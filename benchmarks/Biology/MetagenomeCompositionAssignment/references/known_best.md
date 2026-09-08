@@ -1,52 +1,54 @@
-# MetagenomeCompositionAssignment: scoring evidence — 2026-09-06
+# MetagenomeCompositionAssignment: withdrawal after repair — 2026-09-08
 
-## Scientific endpoints
+## Status and measured repairs
 
-Zero is the blanket-refusal floor; one requires exact supported taxa/abundances,
-correct unresolved alias groups, and correct library-inadequacy refusal.
-Absolute abundance tolerance is now 0.025 (2.5 percentage points), replacing 0.15.
-Taxon F1, alias precision penalties and the two-panel budget are unchanged.
-The original conditional-profile fit is unchanged. Exact identifiable abundance
-still earns full component credit; tightening this precision threshold does
-not manufacture a reference-based ceiling. The reference informed calibration,
-so the measured procedural worlds are not blind validation.
+Replaced the four fixed abundance values with continuous simplex draws (each
+component exceeds the reporting threshold), varied the number of active taxa from
+2 to 4, and varied the identifiable members in alias mixtures. Alias scoring now
+handles all identifiable members rather than assuming t2 is the sole member.
+FDR counts every world, including supported-world false claims. Alias resolution
+and library refusal have separate rates and denominators; held-out uses the same
+blanket-refusal normalization rule as development.
 
-## Reproduction and measurements
+Before repair, reference + nearest {0.35,0.45,0.55,0.65} rounding scored
+0.942 development / 1.0 held-out versus reference 0.694504257. After repair,
+the unchanged reference scores 0.723821438 / 0.555464463 and rounding scores
+0.620526320 / 0.537500000. Thus the confirmed fixed-abundance advantage is removed
+on this panel; this is not a proof against all quantization probes.
 
-The legal `solution.py` baseline scores **0.000000**, valid=1. The input-only
-comparison reference is `verification/reference_assignment.py`.
-Reproduce using:
+The current public alias list and zero-weight sentinel marker still make two
+scientific decisions lookup operations. There are only nine worlds. Repairing
+those issues requires new panel-dependent identifiability and shared-marker
+library-inadequacy models, followed by calibration. This family is withdrawn,
+not claimed to satisfy the September 8 scientific requirements.
+
+## Reproduction
 
 ```sh
-python -m sle eval --allow-uncertified --task Microbiology/MetagenomeCompositionAssignment \
-  --candidate benchmarks/Biology/MetagenomeCompositionAssignment/verification/reference_assignment.py --timeout 300
+OPENBLAS_NUM_THREADS=1 python -m pytest -q tests/test_metagenome_composition.py
+python scripts/check_task_contribution.py --task Microbiology/MetagenomeCompositionAssignment --timeout 300
 ```
 
-Baseline and reference were validated through the Linux candidate sandbox on
-implementation commit `3b62c02`; baseline score was exactly zero and both were valid.
+The dedicated regression suite reproduces the repaired contract. Scientific
+shortcut comparisons are reported above and in the corresponding PR discussion;
+they are not frontier-model calibration draws. `verification/reference_*.py`
+is the input-only comparison. For parsimony, `verification/shortcut_probe.py`
+and `verification/headroom_probe.py` provide the negative and search controls.
 
-| Solver | Development normalized score | heldout_scientific_score | Valid |
-| --- | ---: | ---: | ---: |
-| Original reference | 0.69450426 | 0.86021894 | 1 |
+## Remaining evidence requirements
 
-The discovery held-out column is raw scientific quality, not the normalized
-development scale. Optimization held-out scores use the same normalization as
-development. All reference algorithms are unchanged by this calibration.
-Pre-calibration score measurements do not describe this revision.
+Software validity and deterministic repeats do not establish task difficulty.
+The current instance family is withdrawn; baseline/reference tests check valid,
+bounded execution, **not** the former 0.5–0.8 admission band. This test change
+records a failed calibration rather than relaxing admission requirements.
+No blind model draws, long-horizon calibration or external domain confirmation
+were performed. Seeds are repository-visible; held-out means omitted from search
+feedback, not secret. A replacement must document new instances, reachable
+endpoints, all shortcut/ablation measurements and independent confirmation.
 
-## Limits and provenance
+## History
 
-These original procedural worlds are repository-visible; held-out means excluded
-from search feedback, not server-secret. No external datasets or code are
-redistributed. Model simplifications and nearest-task overlap are in `Task.md`.
-Precision/headroom measurements do not establish expert difficulty: strong
-classical comparisons, frontier draws, long-horizon search and external domain
-review remain pending. The task stays **candidate**.
-
-Scientific sources: doi:10.1093/bioinformatics/btu721.
-
-## Admission review — 2026-09-08
-
-Maintainer probes: rounding abundances to the four construction constants scored 0.942 (held-out 1.0); a 0.05 grid scored 0.812. Fixed alias-group claims scored 0.27. Constant truths and sentinel-marker shortcuts remain admission blockers.
-
-These findings are from the [maintainer review](https://github.com/Geniusyingmanji/ScientistsLastExam/pull/39) except the explicitly identified independent geometry reproduction. They supersede any earlier suggestion that a low reference score alone establishes useful headroom. Scientific instance/normalization revisions remain pending; passing software tests does not resolve these blockers. No frontier-model draws were performed in this follow-up.
+The original measurements and the maintainer's September 8 findings remain in
+[PR #39](https://github.com/Geniusyingmanji/ScientistsLastExam/pull/39).
+The branch preserves the fixes and their regression tests for a future redesign;
+closing the current PR does not assert that this scientific subject is unusable.

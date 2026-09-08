@@ -1,8 +1,7 @@
 schema_version: 2
-scientific_question: Recover taxa and abundance from marker counts while preserving strain aliases
-  and rejecting a detectably inadequate reference library.
-artifact: Concrete taxon-abundance claims, alias groups, or library-inadequacy refusal after charged
-  panels.
+scientific_question: Recover taxa and abundance from marker counts while preserving strain aliases and
+  rejecting a detectably inadequate reference library.
+artifact: Concrete taxon-abundance claims, alias groups, or library-inadequacy refusal after charged panels.
 oracle:
   model: Deterministic multinomial marker mixtures with identifiable, exact-alias, and outside-reference-cone
     worlds.
@@ -10,10 +9,10 @@ oracle:
   deterministic: true
 normalization:
   baseline: Legal single-marker nearest-reference solution.py policy scores exactly zero.
-  reference: Panel-conditional mixture fit, alias grouping and residual refusal; not the perfect-recovery
-    anchor.
-  score: Composition above blanket-refusal floor; absolute abundance tolerance 0.025, with separate
-    false claims and held-out quality.
+  reference: 'Unchanged mixture reference after continuous abundances: 0.723821438 development, 0.555464463
+    held-out. Withdrawn instance family.'
+  score: Composition above blanket-refusal floor; absolute abundance tolerance 0.025, with separate false
+    claims and held-out quality.
 citations:
 - id: doi:10.1093/bioinformatics/btu721
   title: 'TIPP: taxonomic identification and phylogenetic profiling'
@@ -23,10 +22,21 @@ invariants:
 - Detectable library-inadequacy worlds contain a marker outside the reference cone.
 - Taxon and marker permutations preserve scores.
 - False-discovery rates publish numerator and denominator.
-known_shortcuts: >-
-  Regression probes add five false taxa to each alias-world reference output; every extra claim is counted and reduces composition credit. Absent alias groups also reduce supported-world precision; group-only claims in library-inadequate worlds count toward false discoveries. Each concrete taxon or alias group contributes one claim to the reported denominator. The controlled marker abstraction omits read mapping, copy-number variation and real specimens; no sample-identification claim is supported. Maintainer probes: rounding abundances to the four construction constants scored 0.942 (held-out 1.0); a 0.05 grid scored 0.812. Fixed alias-group claims scored 0.27. Constant truths and sentinel-marker shortcuts remain admission blockers.
+known_shortcuts: Replaced the four fixed abundance values with continuous simplex draws (each component
+  exceeds the reporting threshold), varied the number of active taxa from 2 to 4, and varied the identifiable
+  members in alias mixtures. Alias scoring now handles all identifiable members rather than assuming t2
+  is the sole member. FDR counts every world, including supported-world false claims. Alias resolution
+  and library refusal have separate rates and denominators; held-out uses the same blanket-refusal normalization
+  rule as development.  Before repair, reference + nearest {0.35,0.45,0.55,0.65} rounding scored 0.942
+  development / 1.0 held-out versus reference 0.694504257. After repair, the unchanged reference scores
+  0.723821438 / 0.555464463 and rounding scores 0.620526320 / 0.537500000. Thus the confirmed fixed-abundance
+  advantage is removed on this panel; this is not a proof against all quantization probes.  The current
+  public alias list and zero-weight sentinel marker still make two scientific decisions lookup operations.
+  There are only nine worlds. Repairing those issues requires new panel-dependent identifiability and
+  shared-marker library-inadequacy models, followed by calibration. This family is withdrawn, not claimed
+  to satisfy the September 8 scientific requirements.
 review:
-  domain: pending_external_metagenomics
+  domain: withdrawn_pending_instance_redesign
   evaluator_security: internal_budget_rng_alias_residual_schema_and_malformed_output_tests
 provenance:
   class: procedural
@@ -65,7 +75,6 @@ long_horizon:
   measurement_health_passed: false
   material_headroom_after_2h: false
   evidence: []
-
 evaluation_budget:
   EVAL_TIMEOUT_S: 5
   scope: Total candidate wall-clock deadline across all instances.

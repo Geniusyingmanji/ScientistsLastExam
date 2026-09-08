@@ -17,8 +17,15 @@ REF=_reference()
 
 def _truth(kind,seed):
     rng=np.random.default_rng(seed)
-    if kind=="alias": ids=[0,2]; abundance=np.array([.45,.55])
-    else: ids=sorted(rng.choice(np.arange(2,8),2,replace=False)); abundance=np.array([.35,.65])
+    count = int(rng.integers(2, 5))
+    if kind == "alias":
+        ids = [0] + sorted(rng.choice(np.arange(2, 8), count-1, replace=False))
+    else:
+        ids = sorted(rng.choice(np.arange(2, 8), count, replace=False))
+    # A continuous simplex draw, with every true component above the reporting
+    # threshold. No rounded grid or repeated fixed abundance is an oracle target.
+    abundance = .10 + (1 - .10*count) * rng.dirichlet(np.ones(count)*2)
+
     probs=REF[:,ids]@abundance
     if kind=="out_of_library": probs=.72*probs; probs[15]=.28
     probs=probs/probs.sum()
@@ -72,15 +79,17 @@ def evaluate(assign_composition):
         valid=parsed is not None and not seq.violated; taxa,groups,abstain=parsed if valid else ({},[],False)
         ids,ab,_=_truth(kind,seed); truth={TAXA[i]:float(x) for i,x in zip(ids,ab)}
         if kind=="alias":
-            alias_ok=frozenset(("t0","t1")) in groups
-            abundance_quality=max(0.0,1.0-abs(taxa.get("t2",-1.0)-truth["t2"])/problem["abundance_tolerance"]) if "t2" in taxa else 0.0
-            # Only the identifiable member and the unresolved group are supported.
-            # Every other concrete taxon is a false claim, including t0/t1 themselves.
-            false=len(set(taxa)-{"t2"})
-            correct_claims=int(alias_ok)+int("t2" in taxa)
-            precision=correct_claims/max(1,correct_claims+false)
-            mechanism=(.5*alias_ok + .5*abundance_quality)*precision
-            refusal=float(alias_ok)
+            alias_ok = frozenset(("t0", "t1")) in groups
+            identifiable = set(truth) - {"t0", "t1"}
+            abundance_quality = sum(
+                max(0.0, 1.0-abs(taxa[t]-truth[t])/problem["abundance_tolerance"])
+                for t in sorted(identifiable & set(taxa))
+            ) / len(identifiable)
+            false = len(set(taxa)-identifiable)
+            correct_claims = int(alias_ok) + len(identifiable & set(taxa))
+            precision = correct_claims / max(1, correct_claims+false)
+            mechanism = (.5*alias_ok + .5*abundance_quality)*precision
+            refusal = float(alias_ok)
         elif kind=="out_of_library":
             mechanism=0.0; false=len(taxa)+len(groups); refusal=float(abstain)
         else:
@@ -93,16 +102,29 @@ def evaluate(assign_composition):
                      "refusal":refusal,"coverage":float(bool(taxa) or bool(groups)),"scientific":scientific})
     dev=[rows[i] for i in DEV]; held=[rows[i] for i in HELD]; floor=sum(r["kind"]=="out_of_library" for r in dev)/len(dev)
     raw=float(np.mean([r["scientific"] for r in dev])); combined=max(0,(raw-floor)/(1-floor))
-    unsupported=[r for r in dev if r["kind"] in {"alias","out_of_library"}]
-    metrics = {"combined_score":float(combined),"valid":1.0 if all(r["valid"] for r in dev) else 0.0,
-            "feasibility_rate":float(np.mean([r["valid"] for r in dev])),
-            "development_mechanism_score":float(np.mean([r["mechanism"] for r in dev if r["kind"]!="out_of_library"])),
-            "development_false_discovery_rate":sum(r["false"] for r in unsupported)/max(1,sum(r["claimed"] for r in unsupported)),
-            "development_false_discovery_count":sum(r["false"] for r in unsupported),
-            "development_unsupported_claim_count":sum(r["claimed"] for r in unsupported),
-            "development_correct_refusal_rate":float(np.mean([r["refusal"] for r in unsupported])),
-            "development_discovery_coverage":float(np.mean([r["coverage"] for r in dev if r["kind"]=="supported"])),
-            "heldout_scientific_score":float(np.mean([r["scientific"] for r in held])),"per_world":rows}
+    metrics = {"combined_score": float(combined), "valid": 1.0,
+               "feasibility_rate": float(np.mean([r["valid"] for r in dev])),
+               "per_world": rows}
+    for prefix, panel in (("development", dev), ("heldout", held)):
+        aliases = [r for r in panel if r["kind"] == "alias"]
+        library = [r for r in panel if r["kind"] == "out_of_library"]
+        supported = [r for r in panel if r["kind"] == "supported"]
+        false = sum(r["false"] for r in panel)
+        claims = sum(r["claimed"] for r in panel)
+        metrics.update({
+            f"{prefix}_mechanism_score": float(np.mean([r["mechanism"] for r in panel if r["kind"] != "out_of_library"])),
+            f"{prefix}_false_discovery_rate": false / max(1, claims),
+            f"{prefix}_false_discovery_count": false,
+            f"{prefix}_claim_count": claims,
+            f"{prefix}_alias_resolution_rate": float(np.mean([r["refusal"] for r in aliases])),
+            f"{prefix}_alias_world_count": len(aliases),
+            f"{prefix}_correct_refusal_rate": float(np.mean([r["refusal"] for r in library])),
+            f"{prefix}_refusal_world_count": len(library),
+            f"{prefix}_discovery_coverage": float(np.mean([r["coverage"] for r in supported])),
+        })
+    held_floor = sum(r["kind"] == "out_of_library" for r in held) / len(held)
+    held_raw = float(np.mean([r["scientific"] for r in held]))
+    metrics["heldout_scientific_score"] = max(0.0, (held_raw-held_floor)/(1-held_floor))
     if not all(row["valid"] for row in rows):
         metrics["valid"] = 0.0
         metrics["combined_score"] = 0.0

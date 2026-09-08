@@ -1,5 +1,8 @@
 # MetagenomeCompositionAssignment — composition, aliases, or an inadequate library
 
+This candidate submission is withdrawn pending instance redesign. The branch preserves
+the repaired executable contract; it is not an admitted or recalibrated benchmark.
+
 ## Question and nearest tasks
 
 Allocate marker-panel sequencing and infer the taxa and abundances in a mixture. Exact reference
@@ -29,12 +32,12 @@ known_alias_groups entry, cannot overlap concrete taxa, and earn credit jointly 
 of identifiable mixture members. Each reported group counts as one claim. A known alias
 group is not evidence that its members occur in the sample: in supported worlds an
 absent group reduces taxon-set precision and counts as a false claim; in library-inadequate
-worlds every taxon or group claim is false. Unsupported-world false-discovery rates
+worlds every taxon or group claim is false. All-world false-discovery rates
 count both concrete taxa and groups in their denominator. In alias worlds, all extra unsupported concrete taxa
 count as false discoveries and reduce composition credit through claim precision; a correct
 alias group does not excuse unrelated false species. Use abstain only when the reference library cannot explain the
 sample; then taxa and groups must be empty. The evaluator separately reports composition
-recovery, unsupported-world false discovery, alias/library refusal, coverage, and held-out
+recovery, all-world false discovery, separate alias resolution and library refusal, coverage, and held-out
 performance. Blanket abstention and the single-marker baseline score zero.
 
 This is a controlled marker-count model. It evaluates mixture reasoning, not a clinical or
@@ -54,3 +57,8 @@ Any invalid world makes the entire submission invalid: aggregate development and
 held-out scores are zero. Per-world diagnostics are retained only in trusted reports.
 
 Nearest task forms: CrowdedSpectrumAssignment and TransmissionSpectrumSpecies also require evidence for distinguishable components; this task uses marker-count mixtures, but current exact aliases and sentinel markers still require redesign.
+
+Both splits use `max(0, (mean_scientific - library_world_fraction) /
+(1 - library_world_fraction))`. Alias resolution and library refusal have separate
+rates and world counts. FDR uses all taxon/group claims as its denominator;
+`claim_count` is reported for each split.

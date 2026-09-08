@@ -29,13 +29,13 @@ class BiologyExpansionTests(unittest.TestCase):
             ref=load(BIO/task/"verification"/refname,"ref_"+task)
             cls.loaded[task]=(ev,entry,ev.evaluate(getattr(base,entry)),ev.evaluate(getattr(ref,entry)))
 
-    def test_baselines_are_valid_zero_and_references_improve(self):
+    def test_withdrawn_family_scores_are_valid_and_bounded(self):
         for task,(_,_,baseline,reference) in self.loaded.items():
             self.assertEqual(baseline["valid"],1.0,task)
             self.assertAlmostEqual(baseline["combined_score"],0.0,places=12,msg=task)
             self.assertEqual(reference["valid"],1.0,task)
-            self.assertGreaterEqual(reference["combined_score"],0.5,task)
-            self.assertLessEqual(reference["combined_score"],0.8,task)
+            self.assertGreater(reference["combined_score"],0.0,task)
+            self.assertLessEqual(reference["combined_score"],1.0,task)
 
     def test_evaluators_are_deterministic(self):
         for task,entry,refname in TASKS:
@@ -77,7 +77,7 @@ print(json.dumps([ev.evaluate(getattr(base,entry)),ev.evaluate(getattr(ref,entry
 
     def test_discovery_tasks_publish_axes_and_denominators(self):
         keys={"development_mechanism_score","development_false_discovery_rate",
-              "development_false_discovery_count","development_unsupported_claim_count",
+              "development_false_discovery_count","development_claim_count",
               "development_correct_refusal_rate","development_discovery_coverage"}
         for task in ('MetagenomeCompositionAssignment',):
             self.assertTrue(keys<=set(self.loaded[task][3]),task)
@@ -117,19 +117,31 @@ print(json.dumps([ev.evaluate(getattr(base,entry)),ev.evaluate(getattr(ref,entry
         self.assertEqual(metrics["combined_score"],0.0)
 
     def test_metagenome_alias_world_penalizes_every_extra_false_taxon(self):
-        ev=self.loaded["MetagenomeCompositionAssignment"][0]
-        ref=load(BIO/"MetagenomeCompositionAssignment"/"verification/reference_assignment.py","meta_extra_ref")
-        def extra(p,sequence):
-            out=ref.assign_composition(p,sequence)
+        ev = self.loaded["MetagenomeCompositionAssignment"][0]
+        specs = iter(ev.SPECS)
+        def truth_candidate(p, sequence):
+            kind, seed = next(specs)
+            ids, ab, _ = ev._truth(kind, seed)
+            if kind == "out_of_library":
+                return dict(taxa=[], ambiguous_groups=[], abstain=True)
+            return dict(taxa=[dict(taxon=ev.TAXA[i], abundance=float(a))
+                              for i, a in zip(ids, ab) if i != 0],
+                        ambiguous_groups=[["t0", "t1"]] if kind == "alias" else [], abstain=False)
+        clean = ev.evaluate(truth_candidate)
+        specs = iter(ev.SPECS)
+        def extra(p, sequence):
+            out = truth_candidate(p, sequence)
             if out["ambiguous_groups"]:
-                out["taxa"] += [{"taxon":t,"abundance":.08} for t in ("t3","t4","t5","t6","t7")]
+                present = {row["taxon"] for row in out["taxa"]} | {"t0", "t1"}
+                taxon = next(t for t in p["taxon_ids"] if t not in present)
+                out["taxa"].append(dict(taxon=taxon, abundance=.08))
             return out
-        metrics=ev.evaluate(extra)
-        self.assertEqual(metrics["valid"],1.0)
-        self.assertEqual(metrics["development_false_discovery_count"],10)
-        self.assertGreater(metrics["development_false_discovery_rate"],0.0)
-        self.assertLess(metrics["combined_score"],self.loaded["MetagenomeCompositionAssignment"][3]["combined_score"])
-        self.assertLess(metrics["heldout_scientific_score"],self.loaded["MetagenomeCompositionAssignment"][3]["heldout_scientific_score"])
+        result = ev.evaluate(extra)
+        self.assertEqual(result["valid"], 1)
+        self.assertEqual(result["development_false_discovery_count"], 2)
+        self.assertGreater(result["development_false_discovery_rate"], 0)
+        self.assertLess(result["combined_score"], clean["combined_score"])
+        self.assertLess(result["heldout_scientific_score"], clean["heldout_scientific_score"])
 
     def test_metagenome_absent_alias_groups_reduce_supported_credit(self):
         ev=self.loaded["MetagenomeCompositionAssignment"][0]
@@ -156,9 +168,9 @@ print(json.dumps([ev.evaluate(getattr(base,entry)),ev.evaluate(getattr(ref,entry
         ev=self.loaded["MetagenomeCompositionAssignment"][0]
         result=ev.evaluate(lambda p,s:dict(taxa=[],ambiguous_groups=[["t0","t1"]],abstain=False))
         self.assertEqual(result["valid"],1.)
-        self.assertEqual(result["development_false_discovery_count"],1)
-        self.assertEqual(result["development_unsupported_claim_count"],3)
-        self.assertAlmostEqual(result["development_false_discovery_rate"],1/3)
+        self.assertEqual(result["development_false_discovery_count"],4)
+        self.assertEqual(result["development_claim_count"],6)
+        self.assertAlmostEqual(result["development_false_discovery_rate"],4/6)
         for row in result["per_world"]:
             self.assertEqual(row["claimed"],1)
             self.assertEqual(row["false"],int(row["kind"]!="alias"))
@@ -212,3 +224,56 @@ def test_reference_alias_groups_follow_public_taxon_names():
     assert not out["abstain"]
     assert out["ambiguous_groups"] == problem["known_alias_groups"]
     assert all(row["taxon"] in problem["taxon_ids"] for row in out["taxa"])
+
+
+def test_continuous_abundances_variable_member_counts_and_no_fixed_rounding_gain():
+    ev = load(BIO/"MetagenomeCompositionAssignment/verification/evaluator.py", "continuous_ev")
+    ref = load(BIO/"MetagenomeCompositionAssignment/verification/reference_assignment.py", "continuous_ref")
+    count_set = set()
+    alias_members = set()
+    abundances = []
+    for kind in ("supported", "alias", "out_of_library"):
+        for seed in range(31, 81):
+            ids, ab, _ = ev._truth(kind, seed)
+            count_set.add(len(ids))
+            assert len(ids) == len(set(ids)) == len(ab)
+            assert abs(sum(ab)-1) < 1e-12 and min(ab) > .08
+            abundances.extend(ab)
+            if kind == "alias":
+                alias_members.add(tuple(ids))
+    assert count_set == {2, 3, 4} and len(alias_members) > 10
+    assert len(set(abundances)) > 100
+    def rounded(p, seq):
+        out = ref.assign_composition(p, seq)
+        for row in out["taxa"]:
+            row["abundance"] = min((.35, .45, .55, .65), key=lambda a: abs(a-row["abundance"]))
+        return out
+    clean = ev.evaluate(ref.assign_composition)
+    shortcut = ev.evaluate(rounded)
+    assert shortcut["combined_score"] < clean["combined_score"]
+    assert shortcut["heldout_scientific_score"] < clean["heldout_scientific_score"]
+
+
+def test_alias_and_library_refusal_have_separate_denominators():
+    ev = load(BIO/"MetagenomeCompositionAssignment/verification/evaluator.py", "axes_ev")
+    result = ev.evaluate(lambda p, seq: dict(taxa=[], ambiguous_groups=[], abstain=True))
+    assert result["development_alias_world_count"] == 2
+    assert result["development_refusal_world_count"] == 1
+    assert result["development_alias_resolution_rate"] == 0
+    assert result["development_correct_refusal_rate"] == 1
+    assert result["heldout_alias_world_count"] == result["heldout_refusal_world_count"] == 1
+    assert result["heldout_scientific_score"] == 0
+
+
+def test_fdr_counts_false_claims_in_supported_worlds_too():
+    ev = load(BIO/"MetagenomeCompositionAssignment/verification/evaluator.py", "fdr_ev")
+    ref = load(BIO/"MetagenomeCompositionAssignment/verification/reference_assignment.py", "fdr_ref")
+    result = ev.evaluate(ref.assign_composition)
+    for prefix, indices in (("development", ev.DEV), ("heldout", ev.HELD)):
+        rows = [result["per_world"][i] for i in indices]
+        false = sum(row["false"] for row in rows)
+        claims = sum(row["claimed"] for row in rows)
+        assert result[f"{prefix}_false_discovery_count"] == false
+        assert result[f"{prefix}_claim_count"] == claims
+        assert result[f"{prefix}_false_discovery_rate"] == false/max(1, claims)
+    assert any(row["kind"] == "supported" and row["false"] > 0 for row in result["per_world"])
