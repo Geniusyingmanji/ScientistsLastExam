@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
   "evidence_scope": "MODEL_CALIBRATION_NOT_POPULATION_PERFORMANCE",
+  "historical_metric_note": "The run-level mechanism_score fields below retain their original pre-review meaning (composite science score), not the subsequently added family-diagnosis accuracy. Combined scores are unchanged; these historical fields must not be compared with current mechanism_score.",
   "task": "Neuroscience/SpikeHistoryInference",
   "task_source_revision": "156927e2009040aa4b7219fd0832ed3f8739ebf1",
   "score_evaluation_source_tree_dirty": false,
