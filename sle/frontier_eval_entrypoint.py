@@ -31,6 +31,10 @@ CANDIDATE_FAILURES = frozenset((
 
 
 def _public_error(result):
+    message = result.get("error_message")
+    if message in ("candidate is not a regular file", "task has no declared entrypoint.txt",
+                   "timeout must be positive and finite"):
+        return message
     kind = result.get("candidate_failure_kind")
     if isinstance(kind, str) and kind in CANDIDATE_FAILURES:
         return "candidate invalid: " + kind
