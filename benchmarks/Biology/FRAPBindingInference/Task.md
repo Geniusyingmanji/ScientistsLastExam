@@ -14,9 +14,10 @@ def infer_frap_binding(problem, measure):
     ...
 ```
 
-`measure(radius_um, time_s)` costs one unit. Both arguments must be values listed in `problem`.
-Repeated measurements are allowed and receive independent deterministic noise. The returned mapping
-contains exactly these keys:
+The first `measure(radius_um, time_s)` call at each distinct radius costs five units: four setup
+units plus one measurement unit. Later calls at an already configured radius cost one unit.
+Both arguments must be values listed in `problem`. Repeated measurements are allowed and receive
+independent deterministic noise. The returned mapping contains exactly these keys:
 
 | key | meaning |
 |---|---|
@@ -25,7 +26,7 @@ contains exactly these keys:
 | `time_s` | time after bleaching |
 | `recovery_fraction` | normalized fluorescence recovery in `[0, 1]` |
 | `recovery_standard_error` | one-standard-error uncertainty |
-| `cost_units` | cost of this call |
+| `cost_units` | cost of this call (`5` for the first call at a radius, otherwise `1`) |
 | `spent_units` | cumulative cost in the current world |
 
 Calling beyond the budget or with an unlisted radius or time invalidates that world even if your
@@ -83,7 +84,7 @@ or radius-independent binding under an active bleach-radius design.
 |---|---|
 | `bleach_radii_um` | list of allowed bleach-radius numbers |
 | `sample_times_s` | list of allowed post-bleach time numbers |
-| `measurement_budget_units` | total one-unit measurement budget |
+| `measurement_budget_units` | total cost-unit budget, including first-use radius setup |
 | `minimum_evidence_measurements` | minimum evidence count for a supported or named unsupported diagnosis |
 | `prediction_contexts` | ordered list of `{"radius_um": number, "time_s": number}` mappings for `predicted_recovery` |
 | `parameter_bounds` | mapping from each reported parameter key to a two-number `[lower, upper]` list |
@@ -157,11 +158,11 @@ their denominators, and all held-out axes.
 
 ## Rules
 
-The 16-measurement truth-blind reference uses the two endpoint radii and scores `0.903145`
-development / `0.898634` held out. Using only one endpoint radius scores `0.294398 / 0.559214`;
-using four times at both endpoints (half the budget) scores `0.842761 / 0.816432`; fixing the two
-binding rates scores `0.209945 / 0.000000`; and never refusing scores `0.000000 / 0.000000`.
-An optimizer-free 3,798-point coarse model grid reaches `0.752831 / 0.784107`.
+The 16-unit truth-blind reference uses four times at each endpoint radius and scores `0.927573`
+development / `0.890764` held out. The stronger one-endpoint half-budget ablation scores
+`0.109060 / 0.107372`; fixing the two binding rates or never refusing scores
+`0.000000 / 0.000000`. An optimizer-free 3,798-point coarse model grid reaches
+`0.728143 / 0.707547`.
 
 - Only edit `solution.py`; preserve `infer_frap_binding(problem, measure)`.
 - Use deterministic CPU Python, NumPy, SciPy, and the standard library only.

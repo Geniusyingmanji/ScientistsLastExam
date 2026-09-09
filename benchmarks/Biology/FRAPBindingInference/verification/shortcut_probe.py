@@ -6,7 +6,7 @@ import math
 import numpy as np
 
 
-TIME_INDICES = (1, 2, 3, 4, 5, 6, 7, 9)
+TIME_INDICES = (3, 6, 7, 9)
 
 
 def _supported(d, kon, koff, radius, time):

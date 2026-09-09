@@ -5,11 +5,7 @@ from reference_solver import solve
 
 
 def one_radius_only(problem, measure):
-    return solve(problem, measure, radii=(problem["bleach_radii_um"][0],))
-
-
-def half_time_grid(problem, measure):
-    return solve(problem, measure, time_indices=(2, 4, 7, 9))
+    return solve(problem, measure, radii=(problem["bleach_radii_um"][-1],))
 
 
 def fixed_binding_rates(problem, measure):

@@ -26,12 +26,15 @@ fixed in-bounds parameters. It is valid and scores `0.000000` on both splits.
 
 ## Reference
 
-The truth-blind reference spends all 16 units at eight times for each endpoint radius (`0.8` and
-`2.6` um), fits the supported and three alternative families with deterministic multi-start bounded
-search, and uses a BIC margin for attribution. It scores `0.903145` development and `0.898634` held
+The truth-blind reference spends all 16 units at four times (`0.40`, `3.20`, `6.40`, and `25.60` s)
+for each endpoint radius (`0.8` and `2.6` um). The eight measurements cost eight units and the two
+first-use radius setups cost four units each. The time subset was selected from all 210 four-time
+subsets using development score only. The solver fits the supported and three alternative families
+with deterministic multi-start bounded search and uses a BIC margin for attribution. It scores
+`0.927573` development and `0.890764` held
 out, with full supported coverage, correct attribution of all six unsupported worlds, zero false
-discovery, and exact replay. Its supported-world parameter score is `0.883412` development and
-`0.875471` held out; prediction scores are `0.997830` and `0.996683`. Remaining headroom is primarily
+discovery, and exact replay. Its supported-world parameter score is `0.924884` development and
+`0.862357` held out; prediction scores are `0.998214` and `0.993838`. Remaining headroom is primarily
 continuous kinetic recovery under noise and improved measurement design, not a hidden normalization
 constant.
 
@@ -39,19 +42,18 @@ constant.
 
 | strategy | development | held out | dev refusal | held-out refusal |
 |---|---:|---:|---:|---:|
-| full 16-unit endpoint-radius reference | **0.903145** | **0.898634** | 1.000 | 1.000 |
-| half budget: four times at both endpoints | 0.842761 | 0.816432 | 1.000 | 1.000 |
-| half budget: eight times at one endpoint | 0.294398 | 0.559214 | 0.333 | 0.667 |
-| fixed binding rates | 0.209945 | 0.000000 | 1.000 | 1.000 |
+| full priced two-endpoint reference | **0.927573** | **0.890764** | 1.000 | 1.000 |
+| half budget: same four times at the stronger single endpoint | 0.109060 | 0.107372 | 0.333 | 0.333 |
+| fixed binding rates | 0.000000 | 0.000000 | 1.000 | 1.000 |
 | never refuse | 0.000000 | 0.000000 | 0.000 | 0.000 |
 | blanket undetermined abstention | 0.000000 | 0.000000 | 0.000 | 0.000 |
 
 The current shortcut is an actual low-dimensional model fit rather than a summary-statistic
 threshold scan. Without an optimizer, it profiles mobile fraction in closed form and searches
 1,200 supported parameter points, 120 anomalous-transport points, 462 two-pool points, and 2,016
-spatial-binding points under the same 16-unit budget. BIC comparison over those 3,798 points scores
-`0.752831` development and `0.784107` held out, with correct refusal `1.0` on both splits. The
-multi-start reference retains gaps of `0.150314` and `0.114527`.
+spatial-binding points under the same priced 16-unit design. BIC comparison over those 3,798 points
+scores `0.728143` development and `0.707547` held out, with correct refusal `1.0` on both splits.
+The multi-start reference retains gaps of `0.199430` and `0.183217`.
 
 ## Model calibration
 
@@ -81,20 +83,22 @@ and were corrected before the first model draw. That draw exposed a public-contr
 shapes; both models made incompatible assumptions, so the shapes were documented before replay.
 
 Maintainer review then exposed that the original 32-unit design made all four radii affordable and
-that a coarse model grid nearly matched the reference. The budget was reduced to 16, the capable
-reference was changed to the two endpoint radii, the threshold-only shortcut was replaced by a true
-3,798-point model grid, and the headline score was gated by correct refusal. A single endpoint still
-recovers some supported parameters but loses fault attribution (`0.333/0.667` correct refusal),
-while the four-time half-budget design loses continuous accuracy. Fixed-rate and never-refuse
-ablations show that kinetic recovery and model comparison remain material.
+that a coarse model grid nearly matched the reference. The budget was reduced to 16 and a four-unit
+setup charge was added for first use of each radius, so the capable reference can afford two endpoint
+radii while the half-budget ablation can afford one. The threshold-only shortcut was replaced by a
+true 3,798-point model grid, and the headline score was gated by correct refusal. The stronger
+single-endpoint ablation loses fault attribution (`0.333/0.333` correct refusal) and more than `0.78`
+headline score on each split. Fixed-rate and never-refuse ablations show that kinetic recovery and
+model comparison remain material.
 
 ## Robustness
 
 Two direct reference evaluations are compared as complete dictionaries in the task test. The
 evaluator fails closed on exceptions, empty and wrong-type returns, missing or extra keys,
 non-finite and out-of-bounds numbers, malformed prediction arrays, fabricated or duplicate evidence,
-and caught over-budget callback errors. All scores are rounded to six decimal places, and immutable
-measurement IDs are scoped to one world.
+and caught over-budget callback errors. A dedicated pricing test checks first-use, repeated-radius,
+and new-radius charges. All scores are rounded to six decimal places, and immutable measurement IDs
+are scoped to one world.
 
 ## Limitations and provenance
 

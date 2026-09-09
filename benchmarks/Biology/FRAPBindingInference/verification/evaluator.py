@@ -11,7 +11,8 @@ import numpy as np
 RADII = (0.8, 1.2, 1.8, 2.6)
 TIMES = (0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20, 6.40, 12.80, 25.60)
 BUDGET = 16
-MIN_EVIDENCE = 8
+RADIUS_SETUP_COST = 4
+MIN_EVIDENCE = 4
 PREDICTION_CONTEXTS = (
     (0.9, 0.15), (1.0, 1.0), (1.4, 0.55), (1.5, 5.0),
     (2.1, 2.2), (2.2, 16.0), (3.0, 7.5), (3.2, 30.0),
@@ -99,7 +100,7 @@ def public_problem():
         "parameter_bounds": {key: list(value) for key, value in PARAMETER_BOUNDS.items()},
         "model_family": "one freely diffusing pool reversibly exchanges with one immobile bound pool; radial transport rate is 4*D/radius_um**2 and binding rates are radius-independent",
         "unsupported_families": ["anomalous_transport", "two_mobile_pools", "spatially_varying_binding"],
-        "measurement_model": "measure(radius_um, time_s) costs one unit and returns a noisy normalized recovery fraction with a standard error and immutable measurement_id",
+        "measurement_model": "the first measure call at each distinct radius costs five units (four setup plus one measurement); later calls at that radius cost one unit; each returns a noisy normalized recovery fraction with a standard error and immutable measurement_id",
         "abstain_when": "use the matching unsupported diagnosis and abstain when cross-radius recovery is inconsistent with the supported diffusion-binding family; use undetermined only when evidence is insufficient",
     }
 
@@ -110,6 +111,7 @@ class _Measurement:
         self.spent = 0
         self.calls = 0
         self.repeat_counts = {}
+        self.configured_radii = set()
         self.ids = set()
         self.violated = False
 
@@ -129,13 +131,15 @@ class _Measurement:
             self._reject("radius_um is not in bleach_radii_um")
         if not math.isfinite(time) or not any(abs(time - value) < 1e-9 for value in TIMES):
             self._reject("time_s is not in sample_times_s")
-        if self.spent + 1 > BUDGET:
+        cost = 1 + (RADIUS_SETUP_COST if radius not in self.configured_radii else 0)
+        if self.spent + cost > BUDGET:
             self._reject("measurement budget exceeded", RuntimeError)
         pair = (radius, time)
         repeat = self.repeat_counts.get(pair, 0) + 1
         self.repeat_counts[pair] = repeat
         self.calls += 1
-        self.spent += 1
+        self.spent += cost
+        self.configured_radii.add(radius)
         token = "%s|%.8f|%.8f|%d" % (self.spec["seed"], radius, time, repeat)
         seed = int.from_bytes(hashlib.sha256(token.encode("ascii")).digest()[:8], "little")
         noise = float(np.random.default_rng(seed).normal(0.0, self.spec["noise"]))
@@ -148,7 +152,7 @@ class _Measurement:
             "time_s": time,
             "recovery_fraction": round(float(np.clip(truth + noise, 0.0, 1.0)), 7),
             "recovery_standard_error": float(self.spec["noise"]),
-            "cost_units": 1,
+            "cost_units": cost,
             "spent_units": self.spent,
         }
 

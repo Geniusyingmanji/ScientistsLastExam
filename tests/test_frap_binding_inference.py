@@ -83,6 +83,16 @@ class FRAPBindingInferenceTests(unittest.TestCase):
         late = evaluator.supported_recovery(0.7, 0.82, 0.35, 0.12, 1.2, 1e5)
         self.assertAlmostEqual(float(late), 0.82, places=8)
 
+    def test_radius_setup_cost_makes_cross_scale_measurement_explicit(self):
+        evaluator = _load("frap_pricing", TASK / "verification" / "evaluator.py")
+        measurement = evaluator._Measurement(evaluator.DEVELOPMENT_WORLDS[0])
+        first = measurement(0.8, 0.4)
+        repeated_radius = measurement(0.8, 3.2)
+        new_radius = measurement(2.6, 0.4)
+        self.assertEqual((first["cost_units"], first["spent_units"]), (5, 5))
+        self.assertEqual((repeated_radius["cost_units"], repeated_radius["spent_units"]), (1, 6))
+        self.assertEqual((new_radius["cost_units"], new_radius["spent_units"]), (5, 11))
+
     def test_malformed_and_over_budget_candidates_fail_closed(self):
         evaluator = _load("frap_invalid", TASK / "verification" / "evaluator.py")
         malformed = evaluator.evaluate(lambda problem, measure: {})
@@ -188,16 +198,13 @@ class FRAPBindingInferenceTests(unittest.TestCase):
             sys.path.pop(0)
         full = evaluator.evaluate(reference.infer_frap_binding)
         one_radius = evaluator.evaluate(ablations.one_radius_only)
-        half_time_grid = evaluator.evaluate(ablations.half_time_grid)
         fixed_rates = evaluator.evaluate(ablations.fixed_binding_rates)
         never_refuse = evaluator.evaluate(ablations.never_refuse)
         for split in ("development", "heldout"):
-            self.assertGreater(full[split]["combined_score"], half_time_grid[split]["combined_score"])
             self.assertGreater(
-                full[split]["combined_score"] - half_time_grid[split]["combined_score"], 0.05
+                full[split]["combined_score"] - one_radius[split]["combined_score"], 0.50
             )
-            self.assertGreater(full[split]["combined_score"], one_radius[split]["combined_score"])
-            self.assertGreater(half_time_grid[split]["combined_score"], fixed_rates[split]["combined_score"])
+            self.assertGreater(one_radius[split]["combined_score"], fixed_rates[split]["combined_score"])
             self.assertGreaterEqual(fixed_rates[split]["combined_score"], never_refuse[split]["combined_score"])
 
     def test_coarse_model_grid_retains_material_reference_headroom(self):
@@ -211,7 +218,7 @@ class FRAPBindingInferenceTests(unittest.TestCase):
         full = evaluator.evaluate(reference.infer_frap_binding)
         coarse = evaluator.evaluate(shortcut.infer_frap_binding)
         for split in ("development", "heldout"):
-            self.assertGreater(full[split]["combined_score"] - coarse[split]["combined_score"], 0.10)
+            self.assertGreater(full[split]["combined_score"] - coarse[split]["combined_score"], 0.15)
 
 
 if __name__ == "__main__":
