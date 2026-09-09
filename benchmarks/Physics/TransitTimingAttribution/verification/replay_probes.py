@@ -42,7 +42,7 @@ def main():
         "always_abstain": 'def attribute_ttv(*args): return {"abstain": True}\n',
         "order_keyed": ORDER,
         "never_abstain_reference": reference.replace(
-            'if rms > 1.8*noise:', 'if False:').replace('if gap < 5.0:', 'if False:'),
+            'if rms > 1.4*noise:', 'if False:').replace('if gap < 10.0:', 'if False:'),
     }
     for kind in ("planet", "activity", "clock"):
         candidates["constant_" + kind] = CONSTANT.replace("KIND", repr(kind))

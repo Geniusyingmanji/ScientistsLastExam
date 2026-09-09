@@ -7,7 +7,7 @@ oracle:
   deterministic: true
 normalization:
   baseline: one legal follow-up timing followed by abstention
-  reference: four follow-ups and least-squares/BIC comparison of quadratic clock and periodic models; clean Linux replay 0.900201 development and 0.901472 held-out
+  reference: three follow-ups at normalized positions 0.0, 0.5, 1.0 with least-squares/BIC comparison of quadratic clock and periodic models; clean Linux replay 0.900201 development and 0.901472 held-out
   score: all-world reward minus blanket-refusal reward, divided by supported count and clipped below at zero, multiplied by correct-refusal rate; wrong mechanisms receive no period or forecast credit
 citations:
 - id: doi:10.1111/j.1365-2966.2005.08922.x
@@ -21,7 +21,7 @@ invariants:
 - overspending, invented IDs and malformed output fail closed
 - mechanism, forecast, coverage and false-discovery metrics remain separate
 - held-out worlds and exact descriptors remain evaluator-only
-known_shortcuts: PR11 review identified a fixed-order counter exploit and free unsupported claims. Shuffled orders, distinct split sizes and fresh candidate sessions now block that path. Constant-family, counter and fitted no-refusal probes all score 0 on both splits; reference is 0.900201/0.901472. Reproduce with verification/replay_probes.py. These targeted regressions are not an exhaustive low-dimensional grid bound; finite period grids remain a reduced-order limitation.
+known_shortcuts: PR11 review identified a fixed-order counter exploit and free unsupported claims. Shuffled orders, distinct split sizes and fresh candidate sessions now block that path. Constant-family, counter and fitted no-refusal probes all score 0 on both splits. Measured low-dimensional bounds are family A (360 points) 0.900219/0.892128, family B (384 points) 0.900219/0.892128, and family C (210 points) 0.717580/0.888285; selected reference is 0.900201/0.901472. Reproduce with verification/replay_probes.py. These are finite grid measurements, not universal bounds.
 review:
   domain: pending_external_astronomy
   evaluator_security: automated_determinism_budget_lineage_and_bad_candidate_checks_passed

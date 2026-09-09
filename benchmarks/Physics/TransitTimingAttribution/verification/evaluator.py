@@ -53,7 +53,7 @@ def _experiment(w, number):
     if len(w["query_ids"]) >= w["budget"]:
         w["invalid_query"] = True
         raise RuntimeError("budget exceeded")
-    rng=random.Random(1000003*number+len(w["query_ids"])+17); t=float(number)
+    rng=random.Random(1000003*number + 1009*w["seed"] + len(w["query_ids"])+17); t=float(number)
     s=_signal(w, t)
     y=s+rng.gauss(0,w["noise"]); qid=f"ttv-{number}-{len(w['query_ids'])}"; w["query_ids"].append(qid)
     return {"transit_number":number,"timing_offset_days":y,"uncertainty_days":w["noise"],"query_id":qid,"remaining_budget":w["budget"]-len(w["query_ids"])}
@@ -131,8 +131,9 @@ def evaluate(candidate):
             summary = _aggregate(rows)
             metrics.update({prefix + "_" + key: value for key, value in summary.items()})
             metrics["combined_score" if prefix == "development" else "robustness_score"] = summary["combined_score"]
+            if prefix == "validation":
+                metrics.update({"heldout_" + key: value for key, value in summary.items()})
     except Exception:
         return _invalid_metrics()
     return metrics
 
-def reference_anchor(): return {"development_score":1.0,"validation_score":1.0}

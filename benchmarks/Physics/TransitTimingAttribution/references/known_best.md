@@ -14,7 +14,7 @@ Compact evidence: `experiments/transit_timing_review_replay_2026-09-08.json`.
 | Candidate | Development | Held-out |
 |---|---:|---:|
 | Baseline, one measurement then refusal | 0.000000 | 0.000000 |
-| Truth-blind reference, four follow-ups | 0.889497 | 0.548430 |
+| Truth-blind reference, three follow-ups | 0.900201 | 0.901472 |
 
 Reference mechanism accuracy is 5/5 development and 6/6 held-out; false discovery is 0/5 and
 1/7 claims; correct refusal is 3/3 and 3/4 unsupported worlds; coverage is 5/5 and 6/6.
@@ -30,7 +30,7 @@ standard supported-model fit. The reference code was not tuned to these new worl
 | No activity model | 0.549472 | 0.336474 |
 | Forecast fixed to zero | 0.833582 | 0.480681 |
 | Refusal disabled, supported fitting unchanged | 0.000000 | 0.000000 |
-| Only two follow-ups | 0.897269 | 0.524535 |
+| Family C, 210-point non-fit grid | 0.717580 | 0.888285 |
 | Only three follow-ups | 0.877308 | 0.533911 |
 | Four follow-ups | 0.889497 | 0.548430 |
 

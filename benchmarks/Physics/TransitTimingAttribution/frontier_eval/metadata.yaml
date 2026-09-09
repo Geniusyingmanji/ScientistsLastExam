@@ -9,7 +9,7 @@ gpu_required: false
 eval_time_seconds: 120
 science_metric: active_transit_timing_mechanism_attribution_with_clock_activity_refusal
 reference_baseline: abstain after one legal low-cost follow-up timing
-reference_sota: truth-blind four-follow-up least-squares/BIC comparison of quadratic clock and periodic models; development 0.889497, held-out 0.548430
+reference_sota: truth-blind three-follow-up least-squares/BIC comparison of quadratic clock and periodic models; development 0.900201, held-out 0.901472
 tool_level: L2
 tools_suggested:
   - literature_search
