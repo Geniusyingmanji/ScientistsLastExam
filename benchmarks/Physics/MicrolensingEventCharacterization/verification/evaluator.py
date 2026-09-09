@@ -147,8 +147,8 @@ def _score(world, claim):
         return row
     true_scale = world["period"] if world["kind"] == "variable" else world["timescale"]
     true_amp = world.get("anomaly_amp", 0.0) if world["kind"] == "binary" else world.get("variability_amp", 0.0)
-    row["parameter_score"] = max(0.0, 1.0 - abs(claim["timescale"] - true_scale) / 5.0)
-    row["amplitude_score"] = max(0.0, 1.0 - abs(claim["amplitude"] - true_amp) / 0.18)
+    row["parameter_score"] = max(0.0, 1.0 - abs(claim["timescale"] - true_scale) / 2.5)
+    row["amplitude_score"] = max(0.0, 1.0 - abs(claim["amplitude"] - true_amp) / 0.10)
     row["mechanism_score"] = 0.50 + 0.25 * row["parameter_score"] + 0.15 * row["amplitude_score"] + 0.10 * claim["confidence"]
     return row
 
