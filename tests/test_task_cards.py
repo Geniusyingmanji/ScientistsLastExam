@@ -51,6 +51,7 @@ RECORDED_LINEAGE = {
     "Superconductivity/SuperconductorTcRecord",
     "Geophysics/UPbConcordiaInference",
     "Sensors/IMUBiasCalibration",
+    "Neuroscience/SpikeHistoryInference",
 }
 
 
