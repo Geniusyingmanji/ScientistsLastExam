@@ -64,12 +64,24 @@ with fixed parameters or zero predictions.
 
 ## Model calibration
 
-The retained DeepSeek v4 Flash and Pro record in
-`experiments/aquifer_pumping_deepseek_calibration_2026-09-08.json` was generated before the current
-identifier, world-order, pricing, noise, and headline-score revision. It remains historical protocol
-evidence, including thinking-disabled smoke tests and valid-candidate counts, but its scores are not
-current task performance and are not compared with the revised reference. A current-revision draw
-must be added before this evidence can again be marked current.
+The September 8 DeepSeek record predates the current identifier, world-order, pricing, noise, and
+headline-score revision. It remains historical protocol evidence, but its scores are not current
+task performance and are not compared with the revised reference.
+
+On clean scoring revision `2293a80fd1`, DeepSeek v4 Flash and Pro each received one proposal with
+seed 845, temperature 0.7, `greedy_rewrite`, and explicitly sent `thinking: disabled`. Both exact
+model IDs first returned `AQ_SMOKE_OK`. Flash used a 16000-token cap and returned 4498 output
+tokens; Pro used an 8000-token cap and returned 3694. Both proposals were valid, but both returned
+`undetermined` on every world, so development and held-out combined score, mechanism score,
+correct refusal, coverage, and attempted-discovery rate are all zero. This is an honest blanket
+abstention rather than a runner or parsing failure, and neither first proposal reaches the
+truth-blind reference.
+
+The compact current record is
+`experiments/aquifer_pumping_deepseek_calibration_2026-09-09.json`. Generation used a temporary
+two-field provider compatibility patch to send the configured chat thinking mode; the patch was
+removed before both candidates were replayed through the secure evaluator on a clean worktree.
+Generated code, prompts, endpoints, credentials, and logs are excluded.
 
 ## Construction findings
 

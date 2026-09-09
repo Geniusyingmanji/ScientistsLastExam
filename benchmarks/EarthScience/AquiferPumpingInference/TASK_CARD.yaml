@@ -61,8 +61,9 @@ lineage:
   - deepseek-v4-pro
   calibration_runs:
   - experiments/aquifer_pumping_deepseek_calibration_2026-09-08.json
-  calibration_evidence_status: historical_only
-  edits_triggered_by_model: The retained DeepSeek Flash and Pro draws predate the revised pricing, noise, identifier, world order, and headline score and are historical protocol evidence only. They did not trigger hidden-world tuning. The independent maintainer red team, not model performance, triggered the current security and calibration revision; current-revision draws are pending.
+  - experiments/aquifer_pumping_deepseek_calibration_2026-09-09.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: The September 8 DeepSeek Flash and Pro draws predate the revised pricing, noise, identifier, world order, and headline score and remain historical protocol evidence only. The independent maintainer red team, not model performance, triggered the security and calibration revision. On the final revision, thinking-disabled Flash and Pro each produced one valid blanket-undetermined first proposal scoring zero on both splits; no further evaluator or hidden-world change followed those results.
   shortcut_discoverer: independent_maintainer_red_team_then_builder_reproduced_128_strategy_confined_fit_and_residual_threshold_sweep
   frozen_before_eval: false
   freeze_timestamp: null
