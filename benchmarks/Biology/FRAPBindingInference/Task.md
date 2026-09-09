@@ -68,11 +68,14 @@ chemistry; this is the information that separates diffusion from binding.
 
 ## Related tasks
 
-`EnzymeKineticsLaw` distinguishes competing reaction-rate laws, `NMRSpectrumFitting` resolves
-overlapping spectral components, and `ForceFieldCalibration` identifies pair potentials from
-energy and force queries. Here the scientific artifact is instead a coupled intracellular
-transport-binding mechanism inferred by actively perturbing FRAP length and time scales, including
-attribution of three ways in which that mechanism can fail.
+`PopulationGenetics/DemographicSFS` infers demographic histories from allele-frequency summaries,
+and `Ecology/OccupancyDetectionDesign` separates occupancy from imperfect detection in repeated
+surveys. `Biology/CatalystDeactivationLab` attributes kinetic failure in reactor time courses, while
+`Spectroscopy/ActiveNoiseSpectroscopy` reconstructs environmental spectra from controlled quantum
+probes. Those tasks use different scientific artifacts, misspecified families, refusal semantics,
+and instance generators. Here the artifact is a shared intracellular transport-binding mechanism
+and sealed FRAP predictions; the false worlds specifically violate transport scaling, pool count,
+or radius-independent binding under an active bleach-radius design.
 
 ## Every `problem` key
 
@@ -133,28 +136,32 @@ abstention requires at least one.
 
 ## Scoring
 
-The split-prefixed `mechanism_score` is the fraction of all worlds with the correct family
-diagnosis: a supported claim on a supported world, or the correct named refusal on an unsupported
-world. Each split publishes `mechanism_correct_count` and `mechanism_total_count`.
-Undetermined abstention and invalid submissions count as incorrect. This axis is separate from
-continuous parameter recovery, prediction, and the composite science score.
+The split-prefixed `mechanism_score` is the fraction of all worlds with a scientifically adequate
+family decision. A supported-world claim counts only when its continuous `science_score` is at
+least `0.5`; an unsupported world counts only for the correct named refusal. Each split publishes
+`mechanism_correct_count` and `mechanism_total_count`. Wrong, weak, undetermined, and invalid claims
+remain in the denominator and count as incorrect.
 
 Supported worlds score continuous recovery of the four parameters and the supplied conditional
 recovery predictions. Errors in `D`, `k_on`, and `k_off` are measured on a logarithmic scale;
 mobile-fraction and prediction errors are continuous. Named unsupported worlds score only when the
 candidate both abstains and attributes the correct failure family.
 
-`combined_score` is the mean development-world science score with a small confidence-calibration
-factor, clipped to `[0, 1]`. Blanket `undetermined` abstention is valid and scores exactly zero.
-The evaluator separately reports mechanism recovery, false-discovery rate, correct-refusal rate,
-supported discovery coverage, attempted-discovery rate, their denominators, and all held-out axes.
+Within supported worlds, parameter and prediction quality form a continuous science score with a
+small confidence-calibration factor. The split `combined_score` is the mean of that supported-world
+composite multiplied by the exact-diagnosis rate across all unsupported worlds. Thus partial or
+incorrect refusal reduces the headline score, and never-refuse, fixed-label refusal, and blanket
+`undetermined` strategies score exactly zero. The evaluator separately reports mechanism recovery,
+false-discovery rate, correct-refusal rate, supported discovery coverage, attempted-discovery rate,
+their denominators, and all held-out axes.
 
 ## Rules
 
-The truth-blind reference scores 0.965603 development / 0.958000 held out. Two radii only score
-0.901797 / 0.921424; omitting the latest intermediate time scores 0.917655 / 0.865443;
-fixed binding rates score 0.622044 / 0.595200; never refusing scores 0.469603 / 0.362800.
-A 192-strategy summary-statistic shortcut sweep reaches 0.369094 / 0.386000.
+The 16-measurement truth-blind reference uses the two endpoint radii and scores `0.903145`
+development / `0.898634` held out. Using only one endpoint radius scores `0.294398 / 0.559214`;
+using four times at both endpoints (half the budget) scores `0.842761 / 0.816432`; fixing the two
+binding rates scores `0.209945 / 0.000000`; and never refusing scores `0.000000 / 0.000000`.
+An optimizer-free 3,798-point coarse model grid reaches `0.752831 / 0.784107`.
 
 - Only edit `solution.py`; preserve `infer_frap_binding(problem, measure)`.
 - Use deterministic CPU Python, NumPy, SciPy, and the standard library only.

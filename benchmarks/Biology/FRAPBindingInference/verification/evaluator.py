@@ -10,7 +10,7 @@ import numpy as np
 
 RADII = (0.8, 1.2, 1.8, 2.6)
 TIMES = (0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20, 6.40, 12.80, 25.60)
-BUDGET = 32
+BUDGET = 16
 MIN_EVIDENCE = 8
 PREDICTION_CONTEXTS = (
     (0.9, 0.15), (1.0, 1.0), (1.4, 0.55), (1.5, 5.0),
@@ -222,10 +222,10 @@ def _score(spec, claim):
     science_score = 0.0
     if supported and not claim["abstain"] and claim["diagnosis"] == "supported":
         component_scores = (
-            math.exp(-abs(math.log(claim["diffusion_coefficient_um2_s"] / spec["d"])) / 0.48),
-            math.exp(-abs(claim["mobile_fraction"] - spec["mobile"]) / 0.12),
-            math.exp(-abs(math.log(claim["binding_on_rate_s"] / spec["kon"])) / 0.72),
-            math.exp(-abs(math.log(claim["binding_off_rate_s"] / spec["koff"])) / 0.72),
+            math.exp(-abs(math.log(claim["diffusion_coefficient_um2_s"] / spec["d"])) / 0.30),
+            math.exp(-abs(claim["mobile_fraction"] - spec["mobile"]) / 0.08),
+            math.exp(-abs(math.log(claim["binding_on_rate_s"] / spec["kon"])) / 0.45),
+            math.exp(-abs(math.log(claim["binding_off_rate_s"] / spec["koff"])) / 0.45),
         )
         parameter_score = float(np.prod(component_scores) ** 0.25)
         truth = _truth_recovery(
@@ -234,7 +234,7 @@ def _score(spec, claim):
             np.array([item[1] for item in PREDICTION_CONTEXTS]),
         )
         rmse = float(np.sqrt(np.mean(np.square(claim["predictions"] - truth))))
-        prediction_score = math.exp(-((rmse / 0.10) ** 2))
+        prediction_score = math.exp(-((rmse / 0.08) ** 2))
         science_score = 0.68 * parameter_score + 0.32 * prediction_score
     elif correct_refusal:
         science_score = 1.0
@@ -293,8 +293,10 @@ def _summary(rows):
     supported = [row for row in rows if row["kind"] == "supported"]
     unsupported = [row for row in rows if row["kind"] != "supported"]
     attempts = [row for row in rows if not row["abstained"]]
+    refusal_rate = float(np.mean([row["correct_refusal"] for row in unsupported])) if unsupported else 0.0
+    supported_science = float(np.mean([row["combined_score"] for row in supported])) if supported else 0.0
     return {
-        "combined_score": round(float(np.mean([row["combined_score"] for row in rows])), 6),
+        "combined_score": round(supported_science * refusal_rate, 6),
         "valid": float(all(row["valid"] for row in rows)),
         "science_score": round(float(np.mean([row["science_score"] for row in rows])), 6),
         "parameter_recovery_score": round(float(np.mean([row["parameter_recovery_score"] for row in supported])), 6),
@@ -314,6 +316,14 @@ def _summary(rows):
     }
 
 
+def _mechanism_correct(row):
+    if not row["valid"]:
+        return False
+    if row["kind"] == "supported":
+        return row.get("science_score", 0.0) >= 0.5
+    return row["correct_refusal"]
+
+
 def evaluate(candidate) -> dict[str, Any]:
     development = [_evaluate_world(spec, "development", i, candidate) for i, spec in enumerate(DEVELOPMENT_WORLDS)]
     heldout = [_evaluate_world(spec, "heldout", i, candidate) for i, spec in enumerate(HELDOUT_WORLDS)]
@@ -327,10 +337,10 @@ def evaluate(candidate) -> dict[str, Any]:
         "heldout": held,
         "development_combined_score": dev["combined_score"],
         "heldout_combined_score": held["combined_score"],
-        "development_mechanism_score": sum(r["valid"] and (r["correct_refusal"] if r["kind"] != "supported" else not r["abstained"]) for r in development) / len(development),
-        "heldout_mechanism_score": sum(r["valid"] and (r["correct_refusal"] if r["kind"] != "supported" else not r["abstained"]) for r in heldout) / len(heldout),
-        "development_mechanism_correct_count": sum(r["valid"] and (r["correct_refusal"] if r["kind"] != "supported" else not r["abstained"]) for r in development),
-        "heldout_mechanism_correct_count": sum(r["valid"] and (r["correct_refusal"] if r["kind"] != "supported" else not r["abstained"]) for r in heldout),
+        "development_mechanism_score": sum(map(_mechanism_correct, development)) / len(development),
+        "heldout_mechanism_score": sum(map(_mechanism_correct, heldout)) / len(heldout),
+        "development_mechanism_correct_count": sum(map(_mechanism_correct, development)),
+        "heldout_mechanism_correct_count": sum(map(_mechanism_correct, heldout)),
         "development_mechanism_total_count": len(development),
         "heldout_mechanism_total_count": len(heldout),
         "development_false_discovery_rate": dev["false_discovery_rate"],

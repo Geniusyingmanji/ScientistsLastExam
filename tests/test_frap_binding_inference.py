@@ -21,13 +21,13 @@ def _load(name: str, path: Path):
 
 
 class FRAPBindingInferenceTests(unittest.TestCase):
-    def test_mechanism_axis_is_family_accuracy_not_composite(self):
+    def test_mechanism_axis_requires_scientifically_adequate_supported_claims(self):
         from unittest.mock import patch
         oracle = _load("frap_mechanism", TASK / "verification" / "evaluator.py")
         rows = [
-            {"kind": "supported", "valid": True, "abstained": False, "correct_refusal": False},
-            {"kind": "supported", "valid": True, "abstained": True, "correct_refusal": False},
-            {"kind": "unsupported", "valid": True, "abstained": True, "correct_refusal": True},
+            {"kind": "supported", "valid": True, "abstained": False, "correct_refusal": False, "science_score": 0.8},
+            {"kind": "supported", "valid": True, "abstained": False, "correct_refusal": False, "science_score": 0.2},
+            {"kind": "unsupported", "valid": True, "abstained": True, "correct_refusal": True, "science_score": 1.0},
         ]
         summary = dict(combined_score=0.2, valid=1.0, science_score=0.3,
                        false_discovery_rate=0.0, correct_refusal_rate=1.0,
@@ -62,6 +62,7 @@ class FRAPBindingInferenceTests(unittest.TestCase):
         self.assertEqual(first["heldout_false_discovery_rate"], 0.0)
         self.assertEqual(first["development_discovery_coverage"], 1.0)
         self.assertEqual(first["heldout_discovery_coverage"], 1.0)
+        self.assertEqual({row["budget_used"] for row in first["per_instance"]}, {16})
 
         baseline = _load("frap_baseline", TASK / "solution.py")
         result = evaluator.evaluate(baseline.infer_frap_binding)
@@ -146,6 +147,37 @@ class FRAPBindingInferenceTests(unittest.TestCase):
                 self.assertEqual(result["valid"], 0.0)
                 self.assertEqual(result["combined_score"], 0.0)
 
+    def test_degenerate_refusal_policies_have_zero_headline_score(self):
+        evaluator = _load("frap_degenerate", TASK / "verification" / "evaluator.py")
+
+        def fixed_claim(problem, measure, diagnosis):
+            rows = [
+                measure(problem["bleach_radii_um"][0], time)
+                for time in problem["sample_times_s"][:8]
+            ]
+            return {
+                "diagnosis": diagnosis,
+                "diffusion_coefficient_um2_s": 1.0,
+                "mobile_fraction": 0.8,
+                "binding_on_rate_s": 0.3,
+                "binding_off_rate_s": 0.12,
+                "predicted_recovery": [0.5 for _ in problem["prediction_contexts"]],
+                "confidence": 0.5,
+                "abstain": diagnosis != "supported",
+                "evidence_measurement_ids": [row["measurement_id"] for row in rows],
+            }
+
+        candidates = (
+            lambda problem, measure: fixed_claim(problem, measure, "supported"),
+            lambda problem, measure: fixed_claim(problem, measure, "anomalous_transport"),
+        )
+        for candidate in candidates:
+            with self.subTest(candidate=candidate):
+                result = evaluator.evaluate(candidate)
+                self.assertEqual(result["valid"], 1.0)
+                self.assertEqual(result["development_combined_score"], 0.0)
+                self.assertEqual(result["heldout_combined_score"], 0.0)
+
     def test_ablation_ladder_retains_material_headroom(self):
         evaluator = _load("frap_ablation_eval", TASK / "verification" / "evaluator.py")
         sys.path.insert(0, str(TASK / "verification"))
@@ -155,13 +187,31 @@ class FRAPBindingInferenceTests(unittest.TestCase):
         finally:
             sys.path.pop(0)
         full = evaluator.evaluate(reference.infer_frap_binding)
-        two_radii = evaluator.evaluate(ablations.two_radii_only)
+        one_radius = evaluator.evaluate(ablations.one_radius_only)
+        half_time_grid = evaluator.evaluate(ablations.half_time_grid)
         fixed_rates = evaluator.evaluate(ablations.fixed_binding_rates)
         never_refuse = evaluator.evaluate(ablations.never_refuse)
         for split in ("development", "heldout"):
-            self.assertGreater(full[split]["combined_score"], two_radii[split]["combined_score"])
-            self.assertGreater(two_radii[split]["combined_score"], fixed_rates[split]["combined_score"])
-            self.assertGreater(fixed_rates[split]["combined_score"], never_refuse[split]["combined_score"])
+            self.assertGreater(full[split]["combined_score"], half_time_grid[split]["combined_score"])
+            self.assertGreater(
+                full[split]["combined_score"] - half_time_grid[split]["combined_score"], 0.05
+            )
+            self.assertGreater(full[split]["combined_score"], one_radius[split]["combined_score"])
+            self.assertGreater(half_time_grid[split]["combined_score"], fixed_rates[split]["combined_score"])
+            self.assertGreaterEqual(fixed_rates[split]["combined_score"], never_refuse[split]["combined_score"])
+
+    def test_coarse_model_grid_retains_material_reference_headroom(self):
+        evaluator = _load("frap_shortcut_eval", TASK / "verification" / "evaluator.py")
+        sys.path.insert(0, str(TASK / "verification"))
+        try:
+            reference = _load("frap_shortcut_ref", TASK / "verification" / "reference_solver.py")
+            shortcut = _load("frap_shortcut", TASK / "verification" / "shortcut_probe.py")
+        finally:
+            sys.path.pop(0)
+        full = evaluator.evaluate(reference.infer_frap_binding)
+        coarse = evaluator.evaluate(shortcut.infer_frap_binding)
+        for split in ("development", "heldout"):
+            self.assertGreater(full[split]["combined_score"] - coarse[split]["combined_score"], 0.10)
 
 
 if __name__ == "__main__":

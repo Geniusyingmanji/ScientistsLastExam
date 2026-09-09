@@ -3,12 +3,12 @@ scientific_question: Can an agent separate intracellular diffusion from reversib
 artifact: Four reaction-diffusion parameters, conditional recovery predictions, a supported or model-inadequacy diagnosis, confidence, and immutable measurement evidence.
 oracle:
   model: deterministic seeded single-radial-mode FRAP recovery with freely diffusing and immobile bound pools, plus three structured unsupported transport or binding families
-  feasibility: listed radii and times, a 32-unit measurement budget, exact bounded finite outputs, matching diagnosis and abstention, and current-world evidence identifiers
+  feasibility: listed radii and times, a 16-unit measurement budget, exact bounded finite outputs, matching diagnosis and abstention, and current-world evidence identifiers
   deterministic: true
 normalization:
   baseline: one early measurement followed by a valid undetermined abstention with fixed in-bounds parameters
   reference: cross-radius deterministic bounded fits of the supported reaction-diffusion family and three structured alternatives with BIC attribution
-  score: clipped development joint of parameter recovery, conditional prediction, diagnosis, and confidence; false discovery, correct refusal, coverage, attempts, unwarranted refusal, and held-out transfer remain separate
+  score: mean supported-world parameter/prediction/confidence composite multiplied by exact unsupported-family refusal rate; mechanism accuracy requires science_score at least 0.5 on supported worlds, while false discovery, coverage, attempts, unwarranted refusal, and held-out transfer remain separate
 citations:
 - id: doi:10.1529/biophysj.103.026765
   title: Analysis of Binding Reactions by Fluorescence Recovery after Photobleaching
@@ -25,7 +25,7 @@ invariants:
 - malformed, non-finite, extra-key, fabricated-evidence, and over-budget submissions fail closed
 - development and held-out worlds use different parameters and seeds
 - the truth-blind reference consumes only public problems and measurement callbacks
-known_shortcuts: A 192-strategy sweep using only plateau, half-time, curve-shape and late-tail thresholds reaches 0.369/0.386 development/held-out, versus the truth-blind joint reaction-diffusion reference at 0.966/0.958. Two radii reach 0.902/0.921, omitting the latest intermediate time reaches 0.918/0.865, fixed binding rates reach 0.622/0.595, and never refusing reaches 0.470/0.363. The reduced-order laboratory omits full bleach geometry, finite exposure, three-dimensional transport, photoswitching, cell motion, drift, and image-level inference.
+known_shortcuts: An optimizer-free coarse fit profiles mobile fraction and searches 1,200 supported parameter points plus 120 anomalous, 462 two-pool, and 2,016 spatial-binding points under the same 16-measurement budget. It reaches 0.752831/0.784107 development/held-out versus the truth-blind multi-start reference at 0.903145/0.898634. One radius reaches 0.294398/0.559214, a four-time two-radius half-budget fit reaches 0.842761/0.816432, fixed binding rates reach 0.209945/0, and never refusing scores zero. The reduced-order laboratory omits full bleach geometry, finite exposure, three-dimensional transport, photoswitching, cell motion, drift, and image-level inference.
 review:
   domain: pending_external_cell_biophysics_review
   evaluator_security: automated_budget_contract_determinism_recovery_invariant_bad_candidate_and_fault_attribution_tests
@@ -33,10 +33,10 @@ provenance:
   class: procedural
   target_source: Repository-visible deterministic multi-radius FRAP generator with development and held-out supported and misspecified worlds.
   task_contract_public_before_evaluation: true
-  fresh_confirmation_status: linux_secure_eval_completed_at_frozen_revision
+  fresh_confirmation_status: pending_linux_secure_replay_after_budget_and_scoring_hardening
 novelty_risk:
   level: medium
-  rationale: No repository or Frontier-Eng task uses fluorescence photobleaching recovery or bleach-radius perturbations. EnzymeKineticsLaw classifies substrate-inhibitor rate laws, NMRSpectrumFitting recovers spectral peaks, and ForceFieldCalibration fits microscopic pair potentials; none separates cellular transport from reversible binding through spatial-scale-dependent recovery.
+  rationale: No repository or Frontier-Eng task uses fluorescence photobleaching recovery or bleach-radius perturbations. PopulationGenetics/DemographicSFS returns demographic parameters from allele-frequency summaries, Ecology/OccupancyDetectionDesign returns occupancy/detection estimates from surveys, Biology/CatalystDeactivationLab diagnoses reactor kinetic failure, and Spectroscopy/ActiveNoiseSpectroscopy returns noise spectra from quantum-probe measurements. Their misspecified families, refusal axes, and instance generators differ; none recovers shared intracellular transport-binding parameters and sealed FRAP predictions while attributing anomalous scaling, two mobile pools, or radius-dependent binding.
 lineage:
   status: complete
   builder_model_ids:
@@ -49,9 +49,9 @@ lineage:
   - deepseek-v4-pro
   calibration_runs:
   - experiments/deepseek_frap_binding_inference_calibration_2026-09-07.json
-  calibration_evidence_status: current_or_migration_replayed
-  edits_triggered_by_model: The first frozen draw exposed that Task.md named parameter_bounds and prediction_contexts without stating their container shapes; both models made incompatible assumptions and failed before scientific evaluation. The contract was clarified and frozen at c6bc78a before replay. DeepSeek Pro then produced a valid first proposal at 0.478/0.343 development/held out, while Flash's complete 7149-token proposal retained a candidate-side array/scalar runtime error and is recorded as protocol-incomplete rather than performance evidence.
-  shortcut_discoverer: builder_self_audit_with_192_strategy_summary_statistic_sweep
+  calibration_evidence_status: historical_only
+  edits_triggered_by_model: The first draw exposed that Task.md named parameter_bounds and prediction_contexts without stating their container shapes; both models made incompatible assumptions and failed before scientific evaluation. The contract was clarified at c6bc78a before replay. DeepSeek Pro then produced a valid first proposal at 0.478/0.343 development/held out, while Flash's complete 7149-token proposal retained a candidate-side array/scalar runtime error. Subsequent budget and scoring hardening makes those scores historical protocol evidence rather than current performance evidence.
+  shortcut_discoverer: builder_self_audit_with_optimizer_free_3798_point_model_grid
   frozen_before_eval: false
   freeze_timestamp: null
 long_horizon:
@@ -66,4 +66,4 @@ construction_audit:
   expert_hours: null
   red_team_rounds: 2
   oracle_disagreement_status: not_quantified
-  independent_recomputation_status: baseline, truth-blind reference, malformed-candidate checks, recovery invariants, ablations, and shortcut sweep are executable from the task package
+  independent_recomputation_status: baseline, truth-blind reference, malformed-candidate checks, recovery invariants, budget ablations, and coarse model-grid shortcut are executable from the task package

@@ -164,6 +164,8 @@ def _fits(problem, rows, fixed_rates=None):
 
 def solve(problem, measure, *, radii=None, time_indices=MEASURE_TIME_INDICES,
           fixed_rates=None, force_supported=False):
+    if radii is None:
+        radii = (problem["bleach_radii_um"][0], problem["bleach_radii_um"][-1])
     rows = _collect(problem, measure, radii=radii, time_indices=time_indices)
     fitted = _fits(problem, rows, fixed_rates=fixed_rates)
     supported_bic = fitted["supported"]["bic"]

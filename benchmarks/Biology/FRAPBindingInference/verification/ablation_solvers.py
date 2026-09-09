@@ -4,12 +4,12 @@ from __future__ import annotations
 from reference_solver import solve
 
 
-def two_radii_only(problem, measure):
-    return solve(problem, measure, radii=problem["bleach_radii_um"][1:3])
+def one_radius_only(problem, measure):
+    return solve(problem, measure, radii=(problem["bleach_radii_um"][0],))
 
 
-def short_times_only(problem, measure):
-    return solve(problem, measure, time_indices=tuple(range(8)))
+def half_time_grid(problem, measure):
+    return solve(problem, measure, time_indices=(2, 4, 7, 9))
 
 
 def fixed_binding_rates(problem, measure):
