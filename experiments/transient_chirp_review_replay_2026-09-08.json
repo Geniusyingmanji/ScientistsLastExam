@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "task": "Gravitation/TransientChirpInference",
-  "source_revision": "94cda555f5cd1cd5488566b900e592609d178b89",
+  "source_revision": "fe80e1d2cbd79000a13e1a2159aff74ec4c1aeb0",
   "source_tree_clean": true,
   "sweep_execution": "Trusted in-process Linux, development-only selection",
   "replay_execution": "Linux trusted driver and bubblewrap, two identical complete metric payloads per policy",
@@ -15,17 +15,19 @@
     "maintainer_sign_count": [0.0, 0.0],
     "shortcut_probe": [0.418415164928561, 0.21425873520204367],
     "sign_count_shortcut_probe": [0.6272606020587237, 0.5439090472066392],
+    "morphology_shortcut_probe": [0.686057949909691, 0.6352363343569875],
     "baseline": [0.0, 0.0],
     "all_abstain": [0.0, 0.0],
     "constant_slope": [0.48712244430460033, 0.4317616420077246]
   },
   "sweeps": {
     "threshold": {"strategy_count": 2916, "selected_parameters": [10, 0.2, 0.06, 0.06]},
-    "sign_count": {"strategy_count": 1620, "selected_parameters": [12, 0.28, 0.08, 0.05, 0, 0.006]}
+    "sign_count": {"strategy_count": 1620, "selected_parameters": [12, 0.28, 0.08, 0.05, 0, 0.006]},
+    "morphology": {"strategy_count": 216, "selected_parameters": [15, 0.1, 0.1, 2, 0.006]}
   },
   "reference_diagnostics": {
     "development": {"mechanism_correct_count": 9, "mechanism_denominator": 10, "false_discovery_count": 0, "false_discovery_denominator": 9, "correct_refusal_count": 4, "correct_refusal_denominator": 4, "discovery_count": 9, "discovery_coverage_denominator": 10},
     "heldout": {"mechanism_correct_count": 10, "mechanism_denominator": 12, "false_discovery_count": 1, "false_discovery_denominator": 11, "correct_refusal_count": 4, "correct_refusal_denominator": 4, "discovery_count": 11, "discovery_coverage_denominator": 12}
   },
-  "limitations": ["Enhanced sign-count shortcut retains about 80 percent of reference development score; this is not an exhaustive upper bound.", "Reference retains a fixed early cadence and a finite slope grid.", "No full-repository tests or global evidence refresh performed."]
+  "limitations": ["The strongest measured no-fit shortcut retains 87.2 percent of reference development and 87.8 percent held out; this is not an exhaustive upper bound.", "RMS refusal is inexpensive, and line/glitch parameter terms are comparatively easy after correct labeling.", "Reference retains a fixed early cadence and a finite slope grid.", "No full-repository tests or global evidence refresh performed."]
 }
