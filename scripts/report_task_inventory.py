@@ -56,6 +56,7 @@ CHINESE_NAMES = {
     "Exoplanets/RadialVelocityPlanets": "视向速度找行星",
     "Physics/CriticalPhenomenaLab": "有限尺寸临界现象发现",
     "Geophysics/GravityInversion": "重力反演",
+    "Hydrology/AquiferPumpingInference": "含水层抽水试验反演",
     "Geophysics/UPbConcordiaInference": "铀铅谐和图事件归因",
     "Gravitation/PTAHellingsDowns": "脉冲星阵四极相关",
     "HeatTransfer/ConvectionDiffusionOpt": "对流扩散辨识与加热器设计",
@@ -190,6 +191,9 @@ CHINESE_BRIEFS = {
     "Geophysics/GravityInversion": (
         "主动布设重力测线,反演地下密度体的位置与强度;声明的源族不支持时拒答",
         "源恢复 + 外场校验 + 拒答;许多密度分布产生相似地表场"),
+    "Hydrology/AquiferPumpingInference": (
+        "选择观测井距与时间,从抽水降深曲线恢复含水层导水率和贮水系数,并诊断概念模型失配",
+        "参数恢复 + 密封降深预测 + 泄漏、补给边界和双孔隙归因;误发现、拒答、覆盖率与留出迁移分列"),
     "Geophysics/UPbConcordiaInference": (
         "在分析预算内选择锆石域,由两套铀铅衰变比判断单一结晶或一次铅丢失历史;可分辨的多事件历史须拒答",
         "事件类型 + 结晶与铅丢失年龄 + 证据血缘;误发现、拒答、覆盖率和留出迁移分列"),

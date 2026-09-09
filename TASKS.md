@@ -4,12 +4,12 @@
 
 | | |
 |---|---:|
-| 任务包 | 83 |
+| 任务包 | 84 |
 | optimization | 41 |
-| discovery | 42 |
+| discovery | 43 |
 | certified | 5 |
-| candidate | 78 |
-| 学科 | 7(Biology 8,Chemistry 13,ComputerScience 7,EarthScience 7,Engineering 13,Mathematics 19,Physics 16) |
+| candidate | 79 |
+| 学科 | 7(Biology 8,Chemistry 13,ComputerScience 7,EarthScience 8,Engineering 13,Mathematics 19,Physics 16) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
@@ -76,7 +76,7 @@
 | [`SpherePackingCertificate`](benchmarks/Mathematics/SpherePackingCertificate/)<br>球堆积上界证书 | Mathematics | DiscreteGeometry | uncapped | analytical | candidate | prove a packing bound, exactly | 为球堆积密度给出一份可精确验证的上界证明。Cohn-Elkies 定理把上界化为分析问题:找一个函数,它在半径外非正、其傅里叶变换处处非负。除 1/2/3/8/24 维外全部开放——12 维已知最好堆积 0.03704,最好的证明只到 0.06279。取变量 w=2π‖x‖²,拉盖尔特征基的系数是有理的,两条假设都变成有理半轴上的有理多项式,而单变量多项式在半轴非负当且仅当能写成 σ₀+wσ₁,这个刻画是完备的。 | 四个维度(8/12/16/20)取均值,不设上限。零点是闭式的二项证书——这个方法不花力气就能给出的东西;1.0 是已发表的 Cohn-Elkies 数值界,而与之等强的精确有理证书似乎在任何维度都还没有人发表过。有理数精确验证,提交浮点判零:网格线性规划这个教科书方法会给出假界(16 阶时 8 维报 0.06237,低于 E8 格实际达到的 0.0625)。 |
 | [`BellBoundCertificate`](benchmarks/Physics/BellBoundCertificate/)<br>贝尔不等式上界证书 | Physics | QuantumFoundations | uncapped | analytical | candidate | prove an upper bound, do not just compute one | 为贝尔泛函的量子最大值给出一份可精确验证的上界证明:提交一组基词与若干加权平方,使它们的和恰好等于 beta*I - B。CHSH 的答案是无理数 2√2,只能逼近;I3322 的量子值至今未知,NPA 层级 1 给 0.375、层级 2 给 0.25102173、已知最好值 0.25087538 要到层级 4 以上。 | 四个实例(CHSH 与三种基词预算下的 I3322)取均值,不设上限。分数是所证界到已知量子值距离的对数进步:免费的层级 1 界记 0,已发表的层级 2 界记 1,超过则大于 1。有理数精确验证,提交浮点数直接判零——数值 SDP 解不是证明。 |
 
-## Discovery(42)
+## Discovery(43)
 
 ### 公式(formula) — 6
 
@@ -124,7 +124,7 @@
 | [`MethaneSourceAttribution`](benchmarks/EarthScience/MethaneSourceAttribution/)<br>甲烷源归因 | EarthScience | AtmosphericChemistry | clipped | analytical | candidate | say which sources moved, or say the record cannot tell | 在固定观测预算下,判断二十年里哪些甲烷排放部门发生了变化——以及在记录判不了时说出判不了。2007 年后大气甲烷重新增长、δ¹³C 变轻,驱动因素至今没有定论:同位素证据被读成主要是微生物源,而这个读法又被以源signature空间变异和汇的未解问题反驳。四类世界只有两类可答:化石与生物质燃烧会让 δ¹³C 上升、乙烷能分开;单一微生物源变化足够大时部门清单能认出;而纯汇变化和两个微生物源同时小幅变化都判不了。 | 三轴分开报、永不平均:机制恢复率、假发现率(带分母)、校准拒答率,外加是否尝试过的计数。总分是三者之积,全弃权与从不弃权都恰好得零。关键在于纯汇变化能被纯源变化复现到观测噪声以内(约化失配 0.00),而它看起来最像废弃物在小幅增加——baseline 在八个纯汇案例里点名废弃物五次。出路是买废弃物清单,发现它没变,把自上而下与自下而上的矛盾当作弃权的理由。 |
 | [`TransmissionSpectrumSpecies`](benchmarks/Physics/TransmissionSpectrumSpecies/)<br>透射光谱分子判定 | Physics | Exoplanets | clipped | analytical | candidate | say which molecules are there, or say you cannot tell | 在固定的凌星次数预算下,判断系外行星大气里有哪些分子——以及在观测无法判定时说出无法判定。K2-18b 的 DMS 之争正是这个问题:多次重分析的结论是那些特征并非唯一可辨识。四类世界里有三类不可辨识,而且原因各不相同:灰云层一次压平所有特征;混淆对在任何预算分配下都分不开(单振幅误差是其和的 24.5 倍);暗弱系统把整个预算压在最好波段也到不了 1σ。只有第三类是噪声。 | 三轴分开报、永不平均:机制恢复率、假发现率(带分母)、校准拒答率,外加是否尝试过的计数。总分是三者之积,归一化到全弃权恰好得零——从不弃权因拒答率为零也得零,两种退化策略都是零,靠尝试率把它们区分开。点名混淆对里任何一方都算假发现,即使其中一个确实存在:世界不决定是哪一个。 |
 
-### 参数反演(parameter_inversion) — 16
+### 参数反演(parameter_inversion) — 17
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
@@ -134,6 +134,7 @@
 | [`NMRSpectrumFitting`](benchmarks/Chemistry/NMRSpectrumFitting/)<br>核磁谱峰机制恢复 | Chemistry | Spectroscopy | clipped | physical_sim | candidate | recover supported peak mechanisms across spectra | 从一维核磁谱里恢复未知个数的重叠共振、区分线型与基线漂移;线型族不支持时拒答 | 峰机制恢复 + 移位重建 + 模型不足拒答;残差低会奖励虚假峰 |
 | [`ReactionMechanismFitting`](benchmarks/Chemistry/ReactionMechanismFitting/)<br>反应机理辨识 | Chemistry | ChemicalKinetics | clipped | physical_sim | candidate | discover a reaction network by choosing assays | 自选温度、初始混合与采样时刻,从公开一阶反应库里认出稀疏反应网络与其温度依赖 | 机制恢复 + 外推;库外世界须拒答 |
 | [`SpinSystemInference`](benchmarks/Chemistry/SpinSystemInference/)<br>自旋体系反演 | Chemistry | Spectroscopy | clipped | community_spin_dynamics_nmrsim | candidate | Given a high-resolution proton NMR spectrum, recover the spin system that produced it: the | 从高分辨质子谱恢复自旋体系的化学位移与两两耦合;二级体系下一级读谱失效 | 机制恢复;误发现率与校准拒答分开报告 |
+| [`AquiferPumpingInference`](benchmarks/EarthScience/AquiferPumpingInference/)<br>含水层抽水试验反演 | EarthScience | Hydrology | clipped | physical_sim | candidate | A pumping test perturbs an aquifer and records hydraulic drawdown away from the well. | 选择观测井距与时间,从抽水降深曲线恢复含水层导水率和贮水系数,并诊断概念模型失配 | 参数恢复 + 密封降深预测 + 泄漏、补给边界和双孔隙归因;误发现、拒答、覆盖率与留出迁移分列 |
 | [`EnergyBalanceModel`](benchmarks/EarthScience/EnergyBalanceModel/)<br>能量平衡模型辨识 | EarthScience | ClimateScience | clipped | active_system_identification | candidate | identify climate response by choosing forcing experiments | 自选辐射强迫实验,辨识两层气候响应的五个参数;需状态依赖反馈或第三层时拒答 | 参数恢复 + 强迫迁移 + 模型不足拒答;实验预算受限 |
 | [`GravityInversion`](benchmarks/EarthScience/GravityInversion/)<br>重力反演 | EarthScience | Geophysics | clipped | physical_sim | candidate | actively survey and infer subsurface density bodies | 主动布设重力测线,反演地下密度体的位置与强度;声明的源族不支持时拒答 | 源恢复 + 外场校验 + 拒答;许多密度分布产生相似地表场 |
 | [`RadiativeTransferFit`](benchmarks/EarthScience/RadiativeTransferFit/)<br>辐射传输反演 | EarthScience | AtmosphericScience | clipped | physical_sim | candidate | actively select thermal channels and retrieve an atmospheric mechanism | 主动选择热红外通道与观测角,反演大气温度与光学厚度剖面;未建模的吸收体或云须拒答 | 机制恢复 + 模型不足拒答;观测预算受限,残差低不足以判对 |

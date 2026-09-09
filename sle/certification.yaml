@@ -800,3 +800,11 @@ tasks:
       - doi:10.1103/PhysRevLett.93.165501
       - doi:10.1016/0375-9601(74)90847-0
       - doi:10.1063/1.1723844
+  Hydrology/AquiferPumpingInference:
+    status: candidate
+    reason: active multi-radius pumping-test inference recovers transmissivity and storativity under priced radius setup and attributes three publicly specified reduced-order alternatives; a truth-blind multi-model reference reaches 0.622/0.793 development/held out, a one-radius half-budget ablation reaches 0.000/0.193, and a 128-strategy confined-fit plus residual-threshold shortcut reaches 0.482/0.526; identifiers are world-independent digests, world order is deterministically shuffled, and both blanket abstention and never-refusing score zero; thinking-disabled DeepSeek Flash and Pro current-revision first proposals are valid blanket-undetermined outcomes scoring zero on both splits; retain pending server-held field curves, higher-fidelity radial-flow replication, repeated controls, and independent hydrogeology review
+    citation_ids:
+      - doi:10.1029/TR016i002p00519
+      - doi:10.1029/TR036i001p00095
+      - doi:10.3133/wsp1536E
+      - doi:10.1029/WR020i007p00831
