@@ -29,7 +29,7 @@ class TransientChirpInferenceTests(unittest.TestCase):
         a = self.ev.evaluate(self.ref.infer_transient)
         b = self.ev.evaluate(self.ref.infer_transient)
         self.assertEqual(a, b)
-        self.assertGreater(a["combined_score"], 0.5)
+        self.assertGreater(a["combined_score"], 0.75)
         self.assertEqual(a["development_false_discovery_rate"], 0.0)
         self.assertEqual(a["development_correct_refusal_rate"], 1.0)
 
@@ -131,7 +131,17 @@ class TransientChirpInferenceTests(unittest.TestCase):
         for key in ("combined_score", "robustness_score"):
             self.assertGreater(reference[key] - probe[key], 0.1)
 
-    def test_candidate_session_is_reset_between_worlds(self):
+    def test_morphology_grid_witness_stays_below_reference(self):
+        calibration = load(TASK / "verification/calibrate.py", "chirp_morphology_test")
+        candidate = calibration.morphology_policy(15, 0.10, 0.10, 2, 0.006)
+        probe = self.ev.evaluate(candidate)
+        reference = self.ev.evaluate(self.ref.infer_transient)
+        self.assertAlmostEqual(probe["combined_score"], 0.686057949909691)
+        self.assertAlmostEqual(probe["robustness_score"], 0.6352363343569877)
+        for key in ("combined_score", "robustness_score"):
+            self.assertGreater(reference[key] - probe[key], 0.08)
+
+    def test_reset_session_hook_is_called_before_every_world(self):
         baseline = self.base.infer_transient
         class Counter:
             calls = 0

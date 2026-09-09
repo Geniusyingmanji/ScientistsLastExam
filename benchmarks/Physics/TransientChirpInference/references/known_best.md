@@ -40,6 +40,7 @@ they are operational reduced policies, not claims that all other decisions are i
 | Maintainer noise/sign-count rule | 1 | 0.000000 | 0.000000 |
 | Original peak/RMS/roughness family | 2916 | 0.418415 | 0.214259 |
 | Noise/RMS/sign-count/fixed-slope family | 1620 | 0.627261 | 0.543909 |
+| No-fit RMS/median/sign-count morphology family | 216 | 0.686058 | 0.635236 |
 
 The expanded grid varies paired sample count, glitch threshold, amplitude refusal, uncertainty
 refusal, sign-count difference and fixed chirp slope. The selected enhanced parameters are
@@ -48,10 +49,15 @@ reported after selection, not used for tuning. The sweep is trusted in-process L
 the selected policies, reference and ablations are then independently executed through the
 trusted driver and bubblewrap. The direct and sandbox results agree.
 
-The original heuristic no longer ties the reference. The retuned heuristic still achieves about
-80% of reference development score, so this is a measured gap of 0.159862, not proof that every
-low-dimensional method is weak. New regression tests pin a >0.10 gap on both splits for this
-registered selected probe. No claim of an exhaustive algorithmic upper bound is made.
+The 216-policy morphology family varies H1 sample count, RMS refusal, median-magnitude glitch
+threshold, sign-count difference and fixed chirp slope. Its selected parameters are
+`(15, 0.10, 0.10, 2, 0.006)`; it performs no waveform fitting.
+
+The original heuristic no longer ties the reference. The strongest measured no-fit family reaches
+87.2% of reference development and 87.8% held out, leaving gaps of 0.101064 and 0.088192.
+Its refusal decision is a single RMS threshold, and correct line/glitch labels make their slope-zero
+or integer-event-time parameter terms comparatively easy to collect. Regression tests pin this
+selected witness and its positive gap on both splits. No exhaustive algorithmic upper bound is claimed.
 
 Reproduce on Linux:
 
@@ -94,9 +100,10 @@ Glitches use event-time recovery for the same parameter term, avoiding irrelevan
 
 The score subtracts all-refusal reward and multiplies by correct-refusal rate. The latter makes
 never-refusing fits zero; it is an explicit additional design choice. Four-axis counts and
-denominators are derived from actual claims, including incorrect ones in coverage. Candidate
-sessions reset between worlds, public inputs are copied, and invalid candidates receive a zero
-headline with matching result-key structure. A separate confidence-calibration diagnostic scores
+denominators are derived from actual claims, including incorrect ones in coverage. Public inputs
+are copied per world; `reset_session()` is called only when the candidate object defines that hook,
+so ordinary module-level state is retained. Invalid candidates receive a zero headline with matching
+result-key structure. A separate confidence-calibration diagnostic scores
 wrong declarations, rather than presenting raw submitted confidence as calibration evidence.
 
 ## Current robustness and evidence

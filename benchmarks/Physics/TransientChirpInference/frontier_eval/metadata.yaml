@@ -6,7 +6,7 @@ tier: T2
 oracle_type: statistical_sim
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 5
+eval_time_seconds: 20
 science_metric: transient_waveform_model_selection_and_parameter_recovery
 reference_baseline: six H1 observations followed by a fixed coherent-line claim
 reference_sota: dual-detector cadence, sinusoid/chirp grid comparison, coherence glitch test and low-SNR refusal; revised reference 0.787122 development and 0.723428 held-out

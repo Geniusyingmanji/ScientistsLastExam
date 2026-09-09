@@ -63,16 +63,20 @@ and coverage denominators include every supported world. Counts and denominators
 
 All families have the same reported noise standard deviation; ambiguity comes from weak signal.
 Chirps and lines may have identical early/late sign-change counts, requiring phase-evolution fits.
-Each world starts a fresh candidate session. The initial frequency is in [0.04, 0.18] cycles/day.
+Each world receives a fresh copy of `problem`. If a candidate object defines `reset_session()`, the
+evaluator calls that hook before each world; ordinary module-level state is otherwise retained.
+The initial frequency is in [0.04, 0.18] cycles/day.
 The reference observes t=0..11, leaving later localized transients and more adaptive schedules
 as explicit headroom. This is a reduced-order phase model, not a full inspiral waveform.
 
 Current reference: 0.787122 development / 0.723428 held-out normalized score. Removing H1/L1
 coherence gives 0.692047/0.643030; removing chirp fitting gives 0.479101/0.479147; fixing slopes
 to 0.02 gives 0.487122/0.431762; never refusing gives 0/0. The original noise/sign-count shortcut
-gives 0/0. A development-selected 1,620-policy noise/RMS/sign-count/slope grid reaches
-0.627261/0.543909, and the historical 2,916-policy threshold family reaches 0.418415/0.214259.
-These are tested grid maxima, not an exhaustive upper bound over possible algorithms.
+gives 0/0. A development-selected 216-policy no-fit morphology grid reaches 0.686058/0.635236;
+the 1,620-policy noise/RMS/sign-count/slope grid reaches 0.627261/0.543909, and the historical
+2,916-policy threshold family reaches 0.418415/0.214259. These are maxima within the listed finite
+grids, not an exhaustive upper bound over possible algorithms. RMS refusal remains inexpensive,
+and correct line/glitch labels make their parameter terms comparatively easy to collect.
 
 ## Relationship to nearby tasks
 

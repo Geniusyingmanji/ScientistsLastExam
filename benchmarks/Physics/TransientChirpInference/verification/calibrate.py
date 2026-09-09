@@ -168,6 +168,32 @@ def sign_count_policy(sample_count=12, glitch_threshold=0.38, refusal_rms=0.0,
     return infer
 
 
+def morphology_policy(sample_count=15, refusal_rms=0.15, glitch_median=0.15,
+                      count_delta=1, chirp_slope=0.006):
+    """No-fit morphology probe supplied during PR48 review."""
+    def infer(problem, observe):
+        times = [float(value) for value in problem["candidate_times"][:sample_count]]
+        rows = [observe(time, "H1") for time in times]
+        h = np.asarray([row["strain"] for row in rows], dtype=float)
+        evidence = [row["query_id"] for row in rows]
+        if float(np.std(h)) < refusal_rms:
+            return {"abstain": True, "confidence": 1.0, "evidence_query_ids": evidence}
+        if float(np.median(np.abs(h))) < glitch_median:
+            model, slope = "glitch", 0.0
+            event_time = times[int(np.argmax(h))]
+            amplitude = float(np.max(np.abs(h)))
+        else:
+            early = int(np.sum(np.diff(np.signbit(h[:6]))))
+            late = int(np.sum(np.diff(np.signbit(h[6:]))))
+            model = "chirp" if late - early >= count_delta else "line"
+            slope, event_time = (chirp_slope if model == "chirp" else 0.0), 9.0
+            amplitude = float(np.sqrt(2) * np.std(h))
+        return {"abstain": False, "model": model, "frequency_slope": slope,
+                "event_time": event_time, "amplitude": float(np.clip(amplitude, 0, 1)),
+                "confidence": 1.0, "evidence_query_ids": evidence}
+    return infer
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output")
@@ -210,6 +236,18 @@ def main():
         if best is None or metrics["combined_score"] > best[0]:
             best = (metrics["combined_score"], parameters, metrics)
     results["sign_count_shortcut_probe"] = {
+        "strategy_count": count, "best_parameters": list(best[1]), **_summary(best[2])}
+    best = None
+    count = 0
+    for parameters in itertools.product(
+        (12, 15, 19), (0.10, 0.15, 0.22), (0.10, 0.15, 0.22),
+        (1, 2), (0.003, 0.0045, 0.006, 0.02),
+    ):
+        metrics = EVALUATOR.evaluate(morphology_policy(*parameters))
+        count += 1
+        if best is None or metrics["combined_score"] > best[0]:
+            best = (metrics["combined_score"], parameters, metrics)
+    results["morphology_shortcut_probe"] = {
         "strategy_count": count, "best_parameters": list(best[1]), **_summary(best[2])}
     results["selection_protocol"] = "Development-only selection; trusted in-process sweep. Replay selected policies through the sandbox separately."
     payload = json.dumps(results, indent=2, sort_keys=True)
