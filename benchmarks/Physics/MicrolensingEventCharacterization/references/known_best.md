@@ -18,7 +18,7 @@ expected event center, a grid point-lens fit, a periodic alternative and a low-s
 The former six g-band queries contributed evidence IDs only, not fit data or color checks.
 They have been removed. All event families share the same band scaling, so this reduced-order
 oracle does not implement the classic achromatic-lensing versus chromatic-variability test.
-Its current task-local calibration is **0.560636** development and **0.770906** held out; the
+Its current task-local calibration is **0.494434** development and **0.725384** held out; the
 reference is an anchor rather than a ceiling and leaves headroom in model selection and continuous
 parameter recovery. The legal baseline is 0.000000.
 

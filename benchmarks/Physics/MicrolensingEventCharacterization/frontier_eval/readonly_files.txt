@@ -1,2 +1,3 @@
 Task.md
+verification
 frontier_eval/constraints.txt

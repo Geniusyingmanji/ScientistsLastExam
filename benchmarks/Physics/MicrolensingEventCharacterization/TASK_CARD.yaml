@@ -7,7 +7,7 @@ oracle:
   deterministic: true
 normalization:
   baseline: six fixed r-band observations followed by a point-lens claim with fixed parameters
-  reference: broad r-band cadence, targeted anomaly epochs, grid point-lens fit, sinusoidal comparison and calibrated ambiguity refusal; unused g-band evidence queries removed
+  reference: broad r-band cadence, targeted anomaly epochs, grid point-lens fit, sinusoidal comparison and calibrated ambiguity refusal; updated parameter tolerances are 2.5 days and 0.10 amplitude
   score: development mechanism recovery normalized above blanket abstention; model accuracy, false discovery, refusal, budget, feasibility and held-out transfer remain separate
 citations:
 - id: doi:10.1086/164140
@@ -23,7 +23,7 @@ invariants:
 - duplicate queries, overspending, unknown epochs or malformed candidates fail closed
 - every answer cites at least six distinct current-world observations
 - model accuracy, false discovery, refusal, feasibility and held-out transfer are separate axes
-known_shortcuts: A fixed point-lens claim scores zero. Removing unused g observations leaves the 0.560636 development reference score unchanged; disabling reference refusal gives 0.227303. The old 0.118333 figure belongs to a separate weak threshold policy, not an ablation. The recorded 4,116-policy sweep reaches 0.276213 but excludes uncertainty; a six-query uncertainty-threshold refusal shortcut was reproduced at 0.300 development. This is not a universal shortcut bound. Color discrimination, parallax, finite-source limb darkening, blending, binary orbital motion and real cadence/weather systematics are not modeled; certification requires server-held events and independent astrophysical review.
+  known_shortcuts: A fixed point-lens claim scores zero. After tightening parameter tolerances to 2.5 days and 0.10 amplitude, the reference scores 0.494434 development and 0.725384 held out; prior shortcut sweeps must be remeasured under this scoring revision. Color discrimination, parallax, finite-source limb darkening, blending, binary orbital motion and real cadence/weather systematics are not modeled; certification requires server-held events and independent astrophysical review.
 review:
   domain: pending_external_astronomy
   evaluator_security: automated_budget_determinism_refusal_and_malformed_candidate_checks_passed_clean_linux_replay

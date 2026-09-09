@@ -56,7 +56,7 @@ amplitude recovery (0.15), and confidence (0.10). Ambiguous worlds score only fo
 model accuracy, false discovery, refusal, budget, feasibility and held-out transfer are reported
 separately. Held-out worlds and per-world truth are not search-visible.
 
-The task-local reference scores 0.560636 using 18 r-band observations. Adding six unused
+The task-local reference scores 0.494434 using 18 r-band observations. Adding six unused
 g-band queries leaves scientific metrics unchanged; disabling the reference's refusal lowers
 the development score to 0.227303. A 4,116-strategy range/roughness/peak-threshold sweep reaches
 0.276213, but an uncertainty-threshold refusal policy reaches 0.300000, so the former is not
