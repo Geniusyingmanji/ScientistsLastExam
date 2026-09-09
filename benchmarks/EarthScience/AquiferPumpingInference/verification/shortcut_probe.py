@@ -1,60 +1,103 @@
-"""Low-dimensional summary-statistic shortcut sweep."""
+"""Fit the confined family, then sweep only low-dimensional residual thresholds."""
 from __future__ import annotations
 
+import importlib.util
 import itertools
 import json
+from pathlib import Path
 
 import numpy as np
 
 import evaluator
 
 
-def _candidate(leak_cut, boundary_cut, curvature_cut, radius_count):
+_SPEC = importlib.util.spec_from_file_location(
+    "aquifer_reference_for_shortcut", Path(__file__).with_name("reference_solver.py")
+)
+_REFERENCE = importlib.util.module_from_spec(_SPEC)
+assert _SPEC.loader is not None
+_SPEC.loader.exec_module(_REFERENCE)
+_FIT_CACHE = {}
+
+
+def _candidate(chi2_cut, radial_cut, temporal_cut):
     def solve(problem, measure):
         rows = []
-        radii = problem["observation_radii_m"][:radius_count]
-        times = problem["observation_times_s"][1:5]
-        for radius in radii:
-            for time in times:
+        for radius_index in (0, -1):
+            radius = problem["observation_radii_m"][radius_index]
+            for time in problem["observation_times_s"][1:7]:
                 rows.append(measure(radius, time))
-        by_radius = {r: [x["drawdown_m"] for x in rows if x["radius_m"] == r] for r in radii}
-        early_ratio = by_radius[radii[-1]][0] / max(by_radius[radii[0]][0], 1e-9)
-        late_growth = by_radius[radii[0]][-1] / max(by_radius[radii[0]][-2], 1e-9)
-        middle = np.asarray(by_radius[radii[len(radii) // 2]], dtype=float)
-        curvature = abs(float(middle[-1] - 2 * middle[-2] + middle[-3])) / max(float(middle[-1]), 1e-9)
-        if early_ratio < leak_cut:
-            diagnosis = "leaky_aquifer"
-        elif late_growth < boundary_cut:
-            diagnosis = "recharge_boundary"
-        elif curvature > curvature_cut:
-            diagnosis = "dual_porosity"
-        else:
+
+        r = np.asarray([row["radius_m"] for row in rows], dtype=float)
+        t = np.asarray([row["time_s"] for row in rows], dtype=float)
+        y = np.asarray([row["drawdown_m"] for row in rows], dtype=float)
+        sigma = np.asarray([row["drawdown_standard_error_m"] for row in rows], dtype=float)
+        cache_key = tuple(np.round(y, 12))
+        if cache_key not in _FIT_CACHE:
+            rss, theta = _REFERENCE._fit(
+                "confined", r, t, y, sigma, float(problem["pumping_rate_m3_s"]),
+                problem["parameter_bounds"],
+            )
+            fitted = _REFERENCE._predict(
+                "confined", theta, r, t, float(problem["pumping_rate_m3_s"])
+            )
+            residual = (y - fitted) / sigma
+            residual_by_radius = residual.reshape(2, 6)
+            radial_contrast = float(np.mean(residual_by_radius[1] - residual_by_radius[0]))
+            temporal_contrast = float(
+                np.mean(residual_by_radius[:, -2:])
+                - np.mean(residual_by_radius[:, :2])
+            )
+            _FIT_CACHE[cache_key] = (rss / len(rows), radial_contrast, temporal_contrast, theta)
+        chi2_per_observation, radial_contrast, temporal_contrast, theta = _FIT_CACHE[cache_key]
+
+        if chi2_per_observation <= chi2_cut:
             diagnosis = "confined"
+        elif radial_contrast < radial_cut:
+            diagnosis = "leaky_aquifer"
+        elif temporal_contrast < temporal_cut:
+            diagnosis = "recharge_boundary"
+        else:
+            diagnosis = "dual_porosity"
+
+        transmissivity, storativity = np.exp(theta[:2])
+        predictions = [
+            _REFERENCE._theis(
+                transmissivity,
+                storativity,
+                float(context["radius_m"]),
+                float(context["time_s"]),
+                float(problem["pumping_rate_m3_s"]),
+            )
+            for context in problem["prediction_contexts"]
+        ]
         return {
             "diagnosis": diagnosis,
-            "transmissivity_m2_s": 0.002,
-            "storativity": 0.001,
-            "predicted_drawdown_m": [0.0 for _ in problem["prediction_contexts"]],
-            "confidence": 0.55,
+            "transmissivity_m2_s": float(transmissivity),
+            "storativity": float(storativity),
+            "predicted_drawdown_m": [float(value) for value in predictions],
+            "confidence": 0.65,
             "abstain": diagnosis != "confined",
             "evidence_measurement_ids": [row["measurement_id"] for row in rows],
         }
+
     return solve
 
 
-def main():
+def run_sweep():
     best = None
     count = 0
-    for values in itertools.product((0.01, 0.03, 0.08, 0.16),
-                                    (1.25, 1.6, 2.1, 3.0),
-                                    (0.02, 0.06, 0.14, 0.30),
-                                    (3, 4, 5)):
+    for values in itertools.product(
+        (2.0, 4.0, 8.0, 16.0),
+        (-3.0, -1.5, -0.5, 0.0),
+        (-4.0, -2.0, -1.0, -0.5, -0.2, 0.0, 0.2, 0.5),
+    ):
         count += 1
         result = evaluator.evaluate(_candidate(*values))
         if best is None or result["combined_score"] > best["combined_score"]:
             best = {"settings": values, **result}
-    print(json.dumps({"strategies": count, "best": best}, indent=2))
+    return {"strategies": count, "best": best}
 
 
 if __name__ == "__main__":
-    main()
+    print(json.dumps(run_sweep(), indent=2, sort_keys=True))

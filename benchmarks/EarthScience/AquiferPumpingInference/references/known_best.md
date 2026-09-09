@@ -2,73 +2,105 @@
 
 ## Scoring
 
-`combined_score` is clipped to `[0,1]`; a valid blanket `undetermined` answer is exactly zero.
-Family accuracy is the fraction of all worlds with a correct confined claim or correct named
-refusal and is reported separately with counts. The reference is a task-local evaluation witness,
-not a claim of field-site optimality.
+`combined_score` is clipped to `[0,1]`. For each split it is the mean continuous quality on the
+five supported confined worlds multiplied by the exact named-refusal rate on the three unsupported
+worlds. Thus blanket `undetermined`, never refusing, and any fixed unsupported label are exactly
+zero. Mechanism accuracy, false discovery, correct refusal, supported coverage, parameter recovery,
+prediction, and their explicit counts remain separate.
 
 ## Scientific target
 
-Design a multi-radius pumping test, recover confined-aquifer transmissivity and storativity,
-predict sealed drawdown, and distinguish leakage, a recharge boundary, and delayed dual-porosity
-storage from the supported Theis family.
+Design a pumping test under priced radius setup, recover confined-aquifer transmissivity and
+storativity, predict sealed drawdown, and distinguish three public reduced-order alternatives:
+leakage attenuation, a recharge image well, and delayed dual-porosity storage. The cited literature
+motivates those alternatives; `Task.md` publishes the benchmark formulas and does not claim they
+are the complete Hantush-Jacob or Moench solutions.
 
 ## Baseline
 
-The shipped baseline makes one early observation and returns `undetermined` with in-bounds
-parameters. It is valid and scores `0.000000` on development and held-out worlds, with zero
-attempted-discovery rate.
+The shipped baseline opens one radius, records one early observation, and returns `undetermined`
+with in-bounds parameters. It is valid and scores `0.000000` on development and held-out worlds,
+with zero attempted-discovery rate.
 
 ## Reference
 
-The truth-blind reference spends all 24 units across four radii and six logarithmic times. It fits
-the confined and three alternative reduced-order families with deterministic bounded multi-start
-least squares and applies an information-criterion margin. On clean Linux secure evaluation it
-scores `0.985962` development and `0.983490` held out. Mechanism accuracy, supported coverage, and
-correct refusal are all `1.0`; false discovery is zero. Parameter recovery is `0.993042/0.986158`
-and sealed prediction is `0.974560/0.966455`. Two complete replays are identical.
+The truth-blind reference spends all 24 units: two endpoint radii cost twelve setup units and six
+times at each radius cost twelve measurement units. It independently fits the confined and three
+published reduced-order benchmark formulas with deterministic bounded multi-start least squares,
+then uses BIC and a margin rule for attribution. It only consumes the public problem and charged
+measurement callback and the reduced-order formulas published in `Task.md`.
 
-## Ablations and shortcuts
+On the final builder-replayed Linux revision it scores `0.622081` development and `0.793352` held
+out. Mechanism accuracy is `0.875/1.000`, supported coverage is `0.800/1.000`, correct refusal is
+`1.000/1.000`, and false discovery is zero. Parameter recovery is `0.674984/0.819008`; sealed
+prediction is `0.455605/0.671059`. Two complete in-process replays are identical.
+
+The reference is deliberately below the ceiling. Its noisy two-radius design leaves one supported
+development world unresolved, and it uses unweighted least squares, a small fixed start set, and
+point predictions rather than uncertainty-aware design or inference. Better radius/time allocation,
+noise-aware weighting, and posterior model comparison can improve both supported recovery and
+refusal without reading evaluator state.
+
+## Ablations and shortcut probe
 
 | strategy | development | held out | mechanism | correct refusal |
 |---|---:|---:|---:|---:|
-| full multi-radius reference | 0.985962 | 0.983490 | 1.000/1.000 | 1.000/1.000 |
-| one radius, repeated observations | 0.852296 | 0.839991 | 0.875/0.875 | 0.667/0.667 |
-| fixed storativity | 0.699741 | 0.722078 | 1.000/1.000 | 1.000/1.000 |
-| never refuse | 0.612462 | 0.609990 | 0.625/0.625 | 0.000/0.000 |
+| full two-radius reference | 0.622081 | 0.793352 | 0.875/1.000 | 1.000/1.000 |
+| one radius, half budget | 0.000000 | 0.192774 | 0.625/0.750 | 0.000/0.333 |
+| fixed storativity | 0.351835 | 0.431246 | 0.875/1.000 | 1.000/1.000 |
+| never refuse | 0.000000 | 0.000000 | 0.625/0.625 | 0.000/0.000 |
 
-A reproducible 192-strategy sweep in `verification/shortcut_probe.py` uses early cross-radius
-attenuation, late-time growth, and curvature thresholds but no nonlinear aquifer fit. Its best
-development-selected strategy scores `0.361500` on both splits, obtains only `0.375` mechanism
-accuracy, and has false-discovery rate `0.625`. Spatial diversity, parameter inference, and model
-checking therefore each change measured capability.
+The one-radius strategy consumes 12 units, exactly half the full design's budget, and loses more
+than 0.42 development and 0.60 held-out score. The task test pins a gap greater than 0.10 on both
+splits.
+
+The reproducible 128-strategy probe in `verification/shortcut_probe.py` first performs an honest
+confined nonlinear fit and prediction. It then sweeps only three residual thresholds: chi-square
+per observation, cross-radius residual contrast, and early-to-late residual contrast. The best
+development-selected settings `(2.0, -3.0, -4.0)` score `0.481859/0.525816`, with mechanism
+accuracy `0.875/0.875`, false-discovery rate `0.125/0.125`, and correct refusal `0.667/0.667`.
+This measures the strongest tested low-dimensional diagnostic shortcut rather than handicapping it
+with fixed parameters or zero predictions.
 
 ## Model calibration
 
-The model proposals were generated against frozen evaluator/public contract revision `5603d13c6`
-and replayed with identical full metrics on clean executable revision `d70ab470e`; the intervening
-change affected only the reference ablation helper and its test. One selection-blind first proposal
-per model used seed 845, temperature 0.7, `greedy_rewrite`, and explicit
-`chat_thinking: disabled`. Both exact model
-IDs first returned `AQ_SMOKE_OK` in 32-token smoke tests. DeepSeek v4 Flash required a 16000-token
-replay after its 8000-token output was truncated into a candidate runtime failure. The completed
-Flash proposal is valid and scores `0.124000/0.000000`, with mechanism accuracy `0.125/0.000` and
-false discovery `0.875/1.000`.
+The retained DeepSeek v4 Flash and Pro record in
+`experiments/aquifer_pumping_deepseek_calibration_2026-09-08.json` was generated before the current
+identifier, world-order, pricing, noise, and headline-score revision. It remains historical protocol
+evidence, including thinking-disabled smoke tests and valid-candidate counts, but its scores are not
+current task performance and are not compared with the revised reference. A current-revision draw
+must be added before this evidence can again be marked current.
 
-DeepSeek v4 Pro's first proposal is valid and scores `0.726552/0.726790`. It recovers parameters at
-`0.992193/0.993442` and predicts at `0.965315/0.963268`, but identifies only one of three
-unsupported mechanisms on each split: correct refusal is `0.333333`, false discovery is `0.25`,
-and mechanism accuracy is `0.75`. Thus it demonstrates a strong Theis fit while retaining clear
-headroom in conceptual-model diagnosis. The credential-free compact record is
-`experiments/aquifer_pumping_deepseek_calibration_2026-09-08.json`; generated code, prompts,
-endpoints, credentials, and logs are excluded.
+## Construction findings
 
-## Limitations and provenance
+Three review rounds produced concrete changes:
 
-The oracle is a deterministic radial reduced-order laboratory, not a full groundwater simulator.
-It omits partial penetration, pumping-well storage and skin, heterogeneity, anisotropy, nonlinear
-unconfined flow, irregular boundaries, correlated instrument drift, and recovery after shutoff.
-The confined equation follows Theis (1935), DOI `10.1029/TR016i002p00519`; leakage is motivated by
-Hantush and Jacob (1955), DOI `10.1029/TR036i001p00095`; boundary image methods follow Ferris et al.
-(1962), DOI `10.3133/wsp1536E`; and dual-porosity behavior is motivated by Moench (1984), DOI
-`10.1029/WR020i007p00831`.
+- The initial builder checks removed an over-conservative reference abstention and replaced a
+  two-radius ablation with a genuinely one-radius comparison, but did not expose the larger budget
+  and security failures below.
+- The first model calibration found a valid strong confined fit and a high-false-discovery result,
+  but did not trigger changes to hidden worlds or scoring. That evidence is now historical because
+  the public contract changed.
+- An independent maintainer red team found that `measurement_id` encoded the world seed, the
+  observation budget was nearly inert, the shortcut probe omitted a normal fit, extreme policies
+  scored above zero, invalid and successful metrics had different key sets, and the alternative
+  formulas were not public. IDs are now BLAKE2s coordinate/repeat digests independent of world,
+  split worlds are deterministically shuffled, radius setup is charged, the noise and score scale
+  are recalibrated, the shortcut begins with a confined fit, the headline requires named refusal,
+  both metric paths expose the same 40 keys, and all reduced-order formulas appear in `Task.md`.
+
+## Robustness and limitations
+
+- Twelve malformed output mutations, overspending, an empty mapping, an ID-only policy, blanket
+  abstention, and never refusing all fail closed or score exactly zero as applicable.
+- Measurement noise depends on world, coordinate, and repeat index rather than query order. IDs do
+  not depend on world seed or world order, and candidate session state is reset between worlds.
+- Two evaluations of the reference are key-identical; invalid and successful evaluations return
+  the same 40 top-level metric keys.
+- The oracle is a deterministic radial reduced-order laboratory, not a full groundwater simulator.
+  It omits partial penetration, pumping-well storage and skin, heterogeneity, anisotropy, nonlinear
+  unconfined flow, irregular boundaries, correlated instrument drift, and recovery after shutoff.
+
+The confined equation follows Theis (1935), DOI `10.1029/TR016i002p00519`. The alternatives are
+motivated by Hantush and Jacob (1955), DOI `10.1029/TR036i001p00095`; Ferris et al. (1962), DOI
+`10.3133/wsp1536E`; and Moench (1984), DOI `10.1029/WR020i007p00831`.

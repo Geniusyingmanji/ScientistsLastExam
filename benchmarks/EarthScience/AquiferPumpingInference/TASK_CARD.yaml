@@ -2,13 +2,19 @@ schema_version: 2
 scientific_question: Can an agent design a multi-radius pumping test, recover confined-aquifer transmissivity and storativity, and refuse leakage, recharge-boundary, or delayed dual-porosity mechanisms?
 artifact: Two confined-aquifer parameters, sealed drawdown predictions, a conceptual-model diagnosis, confidence, and immutable measurement evidence.
 oracle:
-  model: deterministic seeded Theis radial-flow laboratory with leaky-aquifer attenuation, constant-head image-well boundaries, and delayed dual-porosity alternatives
-  feasibility: listed radius/time queries, a 24-unit budget, exact finite bounded outputs, consistent diagnosis and abstention, and current-world evidence identifiers
+  model: deterministic seeded Theis radial-flow laboratory with three publicly specified reduced-order alternatives motivated by leaky-aquifer attenuation, constant-head image-well boundaries, and delayed dual-porosity storage
+  feasibility: listed radius/time queries, six setup units for each distinct radius plus one unit per observation within a 24-unit budget, exact finite bounded outputs, consistent diagnosis and abstention, and current-world evidence identifiers
   deterministic: true
 normalization:
   baseline: one early observation followed by a valid undetermined abstention
   reference: truth-blind cross-radius nonlinear fits of the confined and three alternative families with information-criterion attribution
-  score: clipped development mean of parameter recovery, sealed prediction, diagnosis and confidence; family accuracy, false discovery, refusal, coverage, attempts and held-out transfer remain separate with counts
+  score: mean supported-world continuous quality multiplied by the exact named-refusal rate on unsupported worlds; family accuracy, false discovery, refusal, coverage, attempts and held-out transfer remain separate with counts
+evaluation_budget:
+  total_units_per_world: 24
+  distinct_radius_setup_units: 6
+  measurement_units: 1
+  reference_design: two endpoint radii with six times at each radius, consuming all 24 units
+  expected_wall_time_seconds: 10
 citations:
 - id: doi:10.1029/TR016i002p00519
   title: The relation between the lowering of the piezometric surface and the rate and duration of discharge of a well using ground-water storage
@@ -23,22 +29,26 @@ invariants:
 - confined drawdown decreases with radius and is invariant under equal values of radius squared divided by time
 - leakage, a recharge image well, and delayed dual-porosity storage alter different cross-radius or temporal features
 - every observation has a listed radius and time, finite nonnegative drawdown, stated uncertainty, and an immutable current-world ID
+- measurement IDs are deterministic coordinate/repeat digests independent of world seed and world order, and worlds are deterministically shuffled within each split
+- every world starts a fresh candidate session, and observation noise is seeded by world, coordinate, and repeat rather than query order
 - blanket undetermined abstention is valid and scores exactly zero
+- never refusing and any fixed unsupported label score exactly zero
 - malformed, non-finite, extra-key, fabricated-evidence, unlisted-coordinate, and over-budget candidates fail closed
+- valid and invalid evaluation paths return the same 40 top-level metric keys
 - development and held-out worlds use different parameters and deterministic noise seeds
 - the reference consumes only public problems and charged measurement callbacks
-known_shortcuts: A reproducible 192-strategy sweep using early cross-radius attenuation, late-time growth, and curvature thresholds scores 0.3615/0.3615 development/held out with 0.375 mechanism accuracy and 0.625 false discovery, below the truth-blind multi-model reference at 0.9860/0.9835. One-radius repeated sampling reaches 0.8523/0.8400, fixed storativity 0.6997/0.7221, and never refusing 0.6125/0.6100. The reduced-order laboratory omits partial penetration, well storage/skin, heterogeneity, anisotropy, unconfined flow, irregular boundaries and correlated drift.
+known_shortcuts: A reproducible 128-strategy probe first performs a normal confined nonlinear fit and then sweeps only chi-square, radial-residual, and temporal-residual thresholds. Its best development-selected strategy scores 0.481859/0.525816 development/held out with 0.875 mechanism accuracy, 0.125 false discovery, and 0.667 correct refusal on both splits, below the truth-blind multi-family reference at 0.622081/0.793352. A one-radius half-budget ablation scores 0.000000/0.192774, fixed storativity scores 0.351835/0.431246, and never refusing scores zero. The reduced-order laboratory omits partial penetration, well storage/skin, heterogeneity, anisotropy, unconfined flow, irregular boundaries and correlated drift.
 review:
-  domain: pending_external_hydrogeology_review
-  evaluator_security: automated_budget_contract_determinism_theis_invariant_bad_candidate_ablation_and_mechanism_accounting_tests
+  domain: independent_maintainer_red_team_completed_pending_external_hydrogeology_review
+  evaluator_security: automated_budget_contract_determinism_theis_invariant_bad_candidate_ablation_metric_shape_identifier_leakage_degenerate_policy_and_mechanism_accounting_tests
 provenance:
   class: procedural
   target_source: Repository-visible deterministic multi-radius pumping-test generator with development and held-out supported and misspecified worlds.
   task_contract_public_before_evaluation: true
-  fresh_confirmation_status: linux_secure_eval_completed_at_frozen_revision
+  fresh_confirmation_status: current_budget_and_scoring_revision_builder_replayed_on_linux_pending_independent_recomputation
 novelty_risk:
   level: medium
-  rationale: No repository or Frontier-Eng task performs pumping-test interpretation. GravityInversion reconstructs static density bodies; EnergyBalanceModel fits global climate response; DistributionNetworkTopology reconstructs pipe graphs. None uses radial groundwater diffusion, pumping interventions, or aquifer conceptual-model attribution.
+  rationale: No repository or Frontier-Eng task performs pumping-test interpretation. GravityInversion reconstructs static density bodies; EnergyBalanceModel fits global climate response; RadiativeTransferFit shares active inversion with refusal but retrieves atmospheric profiles; the open GroundwaterRemediationDesign proposal optimizes intervention rather than inferring a transient aquifer model; DistributionNetworkTopology reconstructs pipe graphs. None uses radial groundwater diffusion, pumping-test radius setup costs, or aquifer conceptual-model attribution.
 lineage:
   status: complete
   builder_model_ids:
@@ -51,9 +61,9 @@ lineage:
   - deepseek-v4-pro
   calibration_runs:
   - experiments/aquifer_pumping_deepseek_calibration_2026-09-08.json
-  calibration_evidence_status: current_or_migration_replayed
-  edits_triggered_by_model: No evaluator or public-contract change followed calibration. Pro recovered supported parameters and predictions but identified only one of three unsupported mechanisms; Flash required a larger output cap and then produced a valid but high-false-discovery candidate. These failures were retained rather than used to tune hidden worlds.
-  shortcut_discoverer: builder_self_audit_with_192_strategy_summary_statistic_sweep
+  calibration_evidence_status: historical_only
+  edits_triggered_by_model: The retained DeepSeek Flash and Pro draws predate the revised pricing, noise, identifier, world order, and headline score and are historical protocol evidence only. They did not trigger hidden-world tuning. The independent maintainer red team, not model performance, triggered the current security and calibration revision; current-revision draws are pending.
+  shortcut_discoverer: independent_maintainer_red_team_then_builder_reproduced_128_strategy_confined_fit_and_residual_threshold_sweep
   frozen_before_eval: false
   freeze_timestamp: null
 long_horizon:
@@ -62,10 +72,10 @@ long_horizon:
   material_headroom_after_2h: false
   evidence: []
 construction_audit:
-  status: builder_audited_pending_external
+  status: builder_and_independent_maintainer_red_team_completed_pending_domain_review
   author_domain: hydrogeology
-  reviewer_domain: pending_external
+  reviewer_domain: independent_maintainer_engineering_review_completed_external_hydrogeology_review_pending
   expert_hours: null
-  red_team_rounds: 2
-  oracle_disagreement_status: not_quantified
-  independent_recomputation_status: baseline, truth-blind reference, malformed-candidate checks, Theis invariants, ablations, and shortcut sweep are executable from the task package
+  red_team_rounds: 3
+  oracle_disagreement_status: reduced_order_alternative_formulas_are_public_and_explicitly_not_claimed_as_the_full_cited_solutions
+  independent_recomputation_status: the maintainer independently reproduced and attacked revision 99c081c; the revised baseline, truth-blind reference, malformed-candidate checks, Theis invariants, ablations, identifier probe, degenerate policies, and shortcut sweep are executable and builder-replayed on Linux pending independent rerun

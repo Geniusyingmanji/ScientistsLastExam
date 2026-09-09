@@ -56,10 +56,12 @@ def _fit(kind, r, t, y, sigma, q, bounds):
     return best
 
 
-def _infer(problem, measure, radius_count=4, repeats=1, allow_refusal=True, fixed_storage=None):
+def _infer(problem, measure, radius_indices=(0, -1), repeats=1, allow_refusal=True,
+           fixed_storage=None):
     rows = []
-    # Cross-scale sampling is essential: use four radii over six logarithmic times.
-    for radius in problem["observation_radii_m"][:radius_count]:
+    # The two endpoint setups and twelve measurements consume all 24 priced units.
+    for radius_index in radius_indices:
+        radius = problem["observation_radii_m"][radius_index]
         for time in problem["observation_times_s"][1:7]:
             for _ in range(repeats):
                 rows.append(measure(radius, time))

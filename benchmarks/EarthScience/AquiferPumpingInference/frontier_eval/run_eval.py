@@ -10,13 +10,14 @@ from pathlib import Path
 
 TASK_ID = "Hydrology/AquiferPumpingInference"
 ROOT = Path(__file__).resolve().parents[4]
+EVAL_TIMEOUT_S = 300
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--candidate", required=True)
     parser.add_argument("--metrics-out", required=True)
-    parser.add_argument("--timeout", type=float, default=300.0)
+    parser.add_argument("--timeout", type=float, default=EVAL_TIMEOUT_S)
     args = parser.parse_args()
     metrics = {"combined_score": -1e18, "valid": 0.0}
     try:

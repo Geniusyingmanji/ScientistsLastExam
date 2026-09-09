@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
   "evidence_scope": "MODEL_CALIBRATION_NOT_POPULATION_PERFORMANCE",
+  "evidence_status": "historical_only_after_identifier_pricing_noise_and_scoring_revision",
   "task": "Hydrology/AquiferPumpingInference",
   "task_source_revision": "d70ab470e",
   "generation_source_revision": "5603d13c6",
@@ -67,6 +68,6 @@
   "excluded_protocol_runs": {
     "deepseek-v4-flash-8000": "output reached the 8000-token cap and the truncated candidate raised a runtime error; not performance evidence"
   },
-  "admission_result": "pass: both completed first proposals are valid and remain below the truth-blind reference on development and held-out splits",
-  "notes": "Candidates were replayed twice with identical full metrics on the clean executable task revision. The local chat compatibility adapter is excluded. No prompt, generated source, endpoint, credential, API key, request log, or run directory is committed."
+  "admission_result": "historical only: both completed first proposals were valid and below the truth-blind reference on their recorded revision; the result does not establish admission against the revised task",
+  "notes": "Candidates were replayed twice with identical full metrics on their recorded clean executable revision. The task later changed identifier security, world order, pricing, noise and scoring, so these values are not current performance. The local chat compatibility adapter is excluded. No prompt, generated source, endpoint, credential, API key, request log, or run directory is committed."
 }

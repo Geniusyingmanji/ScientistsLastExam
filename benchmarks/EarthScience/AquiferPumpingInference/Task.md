@@ -9,8 +9,9 @@ sealed radius/time contexts. Refuse and name the failure when the record resolve
 an aquitard, a constant-head recharge boundary, or delayed dual-porosity storage.
 
 The difficulty is experimental as well as numerical. Early and late observations constrain
-different parameter combinations, while multiple radii are needed to distinguish spatial leakage
-or an image-well boundary from a change in transmissivity.
+different parameter combinations, while opening a new observation radius is expensive and radial
+diversity is needed to distinguish spatial leakage or an image-well boundary from a change in
+transmissivity.
 
 ## Candidate interface
 
@@ -21,9 +22,11 @@ def infer_aquifer(problem, measure):
     ...
 ```
 
-`measure(radius_m, time_s)` costs one unit. Both arguments must be values supplied by `problem`.
-Repeated measurements are permitted and have independent deterministic noise. Catching an
-exception does not undo an invalid coordinate or budget violation. The callback returns exactly:
+Both arguments to `measure(radius_m, time_s)` must be values supplied by `problem`. The first
+observation at a distinct radius costs seven units: six setup units plus one measurement unit.
+Each later observation at that radius costs one unit. Repeated measurements are permitted and
+have independent deterministic noise. Catching an exception does not undo an invalid coordinate
+or budget violation. The callback returns exactly:
 
 - `measurement_id`: immutable current-world evidence identifier;
 - `radius_m`, `time_s`: the requested coordinates;
@@ -42,6 +45,19 @@ s(r,t) = Q E1(u) / (4 pi T),
 ```
 
 where `E1` is the exponential integral. The same `T` and `S` govern every radius and time.
+
+The three unsupported families are explicit reduced-order alternatives. Writing `s_T(r,t)` for
+the confined Theis expression above, the evaluator uses
+
+```text
+leaky aquifer:      s(r,t) = s_T(r,t) exp(-r/L)
+recharge boundary: s(r,t) = max(0, s_T(r,t) - s_T(sqrt(r**2 + (2d)**2), t))
+dual porosity:      s(r,t) = w s_T(r,t; T,S) + (1-w) s_T(r,t/tau; T,rho S)
+```
+
+Here `L` is a leakage length, `d` a recharge-boundary distance, `rho` a storage ratio, `tau` a
+delay factor, and `w` the fast-domain weight. These formulas define this benchmark's reduced-order
+laboratory; they are motivated by, but are not the full Hantush-Jacob or Moench field solutions.
 
 Every candidate-visible `problem` key is listed here:
 
@@ -74,21 +90,22 @@ requires at least one. Do not assume hidden seeds, fixed parameters, world order
 
 ## Scoring
 
-Supported worlds receive continuous parameter-recovery and sealed-prediction scores plus a correct
-confined-family diagnosis. Unsupported worlds receive science credit only for the correct named
-refusal. The clipped development `combined_score` is zero for the valid blanket-undetermined
-baseline. Confidence calibration changes the score only slightly.
+For supported worlds, continuous quality combines parameter recovery, sealed prediction, and a
+correct confined-family diagnosis. The split `combined_score` is the mean supported-world quality
+multiplied by the exact named-refusal rate over unsupported worlds. Therefore blanket abstention,
+never refusing, and a fixed unsupported label all score exactly zero. Confidence calibration
+changes supported-world quality only slightly.
 
 Mechanism accuracy, false-discovery rate, correct-refusal rate, supported discovery coverage,
 attempted discovery, parameter recovery, prediction, validity, and held-out transfer are reported
 separately. Each rate publishes its numerator and denominator. Mechanism accuracy uses all worlds;
 an invalid submission, wrong family, or undetermined answer is incorrect.
 
-The truth-blind reference, ablations, and a 192-strategy shortcut probe are quantified in
+The truth-blind reference, ablations, and a 128-strategy shortcut probe are quantified in
 `references/known_best.md` and pin the capability ladder without exposing evaluator worlds.
-It scores `0.985962/0.983490` development/held out. One-radius repeated sampling scores
-`0.852296/0.839991`; fixed storativity scores `0.699741/0.722078`; never refusing scores
-`0.612462/0.609990`; and the summary-statistic shortcut sweep reaches only `0.361500/0.361500`.
+It scores `0.622081/0.793352` development/held out. A one-radius half-budget version scores
+`0.000000/0.192774`; fixed storativity scores `0.351835/0.431246`; never refusing scores zero;
+and a confined fit followed by three residual thresholds reaches `0.481859/0.525816`.
 
 ## Relationship to nearby tasks
 
@@ -96,6 +113,10 @@ It scores `0.985962/0.983490` development/held out. One-radius repeated sampling
 gravity stations; it has no pumping intervention, transient diffusion equation, hydraulic
 parameters, or aquifer-boundary diagnosis. `ClimateScience/EnergyBalanceModel` infers a global
 two-layer climate response from chosen forcing experiments, not radial groundwater flow.
+`AtmosphericScience/RadiativeTransferFit` also performs active parameter inversion with refusal,
+but selects thermal channels to retrieve atmospheric profiles rather than pumping-test radii and
+porous-medium transport parameters. `EarthScience/GroundwaterRemediationDesign` (open proposal)
+optimizes a remediation design rather than inferring an aquifer model from transient observations.
 `WaterDistribution/DistributionNetworkTopology` (if merged) reconstructs a pressurized pipe graph;
 it does not estimate porous-medium storage or reject aquifer conceptual models. No Frontier-Eng
 task uses pumping-test interpretation or Theis-model inadequacy.
@@ -106,8 +127,8 @@ Only edit `solution.py`. Use deterministic CPU-only Python, NumPy, SciPy, and th
 Do not read `verification/` or `frontier_eval/`, use the network, or create processes.
 `sle.contract_lint` may be imported for free shape checks.
 
-The supported equation follows Theis (1935), DOI `10.1029/TR016i002p00519`. Leaky-aquifer and
-boundary diagnostics are grounded in Hantush and Jacob (1955), DOI `10.1029/TR036i001p00095`, and
-Ferris et al. (1962), USGS Water-Supply Paper 1536-E, DOI `10.3133/wsp1536E`. The oracle is an
-explicit reduced-order benchmark, not a field-site interpretation prescription.
-Delayed dual-porosity behavior is motivated by Moench (1984), DOI `10.1029/WR020i007p00831`.
+The supported equation follows Theis (1935), DOI `10.1029/TR016i002p00519`. The reduced-order
+leakage, boundary, and dual-porosity alternatives are motivated respectively by Hantush and Jacob
+(1955), DOI `10.1029/TR036i001p00095`; Ferris et al. (1962), USGS Water-Supply Paper 1536-E,
+DOI `10.3133/wsp1536E`; and Moench (1984), DOI `10.1029/WR020i007p00831`. They are benchmark
+surrogates, not claims to reproduce those papers' complete solutions or field prescriptions.

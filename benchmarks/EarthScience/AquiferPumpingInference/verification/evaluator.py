@@ -1,6 +1,7 @@
 """Deterministic active pumping-test oracle."""
 from __future__ import annotations
 
+import hashlib
 import math
 import random
 from typing import Any
@@ -16,7 +17,9 @@ PREDICTION_CONTEXTS = (
 )
 Q_M3_S = 0.018
 BUDGET = 24
-MIN_EVIDENCE = 12
+RADIUS_SETUP_COST = 6
+MEASUREMENT_COST = 1
+MIN_EVIDENCE = 6
 DIAGNOSES = ("confined", "leaky_aquifer", "recharge_boundary", "dual_porosity", "undetermined")
 PARAMETER_BOUNDS = {
     "transmissivity_m2_s": (2.0e-4, 2.0e-2),
@@ -68,9 +71,12 @@ def _worlds(split):
             ("dual_porosity", 0.0038, 0.0008, {"storage_ratio": 12.0, "delay": 7.0, "fast_weight": 0.55}),
         )
         seed0 = 71900
-    return [{"kind": k, "T": t, "S": s, "seed": seed0 + i, "query_ids": [],
-             "spent": 0, "violated": False, **extra}
-            for i, (k, t, s, extra) in enumerate(params)]
+    worlds = [{"kind": k, "T": t, "S": s, "seed": seed0 + i, "query_ids": [],
+               "spent": 0, "violated": False, "used_radii": set(),
+               "coordinate_repeats": {}, **extra}
+              for i, (k, t, s, extra) in enumerate(params)]
+    random.Random(seed0 + 8071).shuffle(worlds)
+    return worlds
 
 
 def public_problem():
@@ -85,7 +91,11 @@ def public_problem():
         "prediction_contexts": [{"radius_m": r, "time_s": t} for r, t in PREDICTION_CONTEXTS],
         "diagnosis_values": list(DIAGNOSES),
         "supported_model": "Theis confined-aquifer radial-flow model",
-        "measurement_model": "one unit per drawdown observation; independent deterministic Gaussian noise",
+        "measurement_model": (
+            "the first observation at each distinct radius costs seven units: six radius-setup "
+            "units plus one measurement unit; later observations at that radius cost one unit; "
+            "Gaussian noise is deterministic by coordinate and repeat index"
+        ),
         "abstain_when": "use a named refusal for a resolved unsupported family, otherwise undetermined",
     }
 
@@ -100,19 +110,30 @@ def _measure(world, radius, time):
     if radius not in RADII_M or time not in TIMES_S:
         world["violated"] = True
         raise ValueError("measurement coordinate is not listed")
-    if world["spent"] >= BUDGET:
+    radius_index = RADII_M.index(radius)
+    time_index = TIMES_S.index(time)
+    setup_cost = 0 if radius in world["used_radii"] else RADIUS_SETUP_COST
+    cost = setup_cost + MEASUREMENT_COST
+    if world["spent"] + cost > BUDGET:
         world["violated"] = True
         raise RuntimeError("measurement budget exceeded")
-    call = world["spent"]
-    world["spent"] += 1
-    sigma = 0.012 + 0.000015 * radius
-    rng = random.Random(world["seed"] * 1009 + call * 9176 + RADII_M.index(radius) * 101 + TIMES_S.index(time))
+    coordinate = (radius_index, time_index)
+    repeat_index = world["coordinate_repeats"].get(coordinate, 0)
+    world["coordinate_repeats"][coordinate] = repeat_index + 1
+    world["used_radii"].add(radius)
+    world["spent"] += cost
+    sigma = 0.028 + 0.000035 * radius
+    rng = random.Random(
+        world["seed"] * 1009 + radius_index * 10007 + time_index * 1000003
+        + repeat_index * 100000007
+    )
     value = max(0.0, float(_curve(world, radius, time)) + rng.gauss(0.0, sigma))
-    qid = "aq-%d-%02d" % (world["seed"], call)
+    identity = "aquifer-v2:%d:%d:%d" % (radius_index, time_index, repeat_index)
+    qid = hashlib.blake2s(identity.encode("ascii"), digest_size=12).hexdigest()
     world["query_ids"].append(qid)
     return {"measurement_id": qid, "radius_m": radius, "time_s": time,
             "drawdown_m": value, "drawdown_standard_error_m": sigma,
-            "cost_units": 1, "spent_units": world["spent"]}
+            "cost_units": cost, "spent_units": world["spent"]}
 
 
 def _validate(submission, problem, world):
@@ -157,11 +178,11 @@ def _score(world, result):
     false_discovery = attempted and not correct_mechanism
     correct_refusal = target != "confined" and correct_mechanism and result["abstain"]
     if target == "confined" and not result["abstain"]:
-        t_score = math.exp(-abs(math.log(result["transmissivity_m2_s"] / world["T"])) / 0.55)
-        s_score = math.exp(-abs(math.log(result["storativity"] / world["S"])) / 0.70)
+        t_score = math.exp(-abs(math.log(result["transmissivity_m2_s"] / world["T"])) / 0.095)
+        s_score = math.exp(-abs(math.log(result["storativity"] / world["S"])) / 0.12)
         parameter = 0.60 * t_score + 0.40 * s_score
         truth = np.asarray([_curve(world, r, t) for r, t in PREDICTION_CONTEXTS])
-        scale = 0.025 + 0.05 * np.maximum(truth, 0.05)
+        scale = 0.006 + 0.011 * np.maximum(truth, 0.05)
         prediction = math.exp(-float(np.mean(np.abs(result["predicted_drawdown_m"] - truth) / scale)))
         science = 0.55 * parameter + 0.30 * prediction + 0.15 * float(correct_mechanism)
     elif correct_refusal:
@@ -179,10 +200,12 @@ def _score(world, result):
 
 
 def _invalid_metrics():
-    result = {"combined_score": 0.0, "valid": 0.0, "raw_score": 0.0}
+    result = {"combined_score": 0.0, "valid": 0.0, "raw_score": 0.0,
+              "robustness_score": 0.0}
     for split in ("development", "heldout"):
         for key in ("combined_score", "mechanism_score", "false_discovery_rate",
-                    "correct_refusal_rate", "discovery_coverage", "attempted_discovery_rate"):
+                    "correct_refusal_rate", "discovery_coverage", "attempted_discovery_rate",
+                    "parameter_recovery_score", "prediction_score"):
             result[split + "_" + key] = 0.0
         for key in ("mechanism_correct_count", "mechanism_total_count", "false_discovery_count",
                     "claim_count", "correct_refusal_count", "unsupported_world_count",
@@ -196,15 +219,17 @@ def _summary(rows):
     supported = [row for row in rows if row["kind"] == "confined"]
     unsupported = [row for row in rows if row["kind"] != "confined"]
     claims = [row for row in rows if row["attempted"]]
+    supported_quality = float(np.mean([row["combined_score"] for row in supported]))
+    correct_refusal_rate = sum(row["correct_refusal"] for row in unsupported) / len(unsupported)
     return {
-        "combined_score": float(np.mean([row["combined_score"] for row in rows])),
+        "combined_score": supported_quality * correct_refusal_rate,
         "mechanism_score": float(np.mean([row["correct_mechanism"] for row in rows])),
         "mechanism_correct_count": sum(row["correct_mechanism"] for row in rows),
         "mechanism_total_count": len(rows),
         "false_discovery_rate": sum(row["false_discovery"] for row in rows) / len(claims) if claims else 0.0,
         "false_discovery_count": sum(row["false_discovery"] for row in rows),
         "claim_count": len(claims),
-        "correct_refusal_rate": sum(row["correct_refusal"] for row in unsupported) / len(unsupported),
+        "correct_refusal_rate": correct_refusal_rate,
         "correct_refusal_count": sum(row["correct_refusal"] for row in unsupported),
         "unsupported_world_count": len(unsupported),
         "discovery_coverage": sum(not row["abstained"] for row in supported) / len(supported),
@@ -224,6 +249,9 @@ def evaluate(candidate) -> dict[str, Any]:
         for world in _worlds(split):
             problem = public_problem()
             try:
+                reset = getattr(candidate, "reset_session", None)
+                if callable(reset):
+                    reset()
                 submission = candidate(problem, lambda r, t, w=world: _measure(w, r, t))
                 result = _validate(submission, problem, world)
                 row = {"kind": world["kind"], **_score(world, result)}
@@ -240,7 +268,3 @@ def evaluate(candidate) -> dict[str, Any]:
     metrics["raw_score"] = metrics["combined_score"]
     metrics["robustness_score"] = metrics["heldout_combined_score"]
     return metrics
-
-
-def reference_anchor():
-    return {"development_score": 1.0, "heldout_score": 1.0}
