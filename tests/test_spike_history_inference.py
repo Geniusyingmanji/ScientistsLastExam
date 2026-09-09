@@ -25,9 +25,9 @@ class SpikeHistoryInferenceTests(unittest.TestCase):
         from unittest.mock import patch
         oracle = _load("spike_mechanism", TASK / "verification" / "evaluator.py")
         rows = [
-            {"kind": "supported", "valid": True, "abstained": False, "correct_refusal": False},
-            {"kind": "supported", "valid": True, "abstained": True, "correct_refusal": False},
-            {"kind": "unsupported", "valid": True, "abstained": True, "correct_refusal": True},
+            {"kind": "supported", "valid": True, "abstained": False, "correct_refusal": False, "mechanism_correct": True},
+            {"kind": "supported", "valid": True, "abstained": False, "correct_refusal": False, "mechanism_correct": False},
+            {"kind": "unsupported", "valid": True, "abstained": True, "correct_refusal": True, "mechanism_correct": True},
         ]
         summary = dict(combined_score=0.2, valid=1.0, science_score=0.3,
                        false_discovery_rate=0.0, correct_refusal_rate=1.0,
@@ -96,6 +96,49 @@ class SpikeHistoryInferenceTests(unittest.TestCase):
         self.assertEqual(result["valid"], 0.0)
         self.assertEqual(result["combined_score"], 0.0)
 
+    def test_wrong_supported_diagnosis_and_fixed_refusal_label_score_zero(self):
+        oracle = _load("spike_degenerate", TASK / "verification" / "evaluator.py")
+        baseline = _load("spike_degenerate_baseline", TASK / "solution.py")
+
+        def wrong_supported_diagnosis(problem):
+            result = baseline.infer_spike_history(problem)
+            result.update(diagnosis="burst_history", abstain=False, confidence=0.5)
+            return result
+
+        def fixed_refusal_label(problem):
+            result = baseline.infer_spike_history(problem)
+            result.update(diagnosis="burst_history", abstain=True, confidence=0.5)
+            return result
+
+        wrong = oracle.evaluate(wrong_supported_diagnosis)
+        fixed = oracle.evaluate(fixed_refusal_label)
+        for split in ("development", "heldout"):
+            self.assertEqual(wrong[f"{split}_combined_score"], 0.0)
+            self.assertEqual(fixed[f"{split}_combined_score"], 0.0)
+        self.assertEqual(wrong["development_mechanism_score"], 0.0)
+
+    def test_world_sessions_are_reset_and_candidate_cannot_mutate_contract(self):
+        oracle = _load("spike_reset", TASK / "verification" / "evaluator.py")
+        baseline = _load("spike_reset_baseline", TASK / "solution.py")
+
+        class StatefulCandidate:
+            def __init__(self):
+                self.reset_count = 0
+
+            def reset_session(self):
+                self.reset_count += 1
+
+            def __call__(self, problem):
+                result = baseline.infer_spike_history(problem)
+                problem["prediction_contexts"].clear()
+                return result
+
+        candidate = StatefulCandidate()
+        result = oracle.evaluate(candidate)
+        self.assertEqual(candidate.reset_count, len(oracle.DEVELOPMENT_WORLDS) + len(oracle.HELDOUT_WORLDS))
+        self.assertEqual(result["valid"], 1.0)
+        self.assertTrue(np.isfinite(result["combined_score"]))
+
     def test_submission_fault_matrix(self):
         oracle = _load("spike_faults", TASK / "verification" / "evaluator.py")
         baseline = _load("spike_base_faults", TASK / "solution.py")
@@ -132,13 +175,15 @@ class SpikeHistoryInferenceTests(unittest.TestCase):
             sys.path.pop(0)
         reference_score = oracle.evaluate(reference.infer_spike_history)
         fixed_tau = oracle.evaluate(ablations.fixed_tau_20)
+        midpoint_parameters = oracle.evaluate(ablations.midpoint_parameters)
         never_refuse = oracle.evaluate(ablations.never_refuse)
         rate_only = oracle.evaluate(ablations.rate_only)
         for split in ("development", "heldout"):
             key = "combined_score"
-            self.assertGreater(reference_score[split][key], fixed_tau[split][key])
-            self.assertGreater(fixed_tau[split][key], never_refuse[split][key])
-            self.assertGreater(never_refuse[split][key], rate_only[split][key])
+            self.assertGreater(reference_score[split][key] - fixed_tau[split][key], 0.02)
+            self.assertGreater(reference_score[split][key] - midpoint_parameters[split][key], 0.10)
+            self.assertEqual(never_refuse[split][key], 0.0)
+            self.assertEqual(rate_only[split][key], 0.0)
 
 
 if __name__ == "__main__":

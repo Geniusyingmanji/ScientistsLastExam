@@ -10,6 +10,7 @@ from sle.secure_eval import CandidateProxy
 
 
 INVALID = -1e18
+EVAL_TIMEOUT_S = 60
 TASK_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -24,7 +25,7 @@ def main():
         import evaluator as oracle
 
         candidate = CandidateProxy(
-            Path(args.candidate).resolve(), "infer_spike_history", timeout_s=300
+            Path(args.candidate).resolve(), "infer_spike_history", timeout_s=EVAL_TIMEOUT_S
         )
         result = oracle.evaluate(candidate)
         metrics.update(result)

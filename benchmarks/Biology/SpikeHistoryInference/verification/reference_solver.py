@@ -6,6 +6,9 @@ import math
 import numpy as np
 
 
+SHRINKAGE_WEIGHT = 0.05
+
+
 def _sigmoid(values):
     return 1.0 / (1.0 + np.exp(-np.clip(values, -30.0, 30.0)))
 
@@ -107,12 +110,21 @@ def infer_spike_history(problem):
     elif interaction_strength > 1.00 and interaction_lr > 4.0:
         diagnosis, abstain, confidence = "stimulus_history_interaction", True, 0.92
 
+    bounds = problem["parameter_bounds"]
+    midpoints = {
+        name: 0.5 * (float(interval[0]) + float(interval[1]))
+        for name, interval in bounds.items()
+    }
+    intercept = (1.0 - SHRINKAGE_WEIGHT) * intercept + SHRINKAGE_WEIGHT * midpoints["intercept"]
+    gain = (1.0 - SHRINKAGE_WEIGHT) * gain + SHRINKAGE_WEIGHT * midpoints["stimulus_gain"]
+    amplitude = (1.0 - SHRINKAGE_WEIGHT) * amplitude + SHRINKAGE_WEIGHT * midpoints["refractory_amplitude"]
+    tau_ms = (1.0 - SHRINKAGE_WEIGHT) * tau_ms + SHRINKAGE_WEIGHT * midpoints["refractory_tau_ms"]
+
     predictions = []
     for context in problem["prediction_contexts"]:
         history = sum(math.exp(-lag / tau_ms) for lag in context["recent_spike_lags_ms"])
         eta = intercept + gain * context["stimulus"] - amplitude * history
         predictions.append(float(_sigmoid(eta)))
-    bounds = problem["parameter_bounds"]
     return {
         "intercept": float(np.clip(intercept, *bounds["intercept"])),
         "stimulus_gain": float(np.clip(gain, *bounds["stimulus_gain"])),

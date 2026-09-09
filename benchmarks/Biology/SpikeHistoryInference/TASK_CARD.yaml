@@ -7,8 +7,8 @@ oracle:
   deterministic: true
 normalization:
   baseline: valid undetermined blanket abstention with fixed in-bounds parameters
-  reference: truth-blind regularized logistic fits, exponential time-constant search, and likelihood or BIC comparisons against three structured alternatives
-  score: clipped development joint of parameter recovery, prediction, diagnosis, and confidence normalized above blanket abstention; refusal, false discovery, coverage, attempts, and held-out transfer remain separate
+  reference: truth-blind regularized logistic fits, exponential time-constant search, light shrinkage toward public-bound midpoints, and likelihood or BIC comparisons against three structured alternatives
+  score: clipped mean supported-world quality (70% parameter recovery, 20% prediction, 10% confidence, gated by a supported diagnosis) multiplied by exact unsupported-family refusal; both blanket abstention and never refusing are exactly zero, while false discovery, coverage, attempts, and held-out transfer remain separate
 citations:
 - id: doi:10.1152/jn.00697.2004
   title: A point process framework for relating neural spiking activity to spiking history, neural ensemble, and extrinsic covariate effects
@@ -22,10 +22,12 @@ invariants:
 - burst history, trial-level latent gain mixtures, and stimulus-history interactions violate different parts of the supported conditional model
 - every trial has aligned finite stimulus and binary spike sequences with an immutable trial ID
 - blanket abstention is valid and scores zero after normalization
+- never refusing scores zero because the headline requires correct unsupported-family refusal
 - malformed, non-finite, incomplete, extra-key, and fabricated-evidence submissions fail closed
 - development and held-out worlds use different seeds and parameters
+- every candidate session is reset at each world boundary, preventing cross-world or development-to-held-out state transfer
 - reference outputs are computed from public trials without reading hidden world labels or parameters
-known_shortcuts: A 192-strategy sweep of low-dimensional trial-rate, delayed-spike and stimulus-conditioned frequency thresholds reaches 0.694/0.685 development/held-out with one-third false discovery, below the truth-blind point-process reference's 0.903/0.898. Fixing tau at 20 ms reaches 0.876/0.879, never refusing 0.396/0.300, and rate-only inference 0.234/0.179. The reduced-order laboratory omits continuous-time spike jitter, coupled neurons, sorting errors, nonstationary stimulus filters and long adaptation.
+known_shortcuts: A 1,728-strategy development-selected sweep combines low-order moment thresholds with constant gain, amplitude, and tau profiles. It reaches 0.402102/0.166566 development/held-out with one-third false discovery, below the truth-blind shrinkage reference's 0.697016/0.829388. Replacing every fitted parameter with public-bound midpoints while retaining reference diagnosis reaches 0.496777/0.328371; fixing tau at 20 ms reaches 0.617365/0.751527; never refusing and rate-only inference score zero. The reduced-order laboratory omits continuous-time spike jitter, coupled neurons, sorting errors, nonstationary stimulus filters and long adaptation.
 review:
   domain: pending_external_computational_neuroscience_review
   evaluator_security: automated_bad_candidate_determinism_contract_probability_and_fault_refusal_tests
@@ -36,7 +38,7 @@ provenance:
   fresh_confirmation_status: not_completed
 novelty_risk:
   level: medium
-  rationale: No repository or Frontier-Eng task performs neural point-process inference. GeneNetworkIntervention uses active multi-gene ODE perturbations and HamiltonianLearning uses coherent spin dynamics; neither estimates spike-history likelihoods or attributes refractory-model failure.
+  rationale: No repository or Frontier-Eng task performs neural point-process inference. GeneNetworkIntervention uses active multi-gene ODE perturbations and HamiltonianLearning uses coherent spin dynamics; neither estimates spike-history likelihoods or attributes refractory-model failure. The parallel SingleMoleculeKinetics candidate infers latent molecular-state transitions rather than a stimulus-conditioned neural history kernel and trial-level neural heterogeneity.
 lineage:
   status: complete
   builder_model_ids:
@@ -49,9 +51,9 @@ lineage:
   - deepseek-v4-pro
   calibration_runs:
   - experiments/spike_history_inference_deepseek_calibration_2026-09-07.json
-  calibration_evidence_status: current_or_migration_replayed
-  edits_triggered_by_model: No oracle or public-contract change followed calibration. Both thinking-disabled first proposals were valid and remained below the truth-blind reference. Flash abstained on every supported world, while Pro recovered supported parameters and predictions but falsely discovered all unsupported worlds; these complementary scientific failures were retained rather than used to tune evaluator worlds.
-  shortcut_discoverer: builder_self_audit_with_192_strategy_sweep_and_deepseek_flash_pro_calibration
+  calibration_evidence_status: historical_only
+  edits_triggered_by_model: The original thinking-disabled draws exposed complementary supported-discovery and false-discovery failures but did not trigger oracle tuning. Later independent maintainer review changed world coverage, scoring, session isolation, and the reference, so those draws are retained only as historical protocol evidence for revision 156927e2.
+  shortcut_discoverer: builder_and_independent_maintainer_red_team_with_1728_strategy_moment_and_constant_parameter_sweep
   frozen_before_eval: false
   freeze_timestamp: null
 long_horizon:
@@ -62,8 +64,8 @@ long_horizon:
 construction_audit:
   status: builder_audited_pending_external
   author_domain: computational_neuroscience
-  reviewer_domain: pending_external
+  reviewer_domain: independent_repository_maintainer_scientific_and_evaluator_review
   expert_hours: null
-  red_team_rounds: 2
-  oracle_disagreement_status: not_quantified
-  independent_recomputation_status: baseline, truth-blind reference, malformed-candidate checks, and scientific invariants are executable from the task package
+  red_team_rounds: 3
+  oracle_disagreement_status: independent review found degenerate non-refusal credit, a stronger low-dimensional shortcut, missing world-boundary resets, a mechanism-axis mismatch, and incomplete reference shrinkage; all were resolved in the hardened revision
+  independent_recomputation_status: baseline, shrinkage reference, midpoint and fixed-tau ablations, 1728-strategy shortcut, malformed-candidate checks, session isolation, and scientific invariants are executable from the task package

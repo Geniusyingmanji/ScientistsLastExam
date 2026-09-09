@@ -1,6 +1,7 @@
 """Deterministic point-process laboratory for spike-history inference."""
 from __future__ import annotations
 
+import copy
 import math
 from typing import Any
 
@@ -24,6 +25,13 @@ PREDICTION_CONTEXTS = [
     for lags in ([], [5.0], [10.0, 25.0], [5.0, 15.0, 35.0])
     for stimulus in (-1.2, 0.0, 1.2)
 ]
+
+PARAMETER_TOLERANCES = {
+    "intercept": 0.35,
+    "stimulus_gain": 0.25,
+    "refractory_amplitude": 0.55,
+    "refractory_tau_ms": 15.0,
+}
 
 PUBLIC_TEMPLATE = {
     "schema_version": 1,
@@ -57,8 +65,8 @@ DEVELOPMENT_WORLDS = (
 )
 
 HELDOUT_WORLDS = (
-    {"kind": "supported", "seed": 5101, "intercept": -2.86, "gain": 0.66, "amplitude": 2.05, "tau_ms": 35.0},
-    {"kind": "supported", "seed": 5102, "intercept": -3.16, "gain": 0.88, "amplitude": 2.50, "tau_ms": 8.0},
+    {"kind": "supported", "seed": 5101, "intercept": -3.30, "gain": 0.55, "amplitude": 1.60, "tau_ms": 20.0},
+    {"kind": "supported", "seed": 5102, "intercept": -2.65, "gain": 1.15, "amplitude": 3.10, "tau_ms": 38.0},
     {"kind": "burst_history", "seed": 5103, "intercept": -2.96, "gain": 0.64, "amplitude": 1.90, "tau_ms": 16.0, "burst": 1.20},
     {"kind": "trial_gain_mixture", "seed": 5104, "intercept": -3.10, "gain": 0.74, "amplitude": 2.25, "tau_ms": 15.0, "mixture": 0.64},
     {"kind": "stimulus_history_interaction", "seed": 5105, "intercept": -3.02, "gain": 0.84, "amplitude": 2.05, "tau_ms": 17.0, "interaction": 1.20},
@@ -161,7 +169,7 @@ def _validate(submission: Any, problem: dict[str, Any]) -> dict[str, Any]:
             raise ValueError(f"{name} is outside its public bounds")
         scalars[name] = value
     probabilities = submission["prediction_probabilities"]
-    if not isinstance(probabilities, (list, tuple)) or len(probabilities) != len(problem["prediction_contexts"]):
+    if not isinstance(probabilities, (list, tuple)) or len(probabilities) != len(PREDICTION_CONTEXTS):
         raise ValueError("prediction_probabilities has the wrong length")
     probabilities = np.asarray(probabilities, dtype=float)
     if not np.all(np.isfinite(probabilities)) or np.any(probabilities < 0.0) or np.any(probabilities > 1.0):
@@ -191,10 +199,26 @@ def _score(spec: dict[str, Any], result: dict[str, Any], problem: dict[str, Any]
     elif result["abstain"]:
         parameter_score = science = prediction = 0.0
     else:
-        intercept_score = float(np.clip(1.0 - abs(result["intercept"] - spec["intercept"]) / 0.80, 0.0, 1.0))
-        gain_score = float(np.clip(1.0 - abs(result["stimulus_gain"] - spec["gain"]) / 0.50, 0.0, 1.0))
-        amplitude_score = float(np.clip(1.0 - abs(result["refractory_amplitude"] - spec["amplitude"]) / 1.25, 0.0, 1.0))
-        tau_score = float(np.clip(1.0 - abs(result["refractory_tau_ms"] - spec["tau_ms"]) / 30.0, 0.0, 1.0))
+        intercept_score = float(np.clip(
+            1.0 - abs(result["intercept"] - spec["intercept"]) / PARAMETER_TOLERANCES["intercept"],
+            0.0,
+            1.0,
+        ))
+        gain_score = float(np.clip(
+            1.0 - abs(result["stimulus_gain"] - spec["gain"]) / PARAMETER_TOLERANCES["stimulus_gain"],
+            0.0,
+            1.0,
+        ))
+        amplitude_score = float(np.clip(
+            1.0 - abs(result["refractory_amplitude"] - spec["amplitude"]) / PARAMETER_TOLERANCES["refractory_amplitude"],
+            0.0,
+            1.0,
+        ))
+        tau_score = float(np.clip(
+            1.0 - abs(result["refractory_tau_ms"] - spec["tau_ms"]) / PARAMETER_TOLERANCES["refractory_tau_ms"],
+            0.0,
+            1.0,
+        ))
         parameter_score = 0.20 * intercept_score + 0.20 * gain_score + 0.35 * amplitude_score + 0.25 * tau_score
         diagnosis_score = float(result["diagnosis"] == "supported")
         science = 0.85 * parameter_score + 0.15 * diagnosis_score
@@ -202,8 +226,14 @@ def _score(spec: dict[str, Any], result: dict[str, Any], problem: dict[str, Any]
         mae = float(np.mean(np.abs(result["prediction_probabilities"] - target)))
         prediction = float(np.clip(1.0 - mae / 0.20, 0.0, 1.0))
     confidence_score = float(np.clip(1.0 - abs(result["confidence"] - science), 0.0, 1.0))
-    raw = 0.75 * science + 0.15 * prediction + 0.10 * confidence_score
-    combined = float(np.clip((raw - 0.10) / 0.90, 0.0, 1.0))
+    if unsupported:
+        combined = float(correct_refusal)
+    elif result["abstain"]:
+        combined = 0.0
+    else:
+        combined = diagnosis_score * (
+            0.70 * parameter_score + 0.20 * prediction + 0.10 * confidence_score
+        )
     return {
         "science_score": round(science, 6),
         "parameter_recovery_score": round(parameter_score, 6),
@@ -219,11 +249,16 @@ def _evaluate_world(spec: dict[str, Any], split: str, index: int, candidate) -> 
     problem = public_problem(spec)
     base = {"split": split, "world_index": index, "kind": spec["kind"]}
     try:
-        result = _validate(candidate(problem), problem)
+        result = _validate(candidate(copy.deepcopy(problem)), problem)
         row = {**base, **_score(spec, result, problem)}
         row.update({
             "valid": True,
             "abstained": result["abstain"],
+            "mechanism_correct": bool(
+                result["diagnosis"] == "supported" and not result["abstain"]
+                if spec["kind"] == "supported"
+                else row["correct_refusal"]
+            ),
             "confidence": round(result["confidence"], 6),
             "evidence_count": len(result["evidence_trial_ids"]),
         })
@@ -240,6 +275,7 @@ def _evaluate_world(spec: dict[str, Any], split: str, index: int, candidate) -> 
             "false_discovery": False,
             "valid": False,
             "abstained": True,
+            "mechanism_correct": False,
             "confidence": 0.0,
             "evidence_count": 0,
             "reason": f"{type(exc).__name__}: {exc}",
@@ -250,13 +286,15 @@ def _summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     unsupported = [row for row in rows if row["kind"] != "supported"]
     supported = [row for row in rows if row["kind"] == "supported"]
     attempts = [row for row in rows if not row["abstained"]]
+    supported_quality = float(np.mean([row["combined_score"] for row in supported]))
+    correct_refusal_rate = float(np.mean([row["correct_refusal"] for row in unsupported]))
     return {
-        "combined_score": round(float(np.mean([row["combined_score"] for row in rows])), 6),
+        "combined_score": round(supported_quality * correct_refusal_rate, 6),
         "valid": float(all(row["valid"] for row in rows)),
         "science_score": round(float(np.mean([row["science_score"] for row in rows])), 6),
         "parameter_recovery_score": round(float(np.mean([row["parameter_recovery_score"] for row in supported])), 6),
         "prediction_score": round(float(np.mean([row["prediction_score"] for row in supported])), 6),
-        "correct_refusal_rate": round(float(np.mean([row["correct_refusal"] for row in unsupported])), 6),
+        "correct_refusal_rate": round(correct_refusal_rate, 6),
         "correct_refusal_count": sum(row["correct_refusal"] for row in unsupported),
         "false_discovery_rate": round(float(np.mean([row["false_discovery"] for row in unsupported])), 6),
         "false_discovery_count": sum(row["false_discovery"] for row in unsupported),
@@ -271,8 +309,17 @@ def _summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
 
 
 def evaluate(candidate) -> dict[str, Any]:
-    development = [_evaluate_world(spec, "development", i, candidate) for i, spec in enumerate(DEVELOPMENT_WORLDS)]
-    heldout = [_evaluate_world(spec, "heldout", i, candidate) for i, spec in enumerate(HELDOUT_WORLDS)]
+    def evaluate_split(worlds, split):
+        rows = []
+        for i, spec in enumerate(worlds):
+            reset = getattr(candidate, "reset_session", None)
+            if callable(reset):
+                reset()
+            rows.append(_evaluate_world(spec, split, i, candidate))
+        return rows
+
+    development = evaluate_split(DEVELOPMENT_WORLDS, "development")
+    heldout = evaluate_split(HELDOUT_WORLDS, "heldout")
     dev = _summary(development)
     held = _summary(heldout)
     return {
@@ -283,10 +330,10 @@ def evaluate(candidate) -> dict[str, Any]:
         "heldout": held,
         "development_combined_score": dev["combined_score"],
         "heldout_combined_score": held["combined_score"],
-        "development_mechanism_score": sum(r["valid"] and (r["correct_refusal"] if r["kind"] != "supported" else not r["abstained"]) for r in development) / len(development),
-        "heldout_mechanism_score": sum(r["valid"] and (r["correct_refusal"] if r["kind"] != "supported" else not r["abstained"]) for r in heldout) / len(heldout),
-        "development_mechanism_correct_count": sum(r["valid"] and (r["correct_refusal"] if r["kind"] != "supported" else not r["abstained"]) for r in development),
-        "heldout_mechanism_correct_count": sum(r["valid"] and (r["correct_refusal"] if r["kind"] != "supported" else not r["abstained"]) for r in heldout),
+        "development_mechanism_score": sum(r["valid"] and r["mechanism_correct"] for r in development) / len(development),
+        "heldout_mechanism_score": sum(r["valid"] and r["mechanism_correct"] for r in heldout) / len(heldout),
+        "development_mechanism_correct_count": sum(r["valid"] and r["mechanism_correct"] for r in development),
+        "heldout_mechanism_correct_count": sum(r["valid"] and r["mechanism_correct"] for r in heldout),
         "development_mechanism_total_count": len(development),
         "heldout_mechanism_total_count": len(heldout),
         "development_false_discovery_rate": dev["false_discovery_rate"],

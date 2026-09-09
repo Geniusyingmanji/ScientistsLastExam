@@ -41,8 +41,8 @@ def _features(problem):
     return mean_rate, trial_overdispersion, delayed_lift, interaction_contrast
 
 
-def _candidate(problem, thresholds):
-    mean_rate, overdispersion, delayed_lift, interaction = _features(problem)
+def _candidate(problem, thresholds, parameters, features=None):
+    mean_rate, overdispersion, delayed_lift, interaction = features or _features(problem)
     burst_threshold, mixture_threshold, interaction_threshold = thresholds
     diagnosis, abstain = "supported", False
     if delayed_lift > burst_threshold:
@@ -56,7 +56,7 @@ def _candidate(problem, thresholds):
         math.log(max(mean_rate, 1e-4) / max(1.0 - mean_rate, 1e-4)),
         *problem["parameter_bounds"]["intercept"],
     ))
-    gain, amplitude, tau_ms = 0.6, 2.0, 20.0
+    gain, amplitude, tau_ms = parameters
     probabilities = []
     for context in problem["prediction_contexts"]:
         history = sum(math.exp(-lag / tau_ms) for lag in context["recent_spike_lags_ms"])
@@ -77,17 +77,27 @@ def _candidate(problem, thresholds):
 
 def _cached_worlds():
     return {
-        "development": [(spec, evaluator.public_problem(spec)) for spec in evaluator.DEVELOPMENT_WORLDS],
-        "heldout": [(spec, evaluator.public_problem(spec)) for spec in evaluator.HELDOUT_WORLDS],
+        "development": [
+            (spec, problem, _features(problem))
+            for spec in evaluator.DEVELOPMENT_WORLDS
+            for problem in [evaluator.public_problem(spec)]
+        ],
+        "heldout": [
+            (spec, problem, _features(problem))
+            for spec in evaluator.HELDOUT_WORLDS
+            for problem in [evaluator.public_problem(spec)]
+        ],
     }
 
 
-def _evaluate_cached(worlds, thresholds):
+def _evaluate_cached(worlds, thresholds, parameters):
     summaries = {}
     for split, entries in worlds.items():
         rows = []
-        for spec, problem in entries:
-            result = evaluator._validate(_candidate(problem, thresholds), problem)
+        for spec, problem, features in entries:
+            result = evaluator._validate(
+                _candidate(problem, thresholds, parameters, features), problem
+            )
             score = evaluator._score(spec, result, problem)
             rows.append({
                 "kind": spec["kind"],
@@ -101,19 +111,24 @@ def _evaluate_cached(worlds, thresholds):
 
 def run_sweep():
     worlds = _cached_worlds()
-    grids = itertools.product(
+    threshold_grid = itertools.product(
         (0.000, 0.008, 0.016, 0.024),
-        (1.4, 1.8, 2.2, 2.6, 3.0, 3.4),
-        (0.000, 0.010, 0.020, 0.030, 0.040, 0.050, 0.060, 0.080),
+        (1.4, 2.0, 2.6, 3.2),
+        (0.000, 0.015, 0.030, 0.045, 0.060, 0.080),
+    )
+    parameter_grid = itertools.product(
+        (0.4, 0.8, 1.2),
+        (1.2, 2.4, 3.6),
+        (12.0, 36.0),
     )
     best = None
     count = 0
-    for thresholds in grids:
+    for thresholds, parameters in itertools.product(tuple(threshold_grid), tuple(parameter_grid)):
         count += 1
-        summary = _evaluate_cached(worlds, thresholds)
+        summary = _evaluate_cached(worlds, thresholds, parameters)
         key = summary["development"]["combined_score"]
         if best is None or key > best[0]:
-            best = (key, thresholds, summary)
+            best = (key, thresholds, parameters, summary)
     return {
         "strategy_count": count,
         "best_thresholds": {
@@ -121,8 +136,13 @@ def run_sweep():
             "trial_overdispersion": best[1][1],
             "interaction_contrast": best[1][2],
         },
-        "development": best[2]["development"],
-        "heldout": best[2]["heldout"],
+        "constant_parameters": {
+            "stimulus_gain": best[2][0],
+            "refractory_amplitude": best[2][1],
+            "refractory_tau_ms": best[2][2],
+        },
+        "development": best[3]["development"],
+        "heldout": best[3]["heldout"],
     }
 
 

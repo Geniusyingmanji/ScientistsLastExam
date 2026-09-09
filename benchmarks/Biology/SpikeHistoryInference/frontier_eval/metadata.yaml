@@ -6,8 +6,8 @@ tier: T2
 oracle_type: physical_sim
 score_mode: clipped
 gpu_required: false
-eval_time_seconds: 20
+eval_time_seconds: 10
 science_metric: refractory_point_process_parameter_recovery_prediction_and_model_failure_attribution
 reference_baseline: valid undetermined abstention with fixed in-bounds point-process parameters
-reference_sota: truth-blind regularized point-process fits with structured alternative-model diagnostics
+reference_sota: truth-blind regularized point-process fits with public-prior shrinkage and structured alternative-model diagnostics; development 0.697016 and held-out 0.829388
 citation: "Truccolo et al., Journal of Neurophysiology 2005, DOI 10.1152/jn.00697.2004; Pillow et al., Nature 2008, DOI 10.1038/nature07140"
