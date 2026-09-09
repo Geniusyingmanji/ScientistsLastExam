@@ -23,7 +23,7 @@ invariants:
 - duplicate queries, overspending, unknown epochs or malformed candidates fail closed
 - every answer cites at least six distinct current-world observations
 - model accuracy, false discovery, refusal, feasibility and held-out transfer are separate axes
-  known_shortcuts: A fixed point-lens claim scores zero. After tightening parameter tolerances to 2.5 days and 0.10 amplitude, the reference scores 0.494434 development and 0.725384 held out; prior shortcut sweeps must be remeasured under this scoring revision. Color discrimination, parallax, finite-source limb darkening, blending, binary orbital motion and real cadence/weather systematics are not modeled; certification requires server-held events and independent astrophysical review.
+known_shortcuts: A fixed point-lens claim scores zero. After tightening parameter tolerances to 2.5 days and 0.10 amplitude, the reference scores 0.494434 development and 0.725384 held out; prior shortcut sweeps must be remeasured under this scoring revision. Color discrimination, parallax, finite-source limb darkening, blending, binary orbital motion and real cadence/weather systematics are not modeled; certification requires server-held events and independent astrophysical review.
 review:
   domain: pending_external_astronomy
   evaluator_security: automated_budget_determinism_refusal_and_malformed_candidate_checks_passed_clean_linux_replay
