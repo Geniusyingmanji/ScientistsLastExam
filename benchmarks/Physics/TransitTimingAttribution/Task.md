@@ -49,14 +49,14 @@ Malformed output, invented evidence, and budget overspend fail closed.
 
 ## Relationship to nearby tasks
 
-Unlike `Physics/RadialVelocityPlanets`, this task attributes transit residuals with paid follow-up
+Unlike `Exoplanets/RadialVelocityPlanets`, this task attributes transit residuals with paid follow-up
 choices rather than searching a fixed radial-velocity series. Unlike `ParticlePhysics/LookElsewhereAnomaly`,
 the claim is a physical timing mechanism, and refusal concerns unsupported residual structure,
 not global anomaly significance. Shifted timing/noise instances test transfer of that attribution.
 
 ## Reference checks
 
-The reference scores 0.889497 on development and 0.548430 on held-out. Removing the activity
+The reference scores 0.900201 on development and 0.901472 on held-out. Removing the activity
 model gives 0.549472/0.336474; fixing the forecast to zero gives 0.833582/0.480681; disabling
 refusal gives 0/0. Fixed-family and old call-order probes also give 0/0. These probes do not
 establish an exhaustive shortcut upper bound. Two follow-ups give 0.897269/0.524535, so the

@@ -18,7 +18,7 @@ def _predict(model,t):
 def attribute_ttv(observation, measure, budget_units):
     initial=list(map(int,observation["transit_numbers"])); limit=int(observation["maximum_followup_transit_number"])
     start=max(initial)+1; span=max(1,limit-start)
-    picks=sorted(set(min(limit,start+round(span*q)) for q in (0.05,0.18,0.36,0.58,0.76,0.90,0.97,1.0)))
+    picks=sorted(set(min(limit,start+round(span*q)) for q in (0.0,0.5,1.0)))
     ids=[]; nums=[]; vals=[]
     for p in picks[:int(budget_units)]:
         r=measure(int(p)); ids.append(r["query_id"]); nums.append(float(p)); vals.append(float(r["timing_offset_days"]))
@@ -35,7 +35,7 @@ def attribute_ttv(observation, measure, budget_units):
     noise=float(sum(observation["timing_uncertainties_days"])/len(observation["timing_uncertainties_days"]))
     pred=[_predict(best[2], t) for t in x]
     rms=math.sqrt(sum((u-v)**2 for u,v in zip(y,pred))/len(y))
-    if rms > 1.8*noise: return {"abstain":True}
-    if gap < 5.0: return {"abstain":True}
+    if rms > 1.4*noise: return {"abstain":True}
+    if gap < 10.0: return {"abstain":True}
     forecast=float(observation["forecast_transit_number"])
     return {"mechanism":best[0],"period":best[1],"next_offset_days":_predict(best[2],forecast),"confidence":min(0.95,0.5+gap/20.0),"evidence_query_ids":ids,"abstain":False}
