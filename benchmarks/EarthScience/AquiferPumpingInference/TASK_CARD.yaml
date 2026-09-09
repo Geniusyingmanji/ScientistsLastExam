@@ -39,7 +39,7 @@ invariants:
 - the reference consumes only public problems and charged measurement callbacks
 known_shortcuts: A reproducible 128-strategy probe first performs a normal confined nonlinear fit and then sweeps only chi-square, radial-residual, and temporal-residual thresholds. Its best development-selected strategy scores 0.481859/0.525816 development/held out with 0.875 mechanism accuracy, 0.125 false discovery, and 0.667 correct refusal on both splits, below the truth-blind multi-family reference at 0.622081/0.793352. A one-radius half-budget ablation scores 0.000000/0.192774, fixed storativity scores 0.351835/0.431246, and never refusing scores zero. The reduced-order laboratory omits partial penetration, well storage/skin, heterogeneity, anisotropy, unconfined flow, irregular boundaries and correlated drift.
 review:
-  domain: independent_maintainer_red_team_completed_pending_external_hydrogeology_review
+  domain: pending_external_hydrogeology_review
   evaluator_security: automated_budget_contract_determinism_theis_invariant_bad_candidate_ablation_metric_shape_identifier_leakage_degenerate_policy_and_mechanism_accounting_tests
 provenance:
   class: procedural
