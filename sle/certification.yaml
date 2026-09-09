@@ -33,7 +33,7 @@ tasks:
     citation_ids:
       - doi:10.1111/j.1365-2966.2005.08922.x
       - doi:10.1126/science.1107822
-    Mathematics/NarrowAdmissibleTuple:
+  Mathematics/NarrowAdmissibleTuple:
     status: candidate
     reason: exact admissibility/diameter oracle scored uncapped against Polymath8b's own published narrow-admissible-tuple diameters (246 at k=50, direct primary-source quote; 270 at k=54, secondary-source only, disclosed); no frontier searcher draw yet, pending external number-theory review
     citation_ids: [doi:10.4007/annals.2014.179.3.7, doi:10.4007/annals.2015.181.1.7, arxiv:1409.8361, doi:10.1186/s40687-014-0012-7]
