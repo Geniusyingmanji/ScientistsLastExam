@@ -136,6 +136,8 @@ def _invalid_metrics():
     for prefix in ("development", "validation", "heldout"):
         metrics.update({prefix + "_" + key: 0.0 for key in _aggregate([])})
     return metrics
+
+
 def evaluate(candidate):
     metrics = {"valid": 1.0}
     try:
@@ -160,4 +162,3 @@ def evaluate(candidate):
     except Exception:
         return _invalid_metrics()
     return metrics
-
