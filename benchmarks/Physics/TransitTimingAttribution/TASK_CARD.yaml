@@ -30,7 +30,7 @@ provenance:
   class: procedural
   target_source: repository-visible deterministic TTV generator with development and shifted held-out worlds
   task_contract_public_before_evaluation: true
-  fresh_confirmation_status: pending_maintainer_replay_after_pr11_scoring_hardening
+  fresh_confirmation_status: ali_linux_secure_replay_2026_09_10_pending_maintainer_review
   license: procedural repository-local code; no external dataset bundled
 novelty_risk:
   level: medium
