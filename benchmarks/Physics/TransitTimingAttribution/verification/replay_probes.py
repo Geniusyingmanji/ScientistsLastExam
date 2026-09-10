@@ -69,7 +69,8 @@ def main():
         candidates["followups_%d" % budget] = reference.replace(
             "return _attribute_ttv(observation,measure,budget_units,1.00,6.0,0.80)",
             "return _attribute_ttv(observation,measure,min(budget_units,%d),1.00,6.0,0.80)" % budget)
-    candidates["no_activity_model"] = reference.replace('observation["activity_period_grid"]:', '[]:')
+    candidates["no_activity_model"] = reference.replace(
+        'for p in observation["activity_period_grid"]', 'for p in []')
     candidates["constant_forecast"] = reference.replace(
         '"next_offset_days":_predict(best[2],forecast)', '"next_offset_days":0.0')
     report = {"task": TASK_ID, "source_revision": subprocess.check_output(
