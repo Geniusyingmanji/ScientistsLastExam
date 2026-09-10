@@ -1,6 +1,7 @@
 """Replay public-input probes through the trusted Linux sandbox, not in-process."""
 from __future__ import annotations
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import subprocess
@@ -73,11 +74,12 @@ def main():
         'for p in observation["activity_period_grid"]', 'for p in []')
     candidates["constant_forecast"] = reference.replace(
         '"next_offset_days":_predict(best[2],forecast)', '"next_offset_days":0.0')
-    report = {"task": TASK_ID, "source_revision": subprocess.check_output(
+    report = {"schema_version":1,"task": TASK_ID, "source_revision": subprocess.check_output(
         ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "source_tree_clean": not bool(subprocess.check_output(
             ["git", "status", "--porcelain"], cwd=ROOT, text=True).strip()),
-        "execution": "Linux trusted driver and bubblewrap; no model generation", "probes": {}}
+        "execution": "Linux trusted driver and bubblewrap", "model_generation":False,
+        "probes": {}}
     with tempfile.TemporaryDirectory(prefix="ttv-probes-") as tmp:
         for name, source in candidates.items():
             candidate = Path(tmp) / (name + ".py")
@@ -92,7 +94,19 @@ def main():
                 results.append(json.loads(run.stdout))
             if results[0] != results[1]:
                 raise AssertionError("nondeterministic probe: " + name)
-            report["probes"][name] = {"complete_metrics_identical_twice": True, "metrics": results[0]}
+            complete=json.dumps(results[0],sort_keys=True,separators=(",",":"))
+            keys=("combined_score","robustness_score","valid",
+                  "development_mechanism_correct_count","development_mechanism_total_count",
+                  "development_false_discovery_count","development_false_discovery_denominator",
+                  "development_correct_refusal_count","development_correct_refusal_denominator",
+                  "heldout_mechanism_correct_count","heldout_mechanism_total_count",
+                  "heldout_false_discovery_count","heldout_false_discovery_denominator",
+                  "heldout_correct_refusal_count","heldout_correct_refusal_denominator")
+            report["probes"][name]={
+                "complete_metrics_identical_twice":True,
+                "complete_metrics_sha256":hashlib.sha256(complete.encode("utf-8")).hexdigest(),
+                "metrics":{key:results[0][key] for key in keys},
+            }
             print(name, results[0]["combined_score"], results[0]["robustness_score"], flush=True)
     Path(args.output).write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
