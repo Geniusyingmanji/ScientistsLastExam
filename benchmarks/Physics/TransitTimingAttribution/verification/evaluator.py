@@ -137,7 +137,6 @@ def _invalid_metrics():
         metrics.update({prefix + "_" + key: 0.0 for key in _aggregate([])})
     return metrics
 
-
 def evaluate(candidate):
     metrics = {"valid": 1.0}
     try:
