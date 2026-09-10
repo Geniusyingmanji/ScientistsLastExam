@@ -2,13 +2,13 @@ schema_version: 2
 scientific_question: Can an agent actively distinguish planet-induced transit-timing variations from stellar activity, clock drift, and unsupported mixtures under a follow-up observation budget?
 artifact: A TTV mechanism claim, perturbation period, next-offset forecast, confidence and immutable evidence lineage, or calibrated refusal.
 oracle:
-  model: deterministic reduced-order transit-timing residual laboratory with planet, activity, clock and unsupported worlds
+  model: deterministic reduced-order transit-timing residual laboratory with continuous-period planet and activity signals, clock drift, and two distinct unsupported families
   feasibility: bounded integer transit queries, finite mechanism parameters, evidence IDs from current measurements and calibrated refusal
   deterministic: true
 normalization:
   baseline: one legal follow-up timing followed by abstention
-  reference: three follow-ups at normalized positions 0.0, 0.5, 1.0 with least-squares/BIC comparison of quadratic clock and periodic models; clean Linux replay 0.900201 development and 0.901472 held-out
-  score: all-world reward minus blanket-refusal reward, divided by supported count and clipped below at zero, multiplied by correct-refusal rate; wrong mechanisms receive no period or forecast credit
+  reference: three spread follow-ups plus one model-disagreement query, continuous-period least-squares/BIC refinement, and residual diagnostics; clean replay 0.632413 development and 0.430139 held-out
+  score: all-world reward minus blanket-refusal reward, divided by supported count and bounded below at zero, multiplied by correct-refusal rate and squared discovery precision; wrong mechanisms receive no period or forecast credit
 citations:
 - id: doi:10.1111/j.1365-2966.2005.08922.x
   title: On detecting terrestrial planets with timing of giant planet transits
@@ -20,8 +20,9 @@ invariants:
 - every non-abstaining claim cites at least two current query IDs
 - overspending, invented IDs and malformed output fail closed
 - mechanism, forecast, coverage and false-discovery metrics remain separate
-- held-out worlds and exact descriptors remain evaluator-only
-known_shortcuts: PR11 review identified a fixed-order counter exploit and free unsupported claims. Shuffled orders, distinct split sizes and fresh candidate sessions now block that path. Constant-family, counter and fitted no-refusal probes all score 0 on both splits. Measured low-dimensional bounds are family A (360 points) 0.900219/0.892128, family B (384 points) 0.900219/0.892128, and family C (210 points) 0.717580/0.888285; selected reference is 0.900201/0.901472. Reproduce with verification/replay_probes.py. These are finite grid measurements, not universal bounds.
+- held-out worlds, unsupported-family labels and exact descriptors remain evaluator-only
+- development and held-out each include both unsupported reasons with non-unit denominators
+known_shortcuts: PR11 review identified fixed-order, free-unsupported-claim, shared-noise and threshold-grid exploits. Per-world coordinate-seeded noise, shuffled unequal splits, fresh sessions, two unsupported reasons and the precision/refusal gates block those paths. Constant-family, counter and fitted no-refusal probes score 0 on both splits. Development-selected fixed-schedule grids reach 0.574956/0.301806 for family A (800 policies), 0.492715/0.206081 for family B (160), and 0.441114/0.235989 for family C (160), below the 0.632413/0.430139 reference. Reproduce the grids with verification/calibrate.py and witnesses with verification/replay_probes.py; these are finite measured families, not universal bounds.
 review:
   domain: pending_external_astronomy
   evaluator_security: automated_determinism_budget_lineage_and_bad_candidate_checks_passed
@@ -29,7 +30,7 @@ provenance:
   class: procedural
   target_source: repository-visible deterministic TTV generator with development and shifted held-out worlds
   task_contract_public_before_evaluation: true
-  fresh_confirmation_status: crossref_metadata_confirmed_2026-09-05
+  fresh_confirmation_status: pending_maintainer_replay_after_pr11_scoring_hardening
   license: procedural repository-local code; no external dataset bundled
 novelty_risk:
   level: medium
@@ -61,6 +62,6 @@ construction_audit:
   author_domain: computational_astronomy
   reviewer_domain: pending_external_astronomy
   expert_hours: null
-  red_team_rounds: 1
+  red_team_rounds: 3
   oracle_disagreement_status: not_quantified
   independent_recomputation_status: baseline and reference replayed; independent photodynamical recomputation pending

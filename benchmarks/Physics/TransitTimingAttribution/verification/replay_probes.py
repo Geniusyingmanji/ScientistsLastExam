@@ -29,6 +29,22 @@ def attribute_ttv(observation, measure, budget_units):
     return {"mechanism": kind, "period": 5.2, "next_offset_days": 0.0,
             "confidence": 1.0, "evidence_query_ids": ids, "abstain": False}
 '''
+FIXED_SCHEDULE = '''
+def attribute_ttv(observation, measure, budget_units):
+    ids=[]; extra_x=[]; extra_y=[]
+    for number in (13,26,43,59)[:int(budget_units)]:
+        row=measure(number)
+        ids.append(row["query_id"]); extra_x.append(float(number))
+        extra_y.append(float(row["timing_offset_days"]))
+    if len(ids)<2: return {"abstain":True}
+    x=list(map(float,observation["transit_numbers"]))+extra_x
+    y=list(map(float,observation["timing_offsets_days"]))+extra_y
+    best,gap,relative_rms,correlation=_diagnostics(observation,x,y)
+    if relative_rms>1.2 or gap<3.0 or correlation>0.8: return {"abstain":True}
+    return {"mechanism":best[0],"period":best[1],
+            "next_offset_days":_predict(best[2],float(observation["forecast_transit_number"])),
+            "confidence":0.8,"evidence_query_ids":ids,"abstain":False}
+'''
 
 
 def main():
@@ -42,13 +58,17 @@ def main():
         "always_abstain": 'def attribute_ttv(*args): return {"abstain": True}\n',
         "order_keyed": ORDER,
         "never_abstain_reference": reference.replace(
-            'if rms > 1.4*noise:', 'if False:').replace('if gap < 10.0:', 'if False:'),
+            'if relative_rms > rms_limit:', 'if False:').replace(
+            'if gap < gap_limit:', 'if False:').replace(
+            'if correlation > correlation_limit:', 'if False:'),
+        "fixed_schedule_shortcut": reference + "\n" + FIXED_SCHEDULE,
     }
     for kind in ("planet", "activity", "clock"):
         candidates["constant_" + kind] = CONSTANT.replace("KIND", repr(kind))
     for budget in (2, 3, 4):
         candidates["followups_%d" % budget] = reference.replace(
-            "picks[:int(budget_units)]", "picks[:min(int(budget_units), %d)]" % budget)
+            "return _attribute_ttv(observation,measure,budget_units,1.00,6.0,0.80)",
+            "return _attribute_ttv(observation,measure,min(budget_units,%d),1.00,6.0,0.80)" % budget)
     candidates["no_activity_model"] = reference.replace('observation["activity_period_grid"]:', '[]:')
     candidates["constant_forecast"] = reference.replace(
         '"next_offset_days":_predict(best[2],forecast)', '"next_offset_days":0.0')

@@ -8,6 +8,14 @@ PATH = ROOT / "benchmarks/Physics/TransitTimingAttribution/verification/evaluato
 spec = importlib.util.spec_from_file_location("ttv_metrics", PATH)
 evaluator = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(evaluator)
+REF_PATH = ROOT / "benchmarks/Physics/TransitTimingAttribution/verification/reference_solver.py"
+ref_spec = importlib.util.spec_from_file_location("ttv_reference", REF_PATH)
+reference = importlib.util.module_from_spec(ref_spec)
+ref_spec.loader.exec_module(reference)
+CAL_PATH = ROOT / "benchmarks/Physics/TransitTimingAttribution/verification/calibrate.py"
+cal_spec = importlib.util.spec_from_file_location("ttv_calibrate", CAL_PATH)
+calibrate = importlib.util.module_from_spec(cal_spec)
+cal_spec.loader.exec_module(calibrate)
 
 
 def claim(kind="planet", ids=None):
@@ -67,6 +75,22 @@ class TransitMechanismMetricsTests(unittest.TestCase):
         self.assertNotEqual(len(dev), len(val))
         self.assertNotEqual([w["kind"] for w in dev], [w["kind"] for w in val][:len(dev)])
         self.assertNotEqual([w["kind"] for w in dev], sorted(w["kind"] for w in dev))
+        self.assertEqual({w["kind"] for w in dev if w["kind"] not in evaluator.MECHANISMS},
+                         {"unsupported_resonant", "unsupported_chirp"})
+        self.assertEqual(len({w["seed"] for w in dev + val}), len(dev) + len(val))
+
+    def test_followup_noise_is_world_and_coordinate_seeded(self):
+        first = evaluator.development_worlds()[0]
+        second = evaluator.development_worlds()[1]
+        a = evaluator._experiment(first, 20)["timing_offset_days"] - evaluator._signal(first, 20)
+        b = evaluator._experiment(second, 20)["timing_offset_days"] - evaluator._signal(second, 20)
+        self.assertNotEqual(a, b)
+        ordered = evaluator.development_worlds()[0]
+        reordered = evaluator.development_worlds()[0]
+        expected = evaluator._experiment(ordered, 20)["timing_offset_days"]
+        evaluator._experiment(reordered, 21)
+        actual = evaluator._experiment(reordered, 20)["timing_offset_days"]
+        self.assertEqual(expected, actual)
 
     def test_sessions_reset_at_every_world_boundary(self):
         class Counter:
@@ -105,6 +129,19 @@ class TransitMechanismMetricsTests(unittest.TestCase):
             self.assertEqual(result["valid"], 0)
             self.assertEqual(result["combined_score"], 0)
             self.assertEqual(set(result), set(good))
+
+    def test_reference_budget_and_shortcut_headroom(self):
+        full = evaluator.evaluate(reference.attribute_ttv)
+        half = evaluator.evaluate(lambda observation, measure, budget: reference._attribute_ttv(
+            observation, measure, min(budget, 2), 1.0, 6.0, 0.8))
+        shortcut = evaluator.evaluate(calibrate.fitted_policy(
+            (13, 26, 43, 59), 1.2, 3.0, 0.8))
+        self.assertGreater(full["combined_score"] - half["combined_score"], 0.30)
+        self.assertGreater(full["robustness_score"] - half["robustness_score"], 0.15)
+        self.assertGreater(full["combined_score"] - shortcut["combined_score"], 0.05)
+        self.assertGreater(full["robustness_score"] - shortcut["robustness_score"], 0.10)
+        self.assertEqual(full["development_correct_refusal_denominator"], 10)
+        self.assertEqual(full["heldout_correct_refusal_denominator"], 10)
 
 
 if __name__ == "__main__":
