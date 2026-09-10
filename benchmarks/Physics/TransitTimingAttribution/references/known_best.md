@@ -64,9 +64,11 @@ development `combined_score`; held-out metrics are read afterward.
 | Reference | - | 0.632413 | 0.430139 |
 
 `verification/calibrate.py` caches the repeated fits, selects each family on development, then
-replays the selected witness through the evaluator. Constant planet/activity/clock claims, the old
-call-order counter and reference fitting with refusal disabled all score exactly zero on both
-splits. These are measured finite families rather than a universal shortcut bound.
+checks each selected witness with the full in-process evaluator. The strongest family-A witness is
+also replayed twice through the external sandbox by `verification/replay_probes.py`. Constant
+planet/activity/clock claims, the old call-order counter and reference fitting with refusal disabled
+all score exactly zero on both splits. These are measured finite families rather than a universal
+shortcut bound.
 
 ## Construction errors
 
