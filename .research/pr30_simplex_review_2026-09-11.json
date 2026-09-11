@@ -1,0 +1,229 @@
+{
+  "candidate_sha256": "e64e17faa29645ddd656b3c134a76096c98b6191b0e87e0ff11dd5dda02f3342",
+  "candidate_source_path": ".research/pr30_simplex_candidates_2026-09-11/exact_lp_revised_simplex.py",
+  "completed_evaluations": 2,
+  "derivation": {
+    "candidate_sha256": "e64e17faa29645ddd656b3c134a76096c98b6191b0e87e0ff11dd5dda02f3342",
+    "method_change": {
+      "farkas_lp_changed": false,
+      "fraction_reconstruction_changed": false,
+      "from": "highs",
+      "occurrences": 1,
+      "other_solver_options_changed": false,
+      "public_adapter_changed": false,
+      "to": "revised simplex"
+    },
+    "plan": "independent two-call revised-simplex compatibility replay; original six-call plan preserved",
+    "prior_candidate_path": ".research/pr30_shortcut_candidates_2026-09-11/exact_lp_public_adapter.py",
+    "prior_candidate_sha256": "0edd2d00f3d22286e7e33daad4ec1cfb6bc5610f1a1de1e7ceca2521a96f623d",
+    "prior_evidence_commit": "967be15528a95613defc2bd2af5fb5022c616184",
+    "prior_helper_provenance": {
+      "adapter_sha256": "e9af130437db7b5d23b100bb16d1f273b00a785c28204c0dc8bb9bd8692e951e",
+      "algorithm": {
+        "exact_reconstruction": "Fraction Gaussian elimination; exact equality and nonnegativity checks retained",
+        "new_search_or_parameters": false,
+        "norm_formulation": "helper split positive/negative slope variables with sum=1; final candidate still subjected to oracle exact one-norm and Farkas validation",
+        "numeric_basis": "scipy.optimize.linprog(method=highs), exactly unchanged helper defaults"
+      },
+      "appended_adapter_utf8": "\n\n# Fixed serialization adapter over public instance values only.\ndef _public_fraction(value):\n    if isinstance(value, int) and not isinstance(value, bool):\n        return Fraction(value)\n    if isinstance(value, (list, tuple)) and len(value) == 2:\n        return Fraction(value[0], value[1])\n    raise ValueError(\"public rational must be integer or [numerator, denominator]\")\n\n\ndef _public_ratio(value):\n    return [value.numerator, value.denominator]\n\n\ndef build_ranking(instance):\n    guards = [([_public_fraction(x) for x in row[\"g\"]],\n               _public_fraction(row[\"d\"])) for row in instance[\"guards\"]]\n    a = [[_public_fraction(x) for x in row] for row in instance[\"A\"]]\n    b = [_public_fraction(x) for x in instance[\"b\"]]\n    witness = exact_maximum_delta(guards, a, b)\n    return {\"r\": [_public_ratio(x) for x in witness[\"r\"]],\n            \"s\": _public_ratio(witness[\"s\"]),\n            \"delta\": _public_ratio(witness[\"delta\"]),\n            \"nonneg_lambdas\": [_public_ratio(x) for x in witness[\"nonneg_lambdas\"]],\n            \"decrease_lambdas\": [_public_ratio(x) for x in witness[\"decrease_lambdas\"]]}\n",
+      "candidate_sha256": "0edd2d00f3d22286e7e33daad4ec1cfb6bc5610f1a1de1e7ceca2521a96f623d",
+      "original_byte_length": 3931,
+      "original_git_blob_sha1": "d37f67344252969a104a0b24736f60074e754125",
+      "original_sha256": "6d5a9d2b8550cc84f93aae27935ca02abe2d3c8a1d2175fb75f8ccfbfa4f9207",
+      "original_source_path": "tests/affine_ranking_lp.py",
+      "original_source_url": "https://github.com/Geniusyingmanji/ScientistsLastExam/blob/90366563a7605e8f6eb6226200b1463615419b4a/tests/affine_ranking_lp.py",
+      "public_input_review": {
+        "code_change": "complete original helper source retained, only public rational decode/encode and build_ranking entrypoint appended",
+        "filesystem_or_network_access": false,
+        "hidden_optimum_or_answer_table": false,
+        "imports": [
+          "__future__.annotations",
+          "fractions.Fraction",
+          "numpy",
+          "scipy.optimize.linprog"
+        ],
+        "inputs": [
+          "instance.guards[*].g",
+          "instance.guards[*].d",
+          "instance.A",
+          "instance.b"
+        ],
+        "oracle_or_reference_import": false,
+        "unused_public_fields": [
+          "name",
+          "dimension",
+          "max_numerator",
+          "max_denominator"
+        ]
+      },
+      "scope": "related current fixed LP helper, not original missing issue78 155-line pure-standard-library candidate",
+      "task_head": "90366563a7605e8f6eb6226200b1463615419b4a"
+    },
+    "prior_reference_comparison": {
+      "integration_head": "2660c38a413fb7281d0e7012a6446eb384a934d1",
+      "reference_runs": [
+        {
+          "full_metrics_sha256": "b72b81a387711a1c0e3fb608e63d46102cb0be89bfe745df0e9e8911cb8b5b37",
+          "instance_aggregate": {
+            "count": 4,
+            "score_max": 0.535373,
+            "score_mean": 0.459105,
+            "score_min": 0.366159,
+            "valid_count": 4
+          },
+          "metric_scope": "optimization only; no development/heldout split or discovery axes",
+          "metrics": {
+            "combined_score": 0.459105,
+            "feasibility_rate": 1.0,
+            "instances_with_a_valid_certificate": 4,
+            "raw_score": 0.459105,
+            "valid": 1.0
+          },
+          "repeat": 1,
+          "wall_seconds": 0.9358255229890347
+        },
+        {
+          "full_metrics_sha256": "b72b81a387711a1c0e3fb608e63d46102cb0be89bfe745df0e9e8911cb8b5b37",
+          "instance_aggregate": {
+            "count": 4,
+            "score_max": 0.535373,
+            "score_mean": 0.459105,
+            "score_min": 0.366159,
+            "valid_count": 4
+          },
+          "metric_scope": "optimization only; no development/heldout split or discovery axes",
+          "metrics": {
+            "combined_score": 0.459105,
+            "feasibility_rate": 1.0,
+            "instances_with_a_valid_certificate": 4,
+            "raw_score": 0.459105,
+            "valid": 1.0
+          },
+          "repeat": 2,
+          "wall_seconds": 1.028826005756855
+        }
+      ],
+      "reference_sha256": "6f92e7ce8680baebf063924022b6664094f29c1e9e0fc0506321b6e32c42f01e",
+      "report_path": ".research/pr30_shortcut_review_2026-09-11.json",
+      "report_sha256": "1433a12ed9805e3df60866ae7724990fe2323781812e04b748d1cbd4c168cfdc",
+      "runtime": {
+        "executable": "/usr/bin/python3",
+        "numpy": "1.24.4",
+        "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29",
+        "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+        "scipy": "1.10.1",
+        "thread_environment": {
+          "MKL_NUM_THREADS": "1",
+          "NUMEXPR_NUM_THREADS": "1",
+          "OMP_NUM_THREADS": "1",
+          "OPENBLAS_NUM_THREADS": "1"
+        }
+      },
+      "runtime_source_sha256": "8159a99d54894dd304e3ac48956cd05d4389f12a041f5d5d86a2c079641c2c86",
+      "scope": "prior separate frozen six-call plan in same task/runtime/environment; no reference rerun in this plan",
+      "task_head": "90366563a7605e8f6eb6226200b1463615419b4a",
+      "task_package_sha256": "a07453ee0e66af507910dcd6275db46c33c98b7a5a51b5c6079f1d86c7a640b5"
+    },
+    "public_input_review": "same previously reviewed public guards/A/b decoder and exact rational output; method literal is sole changed line; no evaluator/reference imports, label tables, filesystem reads or new parameter selection",
+    "scope_limitation": "related current helper implementation using revised-simplex backend; not the unavailable original issue78 155-line pure-stdlib probe",
+    "single_line_diff": "--- prior_fixed_highs_candidate.py\n+++ fixed_revised_simplex_candidate.py\n@@ -85,7 +85,7 @@\n     af = np.array([[float(x) for x in row] for row in A], dtype=float)\n     bf = np.array([float(x) for x in rhs], dtype=float)\n     cf = np.array([float(x) for x in c], dtype=float)\n-    result = linprog(-cf, A_eq=af, b_eq=bf, bounds=[(0, None)] * nvars, method=\"highs\")\n+    result = linprog(-cf, A_eq=af, b_eq=bf, bounds=[(0, None)] * nvars, method=\"revised simplex\")\n     if not result.success:\n         raise RuntimeError(result.message)\n     basic = []\n",
+    "task_head": "90366563a7605e8f6eb6226200b1463615419b4a"
+  },
+  "driver_sha256": "d3656e8b7c6a6f7c1bef2a7ae1f4538a04aaf3a8361e9b05925c6ca73b2b2081",
+  "finished_utc": "2026-09-11T05:44:43.320608+00:00",
+  "full_metrics_repeat_identical": true,
+  "integration_head": "2660c38a413fb7281d0e7012a6446eb384a934d1",
+  "loader_adapter": {
+    "in_memory_only": true,
+    "mapping": "ScientificComputing -> ComputerScience",
+    "previous": "ComputerScience"
+  },
+  "planned_evaluations": 2,
+  "raw_metrics_scope": "complete per-instance metrics private; only scalar and instance score aggregates public",
+  "runs": [
+    {
+      "full_metrics_sha256": "a71f873fc4644fe1972e3ae3610110362a7792d92e53515669bfb54e9dd9f684",
+      "instance_aggregate": {
+        "count": 0,
+        "score_max": null,
+        "score_mean": null,
+        "score_min": null,
+        "valid_count": 0
+      },
+      "metrics": {
+        "combined_score": -1e+18,
+        "raw_score": -1e+18,
+        "valid": 0.0
+      },
+      "outcome": {
+        "candidate_failure_kind": "candidate_runtime_error",
+        "infrastructure_failure": false,
+        "scientific_score_available": false
+      },
+      "repeat": 1,
+      "wall_seconds": 0.981481559574604
+    },
+    {
+      "full_metrics_sha256": "a71f873fc4644fe1972e3ae3610110362a7792d92e53515669bfb54e9dd9f684",
+      "instance_aggregate": {
+        "count": 0,
+        "score_max": null,
+        "score_mean": null,
+        "score_min": null,
+        "valid_count": 0
+      },
+      "metrics": {
+        "combined_score": -1e+18,
+        "raw_score": -1e+18,
+        "valid": 0.0
+      },
+      "outcome": {
+        "candidate_failure_kind": "candidate_runtime_error",
+        "infrastructure_failure": false,
+        "scientific_score_available": false
+      },
+      "repeat": 2,
+      "wall_seconds": 0.9584835786372423
+    }
+  ],
+  "runtime": {
+    "executable": "/usr/bin/python3",
+    "numpy": "1.24.4",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29",
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "scipy": "1.10.1",
+    "thread_environment": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    }
+  },
+  "runtime_source_sha256": "8159a99d54894dd304e3ac48956cd05d4389f12a041f5d5d86a2c079641c2c86",
+  "schema_version": 1,
+  "scientifically_valid_evaluations": 0,
+  "scope": "independent two-call revised-simplex plan; previous six calls unchanged; no baseline/reference reruns or new method search",
+  "started_utc": "2026-09-11T05:44:41.374019+00:00",
+  "task_head": "90366563a7605e8f6eb6226200b1463615419b4a",
+  "task_id": "ScientificComputing/AffineLoopRankingCertificate",
+  "task_package_sha256": "a07453ee0e66af507910dcd6275db46c33c98b7a5a51b5c6079f1d86c7a640b5",
+  "task_source_hashes": {
+    "TASK_CARD.yaml": "11673e8760663236f36980102f5f300d443507002971ebe8ff8360ba31151ed0",
+    "Task.md": "866a42de1604d40e517436c92f66bd8e18eeaee5ec339bdb931f9f63bc4ad310",
+    "frontier_eval/agent_files.txt": "9c9c47fdaee31c7a9d4f0e822d48c015fc619de200fb801cbd5b1c940901b6e1",
+    "frontier_eval/candidate_destination.txt": "ece4e0053b1c683eff94ac0fadeacd92748da603286a0105b2870eb77b63e459",
+    "frontier_eval/constraints.txt": "f496be1253fa734b162377c722140d431e7faba50e9751e3e98ebe6206f47e90",
+    "frontier_eval/entrypoint.txt": "927532f5d5eb1b7491e280d55fd21d05ead54c68df05be5dc7fc3ea1e9f1219a",
+    "frontier_eval/eval_command.txt": "5c442f4425daec9752afea2e730fb75e7aace44d99c642f92f0464afa091b956",
+    "frontier_eval/initial_program.txt": "ece4e0053b1c683eff94ac0fadeacd92748da603286a0105b2870eb77b63e459",
+    "frontier_eval/metadata.yaml": "609e5289a14facf6b684c4a53a4e58b79374958526a43804b0303348f711657e",
+    "frontier_eval/readonly_files.txt": "0869f319a451d8f8dad02a105d31c2393ad9ad29f4b18a25c53779365dcc5fc4",
+    "frontier_eval/run_eval.py": "7bc9c2b163220b17dfe962f0f621b84ed5fdbcae680f14db2370942c172514a7",
+    "references/inverse_column_probe.py": "448549d3167fd63c93af142b6ed1ae10a493611a9362381b311224f6bb5bec26",
+    "references/known_best.md": "4054c6d5eed7f7e870fa4a62cf98ca9f9d4f60b08ebe48573e08fd23c44133a7",
+    "solution.py": "727ca3e49e35dc16e633ac0919982fee2a0811efea2066785f02df1038c445ec",
+    "verification/evaluator.py": "3ebca671fd9c769630564f5d6f0a5f1cb2cabc8184abd7f0fa4fa2066f17c4a3",
+    "verification/reference_ranking.py": "6f92e7ce8680baebf063924022b6664094f29c1e9e0fc0506321b6e32c42f01e"
+  },
+  "timeout_seconds": 300.0
+}

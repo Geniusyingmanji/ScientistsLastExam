@@ -1,0 +1,11 @@
+--- prior_fixed_highs_candidate.py
++++ fixed_revised_simplex_candidate.py
+@@ -85,7 +85,7 @@
+     af = np.array([[float(x) for x in row] for row in A], dtype=float)
+     bf = np.array([float(x) for x in rhs], dtype=float)
+     cf = np.array([float(x) for x in c], dtype=float)
+-    result = linprog(-cf, A_eq=af, b_eq=bf, bounds=[(0, None)] * nvars, method="highs")
++    result = linprog(-cf, A_eq=af, b_eq=bf, bounds=[(0, None)] * nvars, method="revised simplex")
+     if not result.success:
+         raise RuntimeError(result.message)
+     basic = []
