@@ -511,6 +511,13 @@ ROW_KEYS = ("set_f1", "effect_score", "mechanism_score", "false_discovery", "cor
 
 
 def _evaluate_world(fine_map, spec, split, index):
+    # One scientific world owns one candidate process and private tmpfs.  Keep all
+    # paid LD callbacks inside that session, but never carry state across worlds
+    # (including the development/heldout boundary).  A failed reset is a runtime
+    # failure, so it must escape the invalid-submission handler below.
+    reset_session = getattr(fine_map, "reset_session", None)
+    if callable(reset_session):
+        reset_session()
     world = _world(spec)
     campaign = _Campaign(world)
     problem = _public_problem(world)

@@ -16,6 +16,8 @@ from __future__ import annotations
 import importlib.util
 import json
 import sys
+import tempfile
+import textwrap
 import unittest
 from pathlib import Path
 
@@ -23,6 +25,9 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+
+from _sandbox_tools import skip_unless_sandbox
+from sle.secure_eval import CandidateProxy
 
 TASK = ROOT / "benchmarks/Biology/LDMismatchFineMapping"
 
@@ -239,6 +244,57 @@ class LDMismatchFineMappingTests(unittest.TestCase):
         first = self.evaluator.evaluate(self.reference.fine_map)
         second = self.evaluator.evaluate(self.reference.fine_map)
         self.assertEqual(json.dumps(first, sort_keys=True), json.dumps(second, sort_keys=True))
+
+    @skip_unless_sandbox("bwrap")
+    def test_actual_candidate_process_and_tmpfs_reset_between_all_worlds_and_splits(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            candidate = Path(tmp) / "candidate.py"
+            candidate.write_text(textwrap.dedent('''
+                import os
+                import numpy as np
+
+                calls = 0
+
+                def fine_map(problem, ld_row):
+                    global calls
+                    calls += 1
+                    marker = "/tmp/fine-mapping-world-state"
+                    if calls != 1 or os.path.exists(marker):
+                        raise RuntimeError("state leaked from previous world")
+                    if getattr(np, "_fine_mapping_world_seen", False):
+                        raise RuntimeError("imported state leaked from previous world")
+                    np._fine_mapping_world_seen = True
+                    with open(marker, "w") as handle:
+                        handle.write("within-world state")
+                    first = ld_row(0)
+                    second = ld_row(0)
+                    if first != second or calls != 1:
+                        raise RuntimeError("paid callback did not preserve its session")
+                    with open(marker) as handle:
+                        if handle.read() != "within-world state":
+                            raise RuntimeError("tmpfs reset inside world")
+                    return {"verdict": "unresolved", "confidence": 0.8}
+            '''), encoding="utf-8")
+            with CandidateProxy(candidate, "fine_map", timeout_s=90) as proxy:
+                metrics = self.evaluator.evaluate(proxy)
+        rows = metrics["per_instance"]
+        self.assertEqual(len(rows), len(self.evaluator.DEVELOPMENT_WORLDS)
+                         + len(self.evaluator.HELDOUT_WORLDS))
+        self.assertEqual({r["split"] for r in rows}, {"development", "heldout"})
+        for row in rows:
+            self.assertTrue(row["valid"], row)
+            self.assertEqual(row["rows_bought"], 1, row)
+
+    def test_reset_failure_is_not_scored_as_an_invalid_scientific_submission(self):
+        class BrokenReset:
+            def reset_session(self):
+                raise RuntimeError("cannot establish isolated candidate session")
+
+            def __call__(self, _problem, _ld_row):
+                raise AssertionError("candidate must not run after failed reset")
+
+        with self.assertRaisesRegex(RuntimeError, "cannot establish isolated"):
+            self.evaluator.evaluate(BrokenReset())
 
     def test_truth_effect_units_follow_the_accepted_phenotype_draw(self):
         signal = np.array([-2.0, -1.0, 1.0, 2.0])
