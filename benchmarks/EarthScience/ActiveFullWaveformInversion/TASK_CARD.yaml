@@ -1,0 +1,140 @@
+schema_version: 2
+scientific_question: Can a bounded shot program recover a supported acoustic velocity structure and refuse
+  null or resolvably non-acoustic responses?
+artifact: A bounded two-dimensional velocity grid, confidence and an optional model-inadequacy abstention.
+oracle:
+  model: deterministic constant-density 2-D acoustic finite differences with smooth random heterogeneous
+    velocity fields throughout the full depth range, unresolved near-null structure, independently varying
+    source-timing errors and structural attenuation; NumPy waveform alignment and aggregation
+  feasibility: finite bounded velocity grids and strictly charged source acquisitions under a three-unit
+    budget
+  deterministic: true
+  external_tooling: NumPy for fixed-grid time/receiver waveform alignment and reduction
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: working noise and smooth heterogeneous fields
+    2: diagnostic only; 30 percent more noise and more spatial components; unvalidated after the world
+      revision
+    3: diagnostic only; 65 percent more noise and more spatial components; unvalidated after the world
+      revision
+normalization:
+  baseline: one central shot followed by a confident background-velocity claim on every world
+  reference: Standalone public-input acoustic inversion witness; algorithm and measured comparisons are
+    recorded in references/known_best.md.
+  score: background-relative depth-weighted structural skill (background or worse gives zero) and sealed-frequency
+    waveform recovery normalized above always abstaining; refusal, calibration and held-out transfer remain
+    separate
+citations:
+- id: doi:10.1190/1.3238367
+  title: An overview of full-waveform inversion in exploration geophysics
+- id: arxiv:2003.14181
+  title: 'Wavefield Reconstruction Inversion: an example'
+invariants:
+- constant velocity produces stable finite waveforms and identical repeated traces
+- exact supported velocity fields attain unit structural and sealed-waveform scores
+- background and worse-than-background predictions receive zero structural skill
+- structured attenuating worlds occur in both splits; at least one defeats the old global energy gate
+- near-null, source-timing and attenuating responses reward refusal instead of fabricated structure
+- every acquisition consumes budget and overspending fails closed
+- held-out shots, frequencies, worlds and mechanism metrics remain evaluator-only
+- ten supported worlds per split with disjoint development and heldout seeds
+- all three unsupported regimes have seed-dependent velocity fields and independent noise; the near-null is a shared negative control, not independent geological-transfer evidence
+- the deep region contains genuine structure; a fixed shallow-only reconstruction discards signal
+known_shortcuts: 'The September 10 maintainer review invalidated the previous claimed bound: continuous
+  Gaussian fitting with discrepancy stopping and a depth cap achieved 0.820084/0.561552 versus the old
+  reference 0.714101/0.660180. The old 58.7/55.0 percent ratios were not upper bounds. This revision changes
+  the world family and recording duration; archived scores are not transferable. scripts/audit_fwi_revision.py
+  tests continuous one/three/five-blob families with noise and depth priors and all single/pair source
+  choices. The final three-shot reference measures 0.664800/0.551567; best development-selected single
+  and pair measure 0.512128/0.391881 and 0.620585/0.469126. These finite audits are not universal shortcut
+  bounds. Full threshold sweeps, uncertainty and remaining admission limitations are recorded in references/known_best.md.'
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All waveforms and velocity worlds are generated from original repository code; cited publications
+    are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The acoustic family, grid and scaffold are public and AI-assisted; server-held worlds and
+    an independent solver are still required.
+review:
+  domain: pending_external_seismology
+  evaluator_security: targeted_regressions_and_real_linux_sandbox_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic acoustic simulator with development and held-out structural,
+    noise and model-misspecification regimes.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: predeclared_procedural_seeds_completed_external_validation_pending
+novelty_risk:
+  level: medium
+  rationale: Geophysics/GravityInversion also uses paid observations and model-inadequacy refusal, but
+    recovers potential-field parameters. This task returns a two-dimensional acoustic velocity grid and
+    tests transfer to sealed shots and frequencies. The public acoustic scaffold remains a contamination
+    risk; builder-model independence is not established.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex
+  builder_scaffolds:
+  - repository-native-earth-science-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: No frontier-model draw has been run. Local code review replaced the fixed
+    negative lens with signed spatial velocity corrections and added contract and regression checks; the
+    historical method comparison is retained as non-causal diagnostic evidence. The 2026-09-07 revision
+    measured the three first-shot no-inversion families, found a constant lens above the single-pass 3x5
+    reference, and replaced that reference with a coarse-to-fine 3x5-to-5x8 grid-continuation fit (historically
+    0.615339 development). The September 9 revision removes the structural-score floor, adds structured
+    attenuation and measures paid-shot ablation; current scores and method margins are recorded in known_best.md
+    and pinned in tests/test_pr9_earth_hardening.py. A subsequent solver-only revision adds exact tangent
+    sensitivities, minimum-change regularization and late receiver balancing; development-only selection,
+    source freeze and fresh-world failures are documented in references/solver_confirmation_2026-09-09.json.
+    No scoring or world changes were made for that solver improvement. A separate review completion then
+    isolates noise streams by world kind and remeasures both references and all probes without retuning
+    the solver or changing the score formula. The September 11 review follow-up replaces the low-dimensional
+    Gaussian truth family with smooth random heterogeneous fields, covers deep structure, expands both
+    splits to ten supported worlds and independently varies all unsupported regimes. Continuous Gaussian
+    fitting, exhaustive source choices and stratified world uncertainty are now included in the review
+    audit. Exact derivatives are a numerical implementation choice, not claimed independent scientific
+    capability.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_seismology
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_high_fidelity_replication_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations and clean frontier-model
+    calibration before certification
+frontier_eng_overlap_review:
+  date: '2026-09-06'
+  classification: 无
+  nearest: CarAerodynamicsSensing; holographic_multiplane_focusing
+  distinction: Budgeted acoustic shots recover a subsurface velocity grid and test model adequacy; FE
+    selects car pressure sensors or designs optical phase masks. Neither recovers acoustic velocity from
+    acquired waveforms.
+  evidence: .research/pr20_frontier_eng_overlap_2026-09-06.md
+  status: available_catalog_scope_confirmed_by_maintainer
+public_model_disclosure: The finite-difference stencil, damping, wavelet and acquisition geometry are
+  deliberately public so the task measures inversion rather than guessing the simulator. Hidden structures,
+  noise and sealed shots/frequencies remain evaluator-only.
+evaluation_budget:
+  timeout_seconds: 1200
+  acquisition_units: 3
+  measurement_source: Two final-source Linux sandbox runs took 618.68 and 607.13 seconds under concurrent
+    diagnostic load; identical metrics and source hashes are recorded in references/review_revision_2026-09-11.json.
+    Previous nine-world timing claims are historical and do not apply to this revision.

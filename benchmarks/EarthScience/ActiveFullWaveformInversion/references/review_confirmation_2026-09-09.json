@@ -1,0 +1,1707 @@
+{
+  "scope": "current_independent_noise_comparison_with_unchanged_reference_algorithm",
+  "environment": "macOS Python 3.11; NumPy 1.24.4; SciPy 1.10.1",
+  "development": {
+    "split": "development",
+    "numpy": "1.24.4",
+    "scipy": "1.10.1",
+    "platform": "macOS-15.7.4-arm64-arm-64bit",
+    "source_sha256": {
+      "benchmarks/EarthScience/ActiveFullWaveformInversion/verification/evaluator.py": "040f83dfd67528f9a381de78565fce2990083300064a166ae2923945610c7752",
+      "reference_before": "c99765609c381021c0ffef8f6e41dac5f78d09b7548fd3112c9066e2b62955b6",
+      "reference_after": "c6140935f48c7958d6e032c30138c6881697797ad9252e6cd577e9effe594427"
+    },
+    "methods": {
+      "old": {
+        "per_world": [
+          {
+            "spec": [
+              41011,
+              "supported",
+              0
+            ],
+            "seconds": 2.802772583992919,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.5512624956592951,
+            "waveform_score": 0.991067185853048,
+            "mechanism_score": 0.7391469206046831,
+            "velocity_rmse_m_s": 49.95281486202385,
+            "background_relative_error": 0.2857651398535884,
+            "upper_rmse_m_s": 9.828772478932779,
+            "lower_rmse_m_s": 69.95686282872207
+          },
+          {
+            "spec": [
+              41017,
+              "supported",
+              1
+            ],
+            "seconds": 2.537048540994874,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.14499571412443885,
+            "waveform_score": 0.9884976818139442,
+            "mechanism_score": 0.3785867500124181,
+            "velocity_rmse_m_s": 182.951737773418,
+            "background_relative_error": 0.7275467130443615,
+            "upper_rmse_m_s": 25.138942051167085,
+            "lower_rmse_m_s": 257.5086606333369
+          },
+          {
+            "spec": [
+              41023,
+              "supported",
+              2
+            ],
+            "seconds": 5.073188750000554,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.05976875289271422,
+            "waveform_score": 0.9154551509584822,
+            "mechanism_score": 0.23391368643583027,
+            "velocity_rmse_m_s": 289.31413383853703,
+            "background_relative_error": 0.8739695043740722,
+            "upper_rmse_m_s": 34.90576800760396,
+            "lower_rmse_m_s": 407.66030397536275
+          },
+          {
+            "spec": [
+              41039,
+              "supported",
+              3
+            ],
+            "seconds": 5.237075333003304,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.14864532768277475,
+            "waveform_score": 0.946229146360473,
+            "mechanism_score": 0.37503672023382556,
+            "velocity_rmse_m_s": 141.925488001583,
+            "background_relative_error": 0.7219409983526179,
+            "upper_rmse_m_s": 91.07217153351914,
+            "lower_rmse_m_s": 178.86181219350382
+          },
+          {
+            "spec": [
+              41047,
+              "null",
+              0
+            ],
+            "seconds": 0.011668124992866069,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              41051,
+              "misspecified",
+              1
+            ],
+            "seconds": 0.01308854200760834,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              41023,
+              "structured_attenuation",
+              2
+            ],
+            "seconds": 7.270897916998365,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 22.980780916986987,
+        "combined_score": 0.4316710193216893,
+        "model_score": 0.22616807258980573,
+        "waveform_score": 0.9603122912464868,
+        "correct_refusal_rate": 1.0,
+        "coverage": 1.0,
+        "mean_rmse_m_s": 166.03604361889046
+      },
+      "new": {
+        "per_world": [
+          {
+            "spec": [
+              41011,
+              "supported",
+              0
+            ],
+            "seconds": 2.784607416993822,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.5567534394894335,
+            "waveform_score": 0.996802922038863,
+            "mechanism_score": 0.7449654054640756,
+            "velocity_rmse_m_s": 50.22403155964069,
+            "background_relative_error": 0.2814135778809764,
+            "upper_rmse_m_s": 6.960065958384226,
+            "lower_rmse_m_s": 70.68567163196875
+          },
+          {
+            "spec": [
+              41017,
+              "supported",
+              1
+            ],
+            "seconds": 3.467276417009998,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.36466012416161125,
+            "waveform_score": 0.9856599397338381,
+            "mechanism_score": 0.5995255424120541,
+            "velocity_rmse_m_s": 117.10157215339099,
+            "background_relative_error": 0.4535878541767074,
+            "upper_rmse_m_s": 21.80235466707756,
+            "lower_rmse_m_s": 164.16520256303596
+          },
+          {
+            "spec": [
+              41023,
+              "supported",
+              2
+            ],
+            "seconds": 5.920909499996924,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.5028819329576365,
+            "waveform_score": 0.9768810777923139,
+            "mechanism_score": 0.7008964578808614,
+            "velocity_rmse_m_s": 111.8177283522427,
+            "background_relative_error": 0.32538644934184213,
+            "upper_rmse_m_s": 31.87773484855767,
+            "lower_rmse_m_s": 154.88776184268704
+          },
+          {
+            "spec": [
+              41039,
+              "supported",
+              3
+            ],
+            "seconds": 5.022458292005467,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.6680831873882029,
+            "waveform_score": 0.984527065485207,
+            "mechanism_score": 0.8110154005808465,
+            "velocity_rmse_m_s": 39.10690239080479,
+            "background_relative_error": 0.19880813438663528,
+            "upper_rmse_m_s": 18.522079265000922,
+            "lower_rmse_m_s": 52.1117281320519
+          },
+          {
+            "spec": [
+              41047,
+              "null",
+              0
+            ],
+            "seconds": 0.012507207997259684,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              41051,
+              "misspecified",
+              1
+            ],
+            "seconds": 0.010805458994582295,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              41023,
+              "structured_attenuation",
+              2
+            ],
+            "seconds": 10.091571249999106,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 27.347727166008553,
+        "combined_score": 0.7141007015844596,
+        "model_score": 0.523094670999221,
+        "waveform_score": 0.9859677512625555,
+        "correct_refusal_rate": 1.0,
+        "coverage": 1.0,
+        "mean_rmse_m_s": 79.56255861401979
+      }
+    }
+  },
+  "heldout": {
+    "split": "heldout",
+    "numpy": "1.24.4",
+    "scipy": "1.10.1",
+    "platform": "macOS-15.7.4-arm64-arm-64bit",
+    "source_sha256": {
+      "benchmarks/EarthScience/ActiveFullWaveformInversion/verification/evaluator.py": "040f83dfd67528f9a381de78565fce2990083300064a166ae2923945610c7752",
+      "reference_before": "c99765609c381021c0ffef8f6e41dac5f78d09b7548fd3112c9066e2b62955b6",
+      "reference_after": "c6140935f48c7958d6e032c30138c6881697797ad9252e6cd577e9effe594427"
+    },
+    "methods": {
+      "old": {
+        "per_world": [
+          {
+            "spec": [
+              51001,
+              "supported",
+              4
+            ],
+            "seconds": 3.066984625009354,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.9934277937363749,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 230.98621925936357,
+            "background_relative_error": 1.4398245227055968,
+            "upper_rmse_m_s": 9.045947631478738,
+            "lower_rmse_m_s": 326.53857016732053
+          },
+          {
+            "spec": [
+              51007,
+              "supported",
+              5
+            ],
+            "seconds": 4.033687792005367,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.9769982577171672,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 344.31565177362404,
+            "background_relative_error": 4.096475487864072,
+            "upper_rmse_m_s": 29.392896025396844,
+            "lower_rmse_m_s": 486.04793361954665
+          },
+          {
+            "spec": [
+              51019,
+              "supported",
+              6
+            ],
+            "seconds": 2.8423527920094784,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.8082999641524906,
+            "waveform_score": 0.9984989861681147,
+            "mechanism_score": 0.8983800391404438,
+            "velocity_rmse_m_s": 17.334366496195116,
+            "background_relative_error": 0.10750411309481482,
+            "upper_rmse_m_s": 3.0132339491214957,
+            "lower_rmse_m_s": 24.328603429228835
+          },
+          {
+            "spec": [
+              51031,
+              "null",
+              0
+            ],
+            "seconds": 0.011734958010492846,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              51043,
+              "misspecified",
+              2
+            ],
+            "seconds": 0.011731708000297658,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              51053,
+              "structured_attenuation",
+              8
+            ],
+            "seconds": 0.012164083003881387,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 10.004719874996226,
+        "combined_score": 0.2994600130468146,
+        "model_score": 0.26943332138416354,
+        "waveform_score": 0.989641679207219,
+        "correct_refusal_rate": 1.0,
+        "coverage": 1.0,
+        "mean_rmse_m_s": 197.54541250972758
+      },
+      "new": {
+        "per_world": [
+          {
+            "spec": [
+              51001,
+              "supported",
+              4
+            ],
+            "seconds": 2.9481857089995174,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.1326739214556911,
+            "waveform_score": 0.9910684028632399,
+            "mechanism_score": 0.3626140254302014,
+            "velocity_rmse_m_s": 121.23603462147345,
+            "background_relative_error": 0.7468286462359234,
+            "upper_rmse_m_s": 13.748907623091165,
+            "lower_rmse_m_s": 170.90149127684617
+          },
+          {
+            "spec": [
+              51007,
+              "supported",
+              5
+            ],
+            "seconds": 3.3829187500086846,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.551403604576352,
+            "waveform_score": 0.9943004918128395,
+            "mechanism_score": 0.740446402663717,
+            "velocity_rmse_m_s": 25.40645868699578,
+            "background_relative_error": 0.28565295499245225,
+            "upper_rmse_m_s": 17.185825015530238,
+            "lower_rmse_m_s": 31.553505424336326
+          },
+          {
+            "spec": [
+              51019,
+              "supported",
+              6
+            ],
+            "seconds": 2.9821355000021867,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.7759453089931914,
+            "waveform_score": 0.9923016122256264,
+            "mechanism_score": 0.8774803593886622,
+            "velocity_rmse_m_s": 21.067395262401224,
+            "background_relative_error": 0.12748983995842036,
+            "upper_rmse_m_s": 5.753633298620602,
+            "lower_rmse_m_s": 29.23296068053141
+          },
+          {
+            "spec": [
+              51031,
+              "null",
+              0
+            ],
+            "seconds": 0.011266292000073008,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              51043,
+              "misspecified",
+              2
+            ],
+            "seconds": 0.012703667001915164,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              51053,
+              "structured_attenuation",
+              8
+            ],
+            "seconds": 0.010953790988423862,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 9.375558749990887,
+        "combined_score": 0.6601802624941934,
+        "model_score": 0.4866742783417448,
+        "waveform_score": 0.992556835633902,
+        "correct_refusal_rate": 1.0,
+        "coverage": 1.0,
+        "mean_rmse_m_s": 55.90329619029015
+      }
+    }
+  },
+  "additional_worlds": {
+    "split": "fresh",
+    "numpy": "1.24.4",
+    "scipy": "1.10.1",
+    "platform": "macOS-15.7.4-arm64-arm-64bit",
+    "source_sha256": {
+      "benchmarks/EarthScience/ActiveFullWaveformInversion/verification/evaluator.py": "040f83dfd67528f9a381de78565fce2990083300064a166ae2923945610c7752",
+      "reference_before": "c99765609c381021c0ffef8f6e41dac5f78d09b7548fd3112c9066e2b62955b6",
+      "reference_after": "c6140935f48c7958d6e032c30138c6881697797ad9252e6cd577e9effe594427"
+    },
+    "methods": {
+      "old": {
+        "per_world": [
+          {
+            "spec": [
+              71011,
+              "supported",
+              0
+            ],
+            "seconds": 4.207584499992663,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.5200414790240155,
+            "waveform_score": 0.9915932514074933,
+            "mechanism_score": 0.7181014002577807,
+            "velocity_rmse_m_s": 71.87877061577437,
+            "background_relative_error": 0.31106261854121453,
+            "upper_rmse_m_s": 10.872291920314936,
+            "lower_rmse_m_s": 101.06883099585983
+          },
+          {
+            "spec": [
+              71017,
+              "supported",
+              1
+            ],
+            "seconds": 5.214004082998144,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.9492578198643313,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 219.14601893487077,
+            "background_relative_error": 1.2424596064123576,
+            "upper_rmse_m_s": 68.87785842905976,
+            "lower_rmse_m_s": 302.1684891715744
+          },
+          {
+            "spec": [
+              71023,
+              "supported",
+              2
+            ],
+            "seconds": 7.9411724579986185,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71039,
+              "supported",
+              3
+            ],
+            "seconds": 2.7816335420066025,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.06833124521759071,
+            "waveform_score": 0.9936995104761464,
+            "mechanism_score": 0.2605776754116618,
+            "velocity_rmse_m_s": 166.0124939846485,
+            "background_relative_error": 0.8577180140193549,
+            "upper_rmse_m_s": 28.248144570944064,
+            "lower_rmse_m_s": 233.07153117938913
+          },
+          {
+            "spec": [
+              71047,
+              "supported",
+              4
+            ],
+            "seconds": 7.382062042001053,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.950784936431228,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 380.8736792860084,
+            "background_relative_error": 2.1310276426304267,
+            "upper_rmse_m_s": 65.37848941401495,
+            "lower_rmse_m_s": 534.6542548859626
+          },
+          {
+            "spec": [
+              71051,
+              "supported",
+              5
+            ],
+            "seconds": 4.14262954100559,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.9802722595252593,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 327.10655606191034,
+            "background_relative_error": 1.5450249220428784,
+            "upper_rmse_m_s": 50.70592759000768,
+            "lower_rmse_m_s": 459.81116444101735
+          },
+          {
+            "spec": [
+              71059,
+              "supported",
+              6
+            ],
+            "seconds": 0.012354957987554371,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71063,
+              "supported",
+              7
+            ],
+            "seconds": 6.067280082992511,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71069,
+              "supported",
+              8
+            ],
+            "seconds": 3.52315620900481,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.4616238096260882,
+            "waveform_score": 0.976831152311978,
+            "mechanism_score": 0.671512112989555,
+            "velocity_rmse_m_s": 137.80223344094853,
+            "background_relative_error": 0.3611409502095795,
+            "upper_rmse_m_s": 26.207075496845395,
+            "lower_rmse_m_s": 193.11162646648177
+          },
+          {
+            "spec": [
+              71081,
+              "supported",
+              9
+            ],
+            "seconds": 3.4507419580040732,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.9584295113706628,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 178.93014690796002,
+            "background_relative_error": 1.1625864114160869,
+            "upper_rmse_m_s": 73.28246007543103,
+            "lower_rmse_m_s": 242.2017258202368
+          },
+          {
+            "spec": [
+              71089,
+              "supported",
+              10
+            ],
+            "seconds": 0.014833459004876204,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71099,
+              "supported",
+              11
+            ],
+            "seconds": 8.079457542000455,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              72011,
+              "null",
+              0
+            ],
+            "seconds": 0.01029029200435616,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72017,
+              "misspecified",
+              1
+            ],
+            "seconds": 0.01037329199607484,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72023,
+              "structured_attenuation",
+              2
+            ],
+            "seconds": 0.01045558400801383,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72031,
+              "structured_attenuation",
+              4
+            ],
+            "seconds": 6.223653499997454,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72043,
+              "structured_attenuation",
+              6
+            ],
+            "seconds": 0.010443250008393079,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 59.155794165999396,
+        "combined_score": 0.13751593238824977,
+        "model_score": 0.0874997111556412,
+        "waveform_score": 0.5667390367822583,
+        "correct_refusal_rate": 1.0,
+        "coverage": 0.5833333333333334,
+        "mean_rmse_m_s": 211.67855703316016
+      },
+      "new": {
+        "per_world": [
+          {
+            "spec": [
+              71011,
+              "supported",
+              0
+            ],
+            "seconds": 2.32031100000313,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.7625394480281681,
+            "waveform_score": 0.9862681576705733,
+            "mechanism_score": 0.8672187593438446,
+            "velocity_rmse_m_s": 31.52632155383071,
+            "background_relative_error": 0.13594957012503042,
+            "upper_rmse_m_s": 7.563860222122017,
+            "lower_rmse_m_s": 43.938660880496364
+          },
+          {
+            "spec": [
+              71017,
+              "supported",
+              1
+            ],
+            "seconds": 3.1022379170026397,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.4606299101464249,
+            "waveform_score": 0.9631194462400154,
+            "mechanism_score": 0.6660642791666679,
+            "velocity_rmse_m_s": 65.25440027247895,
+            "background_relative_error": 0.36202637181814995,
+            "upper_rmse_m_s": 30.876070806767295,
+            "lower_rmse_m_s": 86.96517556687442
+          },
+          {
+            "spec": [
+              71023,
+              "supported",
+              2
+            ],
+            "seconds": 10.246157249988755,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71039,
+              "supported",
+              3
+            ],
+            "seconds": 2.2958252079988597,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.36019778013532855,
+            "waveform_score": 0.9907465980619571,
+            "mechanism_score": 0.5973815575480595,
+            "velocity_rmse_m_s": 90.81472527724868,
+            "background_relative_error": 0.4581671301431181,
+            "upper_rmse_m_s": 14.905542006802344,
+            "lower_rmse_m_s": 127.56352720055898
+          },
+          {
+            "spec": [
+              71047,
+              "supported",
+              4
+            ],
+            "seconds": 4.737928249989636,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.3095016744441465,
+            "waveform_score": 0.9727818511004782,
+            "mechanism_score": 0.54870539616854,
+            "velocity_rmse_m_s": 93.39540686869543,
+            "background_relative_error": 0.5125280714096205,
+            "upper_rmse_m_s": 26.450471332876894,
+            "lower_rmse_m_s": 129.4054736655563
+          },
+          {
+            "spec": [
+              71051,
+              "supported",
+              5
+            ],
+            "seconds": 4.859012749991962,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.2503279475310759,
+            "waveform_score": 0.9688107938896888,
+            "mechanism_score": 0.49246362056537535,
+            "velocity_rmse_m_s": 127.35788262131254,
+            "background_relative_error": 0.5821503419245687,
+            "upper_rmse_m_s": 39.910337199109115,
+            "lower_rmse_m_s": 175.63378238887145
+          },
+          {
+            "spec": [
+              71059,
+              "supported",
+              6
+            ],
+            "seconds": 0.008760791999520734,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71063,
+              "supported",
+              7
+            ],
+            "seconds": 8.137716249999357,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.6367764631582197,
+            "waveform_score": 0.9764099096892817,
+            "mechanism_score": 0.7885143301707188,
+            "velocity_rmse_m_s": 39.465971863098616,
+            "background_relative_error": 0.22102188723400076,
+            "upper_rmse_m_s": 16.450410149986883,
+            "lower_rmse_m_s": 53.33394675152957
+          },
+          {
+            "spec": [
+              71069,
+              "supported",
+              8
+            ],
+            "seconds": 2.474110292008845,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.5880641363721485,
+            "waveform_score": 0.9710899763018456,
+            "mechanism_score": 0.7556872291190284,
+            "velocity_rmse_m_s": 99.89158036156692,
+            "background_relative_error": 0.2571284663414818,
+            "upper_rmse_m_s": 16.3109330131931,
+            "lower_rmse_m_s": 140.32323085826485
+          },
+          {
+            "spec": [
+              71081,
+              "supported",
+              9
+            ],
+            "seconds": 3.701077499994426,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.6397248969727479,
+            "waveform_score": 0.9869432019199866,
+            "mechanism_score": 0.7945892889828162,
+            "velocity_rmse_m_s": 34.573427811075405,
+            "background_relative_error": 0.21889796175863058,
+            "upper_rmse_m_s": 17.16576371187994,
+            "lower_rmse_m_s": 45.78187826425638
+          },
+          {
+            "spec": [
+              71089,
+              "supported",
+              10
+            ],
+            "seconds": 0.008317792002344504,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71099,
+              "supported",
+              11
+            ],
+            "seconds": 8.99816670898872,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              72011,
+              "null",
+              0
+            ],
+            "seconds": 0.00854895899828989,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72017,
+              "misspecified",
+              1
+            ],
+            "seconds": 0.009361541000544094,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72023,
+              "structured_attenuation",
+              2
+            ],
+            "seconds": 0.008818290996714495,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72031,
+              "structured_attenuation",
+              4
+            ],
+            "seconds": 9.24124912499974,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72043,
+              "structured_attenuation",
+              6
+            ],
+            "seconds": 0.011013374998583458,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 60.234992999990936,
+        "combined_score": 0.4592187050887544,
+        "model_score": 0.33398018806568835,
+        "waveform_score": 0.6513474945728189,
+        "correct_refusal_rate": 1.0,
+        "coverage": 0.6666666666666666,
+        "mean_rmse_m_s": 72.78496457866342
+      }
+    }
+  },
+  "diagnostic_levels": {
+    "2": {
+      "scope": "method_diagnostics_not_model_calibration",
+      "platform": "macOS-15.7.4-arm64-arm-64bit",
+      "numpy": "1.24.4",
+      "scipy": "1.10.1",
+      "difficulty": 2,
+      "source_sha256": {
+        "benchmarks/EarthScience/ActiveFullWaveformInversion/verification/evaluator.py": "040f83dfd67528f9a381de78565fce2990083300064a166ae2923945610c7752",
+        "benchmarks/EarthScience/ActiveFullWaveformInversion/verification/reference_solver.py": "c6140935f48c7958d6e032c30138c6881697797ad9252e6cd577e9effe594427",
+        "tests/test_pr9_earth_hardening.py": "6b20d04237e1419334e7521274183b50acd3b509a4facec7bde4693971619256",
+        ".research/pr20_fwi_spatial_probe.py": "da724e1c0feef93ae0b2ca479c4504365579123e6354713570ca9e5689afe87d"
+      },
+      "results": {
+        "three_shots": {
+          "combined_score": 0.597971804764119,
+          "valid": 1.0,
+          "feasibility_rate": 1.0,
+          "mechanism_score": 0.7702696027223537,
+          "development_model_score": 0.3707011156176009,
+          "development_waveform_score": 0.9737685073198713,
+          "development_confidence_calibration_score": 0.9701914424815221,
+          "development_false_discovery_rate": 0.0,
+          "development_correct_refusal_rate": 1.0,
+          "development_discovery_coverage": 1.0,
+          "supported_world_count": 4,
+          "unsupported_world_count": 3,
+          "discovery_attempt_count": 4,
+          "false_discovery_count": 0,
+          "correct_refusal_count": 3,
+          "robustness_score": 0.29004235069213524,
+          "heldout_feasibility_rate": 1.0,
+          "heldout_model_score": 0.12832666381608746,
+          "heldout_waveform_score": 0.860646573666065,
+          "heldout_false_discovery_rate": 0.0,
+          "heldout_correct_refusal_rate": 1.0,
+          "heldout_discovery_coverage": 1.0,
+          "heldout_supported_world_count": 3,
+          "heldout_unsupported_world_count": 3,
+          "heldout_discovery_attempt_count": 3,
+          "heldout_false_discovery_count": 0,
+          "heldout_correct_refusal_count": 3,
+          "heldout_confidence_calibration_score": 0.8436906730723505,
+          "per_world": [
+            {
+              "split": "development",
+              "world_index": 0,
+              "valid": true,
+              "abstained": false,
+              "mechanism_score": 0.5633432127688668,
+              "model_score": 0.32073728463464424,
+              "waveform_score": 0.9894564510460714,
+              "waveform_relative_l2": 0.003533175326065851,
+              "confidence_score": 0.9439935650574381,
+              "false_discovery": false,
+              "correct_refusal": false,
+              "shot_calls": 3
+            },
+            {
+              "split": "development",
+              "world_index": 1,
+              "valid": true,
+              "abstained": false,
+              "mechanism_score": 0.5149864061521443,
+              "model_score": 0.27847379380382786,
+              "waveform_score": 0.9523732732579153,
+              "waveform_relative_l2": 0.016266075760375902,
+              "confidence_score": 0.9187672513219295,
+              "false_discovery": false,
+              "correct_refusal": false,
+              "shot_calls": 3
+            },
+            {
+              "split": "development",
+              "world_index": 2,
+              "valid": true,
+              "abstained": false,
+              "mechanism_score": 0.6427058688052675,
+              "model_score": 0.4252787020582234,
+              "waveform_score": 0.9712944283303934,
+              "waveform_relative_l2": 0.009708544963921104,
+              "confidence_score": 0.9752585562916942,
+              "false_discovery": false,
+              "correct_refusal": false,
+              "shot_calls": 3
+            },
+            {
+              "split": "development",
+              "world_index": 3,
+              "valid": true,
+              "abstained": false,
+              "mechanism_score": 0.6708517313301974,
+              "model_score": 0.45831468197370817,
+              "waveform_score": 0.981949876645105,
+              "waveform_relative_l2": 0.006071671347763937,
+              "confidence_score": 0.9833207246995924,
+              "false_discovery": false,
+              "correct_refusal": false,
+              "shot_calls": 3
+            },
+            {
+              "split": "development",
+              "world_index": 4,
+              "valid": true,
+              "abstained": true,
+              "mechanism_score": 1.0,
+              "model_score": 1.0,
+              "waveform_score": 1.0,
+              "waveform_relative_l2": 0.0,
+              "confidence_score": 0.99,
+              "false_discovery": false,
+              "correct_refusal": true,
+              "shot_calls": 3
+            },
+            {
+              "split": "development",
+              "world_index": 5,
+              "valid": true,
+              "abstained": true,
+              "mechanism_score": 1.0,
+              "model_score": 1.0,
+              "waveform_score": 1.0,
+              "waveform_relative_l2": 0.0,
+              "confidence_score": 0.99,
+              "false_discovery": false,
+              "correct_refusal": true,
+              "shot_calls": 3
+            },
+            {
+              "split": "development",
+              "world_index": 6,
+              "valid": true,
+              "abstained": true,
+              "mechanism_score": 1.0,
+              "model_score": 1.0,
+              "waveform_score": 1.0,
+              "waveform_relative_l2": 0.0,
+              "confidence_score": 0.99,
+              "false_discovery": false,
+              "correct_refusal": true,
+              "shot_calls": 3
+            },
+            {
+              "split": "heldout",
+              "world_index": 0,
+              "valid": true,
+              "abstained": false,
+              "mechanism_score": 0.0,
+              "model_score": 0.0,
+              "waveform_score": 0.6093594939158183,
+              "waveform_relative_l2": 0.1651156278118371,
+              "confidence_score": 0.3599999999999999,
+              "false_discovery": false,
+              "correct_refusal": false,
+              "shot_calls": 3
+            },
+            {
+              "split": "heldout",
+              "world_index": 1,
+              "valid": true,
+              "abstained": false,
+              "mechanism_score": 0.40768925426196495,
+              "model_score": 0.16988195199409226,
+              "waveform_score": 0.9783883814006162,
+              "waveform_relative_l2": 0.007282856593753959,
+              "confidence_score": 0.8460922787784668,
+              "false_discovery": false,
+              "correct_refusal": false,
+              "shot_calls": 3
+            },
+            {
+              "split": "heldout",
+              "world_index": 2,
+              "valid": true,
+              "abstained": false,
+              "mechanism_score": 0.46243779781444067,
+              "model_score": 0.2150980394541701,
+              "waveform_score": 0.9941918456817604,
+              "waveform_relative_l2": 0.001941695748132466,
+              "confidence_score": 0.8860517596556355,
+              "false_discovery": false,
+              "correct_refusal": false,
+              "shot_calls": 3
+            },
+            {
+              "split": "heldout",
+              "world_index": 3,
+              "valid": true,
+              "abstained": true,
+              "mechanism_score": 1.0,
+              "model_score": 1.0,
+              "waveform_score": 1.0,
+              "waveform_relative_l2": 0.0,
+              "confidence_score": 0.99,
+              "false_discovery": false,
+              "correct_refusal": true,
+              "shot_calls": 3
+            },
+            {
+              "split": "heldout",
+              "world_index": 4,
+              "valid": true,
+              "abstained": true,
+              "mechanism_score": 1.0,
+              "model_score": 1.0,
+              "waveform_score": 1.0,
+              "waveform_relative_l2": 0.0,
+              "confidence_score": 0.99,
+              "false_discovery": false,
+              "correct_refusal": true,
+              "shot_calls": 3
+            },
+            {
+              "split": "heldout",
+              "world_index": 5,
+              "valid": true,
+              "abstained": true,
+              "mechanism_score": 1.0,
+              "model_score": 1.0,
+              "waveform_score": 1.0,
+              "waveform_relative_l2": 0.0,
+              "confidence_score": 0.99,
+              "false_discovery": false,
+              "correct_refusal": true,
+              "shot_calls": 3
+            }
+          ],
+          "wall_seconds": 45.649863250000635
+        }
+      }
+    },
+    "3": {
+      "scope": "method_diagnostics_not_model_calibration",
+      "platform": "macOS-15.7.4-arm64-arm-64bit",
+      "numpy": "1.24.4",
+      "scipy": "1.10.1",
+      "difficulty": 3,
+      "source_sha256": {
+        "benchmarks/EarthScience/ActiveFullWaveformInversion/verification/evaluator.py": "040f83dfd67528f9a381de78565fce2990083300064a166ae2923945610c7752",
+        "benchmarks/EarthScience/ActiveFullWaveformInversion/verification/reference_solver.py": "c6140935f48c7958d6e032c30138c6881697797ad9252e6cd577e9effe594427",
+        "tests/test_pr9_earth_hardening.py": "6b20d04237e1419334e7521274183b50acd3b509a4facec7bde4693971619256",
+        ".research/pr20_fwi_spatial_probe.py": "da724e1c0feef93ae0b2ca479c4504365579123e6354713570ca9e5689afe87d"
+      },
+      "results": {
+        "three_shots": {
+          "combined_score": 0.6149437487105672,
+          "valid": 1.0,
+          "feasibility_rate": 1.0,
+          "mechanism_score": 0.7799678564060384,
+          "development_model_score": 0.3985359528392086,
+          "development_waveform_score": 0.9695184453895122,
+          "development_confidence_calibration_score": 0.9706132612059701,
+          "development_false_discovery_rate": 0.0,
+          "development_correct_refusal_rate": 1.0,
+          "development_discovery_coverage": 1.0,
+          "supported_world_count": 4,
+          "unsupported_world_count": 3,
+          "discovery_attempt_count": 4,
+          "false_discovery_count": 0,
+          "correct_refusal_count": 3,
+          "robustness_score": 0.33085439344352374,
+          "heldout_feasibility_rate": 1.0,
+          "heldout_model_score": 0.16980197629350813,
+          "heldout_waveform_score": 0.9837745414873295,
+          "heldout_false_discovery_rate": 0.0,
+          "heldout_correct_refusal_rate": 1.0,
+          "heldout_discovery_coverage": 1.0,
+          "heldout_supported_world_count": 3,
+          "heldout_unsupported_world_count": 3,
+          "heldout_discovery_attempt_count": 3,
+          "heldout_false_discovery_count": 0,
+          "heldout_correct_refusal_count": 3,
+          "heldout_confidence_calibration_score": 0.8557843777811335,
+          "per_world": [
+            {
+              "split": "development",
+              "world_index": 0,
+              "valid": true,
+              "abstained": false,
+              "mechanism_score": 0.7278126818656713,
+              "model_score": 0.538091253270345,
+              "waveform_score": 0.9844265199723774,
+              "waveform_relative_l2": 0.005232006862664893,
+              "confidence_score": 0.9947889911005732,
+              "false_discovery": false,
+              "correct_refusal": false,
+              "shot_calls": 3
+            },
+            {
+              "split": "development",
+              "world_index": 1,
+              "valid": true,
+              "abstained": false,
+              "mechanism_score": 0.471035238376493,
+              "model_score": 0.23422438991648567,
+              "waveform_score": 0.9472719552029162,
+              "waveform_relative_l2": 0.018056350506129325,
+              "confidence_score": 0.8917821856099892,
+              "false_discovery": false,
+              "correct_refusal": false,
+              "shot_calls": 3
+            },
+            {
+              "split": "development",
+              "world_index": 2,
+              "valid": true,
+              "abstained": false,
+              "mechanism_score": 0.6794182301248959,
+              "model_score": 0.4744472647660723,
+              "waveform_score": 0.9729408634142802,
+              "waveform_relative_l2": 0.009143992074518098,
+              "confidence_score": 0.9854600367737875,
+              "false_discovery": false,
+              "correct_refusal": false,
+              "shot_calls": 3
+            },
+            {
+              "split": "development",
+              "world_index": 3,
+              "valid": true,
+              "abstained": false,
+              "mechanism_score": 0.581508844475208,
+              "model_score": 0.3473809034039315,
+              "waveform_score": 0.9734344429684749,
+              "waveform_relative_l2": 0.008974932673638802,
+              "confidence_score": 0.9522616149574411,
+              "false_discovery": false,
+              "correct_refusal": false,
+              "shot_calls": 3
+            },
+            {
+              "split": "development",
+              "world_index": 4,
+              "valid": true,
+              "abstained": true,
+              "mechanism_score": 1.0,
+              "model_score": 1.0,
+              "waveform_score": 1.0,
+              "waveform_relative_l2": 0.0,
+              "confidence_score": 0.99,
+              "false_discovery": false,
+              "correct_refusal": true,
+              "shot_calls": 3
+            },
+            {
+              "split": "development",
+              "world_index": 5,
+              "valid": true,
+              "abstained": true,
+              "mechanism_score": 1.0,
+              "model_score": 1.0,
+              "waveform_score": 1.0,
+              "waveform_relative_l2": 0.0,
+              "confidence_score": 0.99,
+              "false_discovery": false,
+              "correct_refusal": true,
+              "shot_calls": 3
+            },
+            {
+              "split": "development",
+              "world_index": 6,
+              "valid": true,
+              "abstained": true,
+              "mechanism_score": 1.0,
+              "model_score": 1.0,
+              "waveform_score": 1.0,
+              "waveform_relative_l2": 0.0,
+              "confidence_score": 0.99,
+              "false_discovery": false,
+              "correct_refusal": true,
+              "shot_calls": 3
+            },
+            {
+              "split": "heldout",
+              "world_index": 0,
+              "valid": true,
+              "abstained": false,
+              "mechanism_score": 0.4227833304302963,
+              "model_score": 0.18113160308456644,
+              "waveform_score": 0.9868280379889344,
+              "waveform_relative_l2": 0.004419827229833881,
+              "confidence_score": 0.8577075841987409,
+              "false_discovery": false,
+              "correct_refusal": false,
+              "shot_calls": 3
+            },
+            {
+              "split": "heldout",
+              "world_index": 1,
+              "valid": true,
+              "abstained": false,
+              "mechanism_score": 0.0,
+              "model_score": 0.0,
+              "waveform_score": 0.9755389369842098,
+              "waveform_relative_l2": 0.00825506827210278,
+              "confidence_score": 0.3599999999999999,
+              "false_discovery": false,
+              "correct_refusal": false,
+              "shot_calls": 3
+            },
+            {
+              "split": "heldout",
+              "world_index": 2,
+              "valid": true,
+              "abstained": false,
+              "mechanism_score": 0.5697798499002749,
+              "model_score": 0.3282743257959579,
+              "waveform_score": 0.9889566494888442,
+              "waveform_relative_l2": 0.0037015936635453844,
+              "confidence_score": 0.94699868248806,
+              "false_discovery": false,
+              "correct_refusal": false,
+              "shot_calls": 3
+            },
+            {
+              "split": "heldout",
+              "world_index": 3,
+              "valid": true,
+              "abstained": true,
+              "mechanism_score": 1.0,
+              "model_score": 1.0,
+              "waveform_score": 1.0,
+              "waveform_relative_l2": 0.0,
+              "confidence_score": 0.99,
+              "false_discovery": false,
+              "correct_refusal": true,
+              "shot_calls": 3
+            },
+            {
+              "split": "heldout",
+              "world_index": 4,
+              "valid": true,
+              "abstained": true,
+              "mechanism_score": 1.0,
+              "model_score": 1.0,
+              "waveform_score": 1.0,
+              "waveform_relative_l2": 0.0,
+              "confidence_score": 0.99,
+              "false_discovery": false,
+              "correct_refusal": true,
+              "shot_calls": 3
+            },
+            {
+              "split": "heldout",
+              "world_index": 5,
+              "valid": true,
+              "abstained": true,
+              "mechanism_score": 1.0,
+              "model_score": 1.0,
+              "waveform_score": 1.0,
+              "waveform_relative_l2": 0.0,
+              "confidence_score": 0.99,
+              "false_discovery": false,
+              "correct_refusal": true,
+              "shot_calls": 3
+            }
+          ],
+          "wall_seconds": 41.47703254199587
+        }
+      }
+    }
+  }
+}

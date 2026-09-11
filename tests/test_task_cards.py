@@ -14,6 +14,8 @@ RECORDED_LINEAGE = {
     "Ecology/OccupancyDetectionDesign",
     "DataPrivacy/SparseVectorAudit",
     "Physics/CriticalPhenomenaLab",
+    "WavePropagation/ActiveFullWaveformInversion",
+
     "SystemsBiology/EnzymeKineticsLaw",
     "ParticlePhysics/DiscrepantMeasurements",
     "MaterialsScience/PhaseDiagramDiscovery",

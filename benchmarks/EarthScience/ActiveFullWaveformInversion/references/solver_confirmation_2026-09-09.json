@@ -1,0 +1,4533 @@
+{
+  "scope": "local_method_confirmation_not_model_calibration_or_server_held_worlds",
+  "freeze": {
+    "frozen_at_utc": "2026-09-09T05:16:22.648099+00:00",
+    "selection": "Original development worlds only. Candidate selected: analytic tangent Gauss-Newton, minimum-change and gradient regularization, 3x5 -> 5x8 -> 7x11, trace balance at final stage. Same shots/refusal thresholds.",
+    "source_sha256": {
+      "evaluator_frozen.py": "9b786e4c449d4937efaeff1102ecc2d7b6396b0b7a2bb7e8b4c89cd3d63d7fb9",
+      "reference_before.py": "c99765609c381021c0ffef8f6e41dac5f78d09b7548fd3112c9066e2b62955b6",
+      "reference_after.py": "c6140935f48c7958d6e032c30138c6881697797ad9252e6cd577e9effe594427",
+      "spatial_probe.py": "1b14dacbdee6f752a992321a8556f7914a194568b3b65ad67840f72133358bcd",
+      "validation-plan.md": "adcb4715333c9c8e18cf2c6012061b6d60ec04a59775480e0db91a075b87d654",
+      "compare.py": "7a1bccaec7ed1696e10d366afebea25d83eca51cd9815aafe477c1822c224474"
+    }
+  },
+  "validation_plan": "# FWI substantive revision experiment plan\n\nThe baseline is PR head cc000759, evaluator SHA-256\n9b786e4c449d4937efaeff1102ecc2d7b6396b0b7a2bb7e8b4c89cd3d63d7fb9.\nThe shipped score, development and held-out worlds, three-shot budget and 300-second\nwhole-evaluation timeout remain unchanged during solver development.\n\nDevelop numerical methods using development worlds only. Verify the discrete forward\noperator against the frozen evaluator, and its adjoint against central differences.\nMeasure actual velocity RMSE, background-relative weighted error, waveform prediction,\nrefusals and runtime, not just aggregate score. Never pass truth to a solver.\n\nAfter selecting the solver on development diagnostics, freeze its source hash before\nevaluating the original held-out worlds and these predeclared additional worlds:\n\n- Supported: seeds 71011, 71017, 71023, 71039, 71047, 71051, 71059, 71063,\n  71069, 71081, 71089, 71099; variants 0 through 11 in that order.\n- Null: (72011, null, 0).\n- Background attenuation: (72017, misspecified, 1).\n- Structured attenuation: seeds 72023, 72031, 72043; variants 2, 4, 6.\n\nThese are additional local validation worlds, not new production worlds or secure\nserver-held evidence. Their outcomes may expose remaining limitations. Do not tune\nagainst them and then describe them as untouched validation.\n\nKeep a before/after solver and spatial Gaussian-search comparator. Any unavailable\nmaintainer probe implementation must be described as independently reconstructed,\nnot an exact reproduction of that implementation.\n",
+  "source_note": "Freeze used experiment filenames. reference_after.py is byte-identical to verification/reference_solver.py; reference_before.py to .research/pr20_fwi_reference_before.py; spatial_probe.py to .research/pr20_fwi_spatial_probe.py.",
+  "production_evaluator_unchanged": true,
+  "shipped_evaluation": {
+    "scope": "method_diagnostics_not_model_calibration",
+    "platform": "macOS-15.7.4-arm64-arm-64bit",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "difficulty": 1,
+    "source_sha256": {
+      "benchmarks/EarthScience/ActiveFullWaveformInversion/verification/evaluator.py": "9b786e4c449d4937efaeff1102ecc2d7b6396b0b7a2bb7e8b4c89cd3d63d7fb9",
+      "benchmarks/EarthScience/ActiveFullWaveformInversion/verification/reference_solver.py": "c6140935f48c7958d6e032c30138c6881697797ad9252e6cd577e9effe594427",
+      "tests/test_pr9_earth_hardening.py": "6b20d04237e1419334e7521274183b50acd3b509a4facec7bde4693971619256",
+      ".research/pr20_fwi_spatial_probe.py": "1b14dacbdee6f752a992321a8556f7914a194568b3b65ad67840f72133358bcd"
+    },
+    "results": {
+      "three_shots": {
+        "combined_score": 0.7091442418629655,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "mechanism_score": 0.8337967096359803,
+        "development_model_score": 0.517191857919229,
+        "development_waveform_score": 0.9858127379343868,
+        "development_confidence_calibration_score": 0.9869898017912805,
+        "development_false_discovery_rate": 0.0,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "supported_world_count": 4,
+        "unsupported_world_count": 3,
+        "discovery_attempt_count": 4,
+        "false_discovery_count": 0,
+        "correct_refusal_count": 3,
+        "robustness_score": 0.6753585671603808,
+        "heldout_feasibility_rate": 1.0,
+        "heldout_model_score": 0.5109493530071967,
+        "heldout_waveform_score": 0.992566409221259,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0,
+        "heldout_supported_world_count": 3,
+        "heldout_unsupported_world_count": 3,
+        "heldout_discovery_attempt_count": 3,
+        "heldout_false_discovery_count": 0,
+        "heldout_correct_refusal_count": 3,
+        "heldout_confidence_calibration_score": 0.961696106161936,
+        "per_world": [
+          {
+            "split": "development",
+            "world_index": 0,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.7040197769461671,
+            "model_score": 0.497408927888225,
+            "waveform_score": 0.9964514477768063,
+            "waveform_relative_l2": 0.001184954423036048,
+            "confidence_score": 0.9907877967825365,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 1,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.5978620658056818,
+            "model_score": 0.3633017487959104,
+            "waveform_score": 0.9838627281979686,
+            "waveform_relative_l2": 0.00542296517510192,
+            "confidence_score": 0.9591402555596534,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 2,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.7007627426301403,
+            "model_score": 0.5024629399288733,
+            "waveform_score": 0.9773226688679367,
+            "waveform_relative_l2": 0.007646138834252595,
+            "confidence_score": 0.9901519667497082,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 3,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.833932382069873,
+            "model_score": 0.7055938150639072,
+            "waveform_score": 0.9856141068948354,
+            "waveform_relative_l2": 0.004830124434415534,
+            "confidence_score": 0.9988485934470641,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 4,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 5,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 6,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 0,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.3740468531324109,
+            "model_score": 0.1410134423350247,
+            "waveform_score": 0.9921823481612041,
+            "waveform_relative_l2": 0.002616123292987395,
+            "confidence_score": 0.8185639166735981,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 1,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.7337274284172839,
+            "model_score": 0.5420662010359342,
+            "waveform_score": 0.9931553345015737,
+            "waveform_relative_l2": 0.0022893992208845256,
+            "confidence_score": 0.9956079462558137,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 2,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.9183014199314471,
+            "model_score": 0.8497684156506312,
+            "waveform_score": 0.9923615450009995,
+            "waveform_relative_l2": 0.0025559258034786496,
+            "confidence_score": 0.9860047740422034,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 3,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 4,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 5,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          }
+        ],
+        "wall_seconds": 26.515466416996787
+      },
+      "one_shot": {
+        "combined_score": 0.34433636324953953,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "mechanism_score": 0.6253350647140226,
+        "development_model_score": 0.20724690195710282,
+        "development_waveform_score": 0.6938942466330433,
+        "development_confidence_calibration_score": 0.8623238788917781,
+        "development_false_discovery_rate": 0.0,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "supported_world_count": 4,
+        "unsupported_world_count": 3,
+        "discovery_attempt_count": 4,
+        "false_discovery_count": 0,
+        "correct_refusal_count": 3,
+        "robustness_score": 0.44822051578944344,
+        "heldout_feasibility_rate": 1.0,
+        "heldout_model_score": 0.28464176122928764,
+        "heldout_waveform_score": 0.8274169803935202,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0,
+        "heldout_supported_world_count": 3,
+        "heldout_unsupported_world_count": 3,
+        "heldout_discovery_attempt_count": 3,
+        "heldout_false_discovery_count": 0,
+        "heldout_correct_refusal_count": 3,
+        "heldout_confidence_calibration_score": 0.921497978935614,
+        "per_world": [
+          {
+            "split": "development",
+            "world_index": 0,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.5065740979801878,
+            "model_score": 0.3035647108376754,
+            "waveform_score": 0.8453463383023511,
+            "waveform_relative_l2": 0.05600295592813261,
+            "confidence_score": 0.9139012400238595,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 1
+          },
+          {
+            "split": "development",
+            "world_index": 1,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.25854451914793675,
+            "model_score": 0.07604078386655413,
+            "waveform_score": 0.8790712691592746,
+            "waveform_relative_l2": 0.04296310158886702,
+            "confidence_score": 0.7068259622552608,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 1
+          },
+          {
+            "split": "development",
+            "world_index": 2,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.1236139136219758,
+            "model_score": 0.03187898732752414,
+            "waveform_score": 0.47932512673475935,
+            "waveform_relative_l2": 0.24512538345838406,
+            "confidence_score": 0.5425018621542199,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 1
+          },
+          {
+            "split": "development",
+            "world_index": 3,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.4886129222480574,
+            "model_score": 0.41750312579665755,
+            "waveform_score": 0.5718342523357882,
+            "waveform_relative_l2": 0.1863020327457038,
+            "confidence_score": 0.9030380878091057,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 1
+          },
+          {
+            "split": "development",
+            "world_index": 4,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 1
+          },
+          {
+            "split": "development",
+            "world_index": 5,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 1
+          },
+          {
+            "split": "development",
+            "world_index": 6,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 1
+          },
+          {
+            "split": "heldout",
+            "world_index": 0,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.26773316255611435,
+            "model_score": 0.07830909091008428,
+            "waveform_score": 0.9153604709139586,
+            "waveform_relative_l2": 0.029479111334798778,
+            "confidence_score": 0.7166920137574841,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 1
+          },
+          {
+            "split": "heldout",
+            "world_index": 1,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.4362336127437058,
+            "model_score": 0.23608547198364355,
+            "waveform_score": 0.8060630045910229,
+            "waveform_relative_l2": 0.07186445668760404,
+            "confidence_score": 0.8676740155025038,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 1
+          },
+          {
+            "split": "heldout",
+            "world_index": 2,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.6406947720685103,
+            "model_score": 0.5395307207941351,
+            "waveform_score": 0.7608274656755792,
+            "waveform_relative_l2": 0.09111622245228984,
+            "confidence_score": 0.9746218443536961,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 1
+          },
+          {
+            "split": "heldout",
+            "world_index": 3,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 1
+          },
+          {
+            "split": "heldout",
+            "world_index": 4,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 1
+          },
+          {
+            "split": "heldout",
+            "world_index": 5,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 1
+          }
+        ],
+        "wall_seconds": 6.182052499993006
+      },
+      "spatial_grid": {
+        "combined_score": 0.04293286572106486,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "mechanism_score": 0.4531044946977513,
+        "development_model_score": 0.169278015981558,
+        "development_waveform_score": 0.6153692355019866,
+        "development_confidence_calibration_score": 0.8298381578890923,
+        "development_false_discovery_rate": 0.3333333333333333,
+        "development_correct_refusal_rate": 0.6666666666666666,
+        "development_discovery_coverage": 0.75,
+        "supported_world_count": 4,
+        "unsupported_world_count": 3,
+        "discovery_attempt_count": 3,
+        "false_discovery_count": 1,
+        "correct_refusal_count": 2,
+        "robustness_score": 0.2657302537994026,
+        "heldout_feasibility_rate": 1.0,
+        "heldout_model_score": 0.1729967144479567,
+        "heldout_waveform_score": 0.8105268889132043,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0,
+        "heldout_supported_world_count": 3,
+        "heldout_unsupported_world_count": 3,
+        "heldout_discovery_attempt_count": 3,
+        "heldout_false_discovery_count": 0,
+        "heldout_correct_refusal_count": 3,
+        "heldout_confidence_calibration_score": 0.8149816326905679,
+        "per_world": [
+          {
+            "split": "development",
+            "world_index": 0,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.4331617597928171,
+            "model_score": 0.1953650815571755,
+            "waveform_score": 0.9604024867253401,
+            "waveform_relative_l2": 0.013467608459451138,
+            "confidence_score": 0.8654297055216972,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 1,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.2811612960055947,
+            "model_score": 0.08071761163915595,
+            "waveform_score": 0.9793609197078602,
+            "waveform_relative_l2": 0.006951680929708731,
+            "confidence_score": 0.7308063992374059,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 2,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 0.0,
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "waveform_relative_l2": 1000000.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 3,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.4574084070858471,
+            "model_score": 0.4010293707299006,
+            "waveform_score": 0.5217135355747461,
+            "waveform_relative_l2": 0.2168788747198481,
+            "confidence_score": 0.8826310004645433,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 4,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 5,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 6,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.0,
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "waveform_relative_l2": 1000000.0,
+            "confidence_score": 0.3599999999999999,
+            "false_discovery": true,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 0,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.1558415269043616,
+            "model_score": 0.0283163365686241,
+            "waveform_score": 0.8576879798354138,
+            "waveform_relative_l2": 0.0511716351666481,
+            "confidence_score": 0.5850598615390956,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 1,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.0,
+            "model_score": 0.0,
+            "waveform_score": 0.7355988246556016,
+            "waveform_relative_l2": 0.10235679468564768,
+            "confidence_score": 0.3599999999999999,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 2,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.6413492344938466,
+            "model_score": 0.4906738067752459,
+            "waveform_score": 0.8382938622485976,
+            "waveform_relative_l2": 0.058795523009896995,
+            "confidence_score": 0.9748299346043116,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 3,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 4,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 5,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          }
+        ],
+        "wall_seconds": 3.2895185420056805
+      },
+      "spatial_refined": {
+        "combined_score": 0.4192854109432465,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "mechanism_score": 0.6681630919675694,
+        "development_model_score": 0.32385196790710374,
+        "development_waveform_score": 0.8095276480716056,
+        "development_confidence_calibration_score": 0.8611947185160383,
+        "development_false_discovery_rate": 0.0,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "supported_world_count": 4,
+        "unsupported_world_count": 3,
+        "discovery_attempt_count": 4,
+        "false_discovery_count": 0,
+        "correct_refusal_count": 3,
+        "robustness_score": 0.36290969600713274,
+        "heldout_feasibility_rate": 1.0,
+        "heldout_model_score": 0.2847012127389488,
+        "heldout_waveform_score": 0.8763878637613339,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0,
+        "heldout_supported_world_count": 3,
+        "heldout_unsupported_world_count": 3,
+        "heldout_discovery_attempt_count": 3,
+        "heldout_false_discovery_count": 0,
+        "heldout_correct_refusal_count": 3,
+        "heldout_confidence_calibration_score": 0.830201038247309,
+        "per_world": [
+          {
+            "split": "development",
+            "world_index": 0,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.6230401475218009,
+            "model_score": 0.40287929968060354,
+            "waveform_score": 0.9635119643320712,
+            "waveform_relative_l2": 0.012390124543769766,
+            "confidence_score": 0.968685210610894,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 1,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.28075865243327464,
+            "model_score": 0.08060645230237218,
+            "waveform_score": 0.9779046052102276,
+            "waveform_relative_l2": 0.007447718129853512,
+            "confidence_score": 0.730388422977091,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 2,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.0,
+            "model_score": 0.0,
+            "waveform_score": 0.5600973226252237,
+            "waveform_relative_l2": 0.19321490665018648,
+            "confidence_score": 0.3599999999999999,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 3,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.7733428438179106,
+            "model_score": 0.8119221196454393,
+            "waveform_score": 0.7365967001189,
+            "waveform_relative_l2": 0.10190491828774412,
+            "confidence_score": 0.9992893960242837,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 4,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 5,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 6,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 0,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.2141412878653818,
+            "model_score": 0.048460625742078454,
+            "waveform_score": 0.9462628776752885,
+            "waveform_relative_l2": 0.018411621718336674,
+            "confidence_score": 0.6567695694159665,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 1,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.0,
+            "model_score": 0.0,
+            "waveform_score": 0.7334680140907045,
+            "waveform_relative_l2": 0.10332376319607574,
+            "confidence_score": 0.3599999999999999,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 2,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.8745878001560162,
+            "model_score": 0.8056430124747679,
+            "waveform_score": 0.9494326995180089,
+            "waveform_relative_l2": 0.01729687705324623,
+            "confidence_score": 0.9944366600678862,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 3,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 4,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 5,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          }
+        ],
+        "wall_seconds": 8.146472792010172
+      }
+    }
+  },
+  "original_development_before_and_probes": {
+    "split": "development",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "platform": "macOS-15.7.4-arm64-arm-64bit",
+    "source_sha256": {
+      "reference_before": "c99765609c381021c0ffef8f6e41dac5f78d09b7548fd3112c9066e2b62955b6",
+      "spatial_probe": "1b14dacbdee6f752a992321a8556f7914a194568b3b65ad67840f72133358bcd"
+    },
+    "methods": {
+      "old": {
+        "per_world": [
+          {
+            "spec": [
+              41011,
+              "supported",
+              0
+            ],
+            "seconds": 2.5504575420054607,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.6143896172686266,
+            "waveform_score": 0.9911349505546286,
+            "mechanism_score": 0.7803480139865914,
+            "velocity_rmse_m_s": 41.621275847263576,
+            "background_relative_error": 0.23737301868551844,
+            "upper_rmse_m_s": 9.531434412415363,
+            "lower_rmse_m_s": 58.08453291840984
+          },
+          {
+            "spec": [
+              41017,
+              "supported",
+              1
+            ],
+            "seconds": 2.126239290999365,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.14397809753444551,
+            "waveform_score": 0.9880930507085129,
+            "mechanism_score": 0.37717868130107524,
+            "velocity_rmse_m_s": 183.25681242917554,
+            "background_relative_error": 0.7291181871397502,
+            "upper_rmse_m_s": 24.508669549756384,
+            "lower_rmse_m_s": 258.0027978923967
+          },
+          {
+            "spec": [
+              41023,
+              "supported",
+              2
+            ],
+            "seconds": 4.113038583003799,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.060868724977968615,
+            "waveform_score": 0.9146226875029472,
+            "mechanism_score": 0.23594897080561175,
+            "velocity_rmse_m_s": 288.62741899228956,
+            "background_relative_error": 0.8718594609192556,
+            "upper_rmse_m_s": 34.9267524876437,
+            "lower_rmse_m_s": 406.6837788121973
+          },
+          {
+            "spec": [
+              41039,
+              "supported",
+              3
+            ],
+            "seconds": 3.595300833010697,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.13251117141231022,
+            "waveform_score": 0.9463903020731568,
+            "mechanism_score": 0.3541289137319405,
+            "velocity_rmse_m_s": 145.6979525825238,
+            "background_relative_error": 0.7470870968898141,
+            "upper_rmse_m_s": 89.62222811144169,
+            "lower_rmse_m_s": 185.53609622340184
+          },
+          {
+            "spec": [
+              41047,
+              "null",
+              0
+            ],
+            "seconds": 0.009134499996434897,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              41051,
+              "misspecified",
+              1
+            ],
+            "seconds": 0.009514459001366049,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              41023,
+              "structured_attenuation",
+              2
+            ],
+            "seconds": 5.143109875003574,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 17.573782833002042,
+        "combined_score": 0.4369011449563047,
+        "model_score": 0.23793690279833773,
+        "waveform_score": 0.9600602477098114,
+        "correct_refusal_rate": 1.0,
+        "coverage": 1.0,
+        "mean_rmse_m_s": 164.80086496281314
+      },
+      "grid": {
+        "per_world": [
+          {
+            "spec": [
+              41011,
+              "supported",
+              0
+            ],
+            "seconds": 0.3797487080009887,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.1953650815571755,
+            "waveform_score": 0.9604024867253401,
+            "mechanism_score": 0.4331617597928171,
+            "velocity_rmse_m_s": 120.19198162842865,
+            "background_relative_error": 0.6540579245392567,
+            "upper_rmse_m_s": 56.61261299526567,
+            "lower_rmse_m_s": 160.27238360174638
+          },
+          {
+            "spec": [
+              41017,
+              "supported",
+              1
+            ],
+            "seconds": 0.40512770900386386,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.08071761163915595,
+            "waveform_score": 0.9793609197078602,
+            "mechanism_score": 0.2811612960055947,
+            "velocity_rmse_m_s": 221.2521470910228,
+            "background_relative_error": 0.8348884849648168,
+            "upper_rmse_m_s": 89.5421937390659,
+            "lower_rmse_m_s": 299.8119756200055
+          },
+          {
+            "spec": [
+              41023,
+              "supported",
+              2
+            ],
+            "seconds": 0.4220961660030298,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              41039,
+              "supported",
+              3
+            ],
+            "seconds": 0.45063216699054465,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.4010293707299006,
+            "waveform_score": 0.5217135355747461,
+            "mechanism_score": 0.4574084070858471,
+            "velocity_rmse_m_s": 89.75576939034495,
+            "background_relative_error": 0.41739399199177507,
+            "upper_rmse_m_s": 120.27126394314779,
+            "lower_rmse_m_s": 40.58348613935533
+          },
+          {
+            "spec": [
+              41047,
+              "null",
+              0
+            ],
+            "seconds": 0.009960334005882032,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              41051,
+              "misspecified",
+              1
+            ],
+            "seconds": 0.009117292007431388,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              41023,
+              "structured_attenuation",
+              2
+            ],
+            "seconds": 0.41728958299790975,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          }
+        ],
+        "wall_seconds": 2.1175456670025596,
+        "combined_score": 0.042932865721064695,
+        "model_score": 0.169278015981558,
+        "waveform_score": 0.6153692355019866,
+        "correct_refusal_rate": 0.6666666666666666,
+        "coverage": 0.75,
+        "mean_rmse_m_s": 143.73329936993213
+      },
+      "refined": {
+        "per_world": [
+          {
+            "spec": [
+              41011,
+              "supported",
+              0
+            ],
+            "seconds": 0.8580967500020051,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.40287929968060354,
+            "waveform_score": 0.9635119643320712,
+            "mechanism_score": 0.6230401475218009,
+            "velocity_rmse_m_s": 76.12169142117568,
+            "background_relative_error": 0.4156044705860428,
+            "upper_rmse_m_s": 32.89306653338905,
+            "lower_rmse_m_s": 102.50399984230577
+          },
+          {
+            "spec": [
+              41017,
+              "supported",
+              1
+            ],
+            "seconds": 0.798373834011727,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.08060645230237218,
+            "waveform_score": 0.9779046052102276,
+            "mechanism_score": 0.28075865243327464,
+            "velocity_rmse_m_s": 221.17708660260692,
+            "background_relative_error": 0.8350899268394774,
+            "upper_rmse_m_s": 88.00637009086458,
+            "lower_rmse_m_s": 300.1557697254276
+          },
+          {
+            "spec": [
+              41023,
+              "supported",
+              2
+            ],
+            "seconds": 0.7216832499980228,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.5600973226252237,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 367.55923286580946,
+            "background_relative_error": 1.0320901680141203,
+            "upper_rmse_m_s": 185.25208529640273,
+            "lower_rmse_m_s": 485.6760692304481
+          },
+          {
+            "spec": [
+              41039,
+              "supported",
+              3
+            ],
+            "seconds": 0.7461236249946523,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.8119221196454393,
+            "waveform_score": 0.7365967001189,
+            "mechanism_score": 0.7733428438179106,
+            "velocity_rmse_m_s": 22.58498730936662,
+            "background_relative_error": 0.10530351982449876,
+            "upper_rmse_m_s": 29.574726762206733,
+            "lower_rmse_m_s": 12.062290017625822
+          },
+          {
+            "spec": [
+              41047,
+              "null",
+              0
+            ],
+            "seconds": 0.008034542013774626,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              41051,
+              "misspecified",
+              1
+            ],
+            "seconds": 0.008279749992652796,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              41023,
+              "structured_attenuation",
+              2
+            ],
+            "seconds": 0.6706365419959184,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 3.840178749989718,
+        "combined_score": 0.41928541094324645,
+        "model_score": 0.32385196790710374,
+        "waveform_score": 0.8095276480716056,
+        "correct_refusal_rate": 1.0,
+        "coverage": 1.0,
+        "mean_rmse_m_s": 171.86074954973967
+      }
+    }
+  },
+  "original_development_after_and_one_shot": {
+    "split": "development",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "platform": "macOS-15.7.4-arm64-arm-64bit",
+    "source_sha256": {
+      "reference_after": "c6140935f48c7958d6e032c30138c6881697797ad9252e6cd577e9effe594427"
+    },
+    "methods": {
+      "new": {
+        "per_world": [
+          {
+            "spec": [
+              41011,
+              "supported",
+              0
+            ],
+            "seconds": 2.1535173340089386,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.497408927888225,
+            "waveform_score": 0.9964514477768063,
+            "mechanism_score": 0.7040197769461671,
+            "velocity_rmse_m_s": 58.77523712988126,
+            "background_relative_error": 0.33002050982295406,
+            "upper_rmse_m_s": 7.394656292924716,
+            "lower_rmse_m_s": 82.79115929649164
+          },
+          {
+            "spec": [
+              41017,
+              "supported",
+              1
+            ],
+            "seconds": 2.416167499992298,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.3633017487959104,
+            "waveform_score": 0.9838627281979686,
+            "mechanism_score": 0.5978620658056818,
+            "velocity_rmse_m_s": 117.33535949199039,
+            "background_relative_error": 0.45497849743659863,
+            "upper_rmse_m_s": 20.260891555275133,
+            "lower_rmse_m_s": 164.69568739834878
+          },
+          {
+            "spec": [
+              41023,
+              "supported",
+              2
+            ],
+            "seconds": 4.43557333300123,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.5024629399288733,
+            "waveform_score": 0.9773226688679367,
+            "mechanism_score": 0.7007627426301403,
+            "velocity_rmse_m_s": 112.22839026129013,
+            "background_relative_error": 0.32574007949427897,
+            "upper_rmse_m_s": 32.13535860497816,
+            "lower_rmse_m_s": 155.42760980150965
+          },
+          {
+            "spec": [
+              41039,
+              "supported",
+              3
+            ],
+            "seconds": 3.412475249991985,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.7055938150639072,
+            "waveform_score": 0.9856141068948354,
+            "mechanism_score": 0.833932382069873,
+            "velocity_rmse_m_s": 34.15809709325986,
+            "background_relative_error": 0.17313179626208564,
+            "upper_rmse_m_s": 19.645259853668524,
+            "lower_rmse_m_s": 44.13179080149564
+          },
+          {
+            "spec": [
+              41047,
+              "null",
+              0
+            ],
+            "seconds": 0.007265124993864447,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              41051,
+              "misspecified",
+              1
+            ],
+            "seconds": 0.007700334012042731,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              41023,
+              "structured_attenuation",
+              2
+            ],
+            "seconds": 7.52493533300003,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 19.98406104098831,
+        "combined_score": 0.7091442418629654,
+        "model_score": 0.517191857919229,
+        "waveform_score": 0.9858127379343868,
+        "correct_refusal_rate": 1.0,
+        "coverage": 1.0,
+        "mean_rmse_m_s": 80.62427099410542
+      },
+      "one_shot": {
+        "per_world": [
+          {
+            "spec": [
+              41011,
+              "supported",
+              0
+            ],
+            "seconds": 0.8337596250057686,
+            "abstained": false,
+            "sources": [
+              3
+            ],
+            "model_score": 0.3035647108376754,
+            "waveform_score": 0.8453463383023511,
+            "mechanism_score": 0.5065740979801878,
+            "velocity_rmse_m_s": 94.6940673791673,
+            "background_relative_error": 0.5191941901225973,
+            "upper_rmse_m_s": 37.69503472978411,
+            "lower_rmse_m_s": 128.50298498611198
+          },
+          {
+            "spec": [
+              41017,
+              "supported",
+              1
+            ],
+            "seconds": 0.9849727919936413,
+            "abstained": false,
+            "sources": [
+              3
+            ],
+            "model_score": 0.07604078386655413,
+            "waveform_score": 0.8790712691592746,
+            "mechanism_score": 0.25854451914793675,
+            "velocity_rmse_m_s": 221.30431293244686,
+            "background_relative_error": 0.8434168242368035,
+            "upper_rmse_m_s": 58.33176077550251,
+            "lower_rmse_m_s": 307.48756646380724
+          },
+          {
+            "spec": [
+              41023,
+              "supported",
+              2
+            ],
+            "seconds": 0.847635750003974,
+            "abstained": false,
+            "sources": [
+              3
+            ],
+            "model_score": 0.03187898732752414,
+            "waveform_score": 0.47932512673475935,
+            "mechanism_score": 0.1236139136219758,
+            "velocity_rmse_m_s": 331.59549854359796,
+            "background_relative_error": 0.9298306936283705,
+            "upper_rmse_m_s": 162.9893005508051,
+            "lower_rmse_m_s": 439.7108563757709
+          },
+          {
+            "spec": [
+              41039,
+              "supported",
+              3
+            ],
+            "seconds": 0.7999917080014711,
+            "abstained": false,
+            "sources": [
+              3
+            ],
+            "model_score": 0.41750312579665755,
+            "waveform_score": 0.5718342523357882,
+            "mechanism_score": 0.4886129222480574,
+            "velocity_rmse_m_s": 83.75840819708759,
+            "background_relative_error": 0.4016247444513676,
+            "upper_rmse_m_s": 102.24911805221222,
+            "lower_rmse_m_s": 59.80016509144994
+          },
+          {
+            "spec": [
+              41047,
+              "null",
+              0
+            ],
+            "seconds": 0.0036012500058859587,
+            "abstained": true,
+            "sources": [
+              3
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              41051,
+              "misspecified",
+              1
+            ],
+            "seconds": 0.003651834005722776,
+            "abstained": true,
+            "sources": [
+              3
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              41023,
+              "structured_attenuation",
+              2
+            ],
+            "seconds": 0.0037707919982494786,
+            "abstained": true,
+            "sources": [
+              3
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 3.503904875004082,
+        "combined_score": 0.34433636324953953,
+        "model_score": 0.20724690195710282,
+        "waveform_score": 0.6938942466330433,
+        "correct_refusal_rate": 1.0,
+        "coverage": 1.0,
+        "mean_rmse_m_s": 182.83807176307494
+      }
+    }
+  },
+  "original_heldout": {
+    "split": "heldout",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "platform": "macOS-15.7.4-arm64-arm-64bit",
+    "source_sha256": {
+      "reference_before": "c99765609c381021c0ffef8f6e41dac5f78d09b7548fd3112c9066e2b62955b6",
+      "reference_after": "c6140935f48c7958d6e032c30138c6881697797ad9252e6cd577e9effe594427",
+      "spatial_probe": "1b14dacbdee6f752a992321a8556f7914a194568b3b65ad67840f72133358bcd"
+    },
+    "methods": {
+      "old": {
+        "per_world": [
+          {
+            "spec": [
+              51001,
+              "supported",
+              4
+            ],
+            "seconds": 2.7434780420007883,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.9934874798061745,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 236.53758274407625,
+            "background_relative_error": 1.4737867186572824,
+            "upper_rmse_m_s": 9.864942063816343,
+            "lower_rmse_m_s": 334.3691657717544
+          },
+          {
+            "spec": [
+              51007,
+              "supported",
+              5
+            ],
+            "seconds": 2.8545909999957075,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.9769324591051077,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 333.4503032906671,
+            "background_relative_error": 3.964933475280281,
+            "upper_rmse_m_s": 28.979835586614954,
+            "lower_rmse_m_s": 470.6786362887617
+          },
+          {
+            "spec": [
+              51019,
+              "supported",
+              6
+            ],
+            "seconds": 2.209972625001683,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.7588040636355688,
+            "waveform_score": 0.9985255099628357,
+            "mechanism_score": 0.8704511557827805,
+            "velocity_rmse_m_s": 22.446105983091428,
+            "background_relative_error": 0.13832602381115258,
+            "upper_rmse_m_s": 3.8263624171911226,
+            "lower_rmse_m_s": 31.51212938315424
+          },
+          {
+            "spec": [
+              51031,
+              "null",
+              0
+            ],
+            "seconds": 0.009235500008799136,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              51043,
+              "misspecified",
+              2
+            ],
+            "seconds": 0.009605416998965666,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              51053,
+              "structured_attenuation",
+              8
+            ],
+            "seconds": 0.009416500004590489,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 7.856666125007905,
+        "combined_score": 0.29015038526092685,
+        "model_score": 0.25293468787852297,
+        "waveform_score": 0.9896484829580393,
+        "correct_refusal_rate": 1.0,
+        "coverage": 1.0,
+        "mean_rmse_m_s": 197.47799733927823
+      },
+      "new": {
+        "per_world": [
+          {
+            "spec": [
+              51001,
+              "supported",
+              4
+            ],
+            "seconds": 2.128585958009353,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.1410134423350247,
+            "waveform_score": 0.9921823481612041,
+            "mechanism_score": 0.3740468531324109,
+            "velocity_rmse_m_s": 119.11189229209396,
+            "background_relative_error": 0.733717643242236,
+            "upper_rmse_m_s": 13.322834262420349,
+            "lower_rmse_m_s": 167.92196955140463
+          },
+          {
+            "spec": [
+              51007,
+              "supported",
+              5
+            ],
+            "seconds": 2.376248458007467,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.5420662010359342,
+            "waveform_score": 0.9931553345015737,
+            "mechanism_score": 0.7337274284172839,
+            "velocity_rmse_m_s": 25.950691657073243,
+            "background_relative_error": 0.29311741586428747,
+            "upper_rmse_m_s": 15.166967165541394,
+            "lower_rmse_m_s": 33.41915471642529
+          },
+          {
+            "spec": [
+              51019,
+              "supported",
+              6
+            ],
+            "seconds": 2.0932502089999616,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.8497684156506312,
+            "waveform_score": 0.9923615450009995,
+            "mechanism_score": 0.9183014199314471,
+            "velocity_rmse_m_s": 13.769419844818849,
+            "background_relative_error": 0.08273476297958396,
+            "upper_rmse_m_s": 5.6488221412164865,
+            "lower_rmse_m_s": 18.63557496141948
+          },
+          {
+            "spec": [
+              51031,
+              "null",
+              0
+            ],
+            "seconds": 0.007945833000121638,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              51043,
+              "misspecified",
+              2
+            ],
+            "seconds": 0.008275250002043322,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              51053,
+              "structured_attenuation",
+              8
+            ],
+            "seconds": 0.008073750010225922,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 6.643024292003247,
+        "combined_score": 0.6753585671603807,
+        "model_score": 0.5109493530071967,
+        "waveform_score": 0.992566409221259,
+        "correct_refusal_rate": 1.0,
+        "coverage": 1.0,
+        "mean_rmse_m_s": 52.94400126466201
+      },
+      "one_shot": {
+        "per_world": [
+          {
+            "spec": [
+              51001,
+              "supported",
+              4
+            ],
+            "seconds": 0.9476873750099912,
+            "abstained": false,
+            "sources": [
+              3
+            ],
+            "model_score": 0.07830909091008428,
+            "waveform_score": 0.9153604709139586,
+            "mechanism_score": 0.26773316255611435,
+            "velocity_rmse_m_s": 137.05680846808986,
+            "background_relative_error": 0.8392668698361194,
+            "upper_rmse_m_s": 33.93336824715919,
+            "lower_rmse_m_s": 190.83412696454485
+          },
+          {
+            "spec": [
+              51007,
+              "supported",
+              5
+            ],
+            "seconds": 0.8680470840045018,
+            "abstained": false,
+            "sources": [
+              3
+            ],
+            "model_score": 0.23608547198364355,
+            "waveform_score": 0.8060630045910229,
+            "mechanism_score": 0.4362336127437058,
+            "velocity_rmse_m_s": 54.79507122606518,
+            "background_relative_error": 0.600052173143755,
+            "upper_rmse_m_s": 44.531774771867184,
+            "lower_rmse_m_s": 63.418614751560185
+          },
+          {
+            "spec": [
+              51019,
+              "supported",
+              6
+            ],
+            "seconds": 0.8611752919969149,
+            "abstained": false,
+            "sources": [
+              3
+            ],
+            "model_score": 0.5395307207941351,
+            "waveform_score": 0.7608274656755792,
+            "mechanism_score": 0.6406947720685103,
+            "velocity_rmse_m_s": 50.411665992689635,
+            "background_relative_error": 0.2951588290161437,
+            "upper_rmse_m_s": 32.46332703614435,
+            "lower_rmse_m_s": 63.47286454904443
+          },
+          {
+            "spec": [
+              51031,
+              "null",
+              0
+            ],
+            "seconds": 0.0036443329881876707,
+            "abstained": true,
+            "sources": [
+              3
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              51043,
+              "misspecified",
+              2
+            ],
+            "seconds": 0.003657332999864593,
+            "abstained": true,
+            "sources": [
+              3
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              51053,
+              "structured_attenuation",
+              8
+            ],
+            "seconds": 0.003810666996287182,
+            "abstained": true,
+            "sources": [
+              3
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 2.708636374998605,
+        "combined_score": 0.4482205157894435,
+        "model_score": 0.28464176122928764,
+        "waveform_score": 0.8274169803935202,
+        "correct_refusal_rate": 1.0,
+        "coverage": 1.0,
+        "mean_rmse_m_s": 80.75451522894822
+      },
+      "grid": {
+        "per_world": [
+          {
+            "spec": [
+              51001,
+              "supported",
+              4
+            ],
+            "seconds": 0.36644054199859966,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0283163365686241,
+            "waveform_score": 0.8576879798354138,
+            "mechanism_score": 0.1558415269043616,
+            "velocity_rmse_m_s": 153.7493984139034,
+            "background_relative_error": 0.9373157750440009,
+            "upper_rmse_m_s": 37.838240634478005,
+            "lower_rmse_m_s": 214.11684326778627
+          },
+          {
+            "spec": [
+              51007,
+              "supported",
+              5
+            ],
+            "seconds": 0.37136558299243916,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.7355988246556016,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 138.55079668026656,
+            "background_relative_error": 1.5320031658151796,
+            "upper_rmse_m_s": 106.36447334267926,
+            "lower_rmse_m_s": 164.55772644275197
+          },
+          {
+            "spec": [
+              51019,
+              "supported",
+              6
+            ],
+            "seconds": 0.3953622500121128,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.4906738067752459,
+            "waveform_score": 0.8382938622485976,
+            "mechanism_score": 0.6413492344938466,
+            "velocity_rmse_m_s": 57.703172974698475,
+            "background_relative_error": 0.3357677878254536,
+            "upper_rmse_m_s": 46.809173009383464,
+            "lower_rmse_m_s": 66.84469810593471
+          },
+          {
+            "spec": [
+              51031,
+              "null",
+              0
+            ],
+            "seconds": 0.008174457994755358,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              51043,
+              "misspecified",
+              2
+            ],
+            "seconds": 0.008268000005045906,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              51053,
+              "structured_attenuation",
+              8
+            ],
+            "seconds": 0.00825174999772571,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 1.1793005829968024,
+        "combined_score": 0.2657302537994027,
+        "model_score": 0.1729967144479567,
+        "waveform_score": 0.8105268889132043,
+        "correct_refusal_rate": 1.0,
+        "coverage": 1.0,
+        "mean_rmse_m_s": 116.66778935628948
+      },
+      "strict_grid": {
+        "per_world": [
+          {
+            "spec": [
+              51001,
+              "supported",
+              4
+            ],
+            "seconds": 0.36541679200308863,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              51007,
+              "supported",
+              5
+            ],
+            "seconds": 0.36754916700010654,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.7355988246556016,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 138.55079668026656,
+            "background_relative_error": 1.5320031658151796,
+            "upper_rmse_m_s": 106.36447334267926,
+            "lower_rmse_m_s": 164.55772644275197
+          },
+          {
+            "spec": [
+              51019,
+              "supported",
+              6
+            ],
+            "seconds": 0.38422045898914803,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.4906738067752459,
+            "waveform_score": 0.8382938622485976,
+            "mechanism_score": 0.6413492344938466,
+            "velocity_rmse_m_s": 57.703172974698475,
+            "background_relative_error": 0.3357677878254536,
+            "upper_rmse_m_s": 46.809173009383464,
+            "lower_rmse_m_s": 66.84469810593471
+          },
+          {
+            "spec": [
+              51031,
+              "null",
+              0
+            ],
+            "seconds": 0.008877542000846006,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              51043,
+              "misspecified",
+              2
+            ],
+            "seconds": 0.008630541007732973,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              51053,
+              "structured_attenuation",
+              8
+            ],
+            "seconds": 0.00999420799780637,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 1.1594458339968696,
+        "combined_score": 0.2137830781646155,
+        "model_score": 0.16355793559174864,
+        "waveform_score": 0.5246308956347331,
+        "correct_refusal_rate": 1.0,
+        "coverage": 0.6666666666666666,
+        "mean_rmse_m_s": 98.12698482748252
+      },
+      "refined": {
+        "per_world": [
+          {
+            "spec": [
+              51001,
+              "supported",
+              4
+            ],
+            "seconds": 0.7776319580007112,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.048460625742078454,
+            "waveform_score": 0.9462628776752885,
+            "mechanism_score": 0.2141412878653818,
+            "velocity_rmse_m_s": 146.38857302759195,
+            "background_relative_error": 0.8960578223964691,
+            "upper_rmse_m_s": 31.90210742650523,
+            "lower_rmse_m_s": 204.5519106922665
+          },
+          {
+            "spec": [
+              51007,
+              "supported",
+              5
+            ],
+            "seconds": 0.7754819160036277,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.7334680140907045,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 137.99006354108135,
+            "background_relative_error": 1.5293604966852132,
+            "upper_rmse_m_s": 102.80766784199595,
+            "lower_rmse_m_s": 165.87072889763635
+          },
+          {
+            "spec": [
+              51019,
+              "supported",
+              6
+            ],
+            "seconds": 0.7522041659976821,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.8056430124747679,
+            "waveform_score": 0.9494326995180089,
+            "mechanism_score": 0.8745878001560162,
+            "velocity_rmse_m_s": 19.03500755498628,
+            "background_relative_error": 0.10912294032838193,
+            "upper_rmse_m_s": 16.222393477244946,
+            "lower_rmse_m_s": 21.482480655320284
+          },
+          {
+            "spec": [
+              51031,
+              "null",
+              0
+            ],
+            "seconds": 0.008236666006268933,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              51043,
+              "misspecified",
+              2
+            ],
+            "seconds": 0.009376500005600974,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              51053,
+              "structured_attenuation",
+              8
+            ],
+            "seconds": 0.008106249995762482,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 2.353012999999919,
+        "combined_score": 0.3629096960071327,
+        "model_score": 0.2847012127389488,
+        "waveform_score": 0.8763878637613339,
+        "correct_refusal_rate": 1.0,
+        "coverage": 1.0,
+        "mean_rmse_m_s": 101.1378813745532
+      }
+    }
+  },
+  "additional_worlds": {
+    "split": "fresh",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "platform": "macOS-15.7.4-arm64-arm-64bit",
+    "source_sha256": {
+      "reference_before": "c99765609c381021c0ffef8f6e41dac5f78d09b7548fd3112c9066e2b62955b6",
+      "reference_after": "c6140935f48c7958d6e032c30138c6881697797ad9252e6cd577e9effe594427",
+      "spatial_probe": "1b14dacbdee6f752a992321a8556f7914a194568b3b65ad67840f72133358bcd"
+    },
+    "methods": {
+      "old": {
+        "per_world": [
+          {
+            "spec": [
+              71011,
+              "supported",
+              0
+            ],
+            "seconds": 3.0894006669986993,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.5187396379985221,
+            "waveform_score": 0.9912543535735123,
+            "mechanism_score": 0.7170794408830745,
+            "velocity_rmse_m_s": 72.29555541466782,
+            "background_relative_error": 0.31213859940175775,
+            "upper_rmse_m_s": 11.180184193628596,
+            "lower_rmse_m_s": 101.62823498825092
+          },
+          {
+            "spec": [
+              71017,
+              "supported",
+              1
+            ],
+            "seconds": 3.772496791993035,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.949641175245008,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 219.40416932258253,
+            "background_relative_error": 1.2446452765141327,
+            "upper_rmse_m_s": 69.12251894201583,
+            "lower_rmse_m_s": 302.48711775441876
+          },
+          {
+            "spec": [
+              71023,
+              "supported",
+              2
+            ],
+            "seconds": 5.951250707992585,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71039,
+              "supported",
+              3
+            ],
+            "seconds": 2.026293082992197,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.05267337341343259,
+            "waveform_score": 0.9937169232897137,
+            "mechanism_score": 0.2287846641881541,
+            "velocity_rmse_m_s": 171.76247847336347,
+            "background_relative_error": 0.8877432321626878,
+            "upper_rmse_m_s": 28.23026959813649,
+            "lower_rmse_m_s": 241.26282328830075
+          },
+          {
+            "spec": [
+              71047,
+              "supported",
+              4
+            ],
+            "seconds": 4.789926625002408,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.9511396228409925,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 357.87712427096636,
+            "background_relative_error": 1.9967010362869668,
+            "upper_rmse_m_s": 65.05361880523249,
+            "lower_rmse_m_s": 501.91642614409113
+          },
+          {
+            "spec": [
+              71051,
+              "supported",
+              5
+            ],
+            "seconds": 2.9792615000042133,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.9809327918814023,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 333.87229493763647,
+            "background_relative_error": 1.5775216505195597,
+            "upper_rmse_m_s": 48.82981671076302,
+            "lower_rmse_m_s": 469.63503665489173
+          },
+          {
+            "spec": [
+              71059,
+              "supported",
+              6
+            ],
+            "seconds": 0.009193582998705097,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71063,
+              "supported",
+              7
+            ],
+            "seconds": 4.438150625006529,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71069,
+              "supported",
+              8
+            ],
+            "seconds": 2.616110083006788,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.4590136927895124,
+            "waveform_score": 0.9764239237288121,
+            "mechanism_score": 0.6694713966696316,
+            "velocity_rmse_m_s": 138.55206562742657,
+            "background_relative_error": 0.3634687049019532,
+            "upper_rmse_m_s": 25.77517320081656,
+            "lower_rmse_m_s": 194.2395176726954
+          },
+          {
+            "spec": [
+              71081,
+              "supported",
+              9
+            ],
+            "seconds": 2.5767061250080587,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.9588613232538631,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 178.52460794319393,
+            "background_relative_error": 1.159931973724144,
+            "upper_rmse_m_s": 73.5741280504924,
+            "lower_rmse_m_s": 241.51380698451166
+          },
+          {
+            "spec": [
+              71089,
+              "supported",
+              10
+            ],
+            "seconds": 0.009435915999347344,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71099,
+              "supported",
+              11
+            ],
+            "seconds": 5.779616125000757,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              72011,
+              "null",
+              0
+            ],
+            "seconds": 0.008968583002570085,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72017,
+              "misspecified",
+              1
+            ],
+            "seconds": 0.009336707997135818,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72023,
+              "structured_attenuation",
+              2
+            ],
+            "seconds": 0.009671958003309555,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72031,
+              "structured_attenuation",
+              4
+            ],
+            "seconds": 5.0304406250070315,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72043,
+              "structured_attenuation",
+              6
+            ],
+            "seconds": 0.009272749986848794,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 43.15480408300937,
+        "combined_score": 0.13461129181173836,
+        "model_score": 0.08586889201678892,
+        "waveform_score": 0.5668308428177754,
+        "correct_refusal_rate": 1.0,
+        "coverage": 0.5833333333333334,
+        "mean_rmse_m_s": 210.32689942711957
+      },
+      "new": {
+        "per_world": [
+          {
+            "spec": [
+              71011,
+              "supported",
+              0
+            ],
+            "seconds": 2.1053152920067078,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.7651228091223637,
+            "waveform_score": 0.9873065432774065,
+            "mechanism_score": 0.8691436911450833,
+            "velocity_rmse_m_s": 31.159635274130476,
+            "background_relative_error": 0.13431097557733299,
+            "upper_rmse_m_s": 7.684413790871482,
+            "lower_rmse_m_s": 43.39119179654249
+          },
+          {
+            "spec": [
+              71017,
+              "supported",
+              1
+            ],
+            "seconds": 2.722716999996919,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.44780419159964996,
+            "waveform_score": 0.9651736552664123,
+            "mechanism_score": 0.6574258957858711,
+            "velocity_rmse_m_s": 66.88726696092407,
+            "background_relative_error": 0.37355901347412723,
+            "upper_rmse_m_s": 31.32909835777017,
+            "lower_rmse_m_s": 89.25413468906083
+          },
+          {
+            "spec": [
+              71023,
+              "supported",
+              2
+            ],
+            "seconds": 8.089888957998483,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71039,
+              "supported",
+              3
+            ],
+            "seconds": 1.7115583749982761,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.3079265460301707,
+            "waveform_score": 0.9912337412379492,
+            "mechanism_score": 0.5524736937157875,
+            "velocity_rmse_m_s": 102.0488542062584,
+            "background_relative_error": 0.5142901649624584,
+            "upper_rmse_m_s": 16.26569299509531,
+            "lower_rmse_m_s": 143.39931841194252
+          },
+          {
+            "spec": [
+              71047,
+              "supported",
+              4
+            ],
+            "seconds": 4.563675375000457,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.3436319635777738,
+            "waveform_score": 0.9723310795393049,
+            "mechanism_score": 0.578034634005427,
+            "velocity_rmse_m_s": 87.20318904970804,
+            "background_relative_error": 0.475447597557766,
+            "upper_rmse_m_s": 28.616065096407496,
+            "lower_rmse_m_s": 119.95796421778928
+          },
+          {
+            "spec": [
+              71051,
+              "supported",
+              5
+            ],
+            "seconds": 4.964604500011774,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.22523906791616996,
+            "waveform_score": 0.9686044819216291,
+            "mechanism_score": 0.4670841152163627,
+            "velocity_rmse_m_s": 134.64223157596263,
+            "background_relative_error": 0.614015276057061,
+            "upper_rmse_m_s": 43.19294531791585,
+            "lower_rmse_m_s": 185.44926670729606
+          },
+          {
+            "spec": [
+              71059,
+              "supported",
+              6
+            ],
+            "seconds": 0.00802708299306687,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71063,
+              "supported",
+              7
+            ],
+            "seconds": 8.18739220801217,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.6004884496430101,
+            "waveform_score": 0.9754848051018314,
+            "mechanism_score": 0.7653544004354536,
+            "velocity_rmse_m_s": 44.18437909669591,
+            "background_relative_error": 0.24773189635340648,
+            "upper_rmse_m_s": 16.63719863450499,
+            "lower_rmse_m_s": 60.23057640365981
+          },
+          {
+            "spec": [
+              71069,
+              "supported",
+              8
+            ],
+            "seconds": 2.485418208001647,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.5840536887490635,
+            "waveform_score": 0.9697595039061971,
+            "mechanism_score": 0.7525899384498016,
+            "velocity_rmse_m_s": 101.02700601154707,
+            "background_relative_error": 0.2601900837112254,
+            "upper_rmse_m_s": 17.318254755342718,
+            "lower_rmse_m_s": 141.820273372827
+          },
+          {
+            "spec": [
+              71081,
+              "supported",
+              9
+            ],
+            "seconds": 3.505658708003466,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.6737459152100296,
+            "waveform_score": 0.9884057029970631,
+            "mechanism_score": 0.8160479795726284,
+            "velocity_rmse_m_s": 30.790919396508503,
+            "background_relative_error": 0.19486800404344531,
+            "upper_rmse_m_s": 15.120014412635651,
+            "lower_rmse_m_s": 40.83560454708926
+          },
+          {
+            "spec": [
+              71089,
+              "supported",
+              10
+            ],
+            "seconds": 0.007763749992591329,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71099,
+              "supported",
+              11
+            ],
+            "seconds": 7.872266457998194,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              72011,
+              "null",
+              0
+            ],
+            "seconds": 0.008111207993351854,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72017,
+              "misspecified",
+              1
+            ],
+            "seconds": 0.007959583002957515,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72023,
+              "structured_attenuation",
+              2
+            ],
+            "seconds": 0.008262457995442674,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72031,
+              "structured_attenuation",
+              4
+            ],
+            "seconds": 7.744772791003925,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72043,
+              "structured_attenuation",
+              6
+            ],
+            "seconds": 0.008734332994208671,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 54.05964970799687,
+        "combined_score": 0.4548461956938679,
+        "model_score": 0.32900105265401924,
+        "waveform_score": 0.6515249594373161,
+        "correct_refusal_rate": 1.0,
+        "coverage": 0.6666666666666666,
+        "mean_rmse_m_s": 74.74293519646689
+      },
+      "grid": {
+        "per_world": [
+          {
+            "spec": [
+              71011,
+              "supported",
+              0
+            ],
+            "seconds": 0.40053716700640507,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.7775995604393603,
+            "waveform_score": 0.7151129537984175,
+            "mechanism_score": 0.7457020306651593,
+            "velocity_rmse_m_s": 30.66929580370863,
+            "background_relative_error": 0.12645333097640696,
+            "upper_rmse_m_s": 26.246218727154012,
+            "lower_rmse_m_s": 34.53038390630995
+          },
+          {
+            "spec": [
+              71017,
+              "supported",
+              1
+            ],
+            "seconds": 0.4194929170043906,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.13519088500580084,
+            "waveform_score": 0.541318350091843,
+            "mechanism_score": 0.27052043697065886,
+            "velocity_rmse_m_s": 140.70594352989713,
+            "background_relative_error": 0.7428443570188511,
+            "upper_rmse_m_s": 150.29326451566706,
+            "lower_rmse_m_s": 130.4157188781357
+          },
+          {
+            "spec": [
+              71023,
+              "supported",
+              2
+            ],
+            "seconds": 0.43238962499890476,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71039,
+              "supported",
+              3
+            ],
+            "seconds": 0.40746745800424833,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.33927601221310383,
+            "waveform_score": 0.9902744444529072,
+            "mechanism_score": 0.5796346819424534,
+            "velocity_rmse_m_s": 93.97176828584402,
+            "background_relative_error": 0.4800668334295892,
+            "upper_rmse_m_s": 29.6988619577297,
+            "lower_rmse_m_s": 129.53518467178114
+          },
+          {
+            "spec": [
+              71047,
+              "supported",
+              4
+            ],
+            "seconds": 0.43414462500368245,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71051,
+              "supported",
+              5
+            ],
+            "seconds": 0.42728366699884646,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0007906733197799936,
+            "waveform_score": 0.881299954272861,
+            "mechanism_score": 0.026397355181284346,
+            "velocity_rmse_m_s": 222.95120632878178,
+            "background_relative_error": 0.9981672690500017,
+            "upper_rmse_m_s": 123.54288390502559,
+            "lower_rmse_m_s": 290.08901503391576
+          },
+          {
+            "spec": [
+              71059,
+              "supported",
+              6
+            ],
+            "seconds": 0.008842625000397675,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71063,
+              "supported",
+              7
+            ],
+            "seconds": 0.43675200000870973,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71069,
+              "supported",
+              8
+            ],
+            "seconds": 0.44306862499797717,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.10546113358450086,
+            "waveform_score": 0.4779246828749907,
+            "mechanism_score": 0.22450496391841673,
+            "velocity_rmse_m_s": 321.5723537011838,
+            "background_relative_error": 0.79149844801353,
+            "upper_rmse_m_s": 214.263704175622,
+            "lower_rmse_m_s": 401.13417007627265
+          },
+          {
+            "spec": [
+              71081,
+              "supported",
+              9
+            ],
+            "seconds": 0.49061920899839606,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.18710825695791253,
+            "waveform_score": 0.7542131863178145,
+            "mechanism_score": 0.3756587742441265,
+            "velocity_rmse_m_s": 111.70618488488454,
+            "background_relative_error": 0.6655630872361522,
+            "upper_rmse_m_s": 140.38079135436672,
+            "lower_rmse_m_s": 72.45534419070668
+          },
+          {
+            "spec": [
+              71089,
+              "supported",
+              10
+            ],
+            "seconds": 0.009046291990671307,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71099,
+              "supported",
+              11
+            ],
+            "seconds": 0.4529926249961136,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.3941479269326203,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 333.5624184369622,
+            "background_relative_error": 1.0070915086271368,
+            "upper_rmse_m_s": 275.1123317428083,
+            "lower_rmse_m_s": 383.198354524214
+          },
+          {
+            "spec": [
+              72011,
+              "null",
+              0
+            ],
+            "seconds": 0.008558874993468635,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72017,
+              "misspecified",
+              1
+            ],
+            "seconds": 0.009147165998001583,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72023,
+              "structured_attenuation",
+              2
+            ],
+            "seconds": 0.010123458007001318,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72031,
+              "structured_attenuation",
+              4
+            ],
+            "seconds": 0.5118992499919841,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72043,
+              "structured_attenuation",
+              6
+            ],
+            "seconds": 0.009493208999629132,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 4.97202699999616,
+        "combined_score": 0.1852015202435083,
+        "model_score": 0.1287855434600382,
+        "waveform_score": 0.39619095822845457,
+        "correct_refusal_rate": 1.0,
+        "coverage": 0.5833333333333334,
+        "mean_rmse_m_s": 179.30559585303743
+      },
+      "strict_grid": {
+        "per_world": [
+          {
+            "spec": [
+              71011,
+              "supported",
+              0
+            ],
+            "seconds": 0.4853597090113908,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71017,
+              "supported",
+              1
+            ],
+            "seconds": 0.5234524580009747,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71023,
+              "supported",
+              2
+            ],
+            "seconds": 0.4599605829862412,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71039,
+              "supported",
+              3
+            ],
+            "seconds": 0.4840272500005085,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.33927601221310383,
+            "waveform_score": 0.9902744444529072,
+            "mechanism_score": 0.5796346819424534,
+            "velocity_rmse_m_s": 93.97176828584402,
+            "background_relative_error": 0.4800668334295892,
+            "upper_rmse_m_s": 29.6988619577297,
+            "lower_rmse_m_s": 129.53518467178114
+          },
+          {
+            "spec": [
+              71047,
+              "supported",
+              4
+            ],
+            "seconds": 0.51015216599626,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71051,
+              "supported",
+              5
+            ],
+            "seconds": 0.4492945000092732,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0007906733197799936,
+            "waveform_score": 0.881299954272861,
+            "mechanism_score": 0.026397355181284346,
+            "velocity_rmse_m_s": 222.95120632878178,
+            "background_relative_error": 0.9981672690500017,
+            "upper_rmse_m_s": 123.54288390502559,
+            "lower_rmse_m_s": 290.08901503391576
+          },
+          {
+            "spec": [
+              71059,
+              "supported",
+              6
+            ],
+            "seconds": 0.010024084011092782,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71063,
+              "supported",
+              7
+            ],
+            "seconds": 0.45439379099116195,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71069,
+              "supported",
+              8
+            ],
+            "seconds": 0.4541148330026772,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71081,
+              "supported",
+              9
+            ],
+            "seconds": 0.5239091659896076,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.18710825695791253,
+            "waveform_score": 0.7542131863178145,
+            "mechanism_score": 0.3756587742441265,
+            "velocity_rmse_m_s": 111.70618488488454,
+            "background_relative_error": 0.6655630872361522,
+            "upper_rmse_m_s": 140.38079135436672,
+            "lower_rmse_m_s": 72.45534419070668
+          },
+          {
+            "spec": [
+              71089,
+              "supported",
+              10
+            ],
+            "seconds": 0.010237166003207676,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71099,
+              "supported",
+              11
+            ],
+            "seconds": 0.4189865829976043,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              72011,
+              "null",
+              0
+            ],
+            "seconds": 0.008604792004916817,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72017,
+              "misspecified",
+              1
+            ],
+            "seconds": 0.00856687499617692,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72023,
+              "structured_attenuation",
+              2
+            ],
+            "seconds": 0.008169125008862466,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72031,
+              "structured_attenuation",
+              4
+            ],
+            "seconds": 0.40813695899851155,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72043,
+              "structured_attenuation",
+              6
+            ],
+            "seconds": 0.010076584003400058,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 5.290098750003381,
+        "combined_score": 0.08180756761398866,
+        "model_score": 0.04393124520756636,
+        "waveform_score": 0.21881563208696522,
+        "correct_refusal_rate": 1.0,
+        "coverage": 0.25,
+        "mean_rmse_m_s": 142.87638649983677
+      },
+      "refined": {
+        "per_world": [
+          {
+            "spec": [
+              71011,
+              "supported",
+              0
+            ],
+            "seconds": 0.8820876670069993,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.7468689868583788,
+            "waveform_score": 0.8671185133049025,
+            "mechanism_score": 0.8047508468576943,
+            "velocity_rmse_m_s": 35.88484764262948,
+            "background_relative_error": 0.1459764048850408,
+            "upper_rmse_m_s": 31.64996585730588,
+            "lower_rmse_m_s": 39.670193368583845
+          },
+          {
+            "spec": [
+              71017,
+              "supported",
+              1
+            ],
+            "seconds": 0.7960006249923026,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.14392397657153444,
+            "waveform_score": 0.9059635635905825,
+            "mechanism_score": 0.36109538726058915,
+            "velocity_rmse_m_s": 136.59404861454885,
+            "background_relative_error": 0.7292018683170421,
+            "upper_rmse_m_s": 139.77967666548057,
+            "lower_rmse_m_s": 133.3323300070961
+          },
+          {
+            "spec": [
+              71023,
+              "supported",
+              2
+            ],
+            "seconds": 0.7788357920071576,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71039,
+              "supported",
+              3
+            ],
+            "seconds": 0.7862968749977881,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.6777992763374842,
+            "waveform_score": 0.9958950687444826,
+            "mechanism_score": 0.8215941558355192,
+            "velocity_rmse_m_s": 39.04475375332083,
+            "background_relative_error": 0.19206190417838617,
+            "upper_rmse_m_s": 18.406407096319487,
+            "lower_rmse_m_s": 52.05948298936018
+          },
+          {
+            "spec": [
+              71047,
+              "supported",
+              4
+            ],
+            "seconds": 0.8198288749990752,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71051,
+              "supported",
+              5
+            ],
+            "seconds": 0.771394416995463,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.9479604529919614,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 232.05869630332165,
+            "background_relative_error": 1.040608497470653,
+            "upper_rmse_m_s": 120.28876052532482,
+            "lower_rmse_m_s": 305.34094247459774
+          },
+          {
+            "spec": [
+              71059,
+              "supported",
+              6
+            ],
+            "seconds": 0.008388834001380019,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71063,
+              "supported",
+              7
+            ],
+            "seconds": 0.770728749994305,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.2011578375078651,
+            "waveform_score": 0.6842629622745152,
+            "mechanism_score": 0.37100519912511654,
+            "velocity_rmse_m_s": 119.0855836467686,
+            "background_relative_error": 0.6461031250907848,
+            "upper_rmse_m_s": 83.76363596298374,
+            "lower_rmse_m_s": 146.10409219198405
+          },
+          {
+            "spec": [
+              71069,
+              "supported",
+              8
+            ],
+            "seconds": 0.7748073749971809,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.09416077632782502,
+            "waveform_score": 0.7564369456206745,
+            "mechanism_score": 0.2668832891784187,
+            "velocity_rmse_m_s": 329.15457818906134,
+            "background_relative_error": 0.8109650221988867,
+            "upper_rmse_m_s": 211.7263391176287,
+            "lower_rmse_m_s": 414.55690804699503
+          },
+          {
+            "spec": [
+              71081,
+              "supported",
+              9
+            ],
+            "seconds": 0.7614825420023408,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.38215537097319635,
+            "waveform_score": 0.9212537171394405,
+            "mechanism_score": 0.5933481743747586,
+            "velocity_rmse_m_s": 72.03392139933807,
+            "background_relative_error": 0.43593156573990804,
+            "upper_rmse_m_s": 83.74352560426689,
+            "lower_rmse_m_s": 58.006840835366354
+          },
+          {
+            "spec": [
+              71089,
+              "supported",
+              10
+            ],
+            "seconds": 0.008381708001252264,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 0.0
+          },
+          {
+            "spec": [
+              71099,
+              "supported",
+              11
+            ],
+            "seconds": 0.7693394590023672,
+            "abstained": false,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.6212767454375172,
+            "mechanism_score": 0.0,
+            "velocity_rmse_m_s": 333.163205449327,
+            "background_relative_error": 1.0071189649400565,
+            "upper_rmse_m_s": 270.3269141854947,
+            "lower_rmse_m_s": 385.899990149636
+          },
+          {
+            "spec": [
+              72011,
+              "null",
+              0
+            ],
+            "seconds": 0.008824834003462456,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72017,
+              "misspecified",
+              1
+            ],
+            "seconds": 0.009563625004375353,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72023,
+              "structured_attenuation",
+              2
+            ],
+            "seconds": 0.009707541990792379,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72031,
+              "structured_attenuation",
+              4
+            ],
+            "seconds": 0.7589416249975329,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          },
+          {
+            "spec": [
+              72043,
+              "structured_attenuation",
+              6
+            ],
+            "seconds": 0.009455042003537528,
+            "abstained": true,
+            "sources": [
+              3,
+              15,
+              28
+            ],
+            "model_score": 0.0,
+            "waveform_score": 0.0,
+            "mechanism_score": 1.0
+          }
+        ],
+        "wall_seconds": 8.796218582996516,
+        "combined_score": 0.2682230877193413,
+        "model_score": 0.18717218538135696,
+        "waveform_score": 0.5583473307586729,
+        "correct_refusal_rate": 1.0,
+        "coverage": 0.6666666666666666,
+        "mean_rmse_m_s": 162.12745437478947
+      }
+    }
+  },
+  "additional_worlds_paired_rmse": {
+    "matched_supported_worlds": 7,
+    "before_mean_m_s": 210.3268994271196,
+    "after_mean_m_s": 79.10844321071988,
+    "improved_worlds": 7
+  },
+  "difficulty_2": {
+    "scope": "method_diagnostics_not_model_calibration",
+    "platform": "macOS-15.7.4-arm64-arm-64bit",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "difficulty": 2,
+    "source_sha256": {
+      "benchmarks/EarthScience/ActiveFullWaveformInversion/verification/evaluator.py": "9b786e4c449d4937efaeff1102ecc2d7b6396b0b7a2bb7e8b4c89cd3d63d7fb9",
+      "benchmarks/EarthScience/ActiveFullWaveformInversion/verification/reference_solver.py": "c6140935f48c7958d6e032c30138c6881697797ad9252e6cd577e9effe594427",
+      "tests/test_pr9_earth_hardening.py": "6b20d04237e1419334e7521274183b50acd3b509a4facec7bde4693971619256",
+      ".research/pr20_fwi_spatial_probe.py": "1b14dacbdee6f752a992321a8556f7914a194568b3b65ad67840f72133358bcd"
+    },
+    "results": {
+      "three_shots": {
+        "combined_score": 0.5897133796205872,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "mechanism_score": 0.7655505026403355,
+        "development_model_score": 0.36324932065545895,
+        "development_waveform_score": 0.9729083746680158,
+        "development_confidence_calibration_score": 0.9666948240615552,
+        "development_false_discovery_rate": 0.0,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "supported_world_count": 4,
+        "unsupported_world_count": 3,
+        "discovery_attempt_count": 4,
+        "false_discovery_count": 0,
+        "correct_refusal_count": 3,
+        "robustness_score": 0.27162188896754547,
+        "heldout_feasibility_rate": 1.0,
+        "heldout_model_score": 0.11219169529061952,
+        "heldout_waveform_score": 0.8602859795614916,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0,
+        "heldout_supported_world_count": 3,
+        "heldout_unsupported_world_count": 3,
+        "heldout_discovery_attempt_count": 3,
+        "heldout_false_discovery_count": 0,
+        "heldout_correct_refusal_count": 3,
+        "heldout_confidence_calibration_score": 0.8369581568712907,
+        "per_world": [
+          {
+            "split": "development",
+            "world_index": 0,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.5641728603155242,
+            "model_score": 0.3217220324180971,
+            "waveform_score": 0.9893354642959659,
+            "waveform_relative_l2": 0.0035739364757748377,
+            "confidence_score": 0.9443855601882387,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 1,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.4725162942203724,
+            "model_score": 0.2355298065426701,
+            "waveform_score": 0.947954959846257,
+            "waveform_relative_l2": 0.01781609618882806,
+            "confidence_score": 0.8927544224488423,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 2,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.632100343905603,
+            "model_score": 0.41144061174926033,
+            "waveform_score": 0.9711021064908277,
+            "waveform_relative_l2": 0.009774553401349256,
+            "confidence_score": 0.9718097054833832,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 3,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.6900640200408492,
+            "model_score": 0.4843048319118082,
+            "waveform_score": 0.9832409680390126,
+            "waveform_relative_l2": 0.005633684511979869,
+            "confidence_score": 0.9879140803104212,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 4,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 5,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 6,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 0,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.0,
+            "model_score": 0.0,
+            "waveform_score": 0.6080147508537839,
+            "waveform_relative_l2": 0.16585204534586637,
+            "confidence_score": 0.3599999999999999,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 1,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.40336477075911364,
+            "model_score": 0.16620415815809556,
+            "waveform_score": 0.9789354255191796,
+            "waveform_relative_l2": 0.007096532753391602,
+            "confidence_score": 0.8426804949250295,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 2,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.41150089614352287,
+            "model_score": 0.17037092771376303,
+            "waveform_score": 0.9939077623115111,
+            "waveform_relative_l2": 0.002036957028818346,
+            "confidence_score": 0.8490684463027142,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 3,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 4,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 5,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          }
+        ],
+        "wall_seconds": 43.12240512500284
+      }
+    }
+  },
+  "difficulty_3": {
+    "scope": "method_diagnostics_not_model_calibration",
+    "platform": "macOS-15.7.4-arm64-arm-64bit",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "difficulty": 3,
+    "source_sha256": {
+      "benchmarks/EarthScience/ActiveFullWaveformInversion/verification/evaluator.py": "9b786e4c449d4937efaeff1102ecc2d7b6396b0b7a2bb7e8b4c89cd3d63d7fb9",
+      "benchmarks/EarthScience/ActiveFullWaveformInversion/verification/reference_solver.py": "c6140935f48c7958d6e032c30138c6881697797ad9252e6cd577e9effe594427",
+      "tests/test_pr9_earth_hardening.py": "6b20d04237e1419334e7521274183b50acd3b509a4facec7bde4693971619256",
+      ".research/pr20_fwi_spatial_probe.py": "1b14dacbdee6f752a992321a8556f7914a194568b3b65ad67840f72133358bcd"
+    },
+    "results": {
+      "three_shots": {
+        "combined_score": 0.608117168642611,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "mechanism_score": 0.7760669535100634,
+        "development_model_score": 0.3891763273916065,
+        "development_waveform_score": 0.969995087357625,
+        "development_confidence_calibration_score": 0.9694924234323054,
+        "development_false_discovery_rate": 0.0,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "supported_world_count": 4,
+        "unsupported_world_count": 3,
+        "discovery_attempt_count": 4,
+        "false_discovery_count": 0,
+        "correct_refusal_count": 3,
+        "robustness_score": 0.3727440643123445,
+        "heldout_feasibility_rate": 1.0,
+        "heldout_model_score": 0.17166465871369455,
+        "heldout_waveform_score": 0.9840384378469079,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0,
+        "heldout_supported_world_count": 3,
+        "heldout_unsupported_world_count": 3,
+        "heldout_discovery_attempt_count": 3,
+        "heldout_false_discovery_count": 0,
+        "heldout_correct_refusal_count": 3,
+        "heldout_confidence_calibration_score": 0.8884567660493561,
+        "per_world": [
+          {
+            "split": "development",
+            "world_index": 0,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.7143790414772008,
+            "model_score": 0.5180588598175657,
+            "waveform_score": 0.9850954292753517,
+            "waveform_relative_l2": 0.005005586663269459,
+            "confidence_score": 0.9926690514616371,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 1,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.4684215935411915,
+            "model_score": 0.23167430437909348,
+            "waveform_score": 0.9471002400707751,
+            "waveform_relative_l2": 0.01811678042341795,
+            "confidence_score": 0.8900557603702371,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 2,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.6743900817164469,
+            "model_score": 0.4675831566380531,
+            "waveform_score": 0.9726654518258645,
+            "waveform_relative_l2": 0.009238362515957681,
+            "confidence_score": 0.9842221484287991,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 3,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.5752779578356054,
+            "model_score": 0.3393889887317139,
+            "waveform_score": 0.9751192282585089,
+            "waveform_relative_l2": 0.008398510022398867,
+            "confidence_score": 0.9495000037654641,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 4,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 5,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "development",
+            "world_index": 6,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 0,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.44278297757369445,
+            "model_score": 0.19881677243372536,
+            "waveform_score": 0.9861178351760106,
+            "waveform_relative_l2": 0.004659807742649562,
+            "confidence_score": 0.8723959988888843,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 1,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.1324707089286667,
+            "model_score": 0.017954464989418665,
+            "waveform_score": 0.9773885623662756,
+            "waveform_relative_l2": 0.007623665438588177,
+            "confidence_score": 0.5544046455618032,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 2,
+            "valid": true,
+            "abstained": false,
+            "mechanism_score": 0.5429785064346724,
+            "model_score": 0.29822273871793964,
+            "waveform_score": 0.9886089159984375,
+            "waveform_relative_l2": 0.003818819779014264,
+            "confidence_score": 0.9339399518454482,
+            "false_discovery": false,
+            "correct_refusal": false,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 3,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 4,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          },
+          {
+            "split": "heldout",
+            "world_index": 5,
+            "valid": true,
+            "abstained": true,
+            "mechanism_score": 1.0,
+            "model_score": 1.0,
+            "waveform_score": 1.0,
+            "waveform_relative_l2": 0.0,
+            "confidence_score": 0.99,
+            "false_discovery": false,
+            "correct_refusal": true,
+            "shot_calls": 3
+          }
+        ],
+        "wall_seconds": 39.93981954100309
+      }
+    }
+  },
+  "validation_limitations": [
+    "Linux source transfer rejected by automatic approval review; updated Linux sandbox and contribution gate not run.",
+    "Four of twelve additional supported worlds are refused. One trips the unchanged near-background gate, one the low-energy gate; two fail the final acoustic-fit gate.",
+    "Development world 1 RMSE worsens from 41.6213 to 58.7752 m/s.",
+    "Additional worlds use the same procedural family, not independent geophysical data.",
+    "The original paired development seed/noise issue is retained to keep this comparison on an unchanged evaluator."
+  ],
+  "additional_world_refusal_gate_audit": [
+    {
+      "seed": 71023,
+      "background_relative_waveform_error": 0.6480834349071273,
+      "energy_ratio": 1.0278904217471978,
+      "refusal_gate": "final_fit"
+    },
+    {
+      "seed": 71059,
+      "background_relative_waveform_error": 0.0031226329470385858,
+      "energy_ratio": 1.0000135520346476,
+      "refusal_gate": "near_background"
+    },
+    {
+      "seed": 71089,
+      "background_relative_waveform_error": 0.3546164798019446,
+      "energy_ratio": 0.9400959814560944,
+      "refusal_gate": "low_energy"
+    },
+    {
+      "seed": 71099,
+      "background_relative_waveform_error": 0.3146321218939975,
+      "energy_ratio": 1.0078410478954978,
+      "refusal_gate": "final_fit"
+    }
+  ],
+  "software_validation": {
+    "science_regressions": {
+      "passed": 42,
+      "seconds": 104.21
+    },
+    "framework_regressions": {
+      "passed": 115,
+      "skipped": 13,
+      "subtests_passed": 3,
+      "seconds": 113.11
+    },
+    "linux_sandbox": "pending_explicit_remote_source_transfer_authorization",
+    "existing_test_bounds_changed": false
+  }
+}
