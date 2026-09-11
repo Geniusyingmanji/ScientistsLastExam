@@ -8,7 +8,7 @@ histories inconsistent with the declared families.
 ## Current reference
 
 The executable revision and complete metrics are recorded in
-`experiments/transit_timing_review_replay_2026-09-10.json`. Every candidate below is evaluated
+`experiments/transit_timing_review_replay_2026-09-11.json`. Every candidate below is evaluated
 twice through the trusted Linux driver and bubblewrap; the two complete metric dictionaries must
 match before the record is accepted.
 
