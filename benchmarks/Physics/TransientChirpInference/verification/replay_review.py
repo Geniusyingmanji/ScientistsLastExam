@@ -22,7 +22,7 @@ def main():
     ref = (HERE / "reference_solver.py").read_text().replace("def infer_transient(", "def reference_infer_transient(")
     calibration = (HERE / "calibrate.py").read_text()
     names = {"_line_fit", "no_chirp_grid", "h1_only", "never_refuse", "threshold_policy",
-             "sign_count_policy", "morphology_policy"}
+             "sign_count_policy", "morphology_policy", "lookup_morphology_policy"}
     functions = [ast.get_source_segment(calibration, node) for node in ast.parse(calibration).body
                  if isinstance(node, ast.FunctionDef) and node.name in names]
     library = ref + "\n\n" + "\n\n".join(functions)
@@ -34,7 +34,8 @@ def main():
                       ("never_refuse", "never_refuse"), ("maintainer_sign_count", "sign_count_policy()"))}
     for name, factory in (("shortcut_probe", "threshold_policy"),
                           ("sign_count_shortcut_probe", "sign_count_policy"),
-                          ("morphology_shortcut_probe", "morphology_policy")):
+                          ("morphology_shortcut_probe", "morphology_policy"),
+                          ("lookup_morphology_shortcut_probe", "lookup_morphology_policy")):
         parameters = sweep[name]["best_parameters"]
         candidates[name] = library + "\ninfer_transient = %s(*%r)\n" % (factory, parameters)
     candidates["baseline"] = (HERE.parent / "solution.py").read_text()
@@ -69,7 +70,7 @@ def infer_transient(problem, observe):
             report["probes"][name] = {"complete_metrics_identical_twice": True, "metrics": results[0]}
             print(name, results[0]["combined_score"], results[0]["robustness_score"], flush=True)
     for name in ("maintainer_sign_count", "shortcut_probe", "sign_count_shortcut_probe",
-                 "morphology_shortcut_probe"):
+                 "morphology_shortcut_probe", "lookup_morphology_shortcut_probe"):
         if report["probes"][name]["metrics"]["combined_score"] >= report["probes"]["reference"]["metrics"]["combined_score"]:
             raise AssertionError("shortcut reaches reference: " + name)
     Path(args.output).write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

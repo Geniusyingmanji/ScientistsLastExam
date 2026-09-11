@@ -64,13 +64,13 @@ class TransientChirpInferenceTests(unittest.TestCase):
             self.assertTrue(features["chirp"] & features["line"])
 
     def test_line_slope_is_scored_and_wrong_labels_get_no_parameter_credit(self):
-        world = {"kind": "line", "slope": 0.0, "amplitude": 0.6}
-        good = {"abstain": False, "model": "line", "slope": 0.0,
+        world = {"kind": "line", "f0": 0.12, "slope": 0.0, "amplitude": 0.6}
+        good = {"abstain": False, "model": "line", "frequency": 0.12, "slope": 0.0,
                 "amplitude": 0.6, "event_time": 9.0, "confidence": 0.8}
         right = self.ev._score(world, good)
         wrong_slope = self.ev._score(world, good | {"slope": 0.02})
         wrong_label = self.ev._score(world, good | {"model": "chirp"})
-        self.assertAlmostEqual(right["science_score"] - wrong_slope["science_score"], 0.5)
+        self.assertAlmostEqual(right["science_score"] - wrong_slope["science_score"], 0.25)
         self.assertEqual(wrong_label["science_score"], 0.0)
         self.assertEqual(wrong_label["parameter_score"], 0.0)
         self.assertAlmostEqual(wrong_label["confidence_score"], 0.2)
@@ -136,10 +136,15 @@ class TransientChirpInferenceTests(unittest.TestCase):
         candidate = calibration.morphology_policy(15, 0.10, 0.10, 2, 0.006)
         probe = self.ev.evaluate(candidate)
         reference = self.ev.evaluate(self.ref.infer_transient)
-        self.assertAlmostEqual(probe["combined_score"], 0.686057949909691)
-        self.assertAlmostEqual(probe["robustness_score"], 0.6352363343569877)
         for key in ("combined_score", "robustness_score"):
-            self.assertGreater(reference[key] - probe[key], 0.08)
+            self.assertGreater(reference[key] - probe[key], 0.10)
+
+    def test_lookup_morphology_family_stays_below_reference(self):
+        calibration = load(TASK / "verification/calibrate.py", "chirp_lookup_morphology_test")
+        probe = self.ev.evaluate(calibration.lookup_morphology_policy())
+        reference = self.ev.evaluate(self.ref.infer_transient)
+        for key in ("combined_score", "robustness_score"):
+            self.assertGreater(reference[key] - probe[key], 0.15)
 
     def test_reset_session_hook_is_called_before_every_world(self):
         baseline = self.base.infer_transient

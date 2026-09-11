@@ -59,7 +59,7 @@ def no_chirp_grid(problem, observe):
         "evidence_query_ids": [row["query_id"] for row in rows],
     }
     if not abstain:
-        answer.update(model=model, frequency_slope=0.0, event_time=event_time,
+        answer.update(model=model, initial_frequency=0.11, frequency_slope=0.0, event_time=event_time,
                       amplitude=float(np.clip(amplitude, 0, 1)))
     return answer
 
@@ -77,6 +77,7 @@ def h1_only(problem, observe):
     return {
         "abstain": False,
         "model": model,
+        "initial_frequency": float(np.clip(fit[1], .04, .18)),
         "frequency_slope": float(np.clip(fit[2] if model == "chirp" else 0.0, 0, 0.05)),
         "event_time": 9.0,
         "amplitude": float(np.clip(fit[3], 0, 1)),
@@ -91,7 +92,7 @@ def never_refuse(problem, observe):
         return {
             "abstain": False,
             "model": "line",
-            "frequency_slope": 0.0,
+            "initial_frequency": 0.11, "frequency_slope": 0.0,
             "event_time": 9.0,
             "amplitude": 0.15,
             "confidence": 0.55,
@@ -122,7 +123,7 @@ def threshold_policy(sample_count, glitch_threshold, refusal_threshold, chirp_th
         return {
             "abstain": False,
             "model": model,
-            "frequency_slope": slope,
+            "initial_frequency": 0.11, "frequency_slope": slope,
             "event_time": event_time,
             "amplitude": float(np.clip(np.sqrt(2) * scale, 0, 1)),
             "confidence": 0.65,
@@ -162,7 +163,7 @@ def sign_count_policy(sample_count=12, glitch_threshold=0.38, refusal_rms=0.0,
             model = "chirp" if late - early > count_delta else "line"
             slope, event_time = (chirp_slope if model == "chirp" else 0.0), 9.0
             amplitude = float(np.sqrt(2) * np.std(h))
-        return {"abstain": False, "model": model, "frequency_slope": slope,
+        return {"abstain": False, "model": model, "initial_frequency": 0.11, "frequency_slope": slope,
                 "event_time": event_time, "amplitude": float(np.clip(amplitude, 0, 1)),
                 "confidence": 0.8, "evidence_query_ids": evidence}
     return infer
@@ -188,9 +189,35 @@ def morphology_policy(sample_count=15, refusal_rms=0.15, glitch_median=0.15,
             model = "chirp" if late - early >= count_delta else "line"
             slope, event_time = (chirp_slope if model == "chirp" else 0.0), 9.0
             amplitude = float(np.sqrt(2) * np.std(h))
-        return {"abstain": False, "model": model, "frequency_slope": slope,
+        return {"abstain": False, "model": model, "initial_frequency": 0.11, "frequency_slope": slope,
                 "event_time": event_time, "amplitude": float(np.clip(amplitude, 0, 1)),
                 "confidence": 1.0, "evidence_query_ids": evidence}
+    return infer
+
+
+def lookup_morphology_policy(sample_count=14, refusal_rms=0.10, glitch_median=0.10,
+                             half=14, slopes=(0.0, 0.006, 0.018, 0.028, 0.028), line_upto=1):
+    """Maintainer's no-fit morphology family with a finite slope lookup table."""
+    def infer(problem, observe):
+        times = [float(value) for value in problem["candidate_times"][:sample_count]]
+        rows = [observe(time, "H1") for time in times]
+        h = np.asarray([row["strain"] for row in rows], dtype=float)
+        evidence = [row["query_id"] for row in rows]
+        if float(np.std(h)) < refusal_rms:
+            return {"abstain": True, "confidence": 1.0, "evidence_query_ids": evidence}
+        if float(np.median(np.abs(h))) < glitch_median:
+            return {"abstain": False, "model": "glitch", "initial_frequency": 0.11,
+                    "frequency_slope": 0.0, "event_time": times[int(np.argmax(h))],
+                    "amplitude": float(np.clip(np.max(np.abs(h)), 0, 1)), "confidence": 1.0,
+                    "evidence_query_ids": evidence}
+        delta = (int(np.sum(np.diff(np.signbit(h[half:]))))
+                 - int(np.sum(np.diff(np.signbit(h[:half])))))
+        model = "line" if delta <= line_upto else "chirp"
+        slope = 0.0 if model == "line" else slopes[min(len(slopes) - 1, max(0, delta))]
+        return {"abstain": False, "model": model, "initial_frequency": 0.11,
+                "frequency_slope": slope, "event_time": 9.0,
+                "amplitude": float(np.clip(np.sqrt(2) * np.std(h), 0, 1)), "confidence": 1.0,
+                "evidence_query_ids": evidence}
     return infer
 
 
@@ -249,6 +276,21 @@ def main():
             best = (metrics["combined_score"], parameters, metrics)
     results["morphology_shortcut_probe"] = {
         "strategy_count": count, "best_parameters": list(best[1]), **_summary(best[2])}
+    lookup_tables = ((0.0, 0.006, 0.018, 0.028, 0.028),
+                     (0.0, 0.005, 0.015, 0.025, 0.035))
+    best = None
+    count = 0
+    for parameters in itertools.product((12, 14, 16), (0.08, 0.10, 0.14), (0.08, 0.10, 0.14),
+                                        (6, 7, 8), lookup_tables, (0, 1)):
+        metrics = EVALUATOR.evaluate(lookup_morphology_policy(*parameters))
+        count += 1
+        if best is None or metrics["combined_score"] > best[0]:
+            best = (metrics["combined_score"], parameters, metrics)
+    results["lookup_morphology_shortcut_probe"] = {
+        "strategy_count": count,
+        "best_parameters": [*best[1][:4], list(best[1][4]), best[1][5]],
+        **_summary(best[2]),
+    }
     results["selection_protocol"] = "Development-only selection; trusted in-process sweep. Replay selected policies through the sandbox separately."
     payload = json.dumps(results, indent=2, sort_keys=True)
     if args.output:

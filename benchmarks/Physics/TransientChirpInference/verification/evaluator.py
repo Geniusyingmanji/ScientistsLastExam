@@ -10,6 +10,7 @@ BUDGET = 24
 MIN_EVIDENCE = 6
 NOISE_SIGMA = 0.04
 SLOPE_TOLERANCE = 0.003
+FREQUENCY_TOLERANCE = 0.008
 
 def _noise(seed, t, d, sigma):
     h = hashlib.sha256(f"{seed}|{t:.3f}|{d}".encode()).digest()
@@ -55,7 +56,7 @@ PUBLIC_PROBLEM = {
     "candidate_times": list(TIMES), "detectors": ["H1", "L1"],
     "detector_costs": {"H1": 1, "L1": 1}, "observation_budget_units": BUDGET,
     "minimum_evidence_queries": MIN_EVIDENCE, "model_labels": ["chirp", "line", "glitch"],
-    "frequency_slope_bounds": [0.0, 0.05], "event_time_bounds": [0.0, 18.0],
+    "initial_frequency_bounds": [0.04, 0.18], "frequency_slope_bounds": [0.0, 0.05], "event_time_bounds": [0.0, 18.0],
     "amplitude_bounds": [0.0, 1.0],
     "signal_model": "coherent sinusoid with phase 2*pi*(f0*t + 0.5*slope*t^2) + phase0; f0 in [0.04, 0.18] cycles/day; line slope is zero",
     "glitch_model": "localized Gaussian transient confined primarily to one detector",
@@ -73,9 +74,14 @@ def _validate(s, ids):
     if not isinstance(ev, list) or len(ev) < MIN_EVIDENCE or len(ev) != len(set(ev)) or not set(ev) <= ids: raise ValueError("bad evidence")
     if abstain: return {"abstain": True, "confidence": conf}
     if s.get("model") not in set(PUBLIC_PROBLEM["model_labels"]): raise ValueError("bad model")
-    slope, et, amp = float(s.get("frequency_slope", float("nan"))), float(s.get("event_time", float("nan"))), float(s.get("amplitude", float("nan")))
-    if not math.isfinite(slope) or not 0 <= slope <= .05 or not math.isfinite(et) or not 0 <= et <= 18 or not math.isfinite(amp) or not 0 <= amp <= 1: raise ValueError("bad parameter")
-    return {"abstain": False, "model": s["model"], "slope": slope, "event_time": et, "amplitude": amp, "confidence": conf}
+    frequency, slope, et, amp = (float(s.get("initial_frequency", float("nan"))),
+        float(s.get("frequency_slope", float("nan"))), float(s.get("event_time", float("nan"))),
+        float(s.get("amplitude", float("nan"))))
+    if (not math.isfinite(frequency) or not .04 <= frequency <= .18 or not math.isfinite(slope)
+            or not 0 <= slope <= .05 or not math.isfinite(et) or not 0 <= et <= 18
+            or not math.isfinite(amp) or not 0 <= amp <= 1): raise ValueError("bad parameter")
+    return {"abstain": False, "model": s["model"], "frequency": frequency, "slope": slope,
+            "event_time": et, "amplitude": amp, "confidence": conf}
 
 def _score(w, c):
     row = {"model_correct": False, "science_score": 0.0, "parameter_score": 0.0,
@@ -93,17 +99,21 @@ def _score(w, c):
     row["model_correct"] = c["model"] == truth; row["false_discovery"] = not row["model_correct"]
     if not row["model_correct"]: return row
     slope = w.get("slope", 0.0); et = w.get("event_time", 9.0); amp = w["amplitude"]
-    parameter = (max(0.0, 1 - abs(c["slope"] - slope) / SLOPE_TOLERANCE)
-                 if truth in {"chirp", "line"} else max(0.0, 1 - abs(c["event_time"] - et) / 2.0))
+    if truth in {"chirp", "line"}:
+        slope_quality = max(0.0, 1 - abs(c["slope"] - slope) / SLOPE_TOLERANCE)
+        frequency_quality = max(0.0, 1 - abs(c["frequency"] - w["f0"]) / FREQUENCY_TOLERANCE)
+        parameter = 0.5 * (slope_quality + frequency_quality)
+    else:
+        parameter = max(0.0, 1 - abs(c["event_time"] - et) / 1.0)
     pa = max(0.0, 1 - abs(c["amplitude"] - amp) / .25)
     row["parameter_score"] = parameter
     row["amplitude_score"] = pa
     row["confidence_score"] = c["confidence"]
-    row["science_score"] = .20 + .50 * parameter + .20 * pa + .10 * c["confidence"]
+    row["science_score"] = .30 + .50 * parameter + .20 * pa
     return row
 
-DEVELOPMENT_WORLDS = ({"kind":"chirp","seed":5101,"f0":.055,"slope":.018,"phase":.2,"amplitude":.72,"coherence":.92,"noise":.035}, {"kind":"chirp","seed":5102,"f0":.075,"slope":.028,"phase":1.1,"amplitude":.64,"coherence":.88,"noise":.038}, {"kind":"line","seed":5103,"f0":.12,"slope":0.0,"phase":.4,"amplitude":.68,"coherence":.94,"noise":.035}, {"kind":"line","seed":5104,"f0":.16,"slope":0.0,"phase":2.0,"amplitude":.58,"coherence":.90,"noise":.04}, {"kind":"glitch","seed":5105,"event_time":8.0,"width":.85,"amplitude":.78,"noise":.035}, {"kind":"glitch","seed":5106,"event_time":12.0,"width":1.0,"amplitude":.66,"noise":.04}, {"kind":"ambiguous","seed":5107,"f0":.09,"phase":.7,"amplitude":.13,"noise":.12}, {"kind":"ambiguous","seed":5108,"f0":.14,"phase":1.8,"amplitude":.11,"noise":.13})
-HELDOUT_WORLDS = ({"kind":"chirp","seed":5201,"f0":.06,"slope":.014,"phase":.8,"amplitude":.69,"coherence":.90,"noise":.04}, {"kind":"chirp","seed":5202,"f0":.085,"slope":.032,"phase":1.5,"amplitude":.61,"coherence":.86,"noise":.042}, {"kind":"line","seed":5203,"f0":.105,"slope":0.0,"phase":.1,"amplitude":.62,"coherence":.92,"noise":.04}, {"kind":"line","seed":5204,"f0":.145,"slope":0.0,"phase":2.4,"amplitude":.55,"coherence":.88,"noise":.042}, {"kind":"glitch","seed":5205,"event_time":7.0,"width":.9,"amplitude":.73,"noise":.04}, {"kind":"glitch","seed":5206,"event_time":14.0,"width":1.05,"amplitude":.60,"noise":.042}, {"kind":"ambiguous","seed":5207,"f0":.1,"phase":.3,"amplitude":.12,"noise":.13}, {"kind":"ambiguous","seed":5208,"f0":.13,"phase":2.1,"amplitude":.10,"noise":.135})
+DEVELOPMENT_WORLDS = ({"kind":"chirp","seed":5101,"f0":.0567,"slope":.01731,"phase":.2,"amplitude":.72,"coherence":.92,"noise":.035}, {"kind":"chirp","seed":5102,"f0":.0734,"slope":.02743,"phase":1.1,"amplitude":.64,"coherence":.88,"noise":.038}, {"kind":"line","seed":5103,"f0":.1217,"slope":0.0,"phase":.4,"amplitude":.68,"coherence":.94,"noise":.035}, {"kind":"line","seed":5104,"f0":.1583,"slope":0.0,"phase":2.0,"amplitude":.58,"coherence":.90,"noise":.04}, {"kind":"glitch","seed":5105,"event_time":8.35,"width":.85,"amplitude":.78,"noise":.035}, {"kind":"glitch","seed":5106,"event_time":11.65,"width":1.0,"amplitude":.66,"noise":.04}, {"kind":"ambiguous","seed":5107,"f0":.0913,"phase":.7,"amplitude":.13,"noise":.12}, {"kind":"ambiguous","seed":5108,"f0":.1376,"phase":1.8,"amplitude":.11,"noise":.13})
+HELDOUT_WORLDS = ({"kind":"chirp","seed":5201,"f0":.0619,"slope":.01367,"phase":.8,"amplitude":.69,"coherence":.90,"noise":.04}, {"kind":"chirp","seed":5202,"f0":.0862,"slope":.03121,"phase":1.5,"amplitude":.61,"coherence":.86,"noise":.042}, {"kind":"line","seed":5203,"f0":.1064,"slope":0.0,"phase":.1,"amplitude":.62,"coherence":.92,"noise":.04}, {"kind":"line","seed":5204,"f0":.1468,"slope":0.0,"phase":2.4,"amplitude":.55,"coherence":.88,"noise":.042}, {"kind":"glitch","seed":5205,"event_time":7.4,"width":.9,"amplitude":.73,"noise":.04}, {"kind":"glitch","seed":5206,"event_time":13.55,"width":1.05,"amplitude":.60,"noise":.042}, {"kind":"ambiguous","seed":5207,"f0":.1011,"phase":.3,"amplitude":.12,"noise":.13}, {"kind":"ambiguous","seed":5208,"f0":.1287,"phase":2.1,"amplitude":.10,"noise":.135})
 
 def _harden_worlds(worlds, seed, extra_chirps):
     result = [dict(w, noise=NOISE_SIGMA) for w in worlds]
@@ -128,9 +138,9 @@ def _harden_worlds(worlds, seed, extra_chirps):
 
 
 DEVELOPMENT_WORLDS = _harden_worlds(DEVELOPMENT_WORLDS, 53100,
-                                  ((0.09, 0.003, 0.4), (0.115, 0.006, 1.2)))
+                                  ((0.0917, 0.00341, 0.4), (0.1136, 0.00637, 1.2)))
 HELDOUT_WORLDS = _harden_worlds(HELDOUT_WORLDS, 54100,
-                              ((0.085, 0.0035, 0.7), (0.105, 0.005, 1.6), (0.08, 0.007, 0.2)))
+                              ((0.0843, 0.00357, 0.7), (0.1061, 0.00523, 1.6), (0.0818, 0.00719, 0.2)))
 
 
 def _evaluate_one(candidate, w):
