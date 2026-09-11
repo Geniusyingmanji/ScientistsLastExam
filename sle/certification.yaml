@@ -12,7 +12,7 @@ policy:
 tasks:
   Neuroscience/SpikeHistoryInference:
     status: candidate
-    reason: deterministic repeated-trial neural point-process inference with stimulus and refractory-kernel recovery, sealed conditional-probability prediction, and explicit refusal for burst history, latent trial-gain mixtures, and stimulus-dependent refractoriness; the hardened truth-blind shrinkage reference reaches 0.697/0.829 development/held out, a 1728-strategy moment and constant-parameter shortcut reaches 0.402/0.167, and both blanket abstention and never refusing score zero; historical thinking-disabled DeepSeek draws predate the hardened contract, and the task remains pending server-held recordings and independent computational-neuroscience review
+    reason: deterministic repeated-trial neural point-process inference with stimulus and refractory-kernel recovery, sealed conditional-probability prediction, and explicit refusal for burst history, latent trial-gain mixtures, and stimulus-dependent refractoriness; the hardened truth-blind shrinkage reference reaches 0.697016/0.829388 development/held out, a 3456-strategy moment, logit and constant-parameter shortcut reaches 0.626217/0.463498, and both blanket abstention and never refusing score zero; historical thinking-disabled DeepSeek draws predate the hardened contract, and the task remains pending server-held recordings and independent computational-neuroscience review
     citation_ids: [doi:10.1152/jn.00697.2004, doi:10.1088/0954-898X/15/4/009, doi:10.1038/nature07140]
   Ecology/OccupancyDetectionDesign:
     status: candidate

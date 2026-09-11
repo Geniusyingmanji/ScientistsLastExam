@@ -53,7 +53,7 @@ lineage:
   - experiments/spike_history_inference_deepseek_calibration_2026-09-07.json
   calibration_evidence_status: historical_only
   edits_triggered_by_model: The original thinking-disabled draws exposed complementary supported-discovery and false-discovery failures but did not trigger oracle tuning. Later independent maintainer review changed world coverage, scoring, session isolation, and the reference, so those draws are retained only as historical protocol evidence for revision 156927e2.
-  shortcut_discoverer: builder_and_independent_maintainer_red_team_with_1728_strategy_moment_and_constant_parameter_sweep
+  shortcut_discoverer: builder_and_independent_maintainer_red_team_with_3456_strategy_moment_logit_and_constant_parameter_sweep
   frozen_before_eval: false
   freeze_timestamp: null
 long_horizon:
@@ -68,4 +68,4 @@ construction_audit:
   expert_hours: null
   red_team_rounds: 3
   oracle_disagreement_status: independent review found degenerate non-refusal credit, a stronger low-dimensional shortcut, missing world-boundary resets, a mechanism-axis mismatch, and incomplete reference shrinkage; all were resolved in the hardened revision
-  independent_recomputation_status: baseline, shrinkage reference, midpoint and fixed-tau ablations, 1728-strategy shortcut, malformed-candidate checks, session isolation, and scientific invariants are executable from the task package
+  independent_recomputation_status: baseline, shrinkage reference, midpoint and fixed-tau ablations, 3456-strategy shortcut, malformed-candidate checks, session isolation, and scientific invariants are executable from the task package
