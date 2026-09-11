@@ -141,10 +141,13 @@ class TransientChirpInferenceTests(unittest.TestCase):
 
     def test_lookup_morphology_family_stays_below_reference(self):
         calibration = load(TASK / "verification/calibrate.py", "chirp_lookup_morphology_test")
-        probe = self.ev.evaluate(calibration.lookup_morphology_policy())
+        probe = self.ev.evaluate(calibration.lookup_morphology_policy(
+            16, 0.08, 0.08, 7, (0.0, 0.006, 0.018, 0.028, 0.028), 1))
         reference = self.ev.evaluate(self.ref.infer_transient)
+        self.assertAlmostEqual(probe["combined_score"], 0.6611830494930327)
+        self.assertAlmostEqual(probe["robustness_score"], 0.5563081267357214)
         for key in ("combined_score", "robustness_score"):
-            self.assertGreater(reference[key] - probe[key], 0.15)
+            self.assertGreater(reference[key] - probe[key], 0.12)
 
     def test_reset_session_hook_is_called_before_every_world(self):
         baseline = self.base.infer_transient

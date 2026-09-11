@@ -4,7 +4,7 @@
 
 Use a finite two-detector strain-observation budget to characterize a transient signal. Decide
 whether the data support a coherent chirp, a coherent narrow-band line, or a detector-localized
-glitch; estimate the chirp frequency slope, event time, and signal amplitude. Abstain when the
+glitch; estimate initial frequency, chirp frequency slope, event time, and signal amplitude. Abstain when the
 low-SNR observations do not distinguish a supported model.
 
 ## Candidate interface
@@ -21,6 +21,7 @@ Implement `infer_transient(problem, observe)`.
 | `observation_budget_units` | total observation allowance, 24 |
 | `minimum_evidence_queries` | minimum distinct query IDs to cite, 6 |
 | `model_labels` | allowed labels: `chirp`, `line`, `glitch` |
+| `initial_frequency_bounds` | inclusive output bounds `[0.04, 0.18]` cycles/day |
 | `frequency_slope_bounds` | inclusive output bounds `[0, 0.05]` cycles/day^2 |
 | `event_time_bounds` | inclusive output bounds `[0, 18]` days |
 | `amplitude_bounds` | inclusive output bounds `[0, 1]` |
@@ -40,16 +41,17 @@ overspending fail closed. The callback returns exactly `query_id`, `time`, `dete
 
 Return a mapping with boolean `abstain`, finite `confidence` in `[0, 1]`, and at least six distinct
 current-world `evidence_query_ids`. A non-abstaining answer additionally contains `model`, finite
-`frequency_slope` in `[0, 0.05]`, finite `event_time` in `[0, 18]`, and finite `amplitude` in
+`initial_frequency` in `[0.04, 0.18]`, `frequency_slope` in `[0, 0.05]`, finite `event_time` in `[0, 18]`, and finite `amplitude` in
 `[0, 1]`. Malformed output or callback violations score invalid instead of crashing.
 
 ## Scoring
 
-Correctly labeled supported worlds score model identification (0.20), parameter recovery (0.50),
-amplitude recovery (0.20), and confidence (0.10); incorrect labels and supported-world refusals
-receive zero. Parameter quality is `max(0, 1 - absolute_error / tolerance)`: the frequency-slope
-tolerance is 0.003 cycles/day^2 for both chirps and lines (whose true slope is zero); glitch event
-time tolerance is 2 days. Amplitude tolerance is 0.25. Ambiguous worlds score one for refusal,
+Correctly labeled supported worlds score model identification (0.30), parameter recovery (0.50),
+and amplitude recovery (0.20); incorrect labels and supported-world refusals receive zero. For
+chirps and lines, parameter recovery averages initial-frequency quality (tolerance 0.008 cycles/day)
+and slope quality (tolerance 0.003 cycles/day^2). Glitch event-time tolerance is one day. Amplitude
+tolerance is 0.25. Confidence is reported as a separate calibration diagnostic, not science credit.
+Ambiguous worlds score one for refusal,
 zero for a claim. The headline is `max(0, (sum(world_scores) - unsupported_count) / supported_count)`
 times correct-refusal rate; both blanket refusal and never refusing score zero.
 
@@ -69,14 +71,13 @@ The initial frequency is in [0.04, 0.18] cycles/day.
 The reference observes t=0..11, leaving later localized transients and more adaptive schedules
 as explicit headroom. This is a reduced-order phase model, not a full inspiral waveform.
 
-Current reference: 0.787122 development / 0.723428 held-out normalized score. Removing H1/L1
-coherence gives 0.692047/0.643030; removing chirp fitting gives 0.479101/0.479147; fixing slopes
-to 0.02 gives 0.487122/0.431762; never refusing gives 0/0. The original noise/sign-count shortcut
-gives 0/0. A development-selected 216-policy no-fit morphology grid reaches 0.686058/0.635236;
-the 1,620-policy noise/RMS/sign-count/slope grid reaches 0.627261/0.543909, and the historical
-2,916-policy threshold family reaches 0.418415/0.214259. These are maxima within the listed finite
-grids, not an exhaustive upper bound over possible algorithms. RMS refusal remains inexpensive,
-and correct line/glitch labels make their parameter terms comparatively easy to collect.
+Current reference: 0.821949 development / 0.685320 held-out normalized score. Removing H1/L1
+coherence gives 0.480612/0.476616; removing chirp fitting gives 0.459307/0.377229; fixing slopes
+to 0.02 gives 0.660241/0.533228; never refusing gives 0/0. The original noise/sign-count shortcut
+gives 0/0. Development-selected finite grids reach 0.584719/0.519672 (216-policy morphology),
+0.565033/0.459472 (1,620-policy sign-count), 0.440667/0.286497 (2,916-policy threshold), and
+0.661183/0.556308 (324-policy five-slope lookup). These are finite-grid maxima, not exhaustive
+algorithmic upper bounds.
 
 ## Relationship to nearby tasks
 

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "task": "Gravitation/TransientChirpInference",
+  "source_revision": "9bc9157d00c22a2f3f73c34a5162de7ea66204d2",
+  "source_tree_clean": true,
+  "sweep_execution": "Trusted in-process Linux, development-only selection",
+  "replay_execution": "Linux trusted driver and bubblewrap, two identical complete metric payloads per policy",
+  "all_replay_policies_valid": true,
+  "columns": ["combined_score", "robustness_score"],
+  "scores": {
+    "reference": [0.821949084347924, 0.6853203741653763],
+    "h1_only": [0.4806116356894016, 0.47661551916736267],
+    "no_chirp_grid": [0.4593071748578602, 0.3772289181397864],
+    "never_refuse": [0.0, 0.0],
+    "maintainer_sign_count": [0.0, 0.0],
+    "shortcut_probe": [0.44066656313874886, 0.28649653724176183],
+    "sign_count_shortcut_probe": [0.565032767398832, 0.4594724082315375],
+    "morphology_shortcut_probe": [0.5847189979020708, 0.5196719428077046],
+    "lookup_morphology_shortcut_probe": [0.6611830494930327, 0.5563081267357214],
+    "baseline": [0.0, 0.0],
+    "all_abstain": [0.0, 0.0],
+    "constant_slope": [0.6602407510145909, 0.5332283602764872]
+  },
+  "sweeps": {
+    "threshold": {"strategy_count": 2916, "selected_parameters": [10, 0.2, 0.06, 0.06]},
+    "sign_count": {"strategy_count": 1620, "selected_parameters": [12, 0.28, 0.08, 0.05, 0, 0.006]},
+    "morphology": {"strategy_count": 216, "selected_parameters": [15, 0.1, 0.1, 2, 0.006]},
+    "lookup_morphology": {"strategy_count": 324, "selected_parameters": [16, 0.08, 0.08, 7, [0.0, 0.006, 0.018, 0.028, 0.028], 1]}
+  },
+  "reference_diagnostics": {
+    "development": {"mechanism_correct_count": 10, "mechanism_denominator": 10, "false_discovery_count": 0, "false_discovery_denominator": 10, "correct_refusal_count": 4, "correct_refusal_denominator": 4, "discovery_count": 10, "discovery_coverage_denominator": 10},
+    "heldout": {"mechanism_correct_count": 10, "mechanism_denominator": 12, "false_discovery_count": 1, "false_discovery_denominator": 11, "correct_refusal_count": 4, "correct_refusal_denominator": 4, "discovery_count": 11, "discovery_coverage_denominator": 12}
+  },
+  "limitations": ["The five-slope lookup family is a finite measured shortcut family, not an exhaustive bound.", "The reference retains a fixed early cadence; no full-repository tests or global evidence refresh were run."]
+}

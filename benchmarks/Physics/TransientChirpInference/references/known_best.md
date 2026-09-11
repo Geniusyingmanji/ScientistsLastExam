@@ -2,12 +2,12 @@
 
 ## Current reference and baseline
 
-Executable revision `94cda555f5cd1cd5488566b900e592609d178b89` was frozen before the new model
-draws. Clean ali Linux trusted-driver/bubblewrap replays gave reference **0.7871224443** development
-and **0.7234283087** held-out normalized score. The baseline and blanket refusal each score zero.
-All ten replay policies were valid and complete metrics were identical on two runs each.
-The reference's fitting grid, cadence and decision thresholds were not tuned to the revised worlds;
-only a redundant, unused duplicate grid fit was removed.
+Executable revision `9bc9157d00c22a2f3f73c34a5162de7ea66204d2` was replayed on clean ali Linux
+through the trusted driver and bubblewrap. The reference scores **0.8219490843** development and
+**0.6853203742** held-out normalized score. The baseline and blanket refusal each score zero.
+All twelve replay policies were valid and their complete metrics were identical on two runs each.
+The reference locally refines its coarse frequency/slope fit, so its reported frequency is not tied
+to a discrete grid.
 
 Reference mechanism accuracy is 9/10 development and 10/12 held-out. FDR is 0/9 and 1/11 claims;
 correct refusal is 4/4 in both splits. Coverage is 9/10 and 11/12 supported worlds. Mechanism
@@ -22,10 +22,10 @@ is not a full compact-binary waveform solver or an optimal observation policy.
 
 | Policy | Development normalized | Held-out normalized |
 |---|---:|---:|
-| Reference | 0.787122 | 0.723428 |
-| H1 only | 0.692047 | 0.643030 |
-| No chirp grid | 0.479101 | 0.479147 |
-| Reference with all reported slopes fixed at 0.02 | 0.487122 | 0.431762 |
+| Reference | 0.821949 | 0.685320 |
+| H1 only | 0.480612 | 0.476616 |
+| No chirp grid | 0.459307 | 0.377229 |
+| Reference with all reported slopes fixed at 0.02 | 0.660241 | 0.533228 |
 | Never refuse | 0.000000 | 0.000000 |
 
 The constant-slope comparison retains fitted labels and amplitudes; losing 0.300000 development
@@ -38,9 +38,10 @@ they are operational reduced policies, not claims that all other decisions are i
 | Probe | Policies | Development selected | Held-out report |
 |---|---:|---:|---:|
 | Maintainer noise/sign-count rule | 1 | 0.000000 | 0.000000 |
-| Original peak/RMS/roughness family | 2916 | 0.418415 | 0.214259 |
-| Noise/RMS/sign-count/fixed-slope family | 1620 | 0.627261 | 0.543909 |
-| No-fit RMS/median/sign-count morphology family | 216 | 0.686058 | 0.635236 |
+| Original peak/RMS/roughness family | 2916 | 0.440667 | 0.286497 |
+| Noise/RMS/sign-count/fixed-slope family | 1620 | 0.565033 | 0.459472 |
+| No-fit RMS/median/sign-count morphology family | 216 | 0.584719 | 0.519672 |
+| No-fit morphology with five-slope lookup | 324 | 0.661183 | 0.556308 |
 
 The expanded grid varies paired sample count, glitch threshold, amplitude refusal, uncertainty
 refusal, sign-count difference and fixed chirp slope. The selected enhanced parameters are
@@ -51,13 +52,15 @@ trusted driver and bubblewrap. The direct and sandbox results agree.
 
 The 216-policy morphology family varies H1 sample count, RMS refusal, median-magnitude glitch
 threshold, sign-count difference and fixed chirp slope. Its selected parameters are
-`(15, 0.10, 0.10, 2, 0.006)`; it performs no waveform fitting.
+`(15, 0.10, 0.10, 2, 0.006)`; it performs no waveform fitting. The added 324-policy family also
+scans the review-supplied five-slope lookup tables; its selected member is
+`(16, 0.08, 0.08, 7, [0.0, 0.006, 0.018, 0.028, 0.028], 1)`.
 
-The original heuristic no longer ties the reference. The strongest measured no-fit family reaches
-87.2% of reference development and 87.8% held out, leaving gaps of 0.101064 and 0.088192.
-Its refusal decision is a single RMS threshold, and correct line/glitch labels make their slope-zero
-or integer-event-time parameter terms comparatively easy to collect. Regression tests pin this
-selected witness and its positive gap on both splits. No exhaustive algorithmic upper bound is claimed.
+The review-supplied lookup-table family is the strongest measured no-fit family. It reaches 80.4%
+of reference development and 81.2% held out, leaving gaps of 0.160766 and 0.129012. Continuous
+initial-frequency recovery prevents a fixed slope table from collecting full coherent parameter
+credit. Regression tests pin the maintained witnesses and their positive gaps on both splits.
+No exhaustive algorithmic upper bound is claimed.
 
 Reproduce on Linux:
 
@@ -113,7 +116,7 @@ sign-count collisions, line-slope penalties, independent metric bookkeeping, cla
 denominators, session reset, selected-probe separation and 11 malformed output cases. Standard
 CLI bad candidates and the external run_eval path are checked separately. No full-repository
 test suite or maintainer-owned global evidence refresh is run for this revision.
-Compact records: `experiments/transient_chirp_review_replay_2026-09-08.json` and
+Compact records: `experiments/transient_chirp_review_replay_2026-09-11.json` and
 `experiments/transient_chirp_deepseek_review_2026-09-08.json`.
 
 ## Historical version
