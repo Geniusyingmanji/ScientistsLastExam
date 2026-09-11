@@ -1,0 +1,84 @@
+{
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "21b518f546354d2e8a8c65b4f13165d91b965b51",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "/home/ubuntu/validate-attribution-split.py",
+      "neural_report"
+    ]
+  },
+  "task": "Neuroscience/NeuralReportAttribution",
+  "evidence_scope": "split_branch_engineering_validation_not_model_calibration",
+  "checks": [
+    {
+      "name": "focused",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_neural_report.py",
+        "tests/test_secure_eval.py",
+        "tests/test_task_cards.py",
+        "tests/test_benchmark_layout.py",
+        "tests/test_task_inventory_document.py",
+        "tests/test_exam_taxonomy.py"
+      ],
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "contribution",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/check_task_contribution.py",
+        "--task",
+        "Neuroscience/NeuralReportAttribution",
+        "--output",
+        "/home/ubuntu/neural_report-pr-checks/contribution.json"
+      ],
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "wrapper",
+      "command": [
+        "/usr/bin/python3",
+        "benchmarks/Biology/NeuralReportAttribution/frontier_eval/run_eval.py",
+        "--candidate",
+        "benchmarks/Biology/NeuralReportAttribution/solution.py",
+        "--metrics-out",
+        "/home/ubuntu/neural_report-pr-checks/wrapper.json"
+      ],
+      "returncode": 0,
+      "passed": true
+    },
+    {
+      "name": "audit",
+      "command": [
+        "/usr/bin/python3",
+        "scripts/audit_neural_report.py",
+        "--output",
+        "/home/ubuntu/neural_report-pr-checks/audit.json"
+      ],
+      "returncode": 0,
+      "passed": true
+    }
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}

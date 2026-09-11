@@ -1,0 +1,107 @@
+{
+  "python": "3.10.12",
+  "packages": {
+    "numpy": "1.24.4",
+    "scipy": "1.10.1",
+    "pytest": "9.1.1",
+    "networkx": "3.1",
+    "qutip": "4.7.6",
+    "sympy": "1.13.3",
+    "nmrsim": "0.6.0.post1",
+    "numba": "0.58.1",
+    "llvmlite": "0.41.1",
+    "sparse": "0.15.5"
+  },
+  "results": [
+    {
+      "label": "world_isolation",
+      "source_revision": "ffacc758a89678eb8bdc0fe34ab6a5b8acbdad5f",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "pytest",
+        "tests/test_world_session_isolation.py",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--junitxml=/evidence/world_isolation.xml"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 16.712810586672276,
+      "log_sha256": "0316445879fd0cad169df065cdd625a9fe52c0f1957b50913f26da5e26b7a4bc",
+      "xml_sha256": "33e8d31973a8a7354196e51f88bddbf48349d3ffb8e17970f6889c974123c853",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "pytest_summary": "20 passed in 15.68s"
+    },
+    {
+      "label": "pr73",
+      "source_revision": "ffacc758a89678eb8bdc0fe34ab6a5b8acbdad5f",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "pytest",
+        "tests/test_neural_report.py",
+        "tests/test_neural_report_reference.py",
+        "tests/test_task_campaign.py",
+        "tests/test_task_cards.py",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--junitxml=/evidence/pr73.xml"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 12.000225618015975,
+      "log_sha256": "27f706d6da5346c89760bb27fb670c452500fc0295d8af6f2af5b2d3aeefd89c",
+      "xml_sha256": "24bb164c5e97e76ad641a5f50dc41cff52d9254261efd21a8ab6ee221b62bf01",
+      "tests": 68,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "pytest_summary": "68 passed in 11.69s"
+    },
+    {
+      "label": "pr72",
+      "source_revision": "a6b288949f1da8791294172df0c548a6bd214d45",
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "pytest",
+        "tests/test_dark_matter_recoil.py",
+        "tests/test_recoil_reference.py",
+        "tests/test_task_campaign.py",
+        "tests/test_task_cards.py",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "--junitxml=/evidence/pr72.xml"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 86.37612255802378,
+      "log_sha256": "f28f9c616f70f3b230422b2eb31a020fdc16d389de3bf27b11d40f5198042533",
+      "xml_sha256": "7a288adb98a905c629d3b7baf541918d9788a2f59c19dbac5c916a92e37a53de",
+      "tests": 65,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "pytest_summary": "65 passed in 86.07s (0:01:26)"
+    }
+  ],
+  "scope": "Targeted CI-pinned regressions, not a full-suite rerun or difficulty calibration.",
+  "test_runner_sha256": "33c90ebdb7dd1345871e4bb5bc1b9db65a8083a973b240623efe8276fbd8b0c6",
+  "container_base": "ubuntu:22.04",
+  "container_image_id": "sha256:e0527839da5c064a7e97b732022b8a798c582b62e558254d101b339c51a8f5c4",
+  "network_during_tests": "none",
+  "outer_container_privileged_for_nested_bubblewrap": true,
+  "numerical_threads": 1,
+  "host_scientific_environment_changed": false,
+  "model_calls": 0,
+  "dependency_setup_sha256": "3ed401c1cdc0c47e56974caa06ca92719964e5427fb61a7416ba3c24000df428",
+  "source_integrity_followup": {
+    "git_fsck_connectivity_exit_code": 0,
+    "git_diff_HEAD_exit_code": 0,
+    "note": "Initial test containers warned about unavailable absolute git alternates. A follow-up with the three borrowed object directories mounted read-only passed connectivity and HEAD/worktree equality for both exact tested sources. No test was skipped or changed."
+  }
+}

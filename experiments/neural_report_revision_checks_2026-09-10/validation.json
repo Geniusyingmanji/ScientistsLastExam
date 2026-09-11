@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "task": "Neuroscience/NeuralReportAttribution",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "981802039e555698c463591553f54d8e03c2b261",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_neural_report.py",
+      "--output",
+      "/tmp/pr73-revision-audit.json"
+    ]
+  },
+  "environment": {
+    "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-101-generic-x86_64-with-glibc2.39",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1"
+  },
+  "runtime_source_sha256": {
+    "benchmarks/Biology/NeuralReportAttribution/frontier_eval/run_eval.py": "1ebd89b193cc22443a854538bfd183b63691cd9609ff6659c8264c854ae5d63b",
+    "benchmarks/Biology/NeuralReportAttribution/solution.py": "5658d4c2d1abe731ff48b4e0c90565b8165b183b5206cb51813932ba615a66ef",
+    "benchmarks/Biology/NeuralReportAttribution/verification/algebraic_probe.py": "50d90ca08938563f8d10f65ca0af2bd1f77d032761b2d4c9726d2cabb06646ca",
+    "benchmarks/Biology/NeuralReportAttribution/verification/evaluator.py": "f0d8614a0d94f7350b721f0f3e2fea1d801cd8a9ab3242b9e58e0a69397d4bc9",
+    "benchmarks/Biology/NeuralReportAttribution/verification/reference_fit.py": "86ff59c290764f55bd45f20bf35f961da1076cb998abed041d368dc2d32ac51d"
+  },
+  "evidence_scope": "Linux scoped builder and security validation; not independent model calibration",
+  "expanded_audit_passed": true,
+  "contribution_checks_passed": true,
+  "contribution_check_count": 15,
+  "source_note": "Later changes update only narrative documentation and evidence; all task Python hashes match this tested clean commit.",
+  "git_test_environment": "Per-process safe.directory for the checkout in the clean sudo environment; no global configuration changes.",
+  "focused_tests": {
+    "passed": 93,
+    "skipped": 0,
+    "subtests_passed": 22,
+    "warnings": 87,
+    "elapsed_seconds": 20.64,
+    "command": "python3 -m pytest -q -p no:cacheprovider tests/test_neural_report.py tests/test_secure_eval.py tests/test_task_cards.py tests/test_benchmark_layout.py tests/test_task_inventory_document.py tests/test_exam_taxonomy.py tests/test_readme_inventory_counts.py"
+  },
+  "passed": true,
+  "full_suite": {
+    "passed": 1209,
+    "skipped": 50,
+    "failed": 0,
+    "warnings": 117,
+    "subtests_passed": 508,
+    "elapsed_seconds": 2075.6,
+    "command": "SLE_REQUIRE_FROZEN_INVENTORY=0 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python3 -m pytest tests/ -q -p no:cacheprovider",
+    "log": "full-suite.txt",
+    "tested_revision": "981802039e555698c463591553f54d8e03c2b261"
+  }
+}

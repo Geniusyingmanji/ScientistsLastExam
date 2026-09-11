@@ -1,0 +1,8 @@
+.............................................................................................                              [100%]
+=============================== warnings summary ===============================
+tests/test_task_cards.py: 87 warnings
+  /home/ubuntu/sle-pr73-revision-20260910/scripts/audit_tasks.py:222: DeprecationWarning: ast.Str is deprecated and will be removed in Python 3.14; use ast.Constant instead
+    if tree.body and isinstance(tree.body[0], ast.Expr) and isinstance(tree.body[0].value, ast.Str):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+93 passed, 87 warnings, 22 subtests passed in 20.64s

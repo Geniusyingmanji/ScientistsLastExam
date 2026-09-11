@@ -1,0 +1,129 @@
+schema_version: 2
+scientific_question: Disentangle intrinsic feedback from report-mediated feedback
+  and sensor readout paths
+artifact: An explicit model or abstention, finite parameter estimates for a supported
+  mechanism, and calibrated decision confidence.
+oracle:
+  model: Linearized four-population input-state-output system with report-gated coupling,
+    calibrated sensor and actuator mixing, lowpass observation, and additive feedthrough;
+    omitted slow state as unsupported model
+  feasibility: strict typed query and submission validation; per-unit counter-keyed
+    sampling; budget overspend permanently invalidates the instance
+  deterministic: true
+normalization:
+  baseline: overconfident legal baseline scores zero; blanket none and blanket abstention
+    also score exactly zero
+  reference: exact-derivative joint Gaussian fit with algebraic and midpoint starts, calibration uncertainty included,
+    bounded experiment cost; allocation difficulty is not established
+  score: mean mechanism utility minus the 0.2 blanket refusal utility, divided by
+    0.8; false discovery rate, refusal, coverage, confidence and heldout diagnostics
+    remain separate
+citations:
+- id: doi:10.1016/S1053-8119(03)00202-7
+  title: Dynamic causal modelling
+invariants:
+- Repeated observation units are independent and charged; splitting a batch preserves
+  the same counter-indexed observations.
+- The public problem is identical across all worlds and splits; noise SDs are shared
+  experimental settings, not latent parameters or identifiers.
+- Search-visible validity and feasibility depend only on development; the wrapper
+  writes only the closed search-visible metric allowlist.
+- Global random state does not affect the frozen generator.
+- Malformed or overspent candidates fail closed without exposing exception text.
+- An omitted mechanism is not the same scientific decision as a valid null mechanism.
+known_shortcuts: >-
+  Original variable-noise version, independently reviewed at PR 73 comment
+  5615520113: calibrated algebraic probe dev 0.449754 / heldout 0.311061
+  (3024 strategies, 8 units); null-or-refusal dev/heldout 0.25 (3 units,
+  zero supported-world coverage). The earlier 972 raw-response strategies scored
+  zero but did not bound calibrated methods. The 0.2 offset removes blanket refusal,
+  not the 0.25 null-plus-refusal strategy. Revised shared-noise Linux measurements
+  (Python 3.12.3, NumPy 1.26.4, SciPy 1.13.1): calibrated grid dev 0.7540713032 /
+  heldout 0.5456852969 (8 units), null-or-refusal 0.25 / 0.25 (3 units), reference
+  0.8594885223 / 0.7433017461. Full provenance and reproducible probes are in references/known_best.md and
+  experiments/neural_report_revision_2026-09-10.json at repository root.
+  All are finite builder probes, not exhaustive bounds or independent model calibration.
+  Public seeds and deterministic paid observations remain vulnerable to memorization
+  outside the sandbox; admission requires server-held instances.
+review:
+  domain: pending_external_neuroscience
+  evaluator_security: automated_checks_passed_pending_external_review
+provenance:
+  class: procedural
+  target_source: Original bounded simulator with counter-seeded development and heldout
+    instances; no human neural recordings or claims about subjective experience.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: StructuralEngineering/ModalDamageAttribution supplies the discovery-axis
+    and blanket-refusal-offset scoring pattern; this task instead fits report-gated
+    neural response and separately calibrated instruments. QuantumControl/ActiveNoiseSpectroscopy
+    compares second-order-matched noise mechanisms, while this task's supported families
+    are distinguishable in calibrated inverse response entries. This is a controlled
+    local abstraction, not a validated theory of consciousness or proven budget-allocation challenge.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - gpt-6-astra
+  builder_scaffolds:
+  - codex-desktop
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: Builder checks separated incorrect mechanism claims from
+    continuous parameter error and incorporated calibration uncertainty into the reference
+    fit. PR 73 review triggered removal of the noise fingerprint, development-only
+    public validity, wrapper filtering and stronger shortcut/budget evidence. The 2026-09-11 revision adds algebraic initialization, exact derivatives,
+    active-parameter fits, a dimension-aware residual check, fixed executable
+    shortcuts and a predeclared 24-call Linux replay. Every method was valid on
+    both splits and all complete metric pairs matched. The stronger declared
+    20% shortcut separation is not met; no D16 or hard-difficulty pass is claimed. Old results describe reference_legacy.py.
+    No independent frontier draw yet; incomplete_legacy explicitly records incomplete calibration history.
+  reused_designs:
+  - StructuralEngineering/ModalDamageAttribution discovery axes and refusal-offset normalization
+  shortcut_discoverer: builder_invariant_and_low_dimensional_probes
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: incomplete_legacy
+  author_domain: gpt-6-astra
+  reviewer_domain: pending_external_neuroscience
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: pending_independent_domain_review
+  independent_recomputation_status: runnable equation and likelihood checks in tests
+    and verification witness
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+evaluation_budget:
+  cpu_only: true
+  eval_timeout_s: 300
+  expected_reference_seconds: 120
+  experiment_units_per_world: 14
+  allocation_difficulty: not_established
+
+# A proposed 20% engineering guard is deliberately stricter than the observed
+# historical ~12% gap. It may fail; do not weaken it after seeing replay results.
+# Scientific acceptance still requires maintainer review and independent D16.
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_fit.py
+    expected_score: 0.8593526193
+  probes:
+    - id: calibrated_default
+      candidate: verification/algebraic_probe.py
+      expected_score: 0.7449182513
+    - id: published_grid_winner
+      candidate: verification/shortcut_grid_winner.py
+      expected_score: 0.7540713032
+    - id: null_or_refusal
+      candidate: verification/shortcut_null_refusal.py
+      expected_score: 0.25
+  relative_margin: 0.2
+  score_tolerance: 0.000001

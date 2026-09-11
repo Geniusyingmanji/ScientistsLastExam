@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "21b518f546354d2e8a8c65b4f13165d91b965b51",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "scripts/audit_neural_report.py",
+      "--output",
+      "/home/ubuntu/neural_report-pr-checks/audit.json"
+    ]
+  },
+  "environment": {
+    "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-101-generic-x86_64-with-glibc2.39",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1"
+  },
+  "evidence_scope": "secure baselines, truth-blind witnesses and ablations; builder-only finite probes",
+  "model_calibration": "not_run_no_configured_model_endpoint",
+  "tasks": [
+    {
+      "baseline": {
+        "sha256": "5658d4c2d1abe731ff48b4e0c90565b8165b183b5206cb51813932ba615a66ef",
+        "deterministic": true,
+        "metrics": {
+          "development_mechanism_score": 0.0,
+          "development_false_discovery_rate": 0.7,
+          "development_false_discovery_count": 7.0,
+          "development_claim_count": 10.0,
+          "development_correct_refusal_rate": 0.0,
+          "development_refusal_world_count": 2.0,
+          "development_discovery_coverage": 1.0,
+          "development_supported_world_count": 6.0,
+          "development_none_correct_rate": 0.0,
+          "development_valid_rate": 1.0,
+          "development_mean_units": 1.0,
+          "development_confidence_brier": 0.6325,
+          "heldout_mechanism_score": 0.0,
+          "heldout_false_discovery_rate": 0.7,
+          "heldout_false_discovery_count": 7.0,
+          "heldout_claim_count": 10.0,
+          "heldout_correct_refusal_rate": 0.0,
+          "heldout_refusal_world_count": 2.0,
+          "heldout_discovery_coverage": 1.0,
+          "heldout_supported_world_count": 6.0,
+          "heldout_none_correct_rate": 0.0,
+          "heldout_valid_rate": 1.0,
+          "heldout_mean_units": 1.0,
+          "heldout_confidence_brier": 0.6325,
+          "combined_score": 0.0,
+          "valid": 1.0,
+          "feasibility_rate": 1.0,
+          "raw_score": 0.0
+        },
+        "passed": true
+      },
+      "reference": {
+        "sha256": "325814d562ce922ff8c241dbfcaab4810a05af8c7284aaf78a95cfdd634ded0a",
+        "deterministic": true,
+        "metrics": {
+          "development_mechanism_score": 0.8770462287,
+          "development_false_discovery_rate": 0.0,
+          "development_false_discovery_count": 0.0,
+          "development_claim_count": 6.0,
+          "development_correct_refusal_rate": 1.0,
+          "development_refusal_world_count": 2.0,
+          "development_discovery_coverage": 1.0,
+          "development_supported_world_count": 6.0,
+          "development_none_correct_rate": 1.0,
+          "development_valid_rate": 1.0,
+          "development_mean_units": 14.0,
+          "development_confidence_brier": 0.0445,
+          "heldout_mechanism_score": 0.7403329403,
+          "heldout_false_discovery_rate": 0.0,
+          "heldout_false_discovery_count": 0.0,
+          "heldout_claim_count": 6.0,
+          "heldout_correct_refusal_rate": 1.0,
+          "heldout_refusal_world_count": 2.0,
+          "heldout_discovery_coverage": 1.0,
+          "heldout_supported_world_count": 6.0,
+          "heldout_none_correct_rate": 1.0,
+          "heldout_valid_rate": 1.0,
+          "heldout_mean_units": 14.0,
+          "heldout_confidence_brier": 0.0445,
+          "combined_score": 0.8770462287,
+          "valid": 1.0,
+          "feasibility_rate": 1.0,
+          "raw_score": 0.8770462287
+        },
+        "passed": true
+      },
+      "ablations": {
+        "one_unit": {
+          "candidate_sha256": "f3e07971a6a83175c1c956397667ac7eff57b01c5d70b8411f64f8377e6dfbb7",
+          "metrics": {
+            "development_mechanism_score": 0.840246102,
+            "development_false_discovery_rate": 0.0,
+            "development_false_discovery_count": 0.0,
+            "development_claim_count": 6.0,
+            "development_correct_refusal_rate": 1.0,
+            "development_refusal_world_count": 2.0,
+            "development_discovery_coverage": 1.0,
+            "development_supported_world_count": 6.0,
+            "development_none_correct_rate": 1.0,
+            "development_valid_rate": 1.0,
+            "development_mean_units": 10.0,
+            "development_confidence_brier": 0.0445,
+            "heldout_mechanism_score": 0.7036121131,
+            "heldout_false_discovery_rate": 0.0,
+            "heldout_false_discovery_count": 0.0,
+            "heldout_claim_count": 6.0,
+            "heldout_correct_refusal_rate": 1.0,
+            "heldout_refusal_world_count": 2.0,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_supported_world_count": 6.0,
+            "heldout_none_correct_rate": 1.0,
+            "heldout_valid_rate": 1.0,
+            "heldout_mean_units": 10.0,
+            "heldout_confidence_brier": 0.0445,
+            "combined_score": 0.840246102,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.840246102
+          },
+          "delta_from_reference": 0.03680012669999999
+        },
+        "ignore_instruments": {
+          "candidate_sha256": "65f0962c9aabe0dc387e734bfb4253a42e6282069a02a2e055ea251ca601a4bc",
+          "metrics": {
+            "development_mechanism_score": 0.0,
+            "development_false_discovery_rate": 0.0,
+            "development_false_discovery_count": 0.0,
+            "development_claim_count": 0.0,
+            "development_correct_refusal_rate": 1.0,
+            "development_refusal_world_count": 2.0,
+            "development_discovery_coverage": 0.0,
+            "development_supported_world_count": 6.0,
+            "development_none_correct_rate": 0.0,
+            "development_valid_rate": 1.0,
+            "development_mean_units": 14.0,
+            "development_confidence_brier": 0.4625,
+            "heldout_mechanism_score": 0.0,
+            "heldout_false_discovery_rate": 0.0,
+            "heldout_false_discovery_count": 0.0,
+            "heldout_claim_count": 0.0,
+            "heldout_correct_refusal_rate": 1.0,
+            "heldout_refusal_world_count": 2.0,
+            "heldout_discovery_coverage": 0.0,
+            "heldout_supported_world_count": 6.0,
+            "heldout_none_correct_rate": 0.0,
+            "heldout_valid_rate": 1.0,
+            "heldout_mean_units": 14.0,
+            "heldout_confidence_brier": 0.4625,
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "delta_from_reference": 0.8770462287
+        }
+      },
+      "shortcut_probe": {
+        "strategies": 972,
+        "development_best": 0.0,
+        "selected_parameters": [
+          -0.2,
+          0.2,
+          0.2
+        ],
+        "heldout_selected_once": 0.0,
+        "observations": "uncalibrated one-response inverse transfer entries",
+        "scope": "finite builder probe, not exhaustive shortcut exclusion"
+      },
+      "task": "Neuroscience/NeuralReportAttribution"
+    }
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}

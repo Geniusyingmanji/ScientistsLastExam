@@ -1,0 +1,9 @@
+Neuroscience/NeuralReportAttribution baseline 0.0 passed True
+Neuroscience/NeuralReportAttribution reference 0.8594885223 passed True
+Neuroscience/NeuralReportAttribution one_unit 0.8291824705
+Neuroscience/NeuralReportAttribution six_units 0.8276691478
+Neuroscience/NeuralReportAttribution ignore_instruments 0.0
+Neuroscience/NeuralReportAttribution never_abstain 0.6094885223
+Neuroscience/NeuralReportAttribution no_model_selection 0.2752635941
+{"combined_score": 0.0, "valid": 1.0}
+Neuroscience/NeuralReportAttribution calibrated shortcut 0.7540713032 null/refusal 0.25 heldout sealing True

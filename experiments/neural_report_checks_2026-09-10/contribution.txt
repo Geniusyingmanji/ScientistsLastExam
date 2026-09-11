@@ -1,0 +1,17 @@
+ok    listed_in_all                         Neuroscience/NeuralReportAttribution
+ok    registered_in_certification           Neuroscience/NeuralReportAttribution
+ok    certification_status                  candidate
+ok    not_self_certified                    candidate
+ok    required_files
+ok    task_card                             benchmarks/Biology/NeuralReportAttribution/TASK_CARD.yaml
+ok    metadata                              discovery
+ok    discovery_contract_lint_documented
+ok    numeric_keys
+ok    documented_keys                       0 baseline keys
+ok    baseline_eval                         combined_score=0.0
+ok    deterministic_baseline
+ok    discovery_axes                        mechanism/fdr/refusal/coverage rates present
+ok    degenerate_candidates_score_zero      blanket abstention earns nothing
+ok    bad_candidates_score_zero             raises/empty/wrong_type scored
+
+passed Neuroscience/NeuralReportAttribution

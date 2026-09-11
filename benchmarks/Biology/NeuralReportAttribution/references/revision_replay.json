@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "task_id": "Neuroscience/NeuralReportAttribution",
+  "timeout_s": 300,
+  "methods": [
+    {
+      "id": "reference",
+      "candidate": "verification/reference_fit.py"
+    },
+    {
+      "id": "legacy_reference",
+      "candidate": "verification/reference_legacy.py"
+    },
+    {
+      "id": "algebraic_default",
+      "candidate": "verification/algebraic_probe.py"
+    },
+    {
+      "id": "algebraic_grid",
+      "candidate": "verification/shortcut_grid_winner.py"
+    },
+    {
+      "id": "null_refusal",
+      "candidate": "verification/shortcut_null_refusal.py"
+    },
+    {
+      "id": "ignore_instruments",
+      "candidate": "verification/reference_fit.py",
+      "ablation": "ignore_instruments"
+    },
+    {
+      "id": "fixed_calibration",
+      "candidate": "verification/reference_fit.py",
+      "ablation": "fixed_calibration"
+    },
+    {
+      "id": "no_model_selection",
+      "candidate": "verification/reference_fit.py",
+      "ablation": "no_model_selection"
+    },
+    {
+      "id": "never_abstain",
+      "candidate": "verification/reference_fit.py",
+      "ablation": "never_abstain"
+    },
+    {
+      "id": "one_unit",
+      "candidate": "verification/reference_fit.py",
+      "ablation": "one_unit"
+    },
+    {
+      "id": "six_units",
+      "candidate": "verification/reference_fit.py",
+      "ablation": "six_units"
+    },
+    {
+      "id": "midpoint_only",
+      "candidate": "verification/reference_fit.py",
+      "ablation": "midpoint_only"
+    }
+  ],
+  "selection_metric": "combined_score",
+  "method_changes_after_measurement": "New protocol and run root required; retain every old result. No heldout parameter selection.",
+  "ability_ablations": [
+    "ignore_instruments",
+    "fixed_calibration",
+    "no_model_selection",
+    "never_abstain"
+  ],
+  "diagnostic_ablations": [
+    "one_unit",
+    "six_units",
+    "midpoint_only"
+  ],
+  "model_calibration": "Separate immutable scripts/calibrate_task.py plan, 3 selection-blind first proposals, seeds 0/1/2; all scheduled draws retained. Model condition must be supplied before planning.",
+  "admission": "Unassessed. Shortcut guard and valid ablation losses do not establish D16 or domain validity."
+}

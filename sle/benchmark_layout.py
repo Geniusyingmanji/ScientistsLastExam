@@ -13,6 +13,7 @@ DISCIPLINE_DOMAINS: dict[str, tuple[str, ...]] = {
     "Biology": (
         "Microbiology",
         "Biomechanics",
+        "Neuroscience",
         "Ecology",
         "EvidenceSynthesis",
         "PopulationGenetics",

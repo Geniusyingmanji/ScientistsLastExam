@@ -1,0 +1,13 @@
+{
+  "aggregate_sha256": "3a613308fb11bfd5c4a6c61164640c72f70e2460a69c767fb08b756d2bdf7e6f",
+  "invalid_evaluations_without_world_rows": 0,
+  "model_calls": 0,
+  "oracle_calls": 0,
+  "permissions_verified": true,
+  "phase": "methods",
+  "raw_files_verified": 24,
+  "scientific_admission": "not_assessed",
+  "source_revision": "045eb449aa8f19bf4ebc35f6c30f283db8765324",
+  "split_score_and_count_recomputations": 48,
+  "task": "Neuroscience/NeuralReportAttribution"
+}

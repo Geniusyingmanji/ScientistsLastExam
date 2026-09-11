@@ -1,0 +1,1 @@
+Only edit solution.py. Keep infer_circuit(problem, experiment). Deterministic CPU Python, NumPy and SciPy. No network, processes or hidden-file access. Every experiment is charged; catching an invalid request does not restore validity. See Task.md for every request, response and output key. The free sle.contract_lint utility may be used for shape checks.

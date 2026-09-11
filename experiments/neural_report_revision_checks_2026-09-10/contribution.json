@@ -1,0 +1,82 @@
+{
+  "task": "Neuroscience/NeuralReportAttribution",
+  "passed": true,
+  "checks": [
+    {
+      "check": "listed_in_all",
+      "ok": true,
+      "detail": "Neuroscience/NeuralReportAttribution"
+    },
+    {
+      "check": "registered_in_certification",
+      "ok": true,
+      "detail": "Neuroscience/NeuralReportAttribution"
+    },
+    {
+      "check": "certification_status",
+      "ok": true,
+      "detail": "candidate"
+    },
+    {
+      "check": "not_self_certified",
+      "ok": true,
+      "detail": "candidate"
+    },
+    {
+      "check": "required_files",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "task_card",
+      "ok": true,
+      "detail": "benchmarks/Biology/NeuralReportAttribution/TASK_CARD.yaml"
+    },
+    {
+      "check": "metadata",
+      "ok": true,
+      "detail": "discovery"
+    },
+    {
+      "check": "discovery_contract_lint_documented",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "numeric_keys",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "documented_keys",
+      "ok": true,
+      "detail": "0 baseline keys"
+    },
+    {
+      "check": "baseline_eval",
+      "ok": true,
+      "detail": "combined_score=0.0"
+    },
+    {
+      "check": "deterministic_baseline",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "discovery_axes",
+      "ok": true,
+      "detail": "mechanism/fdr/refusal/coverage rates present"
+    },
+    {
+      "check": "degenerate_candidates_score_zero",
+      "ok": true,
+      "detail": "blanket abstention earns nothing"
+    },
+    {
+      "check": "bad_candidates_score_zero",
+      "ok": true,
+      "detail": "raises/empty/wrong_type scored"
+    }
+  ],
+  "baseline_combined_score": 0.0
+}

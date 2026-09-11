@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "status": "scientific_snapshot_model_condition_missing",
+  "task_id": "Neuroscience/NeuralReportAttribution",
+  "source_revision": "ffacc758a89678eb8bdc0fe34ab6a5b8acbdad5f",
+  "task_package_sha256": "e9035bb15c01ec3f6d9e348602f668e9d821df340146ce4c2e932e4766d37482",
+  "task_contract_sha256": "314c6cd8e19a0db0f0281c09f015c59b70ad9c6bd9ff26f12a16f43e5189d41f",
+  "runtime_source_sha256": "629d70c699034b52298f5dda10abb5ce57654800ecacb6eb23eb18986187d94e",
+  "replay_protocol_sha256": "59a299fb401cacfd133b6cd0471b9f3b0af1c85a412116acceacf799072c0a9f",
+  "reference_and_shortcuts": {
+    "schema_version": 1,
+    "metric": "combined_score",
+    "reference": {
+      "candidate": "verification/reference_fit.py",
+      "expected_score": 0.8593526193
+    },
+    "probes": [
+      {
+        "id": "calibrated_default",
+        "candidate": "verification/algebraic_probe.py",
+        "expected_score": 0.7449182513
+      },
+      {
+        "id": "published_grid_winner",
+        "candidate": "verification/shortcut_grid_winner.py",
+        "expected_score": 0.7540713032
+      },
+      {
+        "id": "null_or_refusal",
+        "candidate": "verification/shortcut_null_refusal.py",
+        "expected_score": 0.25
+      }
+    ],
+    "relative_margin": 0.2,
+    "score_tolerance": 1e-06
+  },
+  "evaluation_budget": {
+    "cpu_only": true,
+    "eval_timeout_s": 300,
+    "expected_reference_seconds": 120,
+    "experiment_units_per_world": 14,
+    "allocation_difficulty": "not_established"
+  },
+  "proposed_schedule": {
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "proposals_per_seed": 1,
+    "feedback_mode": "selection_blind"
+  },
+  "model_condition": null,
+  "model_plan_created": false,
+  "model_calls": 0,
+  "scientific_admission": "not_assessed",
+  "shortcut_guard": "failed; proposed 20% margin retained, not a reviewer-prescribed universal requirement",
+  "same_environment_reference_replay_required": true,
+  "candidate_sources_sha256": {
+    "algebraic_probe.py": "50d90ca08938563f8d10f65ca0af2bd1f77d032761b2d4c9726d2cabb06646ca",
+    "evaluator.py": "06fcc9bae382219d0df9592e98f7a5093384d7a463773888eb8359be7f0170a9",
+    "reference_fit.py": "32dc899be3e487418e52342b7e8d4c62afa98f5462424b65013fe01f253bd8a0",
+    "reference_legacy.py": "86ff59c290764f55bd45f20bf35f961da1076cb998abed041d368dc2d32ac51d",
+    "shortcut_grid_winner.py": "958119238cb505301cc704715ed3cfb34ce7a092df124af56dbaaea15193df4f",
+    "shortcut_null_refusal.py": "196f6a7974c070cea68734c84b7b1641a785f90a845f405bd18088e940a05055"
+  },
+  "note": "This source snapshot is not a complete model preregistration or a new calibration result. Supply and freeze model conditions using the runbook before any provider call."
+}

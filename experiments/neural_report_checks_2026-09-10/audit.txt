@@ -1,0 +1,4 @@
+Neuroscience/NeuralReportAttribution baseline 0.0 passed True
+Neuroscience/NeuralReportAttribution reference 0.8770462287 passed True
+Neuroscience/NeuralReportAttribution one_unit 0.840246102
+Neuroscience/NeuralReportAttribution ignore_instruments 0.0
