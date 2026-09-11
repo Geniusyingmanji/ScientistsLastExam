@@ -1,4 +1,16 @@
 schema_version: 2
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.821949
+  probes:
+  - id: legal_baseline
+    candidate: solution.py
+    expected_score: 0.0
+  relative_margin: 0.2
+  score_tolerance: 0.000001
 scientific_question: Can an agent distinguish coherent chirps, narrow-band lines and detector-localized glitches under a finite two-detector strain-observation budget, recover key transient parameters, and refuse low-SNR ambiguity?
 artifact: A transient model label, initial frequency, frequency slope, event time, amplitude, confidence and immutable observation evidence, or a calibrated refusal.
 oracle:
