@@ -42,6 +42,7 @@ CHINESE_NAMES = {
     "Astrodynamics/LowThrustTransfer": "小推力轨道转移",
     "AtmosphericScience/RadiativeTransferFit": "辐射传输反演",
     "Catalysis/CatalystDeactivationLab": "催化剂失活实验室",
+    "CellBiophysics/FRAPBindingInference": "FRAP 扩散-结合归因",
     "CausalDiscovery/InterventionalSCM": "干预式结构因果模型",
     "CausalDiscovery/SurvivorshipConfoundedDesign": "幸存者偏差下的效应估计",
     "DataPrivacy/SparseVectorAudit": "稀疏向量技术的差分隐私审计",
@@ -151,6 +152,9 @@ CHINESE_BRIEFS = {
     "Catalysis/CatalystDeactivationLab": (
         "在仪器漂移与不可逆失活的催化剂试片上做动力学实验,并行反应器乱序返回",
         "动力学参数与漂移恢复;错认试片血缘、重试破坏性实验即失败;密封新批次决策"),
+    "CellBiophysics/FRAPBindingInference": (
+        "主动选择漂白半径与恢复时刻,区分胞内扩散、可逆结合与快交换不可辨识情形",
+        "机制与参数恢复、留出预测和模型不足拒答分列;快交换极限不应被过度归因"),
     "CausalDiscovery/InterventionalSCM": (
         "用干预实验打破马尔可夫等价,恢复隐藏线性无环结构因果模型的有向图与系数",
         "有向图与结构系数恢复;观测关联不足以定向"),

@@ -127,3 +127,4 @@ tasks:
   Sensors/QuartzCrystalMicrobalanceLab: {form: discovery, kind: parameter_inversion}
   Sensors/IMUBiasCalibration: {form: discovery, kind: parameter_inversion, note: triaxial_gravity_bias_and_fault_attribution_not_qcm_resonance}
   Spectroscopy/NMRSpectrumFitting: {form: discovery, kind: parameter_inversion}
+  CellBiophysics/FRAPBindingInference: {form: discovery, kind: parameter_inversion, note: multi_radius_fluorescence_recovery_transport_binding_inference_not_spectral_or_molecular_force_field_fitting}
