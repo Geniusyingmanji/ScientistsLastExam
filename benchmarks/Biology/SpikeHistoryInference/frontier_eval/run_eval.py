@@ -1,42 +1,74 @@
-from __future__ import annotations
-
+"""Launch the shared trusted evaluator without importing project code."""
 import argparse
-import json
+import math
+import subprocess
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
-from sle.secure_eval import CandidateProxy
+ROOT = Path(__file__).resolve().parents[4]
+TASK_ID = "Neuroscience/SpikeHistoryInference"
+EVAL_TIMEOUT_S = 60.0
 
 
-INVALID = -1e18
-EVAL_TIMEOUT_S = 60
-TASK_DIR = Path(__file__).resolve().parent.parent
+_expected_task = Path(__file__).resolve().parents[1].name
+if TASK_ID.split("/")[-1] != _expected_task:
+    raise SystemExit(
+        "TASK_ID %r does not name this directory (%r); this wrapper was copied from another "
+        "task and would score against that task's oracle" % (TASK_ID, _expected_task)
+    )
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("--candidate", required=True)
     parser.add_argument("--metrics-out", required=True)
-    args = parser.parse_args()
-    metrics = {"combined_score": INVALID, "valid": 0.0}
+    parser.add_argument("--timeout", type=float, default=EVAL_TIMEOUT_S)
+    parser.add_argument("--full-metrics-dir")
+    args = parser.parse_args(argv)
+    command = [
+        sys.executable,
+        str(ROOT / "sle/frontier_eval_entrypoint.py"),
+        "--task",
+        TASK_ID,
+        "--root",
+        str(ROOT),
+        "--timeout",
+        str(args.timeout),
+        "--candidate",
+        args.candidate,
+        "--metrics-out",
+        args.metrics_out,
+    ]
+    if args.full_metrics_dir:
+        command.extend(["--full-metrics-dir", args.full_metrics_dir])
     try:
-        sys.path.insert(0, str(TASK_DIR / "verification"))
-        import evaluator as oracle
-
-        candidate = CandidateProxy(
-            Path(args.candidate).resolve(), "infer_spike_history", timeout_s=EVAL_TIMEOUT_S
+        Path(args.metrics_out).unlink(missing_ok=True)
+        if not math.isfinite(args.timeout) or args.timeout <= 0:
+            print("evaluation timeout must be positive and finite", file=sys.stderr)
+            return 2
+        result = subprocess.run(
+            command,
+            capture_output=True,
+            text=True,
+            timeout=args.timeout + 150,
         )
-        result = oracle.evaluate(candidate)
-        metrics.update(result)
-        metrics["raw_score"] = result.get("combined_score")
-    except Exception as exc:  # noqa: BLE001
-        metrics["error_message"] = "%s: %s" % (type(exc).__name__, exc)
-    Path(args.metrics_out).write_text(
-        json.dumps(metrics, indent=2, default=str), encoding="utf-8"
-    )
-    print(json.dumps({key: metrics.get(key) for key in ("combined_score", "valid")}))
-    return 0
+        if result.returncode:
+            Path(args.metrics_out).unlink(missing_ok=True)
+            print(
+                "evaluation entrypoint unavailable or infrastructure failure (exit %d)"
+                % result.returncode,
+                file=sys.stderr,
+            )
+            return 2
+        print(result.stdout, end="")
+        return 0
+    except (OSError, subprocess.TimeoutExpired):
+        try:
+            Path(args.metrics_out).unlink(missing_ok=True)
+        except OSError:
+            pass
+        print("evaluation entrypoint could not be launched or report cleared", file=sys.stderr)
+        return 2
 
 
 if __name__ == "__main__":
