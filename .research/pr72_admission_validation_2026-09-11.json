@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "full_metric_files_checked": 19,
+  "split_denominator_score_checks": 36,
+  "invalid_candidate_without_rows": 1,
+  "source_revision": "9516d4b0fc9ddcb6d2853ee7a39448fc851e549b",
+  "full_metrics_permission": "0700 directory / 0600 files",
+  "scope": "Read-only private-original hash/scalar/denominator/recovery verification; no evaluation or model call.",
+  "task_tests": {
+    "source_revision": "e1503ca6263c63f74ad6bf4822f9308125229a01",
+    "passed": 39,
+    "skipped": 0,
+    "seconds": 36.62,
+    "log": ".research/pr72_admission_tests_2026-09-11.txt",
+    "log_sha256": "7f6034f769109f1ec755d610348ca373c33fea97bf5a36687b0c368c23cfd40d",
+    "command": "env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/sle-pytest38-20260911:. OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 /usr/bin/python3 -B -m pytest tests/test_dark_matter_recoil.py -q -p no:cacheprovider",
+    "scientific_source_identical_to_9516d4b0": true
+  },
+  "local_wrapper_regression": {
+    "command": "python -m pytest tests/test_frontier_eval_entrypoint.py -q -k DarkMatterRecoilAttribution",
+    "passed": 1,
+    "scope": "fake trusted CLI, non-300 timeout and public metric filtering; not a scientific evaluation"
+  }
+}

@@ -4,12 +4,12 @@
 
 | | |
 |---|---:|
-| 任务包 | 86 |
+| 任务包 | 87 |
 | optimization | 42 |
-| discovery | 44 |
+| discovery | 45 |
 | certified | 5 |
-| candidate | 81 |
-| 学科 | 7(Biology 9,Chemistry 13,ComputerScience 8,EarthScience 7,Engineering 13,Mathematics 19,Physics 17) |
+| candidate | 82 |
+| 学科 | 7(Biology 9,Chemistry 13,ComputerScience 8,EarthScience 7,Engineering 13,Mathematics 19,Physics 18) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
@@ -77,7 +77,7 @@
 | [`BellBoundCertificate`](benchmarks/Physics/BellBoundCertificate/)<br>贝尔不等式上界证书 | Physics | QuantumFoundations | uncapped | analytical | candidate | prove an upper bound, do not just compute one | 为贝尔泛函的量子最大值给出一份可精确验证的上界证明:提交一组基词与若干加权平方,使它们的和恰好等于 beta*I - B。CHSH 的答案是无理数 2√2,只能逼近;I3322 的量子值至今未知,NPA 层级 1 给 0.375、层级 2 给 0.25102173、已知最好值 0.25087538 要到层级 4 以上。 | 四个实例(CHSH 与三种基词预算下的 I3322)取均值,不设上限。分数是所证界到已知量子值距离的对数进步:免费的层级 1 界记 0,已发表的层级 2 界记 1,超过则大于 1。有理数精确验证,提交浮点数直接判零——数值 SDP 解不是证明。 |
 | [`FourSettingMomentCertificate`](benchmarks/Physics/FourSettingMomentCertificate/)<br>四设置矩子集证书 | Physics | QuantumFoundations | uncapped | analytical | candidate | exact SOS on I_4422^{13} with a frozen moment pool | I_4422^13 的精确 SOS,额外矩必须是冻结 NPA2 池的 Hamming-k 子集,不是 I3322 自由选词。 | 从精确层级 1 最优 5/8 到全池有理证书约 0.455331 的对数进度;参考约 0.58,无上限。 |
 
-## Discovery(44)
+## Discovery(45)
 
 ### 公式(formula) — 6
 
@@ -101,7 +101,7 @@
 | [`BlackBoxGroupIdentification`](benchmarks/Mathematics/BlackBoxGroupIdentification/)<br>黑盒群同构辨识 | Mathematics | Mathematics | clipped | analytical | candidate | A finite set of `order` labelled elements and a black-box product: `mul(a, b)` returns the label | 只给黑盒乘法与随机标号,在查询预算内从公开构造目录里辨识群的同构类 | 目录 id 精确门控;非群与目录外两种拒答理由分开计分,阶数分布不足以辨识 |
 | [`HiddenCouplingNetwork`](benchmarks/Physics/HiddenCouplingNetwork/)<br>隐藏耦合网络重建 | Physics | Physics | clipped | physical_sim | candidate | A network of `units` observed units relaxes to a steady state under constant drive. | 实验次数少于单元数,从多单元驱动的稳态里恢复带符号的直接耦合图;存在未观测单元时拒答 | 带符号边 F1;间接路径、tanh 非线性与隐藏单元造成的稠密低秩耦合分别记误发现 |
 
-### 证据(evidence) — 10
+### 证据(evidence) — 11
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
@@ -112,6 +112,7 @@
 | [`UPbConcordiaInference`](benchmarks/EarthScience/UPbConcordiaInference/)<br>铀铅谐和图事件归因 | EarthScience | Geophysics | clipped | physical_sim | candidate | infer a zircon event history | 在分析预算内选择锆石域,由两套铀铅衰变比判断单一结晶或一次铅丢失历史;可分辨的多事件历史须拒答 | 事件类型 + 结晶与铅丢失年龄 + 证据血缘;误发现、拒答、覆盖率和留出迁移分列 |
 | [`ModalDamageAttribution`](benchmarks/Engineering/ModalDamageAttribution/)<br>模态损伤归因 | Engineering | StructuralEngineering | clipped | physical_sim | candidate | is the modal shift damage, or the weather? | 在受预算约束的测量日里判断模态频率的偏移是不是某个内部元件的刚度损伤、是哪一个、损失多少;支座变化导致的偏移须拒答 | 定位精确门控 + 严重度容差评分;温度对频率比精确抵消,健康结构误报与支座变化误判分别记误发现,分数标尺锚在全弃权为零 |
 | [`HeavyTailEvidence`](benchmarks/Mathematics/HeavyTailEvidence/)<br>重尾证据判别 | Mathematics | Mathematics | clipped | physical_sim | candidate | A positive sample is either a power law with known `xmin`, a lognormal above `xmin`, a | 在已知 xmin 下判断样本是幂律还是对数正态;指数截断或样本过短须拒答 | 家族恢复 + 截断/小样本拒答;不是质量窗口的 look-elsewhere,也不是不相容常数调和 |
+| [`DarkMatterRecoilAttribution`](benchmarks/Physics/DarkMatterRecoilAttribution/)<br>多靶材暗物质反冲归因 | Physics | ParticlePhysics | clipped | physical_sim | candidate | distinguish recoil laws across targets under a shared uncertain halo | 受预算限制联合多靶材谱、背景与增益控制,判断反冲定律并估计质量 | 机制与质量恢复;模型错设拒答、假发现和留出表现分列 |
 | [`DiscrepantMeasurements`](benchmarks/Physics/DiscrepantMeasurements/)<br>不相容测量调和 | Physics | ParticlePhysics | clipped | statistical_sim | candidate | Eight groups have measured the same physical constant. · on-ramp,不配对 | 八组测量同一常数但彼此不相容,诊断这批证据出了什么问题并给最佳值或判定没有最佳值 | 缺陷诊断 + 收费的内部一致性检验 + 拒答 |
 | [`LookElsewhereAnomaly`](benchmarks/Physics/LookElsewhereAnomaly/)<br>多窗口扫描的全局显著性 | Physics | ParticlePhysics | clipped | physical_sim | candidate | local 5σ is not a discovery | 一张质量谱在多个窗口里扫描,判定局域 5σ 在计入试验因子后还剩多少 | look-elsewhere 后的全局显著性;边带拒绝公开本底时须拒答 |
 | [`PTAHellingsDowns`](benchmarks/Physics/PTAHellingsDowns/)<br>脉冲星阵四极相关 | Physics | Gravitation | clipped | physical_sim | candidate | a common process is not a gravitational-wave background | 脉冲星计时阵里区分 Hellings-Downs 四极相关(引力波背景)与钟差单极、星历偶极、共同红噪声 | 四极 vs 单极判别与拒答;共同过程不等于引力波背景 |

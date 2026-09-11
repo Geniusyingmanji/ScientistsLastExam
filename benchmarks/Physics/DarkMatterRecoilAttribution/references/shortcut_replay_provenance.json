@@ -1,0 +1,397 @@
+{
+  "all_repeats_identical": true,
+  "all_worlds_valid": true,
+  "candidate_plan_sha256": {
+    "baseline": "aee48d712ad9a1a4ac557e1b9805714f607af28da1e214d322367c0b99642070",
+    "fixed_mass_57_8": "7dde497168dee1d28b203be29db0731a94d034fded5358f5bda072624f2c502e",
+    "published_four_way_probe": "10d00d59ef42f48a946c4f4062e218ce0c59f4f49839cbf5c2232768ddaabbaa",
+    "reference": "78da166c44b216e3f69a492ba1a4aa605af0cc21d3223f2168196a9d68325d2c"
+  },
+  "candidates": {
+    "baseline": {
+      "denominators": {
+        "development": {
+          "charged_experiment_units_sum": 28,
+          "correct_refusal_count": 0,
+          "false_claim_count": 18,
+          "mechanism_utility_mean": 0.0,
+          "mechanism_utility_sum": 0.0,
+          "null_correct_count": 0,
+          "null_world_count": 4,
+          "positive_claim_count": 28,
+          "refusal_world_count": 4,
+          "supported_claim_count": 20,
+          "supported_world_count": 20,
+          "valid_world_count": 28,
+          "world_count": 28
+        },
+        "heldout": {
+          "charged_experiment_units_sum": 28,
+          "correct_refusal_count": 0,
+          "false_claim_count": 18,
+          "mechanism_utility_mean": 0.0,
+          "mechanism_utility_sum": 0.0,
+          "null_correct_count": 0,
+          "null_world_count": 4,
+          "positive_claim_count": 28,
+          "refusal_world_count": 4,
+          "supported_claim_count": 20,
+          "supported_world_count": 20,
+          "valid_world_count": 28,
+          "world_count": 28
+        }
+      },
+      "full_metrics_sha256": [
+        "971cd879dcc99ceee1dbe7ca4348f010358d2a532f4ae501bd5cba680e167d6d",
+        "971cd879dcc99ceee1dbe7ca4348f010358d2a532f4ae501bd5cba680e167d6d"
+      ],
+      "metrics": {
+        "combined_score": 0.0,
+        "development_claim_count": 28.0,
+        "development_confidence_brier": 0.5810714286,
+        "development_correct_refusal_rate": 0.0,
+        "development_discovery_coverage": 1.0,
+        "development_false_discovery_count": 18.0,
+        "development_false_discovery_rate": 0.6428571429,
+        "development_mean_units": 1.0,
+        "development_mechanism_score": 0.0,
+        "development_none_correct_rate": 0.0,
+        "development_refusal_world_count": 4.0,
+        "development_supported_world_count": 20.0,
+        "development_valid_rate": 1.0,
+        "feasibility_rate": 1.0,
+        "heldout_claim_count": 28.0,
+        "heldout_confidence_brier": 0.5810714286,
+        "heldout_correct_refusal_rate": 0.0,
+        "heldout_discovery_coverage": 1.0,
+        "heldout_false_discovery_count": 18.0,
+        "heldout_false_discovery_rate": 0.6428571429,
+        "heldout_mean_units": 1.0,
+        "heldout_mechanism_score": 0.0,
+        "heldout_none_correct_rate": 0.0,
+        "heldout_refusal_world_count": 4.0,
+        "heldout_supported_world_count": 20.0,
+        "heldout_valid_rate": 1.0,
+        "raw_score": 0.0,
+        "valid": 1.0
+      },
+      "source_sha256": "aee48d712ad9a1a4ac557e1b9805714f607af28da1e214d322367c0b99642070"
+    },
+    "fixed_mass_57_8": {
+      "denominators": {
+        "development": {
+          "charged_experiment_units_sum": 336,
+          "correct_refusal_count": 4,
+          "false_claim_count": 0,
+          "mechanism_utility_mean": 0.39171912720201696,
+          "mechanism_utility_sum": 10.968135561656474,
+          "null_correct_count": 4,
+          "null_world_count": 4,
+          "positive_claim_count": 20,
+          "refusal_world_count": 4,
+          "supported_claim_count": 20,
+          "supported_world_count": 20,
+          "valid_world_count": 28,
+          "world_count": 28
+        },
+        "heldout": {
+          "charged_experiment_units_sum": 336,
+          "correct_refusal_count": 3,
+          "false_claim_count": 1,
+          "mechanism_utility_mean": 0.3519504608100115,
+          "mechanism_utility_sum": 9.854612902680323,
+          "null_correct_count": 4,
+          "null_world_count": 4,
+          "positive_claim_count": 21,
+          "refusal_world_count": 4,
+          "supported_claim_count": 20,
+          "supported_world_count": 20,
+          "valid_world_count": 28,
+          "world_count": 28
+        }
+      },
+      "full_metrics_sha256": [
+        "04763e350bed7a140ee540bbb34e77b6556018a9cf579d9369b2c1aacf6d480f",
+        "04763e350bed7a140ee540bbb34e77b6556018a9cf579d9369b2c1aacf6d480f"
+      ],
+      "metrics": {
+        "combined_score": 0.2903389817,
+        "development_claim_count": 20.0,
+        "development_confidence_brier": 0.0471428571,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "development_false_discovery_count": 0.0,
+        "development_false_discovery_rate": 0.0,
+        "development_mean_units": 12.0,
+        "development_mechanism_score": 0.2903389817,
+        "development_none_correct_rate": 1.0,
+        "development_refusal_world_count": 4.0,
+        "development_supported_world_count": 20.0,
+        "development_valid_rate": 1.0,
+        "feasibility_rate": 1.0,
+        "heldout_claim_count": 21.0,
+        "heldout_confidence_brier": 0.0667857143,
+        "heldout_correct_refusal_rate": 0.75,
+        "heldout_discovery_coverage": 1.0,
+        "heldout_false_discovery_count": 1.0,
+        "heldout_false_discovery_rate": 0.0476190476,
+        "heldout_mean_units": 12.0,
+        "heldout_mechanism_score": 0.2439422043,
+        "heldout_none_correct_rate": 1.0,
+        "heldout_refusal_world_count": 4.0,
+        "heldout_supported_world_count": 20.0,
+        "heldout_valid_rate": 1.0,
+        "raw_score": 0.2903389817,
+        "valid": 1.0
+      },
+      "source_sha256": "7dde497168dee1d28b203be29db0731a94d034fded5358f5bda072624f2c502e"
+    },
+    "published_four_way_probe": {
+      "denominators": {
+        "development": {
+          "charged_experiment_units_sum": 28,
+          "correct_refusal_count": 3,
+          "false_claim_count": 1,
+          "mechanism_utility_mean": 0.35674432946206586,
+          "mechanism_utility_sum": 9.988841224937843,
+          "null_correct_count": 4,
+          "null_world_count": 4,
+          "positive_claim_count": 10,
+          "refusal_world_count": 4,
+          "supported_claim_count": 9,
+          "supported_world_count": 20,
+          "valid_world_count": 28,
+          "world_count": 28
+        },
+        "heldout": {
+          "charged_experiment_units_sum": 28,
+          "correct_refusal_count": 2,
+          "false_claim_count": 2,
+          "mechanism_utility_mean": 0.2548601877112105,
+          "mechanism_utility_sum": 7.136085255913893,
+          "null_correct_count": 4,
+          "null_world_count": 4,
+          "positive_claim_count": 8,
+          "refusal_world_count": 4,
+          "supported_claim_count": 6,
+          "supported_world_count": 20,
+          "valid_world_count": 28,
+          "world_count": 28
+        }
+      },
+      "full_metrics_sha256": [
+        "b48f133bbc69255234a14e781e0e1dcab78f0c76cde2c40d709f9a318a452e38",
+        "b48f133bbc69255234a14e781e0e1dcab78f0c76cde2c40d709f9a318a452e38"
+      ],
+      "metrics": {
+        "combined_score": 0.249535051,
+        "development_claim_count": 10.0,
+        "development_confidence_brier": 0.4285714286,
+        "development_correct_refusal_rate": 0.75,
+        "development_discovery_coverage": 0.45,
+        "development_false_discovery_count": 1.0,
+        "development_false_discovery_rate": 0.1,
+        "development_mean_units": 1.0,
+        "development_mechanism_score": 0.249535051,
+        "development_none_correct_rate": 1.0,
+        "development_refusal_world_count": 4.0,
+        "development_supported_world_count": 20.0,
+        "development_valid_rate": 1.0,
+        "feasibility_rate": 1.0,
+        "heldout_claim_count": 8.0,
+        "heldout_confidence_brier": 0.5714285714,
+        "heldout_correct_refusal_rate": 0.5,
+        "heldout_discovery_coverage": 0.3,
+        "heldout_false_discovery_count": 2.0,
+        "heldout_false_discovery_rate": 0.25,
+        "heldout_mean_units": 1.0,
+        "heldout_mechanism_score": 0.130670219,
+        "heldout_none_correct_rate": 1.0,
+        "heldout_refusal_world_count": 4.0,
+        "heldout_supported_world_count": 20.0,
+        "heldout_valid_rate": 1.0,
+        "raw_score": 0.249535051,
+        "valid": 1.0
+      },
+      "source_sha256": "10d00d59ef42f48a946c4f4062e218ce0c59f4f49839cbf5c2232768ddaabbaa"
+    },
+    "reference": {
+      "denominators": {
+        "development": {
+          "charged_experiment_units_sum": 336,
+          "correct_refusal_count": 4,
+          "false_claim_count": 0,
+          "mechanism_utility_mean": 0.6131197795462751,
+          "mechanism_utility_sum": 17.167353827295702,
+          "null_correct_count": 4,
+          "null_world_count": 4,
+          "positive_claim_count": 20,
+          "refusal_world_count": 4,
+          "supported_claim_count": 20,
+          "supported_world_count": 20,
+          "valid_world_count": 28,
+          "world_count": 28
+        },
+        "heldout": {
+          "charged_experiment_units_sum": 336,
+          "correct_refusal_count": 3,
+          "false_claim_count": 1,
+          "mechanism_utility_mean": 0.5714394625775762,
+          "mechanism_utility_sum": 16.000304952172133,
+          "null_correct_count": 4,
+          "null_world_count": 4,
+          "positive_claim_count": 21,
+          "refusal_world_count": 4,
+          "supported_claim_count": 20,
+          "supported_world_count": 20,
+          "valid_world_count": 28,
+          "world_count": 28
+        }
+      },
+      "full_metrics_sha256": [
+        "da4d9f97520653c7330ee413a02fe1b78affd71a12de6219921b7bbd47501f7e",
+        "da4d9f97520653c7330ee413a02fe1b78affd71a12de6219921b7bbd47501f7e"
+      ],
+      "metrics": {
+        "combined_score": 0.5486397428,
+        "development_claim_count": 20.0,
+        "development_confidence_brier": 0.0471428571,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "development_false_discovery_count": 0.0,
+        "development_false_discovery_rate": 0.0,
+        "development_mean_units": 12.0,
+        "development_mechanism_score": 0.5486397428,
+        "development_none_correct_rate": 1.0,
+        "development_refusal_world_count": 4.0,
+        "development_supported_world_count": 20.0,
+        "development_valid_rate": 1.0,
+        "feasibility_rate": 1.0,
+        "heldout_claim_count": 21.0,
+        "heldout_confidence_brier": 0.0667857143,
+        "heldout_correct_refusal_rate": 0.75,
+        "heldout_discovery_coverage": 1.0,
+        "heldout_false_discovery_count": 1.0,
+        "heldout_false_discovery_rate": 0.0476190476,
+        "heldout_mean_units": 12.0,
+        "heldout_mechanism_score": 0.5000127063,
+        "heldout_none_correct_rate": 1.0,
+        "heldout_refusal_world_count": 4.0,
+        "heldout_supported_world_count": 20.0,
+        "heldout_valid_rate": 1.0,
+        "raw_score": 0.5486397428,
+        "valid": 1.0
+      },
+      "source_sha256": "78da166c44b216e3f69a492ba1a4aa605af0cc21d3223f2168196a9d68325d2c"
+    }
+  },
+  "completed_evaluations": 8,
+  "derivation": {
+    "fixed_mass_57_8": {
+      "candidate_sha256": "7dde497168dee1d28b203be29db0731a94d034fded5358f5bda072624f2c502e",
+      "derivation": "Entire reference_profile.py with exactly one final positive-signal mass expression changed; none/abstain/law decisions and all helper bytes preserved.",
+      "fidelity": "faithful disclosed-strategy derivative; original reviewer single-file bytes unavailable",
+      "historical_source": "https://github.com/Geniusyingmanji/ScientistsLastExam/issues/78",
+      "mass_gev": 57.8,
+      "parameter_source": ".research/shortcut_revalidation_backlog_2026-09-11.md at 7e7ea5a, PR72 entry",
+      "replace_after": "\"mass_gev\": 57.8",
+      "replace_before": "\"mass_gev\": best[2]"
+    },
+    "published_four_way_probe": {
+      "candidate_sha256": "10d00d59ef42f48a946c4f4062e218ce0c59f4f49839cbf5c2232768ddaabbaa",
+      "config_order": [
+        "target",
+        "units",
+        "excess_threshold",
+        "hardness_ratio",
+        "mass_gev",
+        "peak_kind",
+        "peak_threshold"
+      ],
+      "derivation": "Exact peak_features and probe_answer function source segments, NumPy import and a fixed entrypoint only. Author driver is never imported or executed.",
+      "fixed_config": [
+        1,
+        1,
+        60,
+        2,
+        95.83680934806682,
+        1,
+        0.5
+      ],
+      "functions": [
+        {
+          "lines": [
+            34,
+            43
+          ],
+          "name": "peak_features",
+          "sha256": "cd7f6bacee544ba39d04b5fd3abb03d8c99713982310990f6d6cb13ef38ad3c1"
+        },
+        {
+          "lines": [
+            46,
+            57
+          ],
+          "name": "probe_answer",
+          "sha256": "fc612e234950bc2caf687a1be0cf8146db9967ddd7dc683e8a86d615a8871a7d"
+        }
+      ],
+      "parameter_source": "experiments/dark_matter_recoil_revision_2026-09-10.json tasks[ParticlePhysics/DarkMatterRecoilAttribution].shortcut_probe.selected_parameters",
+      "selection_status": "previously author development-selected; no selection or search in this replay"
+    },
+    "schema_version": 1,
+    "source_sha256": {
+      "benchmarks/Physics/DarkMatterRecoilAttribution/verification/reference_profile.py": "78da166c44b216e3f69a492ba1a4aa605af0cc21d3223f2168196a9d68325d2c",
+      "experiments/dark_matter_recoil_revision_2026-09-10.json": "2a983d49362b95917ad56c570a6792407eadd7533a25ef3952b67c9c45dbcb59",
+      "scripts/audit_dark_matter_recoil.py": "3cef9a3aad3327181e49ed9df96b1e36b828033b4f7cb2053f82b520a4cb4993"
+    },
+    "source_urls": {
+      "benchmarks/Physics/DarkMatterRecoilAttribution/verification/reference_profile.py": "https://github.com/Geniusyingmanji/ScientistsLastExam/blob/8497bd455d3090087e6a15e99fb85f5fae75e5cd/benchmarks/Physics/DarkMatterRecoilAttribution/verification/reference_profile.py",
+      "experiments/dark_matter_recoil_revision_2026-09-10.json": "https://github.com/Geniusyingmanji/ScientistsLastExam/blob/8497bd455d3090087e6a15e99fb85f5fae75e5cd/experiments/dark_matter_recoil_revision_2026-09-10.json",
+      "scripts/audit_dark_matter_recoil.py": "https://github.com/Geniusyingmanji/ScientistsLastExam/blob/8497bd455d3090087e6a15e99fb85f5fae75e5cd/scripts/audit_dark_matter_recoil.py"
+    },
+    "task_head": "8497bd455d3090087e6a15e99fb85f5fae75e5cd"
+  },
+  "integration_head": "2660c38a413fb7281d0e7012a6446eb384a934d1",
+  "model_calls": 0,
+  "new_parameter_configurations_searched": 0,
+  "planned_evaluations": 8,
+  "runtime": {
+    "executable": "/usr/bin/python3",
+    "numpy": "1.24.4",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29",
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "scipy": "1.10.1",
+    "thread_environment": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    }
+  },
+  "runtime_source_sha256": "8159a99d54894dd304e3ac48956cd05d4389f12a041f5d5d86a2c079641c2c86",
+  "schema_version": 1,
+  "scope": "Historical independently executed fixed replay. Not a current task-package/source freeze, model calibration, or scientific admission.",
+  "source_branch": "codex/sle-shortcut-revalidation",
+  "source_report": ".research/pr72_shortcut_review_2026-09-11.json",
+  "source_report_git_blob": "92229081476dcb6f573c3292ff17ca047ddeb2da",
+  "task_head": "8497bd455d3090087e6a15e99fb85f5fae75e5cd",
+  "task_id": "ParticlePhysics/DarkMatterRecoilAttribution",
+  "task_source_hashes": {
+    "TASK_CARD.yaml": "0a634cafee58a21747a26ecddd741553d006517148c3594231f25c6a92c2f24f",
+    "Task.md": "77cacd06d6a837c28d5c4549cd829f6425a2815ac3467f69b42dd9521a5e98c4",
+    "frontier_eval/agent_files.txt": "9c9c47fdaee31c7a9d4f0e822d48c015fc619de200fb801cbd5b1c940901b6e1",
+    "frontier_eval/candidate_destination.txt": "ece4e0053b1c683eff94ac0fadeacd92748da603286a0105b2870eb77b63e459",
+    "frontier_eval/constraints.txt": "c3125be81787bb97705fcd5d656dcc6b1a758f2ac3d1799d3b64acb65bed27c0",
+    "frontier_eval/entrypoint.txt": "8a1a98b6f8c6b42a60bd905d7100f726d959ad88404b6bc3bb9f72ce2ce93e39",
+    "frontier_eval/eval_command.txt": "5c442f4425daec9752afea2e730fb75e7aace44d99c642f92f0464afa091b956",
+    "frontier_eval/initial_program.txt": "ece4e0053b1c683eff94ac0fadeacd92748da603286a0105b2870eb77b63e459",
+    "frontier_eval/metadata.yaml": "0b5f74e19cf09dd9be2c59b1f8d8472147d5cd9f30c041ad22363daffde539ed",
+    "frontier_eval/readonly_files.txt": "36b67e726ed4e57a44cd069f09853385978ab90f45fc432e8d9cb53653ecedf6",
+    "frontier_eval/run_eval.py": "ae5abdac6dbd9ac9ae2e420a09861d983f4f221ddb4477468b3eb29ad1873ac5",
+    "references/known_best.md": "05e5f7b3c07c621e1fd1dc3bf52a4f5364513a836a9b2e1caf994c446d1ed8ca",
+    "solution.py": "aee48d712ad9a1a4ac557e1b9805714f607af28da1e214d322367c0b99642070",
+    "verification/evaluator.py": "8c255e27b25f458f7964ac689eea9140a85d003790149072c02d394438ded72a",
+    "verification/reference_profile.py": "78da166c44b216e3f69a492ba1a4aa605af0cc21d3223f2168196a9d68325d2c"
+  }
+}

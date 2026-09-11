@@ -1,0 +1,16 @@
+domain: ParticlePhysics
+task: DarkMatterRecoilAttribution
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 120
+scientific_role: discovery
+science_metric: normalized_supported_mechanism_recovery
+reference_baseline: legal overconfident fixed mechanism and deliberately inaccurate
+  parameter estimate
+reference_sota: truth-blind joint likelihood witness; not a published record and not
+  the normalization denominator
+citation: arxiv:1405.1420
+difficulty_calibration_status: unmeasured_candidate

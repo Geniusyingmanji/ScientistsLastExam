@@ -1,0 +1,67 @@
+{
+  "criterion_D16": "failed",
+  "input_hashes": {
+    "dark_matter_recoil_first_draw_review_2026-09-11.json": "7dd672ef73e36dbcb66dd1d2ef90f40b113bc29be7c39ef5ecff26e9bc163832",
+    "pr72_admission_contribution_2026-09-11.json": "950d7ad5e33545e84fb74b66afcbdccc7448f74c0ec513c897ea47b45fdb71f7"
+  },
+  "interpretation": "Aggregate attribution only; does not identify the candidate algorithm. All three first proposals retained.",
+  "model_calls": 0,
+  "oracle_calls": 0,
+  "rows": [
+    {
+      "all_worlds_valid": true,
+      "candidate_sha256": "60beb8267a1d58fdd2ff0879ae08ca449d8ee049f064b4967da14a4c9a239bab",
+      "reference_reached": true,
+      "seed_label": 0,
+      "splits": {
+        "development": {
+          "false_claims": 0.0,
+          "mean_units": 12.0,
+          "null_refusal_score_delta": 0.0,
+          "score_delta": 0.036902822599999996,
+          "supported_utility_mean_delta": 0.044283387119999996
+        },
+        "heldout": {
+          "false_claims": 0.0,
+          "mean_units": 12.0,
+          "null_refusal_score_delta": 0.041666666666666664,
+          "score_delta": 0.09530143569999994,
+          "supported_utility_mean_delta": 0.06436172283999993
+        }
+      },
+      "valid_worlds": 56
+    },
+    {
+      "all_worlds_valid": false,
+      "candidate_sha256": "0cd3d63d083c5210fff3bac43986dc41b4bea31710ba7028fce621c9b6d003b4",
+      "interpretation": "Incomplete first proposal retained; not a low-scoring difficulty sample.",
+      "reference_reached": null,
+      "seed_label": 1,
+      "valid_worlds": 49
+    },
+    {
+      "all_worlds_valid": true,
+      "candidate_sha256": "e9c99891ce373188934e925b9b53f1f20ca30adab6df97e109390272821f0904",
+      "reference_reached": false,
+      "seed_label": 2,
+      "splits": {
+        "development": {
+          "false_claims": 0.0,
+          "mean_units": 12.0,
+          "null_refusal_score_delta": 0.0,
+          "score_delta": -0.26836979750000006,
+          "supported_utility_mean_delta": -0.32204375700000004
+        },
+        "heldout": {
+          "false_claims": 0.0,
+          "mean_units": 12.0,
+          "null_refusal_score_delta": 0.041666666666666664,
+          "score_delta": -0.16529090650000006,
+          "supported_utility_mean_delta": -0.24834908780000003
+        }
+      },
+      "valid_worlds": 56
+    }
+  ],
+  "source_revision": "9516d4b0fc9ddcb6d2853ee7a39448fc851e549b"
+}

@@ -1,0 +1,13 @@
+{
+  "aggregate_sha256": "953b07a68f97899e70a1e7a51f34c87854005ff5483c0770f08eee242920e4d7",
+  "invalid_evaluations_without_world_rows": 1,
+  "model_calls": 0,
+  "oracle_calls": 0,
+  "permissions_verified": true,
+  "phase": "contribution",
+  "raw_files_verified": 13,
+  "scientific_admission": "not_assessed",
+  "source_revision": "c6842611bc3783e109b3cdbc7f5667662420b513",
+  "split_score_and_count_recomputations": 24,
+  "task": "ParticlePhysics/DarkMatterRecoilAttribution"
+}

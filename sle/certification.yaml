@@ -10,6 +10,10 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  ParticlePhysics/DarkMatterRecoilAttribution:
+    status: candidate
+    reason: Budgeted synthetic mechanism attribution with explicit model misspecification; pending domain review, independent model calibration and server-held instances.
+    citation_ids: ["arxiv:1405.1420"]
   Ecology/OccupancyDetectionDesign:
     status: candidate
     reason: Active repeat-survey allocation and latent occupancy inference under imperfect detection, with explicit refusal for nonlinear habitat and spatially structured worlds; retained as a candidate pending server-held surveys, real field-data replication and independent ecology review.

@@ -1,0 +1,644 @@
+{
+  "bindings": {
+    "llm_condition_sha256": "967fb197a1603c8c9bd881997ba02cfde1336f0cbb2e1c3a369c3cec24d50d07",
+    "model": "gpt-5.6-sol",
+    "orchestration_sha256": "3275e97f36efb2403b9cc1cdd6187d3f8618cd399d439351a264995203515602",
+    "runtime_source_sha256": "8159a99d54894dd304e3ac48956cd05d4389f12a041f5d5d86a2c079641c2c86",
+    "task_contract_sha256": "9e98b818fc89b0ed4ef7f1fe7a4ec84d53e1b3e3427be29a6fa13f24bb8afe1d",
+    "task_id": "ParticlePhysics/DarkMatterRecoilAttribution",
+    "task_package_sha256": "07665fb4eb5481af5296db7edbcfb67dc4a0321db01ef472048f1988f1a1784d"
+  },
+  "campaign_cell_status_counts": {
+    "complete": 2,
+    "incomplete": 1
+  },
+  "campaign_replay_status": "incomplete",
+  "cells": [
+    {
+      "events": [
+        {
+          "all_worlds_valid": true,
+          "candidate_sha256": "aee48d712ad9a1a4ac557e1b9805714f607af28da1e214d322367c0b99642070",
+          "error_sha256": null,
+          "full_metrics_sha256": "dd950bfc559dc159d5af20c964b9a48d44f57daffbc397b079ddc7fe132eaeff",
+          "observed_worlds": 56,
+          "per_instance_sha256": "07f4599458b48a7cd434ff69e3672970498a8b81ecf196828ed0c8ca13a21d14",
+          "receipt_file_sha256": "294eeef20f8f589f61b58dd92e0b3d5c1049f9edb427f9ac717c13892e052023",
+          "request_id": "5d0de8a1be402569b5183b084d487d8bc0937237f7acae285286a29c789fa1ac",
+          "scalar_metrics": {
+            "combined_score": 0.0,
+            "development_claim_count": 28.0,
+            "development_confidence_brier": 0.5810714286,
+            "development_correct_refusal_count": 0.0,
+            "development_correct_refusal_rate": 0.0,
+            "development_discovery_coverage": 1.0,
+            "development_experiment_units_sum": 28.0,
+            "development_false_discovery_count": 18.0,
+            "development_false_discovery_rate": 0.6428571429,
+            "development_mean_units": 1.0,
+            "development_mechanism_score": 0.0,
+            "development_none_correct_count": 0.0,
+            "development_none_correct_rate": 0.0,
+            "development_none_world_count": 4.0,
+            "development_refusal_world_count": 4.0,
+            "development_supported_claim_count": 20.0,
+            "development_supported_world_count": 20.0,
+            "development_valid_rate": 1.0,
+            "development_valid_world_count": 28.0,
+            "development_world_count": 28.0,
+            "feasibility_rate": 1.0,
+            "heldout_claim_count": 28.0,
+            "heldout_confidence_brier": 0.5810714286,
+            "heldout_correct_refusal_count": 0.0,
+            "heldout_correct_refusal_rate": 0.0,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_experiment_units_sum": 28.0,
+            "heldout_false_discovery_count": 18.0,
+            "heldout_false_discovery_rate": 0.6428571429,
+            "heldout_mean_units": 1.0,
+            "heldout_mechanism_score": 0.0,
+            "heldout_none_correct_count": 0.0,
+            "heldout_none_correct_rate": 0.0,
+            "heldout_none_world_count": 4.0,
+            "heldout_refusal_world_count": 4.0,
+            "heldout_supported_claim_count": 20.0,
+            "heldout_supported_world_count": 20.0,
+            "heldout_valid_rate": 1.0,
+            "heldout_valid_world_count": 28.0,
+            "heldout_world_count": 28.0,
+            "raw_score": 0.0,
+            "valid": 1.0
+          },
+          "scientific_score": 0.0,
+          "step": 0,
+          "valid_worlds": 56
+        },
+        {
+          "all_worlds_valid": true,
+          "candidate_sha256": "60beb8267a1d58fdd2ff0879ae08ca449d8ee049f064b4967da14a4c9a239bab",
+          "error_sha256": null,
+          "full_metrics_sha256": "8040f5fc2c7b951eed4ebad1bb9258ef791a2ed6012d912829c3b12d9e70c3a5",
+          "observed_worlds": 56,
+          "per_instance_sha256": "2cbcf8f44cc18cd947952c427a32764a1e4be3d3abceec49369b964b68728954",
+          "receipt_file_sha256": "8b4c29b29c9e7303e1511e3444530c8c7e88cd2f0aeb37b4def92b05cdf48ca5",
+          "reference_reached": true,
+          "request_id": "b124fd0ad11c6e18b52d2efec395113ad3a7d23e457f050f94c61d38ef6cd21f",
+          "scalar_metrics": {
+            "combined_score": 0.5855425654,
+            "development_claim_count": 20.0,
+            "development_confidence_brier": 0.0007158603,
+            "development_correct_refusal_count": 4.0,
+            "development_correct_refusal_rate": 1.0,
+            "development_discovery_coverage": 1.0,
+            "development_experiment_units_sum": 336.0,
+            "development_false_discovery_count": 0.0,
+            "development_false_discovery_rate": 0.0,
+            "development_mean_units": 12.0,
+            "development_mechanism_score": 0.5855425654,
+            "development_none_correct_count": 4.0,
+            "development_none_correct_rate": 1.0,
+            "development_none_world_count": 4.0,
+            "development_refusal_world_count": 4.0,
+            "development_supported_claim_count": 20.0,
+            "development_supported_world_count": 20.0,
+            "development_valid_rate": 1.0,
+            "development_valid_world_count": 28.0,
+            "development_world_count": 28.0,
+            "feasibility_rate": 1.0,
+            "heldout_claim_count": 20.0,
+            "heldout_confidence_brier": 0.0002724545,
+            "heldout_correct_refusal_count": 4.0,
+            "heldout_correct_refusal_rate": 1.0,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_experiment_units_sum": 336.0,
+            "heldout_false_discovery_count": 0.0,
+            "heldout_false_discovery_rate": 0.0,
+            "heldout_mean_units": 12.0,
+            "heldout_mechanism_score": 0.595314142,
+            "heldout_none_correct_count": 4.0,
+            "heldout_none_correct_rate": 1.0,
+            "heldout_none_world_count": 4.0,
+            "heldout_refusal_world_count": 4.0,
+            "heldout_supported_claim_count": 20.0,
+            "heldout_supported_world_count": 20.0,
+            "heldout_valid_rate": 1.0,
+            "heldout_valid_world_count": 28.0,
+            "heldout_world_count": 28.0,
+            "raw_score": 0.5855425654,
+            "valid": 1.0
+          },
+          "scientific_score": 0.5855425654,
+          "step": 1,
+          "valid_worlds": 56
+        }
+      ],
+      "manifest_sha256": "1a5f702863f8ac90b6886451f6a4251bb05c3802ef7a0f20cfe925b421093c23",
+      "model_condition": {
+        "max_output_tokens": 16384,
+        "model": "gpt-5.6-sol",
+        "reasoning_effort": "high",
+        "temperature": null,
+        "timeout_seconds": 300,
+        "wire": "responses"
+      },
+      "retained_first_proposal_files": [
+        "solution.py",
+        "best_program.py"
+      ],
+      "seed_label": 0,
+      "trajectory_sha256": "3d09db6d5a86c89fd2fc2737058bc6b8db7c2d8e8aaf750d13cc4f95789d41ff",
+      "usage": {
+        "estimated_cost_usd": null,
+        "input_tokens": 2403,
+        "output_tokens": 13494,
+        "pricing_available": false,
+        "total_tokens": 15897,
+        "usage_available": true
+      }
+    },
+    {
+      "events": [
+        {
+          "all_worlds_valid": true,
+          "candidate_sha256": "aee48d712ad9a1a4ac557e1b9805714f607af28da1e214d322367c0b99642070",
+          "error_sha256": null,
+          "full_metrics_sha256": "dd950bfc559dc159d5af20c964b9a48d44f57daffbc397b079ddc7fe132eaeff",
+          "observed_worlds": 56,
+          "per_instance_sha256": "07f4599458b48a7cd434ff69e3672970498a8b81ecf196828ed0c8ca13a21d14",
+          "receipt_file_sha256": "049f449e9feb51b42dd890a6b922bf0a9faffe57cf88d0643e9541c0819759c9",
+          "request_id": "5d0de8a1be402569b5183b084d487d8bc0937237f7acae285286a29c789fa1ac",
+          "scalar_metrics": {
+            "combined_score": 0.0,
+            "development_claim_count": 28.0,
+            "development_confidence_brier": 0.5810714286,
+            "development_correct_refusal_count": 0.0,
+            "development_correct_refusal_rate": 0.0,
+            "development_discovery_coverage": 1.0,
+            "development_experiment_units_sum": 28.0,
+            "development_false_discovery_count": 18.0,
+            "development_false_discovery_rate": 0.6428571429,
+            "development_mean_units": 1.0,
+            "development_mechanism_score": 0.0,
+            "development_none_correct_count": 0.0,
+            "development_none_correct_rate": 0.0,
+            "development_none_world_count": 4.0,
+            "development_refusal_world_count": 4.0,
+            "development_supported_claim_count": 20.0,
+            "development_supported_world_count": 20.0,
+            "development_valid_rate": 1.0,
+            "development_valid_world_count": 28.0,
+            "development_world_count": 28.0,
+            "feasibility_rate": 1.0,
+            "heldout_claim_count": 28.0,
+            "heldout_confidence_brier": 0.5810714286,
+            "heldout_correct_refusal_count": 0.0,
+            "heldout_correct_refusal_rate": 0.0,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_experiment_units_sum": 28.0,
+            "heldout_false_discovery_count": 18.0,
+            "heldout_false_discovery_rate": 0.6428571429,
+            "heldout_mean_units": 1.0,
+            "heldout_mechanism_score": 0.0,
+            "heldout_none_correct_count": 0.0,
+            "heldout_none_correct_rate": 0.0,
+            "heldout_none_world_count": 4.0,
+            "heldout_refusal_world_count": 4.0,
+            "heldout_supported_claim_count": 20.0,
+            "heldout_supported_world_count": 20.0,
+            "heldout_valid_rate": 1.0,
+            "heldout_valid_world_count": 28.0,
+            "heldout_world_count": 28.0,
+            "raw_score": 0.0,
+            "valid": 1.0
+          },
+          "scientific_score": 0.0,
+          "step": 0,
+          "valid_worlds": 56
+        },
+        {
+          "all_worlds_valid": false,
+          "candidate_sha256": "0cd3d63d083c5210fff3bac43986dc41b4bea31710ba7028fce621c9b6d003b4",
+          "error_sha256": null,
+          "full_metrics_sha256": "af70ea413485e480f1266a35619a03a0a63675f2a0e8cdaba9136700cc028435",
+          "observed_worlds": 56,
+          "per_instance_sha256": "87ce831d995d6ae28ff304ce3f41aadfc4f3e14b408edfcfd63ed644692afd90",
+          "receipt_file_sha256": "913fddcc7e708a7d0c34a4acc15813f2691e8b40742c03d845521952c03cfbd1",
+          "reference_reached": null,
+          "request_id": "a84af53dd40f5e27204d2ef701d8e3cd6047bfb649fd0f299e3e5a1f541b4189",
+          "scalar_metrics": {
+            "combined_score": 0.5485267106,
+            "development_claim_count": 20.0,
+            "development_confidence_brier": 0.001252523,
+            "development_correct_refusal_count": 4.0,
+            "development_correct_refusal_rate": 1.0,
+            "development_discovery_coverage": 1.0,
+            "development_experiment_units_sum": 336.0,
+            "development_false_discovery_count": 0.0,
+            "development_false_discovery_rate": 0.0,
+            "development_mean_units": 12.0,
+            "development_mechanism_score": 0.5485267106,
+            "development_none_correct_count": 4.0,
+            "development_none_correct_rate": 1.0,
+            "development_none_world_count": 4.0,
+            "development_refusal_world_count": 4.0,
+            "development_supported_claim_count": 20.0,
+            "development_supported_world_count": 20.0,
+            "development_valid_rate": 1.0,
+            "development_valid_world_count": 28.0,
+            "development_world_count": 28.0,
+            "feasibility_rate": 1.0,
+            "heldout_claim_count": 16.0,
+            "heldout_confidence_brier": 0.257362661,
+            "heldout_correct_refusal_count": 3.0,
+            "heldout_correct_refusal_rate": 0.75,
+            "heldout_discovery_coverage": 0.8,
+            "heldout_experiment_units_sum": 252.0,
+            "heldout_false_discovery_count": 0.0,
+            "heldout_false_discovery_rate": 0.0,
+            "heldout_mean_units": 9.0,
+            "heldout_mechanism_score": 0.3092163689,
+            "heldout_none_correct_count": 2.0,
+            "heldout_none_correct_rate": 0.5,
+            "heldout_none_world_count": 4.0,
+            "heldout_refusal_world_count": 4.0,
+            "heldout_supported_claim_count": 16.0,
+            "heldout_supported_world_count": 20.0,
+            "heldout_valid_rate": 0.75,
+            "heldout_valid_world_count": 21.0,
+            "heldout_world_count": 28.0,
+            "raw_score": 0.5485267106,
+            "valid": 0.0
+          },
+          "scientific_score": null,
+          "step": 1,
+          "valid_worlds": 49
+        }
+      ],
+      "manifest_sha256": "08aa68be8fc8d9412a7c4d63194593f7ba4a009b313bc3ffb51d537bb57c5c11",
+      "model_condition": {
+        "max_output_tokens": 16384,
+        "model": "gpt-5.6-sol",
+        "reasoning_effort": "high",
+        "temperature": null,
+        "timeout_seconds": 300,
+        "wire": "responses"
+      },
+      "retained_first_proposal_files": [
+        "solution.py"
+      ],
+      "seed_label": 1,
+      "trajectory_sha256": "40e87618d4faf3e2d1003a0c515f55fd0b24709119e09958db938d16dd2947e8",
+      "usage": {
+        "estimated_cost_usd": null,
+        "input_tokens": 2403,
+        "output_tokens": 12682,
+        "pricing_available": false,
+        "total_tokens": 15085,
+        "usage_available": true
+      }
+    },
+    {
+      "events": [
+        {
+          "all_worlds_valid": true,
+          "candidate_sha256": "aee48d712ad9a1a4ac557e1b9805714f607af28da1e214d322367c0b99642070",
+          "error_sha256": null,
+          "full_metrics_sha256": "dd950bfc559dc159d5af20c964b9a48d44f57daffbc397b079ddc7fe132eaeff",
+          "observed_worlds": 56,
+          "per_instance_sha256": "07f4599458b48a7cd434ff69e3672970498a8b81ecf196828ed0c8ca13a21d14",
+          "receipt_file_sha256": "bb6189b3729eff55cac3f39a304da37616cefc7fe93575e50b5d27a365840ec5",
+          "request_id": "5d0de8a1be402569b5183b084d487d8bc0937237f7acae285286a29c789fa1ac",
+          "scalar_metrics": {
+            "combined_score": 0.0,
+            "development_claim_count": 28.0,
+            "development_confidence_brier": 0.5810714286,
+            "development_correct_refusal_count": 0.0,
+            "development_correct_refusal_rate": 0.0,
+            "development_discovery_coverage": 1.0,
+            "development_experiment_units_sum": 28.0,
+            "development_false_discovery_count": 18.0,
+            "development_false_discovery_rate": 0.6428571429,
+            "development_mean_units": 1.0,
+            "development_mechanism_score": 0.0,
+            "development_none_correct_count": 0.0,
+            "development_none_correct_rate": 0.0,
+            "development_none_world_count": 4.0,
+            "development_refusal_world_count": 4.0,
+            "development_supported_claim_count": 20.0,
+            "development_supported_world_count": 20.0,
+            "development_valid_rate": 1.0,
+            "development_valid_world_count": 28.0,
+            "development_world_count": 28.0,
+            "feasibility_rate": 1.0,
+            "heldout_claim_count": 28.0,
+            "heldout_confidence_brier": 0.5810714286,
+            "heldout_correct_refusal_count": 0.0,
+            "heldout_correct_refusal_rate": 0.0,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_experiment_units_sum": 28.0,
+            "heldout_false_discovery_count": 18.0,
+            "heldout_false_discovery_rate": 0.6428571429,
+            "heldout_mean_units": 1.0,
+            "heldout_mechanism_score": 0.0,
+            "heldout_none_correct_count": 0.0,
+            "heldout_none_correct_rate": 0.0,
+            "heldout_none_world_count": 4.0,
+            "heldout_refusal_world_count": 4.0,
+            "heldout_supported_claim_count": 20.0,
+            "heldout_supported_world_count": 20.0,
+            "heldout_valid_rate": 1.0,
+            "heldout_valid_world_count": 28.0,
+            "heldout_world_count": 28.0,
+            "raw_score": 0.0,
+            "valid": 1.0
+          },
+          "scientific_score": 0.0,
+          "step": 0,
+          "valid_worlds": 56
+        },
+        {
+          "all_worlds_valid": true,
+          "candidate_sha256": "e9c99891ce373188934e925b9b53f1f20ca30adab6df97e109390272821f0904",
+          "error_sha256": null,
+          "full_metrics_sha256": "8af3918fc0a0a9028748d7a16327dd2d22912d165389819c8cd96bb4ee41c1f7",
+          "observed_worlds": 56,
+          "per_instance_sha256": "6baacbf2f135c4f638395531478ba9963aa366ff808679bd5aff87b0ce38c280",
+          "receipt_file_sha256": "fe136ca780de4fbe06e9d0dc763c823811bd6bf45c603e20a327d115c0c8c2db",
+          "reference_reached": false,
+          "request_id": "c51781201bfabf9b2b7c7d6b12b866b177eb7b96ef42089491686ed51250b799",
+          "scalar_metrics": {
+            "combined_score": 0.2802699453,
+            "development_claim_count": 20.0,
+            "development_confidence_brier": 0.001129517,
+            "development_correct_refusal_count": 4.0,
+            "development_correct_refusal_rate": 1.0,
+            "development_discovery_coverage": 1.0,
+            "development_experiment_units_sum": 336.0,
+            "development_false_discovery_count": 0.0,
+            "development_false_discovery_rate": 0.0,
+            "development_mean_units": 12.0,
+            "development_mechanism_score": 0.2802699453,
+            "development_none_correct_count": 4.0,
+            "development_none_correct_rate": 1.0,
+            "development_none_world_count": 4.0,
+            "development_refusal_world_count": 4.0,
+            "development_supported_claim_count": 20.0,
+            "development_supported_world_count": 20.0,
+            "development_valid_rate": 1.0,
+            "development_valid_world_count": 28.0,
+            "development_world_count": 28.0,
+            "feasibility_rate": 1.0,
+            "heldout_claim_count": 20.0,
+            "heldout_confidence_brier": 0.0004434155,
+            "heldout_correct_refusal_count": 4.0,
+            "heldout_correct_refusal_rate": 1.0,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_experiment_units_sum": 336.0,
+            "heldout_false_discovery_count": 0.0,
+            "heldout_false_discovery_rate": 0.0,
+            "heldout_mean_units": 12.0,
+            "heldout_mechanism_score": 0.3347217998,
+            "heldout_none_correct_count": 4.0,
+            "heldout_none_correct_rate": 1.0,
+            "heldout_none_world_count": 4.0,
+            "heldout_refusal_world_count": 4.0,
+            "heldout_supported_claim_count": 20.0,
+            "heldout_supported_world_count": 20.0,
+            "heldout_valid_rate": 1.0,
+            "heldout_valid_world_count": 28.0,
+            "heldout_world_count": 28.0,
+            "raw_score": 0.2802699453,
+            "valid": 1.0
+          },
+          "scientific_score": 0.2802699453,
+          "step": 1,
+          "valid_worlds": 56
+        }
+      ],
+      "manifest_sha256": "5f04c2ff810b69326b49b613f3445aa773a5c73d84c0f351e23edd6e4caf1c10",
+      "model_condition": {
+        "max_output_tokens": 16384,
+        "model": "gpt-5.6-sol",
+        "reasoning_effort": "high",
+        "temperature": null,
+        "timeout_seconds": 300,
+        "wire": "responses"
+      },
+      "retained_first_proposal_files": [
+        "solution.py",
+        "best_program.py"
+      ],
+      "seed_label": 2,
+      "trajectory_sha256": "a79dcdbbdae5778703396a4bc7ab17594d833084af48cf50eabc98d0d9238414",
+      "usage": {
+        "estimated_cost_usd": null,
+        "input_tokens": 2403,
+        "output_tokens": 11311,
+        "pricing_available": false,
+        "total_tokens": 13714,
+        "usage_available": true
+      }
+    }
+  ],
+  "criterion_D16": "failed",
+  "expected_worlds_per_evaluation": 56,
+  "first_proposals_reaching_reference": 1,
+  "interpretation": "A first proposal is judged only when all expected worlds are valid. Failed/partial proposals remain in the denominator and never establish difficulty. A passing comparison is not external scientific certification. Seed labels do not control provider randomness. No oracle or model calls were made by this reviewer.",
+  "model_reported_usage": {
+    "input_tokens": 7209,
+    "output_tokens": 37487,
+    "total_tokens": 44696
+  },
+  "plan_file_sha256": "48f36d2a3e550b4c6a09a95d43aade861ef508717d0ac5420ac83c08883f711f",
+  "plan_sha256": "ee8ef9532fd223a8a2ab653a0619985537935ef94d4ddcb1cb524673bc6a90ec",
+  "private_artifact_file_hashes": [
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_0/best_program.py",
+      "sha256": "60beb8267a1d58fdd2ff0879ae08ca449d8ee049f064b4967da14a4c9a239bab"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_0/checkpoint.json",
+      "sha256": "000c52690a1bc045b0962f8483cd859c9dfcf6cd0937b7116914967bb431d4d3"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_0/evaluation_ledger/attempts/5d0de8a1be402569b5183b084d487d8bc0937237f7acae285286a29c789fa1ac/000001.json",
+      "sha256": "90d6c218932af2d1b81177aec266b8a5d73c4e4d055c5749f6a28e0d54d737f7"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_0/evaluation_ledger/attempts/b124fd0ad11c6e18b52d2efec395113ad3a7d23e457f050f94c61d38ef6cd21f/000001.json",
+      "sha256": "6a0f02667367c1d6ba5cffc2d1e2109cda3258d09b3348596dbfc387de6e3cf5"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_0/evaluation_ledger/locks/5d0de8a1be402569b5183b084d487d8bc0937237f7acae285286a29c789fa1ac.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_0/evaluation_ledger/locks/b124fd0ad11c6e18b52d2efec395113ad3a7d23e457f050f94c61d38ef6cd21f.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_0/evaluation_ledger/receipts/5d0de8a1be402569b5183b084d487d8bc0937237f7acae285286a29c789fa1ac.json",
+      "sha256": "294eeef20f8f589f61b58dd92e0b3d5c1049f9edb427f9ac717c13892e052023"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_0/evaluation_ledger/receipts/b124fd0ad11c6e18b52d2efec395113ad3a7d23e457f050f94c61d38ef6cd21f.json",
+      "sha256": "8b4c29b29c9e7303e1511e3444530c8c7e88cd2f0aeb37b4def92b05cdf48ca5"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_0/evaluation_ledger/requests/5d0de8a1be402569b5183b084d487d8bc0937237f7acae285286a29c789fa1ac.json",
+      "sha256": "1463269b9f37b1e963e3c586cf546351dac08b9e963d049f01ee4a01528a0f64"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_0/evaluation_ledger/requests/b124fd0ad11c6e18b52d2efec395113ad3a7d23e457f050f94c61d38ef6cd21f.json",
+      "sha256": "50f9da80441dbb983f79db08933852f0fab3521f07ed6250e52f1f67df5f9c97"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_0/run_manifest.json",
+      "sha256": "1a5f702863f8ac90b6886451f6a4251bb05c3802ef7a0f20cfe925b421093c23"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_0/solution.py",
+      "sha256": "60beb8267a1d58fdd2ff0879ae08ca449d8ee049f064b4967da14a4c9a239bab"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_0/summary.json",
+      "sha256": "091fb2aadd07fc0de61a90cf8bdc0414adb66abc78bc14ba471a82febe93d8ca"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_0/trajectory.jsonl",
+      "sha256": "3d09db6d5a86c89fd2fc2737058bc6b8db7c2d8e8aaf750d13cc4f95789d41ff"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_1/best_program.py",
+      "sha256": "aee48d712ad9a1a4ac557e1b9805714f607af28da1e214d322367c0b99642070"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_1/checkpoint.json",
+      "sha256": "cf6aeebcefcd6c0caba103c9b22410c7813f2265e30e7fc18d80c22b04f799a3"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_1/evaluation_ledger/attempts/5d0de8a1be402569b5183b084d487d8bc0937237f7acae285286a29c789fa1ac/000001.json",
+      "sha256": "dcd6aeacd413930ffeb2ed259b97e42188a9cb5c52cf6210d9c991c431e4dde7"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_1/evaluation_ledger/attempts/a84af53dd40f5e27204d2ef701d8e3cd6047bfb649fd0f299e3e5a1f541b4189/000001.json",
+      "sha256": "d42cb90a4a22ceac42f922e7aad9815a460deb6204062c16f0b3e1dbb4285d5f"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_1/evaluation_ledger/locks/5d0de8a1be402569b5183b084d487d8bc0937237f7acae285286a29c789fa1ac.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_1/evaluation_ledger/locks/a84af53dd40f5e27204d2ef701d8e3cd6047bfb649fd0f299e3e5a1f541b4189.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_1/evaluation_ledger/receipts/5d0de8a1be402569b5183b084d487d8bc0937237f7acae285286a29c789fa1ac.json",
+      "sha256": "049f449e9feb51b42dd890a6b922bf0a9faffe57cf88d0643e9541c0819759c9"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_1/evaluation_ledger/receipts/a84af53dd40f5e27204d2ef701d8e3cd6047bfb649fd0f299e3e5a1f541b4189.json",
+      "sha256": "913fddcc7e708a7d0c34a4acc15813f2691e8b40742c03d845521952c03cfbd1"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_1/evaluation_ledger/requests/5d0de8a1be402569b5183b084d487d8bc0937237f7acae285286a29c789fa1ac.json",
+      "sha256": "1463269b9f37b1e963e3c586cf546351dac08b9e963d049f01ee4a01528a0f64"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_1/evaluation_ledger/requests/a84af53dd40f5e27204d2ef701d8e3cd6047bfb649fd0f299e3e5a1f541b4189.json",
+      "sha256": "62d2de13401f30da84cb46f1668998a262e04b7650cededbde0e0f1026891008"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_1/rejected/step_001.json",
+      "sha256": "af1c8973774a12c7d699c62b3a32fd6ea4ebc91afbdb8b728236ef2036847616"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_1/rejected/step_001.py",
+      "sha256": "0cd3d63d083c5210fff3bac43986dc41b4bea31710ba7028fce621c9b6d003b4"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_1/run_manifest.json",
+      "sha256": "08aa68be8fc8d9412a7c4d63194593f7ba4a009b313bc3ffb51d537bb57c5c11"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_1/solution.py",
+      "sha256": "0cd3d63d083c5210fff3bac43986dc41b4bea31710ba7028fce621c9b6d003b4"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_1/summary.json",
+      "sha256": "da08c5c485fb43964aff238621cc83956ad69e18316ae808d36493e8993fb07f"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_1/trajectory.jsonl",
+      "sha256": "40e87618d4faf3e2d1003a0c515f55fd0b24709119e09958db938d16dd2947e8"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_2/best_program.py",
+      "sha256": "e9c99891ce373188934e925b9b53f1f20ca30adab6df97e109390272821f0904"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_2/checkpoint.json",
+      "sha256": "a99c60342a7a3bb7df838fdef221443754e95378e0b8b18d7f2cb1730141712a"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_2/evaluation_ledger/attempts/5d0de8a1be402569b5183b084d487d8bc0937237f7acae285286a29c789fa1ac/000001.json",
+      "sha256": "1d313d3f836c25853ccef647eb75e61df6189bc3eec27c2fda536333ea320f98"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_2/evaluation_ledger/attempts/c51781201bfabf9b2b7c7d6b12b866b177eb7b96ef42089491686ed51250b799/000001.json",
+      "sha256": "17079962215736e68c0210bd9fc4d0894015b7efcc775b3846bb55cadfe9ec14"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_2/evaluation_ledger/locks/5d0de8a1be402569b5183b084d487d8bc0937237f7acae285286a29c789fa1ac.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_2/evaluation_ledger/locks/c51781201bfabf9b2b7c7d6b12b866b177eb7b96ef42089491686ed51250b799.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_2/evaluation_ledger/receipts/5d0de8a1be402569b5183b084d487d8bc0937237f7acae285286a29c789fa1ac.json",
+      "sha256": "bb6189b3729eff55cac3f39a304da37616cefc7fe93575e50b5d27a365840ec5"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_2/evaluation_ledger/receipts/c51781201bfabf9b2b7c7d6b12b866b177eb7b96ef42089491686ed51250b799.json",
+      "sha256": "fe136ca780de4fbe06e9d0dc763c823811bd6bf45c603e20a327d115c0c8c2db"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_2/evaluation_ledger/requests/5d0de8a1be402569b5183b084d487d8bc0937237f7acae285286a29c789fa1ac.json",
+      "sha256": "1463269b9f37b1e963e3c586cf546351dac08b9e963d049f01ee4a01528a0f64"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_2/evaluation_ledger/requests/c51781201bfabf9b2b7c7d6b12b866b177eb7b96ef42089491686ed51250b799.json",
+      "sha256": "03ddec7406589bef019bdabadeae5843ee01e5c7d9bb10f44768baa14159dfc6"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_2/run_manifest.json",
+      "sha256": "5f04c2ff810b69326b49b613f3445aa773a5c73d84c0f351e23edd6e4caf1c10"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_2/solution.py",
+      "sha256": "e9c99891ce373188934e925b9b53f1f20ca30adab6df97e109390272821f0904"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_2/summary.json",
+      "sha256": "37a65ee5eac7b773075101ce369467d8409efe7fcb6ea4f263fba42b1bd20f6c"
+    },
+    {
+      "path": "budget_00/ParticlePhysics__DarkMatterRecoilAttribution/greedy_rewrite/selection_blind/seed_2/trajectory.jsonl",
+      "sha256": "a79dcdbbdae5778703396a4bc7ab17594d833084af48cf50eabc98d0d9238414"
+    }
+  ],
+  "reference_score": 0.5486397428,
+  "replay_file_sha256": "77a44d1790d859b78ca0b2e40f37a7699021c6cf688389ea13c6a7aebc652def",
+  "reviewer_script_sha256": "f4c43943d194573b1cc1176ad025f751e4266b811b39a59a112b4a4f8301d3dd",
+  "scheduled_first_proposals": 3,
+  "schema_version": 1,
+  "scientific_certification": "not_assessed",
+  "source_revision": "9516d4b0fc9ddcb6d2853ee7a39448fc851e549b",
+  "source_unchanged": true,
+  "task_id": "ParticlePhysics/DarkMatterRecoilAttribution",
+  "trusted_frozen_evidence": false,
+  "usage_available_for_all_events": true,
+  "valid_complete_first_proposals": 2
+}

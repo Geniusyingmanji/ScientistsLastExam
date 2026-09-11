@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "task_id": "ParticlePhysics/DarkMatterRecoilAttribution",
+  "timeout_s": 300,
+  "methods": [
+    {
+      "id": "reference",
+      "candidate": "verification/reference_profile.py"
+    },
+    {
+      "id": "fixed_mass",
+      "candidate": "verification/shortcut_fixed_mass.py"
+    },
+    {
+      "id": "four_way",
+      "candidate": "verification/shortcut_four_way.py"
+    },
+    {
+      "id": "one_unit",
+      "candidate": "verification/reference_profile.py",
+      "ablation": "one_unit"
+    },
+    {
+      "id": "ignore_gain",
+      "candidate": "verification/reference_profile.py",
+      "ablation": "ignore_gain"
+    },
+    {
+      "id": "fixed_halo",
+      "candidate": "verification/reference_profile.py",
+      "ablation": "fixed_halo"
+    },
+    {
+      "id": "equal_allocation",
+      "candidate": "verification/reference_profile.py",
+      "ablation": "equal_allocation"
+    },
+    {
+      "id": "legacy_equal_reference",
+      "candidate": "verification/reference_equal_allocation.py"
+    }
+  ],
+  "selection_metric": "combined_score",
+  "ability_ablations": [
+    "one_unit",
+    "ignore_gain",
+    "fixed_halo",
+    "equal_allocation"
+  ],
+  "diagnostic_ablations": [],
+  "historical_d16": {
+    "status": "failed",
+    "source": "9516d4b0fc9ddcb6d2853ee7a39448fc851e549b",
+    "record": "experiments/dark_matter_recoil_first_draw_review_2026-09-11.json",
+    "reference_score": 0.5486397428,
+    "valid_first_proposals": [
+      0.5855425654,
+      0.2802699453
+    ],
+    "invalid_first_proposals": 1
+  },
+  "method_changes_after_measurement": "New protocol and run root required; preserve every existing receipt. No heldout selection.",
+  "redesign_prerequisite": "The security and allocation revision does not erase historical D16. Inspect retained strongest private first-proposal source before asserting its algorithm or claiming independent admission.",
+  "model_calibration": "After an explicitly documented redesign and complete reference/shortcut/ability freeze, create a separate scripts/calibrate_task.py plan for 3 selection-blind first proposals, seeds 0/1/2. Supply model conditions before planning; keep all invalid draws and old failures.",
+  "admission": "Held: retain historical D16 failure. Shared-grid measurements and independent first-draw calibration are required; engineering replay is not admission.",
+  "revision_reason": "Security: replace the world-varying public energy grid with the same fixed grid in all worlds; preserve the RNG draw position and every old receipt. No outcome-based seed or threshold selection. Complete the reference with a paid one-unit-per-target pilot and nuisance-profiled Fisher allocation of the remaining nine units; fit both law hypotheses on pilot and final data. Method declared before measurement, with the legacy equal-allocation witness retained."
+}

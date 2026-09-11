@@ -1,0 +1,412 @@
+{
+  "source_revision": "a222b59254538c9d7f5cc9183bfecf9f31456242",
+  "source_sha256": {
+    "evaluator.py": "29cd4bef86b7f4ded652b8bb44d05b6e29a5c092ac7201cabed4db3c60d75c9e",
+    "reference_profile.py": "78da166c44b216e3f69a492ba1a4aa605af0cc21d3223f2168196a9d68325d2c"
+  },
+  "environment": {
+    "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-101-generic-x86_64-with-glibc2.39",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1"
+  },
+  "scope": "in-process builder reproduction of reviewed source; not secure calibration",
+  "reference": {
+    "development_mechanism_score": 0.5237284587,
+    "development_false_discovery_rate": 0.0,
+    "development_false_discovery_count": 0.0,
+    "development_claim_count": 6.0,
+    "development_correct_refusal_rate": 1.0,
+    "development_refusal_world_count": 2.0,
+    "development_discovery_coverage": 1.0,
+    "development_supported_world_count": 6.0,
+    "development_none_correct_rate": 1.0,
+    "development_valid_rate": 1.0,
+    "development_mean_units": 12.0,
+    "development_confidence_brier": 0.05,
+    "heldout_mechanism_score": 0.5727386264,
+    "heldout_false_discovery_rate": 0.0,
+    "heldout_false_discovery_count": 0.0,
+    "heldout_claim_count": 6.0,
+    "heldout_correct_refusal_rate": 1.0,
+    "heldout_refusal_world_count": 2.0,
+    "heldout_discovery_coverage": 1.0,
+    "heldout_supported_world_count": 6.0,
+    "heldout_none_correct_rate": 1.0,
+    "heldout_valid_rate": 1.0,
+    "heldout_mean_units": 12.0,
+    "heldout_confidence_brier": 0.05,
+    "combined_score": 0.5237284587,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "per_instance": [
+      {
+        "valid": true,
+        "model": "q2",
+        "mechanism": 0.966165491729515,
+        "claim": true,
+        "false_claim": false,
+        "abstain": false,
+        "correct_refusal": false,
+        "confidence_brier": 0.03999999999999998,
+        "split": "development",
+        "kind": "q2",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "q2",
+        "mechanism": 0.3145664816989079,
+        "claim": true,
+        "false_claim": false,
+        "abstain": false,
+        "correct_refusal": false,
+        "confidence_brier": 0.03999999999999998,
+        "split": "development",
+        "kind": "q2",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "q2",
+        "mechanism": 0.126638121401484,
+        "claim": true,
+        "false_claim": false,
+        "abstain": false,
+        "correct_refusal": false,
+        "confidence_brier": 0.03999999999999998,
+        "split": "development",
+        "kind": "q2",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "abstain",
+        "mechanism": 1.0,
+        "claim": false,
+        "false_claim": false,
+        "abstain": true,
+        "correct_refusal": true,
+        "confidence_brier": 0.09000000000000002,
+        "split": "development",
+        "kind": "unsupported",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "contact",
+        "mechanism": 0.5602182653784862,
+        "claim": true,
+        "false_claim": false,
+        "abstain": false,
+        "correct_refusal": false,
+        "confidence_brier": 0.03999999999999998,
+        "split": "development",
+        "kind": "contact",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "none",
+        "mechanism": 1.0,
+        "claim": false,
+        "false_claim": false,
+        "abstain": false,
+        "correct_refusal": false,
+        "confidence_brier": 0.03999999999999998,
+        "split": "development",
+        "kind": "none",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "contact",
+        "mechanism": 0.17441163446623198,
+        "claim": true,
+        "false_claim": false,
+        "abstain": false,
+        "correct_refusal": false,
+        "confidence_brier": 0.03999999999999998,
+        "split": "development",
+        "kind": "contact",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "abstain",
+        "mechanism": 1.0,
+        "claim": false,
+        "false_claim": false,
+        "abstain": true,
+        "correct_refusal": true,
+        "confidence_brier": 0.09000000000000002,
+        "split": "development",
+        "kind": "unsupported",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "none",
+        "mechanism": 1.0,
+        "claim": false,
+        "false_claim": false,
+        "abstain": false,
+        "correct_refusal": false,
+        "confidence_brier": 0.03999999999999998,
+        "split": "development",
+        "kind": "none",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "contact",
+        "mechanism": 0.047827675027587446,
+        "claim": true,
+        "false_claim": false,
+        "abstain": false,
+        "correct_refusal": false,
+        "confidence_brier": 0.03999999999999998,
+        "split": "development",
+        "kind": "contact",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "none",
+        "mechanism": 1.0,
+        "claim": false,
+        "false_claim": false,
+        "abstain": false,
+        "correct_refusal": false,
+        "confidence_brier": 0.03999999999999998,
+        "split": "heldout",
+        "kind": "none",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "contact",
+        "mechanism": 0.0,
+        "claim": true,
+        "false_claim": false,
+        "abstain": false,
+        "correct_refusal": false,
+        "confidence_brier": 0.03999999999999998,
+        "split": "heldout",
+        "kind": "contact",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "q2",
+        "mechanism": 0.0,
+        "claim": true,
+        "false_claim": false,
+        "abstain": false,
+        "correct_refusal": false,
+        "confidence_brier": 0.03999999999999998,
+        "split": "heldout",
+        "kind": "q2",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "q2",
+        "mechanism": 0.9204701412882053,
+        "claim": true,
+        "false_claim": false,
+        "abstain": false,
+        "correct_refusal": false,
+        "confidence_brier": 0.03999999999999998,
+        "split": "heldout",
+        "kind": "q2",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "none",
+        "mechanism": 1.0,
+        "claim": false,
+        "false_claim": false,
+        "abstain": false,
+        "correct_refusal": false,
+        "confidence_brier": 0.03999999999999998,
+        "split": "heldout",
+        "kind": "none",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "abstain",
+        "mechanism": 1.0,
+        "claim": false,
+        "false_claim": false,
+        "abstain": true,
+        "correct_refusal": true,
+        "confidence_brier": 0.09000000000000002,
+        "split": "heldout",
+        "kind": "unsupported",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "contact",
+        "mechanism": 0.7752495232893676,
+        "claim": true,
+        "false_claim": false,
+        "abstain": false,
+        "correct_refusal": false,
+        "confidence_brier": 0.03999999999999998,
+        "split": "heldout",
+        "kind": "contact",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "abstain",
+        "mechanism": 1.0,
+        "claim": false,
+        "false_claim": false,
+        "abstain": true,
+        "correct_refusal": true,
+        "confidence_brier": 0.09000000000000002,
+        "split": "heldout",
+        "kind": "unsupported",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "q2",
+        "mechanism": 0.0,
+        "claim": true,
+        "false_claim": false,
+        "abstain": false,
+        "correct_refusal": false,
+        "confidence_brier": 0.03999999999999998,
+        "split": "heldout",
+        "kind": "q2",
+        "units": 12
+      },
+      {
+        "valid": true,
+        "model": "contact",
+        "mechanism": 0.8861893463198103,
+        "claim": true,
+        "false_claim": false,
+        "abstain": false,
+        "correct_refusal": false,
+        "confidence_brier": 0.03999999999999998,
+        "split": "heldout",
+        "kind": "contact",
+        "units": 12
+      }
+    ]
+  },
+  "constant_mass": {
+    "development": {
+      "with_reference_decisions": {
+        "score": 0.6571920368369677,
+        "mass_gev": 57.801163764783766,
+        "knots_checked": 20,
+        "scope": "exact continuous constant-mass bound with recorded reference decisions"
+      },
+      "with_perfect_decisions": {
+        "score": 0.6571920368369677,
+        "mass_gev": 57.801163764783766,
+        "knots_checked": 20,
+        "scope": "exact continuous constant-mass bound with perfect model/null/refusal decisions"
+      }
+    },
+    "heldout": {
+      "with_reference_decisions": {
+        "score": 0.4837618721030103,
+        "mass_gev": 31.024450007908175,
+        "knots_checked": 20,
+        "scope": "exact continuous constant-mass bound with recorded reference decisions"
+      },
+      "with_perfect_decisions": {
+        "score": 0.4837618721030103,
+        "mass_gev": 31.024450007908175,
+        "knots_checked": 20,
+        "scope": "exact continuous constant-mass bound with perfect model/null/refusal decisions"
+      }
+    }
+  },
+  "four_way_probe": {
+    "strategies": 233280,
+    "development_best": 0.6440765894325653,
+    "selected_parameters": [
+      0,
+      12,
+      5,
+      0.8,
+      59.33740035733916,
+      0,
+      5
+    ],
+    "heldout_selected_once": 0.0844053213482978,
+    "per_acquisition_family": [
+      {
+        "target": 0,
+        "units": 1,
+        "development_best": 0.4071920368369678
+      },
+      {
+        "target": 0,
+        "units": 3,
+        "development_best": 0.5190765894325653
+      },
+      {
+        "target": 0,
+        "units": 12,
+        "development_best": 0.6440765894325653
+      },
+      {
+        "target": 1,
+        "units": 1,
+        "development_best": 0.6440765894325653
+      },
+      {
+        "target": 1,
+        "units": 3,
+        "development_best": 0.6440765894325653
+      },
+      {
+        "target": 1,
+        "units": 12,
+        "development_best": 0.6440765894325653
+      },
+      {
+        "target": 2,
+        "units": 1,
+        "development_best": 0.3786130937147964
+      },
+      {
+        "target": 2,
+        "units": 3,
+        "development_best": 0.6440765894325653
+      },
+      {
+        "target": 2,
+        "units": 12,
+        "development_best": 0.6440765894325653
+      }
+    ],
+    "constant_mass_oracle_bounds": {
+      "development": {
+        "score": 0.6571920368369677,
+        "mass_gev": 57.801163764783766,
+        "knots_checked": 20,
+        "scope": "exact continuous constant-mass bound with perfect model/null/refusal decisions"
+      },
+      "heldout": {
+        "score": 0.4837618721030103,
+        "mass_gev": 31.024450007908175,
+        "knots_checked": 20,
+        "scope": "exact continuous constant-mass bound with perfect model/null/refusal decisions"
+      }
+    },
+    "observations": "single-target excess, hardness, three-bin peak residual; all three targets and 1/3/full budget",
+    "scope": "finite builder grid with null/contact/q2/abstain; selected on development only, not exhaustive shortcut exclusion"
+  }
+}

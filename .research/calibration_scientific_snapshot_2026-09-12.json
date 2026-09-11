@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "status": "scientific_snapshot_model_condition_missing",
+  "task_id": "ParticlePhysics/DarkMatterRecoilAttribution",
+  "source_revision": "a6b288949f1da8791294172df0c548a6bd214d45",
+  "task_package_sha256": "075699b557355d7d1b697ebdc1de443af1e040d295778d884664f26618bea4b2",
+  "task_contract_sha256": "6c91a7ebf666fefe274c4a85f7b60d49d0cf389ad3fd4174e47014dc83005366",
+  "runtime_source_sha256": "e29d3b1d7b0e0f9f5b1b09a8c0a45ace098ad8790547d0333c1940e0a421bea9",
+  "replay_protocol_sha256": "bee2f700208e917b64e8ffd5dfc92922c6338cda20de19512d090766a4c6d86d",
+  "reference_and_shortcuts": {
+    "schema_version": 1,
+    "metric": "combined_score",
+    "reference": {
+      "candidate": "verification/reference_profile.py",
+      "expected_score": 0.5368049832
+    },
+    "probes": [
+      {
+        "id": "fixed_mass_57_8",
+        "candidate": "verification/shortcut_fixed_mass.py",
+        "expected_score": 0.2903389817
+      },
+      {
+        "id": "published_four_way",
+        "candidate": "verification/shortcut_four_way.py",
+        "expected_score": 0.2796988413
+      }
+    ],
+    "relative_margin": 0.3,
+    "score_tolerance": 1e-06
+  },
+  "evaluation_budget": {
+    "eval_timeout_s": 300,
+    "experiment_units_per_world": 12,
+    "rationale": "Explicit 300-second override; two-stage reference observed at about 76 seconds in the fixed single-thread Linux replay."
+  },
+  "proposed_schedule": {
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "proposals_per_seed": 1,
+    "feedback_mode": "selection_blind"
+  },
+  "model_condition": null,
+  "model_plan_created": false,
+  "model_calls": 0,
+  "scientific_admission": "not_assessed",
+  "historical_d16": "failed; retained",
+  "same_environment_reference_replay_required": true,
+  "candidate_sources_sha256": {
+    "evaluator.py": "2ac8ab35897c95fdc3bf7d5618d58d9db788309562be745ac508c3b8c1dacb3e",
+    "reference_equal_allocation.py": "78da166c44b216e3f69a492ba1a4aa605af0cc21d3223f2168196a9d68325d2c",
+    "reference_profile.py": "3126f73f78c367c2ac3f63ec25f3d4860233725baa233316dc8d6cdb1d6fbdf6",
+    "shortcut_fixed_mass.py": "7dde497168dee1d28b203be29db0731a94d034fded5358f5bda072624f2c502e",
+    "shortcut_four_way.py": "10d00d59ef42f48a946c4f4062e218ce0c59f4f49839cbf5c2232768ddaabbaa"
+  },
+  "note": "This source snapshot is not a complete model preregistration or a new calibration result. Supply and freeze model conditions using the runbook before any provider call."
+}
