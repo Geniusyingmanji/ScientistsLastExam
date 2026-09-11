@@ -1,0 +1,299 @@
+{
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "e12275759793e5ddefbd0a6a75465291fa0d7601",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "-"
+    ]
+  },
+  "scope": "CLAIM_CONDITIONAL_FDR_CORRECTION_NO_NEW_MODEL_OR_WORLD",
+  "task_package_sha256": "3d062fcdf02f2ae78c349613b84f429102f4309af8a07cd5907ed1dd885cf38a",
+  "task_contract_sha256": "45c57801ed22944e9da38e6564a23716e43ff68b6fced2ab020664dd934d5f21",
+  "runtime_source_sha256": "8159a99d54894dd304e3ac48956cd05d4389f12a041f5d5d86a2c079641c2c86",
+  "environment": {
+    "python": "3.8.10",
+    "numpy": "1.24.4",
+    "scipy": "1.10.1",
+    "threads": 1
+  },
+  "tests": {
+    "passed": 32,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "elapsed_seconds": 148.93228763528168,
+  "source_after": {
+    "git_available": true,
+    "git_revision": "e12275759793e5ddefbd0a6a75465291fa0d7601",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      "-"
+    ]
+  },
+  "model_calls": 0,
+  "score_world_reference_budget_changed": false,
+  "historical_reports_rewritten": false,
+  "failed_difficulty_decision_unchanged": true,
+  "observations": [
+    {
+      "name": "baseline",
+      "repeat": 0,
+      "combined_score": 0.0,
+      "heldout_mechanism_score": 0.004447000000000006,
+      "development_fdr": 0.8333333333333334,
+      "development_claim_count": 12,
+      "development_false_claim_count": 10,
+      "valid_worlds": 18,
+      "scientific_fields_equal_to_historical_source": true,
+      "compared_fields": [
+        "combined_score",
+        "valid",
+        "feasibility_rate",
+        "raw_score",
+        "development_mechanism_score",
+        "development_raw_mechanism",
+        "development_set_f1",
+        "development_effect_score",
+        "development_correct_refusal_rate",
+        "development_discovery_coverage",
+        "development_confidence_calibration",
+        "development_mean_rows_bought",
+        "heldout_mechanism_score",
+        "heldout_set_f1",
+        "heldout_effect_score",
+        "heldout_correct_refusal_rate",
+        "heldout_discovery_coverage",
+        "heldout_raw_mechanism",
+        "per_instance",
+        "development_world_count",
+        "development_valid_count",
+        "development_determinable_world_count",
+        "development_unsupported_world_count",
+        "development_correct_refusal_count",
+        "development_discovery_attempt_count",
+        "development_mechanism_score_sum",
+        "heldout_world_count",
+        "heldout_valid_count",
+        "heldout_determinable_world_count",
+        "heldout_unsupported_world_count",
+        "heldout_correct_refusal_count",
+        "heldout_discovery_attempt_count",
+        "heldout_mechanism_score_sum"
+      ]
+    },
+    {
+      "name": "baseline",
+      "repeat": 1,
+      "combined_score": 0.0,
+      "heldout_mechanism_score": 0.004447000000000006,
+      "development_fdr": 0.8333333333333334,
+      "development_claim_count": 12,
+      "development_false_claim_count": 10,
+      "valid_worlds": 18,
+      "scientific_fields_equal_to_historical_source": true,
+      "compared_fields": [
+        "combined_score",
+        "valid",
+        "feasibility_rate",
+        "raw_score",
+        "development_mechanism_score",
+        "development_raw_mechanism",
+        "development_set_f1",
+        "development_effect_score",
+        "development_correct_refusal_rate",
+        "development_discovery_coverage",
+        "development_confidence_calibration",
+        "development_mean_rows_bought",
+        "heldout_mechanism_score",
+        "heldout_set_f1",
+        "heldout_effect_score",
+        "heldout_correct_refusal_rate",
+        "heldout_discovery_coverage",
+        "heldout_raw_mechanism",
+        "per_instance",
+        "development_world_count",
+        "development_valid_count",
+        "development_determinable_world_count",
+        "development_unsupported_world_count",
+        "development_correct_refusal_count",
+        "development_discovery_attempt_count",
+        "development_mechanism_score_sum",
+        "heldout_world_count",
+        "heldout_valid_count",
+        "heldout_determinable_world_count",
+        "heldout_unsupported_world_count",
+        "heldout_correct_refusal_count",
+        "heldout_discovery_attempt_count",
+        "heldout_mechanism_score_sum"
+      ]
+    },
+    {
+      "name": "complete_reference",
+      "repeat": 0,
+      "combined_score": 0.9618342499999997,
+      "heldout_mechanism_score": 0.9455182499999999,
+      "development_fdr": 0.0,
+      "development_claim_count": 8,
+      "development_false_claim_count": 0,
+      "valid_worlds": 18,
+      "scientific_fields_equal_to_historical_source": true,
+      "compared_fields": [
+        "combined_score",
+        "valid",
+        "feasibility_rate",
+        "raw_score",
+        "development_mechanism_score",
+        "development_raw_mechanism",
+        "development_set_f1",
+        "development_effect_score",
+        "development_correct_refusal_rate",
+        "development_discovery_coverage",
+        "development_confidence_calibration",
+        "development_mean_rows_bought",
+        "heldout_mechanism_score",
+        "heldout_set_f1",
+        "heldout_effect_score",
+        "heldout_correct_refusal_rate",
+        "heldout_discovery_coverage",
+        "heldout_raw_mechanism",
+        "per_instance",
+        "development_world_count",
+        "development_valid_count",
+        "development_determinable_world_count",
+        "development_unsupported_world_count",
+        "development_correct_refusal_count",
+        "development_discovery_attempt_count",
+        "development_mechanism_score_sum",
+        "heldout_world_count",
+        "heldout_valid_count",
+        "heldout_determinable_world_count",
+        "heldout_unsupported_world_count",
+        "heldout_correct_refusal_count",
+        "heldout_discovery_attempt_count",
+        "heldout_mechanism_score_sum"
+      ]
+    },
+    {
+      "name": "complete_reference",
+      "repeat": 1,
+      "combined_score": 0.9618342499999997,
+      "heldout_mechanism_score": 0.9455182499999999,
+      "development_fdr": 0.0,
+      "development_claim_count": 8,
+      "development_false_claim_count": 0,
+      "valid_worlds": 18,
+      "scientific_fields_equal_to_historical_source": true,
+      "compared_fields": [
+        "combined_score",
+        "valid",
+        "feasibility_rate",
+        "raw_score",
+        "development_mechanism_score",
+        "development_raw_mechanism",
+        "development_set_f1",
+        "development_effect_score",
+        "development_correct_refusal_rate",
+        "development_discovery_coverage",
+        "development_confidence_calibration",
+        "development_mean_rows_bought",
+        "heldout_mechanism_score",
+        "heldout_set_f1",
+        "heldout_effect_score",
+        "heldout_correct_refusal_rate",
+        "heldout_discovery_coverage",
+        "heldout_raw_mechanism",
+        "per_instance",
+        "development_world_count",
+        "development_valid_count",
+        "development_determinable_world_count",
+        "development_unsupported_world_count",
+        "development_correct_refusal_count",
+        "development_discovery_attempt_count",
+        "development_mechanism_score_sum",
+        "heldout_world_count",
+        "heldout_valid_count",
+        "heldout_determinable_world_count",
+        "heldout_unsupported_world_count",
+        "heldout_correct_refusal_count",
+        "heldout_discovery_attempt_count",
+        "heldout_mechanism_score_sum"
+      ]
+    }
+  ],
+  "operator_summary_sha256": "48c9f6907213053bc850963cc7baf9b96ddbec806e0370a769d0c3808fad5b40",
+  "operator_artifacts": {
+    "files": [
+      {
+        "path": "baseline-0.json",
+        "size_bytes": 11444,
+        "sha256": "72c32237c4922261740e594eb31f036b214f911a4670dfa9144bf73298860fcc"
+      },
+      {
+        "path": "baseline-1.json",
+        "size_bytes": 11444,
+        "sha256": "8a2e5c372c8c149b60409453de0e39f999998f01e4a2590d451a6699ed72cc86"
+      },
+      {
+        "path": "complete_reference-0.json",
+        "size_bytes": 11209,
+        "sha256": "4ee1997d00c81393fab23220ec2a41a5d1e6e6d71c2760d89d17dbd8052d841f"
+      },
+      {
+        "path": "complete_reference-1.json",
+        "size_bytes": 11209,
+        "sha256": "af3f06a3138d81e1fb040b712fb0e8fc9de7da5d5a4e014828172b1496a74b83"
+      },
+      {
+        "path": "plan.json",
+        "size_bytes": 1941,
+        "sha256": "bd4e105fd1dde7d1e830a8462a4a5c9da2b079627d5630f726cf2cea135891d0"
+      },
+      {
+        "path": "summary.json",
+        "size_bytes": 7886,
+        "sha256": "48c9f6907213053bc850963cc7baf9b96ddbec806e0370a769d0c3808fad5b40"
+      },
+      {
+        "path": "targeted.log",
+        "size_bytes": 232,
+        "sha256": "2e08af972086f39dd338f19ce5efb8010bd12b302091d2afbd4bc97f27a226ae"
+      },
+      {
+        "path": "targeted.xml",
+        "size_bytes": 5202,
+        "sha256": "fa382ad07410c2a8dd728ab82ef7ea3cb92944d970bb2b67a6f4528d854a5038"
+      }
+    ]
+  },
+  "historical_comparison": {
+    "source": "83e2e3c728d1e7b6cba0c5abeaf11f4e899dad14",
+    "scope": "historical in-process construction, not relabelled as current trusted run",
+    "artifact_sha256": "538312298eb208007ca5a986d0a2b87d03f82e24c91aa855aa24fa96db3144fd",
+    "excluded_changed_fields": [
+      "development_false_discovery_rate",
+      "heldout_false_discovery_rate",
+      "development_false_discovery_count",
+      "heldout_false_discovery_count"
+    ]
+  }
+}
