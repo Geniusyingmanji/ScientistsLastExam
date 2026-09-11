@@ -756,12 +756,14 @@ tasks:
       rows bought by rank never reach it; the near-duplicate is one the panel presents as an
       ordinary resolvable proxy; and every world carries one secondary hit in a band no region-wide
       selection line separates, the real masked partner or a genome-wide significant decoy in weak
-      LD with the causal set. Reference 0.806 on the development split and 0.749 held out, naming
-      only the lead of every masked pair by design, with a documented masking-aware local test at
-      0.962 as its headroom; the baseline scores zero; a 1120-strategy shortcut probe tops out at
-      0.557, 69 per cent of the reference. Built without a model endpoint or a sandbox, so the
-      frontier draw, the sandbox check and the global evidence refresh are still owed. Pending
-      external statistical-genetics review.
+      LD with the causal set. The admission revision corrects true effect units and uses a
+      complete masking-aware reference with exact joint effect conversion: development
+      0.96183425 and heldout 0.94551825. The original region-wide reference is an omission probe
+      at 0.806301625, not a lowered admission line. All 1120 fixed strategies completed on all
+      18 worlds, with development maximum 0.5568645; the panel-clumping baseline is zero.
+      Source-bound construction and Linux sandbox evidence are recorded separately; neither
+      establishes frontier difficulty. Retain candidate status pending independent first-draw
+      calibration, global evidence refresh and external statistical-genetics review.
     citation_ids: [doi:10.1016/j.ajhg.2017.08.012, doi:10.1038/ng.2213, doi:10.1111/rssb.12388, doi:10.1038/s41467-021-27438-7, doi:10.1086/519795, doi:10.1214/17-AOAS1046, doi:10.1534/genetics.114.167908, doi:10.1093/bioinformatics/btw018, doi:10.1093/genetics/165.4.2213, doi:10.1038/s41576-018-0016-z, doi:10.1016/j.xgen.2022.100210]
   Turbulence/RANSCalibration:
     status: candidate

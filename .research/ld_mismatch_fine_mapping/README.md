@@ -1,8 +1,18 @@
 # LDMismatchFineMapping construction scripts
 
-The scripts that produced every number in `benchmarks/Biology/LDMismatchFineMapping/Task.md`,
-`TASK_CARD.yaml` and `references/known_best.md`. Run them from the repository root with the
-project interpreter; they import the task's oracle directly and never touch the sandbox.
+The historical builder scripts below produced the original construction numbers. Their
+runtime estimates describe the builder's environment, and `probe.py` can resume previous
+temporary output; neither is the final admission record.
+
+The post-builder fixed screen is `admission_audit.py`: it requires a new output directory,
+records the complete 1,120-cell plan, runs all 29 reference/ablation/control rungs and checks
+all equal-size joint-swap alternatives. It never resumes or reads prior strategy scores.
+Its Linux result and artifact hashes are in `admission_2026-09-11.json`; the final review,
+Linux sandbox validation and limits are in `review_2026-09-11.md`.
+
+Run construction scripts from the repository root with the project interpreter. They import
+the task's oracle directly, so their results must remain separate from real sandbox gate and
+model-calibration evidence.
 
 | script | what it produces | runtime |
 |---|---|---|
