@@ -42,11 +42,11 @@ Scientists' Last Exam
 
 <!-- task-inventory:start -->
 
-当前 86 个任务包,横跨 7 个学科,5 个 certified、81 个 candidate。
+当前 87 个任务包,横跨 7 个学科,5 个 certified、82 个 candidate。
 这一段的每个数字都由 `tests/test_readme_inventory_counts.py` 对着注册表核,改不动就是改错了。
 
-optimization(42 个):在受约束的设计空间里把目标做得更好。分四类:
-工程设计(换热器、桁架、薄膜、解码器等 16 题)、开放组合纪录(圆堆积、cap set、Ramsey、kissing、
+optimization(43 个):在受约束的设计空间里把目标做得更好。分四类:
+工程设计(换热器、桁架、薄膜、解码器等 17 题)、开放组合纪录(圆堆积、cap set、Ramsey、kissing、
 张量秩、超排列等 17 题,无上限)、分子与大分子设计(5 题)、证书上界(4 题,产物是可验证的论证本身,
 分数是论证证明出的界有多强)。
 分数由做出来的东西有多好决定;公开纪录是 score = 1 的见证,不是封顶。

@@ -4,18 +4,18 @@
 
 | | |
 |---|---:|
-| 任务包 | 86 |
-| optimization | 42 |
+| 任务包 | 87 |
+| optimization | 43 |
 | discovery | 44 |
 | certified | 5 |
-| candidate | 81 |
-| 学科 | 7(Biology 9,Chemistry 13,ComputerScience 8,EarthScience 7,Engineering 13,Mathematics 19,Physics 17) |
+| candidate | 82 |
+| 学科 | 7(Biology 9,Chemistry 13,ComputerScience 8,EarthScience 7,Engineering 14,Mathematics 19,Physics 17) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
-## Optimization(42)
+## Optimization(43)
 
-### 工程设计(engineering_design) — 16
+### 工程设计(engineering_design) — 17
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
@@ -31,6 +31,7 @@
 | [`RANSCalibration`](benchmarks/Engineering/RANSCalibration/)<br>RANS 封闭标定 | Engineering | Turbulence | uncapped | physical_sim | candidate | calibrate a transferable algebraic channel-flow closure | 标定可迁移的代数通道流涡黏封闭,同时匹配平均速度与雷诺剪应力 | 真实 DNS 拟合;密封高雷诺数迁移与壁面坐标稳健性分列,无上限 |
 | [`RoomImpulseResponse`](benchmarks/Engineering/RoomImpulseResponse/)<br>房间声学处理设计 | Engineering | Acoustics | uncapped | physical_sim | candidate | robust room-acoustic treatment design | 布置声源、吸声与受点,让语音房间同时兼顾清晰度、混响时间与声场均匀度 | 清晰度/混响/均匀度综合效用;一阶反射代理与镜像源长程计算排序不同,含安装误差与老化偏移 |
 | [`TrussWeightMinimization`](benchmarks/Engineering/TrussWeightMinimization/)<br>桁架减重 | Engineering | StructuralEngineering | uncapped | analytical | candidate | general truss sizing under physical shifts | 给出跨结构通用的桁架截面尺寸策略,在应力、位移与欧拉屈曲约束下减重 | 标称减重;密封拓扑迁移与载荷/材料/制造稳健性分列,无上限 |
+| [`WakeAwareFarmCoDesign`](benchmarks/Engineering/WakeAwareFarmCoDesign/)<br>尾流感知风场协同设计 | Engineering | WindEnergy | uncapped | physical_sim | candidate | wind-farm layout and yaw co-design | 联合设计风机平面位置与分风向偏航策略,使布局增益和尾流转向增益同时成立 | 布局增益与偏航控制增益的几何均值;留出风况和尾流模型偏移分列,无上限 |
 | [`CalorimeterDesign`](benchmarks/Physics/CalorimeterDesign/)<br>量能器设计 | Physics | ParticlePhysics | uncapped | analytical_reduced_order_physics | candidate | graded sampling-calorimeter design curves | 设计分层取样量能器,使能量分辨、线性与簇射包容在多档成本约束下同时改善 | 多能点效用;留出探测器迁移与最差制造偏移分列,无上限 |
 | [`DiffractionGratingDesign`](benchmarks/Physics/DiffractionGratingDesign/)<br>衍射光栅设计 | Physics | Optics | uncapped | fourier_modal_rcwa | candidate | polarization-tolerant multilayer relief design | 设计五层一维二元介质浮雕,把透射光导入 +1 衍射级,且对偏振与角度容差 | 开发集目标级效率;偏振/角度/波长与工艺偏移稳健性分列,无上限 |
 | [`MultilayerThinFilm`](benchmarks/Physics/MultilayerThinFilm/)<br>多层减反射膜 | Physics | Photonics | clipped | physical_sim | certified | design a broadband antireflection coating | 设计可见光全谱段的多层宽带减反射膜 | 宽带减反射质量;物理下界为零平均反射 |

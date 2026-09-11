@@ -120,6 +120,7 @@ CHINESE_NAMES = {
     "SystemsBiology/GeneNetworkIntervention": "基因网络干预设计",
     "Thermodynamics/HeatExchangerDesign": "换热器帕累托设计",
     "Turbulence/RANSCalibration": "RANS 封闭标定",
+    "WindEnergy/WakeAwareFarmCoDesign": "尾流感知风场协同设计",
 }
 
 # One-line Chinese brief and scoring note per task. Written by hand: the English Task.md
@@ -415,6 +416,9 @@ CHINESE_BRIEFS = {
     "Turbulence/RANSCalibration": (
         "标定可迁移的代数通道流涡黏封闭,同时匹配平均速度与雷诺剪应力",
         "真实 DNS 拟合;密封高雷诺数迁移与壁面坐标稳健性分列,无上限"),
+    "WindEnergy/WakeAwareFarmCoDesign": (
+        "联合设计风机平面位置与分风向偏航策略,使布局增益和尾流转向增益同时成立",
+        "布局增益与偏航控制增益的几何均值;留出风况和尾流模型偏移分列,无上限"),
 }
 
 

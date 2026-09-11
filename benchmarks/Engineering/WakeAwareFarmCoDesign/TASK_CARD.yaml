@@ -1,0 +1,85 @@
+schema_version: 2
+scientific_question: Can one policy jointly place turbines and schedule direction-dependent yaw so that both layout and wake-steering control add annual energy across wind roses and boundaries?
+artifact: A continuous two-dimensional turbine layout and a direction-by-turbine yaw matrix.
+oracle:
+  model: Deterministic reduced Gaussian/Jensen wake superposition with yaw deflection, own-power loss and wind-rose integration. Layout and yaw-control gains are scored as separate axes.
+  feasibility: Exact shapes, finite values, rectangular boundary, pairwise minimum spacing and yaw bounds; violations fail closed.
+  deterministic: true
+normalization:
+  baseline: Regular rectangular grid with zero yaw.
+  reference: Twelve seeded layout starts, one bounded multiscale layout/yaw alternation and a final yaw sweep. The stronger component anchor includes this exact path plus 600 layout draws, additional multiscale alternations and zero-yaw/yaw-only controls.
+  score: The geometric mean of normalized layout-only GWh gain and incremental yaw-control GWh gain. Each axis is floored at zero and the result is uncapped; held-out geometries and the widened-expansion/rotated-direction tier stay separate.
+evaluation_budget:
+  timeout_seconds: 600
+  expected_evaluator_seconds: 35
+  measurement: A clean local macOS Python 3.12 run on 2026-09-12 took 25.92 s for the complete reference evaluation, including recomputing all six strong anchors. Linux sandbox timing remains pending.
+citations:
+- id: doi:10.1088/1742-6596/1618/2/022028
+  title: Overview of FLORIS updates
+- id: doi:10.1017/jfm.2016.595
+  title: Experimental and theoretical study of wind turbine wakes in yawed conditions
+- id: url:https://nrel.github.io/floris/
+  title: NREL FLORIS wake modeling and controls documentation
+invariants:
+- With wake interaction removed and zero yaw, identical turbines have identical free-stream power.
+- Yaw decreases own-turbine power while it can deflect an upstream wake.
+- A zero-yaw design has yaw_control_score zero and a baseline-layout design has layout_score zero, so neither can receive positive combined score alone.
+- Duplicated, too-close, out-of-bound, malformed and over-yawed layouts fail closed.
+- Held-out and model-shift metrics never control combined_score.
+known_shortcuts: >-
+  The 2026-09-08 review found that a repulsion/spreading layout with zero yaw scored 0.509220 under the obsolete single total-value scale, while yaw-only scored 0.003391 and a larger-budget copy of the old reference reached 1.169086. The 2026-09-12 revision does not hide those failures: it removes the unsupported structural-load penalty, gives yaw a physically motivated public deflection term, makes the runnable reference alternate both capabilities, and scores layout and yaw increments separately. Every zero-yaw layout family, including the repulsion probe, now has combined_score 0 while retaining a visible positive layout_score; every baseline-layout yaw family likewise scores 0 with a visible yaw_control_score. The complete reference measures 0.782836 development / 0.782388 heldout with development mean layout/yaw axes 0.714964/0.864917. These structural controls are not a bound on a family optimizing both axes; a fresh joint shortcut sweep and frontier-model draw remain required.
+review:
+  domain: pending_external
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic wind-rose and farm-geometry generator with a sealed wake-expansion and direction shift.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: high
+  rationale: The nearest in-repository optimization tasks are StructuralEngineering/TrussWeightMinimization, which sizes truss members, Thermodynamics/HeatExchangerDesign, which returns a thermal Pareto archive, and Optics/DiffractionGratingDesign, which optimizes optical geometry. This task instead couples turbine placement to a direction-indexed yaw controller and requires positive contribution from both axes. Wake steering and layout remain prominent public families, so server-held roses and calibration are still required.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai:codex-gpt-5
+  builder_scaffolds:
+  - codex-desktop
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: >-
+    No frontier-model draw has been run. Maintainer review exposed that the old total-value score was dominated by layout, that the 0.20 load proxy erased yaw value, and that increasing the same search budget exceeded the old anchor. The 2026-09-12 revision removed the unsupported proxy and inactive cap/floor constants, replaced the fixed displacement coefficient with a Ct/yaw momentum-style public term, decomposed layout and yaw gains, expanded the runnable reference to bounded alternating co-design, and made the stronger anchor include the exact witness path and component controls. CompositeLaminateStacking was withdrawn after a complete pair-exchange plus ILS reference still scored 0.993447 on a recalibrated two-mode oracle, demonstrating budget-scale saturation rather than defensible headroom.
+  shortcut_discoverer: maintainer_adversarial_probe_and_local_deterministic_retest
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: prototype_complete_calibration_pending
+  author_domain: general_scientific_software
+  reviewer_domain: pending_external_wind_energy
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_reference_pinned_floris_replication_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: Original procedural code; cited papers and external simulator assets are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: Public wake-model and optimization families; sealed worlds and independent model calibration are pending.
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: Joint layout-yaw shortcut sweeps, clean frontier-model calibration, pinned FLORIS comparison and external review before certification.
+frontier_eng_overlap_review:
+  date: '2026-09-06'
+  classification: 无
+  nearest: UAVInspectionCoverageWithWind; DawnAircraftDesignOptimization
+  distinction: Joint static turbine locations and directional yaw optimize two separately scored wake-interaction contributions. Frontier-Eng optimizes flight coverage or aircraft mass/geometry, without inter-turbine wakes or a direction-indexed yaw controller.
+  evidence: .research/pr9_frontier_eng_overlap_2026-09-06.md
+  status: source_count_discrepancy_pending_maintainer_confirmation

@@ -1,0 +1,5 @@
+1) Only edit solution.py. Keep design_wind_farm(problem).
+2) Return exact layout and yaw matrix shapes; boundary, spacing and yaw limits are hard constraints.
+3) Use every supplied wind rose and geometry; do not hard-code one direction or turbine count.
+4) Deterministic numpy/scipy/stdlib CPU only. No network or process creation.
+5) Do not read verification/ or frontier_eval/.

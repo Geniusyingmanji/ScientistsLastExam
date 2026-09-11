@@ -10,6 +10,13 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  WindEnergy/WakeAwareFarmCoDesign:
+    status: candidate
+    reason: deterministic mixed continuous layout-yaw co-design with boundary and spacing hard gates, separate layout and yaw-control score axes, uncapped truth-blind search normalization and a separate wake/direction transfer tier; pending pinned FLORIS replication, independent wind-energy review, server-held wind roses and frontier-model calibration
+    citation_ids:
+      - doi:10.1088/1742-6596/1618/2/022028
+      - url:https://nrel.github.io/floris/
+      - doi:10.1017/jfm.2016.595
   Ecology/OccupancyDetectionDesign:
     status: candidate
     reason: Active repeat-survey allocation and latent occupancy inference under imperfect detection, with explicit refusal for nonlinear habitat and spatially structured worlds; retained as a candidate pending server-held surveys, real field-data replication and independent ecology review.
