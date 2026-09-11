@@ -79,13 +79,12 @@ def _candidate(problem, thresholds, parameters, features=None, two_point=False):
     elif interaction > interaction_threshold:
         diagnosis, abstain = "stimulus_history_interaction", True
 
+    gain, amplitude, tau_ms = parameters
     if two_point:
         intercept, gain = features[4:6]
     else:
         intercept = math.log(max(mean_rate, 1e-4) / max(1.0 - mean_rate, 1e-4))
-        gain = parameters[0]
     intercept = float(np.clip(intercept, *problem["parameter_bounds"]["intercept"]))
-    gain, amplitude, tau_ms = parameters
     if two_point:
         gain = float(np.clip(gain, *problem["parameter_bounds"]["stimulus_gain"]))
     probabilities = []
