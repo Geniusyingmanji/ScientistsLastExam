@@ -56,7 +56,9 @@ A 保持 reference 的分类/拒答/coverage 决策，分数下降来自其固�
 
 每个 split 固定 28 worlds：20 个 signal、4 个 none、4 个 unsupported。公开 JSON 保留各 split 聚合、false-claim/positive-claim、正确拒答/unsupported、supported-claim/supported、有效世界、实验 units 等分子分母。实验 units 是 oracle 返回的实际消费；callback 次数未被 oracle 记录，故标为 observed missing，并仅另列源码推导的预期（baseline/B 每 world 1 次，reference/A 每 world 3 次），不把推导当作遥测。
 
-当前 oracle 的 `mechanism_score` 对正确正信号 law 乘以 mass 恢复 utility，再扣除 blanket-refusal utility 后归一化；它将机制判断与参数恢复耦合。**没有独立 parameter-recovery 或 prediction 轴**，因此不能补造完整 discovery 三轴。split 聚合在 oracle 内已四舍五入至 10 位小数；私有逐 world 指标保留 oracle 返回精度，本轮未再四舍五入写入 JSON。
+当前 oracle 的 `mechanism_score` 对正确正信号 law 乘以 mass 恢复 utility，再扣除 blanket-refusal utility 后归一化；它将机制判断与参数恢复耦合。SLE 当前 discovery 三轴是 **mechanism、FDR、refusal**，本任务已在同一 split 报告这三项，coverage 另列。独立 parameter-recovery 和 prediction 未提供，这是额外科学分解的限制，不能据此声称缺少 SLE 的三轴。
+
+原聚合 JSON 的 `axes` 描述保留生成时的原字节；它只注记 mechanism 与额外参数/预测字段，不是框架 `scripts/report_discovery_triple.py::AXES` 的合同定义。所需 FDR/refusal 及其分母已在每次运行的 scalar metrics 和聚合计数中保留。split 聚合在 oracle 内已四舍五入至 10 位小数；私有逐 world 指标保留 oracle 返回精度，本轮未再四舍五入写入 JSON。
 
 完整指标仅保存在 g450 的 `/home/azureuser/workspace-gzy/zyf/sle-pr72-private-20260911`（目录 0700、文件 0600），公开 `pr72_shortcut_review_2026-09-11.json` 不含逐 world 记录、kind 顺序或 candidate 回答。task package SHA-256 为 `ce48a182fdd72225869964e8daed453b8dac8688686829e8335c382c53bcde8f`，实际 driver SHA-256 为 `393f6b08880e2807c788e375372c9cc3d6ad80179baad9f921a5ce1b815cf88c`。公开报告包含 canonical full-metrics hash、私有 JSON 文件 bytes hash、per-instance hash，用于绑定留存原件。运行日志为 `/tmp/sle-pr72-fixed-replay-20260911.log`；首次零评测 preflight 为 `/tmp/sle-pr72-preflight-20260911.log`。
 
