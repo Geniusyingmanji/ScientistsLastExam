@@ -1,0 +1,353 @@
+{
+  "campaigns": [
+    {
+      "candidate_sha256": "c474f9c1c9b90a920d7de9fec60e4a75897a8c08e96519216457435101997ada",
+      "candidate_unchanged": true,
+      "executed_driver_sha256": "6f71bad303e1a6667658f09c854007a82da04e45e953171693445ae4e2d671fd",
+      "model_calls": 0,
+      "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+      "raw_private_campaign_sha256": "42435869c13ad62b06ddf1fd8b0dba366991d11586d93240141dddc702cfbcd2",
+      "rows": [
+        {
+          "case": "import_only",
+          "checkpoints": [
+            "candidate_entered"
+          ],
+          "repeat": 1,
+          "result": {
+            "environment": {
+              "MKL_NUM_THREADS": "1",
+              "NUMEXPR_NUM_THREADS": "1",
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1"
+            },
+            "numpy": "1.24.4",
+            "scipy": "1.10.1"
+          },
+          "seconds": 0.599651588127017,
+          "status": "returned"
+        },
+        {
+          "case": "import_only",
+          "checkpoints": [
+            "candidate_entered"
+          ],
+          "repeat": 2,
+          "result": {
+            "environment": {
+              "MKL_NUM_THREADS": "1",
+              "NUMEXPR_NUM_THREADS": "1",
+              "OMP_NUM_THREADS": "1",
+              "OPENBLAS_NUM_THREADS": "1"
+            },
+            "numpy": "1.24.4",
+            "scipy": "1.10.1"
+          },
+          "seconds": 0.4759489670395851,
+          "status": "returned"
+        },
+        {
+          "case": "python_thread",
+          "checkpoints": [
+            "candidate_entered"
+          ],
+          "repeat": 1,
+          "result": {
+            "failure_category": "RuntimeError",
+            "thread_started": false
+          },
+          "seconds": 0.4654008522629738,
+          "status": "returned"
+        },
+        {
+          "case": "python_thread",
+          "checkpoints": [
+            "candidate_entered"
+          ],
+          "repeat": 2,
+          "result": {
+            "failure_category": "RuntimeError",
+            "thread_started": false
+          },
+          "seconds": 0.45882160775363445,
+          "status": "returned"
+        },
+        {
+          "case": "linprog_default",
+          "checkpoints": [
+            "candidate_entered",
+            "solver_entered"
+          ],
+          "exception_type": "CandidateError",
+          "failure_kind": "candidate_worker_exit",
+          "private_diagnostic_sha256": "f299fa914d95d8a702f50d997241225fa12ae52ea28233542120b36d91b50a9d",
+          "repeat": 1,
+          "seconds": 0.6207807809114456,
+          "status": "failed"
+        },
+        {
+          "case": "linprog_default",
+          "checkpoints": [
+            "candidate_entered",
+            "solver_entered"
+          ],
+          "exception_type": "CandidateError",
+          "failure_kind": "candidate_worker_exit",
+          "private_diagnostic_sha256": "f299fa914d95d8a702f50d997241225fa12ae52ea28233542120b36d91b50a9d",
+          "repeat": 2,
+          "seconds": 0.6369007043540478,
+          "status": "failed"
+        },
+        {
+          "case": "linprog_threads_one",
+          "checkpoints": [
+            "candidate_entered",
+            "solver_entered"
+          ],
+          "exception_type": "CandidateError",
+          "failure_kind": "candidate_worker_exit",
+          "private_diagnostic_sha256": "f299fa914d95d8a702f50d997241225fa12ae52ea28233542120b36d91b50a9d",
+          "repeat": 1,
+          "seconds": 0.6358741577714682,
+          "status": "failed"
+        },
+        {
+          "case": "linprog_threads_one",
+          "checkpoints": [
+            "candidate_entered",
+            "solver_entered"
+          ],
+          "exception_type": "CandidateError",
+          "failure_kind": "candidate_worker_exit",
+          "private_diagnostic_sha256": "f299fa914d95d8a702f50d997241225fa12ae52ea28233542120b36d91b50a9d",
+          "repeat": 2,
+          "seconds": 0.6160165704786777,
+          "status": "failed"
+        },
+        {
+          "case": "direct_threads_one",
+          "checkpoints": [
+            "candidate_entered",
+            "solver_entered"
+          ],
+          "exception_type": "CandidateError",
+          "failure_kind": "candidate_worker_exit",
+          "private_diagnostic_sha256": "f299fa914d95d8a702f50d997241225fa12ae52ea28233542120b36d91b50a9d",
+          "repeat": 1,
+          "seconds": 0.6095263659954071,
+          "status": "failed"
+        },
+        {
+          "case": "direct_threads_one",
+          "checkpoints": [
+            "candidate_entered",
+            "solver_entered"
+          ],
+          "exception_type": "CandidateError",
+          "failure_kind": "candidate_worker_exit",
+          "private_diagnostic_sha256": "f299fa914d95d8a702f50d997241225fa12ae52ea28233542120b36d91b50a9d",
+          "repeat": 2,
+          "seconds": 0.6191771496087313,
+          "status": "failed"
+        },
+        {
+          "case": "direct_serial_minmax",
+          "checkpoints": [
+            "candidate_entered",
+            "solver_entered"
+          ],
+          "exception_type": "CandidateError",
+          "failure_kind": "candidate_worker_exit",
+          "private_diagnostic_sha256": "f299fa914d95d8a702f50d997241225fa12ae52ea28233542120b36d91b50a9d",
+          "repeat": 1,
+          "seconds": 0.630705326795578,
+          "status": "failed"
+        },
+        {
+          "case": "direct_serial_minmax",
+          "checkpoints": [
+            "candidate_entered",
+            "solver_entered"
+          ],
+          "exception_type": "CandidateError",
+          "failure_kind": "candidate_worker_exit",
+          "private_diagnostic_sha256": "f299fa914d95d8a702f50d997241225fa12ae52ea28233542120b36d91b50a9d",
+          "repeat": 2,
+          "seconds": 0.6060754004865885,
+          "status": "failed"
+        }
+      ],
+      "runtime_head": "2660c38a413fb7281d0e7012a6446eb384a934d1",
+      "runtime_source_sha256": "8159a99d54894dd304e3ac48956cd05d4389f12a041f5d5d86a2c079641c2c86",
+      "runtime_unchanged": true,
+      "schema_version": 1,
+      "scope": "data-free two-variable LP engineering compatibility, no task package or oracle imported",
+      "task_evaluations": 0
+    },
+    {
+      "candidate_sha256": "42e4686b76a82f1f83f9fa04f66f1b5260d637584ade67b347bdaed10b2b55d0",
+      "candidate_unchanged": true,
+      "executed_driver_sha256": "46299d81132b111ac54ff9f320572dee4efae36cc3897f616b7fce9729b437bb",
+      "model_calls": 0,
+      "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+      "raw_private_campaign_sha256": "256ca0727d9faf58f1eae3bc6d2ca8a1529b006e3d64572b12a901bc21ee9e85",
+      "rows": [
+        {
+          "case": "capture_forwarded_options",
+          "checkpoints": [
+            "candidate_entered"
+          ],
+          "repeat": 1,
+          "result": {
+            "native_option_names": [
+              "dual_feasibility_tolerance",
+              "highs_debug_level",
+              "ipm_iteration_limit",
+              "ipm_optimality_tolerance",
+              "log_to_console",
+              "mip_max_nodes",
+              "mip_rel_gap",
+              "output_flag",
+              "presolve",
+              "primal_feasibility_tolerance",
+              "sense",
+              "simplex_crash_strategy",
+              "simplex_dual_edge_weight_strategy",
+              "simplex_iteration_limit",
+              "simplex_strategy",
+              "solver",
+              "time_limit"
+            ],
+            "native_solver_called": false,
+            "threads_forwarded": false,
+            "warning_categories": [
+              "OptimizeWarning"
+            ]
+          },
+          "seconds": 0.6149017289280891,
+          "status": "returned"
+        },
+        {
+          "case": "capture_forwarded_options",
+          "checkpoints": [
+            "candidate_entered"
+          ],
+          "repeat": 2,
+          "result": {
+            "native_option_names": [
+              "dual_feasibility_tolerance",
+              "highs_debug_level",
+              "ipm_iteration_limit",
+              "ipm_optimality_tolerance",
+              "log_to_console",
+              "mip_max_nodes",
+              "mip_rel_gap",
+              "output_flag",
+              "presolve",
+              "primal_feasibility_tolerance",
+              "sense",
+              "simplex_crash_strategy",
+              "simplex_dual_edge_weight_strategy",
+              "simplex_iteration_limit",
+              "simplex_strategy",
+              "solver",
+              "time_limit"
+            ],
+            "native_solver_called": false,
+            "threads_forwarded": false,
+            "warning_categories": [
+              "OptimizeWarning"
+            ]
+          },
+          "seconds": 0.478932524099946,
+          "status": "returned"
+        },
+        {
+          "case": "revised_simplex",
+          "checkpoints": [
+            "candidate_entered",
+            "solver_entered",
+            "solver_returned"
+          ],
+          "repeat": 1,
+          "result": {
+            "fun": -2.0,
+            "status": 0,
+            "success": true,
+            "warning_categories": [
+              "DeprecationWarning"
+            ],
+            "x": [
+              0.0,
+              1.0
+            ]
+          },
+          "seconds": 0.471248222514987,
+          "status": "returned"
+        },
+        {
+          "case": "revised_simplex",
+          "checkpoints": [
+            "candidate_entered",
+            "solver_entered",
+            "solver_returned"
+          ],
+          "repeat": 2,
+          "result": {
+            "fun": -2.0,
+            "status": 0,
+            "success": true,
+            "warning_categories": [
+              "DeprecationWarning"
+            ],
+            "x": [
+              0.0,
+              1.0
+            ]
+          },
+          "seconds": 0.462299857288599,
+          "status": "returned"
+        }
+      ],
+      "runtime_head": "2660c38a413fb7281d0e7012a6446eb384a934d1",
+      "runtime_source_sha256": "8159a99d54894dd304e3ac48956cd05d4389f12a041f5d5d86a2c079641c2c86",
+      "runtime_unchanged": true,
+      "schema_version": 1,
+      "scope": "data-free two-variable LP engineering compatibility, no task package or oracle imported",
+      "task_evaluations": 0
+    }
+  ],
+  "conclusions": {
+    "default_highs_synthetic_failure_reproduced": true,
+    "linprog_threads_one_forwarded": false,
+    "native_highs_exit_root_cause": "unresolved; no syscall trace or native stderr exposed",
+    "revised_simplex_micro_control_succeeds": true,
+    "scientific_pr30_score": "not measured by this diagnostic",
+    "thread_creation_blocked": true
+  },
+  "date": "2026-09-11",
+  "model_calls": 0,
+  "original_pr30_candidate_sha256_read_only": "0edd2d00f3d22286e7e33daad4ec1cfb6bc5610f1a1de1e7ceca2521a96f623d",
+  "privacy": "Raw campaign details and worker diagnostics remain in private 0700 directories; native return codes removed from public rows",
+  "resource_profile": {
+    "memory_mb": 4096,
+    "numeric_threads_env": 1,
+    "process_thread_creation": "existing seccomp EPERM policy unchanged",
+    "timeout_seconds": 15
+  },
+  "runtime_policy_changed": false,
+  "sandbox_rpc_calls": 16,
+  "schema_version": 1,
+  "scipy_installed_file_integrity": {
+    "scipy/optimize/_highs/_highs_wrapper.cpython-38-x86_64-linux-gnu.so": {
+      "matches_installed_distribution_record": true,
+      "sha256": "4fb67b100c957bdb10c8ef42c7af4fe88138c222da6d42b554c7faf3cd39e20e"
+    },
+    "scipy/optimize/_linprog_highs.py": {
+      "matches_installed_distribution_record": true,
+      "sha256": "9684c61e71c5fe366612f1b108a2e1d5c99eb34db9fd7f8e965a8424ddc99e1a"
+    }
+  },
+  "scope": "Engineering compatibility only; synthetic two-variable LP, no task data or oracle import",
+  "task_evaluate_candidate_calls": 0
+}
