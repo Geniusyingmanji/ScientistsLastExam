@@ -1,0 +1,192 @@
+schema_version: 2
+scientific_question: Name the causal variants at a genome-wide association locus of sixty typed variants and their per-allele effects, or declare the association unresolvable, from marginal summary statistics and a public reference panel whose linkage disequilibrium differs from the cohort's by an unpublished amount, when six rows of the cohort's own linkage disequilibrium can be bought.
+artifact: A verdict, a list of causal variant indices with signed per-allele effects when the verdict is typed, a confidence, and an optional refusal.
+oracle:
+  model: procedurally generated loci of sixty common variants from a founder haplotype panel copied as a Li-Stephens mosaic in two populations with different founder weights and switch rates, one for the cohort of 20000 and one for the reference panel of 500; a quantitative trait additive in one to three typed causal variants; marginal z-scores and standard errors from the cohort; worlds are single-variant with a panel-invisible proxy, masked pairs of opposite sign, three signals in three haplotype blocks, or a causal variant with a near-duplicate the cohort cannot separate and the panel says it can, the pair the weakest of three signals in most of them; every world carries exactly one secondary hit, a variant whose conditional chi-square given the causal set is 9.5 to 13.5, the real masked partner in the masked worlds and a genome-wide significant decoy in weak LD with every causal variant elsewhere
+  feasibility: charged in-sample linkage-disequilibrium rows, set overlap gated on naming no non-causal variant, effects scored by signed log error, typed worlds scored on the set, and calibrated refusal on unresolved worlds
+  deterministic: true
+normalization:
+  baseline: PLINK-style clumping of the genome-wide significant variants on the reference panel at r-squared 0.1, the strongest variant per clump with its marginal effect, never declining
+  reference: verification/reference_masking_aware.py is the complete truth-blind reference; it acquires residual and resolution rows, tests masked partners within strong-LD neighbourhoods, declines ambiguous configurations, and converts marginal t-statistics to exact joint least-squares per-allele effects; the original region-wide reference is retained as an ablation, not the admission threshold
+  score: development mechanism recovery normalized above always-abstain; set overlap, effects, false discovery, refusal, coverage, calibration, rows bought and the held-out split stay separate
+citations:
+- id: doi:10.1016/j.ajhg.2017.08.012
+  title: Prospects of Fine-Mapping Trait-Associated Genomic Regions by Using Summary Statistics from Genome-wide Association Studies
+- id: doi:10.1038/ng.2213
+  title: Conditional and joint multiple-SNP analysis of GWAS summary statistics identifies additional variants influencing complex traits
+- id: doi:10.1111/rssb.12388
+  title: A Simple New Approach to Variable Selection in Regression, with Application to Genetic Fine Mapping
+- id: doi:10.1038/s41467-021-27438-7
+  title: Improved analyses of GWAS summary statistics by reducing data heterogeneity and errors
+- id: doi:10.1086/519795
+  title: "PLINK: A Tool Set for Whole-Genome Association and Population-Based Linkage Analyses"
+- id: doi:10.1214/17-AOAS1046
+  title: Bayesian large-scale multiple regression with summary statistics from genome-wide association studies
+- id: doi:10.1534/genetics.114.167908
+  title: Identifying Causal Variants at Loci with Multiple Signals of Association
+- id: doi:10.1093/bioinformatics/btw018
+  title: "FINEMAP: efficient variable selection using summary data from genome-wide association studies"
+- id: doi:10.1093/genetics/165.4.2213
+  title: Modeling Linkage Disequilibrium and Identifying Recombination Hotspots Using Single-Nucleotide Polymorphism Data
+- id: doi:10.1038/s41576-018-0016-z
+  title: From genome-wide associations to candidate causal variants by statistical fine-mapping
+- id: doi:10.1016/j.xgen.2022.100210
+  title: Meta-analysis fine-mapping is often miscalibrated at single-variant resolution
+invariants:
+- the reference panel's correlations differ from the cohort's by an unpublished amount, a mean absolute difference of 0.07 to 0.17 on correlated pairs and a largest difference of 0.34 to 0.83 over the graded worlds; in every single-variant world the causal variant has a proxy at cohort r-squared 0.30 to 0.39 and panel r-squared 0.09 or less that is itself genome-wide significant, so clumping and conditional analysis on the panel report a second signal; the reference fed the panel's rows in place of the cohort's falls from 0.806 to 0.000
+- in every masked world the second causal variant has a marginal |z| of 2.6 to 4.6 at rank 4 to 8, with the wrong sign in all five, so no marginal or clumping rule calls it; given the lead's exact row its conditional chi-square is 11.2 to 12.6, below the extended BIC penalty of 18.1, so the reference names only the lead and the masked worlds score 0.51 to 0.55
+- every typed and unresolved world carries exactly one decoy, a non-causal variant whose conditional chi-square given the causal set is 9.5 to 12.6, the masked partner's band, with every other non-causal variant at least 2 below the band; the decoy is genome-wide significant on its own at |z| 5.5 to 8.1 and correlated with every causal variant at 0.30 or less, so clumping on any LD takes it as an independent signal and every region-wide selection line that takes the masked partners takes decoys with it; the plain BIC scores 0.599, the Bonferroni line for sixty variants 0.842 with one false discovery and 0.709 held out, clumping on the bought rows 0.199; the masking-aware local test, a conditional scan of each modelled variant's strong-LD neighbours at a line for that neighbourhood alone, scores 0.962 and 0.947 held out with no false discovery, which is the reference's documented headroom
+- in every multi-signal world the weakest of three signals ranks 9th to 20th by |z| behind the proxies of the strongest, so rows bought by rank never reach it; the six-largest-|z| purchase scores 0.382 against 0.806
+- resolvability is defined by the summary-statistic likelihood under the cohort's own linkage disequilibrium, in which twice the maximised log-likelihood of a configuration is z_S' R_SS^-1 z_S; every typed world has its causal set at least 6 ahead of every single-member swap, 6.2 to 134.4 over the graded worlds, and every unresolved world has its pair within 2, 0.3 to 1.3 here, and at least 11 ahead of everything else; the reference's swap margin lands at 20.9 to 134.4 on typed worlds and 0.3 to 1.3 on unresolved ones, and on one hundred and twenty-five extra worlds outside the graded seeds it makes no false discovery
+- the near-duplicate is correlated with the causal variant at 0.992 to 0.996 in the cohort and 0.57 to 0.86 in the panel, so the panel presents it as an ordinary resolvable proxy; in four of the six unresolved worlds the pair is the weakest of three signals at rank 12 to 19, so rows by rank or by predicted z-score never reach it; nothing in the public problem separates the unresolved worlds from the typed ones
+- the budget is not free, since three or four rows score 0.507 and six 0.806; the chase alone models every world with 2.4 rows on average and one proxy row per modelled variant is what reaches the near-duplicate, so stopping when the chase stops scores 0.306, the same as never declining, and proxy rows by predicted z-score score 0.431
+- two rungs of the ladder gain or match on the development split and lose held out, the Bonferroni line at 0.709 and refusal margin 1 at 0.749 against 0.431 on the development split, so the sealed split is load-bearing
+- declining every world scores exactly zero by construction, and so does naming one fixed variant everywhere; naming the top variant by |z| everywhere scores 0.180; declining a typed world is a false discovery because it claims an ambiguity that is not there, and naming any non-causal variant is a false discovery whatever the confidence, so confidence feeds only the calibration axis
+- rows are charged and overspend fails closed; the candidate receives a closure and not the ledger, so it cannot raise its own budget; buying a row twice returns the same row and is charged once; malformed submissions score zero and never raise out of the evaluator
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+known_shortcuts: >-
+  a 1120-strategy sweep over the purchase rule (panel only, rows for the two, four or six largest
+  |z|, the residual chase with zero, two or four proxy rows by predicted z-score), the model (top
+  variant, clumping at three thresholds, stepwise conditional selection at three thresholds, the
+  extended BIC at three penalties), the refusal (never, a near-duplicate at three thresholds, a
+  swap margin at three thresholds, a residual t above 4) and the effects (joint or marginal) tops
+  out at 0.557 on the development split and 0.257 held out, 69 per cent of the reference, by rows
+  for the two largest |z| with stepwise conditional selection and a residual-t refusal; none of
+  the 1120 reaches 0.6, the chase family with proxies by predicted z-score tops out at 0.556, the
+  panel alone at 0.305, clumping at 0.199 and never declining at 0.308; held out no strategy
+  exceeds 0.511; declining everything and any fixed variant score zero
+review:
+  domain: pending_external_statistical_genetics
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with twelve development worlds (three single-variant, three masked, two multi-signal, four unresolved of which three have the pair as the weakest of three signals) and six sealed held-out worlds, each with its own founder panel, cohort and reference panel.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Fine-mapping from summary statistics (Hormozdiari et al. 2014; Benner et al. 2016; Wang et al. 2020), the damage done by a mismatched reference panel (Benner et al. 2017; Chen et al. 2021; Kanai et al. 2022) and conditional analysis (Yang et al. 2012) are all published, and a model that knows them will reach for a joint model on in-sample linkage disequilibrium at once. What is not published is which rows to buy under a budget of six, that the answer is a chase of the conditional residual rather than a purchase by rank, that a refusal has to be reasoned from a comparison of configurations on bought rows rather than read off the panel, and which worlds are unresolved. The ablation shows the score turns on combining the purchase rule, the joint model, the refusal and the budget rather than on recalling any one of them, and the shortcut probe bounds what a searcher gets at 69 per cent of the reference. The reference's own headroom is deliberate and documented, since it applies one region-wide selection line and so never names a masked partner, while a model that knows masking is a local LD phenomenon and tests the lead's neighbourhood conditionally recovers every partner without taking the decoys. The nearest task in the repository, PopulationGenetics/DemographicSFS, is a coalescent parameter inversion with no linkage disequilibrium in it. No frontier draw has been run yet, so the difficulty at the frontier is not measured.
+lineage:
+  status: complete
+  builder_model_ids:
+  - claude-fable-5-1
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  template_source: >-
+    frontier_eval/run_eval.py is generated by scripts/gen_task.py; the evaluator's per-world
+    scoring, split summary and evaluate skeleton follow Phylogenomics/AnomalyZoneSpeciesTree and
+    through it Engineering/ModalDamageAttribution, the repository's exemplar task; the haplotype
+    simulator, the worlds, the oracle, the metrics, the reference and the baseline are this
+    task's own.
+  edits_triggered_by_model: >-
+    No model has seen the task. Eleven edits came from the construction checkpoints. The first
+    refusal world had an untyped causal variant, whose best typed tag was to be declined as a
+    poor fit; the residual chi-square that was meant to detect it had a noncentrality of ten to
+    forty against a spread the chase rows inflated, so the refusal was not detectable at any
+    threshold, and the world was replaced by the near-duplicate pair, whose unresolvability is a
+    likelihood identity and not a test. The first near-duplicate was planted on the founder
+    haplotypes and could not exceed a cohort correlation of 0.91 because the mosaic's copying
+    error and switches separated the two sites; it is now planted on the realised haplotypes
+    with a per-population mismatch rate. The first residual covariance was wrong and is now the
+    Schur complement. The reference's verification rows, ranked by observed |z|, inflated the
+    residual in weak worlds and are now ranked by predicted |z|. A budget of eight rows left the
+    reference two rows of slack, four rows scoring 0.892 and six the full score, so the budget
+    is six. Two masked worlds had no genome-wide significant variant, which no scan would have
+    sent to fine-mapping; every world now has one. The candidate was handed the campaign object
+    and is now handed a closure. With every unresolved pair the strongest signal in its world, a
+    two-row purchase with stepwise selection reached 0.940 against a reference of 0.959; three
+    development unresolved worlds now have the pair as the weakest of three signals and the
+    reference buys one proxy row per modelled variant, weakest first. The reference then scored
+    0.959 with the masked partners above every selection line, so the task had no headroom; the
+    partner's band was moved below the extended BIC penalty, which alone made the plain BIC the
+    best rung at 0.958, so every other world now carries a genome-wide significant decoy in the
+    same band, in weak LD with every causal variant, and only the lead's LD neighbourhood
+    separates partner from decoy. That band could not be met by redrawing haplotypes, so the
+    construction now redraws the phenotype noise with the haplotypes fixed. With the decoys below
+    genome-wide significance, chased rows with clumping and a swap-margin refusal tied the
+    reference at 0.807; every decoy is now genome-wide significant. And one world had a second
+    variant within the band, so every other non-causal variant is now required to sit at least
+    2 below it.
+  shortcut_discoverer: builder_self_audit_with_a_low_dimensional_strategy_probe
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-fable-5-1
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 11
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference and the baseline are runnable from this directory, and the twenty-seven-rung ablation ladder, the 1120-strategy shortcut probe, the per-world construction statistics, the one-hundred-and-twenty-five-world robustness check with its selection-line variants and the twenty-three bad-candidate shapes from the scripts in .research/ld_mismatch_fine_mapping; the sandbox evaluation of scripts/check_task_contribution.py has not been run because the task was built on a machine without Bubblewrap; a frontier-model draw has not been run because the machine has no model endpoint
+
+evaluation_budget:
+  row_queries_per_world: 6
+  evaluator_timeout_seconds: 300
+metric_contract:
+  mechanism:
+    metric: mechanism_score
+    estimand: clipped_mean_mechanism_above_universal_refusal
+    numerator: mechanism_score_sum_minus_unsupported_world_count_clipped_to_zero
+    denominator: determinable_world_count
+    denominator_metric: determinable_world_count
+    direction: higher
+  fdr:
+    metric: false_discovery_rate
+    estimand: false_discovery_events_per_world_not_claim_conditional_fdr
+    numerator: false_discovery_count
+    denominator: world_count
+    denominator_metric: world_count
+    direction: lower
+  refusal:
+    metric: correct_refusal_rate
+    estimand: correct_refusals_among_unsupported_worlds
+    numerator: correct_refusal_count
+    denominator: unsupported_world_count
+    denominator_metric: unsupported_world_count
+    direction: higher
+  coverage:
+    metric: discovery_coverage
+    estimand: attempted_discoveries_among_determinable_worlds
+    numerator: discovery_attempt_count
+    denominator: determinable_world_count
+    denominator_metric: determinable_world_count
+    direction: higher
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_masking_aware.py
+    expected_score: null
+  probes:
+    - id: region_wide_without_masking
+      candidate: verification/reference_conditional_rows.py
+      expected_score: null
+    - id: two_ranked_rows_conditional_selection
+      candidate: verification/shortcut_ranked_rows.py
+      expected_score: null
+    - id: public_panel_clumping
+      candidate: solution.py
+      expected_score: null
+  relative_margin: 0.1
+  score_tolerance: 0.000001
+post_builder_admission_review:
+  original_pr_head: e58a2b2147cc2d4d661cb545584e3f6d6eb04194
+  status: implementation_corrected_measurements_pending
+  original_measurements: >-
+    The 0.806 region-wide reference, 0.962 local-test rung and 1120-strategy numbers above
+    are builder measurements before correcting the phenotype truth units. They are historical
+    construction context, not current declared shortcut measurements or the admission threshold.
+  changes: >-
+    Use the realised accepted phenotype standard deviation for true per-allele effects;
+    promote the masking-aware local test to a standalone truth-blind complete reference;
+    use an exact marginal-t-to-joint-effect conversion; publish all discovery denominators;
+    use the current fail-closed wrapper and an explicit machine-readable shortcut contract.
+  calibration_status: missing_new_clean_source_draw_required

@@ -1,0 +1,14 @@
+domain: PopulationGenetics
+task: LDMismatchFineMapping
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 90
+eval_timeout_s: 300
+science_metric: causal_variant_set_and_per_allele_effects_from_gwas_summary_statistics_under_ld_mismatch_with_bought_in_sample_ld_rows_and_unresolvable_pair_refusal
+reference_baseline: "PLINK-style clumping on the reference panel at r-squared 0.1, marginal effects, never declining"
+reference_sota: "truth-blind residual and resolution rows, extended BIC, local masked-partner tests, swap-margin refusal, exact joint effect conversion"
+citation: "Benner et al. 2017, DOI 10.1016/j.ajhg.2017.08.012; Yang et al. 2012, DOI 10.1038/ng.2213; Wang et al. 2020, DOI 10.1111/rssb.12388; Chen et al. 2021, DOI 10.1038/s41467-021-27438-7; Purcell et al. 2007, DOI 10.1086/519795; Zhu and Stephens 2017, DOI 10.1214/17-AOAS1046; Hormozdiari et al. 2014, DOI 10.1534/genetics.114.167908; Benner et al. 2016, DOI 10.1093/bioinformatics/btw018; Li and Stephens 2003, DOI 10.1093/genetics/165.4.2213; Schaid, Chen and Larson 2018, DOI 10.1038/s41576-018-0016-z; Kanai et al. 2022, DOI 10.1016/j.xgen.2022.100210"

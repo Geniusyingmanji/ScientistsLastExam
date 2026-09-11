@@ -4,12 +4,12 @@
 
 | | |
 |---|---:|
-| 任务包 | 85 |
+| 任务包 | 86 |
 | optimization | 42 |
-| discovery | 43 |
+| discovery | 44 |
 | certified | 5 |
-| candidate | 80 |
-| 学科 | 7(Biology 9,Chemistry 13,ComputerScience 7,EarthScience 7,Engineering 13,Mathematics 19,Physics 17) |
+| candidate | 81 |
+| 学科 | 7(Biology 10,Chemistry 13,ComputerScience 7,EarthScience 7,Engineering 13,Mathematics 19,Physics 17) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
@@ -77,7 +77,7 @@
 | [`BellBoundCertificate`](benchmarks/Physics/BellBoundCertificate/)<br>贝尔不等式上界证书 | Physics | QuantumFoundations | uncapped | analytical | candidate | prove an upper bound, do not just compute one | 为贝尔泛函的量子最大值给出一份可精确验证的上界证明:提交一组基词与若干加权平方,使它们的和恰好等于 beta*I - B。CHSH 的答案是无理数 2√2,只能逼近;I3322 的量子值至今未知,NPA 层级 1 给 0.375、层级 2 给 0.25102173、已知最好值 0.25087538 要到层级 4 以上。 | 四个实例(CHSH 与三种基词预算下的 I3322)取均值,不设上限。分数是所证界到已知量子值距离的对数进步:免费的层级 1 界记 0,已发表的层级 2 界记 1,超过则大于 1。有理数精确验证,提交浮点数直接判零——数值 SDP 解不是证明。 |
 | [`FourSettingMomentCertificate`](benchmarks/Physics/FourSettingMomentCertificate/)<br>四设置矩子集证书 | Physics | QuantumFoundations | uncapped | analytical | candidate | exact SOS on I_4422^{13} with a frozen moment pool | I_4422^13 的精确 SOS,额外矩必须是冻结 NPA2 池的 Hamming-k 子集,不是 I3322 自由选词。 | 从精确层级 1 最优 5/8 到全池有理证书约 0.455331 的对数进度;参考约 0.58,无上限。 |
 
-## Discovery(43)
+## Discovery(44)
 
 ### 公式(formula) — 6
 
@@ -115,10 +115,11 @@
 | [`LookElsewhereAnomaly`](benchmarks/Physics/LookElsewhereAnomaly/)<br>多窗口扫描的全局显著性 | Physics | ParticlePhysics | clipped | physical_sim | candidate | local 5σ is not a discovery | 一张质量谱在多个窗口里扫描,判定局域 5σ 在计入试验因子后还剩多少 | look-elsewhere 后的全局显著性;边带拒绝公开本底时须拒答 |
 | [`PTAHellingsDowns`](benchmarks/Physics/PTAHellingsDowns/)<br>脉冲星阵四极相关 | Physics | Gravitation | clipped | physical_sim | candidate | a common process is not a gravitational-wave background | 脉冲星计时阵里区分 Hellings-Downs 四极相关(引力波背景)与钟差单极、星历偶极、共同红噪声 | 四极 vs 单极判别与拒答;共同过程不等于引力波背景 |
 
-### 物质(substance) — 6
+### 物质(substance) — 7
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
+| [`LDMismatchFineMapping`](benchmarks/Biology/LDMismatchFineMapping/)<br>连锁不平衡失配下的精细定位 | Biology | PopulationGenetics | clipped | physical_sim | candidate | which variants are causal, when the public LD panel is not the cohort? | 从 GWAS 边际统计量与失配的公共参考面板中指认因果变异及其效应,可购买六行队列内连锁不平衡;参考面板看不见的代理、反号掩蔽变异、被强信号淹没的第三个信号,以及队列无法分辨的近重复变异须拒答 | 因果集合 F1 门控 + 效应对数误差评分;误指非因果变异或误拒可判世界均记误发现,分数标尺锚在全拒答为零 |
 | [`MetagenomeCompositionAssignment`](benchmarks/Biology/MetagenomeCompositionAssignment/)<br>宏基因组组成指认 | Biology | Microbiology | clipped | active_marker_count_mixture | candidate | composition under sequencing resolution | 从收费 marker 计数中恢复分类单元与丰度,保留近缘别名并识别参考库不足 | 组成恢复、别名/库外拒答与假发现率分列 |
 | [`CrowdedSpectrumAssignment`](benchmarks/Chemistry/CrowdedSpectrumAssignment/)<br>混叠谱物种指认 | Chemistry | Spectroscopy | clipped | physical_sim | candidate | name the library species in a blended spectrum | 在混叠谱里指认封闭库中的物种;两个近线的混合与第三个物种不可区分,变焦要花预算 | 库物种指认 + 别名拒答 |
 | [`PhaseDiagramDiscovery`](benchmarks/Chemistry/PhaseDiagramDiscovery/)<br>相图发现 | Chemistry | MaterialsScience | clipped | physical_sim | candidate | An isothermal section of a binary system A-B. | 在合成预算下测定二元等温相图:哪些平衡相存在、各占哪段成分,或该体系根本达不到平衡 | 相集精确门控 + 杠杆定律边界精度;两相区叠加、杂质峰、动力学冻结须区分,冻结体系须拒答 |

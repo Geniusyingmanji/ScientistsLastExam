@@ -99,6 +99,7 @@ CHINESE_NAMES = {
     "Physics/ComplexBoseLaw": "复玻色占据律",
     "Physics/HiddenCouplingNetwork": "隐藏耦合网络重建",
     "PopulationGenetics/DemographicSFS": "位点频率谱人口史反演",
+    "PopulationGenetics/LDMismatchFineMapping": "连锁不平衡失配下的精细定位",
     "ProteinEngineering/ProteinStabilityDesign": "蛋白稳定性批次设计",
     "QuantumDynamics/HamiltonianLearning": "哈密顿量学习",
     "QuantumControl/ActiveNoiseSpectroscopy": "主动非高斯噪声谱辨识",
@@ -350,6 +351,9 @@ CHINESE_BRIEFS = {
     "PopulationGenetics/DemographicSFS": (
         "在测序预算内跨样本量分配测序,从位点频率谱恢复常量或三期人口史",
         "参数恢复 + 留出样本量预测 + 模型不足拒答 + 预算设计"),
+    "PopulationGenetics/LDMismatchFineMapping": (
+        "从 GWAS 边际统计量与失配的公共参考面板中指认因果变异及其效应,可购买六行队列内连锁不平衡;参考面板看不见的代理、反号掩蔽变异、被强信号淹没的第三个信号,以及队列无法分辨的近重复变异须拒答",
+        "因果集合 F1 门控 + 效应对数误差评分;误指非因果变异或误拒可判世界均记误发现,分数标尺锚在全拒答为零"),
     "ProteinEngineering/ProteinStabilityDesign": (
         "在蛋白稳定性实验回放里分配测定预算,设计双点突变批次",
         "留出稳定性前十分位 + 多样性 + 蛋白酶稳健性 + 结构域迁移;无上限"),

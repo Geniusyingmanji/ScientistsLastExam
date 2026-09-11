@@ -109,6 +109,7 @@ tasks:
   Mathematics/BlackBoxGroupIdentification: {form: discovery, kind: structure}
   Spectroscopy/CrowdedSpectrumAssignment: {form: discovery, kind: substance}
   MaterialsScience/QuinaryConvexHull: {form: discovery, kind: substance, note: quinary_hull_not_binary_xrd}
+  PopulationGenetics/LDMismatchFineMapping: {form: discovery, kind: substance, note: which_typed_variants_are_causal_under_ld_mismatch_with_bought_in_sample_ld_rows_not_demographic_history_or_marker_mixture}
   # --- discovery / parameter inversion (SLE's remaining empty-looking cell) ---
   QuantumDynamics/HamiltonianLearning: {form: discovery, kind: parameter_inversion}
   QuantumControl/ActiveNoiseSpectroscopy: {form: discovery, kind: parameter_inversion, note: matched_psd_non_gaussian_filter_function_inversion_not_hamiltonian_learning}

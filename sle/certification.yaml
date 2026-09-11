@@ -741,6 +741,28 @@ tasks:
       - doi:10.1016/j.tpb.2008.01.001
       - doi:10.1214/14-AOS1264
       - doi:10.1073/pnas.1503717112
+  PopulationGenetics/LDMismatchFineMapping:
+    status: candidate
+    reason: >-
+      The second Biology task in the discovery-substance cell, built at exemplar depth. From the
+      marginal summary statistics of a twenty-thousand-person association study at a locus of sixty
+      typed variants and the correlation matrix of a five-hundred-person reference panel from a
+      related population, name the causal variants and their per-allele effects, or decline because
+      a causal variant has a near-duplicate the cohort cannot separate. Six rows of the cohort's own
+      linkage disequilibrium can be bought. The panel's correlations differ from the cohort's by an
+      unpublished amount, so clumping and conditional analysis on the panel report a proxy as a
+      second signal in every single-variant world; a masked variant of opposite sign has no
+      marginal signal; the weakest of three signals ranks behind the proxies of the strongest, so
+      rows bought by rank never reach it; the near-duplicate is one the panel presents as an
+      ordinary resolvable proxy; and every world carries one secondary hit in a band no region-wide
+      selection line separates, the real masked partner or a genome-wide significant decoy in weak
+      LD with the causal set. Reference 0.806 on the development split and 0.749 held out, naming
+      only the lead of every masked pair by design, with a documented masking-aware local test at
+      0.962 as its headroom; the baseline scores zero; a 1120-strategy shortcut probe tops out at
+      0.557, 69 per cent of the reference. Built without a model endpoint or a sandbox, so the
+      frontier draw, the sandbox check and the global evidence refresh are still owed. Pending
+      external statistical-genetics review.
+    citation_ids: [doi:10.1016/j.ajhg.2017.08.012, doi:10.1038/ng.2213, doi:10.1111/rssb.12388, doi:10.1038/s41467-021-27438-7, doi:10.1086/519795, doi:10.1214/17-AOAS1046, doi:10.1534/genetics.114.167908, doi:10.1093/bioinformatics/btw018, doi:10.1093/genetics/165.4.2213, doi:10.1038/s41576-018-0016-z, doi:10.1016/j.xgen.2022.100210]
   Turbulence/RANSCalibration:
     status: candidate
     reason: v2 replaces the analytic log-law/TKE pseudo-DNS and rank-three five-constant surrogate with hash-bound CC-BY-4.0 channel DNS at Re-tau 180/395/590/950, a four-parameter full-rank positive algebraic closure, joint mean-velocity/Reynolds-shear scoring, exact channel momentum balance, evaluator-only higher-Re transfer and wall-coordinate calibration shifts; deterministic nominal and minimax references expose substantial development-to-heldout tradeoffs; single-run GPT-5.5 budget three improves development nominal to 0.356 and heldout nominal to 0.428 but only reaches 0.127/0.299 development/heldout robustness, while budget one and the selection-blind batch remain at zero; retain as a closure-calibration and transfer candidate pending repeated generation-controlled runs, server-held flow families, transport-equation or higher-fidelity CFD replication and independent turbulence review

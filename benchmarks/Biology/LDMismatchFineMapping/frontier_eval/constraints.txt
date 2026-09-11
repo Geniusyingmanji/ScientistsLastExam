@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep fine_map(problem, ld_row).
+2) Return {"verdict", "causal", "effects", "confidence"}. `verdict` is "typed" or "unresolved". When it is "typed", `causal` lists between one and problem["max_causal"] distinct integer variant indices in 0..problem["n_variants"]-1 and `effects` lists one finite per-allele effect on the standardised phenotype for each, in the same order. `confidence` in [0,1]. `abstain: true` is accepted as a synonym for the unresolved verdict.
+3) ld_row(variant) charges one unit and returns the exact correlation of that variant with every typed variant in the study cohort; `variant` must be an integer index. Buying a row twice returns the same row and is charged once. Do not exceed problem["row_budget"] per world.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.
