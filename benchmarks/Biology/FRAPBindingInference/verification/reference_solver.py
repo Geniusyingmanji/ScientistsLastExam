@@ -174,8 +174,18 @@ def solve(problem, measure, *, radii=None, time_indices=MEASURE_TIME_INDICES,
     improvement = supported_bic - alternatives[best_alternative]["bic"]
     diagnosis = "supported" if force_supported or improvement < 12.0 else best_alternative
     parameters = fitted["supported"]["parameters"]
-    predictions = _supported(
-        parameters,
+    if not force_supported and diagnosis == "supported" and parameters[2] >= 1.2 and parameters[3] >= 0.45:
+        diagnosis = "undetermined"
+    prediction_model = {
+        "supported": _supported,
+        "undetermined": _supported,
+        "anomalous_transport": _anomalous,
+        "two_mobile_pools": _two_pools,
+        "spatially_varying_binding": _spatial,
+    }[diagnosis]
+    prediction_parameters = fitted["supported" if diagnosis == "undetermined" else diagnosis]["parameters"]
+    predictions = prediction_model(
+        prediction_parameters,
         np.asarray([item["radius_um"] for item in problem["prediction_contexts"]]),
         np.asarray([item["time_s"] for item in problem["prediction_contexts"]]),
     )

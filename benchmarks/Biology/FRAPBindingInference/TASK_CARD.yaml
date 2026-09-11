@@ -2,13 +2,13 @@ schema_version: 2
 scientific_question: Can an agent separate intracellular diffusion from reversible binding by choosing FRAP bleach radii and recovery times, recover four shared kinetic parameters, and refuse anomalous transport, two mobile pools, or spatially varying binding?
 artifact: Four reaction-diffusion parameters, conditional recovery predictions, a supported or model-inadequacy diagnosis, confidence, and immutable measurement evidence.
 oracle:
-  model: deterministic seeded single-radial-mode FRAP recovery with freely diffusing and immobile bound pools, plus three structured unsupported transport or binding families
+  model: deterministic seeded single-radial-mode FRAP recovery with freely diffusing and immobile bound pools, three structured unsupported transport or binding families, and a fast-exchange identifiability limit
   feasibility: listed radii and times, a 16-unit budget with a four-unit first-use setup charge per radius plus one unit per measurement, exact bounded finite outputs, matching diagnosis and abstention, and current-world evidence identifiers
   deterministic: true
 normalization:
   baseline: one early measurement followed by a valid undetermined abstention with fixed in-bounds parameters
-  reference: cross-radius deterministic bounded fits of the supported reaction-diffusion family and three structured alternatives with BIC attribution
-  score: mean supported-world parameter/prediction/confidence composite multiplied by exact unsupported-family refusal rate; mechanism accuracy requires science_score at least 0.5 on supported worlds, while false discovery, coverage, attempts, unwarranted refusal, and held-out transfer remain separate
+  reference: cross-radius deterministic bounded fits of the supported reaction-diffusion family and three structured alternatives with BIC attribution, plus a fitted fast-exchange identifiability check
+  score: mean supported-world parameter/prediction/confidence composite multiplied by mean continuous science score across unsupported and unidentifiable worlds; a correct abstention must also predict sealed recovery contexts, while mechanism accuracy requires science_score at least 0.5 on supported worlds
 citations:
 - id: doi:10.1529/biophysj.103.026765
   title: Analysis of Binding Reactions by Fluorescence Recovery after Photobleaching
@@ -19,14 +19,14 @@ citations:
 invariants:
 - supported recovery uses a transport rate proportional to diffusion coefficient divided by bleach-radius squared while binding rates remain shared across radii
 - every supported recovery begins at zero, stays bounded by the mobile fraction, and approaches that fraction at late time
-- anomalous transport, two freely mobile pools, and radius-dependent binding violate different parts of the supported family
+- anomalous transport, two freely mobile pools, and radius-dependent binding violate different parts of the supported family; fast exchange can make the two binding rates non-identifiable at the stated budget
 - every measurement has listed finite coordinates, bounded recovery, stated standard error, and an immutable current-world identifier
 - the first measurement at each distinct radius incurs four setup units in addition to its one-unit measurement cost
 - blanket undetermined abstention is valid and scores exactly zero
 - malformed, non-finite, extra-key, fabricated-evidence, and over-budget submissions fail closed
 - development and held-out worlds use different parameters and seeds
 - the truth-blind reference consumes only public problems and measurement callbacks
-known_shortcuts: An optimizer-free coarse fit profiles mobile fraction and searches 1,200 supported parameter points plus 120 anomalous, 462 two-pool, and 2,016 spatial-binding points under the same 16-unit priced-radius design. It reaches 0.728143/0.707547 development/held-out versus the truth-blind multi-start reference at 0.927573/0.890764. The stronger single-endpoint half-budget ablation reaches 0.109060/0.107372, while fixed binding rates and never refusing score zero. The reduced-order laboratory omits full bleach geometry, finite exposure, three-dimensional transport, photoswitching, cell motion, drift, and image-level inference.
+known_shortcuts: Optimizer-free model grids profile mobile fraction under the same 16-unit priced-radius design. The 3,798, 15,240, and 26,586 point resolution ladder reaches at most 0.584593/0.565089 development/held-out versus the truth-blind multi-start reference at 0.906277/0.870745; every rung is regression-tested for a material split-wise gap. The grids misclassify the fast-exchange identifiability limit as supported. The reduced-order laboratory omits full bleach geometry, finite exposure, three-dimensional transport, photoswitching, cell motion, drift, and image-level inference.
 review:
   domain: pending_external_cell_biophysics_review
   evaluator_security: automated_budget_contract_determinism_recovery_invariant_bad_candidate_and_fault_attribution_tests

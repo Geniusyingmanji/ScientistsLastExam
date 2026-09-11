@@ -104,7 +104,7 @@ The possible diagnoses are:
 - `anomalous_transport`: recovery follows a fractional transport time law;
 - `two_mobile_pools`: two freely diffusing pools have different diffusion coefficients;
 - `spatially_varying_binding`: the apparent binding rate changes with bleach radius;
-- `undetermined`: the evidence is insufficient for a scientific claim.
+- `undetermined`: the measured exchange is too fast to identify the binding rates at this budget, or evidence is otherwise insufficient for a scientific claim.
 
 The three named unsupported diagnoses and `undetermined` require `abstain=True`. `supported`
 requires `abstain=False`.
@@ -145,24 +145,25 @@ remain in the denominator and count as incorrect.
 
 Supported worlds score continuous recovery of the four parameters and the supplied conditional
 recovery predictions. Errors in `D`, `k_on`, and `k_off` are measured on a logarithmic scale;
-mobile-fraction and prediction errors are continuous. Named unsupported worlds score only when the
-candidate both abstains and attributes the correct failure family.
+mobile-fraction and prediction errors are continuous. A named unsupported diagnosis, including
+`undetermined`, receives continuous science credit only when it is correct and its required
+`predicted_recovery` accurately predicts the sealed contexts under that diagnosis. Thus a label-only
+refusal is not a complete scientific result.
 
 Within supported worlds, parameter and prediction quality form a continuous science score with a
-small confidence-calibration factor. The split `combined_score` is the mean of that supported-world
-composite multiplied by the exact-diagnosis rate across all unsupported worlds. Thus partial or
-incorrect refusal reduces the headline score, and never-refuse, fixed-label refusal, and blanket
-`undetermined` strategies score exactly zero. The evaluator separately reports mechanism recovery,
-false-discovery rate, correct-refusal rate, supported discovery coverage, attempted-discovery rate,
-their denominators, and all held-out axes.
+small confidence-calibration factor. The split `combined_score` is the supported-world composite
+mean multiplied by the unsupported-world science mean. Thus partial or incorrect refusal, or a
+named refusal with poor sealed recovery prediction, reduces the headline score; never-refuse,
+fixed-label refusal, and blanket `undetermined` strategies score exactly zero. The evaluator
+separately reports mechanism recovery, false-discovery rate, correct-refusal rate, supported
+discovery coverage, attempted-discovery rate, their denominators, and all held-out axes.
 
 ## Rules
 
-The 16-unit truth-blind reference uses four times at each endpoint radius and scores `0.927573`
-development / `0.890764` held out. The stronger one-endpoint half-budget ablation scores
-`0.109060 / 0.107372`; fixing the two binding rates or never refusing scores
-`0.000000 / 0.000000`. An optimizer-free 3,798-point coarse model grid reaches
-`0.728143 / 0.707547`.
+The 16-unit truth-blind reference uses four times at each endpoint radius and scores `0.906277`
+development / `0.870745` held out. The strongest optimizer-free grid in a 3,798 / 15,240 / 26,586
+point resolution ladder reaches `0.584593 / 0.565089`; the task-local tests require a material
+gap for every ladder rung.
 
 - Only edit `solution.py`; preserve `infer_frap_binding(problem, measure)`.
 - Use deterministic CPU Python, NumPy, SciPy, and the standard library only.

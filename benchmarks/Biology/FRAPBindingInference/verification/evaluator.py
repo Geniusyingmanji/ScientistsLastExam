@@ -39,6 +39,7 @@ DEVELOPMENT_WORLDS = (
     {"kind": "anomalous_transport", "seed": 73104, "d": 0.62, "mobile": 0.82, "alpha": 0.58, "noise": 0.008},
     {"kind": "two_mobile_pools", "seed": 73105, "mobile": 0.88, "d1": 0.12, "d2": 1.65, "weight": 0.46, "noise": 0.008},
     {"kind": "spatially_varying_binding", "seed": 73106, "d": 0.72, "mobile": 0.80, "kon": 0.38, "koff": 0.14, "slope": 1.15, "noise": 0.008},
+    {"kind": "undetermined", "seed": 73107, "d": 0.78, "mobile": 0.83, "kon": 1.55, "koff": 0.62, "noise": 0.008},
 )
 
 HELDOUT_WORLDS = (
@@ -47,6 +48,7 @@ HELDOUT_WORLDS = (
     {"kind": "anomalous_transport", "seed": 73203, "d": 1.10, "mobile": 0.77, "alpha": 0.68, "noise": 0.009},
     {"kind": "two_mobile_pools", "seed": 73204, "mobile": 0.83, "d1": 0.20, "d2": 2.05, "weight": 0.62, "noise": 0.008},
     {"kind": "spatially_varying_binding", "seed": 73205, "d": 0.36, "mobile": 0.90, "kon": 0.72, "koff": 0.09, "slope": -1.05, "noise": 0.008},
+    {"kind": "undetermined", "seed": 73206, "d": 1.05, "mobile": 0.78, "kon": 1.42, "koff": 0.56, "noise": 0.008},
 )
 
 
@@ -73,7 +75,7 @@ def _truth_recovery(spec, radius, time):
     kind = spec["kind"]
     radius = np.asarray(radius, dtype=float)
     time = np.asarray(time, dtype=float)
-    if kind == "supported":
+    if kind in {"supported", "undetermined"}:
         return supported_recovery(spec["d"], spec["mobile"], spec["kon"], spec["koff"], radius, time)
     if kind == "anomalous_transport":
         scaled = np.power(np.maximum(4.0 * spec["d"] * time / np.square(radius), 0.0), spec["alpha"])
@@ -224,6 +226,13 @@ def _score(spec, claim):
     parameter_score = 0.0
     prediction_score = 0.0
     science_score = 0.0
+    truth = _truth_recovery(
+        spec,
+        np.array([item[0] for item in PREDICTION_CONTEXTS]),
+        np.array([item[1] for item in PREDICTION_CONTEXTS]),
+    )
+    rmse = float(np.sqrt(np.mean(np.square(claim["predictions"] - truth))))
+    prediction_score = math.exp(-((rmse / 0.055) ** 2))
     if supported and not claim["abstain"] and claim["diagnosis"] == "supported":
         component_scores = (
             math.exp(-abs(math.log(claim["diffusion_coefficient_um2_s"] / spec["d"])) / 0.30),
@@ -232,17 +241,12 @@ def _score(spec, claim):
             math.exp(-abs(math.log(claim["binding_off_rate_s"] / spec["koff"])) / 0.45),
         )
         parameter_score = float(np.prod(component_scores) ** 0.25)
-        truth = _truth_recovery(
-            spec,
-            np.array([item[0] for item in PREDICTION_CONTEXTS]),
-            np.array([item[1] for item in PREDICTION_CONTEXTS]),
-        )
-        rmse = float(np.sqrt(np.mean(np.square(claim["predictions"] - truth))))
-        prediction_score = math.exp(-((rmse / 0.08) ** 2))
         science_score = 0.68 * parameter_score + 0.32 * prediction_score
     elif correct_refusal:
-        science_score = 1.0
-        prediction_score = 1.0
+        # A named model-inadequacy claim must still predict the sealed recovery
+        # contexts.  This distinguishes a fitted alternate mechanism from a
+        # label-only refusal policy.
+        science_score = prediction_score
     confidence_score = max(0.0, 1.0 - abs(claim["confidence"] - science_score))
     combined = science_score * (0.9 + 0.1 * confidence_score)
     return {
@@ -297,14 +301,16 @@ def _summary(rows):
     supported = [row for row in rows if row["kind"] == "supported"]
     unsupported = [row for row in rows if row["kind"] != "supported"]
     attempts = [row for row in rows if not row["abstained"]]
-    refusal_rate = float(np.mean([row["correct_refusal"] for row in unsupported])) if unsupported else 0.0
+    unsupported_science = float(np.mean([row["combined_score"] for row in unsupported])) if unsupported else 0.0
     supported_science = float(np.mean([row["combined_score"] for row in supported])) if supported else 0.0
     return {
-        "combined_score": round(supported_science * refusal_rate, 6),
+        "combined_score": round(supported_science * unsupported_science, 6),
         "valid": float(all(row["valid"] for row in rows)),
         "science_score": round(float(np.mean([row["science_score"] for row in rows])), 6),
         "parameter_recovery_score": round(float(np.mean([row["parameter_recovery_score"] for row in supported])), 6),
         "prediction_score": round(float(np.mean([row["prediction_score"] for row in supported])), 6),
+        "unsupported_prediction_score": round(float(np.mean([row["prediction_score"] for row in unsupported])), 6),
+        "unsupported_science_score": round(unsupported_science, 6),
         "correct_refusal_rate": round(float(np.mean([row["correct_refusal"] for row in unsupported])), 6),
         "correct_refusal_count": sum(row["correct_refusal"] for row in unsupported),
         "false_discovery_rate": round(float(np.mean([row["false_discovery"] for row in unsupported])), 6),
@@ -351,6 +357,8 @@ def evaluate(candidate) -> dict[str, Any]:
         "heldout_false_discovery_rate": held["false_discovery_rate"],
         "development_correct_refusal_rate": dev["correct_refusal_rate"],
         "heldout_correct_refusal_rate": held["correct_refusal_rate"],
+        "development_correct_refusal_count": dev["correct_refusal_count"],
+        "heldout_correct_refusal_count": held["correct_refusal_count"],
         "development_discovery_coverage": dev["supported_discovery_coverage"],
         "heldout_discovery_coverage": held["supported_discovery_coverage"],
         "per_instance": development + heldout,

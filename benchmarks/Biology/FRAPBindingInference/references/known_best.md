@@ -3,11 +3,12 @@
 ## Scoring
 
 The hardened score averages the supported-world parameter/prediction/confidence composite and
-multiplies it by the exact unsupported-family refusal rate. Supported claims count as mechanism
-correct only when their continuous science score is at least `0.5`. This prevents constant
-supported outputs, never-refuse policies, and fixed-label abstention from receiving a positive
-headline score. Historical model draws below remain evidence for their recorded revision, not new
-runs under the revised budget and score.
+multiplies it by the continuous science mean across unsupported and unidentifiable worlds. A
+correct abstention must also predict the sealed recovery contexts under the diagnosed family.
+Supported claims count as mechanism correct only when their continuous science score is at least
+`0.5`. This prevents constant supported outputs, never-refuse policies, and label-only abstention
+from receiving a positive headline score. Historical model draws below remain evidence for their
+recorded revision, not new runs under the revised budget and score.
 
 `combined_score` is clipped to `[0, 1]`. A valid `undetermined` blanket abstention is exactly zero.
 The task-local reference is an evaluation anchor for a reduced-order FRAP laboratory, not a claim
@@ -30,30 +31,32 @@ The truth-blind reference spends all 16 units at four times (`0.40`, `3.20`, `6.
 for each endpoint radius (`0.8` and `2.6` um). The eight measurements cost eight units and the two
 first-use radius setups cost four units each. The time subset was selected from all 210 four-time
 subsets using development score only. The solver fits the supported and three alternative families
-with deterministic multi-start bounded search and uses a BIC margin for attribution. It scores
-`0.927573` development and `0.890764` held
-out, with full supported coverage, correct attribution of all six unsupported worlds, zero false
-discovery, and exact replay. Its supported-world parameter score is `0.924884` development and
-`0.862357` held out; prediction scores are `0.998214` and `0.993838`. Remaining headroom is primarily
-continuous kinetic recovery under noise and improved measurement design, not a hidden normalization
-constant.
+with deterministic multi-start bounded search, uses a BIC margin for attribution, and reports
+`undetermined` when the fitted fast-exchange regime cannot identify both binding rates at the
+available budget. It scores `0.906277` development and `0.870745` held out, with full supported
+coverage, correct attribution or identifiability refusal in all eight non-supported worlds, zero
+false discovery, and exact replay. Its supported-world parameter score is `0.924884` development
+and `0.862357` held out; prediction scores are `0.996225` and `0.987020`. Remaining headroom is
+primarily continuous kinetic recovery under noise and improved measurement design, not a hidden
+normalization constant.
 
 ## Ablations and shortcuts
 
 | strategy | development | held out | dev refusal | held-out refusal |
 |---|---:|---:|---:|---:|
-| full priced two-endpoint reference | **0.927573** | **0.890764** | 1.000 | 1.000 |
-| half budget: same four times at the stronger single endpoint | 0.109060 | 0.107372 | 0.333 | 0.333 |
-| fixed binding rates | 0.000000 | 0.000000 | 1.000 | 1.000 |
+| full priced two-endpoint reference | **0.906277** | **0.870745** | 1.000 | 1.000 |
+| half budget: same four times at the stronger single endpoint | 0.078961 | 0.067988 | 0.250 | 0.250 |
+| fixed binding rates | 0.000000 | 0.000000 | 0.750 | 0.750 |
 | never refuse | 0.000000 | 0.000000 | 0.000 | 0.000 |
 | blanket undetermined abstention | 0.000000 | 0.000000 | 0.000 | 0.000 |
 
-The current shortcut is an actual low-dimensional model fit rather than a summary-statistic
-threshold scan. Without an optimizer, it profiles mobile fraction in closed form and searches
-1,200 supported parameter points, 120 anomalous-transport points, 462 two-pool points, and 2,016
-spatial-binding points under the same priced 16-unit design. BIC comparison over those 3,798 points
-scores `0.728143` development and `0.707547` held out, with correct refusal `1.0` on both splits.
-The multi-start reference retains gaps of `0.199430` and `0.183217`.
+The shortcut is an actual low-dimensional model fit rather than a summary-statistic threshold
+scan. Without an optimizer, it profiles mobile fraction in closed form and searches supported and
+three alternative families under the same priced 16-unit design. The resolution ladder is 3,798,
+15,240, and 26,586 points. Its respective development / held-out scores are
+`0.456192 / 0.503538`, `0.553588 / 0.581351`, and `0.584593 / 0.565089`; each selects the
+unidentifiable fast-exchange world as supported, yielding only `0.75` correct refusal on both
+splits. The reference gaps for the strongest rung are `0.321684` and `0.305656`.
 
 ## Model calibration
 
@@ -83,13 +86,14 @@ and were corrected before the first model draw. That draw exposed a public-contr
 shapes; both models made incompatible assumptions, so the shapes were documented before replay.
 
 Maintainer review then exposed that the original 32-unit design made all four radii affordable and
-that a coarse model grid nearly matched the reference. The budget was reduced to 16 and a four-unit
-setup charge was added for first use of each radius, so the capable reference can afford two endpoint
-radii while the half-budget ablation can afford one. The threshold-only shortcut was replaced by a
-true 3,798-point model grid, and the headline score was gated by correct refusal. The stronger
-single-endpoint ablation loses fault attribution (`0.333/0.333` correct refusal) and more than `0.78`
-headline score on each split. Fixed-rate and never-refuse ablations show that kinetic recovery and
-model comparison remain material.
+that a refined model grid could nearly match the reference. The budget was reduced to 16 and a
+four-unit setup charge was added for first use of each radius, so the capable reference can afford
+two endpoint radii while the half-budget ablation can afford one. The task now includes a
+fast-exchange non-identifiability regime and requires sealed recovery prediction for every correct
+abstention. A 3,798/15,240/26,586-point ladder is regression-tested, rather than only one coarse
+grid. The stronger single-endpoint ablation loses fault attribution (`0.250/0.250` correct refusal)
+and more than `0.79` headline score on each split. Fixed-rate and never-refuse ablations show that
+kinetic recovery and model comparison remain material.
 
 ## Robustness
 

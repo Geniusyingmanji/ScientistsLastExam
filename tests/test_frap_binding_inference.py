@@ -30,7 +30,7 @@ class FRAPBindingInferenceTests(unittest.TestCase):
             {"kind": "unsupported", "valid": True, "abstained": True, "correct_refusal": True, "science_score": 1.0},
         ]
         summary = dict(combined_score=0.2, valid=1.0, science_score=0.3,
-                       false_discovery_rate=0.0, correct_refusal_rate=1.0,
+                       false_discovery_rate=0.0, correct_refusal_rate=1.0, correct_refusal_count=1,
                        supported_discovery_coverage=0.5)
         with patch.object(oracle, "DEVELOPMENT_WORLDS", [None] * 3), \
              patch.object(oracle, "HELDOUT_WORLDS", [None] * 3), \
@@ -58,6 +58,8 @@ class FRAPBindingInferenceTests(unittest.TestCase):
         self.assertGreater(first["heldout_combined_score"], 0.85)
         self.assertEqual(first["development_correct_refusal_rate"], 1.0)
         self.assertEqual(first["heldout_correct_refusal_rate"], 1.0)
+        self.assertEqual(first["development_correct_refusal_count"], 4)
+        self.assertEqual(first["heldout_correct_refusal_count"], 4)
         self.assertEqual(first["development_false_discovery_rate"], 0.0)
         self.assertEqual(first["heldout_false_discovery_rate"], 0.0)
         self.assertEqual(first["development_discovery_coverage"], 1.0)
@@ -207,7 +209,7 @@ class FRAPBindingInferenceTests(unittest.TestCase):
             self.assertGreater(one_radius[split]["combined_score"], fixed_rates[split]["combined_score"])
             self.assertGreaterEqual(fixed_rates[split]["combined_score"], never_refuse[split]["combined_score"])
 
-    def test_coarse_model_grid_retains_material_reference_headroom(self):
+    def test_model_grid_resolution_ladder_retains_material_reference_headroom(self):
         evaluator = _load("frap_shortcut_eval", TASK / "verification" / "evaluator.py")
         sys.path.insert(0, str(TASK / "verification"))
         try:
@@ -216,9 +218,13 @@ class FRAPBindingInferenceTests(unittest.TestCase):
         finally:
             sys.path.pop(0)
         full = evaluator.evaluate(reference.infer_frap_binding)
-        coarse = evaluator.evaluate(shortcut.infer_frap_binding)
-        for split in ("development", "heldout"):
-            self.assertGreater(full[split]["combined_score"] - coarse[split]["combined_score"], 0.15)
+        for resolution in shortcut.GRID_LADDER:
+            with self.subTest(resolution=resolution):
+                grid = evaluator.evaluate(shortcut.resolution_candidate(resolution))
+                for split in ("development", "heldout"):
+                    self.assertGreater(
+                        full[split]["combined_score"] - grid[split]["combined_score"], 0.20
+                    )
 
 
 if __name__ == "__main__":

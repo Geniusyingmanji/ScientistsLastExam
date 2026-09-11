@@ -9,5 +9,5 @@ gpu_required: false
 eval_time_seconds: 10
 science_metric: active_frap_diffusion_binding_parameter_recovery_prediction_and_model_inadequacy_attribution
 reference_baseline: one early recovery measurement followed by an undetermined abstention
-reference_sota: truth-blind priced two-radius reaction-diffusion fitting with structured alternative-model comparison; development 0.927573 and held-out 0.890764
+reference_sota: truth-blind priced two-radius reaction-diffusion fitting with structured alternative-model comparison and a fast-exchange identifiability check; development 0.906277 and held-out 0.870745
 citation: "Sprague et al., Biophysical Journal 2004, DOI 10.1529/biophysj.103.026765; Feder et al., Biophysical Journal 1996, DOI 10.1016/S0006-3495(96)79846-6"

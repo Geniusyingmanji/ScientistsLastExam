@@ -7,6 +7,12 @@ import numpy as np
 
 
 TIME_INDICES = (3, 6, 7, 9)
+GRID_LADDER = {
+    # Number of candidate points is the sum of the four family grids.
+    "coarse": {"d": 12, "on": 10, "off": 10, "alpha": 10, "weight": 7, "slope": 7},  # 3,798
+    "medium": {"d": 16, "on": 14, "off": 14, "alpha": 14, "weight": 9, "slope": 9},  # 15,240
+    "fine": {"d": 18, "on": 16, "off": 16, "alpha": 16, "weight": 10, "slope": 10},  # 26,586
+}
 
 
 def _supported(d, kon, koff, radius, time):
@@ -21,17 +27,28 @@ def _supported(d, kon, koff, radius, time):
     return np.clip(1.0 - deficit, 0.0, 1.0)
 
 
+def _anomalous(d, alpha, radius, time):
+    scaled = np.power(np.maximum(4.0 * d * time / np.square(radius), 0.0), alpha)
+    return np.clip(1.0 - np.exp(-scaled), 0.0, 1.0)
+
+
+def _two_pools(d1, d2, weight, radius, time):
+    first = np.exp(-4.0 * d1 * time / np.square(radius))
+    second = np.exp(-4.0 * d2 * time / np.square(radius))
+    return np.clip(1.0 - weight * first - (1.0 - weight) * second, 0.0, 1.0)
+
+
 def _profile_mobile(base, recovery, sigma, bounds):
     mobile = float(np.clip(np.dot(base, recovery) / max(np.dot(base, base), 1e-12), *bounds))
     rss = float(np.sum(np.square((mobile * base - recovery) / sigma)))
     return rss, mobile
 
 
-def _best_supported(radius, time, recovery, sigma, bounds):
+def _best_supported(radius, time, recovery, sigma, bounds, grid):
     best = None
-    for d in np.geomspace(*bounds["diffusion_coefficient_um2_s"], 12):
-        for kon in np.geomspace(*bounds["binding_on_rate_s"], 10):
-            for koff in np.geomspace(*bounds["binding_off_rate_s"], 10):
+    for d in np.geomspace(*bounds["diffusion_coefficient_um2_s"], grid["d"]):
+        for kon in np.geomspace(*bounds["binding_on_rate_s"], grid["on"]):
+            for koff in np.geomspace(*bounds["binding_off_rate_s"], grid["off"]):
                 base = _supported(d, kon, koff, radius, time)
                 rss, mobile = _profile_mobile(base, recovery, sigma, bounds["mobile_fraction"])
                 if best is None or rss < best[0]:
@@ -39,10 +56,10 @@ def _best_supported(radius, time, recovery, sigma, bounds):
     return best
 
 
-def _best_anomalous(radius, time, recovery, sigma, bounds):
+def _best_anomalous(radius, time, recovery, sigma, bounds, grid):
     best = None
-    for d in np.geomspace(*bounds["diffusion_coefficient_um2_s"], 12):
-        for alpha in np.linspace(0.42, 0.88, 10):
+    for d in np.geomspace(*bounds["diffusion_coefficient_um2_s"], grid["d"]):
+        for alpha in np.linspace(0.42, 0.88, grid["alpha"]):
             scaled = np.power(np.maximum(4.0 * d * time / np.square(radius), 0.0), alpha)
             base = 1.0 - np.exp(-scaled)
             rss, mobile = _profile_mobile(base, recovery, sigma, bounds["mobile_fraction"])
@@ -51,16 +68,16 @@ def _best_anomalous(radius, time, recovery, sigma, bounds):
     return best
 
 
-def _best_two_pools(radius, time, recovery, sigma, bounds):
+def _best_two_pools(radius, time, recovery, sigma, bounds, grid):
     best = None
-    d_grid = np.geomspace(*bounds["diffusion_coefficient_um2_s"], 12)
+    d_grid = np.geomspace(*bounds["diffusion_coefficient_um2_s"], grid["d"])
     for d1 in d_grid:
         for d2 in d_grid:
             if d2 <= d1:
                 continue
             first = np.exp(-4.0 * d1 * time / np.square(radius))
             second = np.exp(-4.0 * d2 * time / np.square(radius))
-            for weight in np.linspace(0.15, 0.85, 7):
+            for weight in np.linspace(0.15, 0.85, grid["weight"]):
                 base = 1.0 - weight * first - (1.0 - weight) * second
                 rss, mobile = _profile_mobile(base, recovery, sigma, bounds["mobile_fraction"])
                 if best is None or rss < best[0]:
@@ -68,12 +85,12 @@ def _best_two_pools(radius, time, recovery, sigma, bounds):
     return best
 
 
-def _best_spatial(radius, time, recovery, sigma, bounds):
+def _best_spatial(radius, time, recovery, sigma, bounds, grid):
     best = None
-    for d in np.geomspace(*bounds["diffusion_coefficient_um2_s"], 8):
-        for kon in np.geomspace(*bounds["binding_on_rate_s"], 6):
-            for koff in np.geomspace(*bounds["binding_off_rate_s"], 6):
-                for slope in np.linspace(-1.5, 1.5, 7):
+    for d in np.geomspace(*bounds["diffusion_coefficient_um2_s"], grid["d"] - 4):
+        for kon in np.geomspace(*bounds["binding_on_rate_s"], grid["on"] - 4):
+            for koff in np.geomspace(*bounds["binding_off_rate_s"], grid["off"] - 4):
+                for slope in np.linspace(-1.5, 1.5, grid["slope"]):
                     varying_koff = koff * np.power(radius / 1.5, slope)
                     base = _supported(d, kon, varying_koff, radius, time)
                     rss, mobile = _profile_mobile(base, recovery, sigma, bounds["mobile_fraction"])
@@ -82,7 +99,8 @@ def _best_spatial(radius, time, recovery, sigma, bounds):
     return best
 
 
-def infer_frap_binding(problem, measure):
+def infer_frap_binding_at_resolution(problem, measure, resolution):
+    grid = GRID_LADDER[resolution]
     radii = (problem["bleach_radii_um"][0], problem["bleach_radii_um"][-1])
     times = [problem["sample_times_s"][index] for index in TIME_INDICES]
     rows = [measure(radius, time) for radius in radii for time in times]
@@ -93,10 +111,10 @@ def infer_frap_binding(problem, measure):
     bounds = problem["parameter_bounds"]
 
     fits = {
-        "supported": (_best_supported(radius, time, recovery, sigma, bounds), 4),
-        "anomalous_transport": (_best_anomalous(radius, time, recovery, sigma, bounds), 3),
-        "two_mobile_pools": (_best_two_pools(radius, time, recovery, sigma, bounds), 4),
-        "spatially_varying_binding": (_best_spatial(radius, time, recovery, sigma, bounds), 5),
+        "supported": (_best_supported(radius, time, recovery, sigma, bounds, grid), 4),
+        "anomalous_transport": (_best_anomalous(radius, time, recovery, sigma, bounds, grid), 3),
+        "two_mobile_pools": (_best_two_pools(radius, time, recovery, sigma, bounds, grid), 4),
+        "spatially_varying_binding": (_best_spatial(radius, time, recovery, sigma, bounds, grid), 5),
     }
     count = len(rows)
     bic = {
@@ -107,13 +125,22 @@ def infer_frap_binding(problem, measure):
     diagnosis = best_alternative if bic["supported"] - bic[best_alternative] >= 12.0 else "supported"
     d, mobile, kon, koff = fits["supported"][0][1]
     contexts = problem["prediction_contexts"]
-    predicted = mobile * _supported(
-        d,
-        kon,
-        koff,
-        np.asarray([context["radius_um"] for context in contexts]),
-        np.asarray([context["time_s"] for context in contexts]),
-    )
+    context_radius = np.asarray([context["radius_um"] for context in contexts])
+    context_time = np.asarray([context["time_s"] for context in contexts])
+    if diagnosis == "supported":
+        predicted = mobile * _supported(d, kon, koff, context_radius, context_time)
+    elif diagnosis == "anomalous_transport":
+        alt_d, alt_mobile, alpha = fits[diagnosis][0][1]
+        predicted = alt_mobile * _anomalous(alt_d, alpha, context_radius, context_time)
+    elif diagnosis == "two_mobile_pools":
+        alt_mobile, d1, d2, weight = fits[diagnosis][0][1]
+        predicted = alt_mobile * _two_pools(d1, d2, weight, context_radius, context_time)
+    else:
+        alt_d, alt_mobile, alt_kon, alt_koff, slope = fits[diagnosis][0][1]
+        predicted = alt_mobile * _supported(
+            alt_d, alt_kon, alt_koff * np.power(context_radius / 1.5, slope),
+            context_radius, context_time,
+        )
     return {
         "diagnosis": diagnosis,
         "diffusion_coefficient_um2_s": d,
@@ -125,6 +152,16 @@ def infer_frap_binding(problem, measure):
         "abstain": diagnosis != "supported",
         "evidence_measurement_ids": [row["measurement_id"] for row in rows],
     }
+
+
+def infer_frap_binding(problem, measure):
+    return infer_frap_binding_at_resolution(problem, measure, "coarse")
+
+
+def resolution_candidate(resolution):
+    def candidate(problem, measure):
+        return infer_frap_binding_at_resolution(problem, measure, resolution)
+    return candidate
 
 
 def run(evaluator):

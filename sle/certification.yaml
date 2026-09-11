@@ -12,7 +12,7 @@ policy:
 tasks:
   CellBiophysics/FRAPBindingInference:
     status: candidate
-    reason: active multi-radius fluorescence-recovery inference separates intracellular diffusion from reversible binding, predicts sealed recovery contexts, and attributes anomalous transport, two mobile pools, or spatially varying binding; under a 16-unit budget with explicit radius-setup pricing the truth-blind reference reaches 0.928/0.891 development/held out while an optimizer-free 3,798-point model grid reaches 0.728/0.708 and a one-radius half-budget ablation reaches 0.109/0.107, so retain pending current frontier-model replay, server-held image-derived curves, full reaction-diffusion replication, and independent cell-biophysics review
+    reason: active multi-radius fluorescence-recovery inference separates intracellular diffusion from reversible binding, predicts sealed recovery contexts, attributes anomalous transport, two mobile pools, or spatially varying binding, and identifies a fast-exchange non-identifiability limit; under a 16-unit budget with explicit radius-setup pricing the truth-blind reference reaches 0.906/0.871 development/held out while the strongest optimizer-free 3,798/15,240/26,586-point grid scores 0.585/0.565 and misclassifies the non-identifiable regime, so retain pending current frontier-model replay, server-held image-derived curves, full reaction-diffusion replication, and independent cell-biophysics review
     citation_ids: [doi:10.1529/biophysj.103.026765, doi:10.1016/S0006-3495(96)79846-6, doi:10.1016/S0006-3495(76)85755-4]
   Ecology/OccupancyDetectionDesign:
     status: candidate
