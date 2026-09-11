@@ -1,4 +1,16 @@
 schema_version: 2
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.430139
+  probes:
+  - id: legal_baseline
+    candidate: solution.py
+    expected_score: 0.0
+  relative_margin: 0.2
+  score_tolerance: 0.000001
 scientific_question: Can an agent actively distinguish planet-induced transit-timing variations from stellar activity, clock drift, and unsupported mixtures under a follow-up observation budget?
 artifact: A TTV mechanism claim, perturbation period, next-offset forecast, confidence and immutable evidence lineage, or calibrated refusal.
 oracle:
