@@ -51,6 +51,8 @@ class MicrolensingEventCharacterizationTests(unittest.TestCase):
     def test_external_contract_keeps_solution_editable(self):
         readonly = (TASK / "frontier_eval/readonly_files.txt").read_text().splitlines()
         self.assertNotIn("solution.py", readonly)
+        self.assertIn("verification", readonly)
+        self.assertIn("frontier_eval", readonly)
         command = (TASK / "frontier_eval/eval_command.txt").read_text()
         self.assertEqual(command.strip(), "{python} frontier_eval/run_eval.py --candidate {candidate} --metrics-out {metrics}")
 

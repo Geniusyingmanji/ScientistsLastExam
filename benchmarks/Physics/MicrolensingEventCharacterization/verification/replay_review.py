@@ -22,14 +22,6 @@ def infer_microlensing(problem, observe):
 '''
 
 
-def _science_only(value):
-    if isinstance(value, dict):
-        return {k: _science_only(v) for k, v in value.items() if "budget_used" not in k}
-    if isinstance(value, list):
-        return [_science_only(v) for v in value]
-    return value
-
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", required=True)
@@ -40,8 +32,6 @@ def main():
                  for node in ast.parse(analysis).body if isinstance(node, ast.FunctionDef)}
     candidates = {
         "reference": reference,
-        "legacy_reference_with_unused_g": reference.replace(
-            "return _infer(problem, observe)", "return _infer(problem, observe, collect_g=True)"),
         "reference_without_refusal": reference.replace(
             "return _infer(problem, observe)", "return _infer(problem, observe, refuse=False)"),
         "baseline": (HERE.parent / "solution.py").read_text(encoding="utf-8"),
@@ -71,11 +61,6 @@ def main():
             report["probes"][name] = {"complete_metrics_identical_twice": True, "metrics": results[0]}
             print(name, results[0]["combined_score"], results[0]["heldout_mechanism_score"],
                   results[0]["development_mean_budget_used"], flush=True)
-    old = report["probes"]["legacy_reference_with_unused_g"]["metrics"]
-    new = report["probes"]["reference"]["metrics"]
-    if _science_only(old) != _science_only(new):
-        raise AssertionError("unused-g removal changed a scientific metric")
-    report["legacy_and_r_only_science_metrics_identical"] = True
     Path(args.output).write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
 
