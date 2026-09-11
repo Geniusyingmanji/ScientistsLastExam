@@ -138,11 +138,10 @@ def main():
     }
     frozen = {name: path.read_bytes() for name, path in candidates.items()}
     verify_derivation(provenance, frozen["reference"], frozen["fixed_mass_57_8"], frozen["published_four_way_probe"])
-    # This PR uses a logical ID absent from the integration branch taxonomy.
-    # Adapt only the loader in memory, without copying the PR's older runtime.
-    if "ParticlePhysics" in benchmark_layout.DOMAIN_DISCIPLINES:
-        raise ValueError("unexpected pre-existing ParticlePhysics mapping")
-    benchmark_layout.DOMAIN_DISCIPLINES["ParticlePhysics"] = "Physics"
+    # Verify the logical ID mapping explicitly; do not infer identity from the
+    # physical path or copy any of the PR's older runtime files.
+    if benchmark_layout.DOMAIN_DISCIPLINES.get("ParticlePhysics") != "Physics":
+        raise ValueError("ParticlePhysics must explicitly map to Physics")
     spec = load_task_spec(TASK)
     if spec.task_id != "ParticlePhysics/DarkMatterRecoilAttribution":
         raise ValueError("unexpected logical task identity")
@@ -156,7 +155,7 @@ def main():
         "runtime_source_sha256": RUNTIME_HASH, "task_package_sha256": task_package_sha256(spec),
         "task_source_hashes": expected,
         "driver_sha256": digest(Path(__file__).read_bytes()),
-        "loader_adapter": "ParticlePhysics -> Physics mapping in memory only; no runtime file change",
+        "loader_adapter": "existing ParticlePhysics -> Physics mapping explicitly verified; no mapping or runtime file change",
         "derivation": provenance, "started_utc": datetime.now(timezone.utc).isoformat(),
         "runtime": {"python": sys.version, "executable": sys.executable, "platform": platform.platform(),
                     "numpy": np.__version__, "scipy": scipy.__version__,
