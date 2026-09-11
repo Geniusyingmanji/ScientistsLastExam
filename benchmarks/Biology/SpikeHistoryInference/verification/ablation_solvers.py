@@ -35,6 +35,31 @@ def never_refuse(problem):
     return result
 
 
+def midpoint_parameters(problem):
+    result = infer_spike_history(problem)
+    if result["abstain"]:
+        return result
+    bounds = problem["parameter_bounds"]
+    result["intercept"] = float(np.mean(bounds["intercept"]))
+    result["stimulus_gain"] = float(np.mean(bounds["stimulus_gain"]))
+    result["refractory_amplitude"] = float(np.mean(bounds["refractory_amplitude"]))
+    result["refractory_tau_ms"] = float(np.mean(bounds["refractory_tau_ms"]))
+    predictions = []
+    for context in problem["prediction_contexts"]:
+        history = sum(
+            math.exp(-lag / result["refractory_tau_ms"])
+            for lag in context["recent_spike_lags_ms"]
+        )
+        eta = (
+            result["intercept"]
+            + result["stimulus_gain"] * context["stimulus"]
+            - result["refractory_amplitude"] * history
+        )
+        predictions.append(float(1.0 / (1.0 + math.exp(-max(-30.0, min(30.0, eta))))))
+    result["prediction_probabilities"] = predictions
+    return result
+
+
 def rate_only(problem):
     spikes = np.concatenate([
         np.asarray(trial["spikes"], dtype=float) for trial in problem["trials"]

@@ -4,12 +4,12 @@
 
 | | |
 |---|---:|
-| 任务包 | 88 |
+| 任务包 | 87 |
 | optimization | 42 |
-| discovery | 46 |
+| discovery | 45 |
 | certified | 5 |
-| candidate | 83 |
-| 学科 | 7(Biology 9,Chemistry 13,ComputerScience 9,EarthScience 7,Engineering 13,Mathematics 19,Physics 18) |
+| candidate | 82 |
+| 学科 | 7(Biology 10,Chemistry 13,ComputerScience 8,EarthScience 7,Engineering 13,Mathematics 19,Physics 17) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
@@ -77,14 +77,13 @@
 | [`BellBoundCertificate`](benchmarks/Physics/BellBoundCertificate/)<br>贝尔不等式上界证书 | Physics | QuantumFoundations | uncapped | analytical | candidate | prove an upper bound, do not just compute one | 为贝尔泛函的量子最大值给出一份可精确验证的上界证明:提交一组基词与若干加权平方,使它们的和恰好等于 beta*I - B。CHSH 的答案是无理数 2√2,只能逼近;I3322 的量子值至今未知,NPA 层级 1 给 0.375、层级 2 给 0.25102173、已知最好值 0.25087538 要到层级 4 以上。 | 四个实例(CHSH 与三种基词预算下的 I3322)取均值,不设上限。分数是所证界到已知量子值距离的对数进步:免费的层级 1 界记 0,已发表的层级 2 界记 1,超过则大于 1。有理数精确验证,提交浮点数直接判零——数值 SDP 解不是证明。 |
 | [`FourSettingMomentCertificate`](benchmarks/Physics/FourSettingMomentCertificate/)<br>四设置矩子集证书 | Physics | QuantumFoundations | uncapped | analytical | candidate | exact SOS on I_4422^{13} with a frozen moment pool | I_4422^13 的精确 SOS,额外矩必须是冻结 NPA2 池的 Hamming-k 子集,不是 I3322 自由选词。 | 从精确层级 1 最优 5/8 到全池有理证书约 0.455331 的对数进度;参考约 0.58,无上限。 |
 
-## Discovery(46)
+## Discovery(45)
 
-### 公式(formula) — 7
+### 公式(formula) — 6
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
 | [`EnzymeKineticsLaw`](benchmarks/Biology/EnzymeKineticsLaw/)<br>酶动力学律辨识 | Biology | SystemsBiology | clipped | physical_sim | candidate | A purified enzyme is in front of you. · on-ramp,不配对 | 在测定预算内自选底物与抑制剂浓度,判定这个酶服从六条已发表速率律中的哪条,或都不服从 | 速率律辨识 + 拒答 + 密封外推预测 |
-| [`CacheReplacementPolicyID`](benchmarks/ComputerScience/CacheReplacementPolicyID/)<br>缓存替换策略辨识 | ComputerScience | ComputerArchitecture | clipped | analytical | candidate | which replacement policy does this cache set run? | 在带噪声的命中/缺失计时通道上对一个缓存组做受预算约束的访问实验,把隐藏的替换策略写成以路为输入的确定性状态机,或判定策略含随机性而拒答 | 提交的状态机与真实策略做精确的可观测等价判定;错误状态机记误发现并扣一个世界,随机策略世界须拒答,分数标尺锚在全拒答为零 |
 | [`AMOCTippingRefusal`](benchmarks/EarthScience/AMOCTippingRefusal/)<br>AMOC 折叠拒答 | EarthScience | Oceanography | clipped | physical_sim | candidate | a dip in the fingerprint is not a fold | AMOC 指纹序列里区分尚未发生的立方折叠、纯红噪声与冰约束唯一吸引子 | 折叠恢复 + 红噪声与冰约束拒答;指纹下降不等于将要崩溃 |
 | [`WallClosureDiscovery`](benchmarks/Engineering/WallClosureDiscovery/)<br>壁面湍流闭合律发现 | Engineering | Turbulence | clipped | analytical | candidate | find the closure, or say the data cannot pin one | 在有限的剖面测量预算下,把湍流壁面闭合律作为公式找出来——以及在观测撑不起任何律时说出撑不起。数据驱动湍流闭合是整个领域在做的问题,它公认的批评不是拟合得不好,而是只在训练它的地方被验证过。三类世界只有一类可解:雷诺数跨度够宽时参数被钉住;跨度太窄时一整段 kappa 都拟合得同样好而在留出工况上互相矛盾;还有一类根本没有单一闭合能同时解释各条剖面。 | 三轴分开报、永不平均:机制恢复率(在从未观测的留出雷诺数上检验公式)、假发现率(带分母)、校准拒答率,外加是否尝试过的计数。总分是三者之积,全弃权与从不弃权都恰好得零。两个拒答理由是正交的:不一致那类残差大,而不可辨识那类残差反而最小、拟合看起来最漂亮,要靠答案的宽度而不是残差来识别。把教科书的 van Driest 闭合直接交上去得零分、假发现率 1.00。 |
 | [`ActiveLawDiscovery`](benchmarks/Mathematics/ActiveLawDiscovery/)<br>主动定律发现 | Mathematics | DynamicalSystems | clipped | physical_sim | candidate | discover dynamical laws by choosing experiments | 自选初值与外部驱动,从候选项库里恢复二维受控系统的稀疏控制方程 | 稀疏律恢复 + 密封轨迹外推;库不足时拒答 |
@@ -102,7 +101,7 @@
 | [`BlackBoxGroupIdentification`](benchmarks/Mathematics/BlackBoxGroupIdentification/)<br>黑盒群同构辨识 | Mathematics | Mathematics | clipped | analytical | candidate | A finite set of `order` labelled elements and a black-box product: `mul(a, b)` returns the label | 只给黑盒乘法与随机标号,在查询预算内从公开构造目录里辨识群的同构类 | 目录 id 精确门控;非群与目录外两种拒答理由分开计分,阶数分布不足以辨识 |
 | [`HiddenCouplingNetwork`](benchmarks/Physics/HiddenCouplingNetwork/)<br>隐藏耦合网络重建 | Physics | Physics | clipped | physical_sim | candidate | A network of `units` observed units relaxes to a steady state under constant drive. | 实验次数少于单元数,从多单元驱动的稳态里恢复带符号的直接耦合图;存在未观测单元时拒答 | 带符号边 F1;间接路径、tanh 非线性与隐藏单元造成的稠密低秩耦合分别记误发现 |
 
-### 证据(evidence) — 11
+### 证据(evidence) — 10
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
@@ -116,7 +115,6 @@
 | [`DiscrepantMeasurements`](benchmarks/Physics/DiscrepantMeasurements/)<br>不相容测量调和 | Physics | ParticlePhysics | clipped | statistical_sim | candidate | Eight groups have measured the same physical constant. · on-ramp,不配对 | 八组测量同一常数但彼此不相容,诊断这批证据出了什么问题并给最佳值或判定没有最佳值 | 缺陷诊断 + 收费的内部一致性检验 + 拒答 |
 | [`LookElsewhereAnomaly`](benchmarks/Physics/LookElsewhereAnomaly/)<br>多窗口扫描的全局显著性 | Physics | ParticlePhysics | clipped | physical_sim | candidate | local 5σ is not a discovery | 一张质量谱在多个窗口里扫描,判定局域 5σ 在计入试验因子后还剩多少 | look-elsewhere 后的全局显著性;边带拒绝公开本底时须拒答 |
 | [`PTAHellingsDowns`](benchmarks/Physics/PTAHellingsDowns/)<br>脉冲星阵四极相关 | Physics | Gravitation | clipped | physical_sim | candidate | a common process is not a gravitational-wave background | 脉冲星计时阵里区分 Hellings-Downs 四极相关(引力波背景)与钟差单极、星历偶极、共同红噪声 | 四极 vs 单极判别与拒答;共同过程不等于引力波背景 |
-| [`TransitTimingAttribution`](benchmarks/Physics/TransitTimingAttribution/)<br>凌星时刻变化归因 | Physics | Exoplanets | clipped | physical_sim | candidate | what causes the transit-time variations? | 主动选择后续凌星时刻,区分模拟的周期、活动代理与时钟漂移族 | 机制、周期预测与拒答;误发现率和留出迁移分开报告 |
 
 ### 物质(substance) — 6
 
@@ -129,7 +127,7 @@
 | [`MethaneSourceAttribution`](benchmarks/EarthScience/MethaneSourceAttribution/)<br>甲烷源归因 | EarthScience | AtmosphericChemistry | clipped | analytical | candidate | say which sources moved, or say the record cannot tell | 在固定观测预算下,判断二十年里哪些甲烷排放部门发生了变化——以及在记录判不了时说出判不了。2007 年后大气甲烷重新增长、δ¹³C 变轻,驱动因素至今没有定论:同位素证据被读成主要是微生物源,而这个读法又被以源signature空间变异和汇的未解问题反驳。四类世界只有两类可答:化石与生物质燃烧会让 δ¹³C 上升、乙烷能分开;单一微生物源变化足够大时部门清单能认出;而纯汇变化和两个微生物源同时小幅变化都判不了。 | 三轴分开报、永不平均:机制恢复率、假发现率(带分母)、校准拒答率,外加是否尝试过的计数。总分是三者之积,全弃权与从不弃权都恰好得零。关键在于纯汇变化能被纯源变化复现到观测噪声以内(约化失配 0.00),而它看起来最像废弃物在小幅增加——baseline 在八个纯汇案例里点名废弃物五次。出路是买废弃物清单,发现它没变,把自上而下与自下而上的矛盾当作弃权的理由。 |
 | [`TransmissionSpectrumSpecies`](benchmarks/Physics/TransmissionSpectrumSpecies/)<br>透射光谱分子判定 | Physics | Exoplanets | clipped | analytical | candidate | say which molecules are there, or say you cannot tell | 在固定的凌星次数预算下,判断系外行星大气里有哪些分子——以及在观测无法判定时说出无法判定。K2-18b 的 DMS 之争正是这个问题:多次重分析的结论是那些特征并非唯一可辨识。四类世界里有三类不可辨识,而且原因各不相同:灰云层一次压平所有特征;混淆对在任何预算分配下都分不开(单振幅误差是其和的 24.5 倍);暗弱系统把整个预算压在最好波段也到不了 1σ。只有第三类是噪声。 | 三轴分开报、永不平均:机制恢复率、假发现率(带分母)、校准拒答率,外加是否尝试过的计数。总分是三者之积,归一化到全弃权恰好得零——从不弃权因拒答率为零也得零,两种退化策略都是零,靠尝试率把它们区分开。点名混淆对里任何一方都算假发现,即使其中一个确实存在:世界不决定是哪一个。 |
 
-### 参数反演(parameter_inversion) — 16
+### 参数反演(parameter_inversion) — 17
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|

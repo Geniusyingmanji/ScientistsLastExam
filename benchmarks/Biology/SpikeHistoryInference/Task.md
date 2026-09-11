@@ -66,17 +66,20 @@ continuous parameter recovery, prediction, and the composite science score.
 
 On supported worlds, the science score combines recovery of all four parameters and the supported
 diagnosis; sealed conditional-probability prediction and confidence calibration are scored
-separately. Unsupported worlds reward only the correct named refusal. The clipped development
-`combined_score` is normalized so the valid blanket-abstention baseline is exactly zero.
+separately. The supported-world quality is 70% parameter recovery, 20% prediction, and 10%
+confidence calibration, and is zero unless the submitted diagnosis is `supported`. The clipped
+`combined_score` is the mean supported-world quality multiplied by the exact named-refusal rate on
+unsupported worlds. Consequently both blanket abstention and never refusing score exactly zero.
 Parameter recovery, prediction, correct refusal, false discovery, supported discovery coverage,
 attempted discovery, validity, and held-out transfer retain separate fields with denominators.
 
-The truth-blind reference scores `0.903` development / `0.898` held out. Fixing the refractory
-time constant at 20 ms scores `0.876 / 0.879`; retaining parameter fits but never refusing scores
-`0.396 / 0.300`; using only the mean firing rate scores `0.234 / 0.179`. A 192-strategy sweep over
-low-dimensional trial-rate, delayed-spike, and stimulus-conditioned frequency thresholds reaches
-only `0.694 / 0.685` and retains a one-third false-discovery rate. Thus point-process fitting and
-structured model checks each change the measured capability.
+The truth-blind reference scores `0.697 / 0.829` development / held out. Fixing the refractory
+time constant at 20 ms scores `0.617 / 0.752`; replacing all fitted parameters with public-bound
+midpoints while retaining the reference diagnosis scores `0.497 / 0.328`. Never refusing and
+mean-rate-only inference both score `0.000 / 0.000`. A 1,728-strategy sweep over low-order moment
+thresholds and constant parameter profiles reaches only `0.402 / 0.167`, with one-third false
+discovery on each split. Thus parameter fitting and structured model checks each change the
+measured capability.
 
 ## Relationship to nearby tasks
 
@@ -84,7 +87,9 @@ structured model checks each change the measured capability.
 phenotype intervention; this task instead estimates a single-neuron conditional point process from
 repeated spike trains and attributes history-model failure. `QuantumDynamics/HamiltonianLearning`
 recovers coherent spin-chain parameters from magnetization trajectories, without stochastic event
-history, refractory kernels, latent trial gains, or point-process likelihoods.
+history, refractory kernels, latent trial gains, or point-process likelihoods. The parallel
+`Biology/SingleMoleculeKinetics` candidate infers latent molecular-state kinetics; it does not
+recover a stimulus-conditioned neural history kernel or diagnose trial-level neural heterogeneity.
 
 ## Rules and references
 
