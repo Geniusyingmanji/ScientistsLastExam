@@ -65,7 +65,7 @@ provenance:
   fresh_confirmation_status: not_completed
 novelty_risk:
   level: medium
-  rationale: Fine-mapping from summary statistics (Hormozdiari et al. 2014; Benner et al. 2016; Wang et al. 2020), the damage done by a mismatched reference panel (Benner et al. 2017; Chen et al. 2021; Kanai et al. 2022) and conditional analysis (Yang et al. 2012) are all published, and a model that knows them will reach for a joint model on in-sample linkage disequilibrium at once. What is not published is which rows to buy under a budget of six, that the answer is a chase of the conditional residual rather than a purchase by rank, that a refusal has to be reasoned from a comparison of configurations on bought rows rather than read off the panel, and which worlds are unresolved. The ablation shows the score turns on combining the purchase rule, the joint model, the refusal and the budget rather than on recalling any one of them, and the shortcut probe bounds what a searcher gets at 69 per cent of the reference. The reference's own headroom is deliberate and documented, since it applies one region-wide selection line and so never names a masked partner, while a model that knows masking is a local LD phenomenon and tests the lead's neighbourhood conditionally recovers every partner without taking the decoys. The nearest task in the repository, PopulationGenetics/DemographicSFS, is a coalescent parameter inversion with no linkage disequilibrium in it. No frontier draw has been run yet, so the difficulty at the frontier is not measured.
+  rationale: Fine-mapping from summary statistics (Hormozdiari et al. 2014; Benner et al. 2016; Wang et al. 2020), the damage done by a mismatched reference panel (Benner et al. 2017; Chen et al. 2021; Kanai et al. 2022) and conditional analysis (Yang et al. 2012) are all published, and a model that knows them will reach for a joint model on in-sample linkage disequilibrium at once. What is not published is which rows to buy under a budget of six, that the answer is a chase of the conditional residual rather than a purchase by rank, that a refusal has to be reasoned from a comparison of configurations on bought rows rather than read off the panel, and which worlds are unresolved. The ablation shows the score turns on combining the purchase rule, the joint model, the refusal and the budget rather than on recalling any one of them, and the fixed shortcut grid reaches 57.90 per cent of the current complete reference. The admission reference includes the local masked-partner test and exact joint effect conversion; it does not disable a standard competence to create headroom. The original region-wide reference is a separate omission probe at 0.806301625 against 0.96183425 for the complete reference, and remaining effect error reflects finite-sample estimation. The nearest task in the repository, PopulationGenetics/DemographicSFS, is a coalescent parameter inversion with no linkage disequilibrium in it. No frontier draw has been run yet, so the difficulty at the frontier is not measured.
 lineage:
   status: complete
   builder_model_ids:
@@ -125,7 +125,7 @@ construction_audit:
   expert_hours: null
   red_team_rounds: 11
   oracle_disagreement_status: not_quantified
-  independent_recomputation_status: the reference and the baseline are runnable from this directory, and the twenty-seven-rung ablation ladder, the 1120-strategy shortcut probe, the per-world construction statistics, the one-hundred-and-twenty-five-world robustness check with its selection-line variants and the twenty-three bad-candidate shapes from the scripts in .research/ld_mismatch_fine_mapping; the sandbox evaluation of scripts/check_task_contribution.py has not been run because the task was built on a machine without Bubblewrap; a frontier-model draw has not been run because the machine has no model endpoint
+  independent_recomputation_status: Historical builder snapshot before the post-builder review below; the reference and the baseline are runnable from this directory, and the twenty-seven-rung ablation ladder, the 1120-strategy shortcut probe, the per-world construction statistics, the one-hundred-and-twenty-five-world robustness check with its selection-line variants and the twenty-three bad-candidate shapes from the scripts in .research/ld_mismatch_fine_mapping; the sandbox evaluation of scripts/check_task_contribution.py has not been run because the task was built on a machine without Bubblewrap; a frontier-model draw has not been run because the machine has no model endpoint
 
 evaluation_budget:
   row_queries_per_world: 6
@@ -188,7 +188,9 @@ post_builder_admission_review:
     Use the realised accepted phenotype standard deviation for true per-allele effects;
     promote the masking-aware local test to a standalone truth-blind complete reference;
     use an exact marginal-t-to-joint-effect conversion; publish all discovery denominators;
-    use the current fail-closed wrapper and an explicit machine-readable shortcut contract.
+    use the current fail-closed wrapper and an explicit machine-readable shortcut contract;
+    reset candidate process, imports and tmpfs at every world boundary while preserving all
+    LD callbacks within one world.
   construction_evidence: .research/ld_mismatch_fine_mapping/admission_2026-09-11.json
   construction_source_commit: 83e2e3c7
   calibration_status: missing_new_clean_source_draw_required

@@ -64,6 +64,10 @@ fixed cohort size; it does not assert that arbitrarily more data could never dis
 variants with correlation below one. This curated synthetic challenge does not estimate the
 prevalence of these cases in real GWAS data.
 
+Each world starts a fresh candidate process with fresh imported-module state and private tmpfs.
+All paid and repeat LD-row callbacks within that world share its session. State cannot carry
+from one development world to another or from development to heldout.
+
 ## The question
 
 A genome-wide association study of 20000 unrelated people regressed a quantitative trait on each
