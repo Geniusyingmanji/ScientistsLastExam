@@ -51,6 +51,7 @@ CHINESE_NAMES = {
     "ClimateScience/EnergyBalanceModel": "能量平衡模型辨识",
     "ClimateScience/ForcedSignalAttribution": "强迫信号检测归因",
     "ControlTheory/InvertedPendulumSwingUp": "倒立摆摆起控制",
+    "DistributedSystems/ClockSyncInversion": "网络时钟偏差区间反演",
     "DynamicalSystems/ActiveLawDiscovery": "主动定律发现",
     "Ecology/OccupancyDetectionDesign": "生态占域与探测设计",
     "Electrochemistry/ElectrolyteConductivityDesign": "电解液电导率设计",
@@ -178,6 +179,9 @@ CHINESE_BRIEFS = {
     "ControlTheory/InvertedPendulumSwingUp": (
         "设计小车倒立摆的摆起与稳定控制律,兼顾轨道限位与作动器约束",
         "摆起效用;偏移工况稳健性分列"),
+    "DistributedSystems/ClockSyncInversion": (
+        "在探测预算与时间窗内对一个小网络的链路做双向时间戳交换,给出每个节点时钟在起止两个时刻相对真时的偏差区间;交换无法由仿射时钟与恒定传播时延在公布的界内解释时拒答",
+        "区间须覆盖真值,得分为无限数据下仍不可消除的可辨识宽度与提交宽度之比;漏掉真值记误发现并扣一个世界,故障世界须拒答,分数标尺锚在全拒答为零"),
     "DynamicalSystems/ActiveLawDiscovery": (
         "自选初值与外部驱动,从候选项库里恢复二维受控系统的稀疏控制方程",
         "稀疏律恢复 + 密封轨迹外推;库不足时拒答"),

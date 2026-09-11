@@ -1,0 +1,48 @@
+{
+  "fixture_sha256": "e2c4ed882bb57c828de4fc442092400b6bafb0870207ecda9fb21257e56763e8",
+  "revision": "10639f76828f15945dec08e1cf430ca1c6a43adc",
+  "rows": [
+    {
+      "method": "revised simplex",
+      "repeat": 0,
+      "result": {
+        "fun": -24.0,
+        "max_error": 0.0,
+        "seconds": 0.07696128822863102,
+        "status": 0
+      }
+    },
+    {
+      "method": "revised simplex",
+      "repeat": 1,
+      "result": {
+        "fun": -24.0,
+        "max_error": 0.0,
+        "seconds": 0.039414696395397186,
+        "status": 0
+      }
+    },
+    {
+      "method": "interior-point",
+      "repeat": 0,
+      "result": {
+        "fun": -23.9999999992309,
+        "max_error": 1.3568213219627978e-10,
+        "seconds": 0.026912039145827293,
+        "status": 0
+      }
+    },
+    {
+      "method": "interior-point",
+      "repeat": 1,
+      "result": {
+        "fun": -23.9999999992309,
+        "max_error": 1.3568213219627978e-10,
+        "seconds": 0.024171683937311172,
+        "status": 0
+      }
+    }
+  ],
+  "runtime_source_sha256": "efd95b4d0b18cbf5f48f5f10bd117dea5055ec25d1cabf70629a0dbd26d2d7a5",
+  "scope": "engineering only; no task evaluations or model calls"
+}

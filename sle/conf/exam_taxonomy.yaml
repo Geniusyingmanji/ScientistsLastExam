@@ -127,3 +127,4 @@ tasks:
   Sensors/QuartzCrystalMicrobalanceLab: {form: discovery, kind: parameter_inversion}
   Sensors/IMUBiasCalibration: {form: discovery, kind: parameter_inversion, note: triaxial_gravity_bias_and_fault_attribution_not_qcm_resonance}
   Spectroscopy/NMRSpectrumFitting: {form: discovery, kind: parameter_inversion}
+  DistributedSystems/ClockSyncInversion: {form: discovery, kind: parameter_inversion, note: offset_intervals_against_exact_identifiable_widths_with_fault_refusal_not_a_point_fit}

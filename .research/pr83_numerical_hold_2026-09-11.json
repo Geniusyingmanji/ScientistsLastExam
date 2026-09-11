@@ -1,0 +1,72 @@
+{
+  "admission": "HOLD",
+  "artifacts_sha256": {
+    "pr83_capture_failed_lp_2026-09-11.py": "a231e8c80b0358b561a1fae96233cffef079e123c5b777776cc197cec116feca",
+    "pr83_centered_oracle_tests_2026-09-11.log": "b32ed74d3b1df7aa0d5e33dfe05b3168ccf652c9e3475e3d604370fcc15d8ca7",
+    "pr83_centered_runtime_tests_2026-09-11.log": "c49148e6ef4eecf275f824969ec3106523421adbb534fa6acee03dc7e1f36b43",
+    "pr83_centered_sandbox_2026-09-11.json": "38db2a3d67dcfc03df7a2844a29c4fe12461d74bf76d4d563be13a9375090d09",
+    "pr83_first_repair_sandbox_2026-09-11.json": "c35f635e2f18a35c3965a28d09a07449b02f145a78a57f6211d32a516260a923",
+    "pr83_original_sandbox_2026-09-11.json": "6daa239e1fc7bfbf21dbeafb1752399aa7dcd4a83113a94a9157beae5a40226a"
+  },
+  "captured_actual_lp_comparison": "not_run",
+  "diagnostic": {
+    "derived_candidate_sha256": "3dc43a845084d83498d82656f91c947182ab07791ebd30357fe4fdfcf4357f49",
+    "first_development_candidate_calls": 2,
+    "first_development_repeat_answer_hash_identical": true,
+    "first_failure_capture_calls": 8,
+    "lp_columns": 26,
+    "lp_rows": 820,
+    "private_failed_lp_sha256": "988052ec0c41008a99f081a60a31fbde63d3640b5ad12d2b63a9dc1ad4386855",
+    "scope": "development only, no scoring, stopped at first solver failure",
+    "solver_message": "The iteration limit was reached before the algorithm converged.",
+    "solver_status": 1,
+    "source_candidate_sha256": "3ebe6dd6e3ae1b1a37c3778901f8a743b53da9ec5e3dd16e421e1d21f4f042d0"
+  },
+  "final_hull_task_calls": 0,
+  "fixed_scientific_calls_completed": 24,
+  "fixed_scientific_invalid": 18,
+  "fixed_scientific_valid_baselines": 6,
+  "model_calls": 0,
+  "owned_sessions": {
+    "15485": {
+      "exit_code": 0
+    },
+    "35634": {
+      "exit_code": 124,
+      "termination": "preset timeout 900s"
+    },
+    "70326": {
+      "exit_code": 0
+    }
+  },
+  "remaining_owned_processes": 0,
+  "schema_version": 1,
+  "source_centered_revision": "56778e870a173cfa33aa8f34f553cf1ad44af8f7",
+  "tests": {
+    "contribution_gate": "not_run",
+    "full_oracle": {
+      "exit_code": 124,
+      "junit": "not_generated",
+      "partial_output": "........F.F.",
+      "state": "timeout_with_failures",
+      "timeout_seconds": 900
+    },
+    "linux_hull": "not_run",
+    "linux_pre_hull_runtime": {
+      "passed": 5,
+      "seconds": 8.38
+    },
+    "local_hull_runtime": {
+      "deselected": 1,
+      "passed": 6,
+      "seconds": 1.05
+    }
+  },
+  "unvalidated_hull_candidate_sha256": {
+    "ablation_no_atom_rows.py": "338764bb520a7b361f2e17a67ddb604afd3440033f3e93fe299aaa1ecdafa6fb",
+    "ablation_no_order_rows.py": "2f66513d6a9dbe281d46cee56d86c8a03f80b716a06ff7d99b08d072dc380113",
+    "reference_envelope_lp.py": "8f973bb3ec46f93ec261c4563efd58078ccfbd1ba57753ba8663ad02840077af",
+    "shortcut_detection_only.py": "b189633d2c1114497cb9730d32891035e29716765fc42a8af801da69cb757a3d"
+  },
+  "unvalidated_hull_revision": "89b8eede038c0e7c73fa9b67bb332e39d26f468c"
+}

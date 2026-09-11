@@ -1,0 +1,13 @@
+domain: DistributedSystems
+task: ClockSyncInversion
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 60
+science_metric: sharpness_of_intervals_that_cover_every_clock_offset_of_a_network_from_charged_two_way_timestamp_exchanges_against_the_width_unlimited_data_cannot_shrink_with_calibrated_refusal_of_exchanges_no_affine_clocks_explain
+reference_baseline: "NTP with a rate: per-round minimum delays in both directions, half their difference on a breadth-first tree, a line through twelve rounds, five microseconds either side, never declining"
+reference_sota: "twelve rounds over the horizon, rough clocks from per-round minima, upper rows from the lowest residuals and a Beta order statistic, a lower-envelope LP, empty-queue rows at the published floor for each third of the horizon, lower bounds and calibrated asymmetry bounds, intervals from the LP's extremes and a refusal when it is infeasible"
+citation: "Lundelius and Lynch 1984, DOI 10.1016/S0019-9958(84)80033-9; Halpern, Megiddo and Munshi 1985, DOI 10.1016/0885-064X(85)90010-X; Attiya, Herzberg and Rajsbaum 1996, DOI 10.1137/S0097539794266328; Freris, Graham and Kumar 2011, DOI 10.1109/TAC.2010.2089210; Moon, Skelly and Towsley 1999, DOI 10.1109/INFCOM.1999.749287; Paxson 1998, DOI 10.1145/277851.277865; Veitch, Babu and Pasztor 2004, DOI 10.1145/1028788.1028817; Mills 1991, DOI 10.1109/26.103043; Mills, Burbank and Kasch 2010, DOI 10.17487/RFC5905; Ridoux and Veitch 2010, DOI 10.1145/1755884.1773943"

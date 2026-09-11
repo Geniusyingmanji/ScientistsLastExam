@@ -834,3 +834,23 @@ tasks:
     - doi:10.1038/nmeth.2066
     - doi:10.1038/s41467-017-02209-5
     - doi:10.1371/journal.pone.0027992
+  DistributedSystems/ClockSyncInversion:
+    status: candidate
+    reason: >-
+      The first distributed-systems task and the first whose answer is a set of intervals scored
+      against an exactly computed identifiable width, in the discovery parameter-inversion cell. A
+      network of 5 to 8 free-running clocks exchanges two-way timestamps over its links; the
+      candidate may run 20000 exchanges within a horizon of 14400 s and must bound every clock's
+      offset at both ends of the horizon, or decline. One-way delays mix constant propagation,
+      queueing that is empty at least one time in twenty, and jitter of 0.2 or 2 us; the lower
+      bounds on propagation and a 1 us asymmetry bound on calibrated links are all that separate
+      offsets from asymmetry. Five development worlds and two held out carry a rate step, a jump or
+      a miscalibrated link that shows only jointly across links and time, 13 to 23 pair jitters from
+      the model. An interval that misses the truth costs one world wherever it is claimed. Reference
+      0.568 on the development split and 0.501 held out, 0.567 and 0.501 averaged over sixteen run
+      seeds with no false discovery; a documented tighter margin as its headroom scores 0.651 and
+      0.592; the baseline scores zero; the best of 29 shortcut strategies reaches 0.385, 68 per cent
+      of the reference. Built without a model endpoint or a sandbox, so the frontier draw, the
+      sandbox check and the global evidence refresh are still owed. Pending external
+      distributed-systems review.
+    citation_ids: [doi:10.1016/S0019-9958(84)80033-9, doi:10.1016/0885-064X(85)90010-X, doi:10.1137/S0097539794266328, doi:10.1109/TAC.2010.2089210, doi:10.1109/INFCOM.1999.749287, doi:10.1145/277851.277865, doi:10.1145/1028788.1028817, doi:10.1109/26.103043, doi:10.17487/RFC5905, doi:10.1145/1755884.1773943]

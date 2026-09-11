@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep identify(problem, exchange, wait).
+2) Return {"verdict", "intervals", "confidence"}. `verdict` is "offsets" or "no_model". When it is "offsets", `intervals` maps every node j in 1..problem["nodes"]-1 (as "j" or j) to two finite intervals [lo, hi] with lo <= hi, in seconds, bounding x_j at problem["epochs_s"][0] and problem["epochs_s"][1]. `confidence` in [0,1]. `abstain: true` is accepted as a synonym for the no_model verdict.
+3) exchange(i, j, n) runs n >= 1 two-way exchanges over the link between integer nodes i and j and returns an n x 4 array (T1, T2, T3, T4); it advances the time by n * problem["probe_spacing_s"]. wait(seconds) advances the time. Do not run more than problem["probe_budget"] exchanges or pass problem["horizon_s"].
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

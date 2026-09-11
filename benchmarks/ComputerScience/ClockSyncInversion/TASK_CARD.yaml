@@ -1,0 +1,171 @@
+schema_version: 2
+# Admission status: the numerical failure behind the 2026-09-11 HOLD is repaired
+# (the reference's LPs are solved by single-threaded revised simplex; see
+# references/known_best.md, "Numerical repair"). The scores and ablations below are
+# in-process builder measurements on that repaired source; the Linux sandbox gate,
+# the shortcut declarations and the first-proposal calibration remain to be run by
+# the maintainer. .research/pr83_numerical_hold_2026-09-11.md keeps the failed
+# replay plans unchanged.
+evaluation_budget:
+  timeout_s: 300
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_envelope_lp.py
+    expected_score: null
+  probes:
+  - id: detection_only_z3
+    candidate: verification/shortcut_detection_only.py
+    expected_score: null
+  relative_margin: 0.1
+  score_tolerance: 0.000001
+metric_contract:
+  mechanism:
+    metric: mechanism_score
+    estimand: normalized_interval_sharpness_with_false_claim_and_refusal_utility
+    numerator: raw_world_utility_mean_minus_always_abstain_utility
+    denominator: one_minus_always_abstain_utility
+    direction: higher_is_better
+  fdr:
+    metric: false_discovery_rate
+    estimand: false_discovery_fraction_among_interval_claims
+    numerator: false_discovery_count
+    denominator: claim_count
+    denominator_metric: claim_count
+    direction: lower_is_better
+  refusal:
+    metric: correct_refusal_rate
+    estimand: correct_refusal_fraction_in_unsupported_worlds
+    numerator: correct_refusal_count
+    denominator: unsupported_count
+    denominator_metric: unsupported_count
+    direction: higher_is_better
+  coverage:
+    metric: discovery_coverage
+    estimand: interval_claim_fraction_in_supported_worlds
+    numerator: supported_claim_count
+    denominator: supported_count
+    denominator_metric: supported_count
+    direction: higher_is_better
+scientific_question: Bound the clock offset of every node of a small network at the start and at the end of a horizon from charged two-way timestamp exchanges whose one-way delays mix constant propagation, random queueing and timestamp jitter, given a lower bound on every propagation delay and an asymmetry bound on some links, and decline when no affine clocks and constant delays within those bounds explain the exchanges.
+artifact: A verdict, and for offsets an interval for every clock at both epochs, with a confidence and an optional refusal.
+oracle:
+  model: 5 to 8 nodes on a random connected network of 6 to 12 links; node 0 keeps true time and every other clock is affine with an offset within 3 ms and a rate within 30 ppm; each direction's delay is a constant propagation of 50 us to 2 ms plus queueing that is empty with a probability driven by a sinusoidal load between the published floor of 0.05 and 0.5, and exponential with a mean of 6 us to 2.6 ms otherwise; every timestamp carries Gaussian jitter of 0.2 us, or 2 us on software-stamped nodes; the lower bounds sit up to 30 us under each propagation, and a calibrated link's asymmetry is 0.6 to 1.0 of its 1 us bound; the unsupported worlds carry a rate step of 2.5 or 3 ppb halfway through, a jump of 10 us at 40 per cent of the horizon, or a calibrated link whose asymmetry is off by 40 or 60 us; the identifiable width of every offset is computed exactly by two linear programs per clock
+  feasibility: at most 20000 exchanges per world, 0.25 s apart within one call, over a horizon of 14400 s; running past the budget or the horizon fails closed; each campaign is seeded by its world; calibrated refusal on the unsupported worlds
+  deterministic: true
+normalization:
+  baseline: NTP with a rate, twelve rounds of exchanges on every link, per-round minimum delays in both directions and half their difference, a line through the rounds, offsets carried from node 0 along a breadth-first tree, five microseconds either side, never declining
+  reference: twelve rounds spread over the horizon, rough clocks from per-round minima, upper rows from the three lowest residuals of every round and from a Beta order statistic, a lower-envelope LP, empty-queue rows for each third of the horizon from a binomial count at the published floor and the quantile of the least jitter, lower bounds and calibrated asymmetry bounds, intervals from the LP's extremes and a refusal when it is infeasible; family-wise error at most 0.00075 per world by a union bound, the tilt allowance aside; it scores 0.569 on the development split and 0.503 held out
+  score: development mechanism normalized above always-abstain; in a supported world intervals that cover every offset score the mean over clocks and epochs of the identifiable width over the submitted width, capped at one, and a miss scores minus one; in an unsupported world declining scores one and a claim zero; sharpness, false discovery, refusal, coverage, calibration, probes used and the held-out split stay separate
+citations:
+- id: doi:10.1016/S0019-9958(84)80033-9
+  title: An upper and lower bound for clock synchronization
+- id: doi:10.1016/0885-064X(85)90010-X
+  title: Optimal precision in the presence of uncertainty
+- id: doi:10.1137/S0097539794266328
+  title: Optimal Clock Synchronization under Different Delay Assumptions
+- id: doi:10.1109/TAC.2010.2089210
+  title: Fundamental Limits on Synchronizing Clocks Over Networks
+- id: doi:10.1109/INFCOM.1999.749287
+  title: Estimation and removal of clock skew from network delay measurements
+- id: doi:10.1145/277851.277865
+  title: On calibrating measurements of packet transit times
+- id: doi:10.1145/1028788.1028817
+  title: Robust synchronization of software clocks across the internet
+- id: doi:10.1109/26.103043
+  title: "Internet time synchronization: the network time protocol"
+- id: doi:10.17487/RFC5905
+  title: "Network Time Protocol Version 4: Protocol and Algorithms Specification"
+- id: doi:10.1145/1755884.1773943
+  title: Principles of Robust Timing over the Internet
+invariants:
+- the exchanges come from the published model; every one-way delay is its propagation plus non-negative queueing plus jitter, at least one probe in twenty finds the queue empty at any time, every propagation is at or above its lower bound and every calibrated asymmetry within 1 us, and the test suite checks a campaign's delays against the true clocks
+- the oracle's widths are exact; with unlimited noiseless data the rates are identified and the offsets are not, and what bounds them is the lower bounds and the calibrated links; the identifiable widths of the eleven supported worlds run from 0.90 to 53.82 us
+- every unsupported world is detectable and no supported one is; the smallest relaxation that lets affine clocks and constant delays within the bounds reproduce every true floor trajectory is 13.0 to 23.2 pair jitters in the unsupported worlds and zero in the supported ones
+- the empty-queue rows are what catch the faults; without them the reference claims six of the seven unsupported worlds and scores 0.000 on both splits, with one row over the whole horizon instead of one per third it claims four and scores 0.116 and 0.228, and used only as a test they catch every fault and leave intervals that score 0.348 and 0.257
+- an interval that misses costs one world wherever it is claimed, minus one in a supported world and zero where declining scores one; the reference makes no false discovery in 288 world-runs over sixteen run seeds
+- declining every world scores exactly zero by construction, and so do the baseline and a claim of one second either side of zero everywhere; confidence feeds only the calibration axis
+- exchanges are charged and running past the budget or the horizon fails closed; the candidate receives two closures and not the ledger, so it cannot raise its own budget or rewind the time; malformed submissions and malformed calls score zero and never raise out of the evaluator
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+known_shortcuts: >-
+  a 29-strategy sweep over blind answers (2, both zero), NTP midpoints on all the data and NTP with
+  a rate at margins from 1 us to 1 ms (10 including the baseline, all zero with false discoveries in
+  every world), per-round Cristian boxes from the minimum delays and the lower bounds with and
+  without a rate (4, zero, since drift within a round empties the boxes), the reference's LP without
+  empty-queue rows with a line test on per-round NTP differences at no threshold or at 2, 5 and 10 us
+  (4, zero), and the LP with detection only, by the reference's empty-queue rows at three upper
+  margins or by a hand-set floor test at 2, 3 and 5 pair jitters over thirds or rounds (9, best
+  0.385), tops out at 0.385 on the development split and 0.298 held out, 68 and 59 per cent of the
+  reference, with the empty-queue rows used only as a test and an upper margin of three jitters;
+  over eight re-drawn run seeds that strategy averages 0.385 and 0.296 with no false discovery
+review:
+  domain: pending_external_distributed_systems
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic worlds with twelve development networks (seven supported, five unsupported) and six sealed held-out networks (four supported, two unsupported), each drawn by the evaluator from its own seed, with the campaign's queueing and jitter drawn from a separate run seed; the identifiable widths are recomputed from the worlds on every run.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: That offsets cannot be separated from delay asymmetry is textbook (Lundelius and Lynch 1984; Freris, Graham and Kumar 2011), the optimal bounds under delay bounds are published (Halpern, Megiddo and Munshi 1985; Attiya, Herzberg and Rajsbaum 1996), and so are the lower-envelope LP for skew (Moon, Skelly and Towsley 1999) and minimum filtering (Mills 1991; Veitch, Babu and Pasztor 2004). A model that knows them will reach for NTP minima or an envelope fit. What is not published is how to turn a floor on the empty-queue probability into rows that make faults visible under jitter, and how to split 20000 exchanges over links and time when rates drift by up to 30 ppm. NTP-style answers score zero because they claim every unsupported world and miss offsets in supported ones, and an envelope LP without the empty-queue rows scores zero too. The shortcut probe bounds what a searcher gets at 68 per cent of the reference. The gap between the reference and the same LP at a three-sigma margin is a safety choice and not an omitted method; its union-bound margins are wide, and at 2.5 sigmas the held-out false discoveries begin. Task.md names neither the faults' kinds nor which worlds carry them. No frontier draw has been run yet, so the difficulty at the frontier is not measured.
+lineage:
+  status: complete
+  builder_model_ids:
+  - claude-opus-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  template_source: >-
+    frontier_eval/run_eval.py is generated by scripts/gen_task.py; the evaluator's per-world
+    scoring, split summary and evaluate skeleton follow StructuralEngineering/ModalDamageAttribution,
+    the repository's exemplar task, and the discovery tasks built on it; the network, the clocks,
+    the delays, the identifiable widths, the detectability measure, the metrics, the reference and
+    the baseline are this task's own.
+  edits_triggered_by_model: >-
+    No model has seen the task. Six edits came from the construction checkpoints. The oracle's
+    identifiable-width LP was first run on the unsupported worlds too, where it is infeasible; widths
+    are computed for supported worlds only. Fault sizes were first judged in seconds, and faults on
+    software-stamped nodes were invisible under their 2 us jitter; detectability is now measured in
+    pair jitters and every unsupported world sits at 13 or more. With an empty-queue floor of 0.01 the
+    detection-only shortcut reached 91 per cent of the reference held out; the floor is now 0.05, the
+    calibrated asymmetries sit near their bound and the held-out worlds have more calibrated links.
+    That change re-drew every world, and three unsupported worlds fell to a detectability of 0 to 2.7;
+    their faults were moved and resized. A reference with upper margins at the family-wise z
+    on the lowest residuals alone was beaten by 27 and 31 per cent by the same LP at z = 3; the
+    order-statistic rows cut that to 15 and 18 per cent, documented as headroom. Robustness runs first
+    re-drew whole worlds; they now re-draw only the campaign. Task.md names neither the faults' kinds
+    nor which worlds carry them.
+  shortcut_discoverer: builder_self_audit_with_a_low_dimensional_strategy_probe
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-opus-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 6
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: >-
+    On revision 56778e87 the fixed ten-call Linux sandbox plan completed with two
+    valid baseline scores of zero and eight invalid candidate_runtime_error results
+    across reference, detection-only, no-order and no-atom pairs; those records keep
+    score -1e18 and are not rewritten. The cause was the LP solver: HiGHS starts
+    worker threads, which the sandbox's seccomp filter denies, and the interior-point
+    fallback stops at its iteration limit in two of the 18 worlds. The reference and
+    its three declared candidates now solve the same LPs with SciPy's revised simplex
+    (Bland's rule), which runs in the calling thread. .research/clock_sync/solver_check.py
+    reproduces the thread count and compares the package solver with HiGHS world by
+    world over eight run seeds. The reference, the ladder, the 29-strategy probe and
+    the sixteen-seed robustness check were re-run in process on this source, and
+    summary.py recomputes every quoted number. Not run here, because the build machine
+    has no Bubblewrap and no model endpoint: the Linux sandbox gate that fills the
+    shortcut_probe declarations, the wrapper double run and the first-proposal calibration.
