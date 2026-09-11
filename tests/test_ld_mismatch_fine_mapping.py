@@ -242,7 +242,7 @@ class LDMismatchFineMappingTests(unittest.TestCase):
 
     def test_truth_effect_units_follow_the_accepted_phenotype_draw(self):
         signal = np.array([-2.0, -1.0, 1.0, 2.0])
-        noise = np.array([0.7, 1.1, -0.3, 2.0])
+        noise = np.array([-1.0, 0.0, 0.0, 1.0])
         phenotype, scale = self.evaluator._standardize_trait(signal, noise)
         expected = signal + noise
         self.assertAlmostEqual(scale, np.std(expected))
@@ -266,6 +266,23 @@ class LDMismatchFineMappingTests(unittest.TestCase):
         np.testing.assert_allclose(estimated, expected, rtol=1e-7, atol=1e-9)
         approximate = np.linalg.solve(R, z) * se
         self.assertGreater(np.max(np.abs(approximate - expected)), 0.01)
+
+    def test_reused_regression_statistics_match_separate_ols_with_intercepts(self):
+        rng = np.random.default_rng(7951)
+        genotype = rng.integers(0, 3, size=(120, 7)).astype(float)
+        statistics = self.evaluator.ldsim.regression_statistics(genotype)
+        for _ in range(3):
+            phenotype = genotype @ rng.normal(size=7) + rng.normal(size=120) + 4.0
+            z, beta, se = self.evaluator.ldsim.marginal_z(genotype, phenotype, statistics)
+            for variant in range(genotype.shape[1]):
+                design = np.column_stack([np.ones(len(phenotype)), genotype[:, variant]])
+                coefficient = np.linalg.lstsq(design, phenotype, rcond=None)[0]
+                residual = phenotype - design @ coefficient
+                variance = float(residual @ residual) / (len(phenotype) - 2)
+                expected_se = np.sqrt(variance * np.linalg.inv(design.T @ design)[1, 1])
+                self.assertAlmostEqual(beta[variant], coefficient[1], places=12)
+                self.assertAlmostEqual(se[variant], expected_se, places=12)
+                self.assertAlmostEqual(z[variant], coefficient[1] / expected_se, places=10)
 
     def test_complete_reference_recovers_masked_partners_without_a_truth_import(self):
         source = (TASK / "verification/reference_masking_aware.py").read_text()

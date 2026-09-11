@@ -70,15 +70,27 @@ def correlation(G):
     return (X.T @ X) / X.shape[0]
 
 
-def marginal_z(G, y):
-    """Marginal association z-scores of every column of G with y (a linear regression each)."""
+def regression_statistics(G):
+    """Genotype-only sufficient statistics, reusable across phenotype draws."""
     X = G - G.mean(axis=0, keepdims=True)
-    yc = y - y.mean()
-    n = len(y)
     sxx = (X ** 2).sum(axis=0)
     sxx[sxx == 0] = 1.0
-    beta = (X * yc[:, None]).sum(axis=0) / sxx
-    resid_var = ((yc[:, None] - X * beta[None, :]) ** 2).sum(axis=0) / (n - 2)
+    return X, sxx
+
+
+def marginal_z(G, y, statistics=None):
+    """Marginal regression t, coefficient and standard error for every variant.
+
+    SSE = y'y - beta * X'y is the same least-squares residual sum of
+    squares as materialising an n-by-p residual matrix. The genotype
+    statistics may be reused while drawing new phenotype noise.
+    """
+    X, sxx = regression_statistics(G) if statistics is None else statistics
+    yc = y - y.mean()
+    n = len(y)
+    sxy = X.T @ yc
+    beta = sxy / sxx
+    resid_var = np.maximum(float(yc @ yc) - beta * sxy, 0.0) / (n - 2)
     se = np.sqrt(resid_var / sxx)
     return beta / se, beta, se
 

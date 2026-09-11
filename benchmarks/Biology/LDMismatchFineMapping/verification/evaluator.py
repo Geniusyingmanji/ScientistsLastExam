@@ -238,9 +238,10 @@ def _try_world(spec, attempt):
     # the haplotypes and the effects are fixed; the phenotype noise is redrawn until the
     # z-scores satisfy the world's constraints
     signal = G @ beta
+    regression_statistics = ldsim.regression_statistics(G)
     for draw in range(NOISE_DRAWS):
         y, phenotype_scale = _standardize_trait(signal, rng.normal(0.0, 1.0, N_GWAS))
-        z, bhat, se = ldsim.marginal_z(G, y)
+        z, bhat, se = ldsim.marginal_z(G, y, regression_statistics)
         # the locus was flagged by the scan: some typed variant is genome-wide significant
         if np.abs(z).max() < GENOME_WIDE_Z:
             continue
