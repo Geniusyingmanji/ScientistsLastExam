@@ -36,10 +36,10 @@ out. Mechanism accuracy is `0.875/1.000`, supported coverage is `0.800/1.000`, c
 prediction is `0.455605/0.671059`. Two complete in-process replays are identical.
 
 The reference is deliberately below the ceiling. Its noisy two-radius design leaves one supported
-development world unresolved, and it uses unweighted least squares, a small fixed start set, and
-point predictions rather than uncertainty-aware design or inference. Better radius/time allocation,
-noise-aware weighting, and posterior model comparison can improve both supported recovery and
-refusal without reading evaluator state.
+development world unresolved, and it uses noise-standard-error-weighted least squares, a small
+fixed start set, and point predictions rather than uncertainty-aware design or inference. Better
+radius/time allocation and posterior model comparison can improve supported recovery and refusal
+without reading evaluator state.
 
 ## Ablations and shortcut probe
 
