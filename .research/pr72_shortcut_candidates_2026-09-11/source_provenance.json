@@ -1,0 +1,66 @@
+{
+  "fixed_mass_57_8": {
+    "candidate_sha256": "7dde497168dee1d28b203be29db0731a94d034fded5358f5bda072624f2c502e",
+    "derivation": "Entire reference_profile.py with exactly one final positive-signal mass expression changed; none/abstain/law decisions and all helper bytes preserved.",
+    "fidelity": "faithful disclosed-strategy derivative; original reviewer single-file bytes unavailable",
+    "historical_source": "https://github.com/Geniusyingmanji/ScientistsLastExam/issues/78",
+    "mass_gev": 57.8,
+    "parameter_source": ".research/shortcut_revalidation_backlog_2026-09-11.md at 7e7ea5a, PR72 entry",
+    "replace_after": "\"mass_gev\": 57.8",
+    "replace_before": "\"mass_gev\": best[2]"
+  },
+  "published_four_way_probe": {
+    "candidate_sha256": "10d00d59ef42f48a946c4f4062e218ce0c59f4f49839cbf5c2232768ddaabbaa",
+    "config_order": [
+      "target",
+      "units",
+      "excess_threshold",
+      "hardness_ratio",
+      "mass_gev",
+      "peak_kind",
+      "peak_threshold"
+    ],
+    "derivation": "Exact peak_features and probe_answer function source segments, NumPy import and a fixed entrypoint only. Author driver is never imported or executed.",
+    "fixed_config": [
+      1,
+      1,
+      60,
+      2,
+      95.83680934806682,
+      1,
+      0.5
+    ],
+    "functions": [
+      {
+        "lines": [
+          34,
+          43
+        ],
+        "name": "peak_features",
+        "sha256": "cd7f6bacee544ba39d04b5fd3abb03d8c99713982310990f6d6cb13ef38ad3c1"
+      },
+      {
+        "lines": [
+          46,
+          57
+        ],
+        "name": "probe_answer",
+        "sha256": "fc612e234950bc2caf687a1be0cf8146db9967ddd7dc683e8a86d615a8871a7d"
+      }
+    ],
+    "parameter_source": "experiments/dark_matter_recoil_revision_2026-09-10.json tasks[ParticlePhysics/DarkMatterRecoilAttribution].shortcut_probe.selected_parameters",
+    "selection_status": "previously author development-selected; no selection or search in this replay"
+  },
+  "schema_version": 1,
+  "source_sha256": {
+    "benchmarks/Physics/DarkMatterRecoilAttribution/verification/reference_profile.py": "78da166c44b216e3f69a492ba1a4aa605af0cc21d3223f2168196a9d68325d2c",
+    "experiments/dark_matter_recoil_revision_2026-09-10.json": "2a983d49362b95917ad56c570a6792407eadd7533a25ef3952b67c9c45dbcb59",
+    "scripts/audit_dark_matter_recoil.py": "3cef9a3aad3327181e49ed9df96b1e36b828033b4f7cb2053f82b520a4cb4993"
+  },
+  "source_urls": {
+    "benchmarks/Physics/DarkMatterRecoilAttribution/verification/reference_profile.py": "https://github.com/Geniusyingmanji/ScientistsLastExam/blob/8497bd455d3090087e6a15e99fb85f5fae75e5cd/benchmarks/Physics/DarkMatterRecoilAttribution/verification/reference_profile.py",
+    "experiments/dark_matter_recoil_revision_2026-09-10.json": "https://github.com/Geniusyingmanji/ScientistsLastExam/blob/8497bd455d3090087e6a15e99fb85f5fae75e5cd/experiments/dark_matter_recoil_revision_2026-09-10.json",
+    "scripts/audit_dark_matter_recoil.py": "https://github.com/Geniusyingmanji/ScientistsLastExam/blob/8497bd455d3090087e6a15e99fb85f5fae75e5cd/scripts/audit_dark_matter_recoil.py"
+  },
+  "task_head": "8497bd455d3090087e6a15e99fb85f5fae75e5cd"
+}
