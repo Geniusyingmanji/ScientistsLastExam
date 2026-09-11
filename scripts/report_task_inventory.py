@@ -37,6 +37,7 @@ CHINESE_NAMES = {
     'Microbiology/MetagenomeCompositionAssignment': "宏基因组组成指认",
     "Acoustics/RoomImpulseResponse": "房间声学处理设计",
     "Algorithm/GraphFromDistances": "距离查询重建图",
+    "Algorithm/JuntaVariableDiscovery": "噪声布尔函数的相关变量发现",
     "Algorithm/MatrixMultiplicationRank": "矩阵乘法秩",
     "Algorithm/TensorRank555": "5x5 与 6x6 张量秩",
     "Astrodynamics/LowThrustTransfer": "小推力轨道转移",
@@ -136,6 +137,9 @@ CHINESE_BRIEFS = {
     "Algorithm/GraphFromDistances": (
         "在有限次距离查询下重建加权网络的边:短距离不等于相邻,可能是两条短边的两跳路径",
         "边恢复 F1;误发现率与不可辨识拒答分开报告"),
+    "Algorithm/JuntaVariableDiscovery": (
+        "在查询预算与标签噪声下,判断一个未知布尔函数依赖哪些变量,有的相关变量只通过奇偶或门起作用,单变量相关为零;超过公布规模的大奇偶函数须拒答",
+        "相关变量召回率;命中无关变量记误发现并扣一个世界,误发现率、拒答率、覆盖率与留出分开报告"),
     "Algorithm/MatrixMultiplicationRank": (
         "搜索双线性张量分解,减少矩阵乘法所需的标量乘法次数",
         "对最好已知乘法数的平均进度;无上限"),

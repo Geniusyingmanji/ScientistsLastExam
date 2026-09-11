@@ -1,0 +1,10 @@
+{"strategy": "blind_declare_all", "dev": 0.0, "held": 0.0, "fd": 216}
+{"strategy": "blind_refuse_all", "dev": 0.0, "held": 0.0, "fd": 0}
+{"strategy": "blind_random_k", "dev": 0.0, "held": 0.0, "fd": 216}
+{"strategy": "correlation_familywise", "dev": 0.0, "held": 0.0, "fd": 85}
+{"strategy": "corr_fixed_0.02", "dev": 0.0, "held": 0.0, "fd": 94}
+{"strategy": "corr_fixed_0.05", "dev": 0.0, "held": 0.0, "fd": 84}
+{"strategy": "pivotal_norefuse_full", "dev": 0.0, "held": 0.0729, "fd": 84}
+{"strategy": "pivotal_fixed_c0.02", "dev": 0.0357, "held": 0.1233, "fd": 2}
+{"strategy": "pivotal_fixed_c0.03", "dev": 0.1637, "held": 0.1858, "fd": 13}
+{"strategy": "corr_claim_pivotal_detect", "dev": 0.3333, "held": 0.2778, "fd": 2}

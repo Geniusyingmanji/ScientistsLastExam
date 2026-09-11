@@ -141,6 +141,25 @@ tasks:
     citation_ids:
       - doi:10.1137/S0097539702418498
       - doi:10.1007/BF01386390
+  Algorithm/JuntaVariableDiscovery:
+    status: candidate
+    reason: >-
+      The variables an unknown Boolean function of 28 depends on, its junta, recovered from noisy
+      membership queries, in the discovery structure cell but with no graph and no distances. The
+      candidate may draw 20000 answers, each flipped with probability 0.10, and must name the
+      relevant variables or decline. Several relevant variables act only through a parity or a gate,
+      so their single-variable correlation with the output is zero and only a query that flips them
+      against a fixed background reveals them; the weakest sit at a few hundredths of influence, at
+      the edge of what the budget can certify. Five development worlds and two held out are a parity
+      of more than the junta size, which no junta that small explains and where declining is the
+      only correct answer. Naming an irrelevant variable costs one world. Reference 0.548 on the
+      development split and 0.604 held out, 0.545 and 0.573 averaged over twelve run seeds with no
+      false discovery in 216 world-runs; a documented tighter margin as its headroom scores 0.764
+      and 0.783; the correlation baseline scores zero; the best of ten shortcut strategies reaches
+      0.333, 61 per cent of the reference, and not cleanly. Built without a model endpoint or a
+      sandbox, so the frontier draw, the sandbox check and the global evidence refresh are still
+      owed. Pending external computer-science review.
+    citation_ids: [doi:10.1016/S0004-3702(97)00063-5, doi:10.1016/j.jcss.2004.04.002, doi:10.1016/j.jcss.2003.11.004, doi:10.1006/jcss.1995.1004, doi:10.1109/SFCS.1988.21923, doi:10.1017/CBO9781139814782]
   QuantumDynamics/HamiltonianLearning:
     status: candidate
     reason: >-

@@ -94,6 +94,7 @@ tasks:
   CausalDiscovery/InterventionalSCM: {form: discovery, kind: structure}
   CausalDiscovery/SurvivorshipConfoundedDesign: {form: discovery, kind: structure, note: selection_not_clone_of_interventional_scm}
   Algorithm/GraphFromDistances: {form: discovery, kind: structure}
+  Algorithm/JuntaVariableDiscovery: {form: discovery, kind: structure, note: which_variables_a_noisy_boolean_function_depends_on_through_pivotal_queries_not_a_graph_from_distances}
   SystemsBiology/GeneNetworkIntervention: {form: discovery, kind: structure}
   # --- discovery / evidence ---------------------------------------------------
   ParticlePhysics/DiscrepantMeasurements: {form: discovery, kind: evidence, note: on_ramp_do_not_pair}

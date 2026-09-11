@@ -31,6 +31,7 @@ RECORDED_LINEAGE = {
     "Mathematics/ErdosMinimumOverlap",
     "Mathematics/HeilbronnTrianglePacking",
     "Algorithm/TensorRank555",
+    "Algorithm/JuntaVariableDiscovery",
     "Mathematics/Superpermutation",
     "AtmosphericChemistry/MethaneSourceAttribution",
     "Turbulence/WallClosureDiscovery",

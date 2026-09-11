@@ -1,0 +1,117 @@
+schema_version: 2
+scientific_question: Recover the set of variables an unknown Boolean function of n variables depends on, its junta, from membership queries whose answers are each flipped with a published noise rate, under a query budget, when some relevant variables act only through a parity or a gate and carry no single-variable correlation with the output, and decline when no junta of the published size can explain the answers.
+artifact: A verdict, and for a junta the list of variables the function depends on, with a confidence and an optional refusal.
+oracle:
+  model: a function of 28 variables; in a supported world it is a multiplexer that reads a selector variable and returns either a majority-style threshold of a four-variable additive block or the parity of a three-variable block xored with a parity gated on two control variables, so its twelve relevant variables sit at three influence levels, seven near 0.12, one near 0.37 and four near 0.50, and seven of them carry zero degree-one correlation; an unsupported world is a parity of 14 to 18 variables, more than the published junta size, whose every variable has influence one; each answer is flipped independently with probability 0.10; the true relevant set and each variable's influence are functions of the world alone and the excess influence kappa* that any junta of the published size must leave uncovered is zero in every supported world and the parity size minus twelve in every unsupported one
+  feasibility: at most 20000 queried labels per world; running past the budget fails closed; each campaign's label noise is seeded by its own run seed; calibrated refusal on the unsupported worlds
+  deterministic: true
+normalization:
+  baseline: degree-one correlation, one random point per query over the whole budget, each variable's Fourier coefficient with the answer, a family-wise margin from zero, decline when more than the published size clear it; it never sees a variable that acts only through a parity or a gate and never declines a big parity
+  reference: pivotal pairs, the budget split evenly over the variables at ninety per cent of it, each variable flipped against random backgrounds, its disagreement rate read against the noise floor 2 eta (1 - eta) and named relevant when it clears the floor by z standard errors with z the normal quantile of delta over n, declining when more than the published size clear it; delta is 1e-3 per world so the chance any irrelevant variable is named is at most delta by a union bound; it scores 0.548 on the development split and 0.604 held out
+  score: development mechanism normalized above always-abstain; in a supported world a named set that is a subset of the true relevant variables scores the fraction of them it recovers, and naming any irrelevant variable is a false discovery worth minus one; in an unsupported world declining scores one and a claim zero; recall, false discovery, refusal, coverage, calibration, queries used and the held-out split stay separate
+citations:
+- id: doi:10.1016/S0004-3702(97)00063-5
+  title: Selection of relevant features and examples in machine learning
+- id: doi:10.1016/j.jcss.2004.04.002
+  title: Learning functions of k relevant variables
+- id: doi:10.1016/j.jcss.2003.11.004
+  title: Testing juntas
+- id: doi:10.1006/jcss.1995.1004
+  title: Learning in the Presence of Finitely or Infinitely Many Irrelevant Attributes
+- id: doi:10.1109/SFCS.1988.21923
+  title: The influence of variables on Boolean functions
+- id: doi:10.1017/CBO9781139814782
+  title: Analysis of Boolean Functions
+invariants:
+- the answers come from the published model; every label is the function at the queried point flipped independently with the published rate, and the test suite checks a campaign's flip rate against the true function
+- the true relevant set is a function of the world; a variable is relevant exactly when flipping it changes the function on a positive fraction of inputs, and the recorded influences of the twelve relevant variables of every supported world sit at three levels, seven near 0.12, one near 0.37 and four near 0.50, so the seven weakest sit at the edge of what the budget certifies
+- every unsupported world is a parity of more than the published junta size, so kappa* is the parity size minus twelve, from 2 to 6, and is zero in every supported world; no supported world is a false parity and no unsupported world is a junta of the published size
+- a variable that acts only through the parity or the gate has degree-one correlation zero, so a method that reads correlations alone recovers none of them and declines nothing; the baseline scores zero and makes a false discovery in seven of the eighteen worlds
+- a named irrelevant variable costs one world in a supported world and a claim costs one in an unsupported world; the reference makes no false discovery in 216 world-runs over twelve run seeds and declines every unsupported world
+- declining every world scores exactly zero by construction, and so do naming all twelve variables everywhere and a random twelve everywhere; confidence feeds only the calibration axis
+- queries are charged and running past the budget fails closed; the candidate receives one query closure and not the ledger, so it cannot raise its own budget; malformed submissions and malformed calls score zero and never raise out of the evaluator
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+known_shortcuts: >-
+  a probe of ten strategies that do not run the full-budget pivotal test with a family-wise refusal,
+  in four families: blind answers (decline everything, name all twelve, name a random twelve; the
+  two claiming strategies make a false discovery in every world and score zero, declining scores
+  zero), degree-one correlation at a family-wise margin or at a hand-set 0.02 and 0.05 (three, all
+  zero with a false discovery in most worlds, since correlation cannot see a parity or a gated
+  variable and cannot decline a big parity), the pivotal test without the refusal (one, zero, it
+  claims every unsupported world), and the pivotal test with a fixed additive floor margin of 0.02
+  and 0.03 or with correlation for the claims and a pivotal pass only for the refusal (three, best
+  0.333 on the development split but with false discoveries; the only strategies that make none score
+  zero by declining everything). The best of them reaches 0.333, 61 per cent of the reference, and it
+  is not clean: every strategy that makes no false discovery over twelve run seeds scores zero. The
+  reference under three-quarters of its budget, still the full pipeline, scores 0.469, and under half
+  0.428; that is the method under-resourced, not a shortcut.
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  relative_margin: 0.1
+  score_tolerance: 0.02
+  reference:
+    candidate: verification/reference_influence.py
+    expected_score: 0.5476
+  probes:
+  - id: degree_one_correlation
+    candidate: solution.py
+    expected_score: 0.0
+  - id: pivotal_without_refusal
+    candidate: verification/probe_pivotal_norefuse.py
+    expected_score: 0.0
+  - id: correlation_claims_pivotal_refusal
+    candidate: verification/probe_corr_detect.py
+    expected_score: 0.3333
+review:
+  domain: pending_external_computer_science
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic worlds with twelve development functions (seven supported, five unsupported) and six sealed held-out functions (four supported, two unsupported), each drawn by the evaluator from its own seed, with the campaign's label noise drawn from a separate run seed; the relevant sets, the influences and kappa* are recomputed from the worlds on every run.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: That a function can depend on a variable only through a parity, where its degree-one correlation vanishes, is textbook Fourier analysis of Boolean functions (Kahn, Kalai and Linial 1988; O'Donnell 2014), and junta learning and testing are published problems (Blum and Langley 1997; Mossel, O'Donnell and Servedio 2004; Fischer, Kindler, Ron, Safra and Samorodnitsky 2004; Blum, Hellerstein and Littlestone 1995). A model that knows them will reach for correlations or a low-degree fit. Correlation-only methods score zero because they miss the parity and gated variables and claim every big parity. What the task fixes is the budget, the noise rate and the junta size so that the pivotal test barely certifies the weakest relevant variables, and the refusal threshold so that a big parity is declined and a junta is not. The shortcut probe bounds a distinct cheap strategy at 61 per cent of the reference, and not cleanly. The same test at three standard errors scores 0.764 with no false discovery over twelve run seeds, but it keeps no family-wise bound, since its exact chance of a false discovery per junta world is 0.0076 against 1.0e-4 for the reference; the gap is a choice of error rate and not an omitted method. Task.md names neither which worlds are juntas nor which relevant variables act through the parity or the gate. No frontier draw has been run yet, so the difficulty at the frontier is not measured.
+lineage:
+  status: complete
+  builder_model_ids:
+  - claude-opus-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  template_source: >-
+    frontier_eval/run_eval.py is generated by scripts/gen_task.py; the evaluator's per-world
+    scoring, split summary and evaluate skeleton follow DistributedSystems/ClockSyncInversion and
+    the discovery tasks it was built on; the function family, the influence structure, the
+    detectability measure, the metrics, the reference and the baseline are this task's own.
+  edits_triggered_by_model: >-
+    No model has seen the task. The unsupported worlds were first an additive threshold of many
+    equal-weight variables, whose low-influence variables the reference could not certify, so it
+    failed to decline and made a false discovery; they are now a parity of more than the junta
+    size, where every variable has influence one and the reference declines by counting significant
+    variables. The budget was first 40000 and the noise 0.05, where the reference recovered every
+    relevant variable and scored near one; the budget is now 20000 and the noise 0.10 so the
+    weakest relevant variables sit at the edge of certifiability and the reference averages 0.545
+    over twelve run seeds. A reference at a fixed confidence level was beaten with no false
+    discovery by the same test at a tighter margin; the reference is now the family-wise margin at
+    delta over n, and the tighter margin z = 3 is documented as the same test without that bound.
+  shortcut_discoverer: builder_self_audit_with_a_ten_strategy_probe
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-opus-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 4
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: the reference and the baseline are runnable from this directory, and the margin-and-budget ladder, the ten-strategy shortcut probe and the twelve-seed robustness check from the scripts in .research/junta, where summary.py recomputes every quoted number; the bad-candidate shapes are in tests/test_junta_variable_discovery.py; the sandbox evaluation of scripts/check_task_contribution.py has not been run because the task was built on a machine without Bubblewrap; a frontier-model draw has not been run because the machine has no model endpoint

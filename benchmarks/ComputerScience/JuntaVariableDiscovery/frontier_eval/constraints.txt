@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep identify(problem, query).
+2) Return {"verdict", "relevant", "confidence"}. `verdict` is "junta" or "no_model". When it is "junta", `relevant` is the list of variables the function depends on, integers in 0..problem["n"]-1, at most problem["max_junta_size"] of them; naming a variable the function does not depend on is a false discovery. `confidence` in [0,1]. `abstain: true`, and the verdict "no_junta", are accepted as synonyms for declining.
+3) query(points) takes a k x problem["n"] array of 0/1 bits and returns k labels in {0,1}, each flipped independently with probability problem["noise_rate"]. Do not draw more than problem["budget"] labels in all.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

@@ -1,0 +1,9 @@
+{"kind": "margin", "z": 3.971, "dev": 0.5446, "dev_lo": 0.5, "dev_hi": 0.5952, "held": 0.5729, "fd": 0}
+{"kind": "margin", "z": 3.5, "dev": 0.6498, "dev_lo": 0.6071, "dev_hi": 0.7262, "held": 0.6667, "fd": 0}
+{"kind": "margin", "z": 3.25, "dev": 0.6964, "dev_lo": 0.631, "dev_hi": 0.7738, "held": 0.7257, "fd": 0}
+{"kind": "margin", "z": 3.0, "dev": 0.7639, "dev_lo": 0.6786, "dev_hi": 0.8095, "held": 0.783, "fd": 0}
+{"kind": "margin", "z": 2.75, "dev": 0.756, "dev_lo": 0.3214, "dev_hi": 0.8571, "held": 0.7726, "fd": 5}
+{"kind": "margin", "z": 2.5, "dev": 0.7569, "dev_lo": 0.0952, "dev_hi": 0.9167, "held": 0.8281, "fd": 8}
+{"kind": "budget", "frac": 0.75, "dev": 0.4692, "held": 0.4757, "fd": 0}
+{"kind": "budget", "frac": 0.5, "dev": 0.4276, "held": 0.4392, "fd": 0}
+{"kind": "budget", "frac": 0.25, "dev": 0.3869, "held": 0.3663, "fd": 0}

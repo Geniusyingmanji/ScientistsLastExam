@@ -1,0 +1,13 @@
+domain: Algorithm
+task: JuntaVariableDiscovery
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 60
+science_metric: recall_of_the_variables_a_noisy_boolean_function_depends_on_from_budgeted_membership_queries_against_the_true_relevant_set_with_calibrated_refusal_when_no_junta_of_the_published_size_explains_the_answers
+reference_baseline: "degree-one correlation: one random point per query over the whole budget, each variable's Fourier coefficient with the answer, a family-wise margin from zero, decline if more than the published size clear it; never sees a variable that acts only through a parity or a gate, and never declines a big parity"
+reference_sota: "pivotal pairs: split the budget evenly over the variables, flip each against random backgrounds, read the disagreement rate against the noise floor 2 eta (1 - eta), name a variable when it clears the floor by a family-wise margin at delta/n, and decline when more than the published size clear it"
+citation: "Blum and Langley 1997, DOI 10.1016/S0004-3702(97)00063-5; Mossel, O'Donnell and Servedio 2004, DOI 10.1016/j.jcss.2004.04.002; Fischer, Kindler, Ron, Safra and Samorodnitsky 2004, DOI 10.1016/j.jcss.2003.11.004; Blum, Hellerstein and Littlestone 1995, DOI 10.1006/jcss.1995.1004; Kahn, Kalai and Linial 1988, DOI 10.1109/SFCS.1988.21923; O'Donnell 2014, DOI 10.1017/CBO9781139814782"
