@@ -45,7 +45,7 @@ better regularized likelihood modeling.
 | shrinkage point-process reference | **0.697016** | **0.829388** | 1.000 | 1.000 |
 | fixed refractory tau = 20 ms | 0.617365 | 0.751527 | 1.000 | 1.000 |
 | public-bound midpoint parameters, reference diagnosis | 0.496777 | 0.328371 | 1.000 | 1.000 |
-| 3,456-strategy moment/logit/constant-parameter sweep | 0.603153 | 0.386705 | 1.000 | 1.000 |
+| 3,456-strategy moment/logit/constant-parameter sweep | 0.626217 | 0.463498 | 1.000 | 1.000 |
 | reference fit, never refuse | 0.000000 | 0.000000 | 0.000 | 0.000 |
 | mean-rate-only, never refuse | 0.000000 | 0.000000 | 0.000 | 0.000 |
 | blanket undetermined abstention | 0.000000 | 0.000000 | 0.000 | 0.000 |
