@@ -1,4 +1,16 @@
 schema_version: 2
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.906277
+  probes:
+  - id: profiled_model_grid
+    candidate: verification/shortcut_probe.py
+    expected_score: 0.456192
+  relative_margin: 0.2
+  score_tolerance: 0.000001
 scientific_question: Can an agent separate intracellular diffusion from reversible binding by choosing FRAP bleach radii and recovery times, recover four shared kinetic parameters, and refuse anomalous transport, two mobile pools, or spatially varying binding?
 artifact: Four reaction-diffusion parameters, conditional recovery predictions, a supported or model-inadequacy diagnosis, confidence, and immutable measurement evidence.
 oracle:
