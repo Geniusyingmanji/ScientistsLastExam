@@ -1,0 +1,5 @@
+Only edit solution.py and keep infer_transient(problem, observe).
+Return abstain, confidence, evidence_query_ids, and when not abstaining model, frequency_slope, event_time, and amplitude.
+Use deterministic CPU Python with NumPy and the standard library; do not read verification/ or access the network.
+Query only candidate_times and detectors through observe; duplicate observations and overspending fail closed.
+Cite at least six distinct query_id values from current-world observations.

@@ -1,0 +1,63 @@
+schema_version: 2
+scientific_question: Can an agent distinguish coherent chirps, narrow-band lines and detector-localized glitches under a finite two-detector strain-observation budget, recover key transient parameters, and refuse low-SNR ambiguity?
+artifact: A transient model label, frequency slope, event time, amplitude, confidence and immutable observation evidence, or a calibrated refusal.
+oracle:
+  model: deterministic coherent sinusoidal/chirping strain families, detector-localized Gaussian glitches and evaluator-only low-SNR ambiguous worlds
+  feasibility: 24 unit-cost observations over fixed epochs and H1/L1 detectors, at most one query per epoch/detector pair, bounded finite claims and current-world evidence only
+  deterministic: true
+normalization:
+  baseline: six fixed H1 observations followed by a fixed coherent-line claim
+  reference: dual-detector cadence, chirp/line grid comparison, localization check and low-SNR refusal
+  score: development mechanism recovery normalized above blanket abstention; accuracy, false discovery, refusal, budget, feasibility and held-out transfer remain separate
+citations:
+- id: doi:10.1103/PhysRevX.6.041015
+  title: Observing gravitational-wave transient GW150914 with minimal assumptions
+- id: doi:10.1103/PhysRevD.85.122006
+  title: FINDCHIRP an algorithm for detection of gravitational waves from inspiraling compact binaries
+invariants:
+- coherent chirp worlds have positive frequency slope in both detectors while line worlds have zero slope
+- glitch worlds are localized primarily to H1 and have a finite event time
+- ambiguous low-SNR worlds require refusal; blanket abstention is exactly zero after normalization
+- duplicate queries, overspending, unknown epochs/detectors and malformed candidates fail closed
+- every answer cites at least six distinct current-world observations
+- model accuracy, false discovery, refusal, feasibility and held-out transfer are separate axes
+known_shortcuts: A fixed line claim is valid but normalizes to zero. H1-only sampling cannot establish detector localization, and an amplitude threshold cannot distinguish chirps from coherent lines. The reduced-order model omits real detector calibration, colored nonstationary noise, sky-position delays, precession and full waveform families; certification requires server-held traces and independent review.
+review:
+  domain: pending_external_gravitational_wave
+  evaluator_security: automated_budget_determinism_refusal_and_malformed_candidate_checks_pending_clean_linux_replay
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and shifted held-out chirp, line, glitch and ambiguous families.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+  license: Procedural repository-local code and generated observations; no external dataset bundled
+  pollution_note: Hidden waveform parameters, world family and split membership remain evaluator-only.
+novelty_risk:
+  level: medium
+  rationale: Unlike Gravitation/PTAHellingsDowns, this is single-event time-domain waveform and detector-coherence inference rather than angular correlation evidence across pulsars; unlike microlensing, it analyzes strain phase evolution and detector-localized glitches.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:gpt-5
+  builder_scaffolds:
+  - science-benchmark-construction
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: none
+  shortcut_discoverer: builder_self_audit_with_task_local_ablation_sweep
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: computational_gravitational_wave
+  reviewer_domain: pending_external_gravitational_wave
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: task-local reference and deterministic tests pending clean Linux validation
