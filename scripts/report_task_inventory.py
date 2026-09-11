@@ -99,6 +99,7 @@ CHINESE_NAMES = {
     "Photonics/MultilayerThinFilm": "多层减反射膜",
     "Physics/ComplexBoseLaw": "复玻色占据律",
     "Physics/HiddenCouplingNetwork": "隐藏耦合网络重建",
+    "Neuroscience/SpikeHistoryInference": "神经脉冲历史核推断",
     "PopulationGenetics/DemographicSFS": "位点频率谱人口史反演",
     "ProteinEngineering/ProteinStabilityDesign": "蛋白稳定性批次设计",
     "QuantumDynamics/HamiltonianLearning": "哈密顿量学习",
@@ -409,6 +410,9 @@ CHINESE_BRIEFS = {
     "SystemsBiology/GeneNetworkIntervention": (
         "用扰动实验恢复带符号的动态调控网络,并设计达成表型的干预",
         "网络恢复 + 预测 + 表型干预迁移 + 拒答"),
+    "Neuroscience/SpikeHistoryInference": (
+        "从重复刺激下的神经脉冲序列恢复刺激增益与不应期历史核,并拒绝爆发、潜在试次增益混合和刺激依赖不应期",
+        "点过程参数恢复 + 条件放电概率预测 + 模型失配归因;误发现、拒答、尝试覆盖率与留出迁移分列"),
     "Thermodynamics/HeatExchangerDesign": (
         "发现换热器的多保真帕累托设计档案,权衡换热量、成本与泵功",
         "成本对换热量的帕累托超体积;密封代理一致性、留出迁移与结垢/制造/堵塞稳健性分列,无上限"),

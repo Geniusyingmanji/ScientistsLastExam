@@ -1,0 +1,3 @@
+Only edit solution.py and keep infer_spike_history(problem) as the entrypoint.
+Use deterministic CPU-only Python, NumPy, SciPy, and the standard library.
+Do not read verification/ or frontier_eval/, access the network, or create processes.

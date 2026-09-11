@@ -127,3 +127,4 @@ tasks:
   Sensors/QuartzCrystalMicrobalanceLab: {form: discovery, kind: parameter_inversion}
   Sensors/IMUBiasCalibration: {form: discovery, kind: parameter_inversion, note: triaxial_gravity_bias_and_fault_attribution_not_qcm_resonance}
   Spectroscopy/NMRSpectrumFitting: {form: discovery, kind: parameter_inversion}
+  Neuroscience/SpikeHistoryInference: {form: discovery, kind: parameter_inversion, note: conditional_neural_point_process_history_inference_not_gene_network_or_hamiltonian_dynamics}
