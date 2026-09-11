@@ -34,6 +34,10 @@ CERTIFICATION = ROOT / "sle" / "certification.yaml"
 # Chinese name per task, shown in the first column beside the English directory name. The
 # directory name is the identifier and never changes; this is what a Chinese reader scans for.
 CHINESE_NAMES = {
+    "Electrophysiology/HodgkinHuxleyCurrentID": "电压钳通道参数恢复",
+    "Electrochemistry/ChronoamperometryLawID": "计时电流法律辨识",
+    "Spectroscopy/MassFragmentationTree": "多碰撞能碎裂树恢复",
+    "ChemicalProcess/ThermochemicalCycleAudit": "热化学闭环审计",
     'Microbiology/MetagenomeCompositionAssignment': "宏基因组组成指认",
     "Acoustics/RoomImpulseResponse": "房间声学处理设计",
     "Algorithm/GraphFromDistances": "距离查询重建图",
@@ -127,6 +131,18 @@ CHINESE_NAMES = {
 # people deciding which task to look at. A task without an entry fails the inventory test,
 # so a new package cannot silently ship without one.
 CHINESE_BRIEFS = {
+    "Electrophysiology/HodgkinHuxleyCurrentID": (
+        "自选电压钳协议恢复八参数通道模型,A 型或整流额外电流须拒答",
+        "参数恢复+密封协议预测几何均值;失配门拒答,全面弃权为零"),
+    "Electrochemistry/ChronoamperometryLawID": (
+        "在电位阶跃预算下辨识六条计时电流律,反常扩散或基线漂移须拒答",
+        "类概率+参数+密封外推几何均值;χ² 门与跨电位漂移统计量分别负责两类拒答"),
+    "Spectroscopy/MassFragmentationTree": (
+        "在能量/变焦预算下从多级质谱恢复中性丢失碎裂树;无分子离子或共洗脱杂质须拒答",
+        "节点/边 F1(质量容差最优匹配)平均;误发现与拒答分列,全面弃权为零"),
+    "ChemicalProcess/ThermochemicalCycleAudit": (
+        "在复测/交叉验证预算下审计焓闭环网络:一致、单点错误、仪器漂移或归因欠定",
+        "校正增益+判决+诊断融合,全一致/全拒答为零;秩亏分支须先取得可定位证据"),
     'Microbiology/MetagenomeCompositionAssignment': (
         "从收费 marker 计数中恢复分类单元与丰度,保留近缘别名并识别参考库不足",
         "组成恢复、别名/库外拒答与假发现率分列"),

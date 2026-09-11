@@ -33,6 +33,10 @@ discovery_kind:
   parameter_inversion: recover numbers of a form that is already named
 
 tasks:
+  Electrophysiology/HodgkinHuxleyCurrentID: {form: discovery, kind: parameter_inversion, note: clamp_protocols_with_extra_current_refusal}
+  Electrochemistry/ChronoamperometryLawID: {form: discovery, kind: formula, note: transient_families_not_initial_rates}
+  Spectroscopy/MassFragmentationTree: {form: discovery, kind: structure, note: fragmentation_tree_from_multienergy_msms_not_library_matching}
+  ChemicalProcess/ThermochemicalCycleAudit: {form: discovery, kind: evidence, note: hess_closure_network_not_single_constant_reconciliation}
   Microbiology/MetagenomeCompositionAssignment: {form: discovery, kind: substance, note: marker_mixture_alias_inadequacy_candidate}
   Ecology/OccupancyDetectionDesign: {form: discovery, kind: evidence, note: latent_occupancy_and_repeat_detection_not_population_history_or_climate_fingerprinting}
   Physics/CriticalPhenomenaLab: {form: discovery, kind: parameter_inversion, note: finite_size_scaling_not_microscopic_law}

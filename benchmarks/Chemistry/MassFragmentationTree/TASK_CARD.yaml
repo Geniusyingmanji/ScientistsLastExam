@@ -1,0 +1,143 @@
+schema_version: 2
+scientific_question: Can a budgeted multi-energy MS/MS audit recover a fragmentation tree
+  while refusing worlds where no tree is identifiable (no surviving precursor, co-isolated
+  isobar)?
+artifact: Fragment-ion m/z nodes, directed edges labelled by public neutral losses,
+  optional model-inadequacy abstention and a confidence scalar.
+oracle:
+  model: deterministic CHNO molecules, hidden multiplicative survival-cascade fragmentation
+    trees over the public loss library, Gaussian mass error, log-normal intensity error,
+    flat locally loss-compatible background peaks, in-source precursor loss and about-one-dalton co-isolates whose
+    carbon count differs by one so isotope ratios separate them
+  feasibility: at most 256 finite positive unique node m/z values and 4096 unique edges
+    referencing distinct submitted nodes through mass-consistent public-library losses,
+    with heavier-to-lighter direction and at most one parent per child; charged
+    measurements under an eight-unit budget
+  deterministic: true
+  external_tooling: none beyond NumPy/SciPy (Hungarian matching)
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: 0.004 Da mass error, eight to twelve background peaks
+    2: 0.007 Da mass error, ten to fifteen background peaks
+    3: 0.012 Da mass error, twelve to nineteen background peaks
+normalization:
+  baseline: one low-energy scan claiming the intact precursor as the entire tree
+  reference: truth-blind decomposition, background filtering, greedy loss attachment and
+    precursor-window refusal
+  score: node F1 averaged with edge F1 on supported worlds, normalized above always
+    abstaining; false discovery and refusal remain separate
+citations:
+- id: doi:10.1073/pnas.1509788112
+  title: Searching molecular structure databases with tandem MS spectra using CSI:FingerID
+- id: doi:10.1186/s13321-016-0116-8
+  title: Fragmentation Trees Reloaded
+invariants:
+- submitting the exact hidden tree scores one on supported worlds
+- repeated edges cannot inflate matching recall and both F1 axes stay within zero and one
+- the precursor ion never survives in in-source worlds at any energy or zoom
+- co-isolates differ by about one dalton and one carbon, so M+1 isotope ratios separate
+  the two precursor ions inside one zoom window
+- background peaks stay flat across energies while analyte fragments rise; some decoys
+  deliberately form public-library mass gaps with analyte peaks
+- malformed or overspent measurement calls invalidate the world even when caught
+- a full abstention scores exactly zero after normalization
+known_shortcuts: The review's all-peaks/all-pairs graph is now invalid because it is not
+  a tree. Its single-parent repair reaches 0.389747/0.456859 against the unchanged
+  0.564467/0.524831 reference after loss-compatible flat decoys were added. Earlier top-k
+  and root-attachment probes remain lower. Formal clean Linux calibration and independent
+  domain validation remain pending.
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All runtime worlds are generated from original repository code; cited publications
+    are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The instrument contract, loss library and procedural family are public and
+    were built with AI assistance; server-held molecules and an independent cascade model
+    are still required.
+review:
+  domain: pending_external_mass_spectrometry
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic fragmentation cascade with development
+    and held-out molecules, trees, backgrounds and failure regimes.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: CrowdedSpectrumAssignment and NMRSpectrumFitting are the closest
+    in-repository spectral inverse problems, while GraphFromDistances is the nearest graph
+    reconstruction task. None combines active MS/MS queries, neutral-loss tree topology
+    and no-precursor/co-isolate refusal; the procedural worlds remain builder-dependent.
+lineage:
+  status: complete
+  builder_model_ids:
+  - glm-5.3
+  builder_scaffolds:
+  - repository-native-chemistry-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local build caught a zoom-path bug that resurrected
+    the precursor in in-source worlds, a background filter that killed saturated fragments,
+    and duplicate nodes from per-energy mass noise; each was fixed and pinned by tests.
+    The 2026-09-08 review found repeated correct edges inflated edge recall beyond
+    one; canonical duplicate edges are now rejected and true-edge hits deduplicated.
+    Submitted node and edge counts are bounded before matching. Invalid outputs no
+    longer count as discoveries, and deterministic replay is documented as ordered
+    query-sequence replay with fresh repeated-measurement noise. The 2026-09-12 review
+    then exposed an all-peaks/all-pairs shortcut; edge validation now enforces a
+    mass-consistent single-parent forest and flat background includes loss-compatible
+    decoys that require energy-contrast filtering.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_mass_spectrometry
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations
+    and clean frontier-model calibration before certification
+  remaining_risk: The reference leaves large headroom on edge recovery; a stronger global
+    tree optimizer could close it, so the difficulty target needs a frontier draw.
+
+frontier_eng_overlap_review:
+  date: '2026-09-06'
+  classification: 无
+  nearest: weighted_parameter_coverage; diverse_conformer_portfolio; torsion_profile_fitting
+  distinction: Charged MS/MS queries reconstruct directed neutral-loss fragment trees
+    with co-isolation/no-precursor refusal. FE chooses molecules/conformers or fits
+    force-field energies. Molecular context alone does not share the inverse graph problem.
+  evidence: .research/pr9_frontier_eng_overlap_2026-09-06.md
+  status: source_count_discrepancy_pending_maintainer_confirmation
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.5644670617816399
+  probes:
+  - id: single_parent_mass_gap
+    candidate: verification/probe_single_parent_mass_gap.py
+    expected_score: 0.3897472390427479
+  relative_margin: 0.1
+  score_tolerance: 1.0e-06
+evaluation_budget:
+  EVAL_TIMEOUT_S: 300
+  scope: Seven development and five held-out worlds; each reference run uses four scans
+    and one two-unit zoom from an eight-unit measurement budget.
+  override: Task wrapper --timeout or sle eval --timeout.

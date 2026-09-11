@@ -10,6 +10,28 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Electrophysiology/HodgkinHuxleyCurrentID:
+    status: candidate
+    reason: deterministic voltage-clamp parameter recovery with consistent absolute membrane and relative rate coordinates, holding-state A-type transients and sealed-protocol prediction; after the 2026-09-08 model corrections the standalone witness reaches 0.640364/0.828679 development/heldout with zero false discoveries in local debugging; earlier calibration and shortcut conclusions are superseded; pending clean Linux calibration, independent electrophysiology review and server-held membranes
+    citation_ids:
+      - doi:10.1113/jphysiol.1952.sp004764
+  Electrochemistry/ChronoamperometryLawID:
+    status: candidate
+    reason: deterministic multi-potential chronoamperometric law identification with Akaike-penalized family fits, chi-square and variable-projection drift gates, anomalous-transport refusal and charged evidence efficiency; the three-step truth-blind witness reaches 0.722/0.661 with zero false discoveries, while removing the model-selection penalty lowers development to 0.657 and disabling the chi-square gate lowers robustness to 0.328; pending clean Linux calibration, independent electrochemistry review and server-held transients
+    citation_ids:
+      - isbn:9780471057528
+  Spectroscopy/MassFragmentationTree:
+    status: candidate
+    reason: deterministic multi-energy MS/MS fragmentation-tree discovery with charged energy/zoom budget, flat-background filtering, in-source precursor loss and one-dalton co-isolate refusal worlds; a truth-blind decomposition-plus-greedy-attachment witness reaches 0.565/0.525 development/robustness with zero false discoveries while shortcut probes stay at or below 0.104; pending clean Linux calibration, server-held molecules, independent mass-spectrometry review and higher-fidelity cascade replication
+    citation_ids:
+      - doi:10.1073/pnas.1509788112
+      - doi:10.1186/s13321-016-0116-8
+  ChemicalProcess/ThermochemicalCycleAudit:
+    status: candidate
+    reason: deterministic rank-7 Hess network over eight species with a truly pendant forward/reverse pair, persistent same-instrument offsets and cross-check-conditioned fault attribution; both always-consistent and always-underdetermined strategies score zero; the corrected standalone witness reaches 0.535168/0.233600 development/heldout in local debugging, resolving both development pendant cases with charged queries; earlier calibration and shortcut conclusions are superseded; pending clean Linux calibration, server-held networks, independent thermochemistry review and ATcT-style replication
+    citation_ids:
+      - doi:10.1021/jp047912y
+      - doi:10.1021/acs.jpca.6c03567
   Ecology/OccupancyDetectionDesign:
     status: candidate
     reason: Active repeat-survey allocation and latent occupancy inference under imperfect detection, with explicit refusal for nonlinear habitat and spatially structured worlds; retained as a candidate pending server-held surveys, real field-data replication and independent ecology review.

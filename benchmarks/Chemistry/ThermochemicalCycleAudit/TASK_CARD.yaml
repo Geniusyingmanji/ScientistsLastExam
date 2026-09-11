@@ -1,0 +1,144 @@
+schema_version: 2
+scientific_question: Does a Hess-closure enthalpy network, under a replicate and
+  cross-check budget, support a consistency verdict, a localized fault or a named
+  drifting instrument — and is refusal on an unresolved rank-deficient branch honest?
+artifact: A verdict string, flagged measurement ids, an optional instrument name,
+  corrected enthalpies for every determination and a confidence scalar.
+oracle:
+  model: deterministic eight-isomer interconversion network with rank-7 closure, seeded
+    enthalpies, balanced three-class instrument assignment with stated precisions,
+    Gaussian noise, systematic instrument offsets, single slips of 28-110 kJ/mol, and a
+    rank-deficient forward/reverse branch whose attribution is resolvable only by a budgeted
+    cross-check
+  feasibility: complete corrected-enthalpy coverage, verdict from the public vocabulary,
+    unique flags, charged queries within a six-unit budget
+  deterministic: true
+  external_tooling: none beyond NumPy
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: stated instrument precisions, drift offsets 4-8 kJ/mol
+    2: 25 percent larger uncertainties and stronger drifts
+    3: 55 percent larger uncertainties and strongest drifts
+normalization:
+  baseline: trusts every reported value and calls the batch consistent
+  reference: weighted network adjustment with exhaustive single-row drop-and-refit, coherent
+    same-direction class testing with one confirming cross-check, rank-deficiency triage
+  score: correction gain, verdict correctness and flagged-set diagnosis blended per
+    world, normalized above both all-consistent and all-underdetermined null strategies;
+    false discovery and refusal remain
+    separate
+citations:
+- id: doi:10.1021/jp047912y
+  title: Introduction to Active Thermochemical Tables - Several key enthalpies revisited
+- id: doi:10.1021/acs.jpca.6c03567
+  title: A perspective on Active Thermochemical Tables as critical data infrastructure
+invariants:
+- Hess closure holds exactly on the noise-free network
+- replicates shrink random error but never a systematic offset; cross-checks reveal both
+- one rank-deficient fault ambiguity is resolvable only by a targeted cross-check
+- the passive auditor scores exactly zero after normalization
+- malformed or overspent laboratory calls invalidate the world even when caught
+known_shortcuts: Both all-consistent and all-underdetermined strategies now score zero,
+  including with improved corrections. On the current head the reference is
+  0.535168/0.565973. Reverting exhaustive drop-and-refit to largest-residual-only leaves
+  development unchanged but drops held-out to 0.233600; removing rank-deficient-branch
+  resolution gives 0.509228/0.554594, and removing drift diagnosis gives
+  0.314229/0.422570. The executable no-query three-gate probe reaches
+  0.509228/0.382935, leaving only a 4.85 percent development margin. Clean Linux
+  calibration remains pending.
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All runtime worlds are generated from original repository code; cited publications
+    are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The network, instrument classes and procedural corruptions are public and
+    were built with AI assistance; server-held networks and independent corruptions are
+    still required.
+review:
+  domain: pending_external_thermochemistry
+  evaluator_security: targeted_local_regressions_added_clean_linux_sandbox_replay_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic thermochemical networks with development
+    and held-out enthalpies, instruments, noise and corruption regimes.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: DiscrepantMeasurements is the closest in-repository neighbour but
+    reconciles repeated estimates of one scalar without closure or a query budget;
+    ProspectiveMetaAnalysis screens literature evidence rather than diagnosing a
+    Hess-law network. The procedural data remain builder-model dependent.
+lineage:
+  status: complete
+  builder_model_ids:
+  - glm-5.3
+  builder_scaffolds:
+  - repository-native-chemistry-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local build caught least-squares smearing of a
+    giant slip into a fake class drift, a length-truncated corrected-enthalpy artifact,
+    an over-tight chi-square gate that false-alarmed clean worlds, and an aggregate
+    drift signal absorbed below detection; each was fixed and pinned by tests.
+    The 2026-09-08 review found that the supposed pendant pair repeated an existing
+    core edge and that replication removed its offset. The pair now alone observes
+    an eighth species, either member may carry a persistent offset, and exact
+    observational equivalence is tested. Null-strategy normalization and dynamic
+    refusal/FDR denominators were also corrected; earlier calibration is superseded.
+    The 2026-09-12 hardening removes the rank-deficient pair's ids and scoring branches
+    from candidate-facing text, reports zero-eligible refusal as null, and divides
+    coverage only by worlds where attribution is warranted after the chosen queries.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_thermochemistry
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations
+    and clean frontier-model calibration before certification
+  remaining_risk: The corrected network invalidates previous ablation and shortcut
+    claims; stronger robust adjustment and renewed model calibration are still needed.
+
+frontier_eng_overlap_review:
+  date: '2026-09-06'
+  classification: 无
+  nearest: snar_multiobjective; mit_case1_mixed; reizman_suzuki_pareto
+  distinction: Replicates and cross-checks diagnose enthalpy-network inconsistency,
+    instrument drift and unidentifiable fault attribution. FE selects reaction conditions
+    for yield or waste; no measurement-consistency verdict is requested.
+  evidence: .research/pr9_frontier_eng_overlap_2026-09-06.md
+  status: source_count_discrepancy_pending_maintainer_confirmation
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.5351684326746017
+  probes:
+  - id: no_query_three_gate_rules
+    candidate: verification/probe_three_gate_rules.py
+    expected_score: 0.5092278544140364
+  relative_margin: 0.04
+  score_tolerance: 1.0e-06
+evaluation_budget:
+  EVAL_TIMEOUT_S: 300
+  scope: Eight development and five held-out worlds; replicates cost one and external
+    cross-checks cost three from a six-unit measurement budget.
+  override: Task wrapper --timeout or sle eval --timeout.

@@ -1,0 +1,16 @@
+domain: Spectroscopy
+task: MassFragmentationTree
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 30
+science_metric: multi-energy MS/MS fragmentation-tree recovery with precursor-failure and
+  co-isolate refusal
+reference_baseline: one low-energy scan claiming the intact precursor as the entire tree
+reference_sota: truth-blind decomposition, background filtering and greedy loss attachment;
+  runnable witness, not a published SoTA claim
+citation: Dührkop et al. 2015 PNAS doi:10.1073/pnas.1509788112; Böcker & Dührkop 2016
+  J Cheminformatics doi:10.1186/s13321-016-0116-8
