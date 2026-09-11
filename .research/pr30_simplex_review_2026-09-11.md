@@ -2,7 +2,7 @@
 
 2026-09-11. **Both independently planned revised-simplex candidate calls failed with `candidate_runtime_error`; neither produced a usable scientific score.** Their complete returned payloads are identical. This report preserves those failures and makes no task-ceiling, difficulty or admission claim. The prior six-call evidence and its two HiGHS worker failures remain unchanged.
 
-The follow-up was authorized after the separate [zero-task-data LP compatibility diagnosis](https://github.com/Geniusyingmanji/ScientistsLastExam/blob/e0a7c129b2e4dd88637e52526afcd160dee901eb/.research/pr30_lp_compatibility_2026-09-11.md) found that its fixed two-variable `revised simplex` micro candidate worked in this environment, while the HiGHS variants exited. That engineering result motivated this one preselected backend substitution; it did not establish that this task's full LP helper or exact reconstruction would succeed. No further method or parameter was tried after these two failures.
+The follow-up was authorized after the separate [zero-task-data LP compatibility diagnosis](pr30_lp_compatibility_2026-09-11.md) found that its fixed two-variable `revised simplex` micro candidate worked in this environment, while the HiGHS variants exited. That engineering result motivated this one preselected backend substitution; it did not establish that this task's full LP helper or exact reconstruction would succeed. No further method or parameter was tried after these two failures.
 
 ## One frozen change
 
