@@ -5,7 +5,7 @@
 For supported worlds, candidate quality is 70% four-parameter recovery, 20% sealed-context
 prediction, and 10% confidence calibration. A wrong supported-family diagnosis makes that world's
 quality zero. The headline is the mean supported-world quality multiplied by the exact named
-refusal rate over unsupported worlds. It is clipped to `[0, 1]`; both valid blanket abstention and
+refusal rate over unsupported worlds. It is bounded by construction in `[0, 1]`; both valid blanket abstention and
 never refusing are exactly zero.
 
 Family-diagnosis accuracy is reported independently over every world with split-level correct and
@@ -45,16 +45,17 @@ better regularized likelihood modeling.
 | shrinkage point-process reference | **0.697016** | **0.829388** | 1.000 | 1.000 |
 | fixed refractory tau = 20 ms | 0.617365 | 0.751527 | 1.000 | 1.000 |
 | public-bound midpoint parameters, reference diagnosis | 0.496777 | 0.328371 | 1.000 | 1.000 |
-| 1,728-strategy moment/constant-parameter sweep | 0.402102 | 0.166566 | 0.667 | 0.667 |
+| 3,456-strategy moment/logit/constant-parameter sweep | 0.603153 | 0.386705 | 1.000 | 1.000 |
 | reference fit, never refuse | 0.000000 | 0.000000 | 0.000 | 0.000 |
 | mean-rate-only, never refuse | 0.000000 | 0.000000 | 0.000 | 0.000 |
 | blanket undetermined abstention | 0.000000 | 0.000000 | 0.000 | 0.000 |
 
-The reproducible shortcut in `verification/shortcut_probe.py` selects on development from 1,728
-strategies combining low-order moment thresholds with constant gain, amplitude, and tau profiles.
-It does not fit a point-process likelihood. Its best development strategy misses one unsupported
-family on each split and abstains on one held-out supported world. The reference retains gaps of
-`0.294914` development and `0.662822` held out.
+The reproducible shortcut in `verification/shortcut_probe.py` selects on development from 3,456
+strategies combining low-order moments, logit-scale conditional-history contrasts, constant
+gain/amplitude/tau profiles, and a two-point logit-drive variant. It does not fit a point-process
+likelihood. Its best development strategy has no false discoveries but remains materially below the
+reference, with gaps of `0.093863` development and `0.442683` held out. This is a disclosed lower-cost
+competitor, not an asserted exhaustive upper bound on moment methods.
 
 ## Model calibration
 

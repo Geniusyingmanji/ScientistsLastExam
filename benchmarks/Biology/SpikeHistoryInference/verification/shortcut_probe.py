@@ -32,17 +32,44 @@ def _features(problem):
     trial_overdispersion = float(np.var(trial_rates, ddof=1) / expected_trial_variance)
 
     delayed_lift = float(np.mean(outcomes[delayed]) - np.mean(outcomes[~delayed]))
+    def logit_rate(values):
+        # The supported refractory term is additive in log odds.  Comparing
+        # probability differences confounds it with stimulus-dependent base
+        # rate, so use the matching logit-scale conditional contrast.
+        rate = float(np.mean(values))
+        rate = float(np.clip(rate, 1e-4, 1.0 - 1e-4))
+        return math.log(rate / (1.0 - rate))
+
     suppressions = []
     for mask in (stimuli <= 0.0, stimuli > 0.0):
         with_history = outcomes[mask & recent]
         without_history = outcomes[mask & ~recent]
-        suppressions.append(float(np.mean(without_history) - np.mean(with_history)))
+        suppressions.append(logit_rate(without_history) - logit_rate(with_history))
     interaction_contrast = suppressions[1] - suppressions[0]
     return mean_rate, trial_overdispersion, delayed_lift, interaction_contrast
 
 
-def _candidate(problem, thresholds, parameters, features=None):
-    mean_rate, overdispersion, delayed_lift, interaction = features or _features(problem)
+def _two_point_parameters(problem):
+    values, outcomes = [], []
+    for trial in problem["trials"]:
+        values.extend(trial["stimulus"])
+        outcomes.extend(trial["spikes"])
+    values = np.asarray(values, dtype=float)
+    outcomes = np.asarray(outcomes, dtype=float)
+
+    def logit_rate(mask):
+        rate = float(np.clip(np.mean(outcomes[mask]), 1e-4, 1.0 - 1e-4))
+        return math.log(rate / (1.0 - rate))
+
+    low, high = values <= 0.0, values > 0.0
+    gain = (logit_rate(high) - logit_rate(low)) / max(float(np.mean(values[high]) - np.mean(values[low])), 1e-6)
+    intercept = logit_rate(np.ones_like(values, dtype=bool)) - gain * float(np.mean(values))
+    return intercept, gain
+
+
+def _candidate(problem, thresholds, parameters, features=None, two_point=False):
+    features = features or _features(problem) + _two_point_parameters(problem)
+    mean_rate, overdispersion, delayed_lift, interaction = features[:4]
     burst_threshold, mixture_threshold, interaction_threshold = thresholds
     diagnosis, abstain = "supported", False
     if delayed_lift > burst_threshold:
@@ -52,11 +79,15 @@ def _candidate(problem, thresholds, parameters, features=None):
     elif interaction > interaction_threshold:
         diagnosis, abstain = "stimulus_history_interaction", True
 
-    intercept = float(np.clip(
-        math.log(max(mean_rate, 1e-4) / max(1.0 - mean_rate, 1e-4)),
-        *problem["parameter_bounds"]["intercept"],
-    ))
+    if two_point:
+        intercept, gain = features[4:6]
+    else:
+        intercept = math.log(max(mean_rate, 1e-4) / max(1.0 - mean_rate, 1e-4))
+        gain = parameters[0]
+    intercept = float(np.clip(intercept, *problem["parameter_bounds"]["intercept"]))
     gain, amplitude, tau_ms = parameters
+    if two_point:
+        gain = float(np.clip(gain, *problem["parameter_bounds"]["stimulus_gain"]))
     probabilities = []
     for context in problem["prediction_contexts"]:
         history = sum(math.exp(-lag / tau_ms) for lag in context["recent_spike_lags_ms"])
@@ -78,25 +109,25 @@ def _candidate(problem, thresholds, parameters, features=None):
 def _cached_worlds():
     return {
         "development": [
-            (spec, problem, _features(problem))
+            (spec, problem, _features(problem) + _two_point_parameters(problem))
             for spec in evaluator.DEVELOPMENT_WORLDS
             for problem in [evaluator.public_problem(spec)]
         ],
         "heldout": [
-            (spec, problem, _features(problem))
+            (spec, problem, _features(problem) + _two_point_parameters(problem))
             for spec in evaluator.HELDOUT_WORLDS
             for problem in [evaluator.public_problem(spec)]
         ],
     }
 
 
-def _evaluate_cached(worlds, thresholds, parameters):
+def _evaluate_cached(worlds, thresholds, parameters, two_point=False):
     summaries = {}
     for split, entries in worlds.items():
         rows = []
         for spec, problem, features in entries:
             result = evaluator._validate(
-                _candidate(problem, thresholds, parameters, features), problem
+                _candidate(problem, thresholds, parameters, features, two_point), problem
             )
             score = evaluator._score(spec, result, problem)
             rows.append({
@@ -114,7 +145,7 @@ def run_sweep():
     threshold_grid = itertools.product(
         (0.000, 0.008, 0.016, 0.024),
         (1.4, 2.0, 2.6, 3.2),
-        (0.000, 0.015, 0.030, 0.045, 0.060, 0.080),
+        (0.40, 0.55, 0.70, 0.85, 1.00, 1.20),
     )
     parameter_grid = itertools.product(
         (0.4, 0.8, 1.2),
@@ -123,12 +154,14 @@ def run_sweep():
     )
     best = None
     count = 0
-    for thresholds, parameters in itertools.product(tuple(threshold_grid), tuple(parameter_grid)):
+    for thresholds, parameters, two_point in itertools.product(
+        tuple(threshold_grid), tuple(parameter_grid), (False, True),
+    ):
         count += 1
-        summary = _evaluate_cached(worlds, thresholds, parameters)
+        summary = _evaluate_cached(worlds, thresholds, parameters, two_point)
         key = summary["development"]["combined_score"]
         if best is None or key > best[0]:
-            best = (key, thresholds, parameters, summary)
+            best = (key, thresholds, parameters, two_point, summary)
     return {
         "strategy_count": count,
         "best_thresholds": {
@@ -141,8 +174,9 @@ def run_sweep():
             "refractory_amplitude": best[2][1],
             "refractory_tau_ms": best[2][2],
         },
-        "development": best[3]["development"],
-        "heldout": best[3]["heldout"],
+        "uses_two_point_logit_drive": best[3],
+        "development": best[4]["development"],
+        "heldout": best[4]["heldout"],
     }
 
 

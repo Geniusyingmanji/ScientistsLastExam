@@ -8,7 +8,7 @@ oracle:
 normalization:
   baseline: valid undetermined blanket abstention with fixed in-bounds parameters
   reference: truth-blind regularized logistic fits, exponential time-constant search, light shrinkage toward public-bound midpoints, and likelihood or BIC comparisons against three structured alternatives
-  score: clipped mean supported-world quality (70% parameter recovery, 20% prediction, 10% confidence, gated by a supported diagnosis) multiplied by exact unsupported-family refusal; both blanket abstention and never refusing are exactly zero, while false discovery, coverage, attempts, and held-out transfer remain separate
+  score: bounded-by-construction mean supported-world quality (70% parameter recovery, 20% prediction, 10% confidence, gated by a supported diagnosis) multiplied by exact unsupported-family refusal; both blanket abstention and never refusing are exactly zero, while false discovery, coverage, attempts, and held-out transfer remain separate
 citations:
 - id: doi:10.1152/jn.00697.2004
   title: A point process framework for relating neural spiking activity to spiking history, neural ensemble, and extrinsic covariate effects
@@ -27,7 +27,7 @@ invariants:
 - development and held-out worlds use different seeds and parameters
 - every candidate session is reset at each world boundary, preventing cross-world or development-to-held-out state transfer
 - reference outputs are computed from public trials without reading hidden world labels or parameters
-known_shortcuts: A 1,728-strategy development-selected sweep combines low-order moment thresholds with constant gain, amplitude, and tau profiles. It reaches 0.402102/0.166566 development/held-out with one-third false discovery, below the truth-blind shrinkage reference's 0.697016/0.829388. Replacing every fitted parameter with public-bound midpoints while retaining reference diagnosis reaches 0.496777/0.328371; fixing tau at 20 ms reaches 0.617365/0.751527; never refusing and rate-only inference score zero. The reduced-order laboratory omits continuous-time spike jitter, coupled neurons, sorting errors, nonstationary stimulus filters and long adaptation.
+known_shortcuts: A 3,456-strategy development-selected sweep combines low-order moment thresholds, logit-scale conditional-history contrasts, constant gain/amplitude/tau profiles, and a two-point logit-drive variant without point-process likelihood fitting. It reaches 0.603153/0.386705 development/held-out with no false discoveries, below the truth-blind shrinkage reference's 0.697016/0.829388. Replacing every fitted parameter with public-bound midpoints while retaining reference diagnosis reaches 0.496777/0.328371; fixing tau at 20 ms reaches 0.617365/0.751527; never refusing and rate-only inference score zero. The reduced-order laboratory omits continuous-time spike jitter, coupled neurons, sorting errors, nonstationary stimulus filters and long adaptation.
 review:
   domain: pending_external_computational_neuroscience_review
   evaluator_security: automated_bad_candidate_determinism_contract_probability_and_fault_refusal_tests
@@ -40,7 +40,7 @@ novelty_risk:
   level: medium
   rationale: No repository or Frontier-Eng task performs neural point-process inference. GeneNetworkIntervention uses active multi-gene ODE perturbations and HamiltonianLearning uses coherent spin dynamics; neither estimates spike-history likelihoods or attributes refractory-model failure. The parallel SingleMoleculeKinetics candidate infers latent molecular-state transitions rather than a stimulus-conditioned neural history kernel and trial-level neural heterogeneity.
 lineage:
-  status: complete
+  status: incomplete_legacy
   builder_model_ids:
   - openai-codex:gpt-5
   builder_scaffolds:
@@ -64,7 +64,7 @@ long_horizon:
 construction_audit:
   status: builder_audited_pending_external
   author_domain: computational_neuroscience
-  reviewer_domain: independent_repository_maintainer_scientific_and_evaluator_review
+  reviewer_domain: pending_external_computational_neuroscience_review
   expert_hours: null
   red_team_rounds: 3
   oracle_disagreement_status: independent review found degenerate non-refusal credit, a stronger low-dimensional shortcut, missing world-boundary resets, a mechanism-axis mismatch, and incomplete reference shrinkage; all were resolved in the hardened revision
