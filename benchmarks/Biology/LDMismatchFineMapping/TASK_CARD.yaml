@@ -150,10 +150,10 @@ metric_contract:
     direction: higher
   fdr:
     metric: false_discovery_rate
-    estimand: false_discovery_events_per_world_not_claim_conditional_fdr
-    numerator: false_discovery_count
-    denominator: world_count
-    denominator_metric: world_count
+    estimand: false_claims_per_valid_non_abstaining_discovery_claims
+    numerator: false_claim_count
+    denominator: claim_count
+    denominator_metric: claim_count
     direction: lower
   refusal:
     metric: correct_refusal_rate
@@ -204,3 +204,15 @@ post_builder_admission_review:
   construction_evidence: .research/ld_mismatch_fine_mapping/admission_2026-09-11.json
   construction_source_commit: 83e2e3c7
   calibration_status: three_complete_first_proposals_failed_D16
+
+metric_reporting_revision:
+  id: claim_conditional_fdr_v2
+  legacy_diagnostic: false_verdict_world_rate
+  legacy_numerator: false_verdict_count
+  legacy_denominator: world_count
+  empty_claims: FDR is zero with claim_count zero; coverage and refusal must remain separately visible.
+  historical_evidence: >-
+    Earlier source-bound model and construction reports used false verdicts per all worlds,
+    including erroneous refusals. Those records retain their original schema and hashes.
+    This correction changes only split diagnostics, not score, world generation, budgets,
+    reference candidates or the failed first-proposal difficulty conclusion.

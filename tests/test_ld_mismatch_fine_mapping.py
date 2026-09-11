@@ -371,14 +371,55 @@ class LDMismatchFineMappingTests(unittest.TestCase):
                 self.assertEqual(metrics[prefix + "determinable_world_count"], len(determinable))
                 self.assertEqual(metrics[prefix + "unsupported_world_count"], len(unsupported))
                 for count, rate, denominator in (
-                    ("false_discovery_count", "false_discovery_rate", len(rows)),
+                    ("false_verdict_count", "false_verdict_world_rate", len(rows)),
                     ("correct_refusal_count", "correct_refusal_rate", len(unsupported)),
                     ("discovery_attempt_count", "discovery_coverage", len(determinable)),
                 ):
                     self.assertAlmostEqual(metrics[prefix + rate], metrics[prefix + count] / denominator)
+                claims = [r for r in rows if r["valid"] and not r["abstained"]]
+                false_claims = sum(r["false_discovery"] for r in claims)
+                self.assertEqual(metrics[prefix + "claim_count"], len(claims))
+                self.assertEqual(metrics[prefix + "false_claim_count"], false_claims)
+                self.assertEqual(metrics[prefix + "false_discovery_count"], false_claims)
+                self.assertEqual(metrics[prefix + "false_discovery_rate"], false_claims / len(claims) if claims else 0.0)
                 expected = np.clip((sum(r["mechanism_score"] for r in rows) - len(unsupported))
                                    / len(determinable), 0.0, 1.0)
                 self.assertAlmostEqual(metrics[prefix + "mechanism_score"], expected)
+
+    def test_claim_conditional_fdr_separates_wrong_refusals_and_invalid_worlds(self):
+        def row(kind, valid=True, abstained=False, false=False, score=0.0):
+            return {"kind": kind, "valid": valid, "abstained": abstained,
+                    "false_discovery": false, "mechanism_score": score,
+                    "set_f1": score, "effect_score": score,
+                    "correct_refusal": kind == "unresolved" and valid and abstained,
+                    "confidence_calibration_score": 0.0, "rows_bought": 0}
+        rows = [row("single", score=1.0),
+                row("masked", false=True),
+                row("multi", abstained=True, false=True),
+                row("single", valid=False, abstained=True),
+                row("unresolved", abstained=True, score=1.0),
+                row("unresolved", false=True),
+                row("unresolved", valid=False, abstained=True)]
+        summary = self.evaluator._split_summary(rows)
+        self.assertEqual(summary["claim_count"], 3)
+        self.assertEqual(summary["false_claim_count"], 2)
+        self.assertEqual(summary["false_discovery_rate"], 2 / 3)
+        self.assertEqual(summary["false_verdict_count"], 3)
+        self.assertEqual(summary["false_verdict_world_rate"], 3 / 7)
+        self.assertEqual(summary["correct_refusal_rate"], 1 / 3)
+        self.assertEqual(summary["discovery_coverage"], 2 / 4)
+
+    def test_zero_claims_report_zero_fdr_without_erasing_wrong_refusal_diagnostic(self):
+        metrics = self.evaluator.evaluate(lambda _problem, _ld_row: {"abstain": True})
+        for split in ("development", "heldout"):
+            prefix = split + "_"
+            self.assertEqual(metrics[prefix + "claim_count"], 0)
+            self.assertEqual(metrics[prefix + "false_discovery_rate"], 0.0)
+            self.assertEqual(metrics[prefix + "discovery_coverage"], 0.0)
+            self.assertEqual(metrics[prefix + "false_verdict_count"], metrics[prefix + "determinable_world_count"])
+            self.assertAlmostEqual(metrics[prefix + "false_verdict_world_rate"],
+                                   metrics[prefix + "determinable_world_count"] / metrics[prefix + "world_count"])
+        self.assertEqual(metrics["combined_score"], 0.0)
 
     def test_malformed_candidates_score_zero_without_raising(self):
         n = self.evaluator.N_SNP

@@ -564,12 +564,21 @@ def _split_summary(records):
     raw = float(np.mean([r["mechanism_score"] for r in records]))
     always_abstain = len(unsupported) / len(records)
     normalized = float(np.clip((raw - always_abstain) / (1.0 - always_abstain), 0.0, 1.0))
+    claims = [r for r in records if r["valid"] and not r["abstained"]]
+    false_claim_count = sum(bool(r["false_discovery"]) for r in claims)
     return {
         "normalized_mechanism": normalized,
         "raw_mechanism": raw,
         "set_f1": float(np.mean([r["set_f1"] for r in determinable])),
         "effect_score": float(np.mean([r["effect_score"] for r in determinable])),
-        "false_discovery_rate": float(np.mean([r["false_discovery"] for r in records])),
+        # An unwarranted refusal is an erroneous scientific verdict, but it is
+        # not a non-abstaining discovery claim. Preserve that legacy diagnostic
+        # separately from claim-conditional FDR. Empty claims have zero FDR and
+        # an explicit zero claim_count, so coverage must also be inspected.
+        "false_discovery_rate": false_claim_count / len(claims) if claims else 0.0,
+        "false_verdict_world_rate": float(np.mean([r["false_discovery"] for r in records])),
+        "false_claim_count": false_claim_count,
+        "claim_count": len(claims),
         "correct_refusal_rate": float(np.mean([r["correct_refusal"] for r in unsupported])),
         "discovery_coverage": float(np.mean([not r["abstained"] for r in determinable])),
         "confidence_calibration": float(np.mean([r["confidence_calibration_score"] for r in records])),
@@ -578,7 +587,8 @@ def _split_summary(records):
         "world_count": len(records),
         "determinable_world_count": len(determinable),
         "unsupported_world_count": len(unsupported),
-        "false_discovery_count": sum(bool(r["false_discovery"]) for r in records),
+        "false_discovery_count": false_claim_count,
+        "false_verdict_count": sum(bool(r["false_discovery"]) for r in records),
         "correct_refusal_count": sum(bool(r["correct_refusal"]) for r in unsupported),
         "discovery_attempt_count": sum(not r["abstained"] for r in determinable),
         "mechanism_score_sum": sum(float(r["mechanism_score"]) for r in records),
@@ -621,6 +631,8 @@ def evaluate(fine_map):
     for split, summary in (("development", dev), ("heldout", held)):
         for name in ("world_count", "valid_count", "determinable_world_count",
                      "unsupported_world_count", "false_discovery_count",
-                     "correct_refusal_count", "discovery_attempt_count", "mechanism_score_sum"):
+                     "correct_refusal_count", "discovery_attempt_count", "mechanism_score_sum",
+                     "false_claim_count", "claim_count", "false_verdict_count",
+                     "false_verdict_world_rate"):
             result[split + "_" + name] = summary[name]
     return result

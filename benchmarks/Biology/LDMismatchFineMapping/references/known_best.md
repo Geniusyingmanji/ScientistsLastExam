@@ -1,5 +1,17 @@
 # LDMismatchFineMapping: known best
 
+## FDR reporting revision
+
+Current `false_discovery_rate` is false claims divided by valid non-abstaining discovery
+claims. `claim_count` and `false_claim_count` are explicit; with no claims, FDR is zero with
+`claim_count=0`, and coverage/refusal remain separate. The old false-verdict rate per world,
+including an unwarranted refusal on a determinable world, is preserved as
+`false_verdict_world_rate` with `false_verdict_count/world_count`.
+
+Historical source-bound construction and three first-proposal reports keep their original
+metric meaning and hashes. No score, reference, world, budget or difficulty conclusion changes;
+all three valid first proposals still meet the complete reference and fail the admission floor.
+
 ## Current complete reference and correction
 
 Current Linux construction screen (Python 3.8.10, NumPy 1.24.4, SciPy 1.10.1, one numerical
