@@ -7,8 +7,6 @@ import math
 
 import numpy as np
 
-import evaluator
-
 
 def _features(problem):
     trial_rates = []
@@ -107,7 +105,19 @@ def _candidate(problem, thresholds, parameters, features=None, two_point=False):
     }
 
 
+def infer_spike_history(problem):
+    """Fixed development-selected member used by the machine-readable guard."""
+    return _candidate(
+        problem,
+        thresholds=(0.008, 1.4, 0.4),
+        parameters=(0.4, 2.4, 12.0),
+        two_point=True,
+    )
+
+
 def _cached_worlds():
+    import evaluator
+
     return {
         "development": [
             (spec, problem, _features(problem) + _two_point_parameters(problem))
@@ -123,6 +133,8 @@ def _cached_worlds():
 
 
 def _evaluate_cached(worlds, thresholds, parameters, two_point=False):
+    import evaluator
+
     summaries = {}
     for split, entries in worlds.items():
         rows = []

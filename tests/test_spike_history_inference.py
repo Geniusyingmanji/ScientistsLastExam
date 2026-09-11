@@ -185,6 +185,23 @@ class SpikeHistoryInferenceTests(unittest.TestCase):
             self.assertEqual(never_refuse[split][key], 0.0)
             self.assertEqual(rate_only[split][key], 0.0)
 
+    def test_declared_shortcut_candidate_matches_sweep_result(self):
+        oracle = _load("spike_shortcut_eval", TASK / "verification" / "evaluator.py")
+        sys.path.insert(0, str(TASK / "verification"))
+        try:
+            reference = _load("spike_shortcut_ref", TASK / "verification" / "reference_solver.py")
+            shortcut = _load("spike_shortcut", TASK / "verification" / "shortcut_probe.py")
+        finally:
+            sys.path.pop(0)
+        reference_metrics = oracle.evaluate(reference.infer_spike_history)
+        shortcut_metrics = oracle.evaluate(shortcut.infer_spike_history)
+        self.assertEqual(shortcut_metrics["development_combined_score"], 0.626217)
+        self.assertEqual(shortcut_metrics["heldout_combined_score"], 0.463498)
+        self.assertLess(
+            shortcut_metrics["combined_score"],
+            0.9 * reference_metrics["combined_score"],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
