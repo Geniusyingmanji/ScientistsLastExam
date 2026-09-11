@@ -1,0 +1,66 @@
+schema_version: 2
+scientific_question: Can an agent separate intracellular diffusion from reversible binding by choosing FRAP bleach radii and recovery times, recover four shared kinetic parameters, and refuse anomalous transport, two mobile pools, or spatially varying binding?
+artifact: Four reaction-diffusion parameters, conditional recovery predictions, a supported or model-inadequacy diagnosis, confidence, and immutable measurement evidence.
+oracle:
+  model: deterministic seeded single-radial-mode FRAP recovery with freely diffusing and immobile bound pools, plus three structured unsupported transport or binding families
+  feasibility: listed radii and times, a 32-unit measurement budget, exact bounded finite outputs, matching diagnosis and abstention, and current-world evidence identifiers
+  deterministic: true
+normalization:
+  baseline: one early measurement followed by a valid undetermined abstention with fixed in-bounds parameters
+  reference: cross-radius deterministic bounded fits of the supported reaction-diffusion family and three structured alternatives with BIC attribution
+  score: clipped development joint of parameter recovery, conditional prediction, diagnosis, and confidence; false discovery, correct refusal, coverage, attempts, unwarranted refusal, and held-out transfer remain separate
+citations:
+- id: doi:10.1529/biophysj.103.026765
+  title: Analysis of Binding Reactions by Fluorescence Recovery after Photobleaching
+- id: doi:10.1016/S0006-3495(96)79846-6
+  title: 'Constrained diffusion or immobile fraction on cell surfaces: a new interpretation'
+- id: doi:10.1016/S0006-3495(76)85755-4
+  title: Mobility measurement by analysis of fluorescence photobleaching recovery kinetics
+invariants:
+- supported recovery uses a transport rate proportional to diffusion coefficient divided by bleach-radius squared while binding rates remain shared across radii
+- every supported recovery begins at zero, stays bounded by the mobile fraction, and approaches that fraction at late time
+- anomalous transport, two freely mobile pools, and radius-dependent binding violate different parts of the supported family
+- every measurement has listed finite coordinates, bounded recovery, stated standard error, and an immutable current-world identifier
+- blanket undetermined abstention is valid and scores exactly zero
+- malformed, non-finite, extra-key, fabricated-evidence, and over-budget submissions fail closed
+- development and held-out worlds use different parameters and seeds
+- the truth-blind reference consumes only public problems and measurement callbacks
+known_shortcuts: A 192-strategy sweep using only plateau, half-time, curve-shape and late-tail thresholds reaches 0.369/0.386 development/held-out, versus the truth-blind joint reaction-diffusion reference at 0.966/0.958. Two radii reach 0.902/0.921, omitting the latest intermediate time reaches 0.918/0.865, fixed binding rates reach 0.622/0.595, and never refusing reaches 0.470/0.363. The reduced-order laboratory omits full bleach geometry, finite exposure, three-dimensional transport, photoswitching, cell motion, drift, and image-level inference.
+review:
+  domain: pending_external_cell_biophysics_review
+  evaluator_security: automated_budget_contract_determinism_recovery_invariant_bad_candidate_and_fault_attribution_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic multi-radius FRAP generator with development and held-out supported and misspecified worlds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: No repository or Frontier-Eng task uses fluorescence photobleaching recovery or bleach-radius perturbations. EnzymeKineticsLaw classifies substrate-inhibitor rate laws, NMRSpectrumFitting recovers spectral peaks, and ForceFieldCalibration fits microscopic pair potentials; none separates cellular transport from reversible binding through spatial-scale-dependent recovery.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:gpt-5
+  builder_scaffolds:
+  - science-benchmark-construction
+  - deterministic_multi_radius_frap_discovery
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: Model calibration will be recorded only after the oracle and public contract are frozen.
+  shortcut_discoverer: builder_self_audit_with_192_strategy_summary_statistic_sweep
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cell_biophysics
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: baseline, truth-blind reference, malformed-candidate checks, recovery invariants, ablations, and shortcut sweep are executable from the task package
