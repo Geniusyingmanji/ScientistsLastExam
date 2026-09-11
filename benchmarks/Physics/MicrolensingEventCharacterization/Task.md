@@ -51,17 +51,16 @@ free to call for shape checks.
 ## Scoring
 
 Supported worlds score model identification (0.50), continuous time-scale recovery (0.25),
-amplitude recovery (0.15), and confidence (0.10). Ambiguous worlds score only for refusal.
+amplitude recovery (0.15), and calibrated confidence (0.10). Confidence is scored by agreement
+with the recovered continuous correctness, rather than as an unpenalized declaration. Ambiguous worlds score only for refusal.
 `combined_score` is development mechanism recovery normalized so blanket abstention is exactly zero;
 model accuracy, false discovery, refusal, budget, feasibility and held-out transfer are reported
 separately. Held-out worlds and per-world truth are not search-visible.
 
-The task-local reference scores 0.494434 using 18 r-band observations. Adding six unused
-g-band queries leaves scientific metrics unchanged; disabling the reference's refusal lowers
-the development score to 0.227303. A 4,116-strategy range/roughness/peak-threshold sweep reaches
-0.276213, but an uncertainty-threshold refusal policy reaches 0.300000, so the former is not
-an upper bound over all shortcuts. Remaining reference headroom includes variable-source
-recognition; it mislabels both development variable sources as binary lenses.
+The task-local reference uses 24 r-band observations, performs independent point-lens and
+continuous-period variability fits, and reports calibrated confidence. Calibration values are
+recorded in `references/known_best.md`; fixed-parameter threshold policies are remeasured with
+the current evaluator before release.
 
 ## Relationship to nearby tasks
 

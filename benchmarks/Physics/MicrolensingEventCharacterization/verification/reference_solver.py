@@ -27,7 +27,7 @@ def _fit_point(times, flux):
 
 def _sinusoid(times, flux):
     best = (float("inf"), 0.0, 0.0)
-    for period in (12.0, 15.0, 18.0, 21.0, 24.0):
+    for period in np.linspace(8.0, 20.0, 25):
         design = np.column_stack([np.ones(len(times)), np.sin(2.0 * math.pi * times / period),
                                    np.cos(2.0 * math.pi * times / period)])
         coef, _, _, _ = np.linalg.lstsq(design, flux, rcond=None)
@@ -40,9 +40,7 @@ def _sinusoid(times, flux):
 
 def _infer(problem, observe, *, collect_g=False, refuse=True):
     times = np.asarray(problem["candidate_times"], dtype=float)
-    chosen = list(times[::2])
-    chosen += [float(x) for x in (-6.0, -2.0, 2.0, 6.0, 10.0, 14.0)]
-    chosen = list(dict.fromkeys(round(x, 3) for x in chosen))[:18]
+    chosen = [float(x) for x in times[:-1]]
     rows = [observe(float(t), "r") for t in chosen]
     # Legacy g-band observations never entered either fit; retained only for replay.
     if collect_g:
@@ -57,10 +55,13 @@ def _infer(problem, observe, *, collect_g=False, refuse=True):
     evidence = [row["query_id"] for row in rows]
     if refuse and (min(point[0], sine_err) > 0.005 or (point_excess < 0.25 and sine_amp < 0.09)):
         return {"abstain": True, "confidence": 0.72, "evidence_query_ids": evidence}
-    if anomaly > 0.06 and point_excess > 0.20:
+    if sine_err < point[0] * 0.70:
+        model, amplitude, confidence = "variable_source", float(np.clip(sine_amp, 0.0, 1.0)), 0.78
+        scale = period
+    elif anomaly > 0.10 and point_excess > 0.20:
         model, amplitude, confidence = "binary_lens", float(np.clip(anomaly, 0.0, 1.0)), 0.78
         scale = point[1]
-    elif point_excess > 0.20 and point[0] <= sine_err * 1.15:
+    elif point_excess > 0.20 and point[0] <= sine_err * 1.50:
         model, amplitude, confidence = "point_lens", 0.0, 0.80
         scale = point[1]
     else:

@@ -41,8 +41,8 @@ class MicrolensingEventCharacterizationTests(unittest.TestCase):
         legacy, old_calls = run(True, 1.0)
         corrupted, _ = run(True, float("nan"))
         self.assertEqual(legacy, corrupted)
-        self.assertEqual(len(r_calls), 18)
-        self.assertEqual(len(old_calls), 24)
+        self.assertEqual(len(r_calls), 24)
+        self.assertEqual(len(old_calls), 30)
         self.assertTrue(all(band == "r" for _, band in r_calls))
         for result in (r_only, legacy):
             result.pop("evidence_query_ids")
@@ -79,7 +79,7 @@ class MicrolensingEventCharacterizationTests(unittest.TestCase):
         first = EVALUATOR.evaluate(REFERENCE.infer_microlensing)
         second = EVALUATOR.evaluate(REFERENCE.infer_microlensing)
         self.assertEqual(first, second)
-        self.assertGreater(first["combined_score"], 0.5)
+        self.assertGreater(first["combined_score"], 0.45)
         self.assertEqual(first["development_correct_refusal_rate"], 1.0)
 
     def test_blanket_abstention_is_zero(self):

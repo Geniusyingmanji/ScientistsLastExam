@@ -10,6 +10,7 @@ TIMES = tuple(round(-24.0 + 2.0 * i, 3) for i in range(25))
 FILTERS = ("g", "r")
 BUDGET = 24
 MIN_EVIDENCE = 6
+MAX_EVIDENCE = 128
 
 
 def _paczynski(t, t0, timescale, u0):
@@ -79,7 +80,9 @@ class _Observer:
             "time": key[0],
             "band": band,
             "flux": _flux(self.world, key[0], band),
-            "uncertainty": self.world["noise"],
+            # This is the instrument reporting floor, not an oracle leak of the
+            # evaluator-only realization noise used to generate this world.
+            "uncertainty": 0.03,
             "budget_used": self.used,
         }
 
@@ -110,7 +113,8 @@ def _validate(submission, query_ids):
     if not math.isfinite(confidence) or not 0.0 <= confidence <= 1.0:
         raise ValueError("confidence must be finite in [0,1]")
     evidence = submission.get("evidence_query_ids", [])
-    if not isinstance(evidence, list) or len(evidence) < MIN_EVIDENCE:
+    if (not isinstance(evidence, list) or len(evidence) < MIN_EVIDENCE
+            or len(evidence) > MAX_EVIDENCE):
         raise ValueError("at least six evidence ids are required")
     if len(evidence) != len(set(evidence)) or not set(evidence).issubset(query_ids):
         raise ValueError("evidence ids must be distinct current-world queries")
@@ -147,32 +151,34 @@ def _score(world, claim):
         return row
     true_scale = world["period"] if world["kind"] == "variable" else world["timescale"]
     true_amp = world.get("anomaly_amp", 0.0) if world["kind"] == "binary" else world.get("variability_amp", 0.0)
-    row["parameter_score"] = max(0.0, 1.0 - abs(claim["timescale"] - true_scale) / 2.5)
-    row["amplitude_score"] = max(0.0, 1.0 - abs(claim["amplitude"] - true_amp) / 0.10)
-    row["mechanism_score"] = 0.50 + 0.25 * row["parameter_score"] + 0.15 * row["amplitude_score"] + 0.10 * claim["confidence"]
+    row["parameter_score"] = max(0.0, 1.0 - abs(claim["timescale"] - true_scale) / 1.8)
+    row["amplitude_score"] = max(0.0, 1.0 - abs(claim["amplitude"] - true_amp) / 0.075)
+    continuous_correctness = 0.50 + 0.25 * row["parameter_score"] + 0.15 * row["amplitude_score"]
+    calibration = max(0.0, 1.0 - abs(claim["confidence"] - continuous_correctness))
+    row["mechanism_score"] = continuous_correctness + 0.10 * calibration
     return row
 
 
 DEVELOPMENT_WORLDS = tuple(_world(spec) for spec in (
-    {"kind": "point", "seed": 4101, "t0": -1.0, "timescale": 7.0, "u0": 0.22, "source_scale": 0.95, "noise": 0.018},
-    {"kind": "point", "seed": 4102, "t0": 2.0, "timescale": 11.0, "u0": 0.35, "source_scale": 0.80, "noise": 0.020},
-    {"kind": "binary", "seed": 4103, "t0": -2.0, "timescale": 8.0, "u0": 0.27, "source_scale": 0.90, "anomaly_time": 6.0, "anomaly_width": 1.3, "anomaly_amp": 0.26, "noise": 0.018},
-    {"kind": "binary", "seed": 4104, "t0": 3.0, "timescale": 10.0, "u0": 0.31, "source_scale": 0.85, "anomaly_time": -5.0, "anomaly_width": 1.0, "anomaly_amp": 0.22, "noise": 0.020},
-    {"kind": "variable", "seed": 4105, "period": 15.0, "phase": -4.0, "variability_amp": 0.18, "noise": 0.022},
-    {"kind": "variable", "seed": 4106, "period": 21.0, "phase": 3.0, "variability_amp": 0.14, "noise": 0.020},
-    {"kind": "ambiguous", "seed": 4107, "t0": 0.0, "timescale": 8.0, "u0": 0.72, "source_scale": 0.25, "noise": 0.075},
-    {"kind": "ambiguous", "seed": 4108, "t0": 1.0, "timescale": 10.0, "u0": 0.65, "source_scale": 0.22, "noise": 0.070},
+    {"kind": "point", "seed": 4101, "t0": -1.37, "timescale": 6.73, "u0": 0.23, "source_scale": 0.84, "noise": 0.024},
+    {"kind": "point", "seed": 4102, "t0": 2.47, "timescale": 11.38, "u0": 0.36, "source_scale": 0.73, "noise": 0.026},
+    {"kind": "binary", "seed": 4103, "t0": -2.36, "timescale": 8.42, "u0": 0.28, "source_scale": 0.81, "anomaly_time": 5.63, "anomaly_width": 1.22, "anomaly_amp": 0.205, "noise": 0.025},
+    {"kind": "binary", "seed": 4104, "t0": 3.18, "timescale": 10.74, "u0": 0.32, "source_scale": 0.75, "anomaly_time": -4.67, "anomaly_width": 1.11, "anomaly_amp": 0.176, "noise": 0.026},
+    {"kind": "variable", "seed": 4105, "period": 14.37, "phase": -3.71, "variability_amp": 0.235, "noise": 0.025},
+    {"kind": "variable", "seed": 4106, "period": 18.63, "phase": 3.27, "variability_amp": 0.196, "noise": 0.026},
+    {"kind": "ambiguous", "seed": 4107, "t0": 0.43, "timescale": 8.17, "u0": 0.72, "source_scale": 0.20, "noise": 0.066},
+    {"kind": "ambiguous", "seed": 4108, "t0": 1.29, "timescale": 10.41, "u0": 0.65, "source_scale": 0.19, "noise": 0.064},
 ))
 
 HELDOUT_WORLDS = tuple(_world(spec) for spec in (
-    {"kind": "point", "seed": 4201, "t0": -3.0, "timescale": 5.5, "u0": 0.25, "source_scale": 0.88, "noise": 0.021},
-    {"kind": "point", "seed": 4202, "t0": 4.0, "timescale": 13.0, "u0": 0.32, "source_scale": 0.78, "noise": 0.022},
-    {"kind": "binary", "seed": 4203, "t0": 0.0, "timescale": 9.0, "u0": 0.29, "source_scale": 0.86, "anomaly_time": 7.0, "anomaly_width": 1.1, "anomaly_amp": 0.24, "noise": 0.021},
-    {"kind": "binary", "seed": 4204, "t0": 2.0, "timescale": 12.0, "u0": 0.34, "source_scale": 0.82, "anomaly_time": -6.0, "anomaly_width": 1.4, "anomaly_amp": 0.20, "noise": 0.022},
-    {"kind": "variable", "seed": 4205, "period": 17.0, "phase": -2.0, "variability_amp": 0.16, "noise": 0.023},
-    {"kind": "variable", "seed": 4206, "period": 19.0, "phase": 5.0, "variability_amp": 0.13, "noise": 0.022},
-    {"kind": "ambiguous", "seed": 4207, "t0": -1.0, "timescale": 9.0, "u0": 0.70, "source_scale": 0.24, "noise": 0.075},
-    {"kind": "ambiguous", "seed": 4208, "t0": 2.0, "timescale": 11.0, "u0": 0.68, "source_scale": 0.23, "noise": 0.072},
+    {"kind": "point", "seed": 4201, "t0": -3.24, "timescale": 5.61, "u0": 0.26, "source_scale": 0.80, "noise": 0.026},
+    {"kind": "point", "seed": 4202, "t0": 4.16, "timescale": 12.71, "u0": 0.33, "source_scale": 0.71, "noise": 0.027},
+    {"kind": "binary", "seed": 4203, "t0": 0.31, "timescale": 9.27, "u0": 0.30, "source_scale": 0.79, "anomaly_time": 6.74, "anomaly_width": 1.16, "anomaly_amp": 0.193, "noise": 0.026},
+    {"kind": "binary", "seed": 4204, "t0": 2.42, "timescale": 12.16, "u0": 0.35, "source_scale": 0.74, "anomaly_time": -5.82, "anomaly_width": 1.33, "anomaly_amp": 0.184, "noise": 0.027},
+    {"kind": "variable", "seed": 4205, "period": 16.42, "phase": -2.38, "variability_amp": 0.218, "noise": 0.026},
+    {"kind": "variable", "seed": 4206, "period": 19.14, "phase": 4.63, "variability_amp": 0.187, "noise": 0.027},
+    {"kind": "ambiguous", "seed": 4207, "t0": -1.18, "timescale": 9.23, "u0": 0.70, "source_scale": 0.20, "noise": 0.067},
+    {"kind": "ambiguous", "seed": 4208, "t0": 2.31, "timescale": 10.84, "u0": 0.68, "source_scale": 0.19, "noise": 0.065},
 ))
 
 
