@@ -1,0 +1,458 @@
+{
+  "all_repeats_identical": true,
+  "candidate_order": [
+    "baseline",
+    "reference",
+    "paired62208_refined"
+  ],
+  "candidate_plan_sha256": {
+    "baseline": "1aee41922acfaa8bfdc23f7e2c88ad5187318df2965c4915b6b435044e262a83",
+    "paired62208_refined": "ce6a820bd33afa90be919d408622deabcb8269fcf769408f4e892d70a4719160",
+    "reference": "3d2f071b414fe5a8e41e11d3140d10f72a76d9456236c2e2742934732b7f80e5"
+  },
+  "candidates": {
+    "baseline": {
+      "candidate_sha256": "1aee41922acfaa8bfdc23f7e2c88ad5187318df2965c4915b6b435044e262a83",
+      "full_metrics_repeat_identical": true,
+      "runs": [
+        {
+          "budget_aggregate": {
+            "development": {
+              "max_units": 0,
+              "mean_units": 0.0,
+              "min_units": 0,
+              "total_units": 0,
+              "valid_world_count": 8,
+              "world_count": 8
+            },
+            "heldout": {
+              "max_units": 0,
+              "mean_units": 0.0,
+              "min_units": 0,
+              "total_units": 0,
+              "valid_world_count": 5,
+              "world_count": 5
+            }
+          },
+          "full_metrics_sha256": "72c3de9b2e0a78399f44b1c0ff6680c589b9e627db3b3a890d5585d9c716e785",
+          "metrics": {
+            "combined_score": 0.0,
+            "correct_refusal_count": 0,
+            "development_axis_score": 0.9842295983067331,
+            "development_confidence_calibration_score": 0.5163382355075907,
+            "development_correct_refusal_rate": 0.0,
+            "development_discovery_coverage": 1.0,
+            "development_false_discovery_rate": 1.0,
+            "development_plane_score": 0.06666666666666665,
+            "development_r_score": 0.470393129622109,
+            "discovery_attempt_count": 5,
+            "false_discovery_count": 3,
+            "feasibility_rate": 1.0,
+            "heldout_confidence_calibration_score": 0.44867409988654516,
+            "heldout_correct_refusal_count": 0,
+            "heldout_correct_refusal_rate": 0.0,
+            "heldout_discovery_attempt_count": 3,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_false_discovery_count": 2,
+            "heldout_false_discovery_rate": 1.0,
+            "heldout_feasibility_rate": 1.0,
+            "heldout_supported_world_count": 3,
+            "heldout_unsupported_world_count": 2,
+            "mechanism_score": 0.12319619278493557,
+            "raw_score": 0.0,
+            "robustness_score": 0.0,
+            "supported_world_count": 5,
+            "unsupported_world_count": 3,
+            "valid": 1.0
+          },
+          "repeat": 1,
+          "wall_seconds": 0.8768711239099503
+        },
+        {
+          "budget_aggregate": {
+            "development": {
+              "max_units": 0,
+              "mean_units": 0.0,
+              "min_units": 0,
+              "total_units": 0,
+              "valid_world_count": 8,
+              "world_count": 8
+            },
+            "heldout": {
+              "max_units": 0,
+              "mean_units": 0.0,
+              "min_units": 0,
+              "total_units": 0,
+              "valid_world_count": 5,
+              "world_count": 5
+            }
+          },
+          "full_metrics_sha256": "72c3de9b2e0a78399f44b1c0ff6680c589b9e627db3b3a890d5585d9c716e785",
+          "metrics": {
+            "combined_score": 0.0,
+            "correct_refusal_count": 0,
+            "development_axis_score": 0.9842295983067331,
+            "development_confidence_calibration_score": 0.5163382355075907,
+            "development_correct_refusal_rate": 0.0,
+            "development_discovery_coverage": 1.0,
+            "development_false_discovery_rate": 1.0,
+            "development_plane_score": 0.06666666666666665,
+            "development_r_score": 0.470393129622109,
+            "discovery_attempt_count": 5,
+            "false_discovery_count": 3,
+            "feasibility_rate": 1.0,
+            "heldout_confidence_calibration_score": 0.44867409988654516,
+            "heldout_correct_refusal_count": 0,
+            "heldout_correct_refusal_rate": 0.0,
+            "heldout_discovery_attempt_count": 3,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_false_discovery_count": 2,
+            "heldout_false_discovery_rate": 1.0,
+            "heldout_feasibility_rate": 1.0,
+            "heldout_supported_world_count": 3,
+            "heldout_unsupported_world_count": 2,
+            "mechanism_score": 0.12319619278493557,
+            "raw_score": 0.0,
+            "robustness_score": 0.0,
+            "supported_world_count": 5,
+            "unsupported_world_count": 3,
+            "valid": 1.0
+          },
+          "repeat": 2,
+          "wall_seconds": 0.8904721923172474
+        }
+      ],
+      "source_path": "benchmarks/EarthScience/FocalMechanismStressInversion/solution.py"
+    },
+    "paired62208_refined": {
+      "candidate_sha256": "ce6a820bd33afa90be919d408622deabcb8269fcf769408f4e892d70a4719160",
+      "full_metrics_repeat_identical": true,
+      "runs": [
+        {
+          "budget_aggregate": {
+            "development": {
+              "max_units": 16,
+              "mean_units": 16.0,
+              "min_units": 16,
+              "total_units": 128,
+              "valid_world_count": 8,
+              "world_count": 8
+            },
+            "heldout": {
+              "max_units": 16,
+              "mean_units": 16.0,
+              "min_units": 16,
+              "total_units": 80,
+              "valid_world_count": 5,
+              "world_count": 5
+            }
+          },
+          "full_metrics_sha256": "1da9f9ed7728c1fb4b36729dea95f9ce6b7ddd0cc345d15a8f5568b3320532bc",
+          "metrics": {
+            "combined_score": 0.7751364580347875,
+            "correct_refusal_count": 3,
+            "development_axis_score": 0.9928787824753009,
+            "development_confidence_calibration_score": 0.9949010967090952,
+            "development_correct_refusal_rate": 1.0,
+            "development_discovery_coverage": 1.0,
+            "development_false_discovery_rate": 0.0,
+            "development_plane_score": 0.65,
+            "development_r_score": 0.741710590554334,
+            "discovery_attempt_count": 5,
+            "false_discovery_count": 0,
+            "feasibility_rate": 1.0,
+            "heldout_confidence_calibration_score": 0.9922223907149321,
+            "heldout_correct_refusal_count": 2,
+            "heldout_correct_refusal_rate": 1.0,
+            "heldout_discovery_attempt_count": 3,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_false_discovery_count": 0,
+            "heldout_false_discovery_rate": 0.0,
+            "heldout_feasibility_rate": 1.0,
+            "heldout_supported_world_count": 3,
+            "heldout_unsupported_world_count": 2,
+            "mechanism_score": 0.8594602862717422,
+            "raw_score": 0.7751364580347875,
+            "robustness_score": 0.8142296791715209,
+            "supported_world_count": 5,
+            "unsupported_world_count": 3,
+            "valid": 1.0
+          },
+          "repeat": 1,
+          "wall_seconds": 34.55285388790071
+        },
+        {
+          "budget_aggregate": {
+            "development": {
+              "max_units": 16,
+              "mean_units": 16.0,
+              "min_units": 16,
+              "total_units": 128,
+              "valid_world_count": 8,
+              "world_count": 8
+            },
+            "heldout": {
+              "max_units": 16,
+              "mean_units": 16.0,
+              "min_units": 16,
+              "total_units": 80,
+              "valid_world_count": 5,
+              "world_count": 5
+            }
+          },
+          "full_metrics_sha256": "1da9f9ed7728c1fb4b36729dea95f9ce6b7ddd0cc345d15a8f5568b3320532bc",
+          "metrics": {
+            "combined_score": 0.7751364580347875,
+            "correct_refusal_count": 3,
+            "development_axis_score": 0.9928787824753009,
+            "development_confidence_calibration_score": 0.9949010967090952,
+            "development_correct_refusal_rate": 1.0,
+            "development_discovery_coverage": 1.0,
+            "development_false_discovery_rate": 0.0,
+            "development_plane_score": 0.65,
+            "development_r_score": 0.741710590554334,
+            "discovery_attempt_count": 5,
+            "false_discovery_count": 0,
+            "feasibility_rate": 1.0,
+            "heldout_confidence_calibration_score": 0.9922223907149321,
+            "heldout_correct_refusal_count": 2,
+            "heldout_correct_refusal_rate": 1.0,
+            "heldout_discovery_attempt_count": 3,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_false_discovery_count": 0,
+            "heldout_false_discovery_rate": 0.0,
+            "heldout_feasibility_rate": 1.0,
+            "heldout_supported_world_count": 3,
+            "heldout_unsupported_world_count": 2,
+            "mechanism_score": 0.8594602862717422,
+            "raw_score": 0.7751364580347875,
+            "robustness_score": 0.8142296791715209,
+            "supported_world_count": 5,
+            "unsupported_world_count": 3,
+            "valid": 1.0
+          },
+          "repeat": 2,
+          "wall_seconds": 34.540013775229454
+        }
+      ],
+      "source_path": ".research/pr74_shortcut_candidates_2026-09-11/paired62208_refined.py"
+    },
+    "reference": {
+      "candidate_sha256": "3d2f071b414fe5a8e41e11d3140d10f72a76d9456236c2e2742934732b7f80e5",
+      "full_metrics_repeat_identical": true,
+      "runs": [
+        {
+          "budget_aggregate": {
+            "development": {
+              "max_units": 16,
+              "mean_units": 16.0,
+              "min_units": 16,
+              "total_units": 128,
+              "valid_world_count": 8,
+              "world_count": 8
+            },
+            "heldout": {
+              "max_units": 16,
+              "mean_units": 16.0,
+              "min_units": 16,
+              "total_units": 80,
+              "valid_world_count": 5,
+              "world_count": 5
+            }
+          },
+          "full_metrics_sha256": "5211d81e20eb6c345443b6ff8ae39c2bacb0faa54920fae06dc206106bdb6ff1",
+          "metrics": {
+            "combined_score": 0.7854573533368907,
+            "correct_refusal_count": 3,
+            "development_axis_score": 0.9944652707248072,
+            "development_confidence_calibration_score": 0.9950276555205569,
+            "development_correct_refusal_rate": 1.0,
+            "development_discovery_coverage": 1.0,
+            "development_false_discovery_rate": 0.0,
+            "development_plane_score": 0.6458333333333334,
+            "development_r_score": 0.7679728857058368,
+            "discovery_attempt_count": 5,
+            "false_discovery_count": 0,
+            "feasibility_rate": 1.0,
+            "heldout_confidence_calibration_score": 0.994651527095515,
+            "heldout_correct_refusal_count": 2,
+            "heldout_correct_refusal_rate": 1.0,
+            "heldout_discovery_attempt_count": 3,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_false_discovery_count": 0,
+            "heldout_false_discovery_rate": 0.0,
+            "heldout_feasibility_rate": 1.0,
+            "heldout_supported_world_count": 3,
+            "heldout_unsupported_world_count": 2,
+            "mechanism_score": 0.8659108458355567,
+            "raw_score": 0.7854573533368907,
+            "robustness_score": 0.7967725500580608,
+            "supported_world_count": 5,
+            "unsupported_world_count": 3,
+            "valid": 1.0
+          },
+          "repeat": 1,
+          "wall_seconds": 11.705857222899795
+        },
+        {
+          "budget_aggregate": {
+            "development": {
+              "max_units": 16,
+              "mean_units": 16.0,
+              "min_units": 16,
+              "total_units": 128,
+              "valid_world_count": 8,
+              "world_count": 8
+            },
+            "heldout": {
+              "max_units": 16,
+              "mean_units": 16.0,
+              "min_units": 16,
+              "total_units": 80,
+              "valid_world_count": 5,
+              "world_count": 5
+            }
+          },
+          "full_metrics_sha256": "5211d81e20eb6c345443b6ff8ae39c2bacb0faa54920fae06dc206106bdb6ff1",
+          "metrics": {
+            "combined_score": 0.7854573533368907,
+            "correct_refusal_count": 3,
+            "development_axis_score": 0.9944652707248072,
+            "development_confidence_calibration_score": 0.9950276555205569,
+            "development_correct_refusal_rate": 1.0,
+            "development_discovery_coverage": 1.0,
+            "development_false_discovery_rate": 0.0,
+            "development_plane_score": 0.6458333333333334,
+            "development_r_score": 0.7679728857058368,
+            "discovery_attempt_count": 5,
+            "false_discovery_count": 0,
+            "feasibility_rate": 1.0,
+            "heldout_confidence_calibration_score": 0.994651527095515,
+            "heldout_correct_refusal_count": 2,
+            "heldout_correct_refusal_rate": 1.0,
+            "heldout_discovery_attempt_count": 3,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_false_discovery_count": 0,
+            "heldout_false_discovery_rate": 0.0,
+            "heldout_feasibility_rate": 1.0,
+            "heldout_supported_world_count": 3,
+            "heldout_unsupported_world_count": 2,
+            "mechanism_score": 0.8659108458355567,
+            "raw_score": 0.7854573533368907,
+            "robustness_score": 0.7967725500580608,
+            "supported_world_count": 5,
+            "unsupported_world_count": 3,
+            "valid": 1.0
+          },
+          "repeat": 2,
+          "wall_seconds": 11.558230336755514
+        }
+      ],
+      "source_path": "benchmarks/EarthScience/FocalMechanismStressInversion/verification/reference_solver.py"
+    }
+  },
+  "completed_evaluations": 6,
+  "derivation": {
+    "appended_configuration_utf8": "\n# Frozen published paired62208_refined configuration; no parameter search.\nGRID_SHAPE = (24, 12, 24, 9)\nPAIRED = True\nQUERY_POLICY = \"ambiguous\"\nSIGNED = True\nLOCAL_ROUNDS = 3\nTHRESHOLD_DEG = 25.0\n",
+    "candidate_sha256": "ce6a820bd33afa90be919d408622deabcb8269fcf769408f4e892d70a4719160",
+    "original_byte_length": 6801,
+    "original_git_blob_sha1": "64ff3d2bf0ac706483d10e48b9de82bffde180f9",
+    "original_sha256": "44d5e5395802141d762c8150e26b5e0a5ea6159f8f794807a03d652305621ddc",
+    "original_source_path": ".research/pr74_grid_probe.py",
+    "original_source_url": "https://github.com/Geniusyingmanji/ScientistsLastExam/blob/8193c5aa6abff91ff8cbbce9f617518ff3bb9b61/.research/pr74_grid_probe.py",
+    "parameters": {
+      "GRID_SHAPE": [
+        24,
+        12,
+        24,
+        9
+      ],
+      "LOCAL_ROUNDS": 3,
+      "PAIRED": true,
+      "QUERY_POLICY": "ambiguous",
+      "SIGNED": true,
+      "THRESHOLD_DEG": 25.0
+    },
+    "public_input_review": {
+      "code_change": "original entire source exact prefix, only six fixed module constants appended",
+      "filesystem_or_network_access": false,
+      "imports": [
+        "itertools",
+        "numpy"
+      ],
+      "inputs": [
+        "problem.events: id, plane_a, plane_b",
+        "problem.noise_sigma_deg",
+        "problem.reanalysis_sigma_deg",
+        "reanalyze(event_id) charged callback",
+        "budget_units"
+      ],
+      "new_parameter_selection": false,
+      "oracle_or_reference_import": false
+    },
+    "refusal_gate_source": {
+      "lines": "30-32,59-82",
+      "meaning": "fixed grids own default gate 25 degrees, not diagnostic infinity or retuned threshold",
+      "path": "benchmarks/EarthScience/FocalMechanismStressInversion/references/known_best.md"
+    },
+    "scope": "author independent same-family paired grid retained at latest head; exact older maintainer four-dimensional implementation unavailable; this is the published .814230 paired62208_refined configuration",
+    "selection_source": {
+      "lines": "91-104, paired62208_refined row 99",
+      "path": ".research/pr74_diagnostics.py"
+    },
+    "task_head": "8193c5aa6abff91ff8cbbce9f617518ff3bb9b61"
+  },
+  "driver_sha256": "655d5a1fd6fe532484f10449de42cdae1da2ea4eadf0df5ff23b9b4318b4ec3f",
+  "finished_utc": "2026-09-11T05:08:49.901534+00:00",
+  "integration_head": "2660c38a413fb7281d0e7012a6446eb384a934d1",
+  "loader_adapter": {
+    "in_memory_only": true,
+    "mapping": "Geophysics -> EarthScience",
+    "previous": "EarthScience"
+  },
+  "raw_metrics_scope": "complete per-world metrics private; public report has scalar and budget aggregates only",
+  "repeats_per_candidate": 2,
+  "runtime": {
+    "executable": "/usr/bin/python3",
+    "numpy": "1.24.4",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29",
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "scipy": "1.10.1",
+    "thread_environment": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    }
+  },
+  "runtime_source_sha256": "8159a99d54894dd304e3ac48956cd05d4389f12a041f5d5d86a2c079641c2c86",
+  "schema_version": 1,
+  "scope": "six fixed latest-head sandbox replays; no model call, new grid or heldout selection",
+  "started_utc": "2026-09-11T05:07:15.747940+00:00",
+  "task_head": "8193c5aa6abff91ff8cbbce9f617518ff3bb9b61",
+  "task_id": "Geophysics/FocalMechanismStressInversion",
+  "task_package_sha256": "3e8e20cd19a36a1934e9c8fa38f44817e95aecd55e53151e6eb4f3f13559c0d4",
+  "task_source_hashes": {
+    "TASK_CARD.yaml": "6ef605308bed7e9d1801f4c1a1109b0dd555eac84623206fb979b8a6dc2e7e4b",
+    "Task.md": "1e4df244d01f003735adedda650186957c6f8cfd17b3e6b5a3db9cb2e5e2e317",
+    "frontier_eval/agent_files.txt": "9c9c47fdaee31c7a9d4f0e822d48c015fc619de200fb801cbd5b1c940901b6e1",
+    "frontier_eval/candidate_destination.txt": "ece4e0053b1c683eff94ac0fadeacd92748da603286a0105b2870eb77b63e459",
+    "frontier_eval/constraints.txt": "7cd603f28f8d76be058198a6f2f97bd7f9653448d0c5a6af172ff32cc422bf1d",
+    "frontier_eval/entrypoint.txt": "66ca0c777d929fb7fbb042fc98dd786236fb92f2780a05f168c3849a03f5f7ca",
+    "frontier_eval/eval_command.txt": "5c442f4425daec9752afea2e730fb75e7aace44d99c642f92f0464afa091b956",
+    "frontier_eval/initial_program.txt": "ece4e0053b1c683eff94ac0fadeacd92748da603286a0105b2870eb77b63e459",
+    "frontier_eval/metadata.yaml": "ef68c5b4afcdd5c8f144a4c7c252428c29d5b98b3a60c5dc594455245ec01bb9",
+    "frontier_eval/readonly_files.txt": "0869f319a451d8f8dad02a105d31c2393ad9ad29f4b18a25c53779365dcc5fc4",
+    "frontier_eval/run_eval.py": "8631b3fd45bfa00fa32e62b3d9e37a4721b9d3fa1cd6ae5caf249c4f537eadf8",
+    "references/known_best.md": "8512eaabc70fc79152cc50846b656227a3bff400b8c2529b2840ce294feaeff1",
+    "references/linux_validation_2026-09-09.json": "31477f198fb63beee4c096da19de30770846f125108c8743b605dad4902212b9",
+    "references/linux_validation_2026-09-10.json": "4dc808f4a9f033b65d889668b1585934ae2319c36fd5a360e109d8114bbe1c86",
+    "references/method_diagnostics_2026-09-10.json": "b5b8e79b2452709ecb6fe1a3eadd485df96cd1fa9aaab92b5199ca78784c3ad8",
+    "references/review_diagnostics_2026-09-09.json": "4e3e6d8f0253db2d453b45ecc545604a474d699b1a5415cd29b1c70f07b8c899",
+    "solution.py": "1aee41922acfaa8bfdc23f7e2c88ad5187318df2965c4915b6b435044e262a83",
+    "verification/evaluator.py": "91e21fa11db09b7203fc4a6753a920570612564fc5b3eed76d5359fb72640404",
+    "verification/reference_solver.py": "3d2f071b414fe5a8e41e11d3140d10f72a76d9456236c2e2742934732b7f80e5",
+    "verification/requirements.txt": "6bd31e587c06276bf231cec25395b5d4a0b1e38c4d2b00813b2dd96aad14f17a"
+  },
+  "timeout_seconds": 300.0
+}

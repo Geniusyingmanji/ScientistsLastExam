@@ -1,0 +1,50 @@
+{
+  "task_head": "8193c5aa6abff91ff8cbbce9f617518ff3bb9b61",
+  "original_source_path": ".research/pr74_grid_probe.py",
+  "original_source_url": "https://github.com/Geniusyingmanji/ScientistsLastExam/blob/8193c5aa6abff91ff8cbbce9f617518ff3bb9b61/.research/pr74_grid_probe.py",
+  "original_sha256": "44d5e5395802141d762c8150e26b5e0a5ea6159f8f794807a03d652305621ddc",
+  "original_byte_length": 6801,
+  "original_git_blob_sha1": "64ff3d2bf0ac706483d10e48b9de82bffde180f9",
+  "candidate_sha256": "ce6a820bd33afa90be919d408622deabcb8269fcf769408f4e892d70a4719160",
+  "appended_configuration_utf8": "\n# Frozen published paired62208_refined configuration; no parameter search.\nGRID_SHAPE = (24, 12, 24, 9)\nPAIRED = True\nQUERY_POLICY = \"ambiguous\"\nSIGNED = True\nLOCAL_ROUNDS = 3\nTHRESHOLD_DEG = 25.0\n",
+  "parameters": {
+    "GRID_SHAPE": [
+      24,
+      12,
+      24,
+      9
+    ],
+    "PAIRED": true,
+    "QUERY_POLICY": "ambiguous",
+    "SIGNED": true,
+    "LOCAL_ROUNDS": 3,
+    "THRESHOLD_DEG": 25.0
+  },
+  "selection_source": {
+    "path": ".research/pr74_diagnostics.py",
+    "lines": "91-104, paired62208_refined row 99"
+  },
+  "refusal_gate_source": {
+    "path": "benchmarks/EarthScience/FocalMechanismStressInversion/references/known_best.md",
+    "lines": "30-32,59-82",
+    "meaning": "fixed grids own default gate 25 degrees, not diagnostic infinity or retuned threshold"
+  },
+  "public_input_review": {
+    "imports": [
+      "itertools",
+      "numpy"
+    ],
+    "inputs": [
+      "problem.events: id, plane_a, plane_b",
+      "problem.noise_sigma_deg",
+      "problem.reanalysis_sigma_deg",
+      "reanalyze(event_id) charged callback",
+      "budget_units"
+    ],
+    "code_change": "original entire source exact prefix, only six fixed module constants appended",
+    "oracle_or_reference_import": false,
+    "filesystem_or_network_access": false,
+    "new_parameter_selection": false
+  },
+  "scope": "author independent same-family paired grid retained at latest head; exact older maintainer four-dimensional implementation unavailable; this is the published .814230 paired62208_refined configuration"
+}
