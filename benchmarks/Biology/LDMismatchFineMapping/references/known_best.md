@@ -77,9 +77,33 @@ On one hundred and twenty-five worlds outside the graded seeds, twenty-five of e
 
 ## Model draws
 
-None. The task was built on a machine without a model endpoint. The card records
-`calibration_evidence_status: missing`; the frontier draw and the global evidence refresh are
-owed before certification.
+The 2026-09-11 fixed campaign ran three `gpt-5.6-sol` high first proposals, with
+selection-blind budget 1, evaluator timeout 300 seconds, maximum output 16384 tokens
+and seed labels 0/1/2. Labels identify replicates rather than provider-controlled
+randomness. All three proposals were valid on all 18 worlds and reached exactly
+the complete reference: development **0.9618342499999997**, heldout
+**0.9455182499999999**. The reference's YAML declaration rounds development to
+0.96183425; the independent comparison uses its actual prior sandbox measurement.
+All proposals had zero false discoveries, complete supported-world discovery
+coverage and complete correct refusal on both splits. Confidence remains a
+separate axis and is not used to turn this into a different score.
+
+**Criterion D16 fails on all three draws; hold this task from merging.** The fixed
+plan was created after the complete-reference repair and source freeze at
+`766aff5fab3c347b2d982ae76417a342845a9029`. The task package was
+`6d5e734ce57ef3566103f22339f7c152242ef6b2d403b2ac8b5714c2c67be1f2`, runtime
+`8159a99d54894dd304e3ac48956cd05d4389f12a041f5d5d86a2c079641c2c86`, and plan
+`16ba07b5c28ad2771ae53bbdeeea602282dc34342a1f09f36ddd551e0bc60b6b`.
+
+The three baseline and three proposal evaluations remain in the original private
+run tree; there were no adaptive retries or task changes after observing scores.
+Total provider-reported usage was 52200 tokens; price was unavailable. A separate
+read-only review checks the original source, all expected cells, retained candidate
+bytes, requests/receipts, complete world validity and file hashes. Its public
+scalar report is `experiments/ld_mismatch_first_draw_review_2026-09-11.json`.
+Later card/reference-note edits are documentation only and leave old source and
+receipt bindings intact. This is operator calibration evidence, not certification
+or a long-horizon cohort. Global evidence is not refreshed for this held task.
 
 ## Baseline: PLINK clumping on the panel, marginal effects, never declining
 

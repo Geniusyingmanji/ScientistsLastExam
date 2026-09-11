@@ -1,0 +1,600 @@
+{
+  "bindings": {
+    "llm_condition_sha256": "967fb197a1603c8c9bd881997ba02cfde1336f0cbb2e1c3a369c3cec24d50d07",
+    "model": "gpt-5.6-sol",
+    "orchestration_sha256": "3275e97f36efb2403b9cc1cdd6187d3f8618cd399d439351a264995203515602",
+    "runtime_source_sha256": "8159a99d54894dd304e3ac48956cd05d4389f12a041f5d5d86a2c079641c2c86",
+    "task_contract_sha256": "b3e21ac27e701aac5718896da119d153e08b2765ef27cbd28e6acb0e15a66469",
+    "task_id": "PopulationGenetics/LDMismatchFineMapping",
+    "task_package_sha256": "6d5e734ce57ef3566103f22339f7c152242ef6b2d403b2ac8b5714c2c67be1f2"
+  },
+  "campaign_cell_status_counts": {
+    "complete": 3
+  },
+  "campaign_replay_status": "complete",
+  "cells": [
+    {
+      "events": [
+        {
+          "all_worlds_valid": true,
+          "candidate_sha256": "0d5255966354ae7b738f7bafa090aead1350fda1f3b663b3dfb9dfc08b3123a1",
+          "error_sha256": null,
+          "full_metrics_sha256": "be088ce89d89dfcf5847de48bfea25bd59e7c8a2f15b4d74ad34e4350634da91",
+          "observed_worlds": 18,
+          "per_instance_sha256": "385a6a1f29aae1bfcff40e1d4de9689012ad4b8276ed9d4fc5fb4081b0ce19a9",
+          "receipt_file_sha256": "b71e7aa33c7013081f23a3f6832279d93113df39034fcd02a2e4c7150f10d18c",
+          "request_id": "9e92a1404869da0191755fa095b44f5823820a2b9f6e11f43bf46619e9dfd44d",
+          "scalar_metrics": {
+            "combined_score": 0.0,
+            "development_confidence_calibration": 0.3008148333333333,
+            "development_correct_refusal_count": 0,
+            "development_correct_refusal_rate": 0.0,
+            "development_determinable_world_count": 8,
+            "development_discovery_attempt_count": 8,
+            "development_discovery_coverage": 1.0,
+            "development_effect_score": 0.139437125,
+            "development_false_discovery_count": 10,
+            "development_false_discovery_rate": 0.8333333333333334,
+            "development_mean_rows_bought": 0.0,
+            "development_mechanism_score": 0.0,
+            "development_mechanism_score_sum": 1.0384989999999998,
+            "development_raw_mechanism": 0.08654158333333332,
+            "development_set_f1": 0.16666675,
+            "development_unsupported_world_count": 4,
+            "development_valid_count": 12,
+            "development_world_count": 12,
+            "feasibility_rate": 1.0,
+            "heldout_correct_refusal_count": 0,
+            "heldout_correct_refusal_rate": 0.0,
+            "heldout_determinable_world_count": 4,
+            "heldout_discovery_attempt_count": 4,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_effect_score": 0.526568,
+            "heldout_false_discovery_count": 3,
+            "heldout_false_discovery_rate": 0.5,
+            "heldout_mechanism_score": 0.004447000000000006,
+            "heldout_mechanism_score_sum": 2.017788,
+            "heldout_raw_mechanism": 0.336298,
+            "heldout_set_f1": 0.5833335,
+            "heldout_unsupported_world_count": 2,
+            "heldout_valid_count": 6,
+            "heldout_world_count": 6,
+            "raw_score": 0.0,
+            "valid": 1.0
+          },
+          "scientific_score": 0.0,
+          "step": 0,
+          "valid_worlds": 18
+        },
+        {
+          "all_worlds_valid": true,
+          "candidate_sha256": "d039d1c55200c24dde10389affe0325c7b92e41c2103470dc95d1268b21180a7",
+          "error_sha256": null,
+          "full_metrics_sha256": "f1e3046bfec1b7660095f73bf462858eacf037782f4620d405123b357c364339",
+          "observed_worlds": 18,
+          "per_instance_sha256": "d8ffc5ed5c34953288914a315ef8f14ef82f1e1ccd8324ebf9b443941b817915",
+          "receipt_file_sha256": "2f5f696d0c4182b0aba6270fda8994aaea058905373a93f3a6555d8c12d76f98",
+          "reference_reached": true,
+          "request_id": "d11a153e847a0c6c1590988b83828cbb6656e1570074cdb732fc2e84388661e8",
+          "scalar_metrics": {
+            "combined_score": 0.9618342499999997,
+            "development_confidence_calibration": 0.9983744166666667,
+            "development_correct_refusal_count": 4,
+            "development_correct_refusal_rate": 1.0,
+            "development_determinable_world_count": 8,
+            "development_discovery_attempt_count": 8,
+            "development_discovery_coverage": 1.0,
+            "development_effect_score": 0.9236685,
+            "development_false_discovery_count": 0,
+            "development_false_discovery_rate": 0.0,
+            "development_mean_rows_bought": 6.0,
+            "development_mechanism_score": 0.9618342499999997,
+            "development_mechanism_score_sum": 11.694674,
+            "development_raw_mechanism": 0.9745561666666666,
+            "development_set_f1": 1.0,
+            "development_unsupported_world_count": 4,
+            "development_valid_count": 12,
+            "development_world_count": 12,
+            "feasibility_rate": 1.0,
+            "heldout_correct_refusal_count": 2,
+            "heldout_correct_refusal_rate": 1.0,
+            "heldout_determinable_world_count": 4,
+            "heldout_discovery_attempt_count": 4,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_effect_score": 0.8910365,
+            "heldout_false_discovery_count": 0,
+            "heldout_false_discovery_rate": 0.0,
+            "heldout_mechanism_score": 0.9455182499999999,
+            "heldout_mechanism_score_sum": 5.7820730000000005,
+            "heldout_raw_mechanism": 0.9636788333333334,
+            "heldout_set_f1": 1.0,
+            "heldout_unsupported_world_count": 2,
+            "heldout_valid_count": 6,
+            "heldout_world_count": 6,
+            "raw_score": 0.9618342499999997,
+            "valid": 1.0
+          },
+          "scientific_score": 0.9618342499999997,
+          "step": 1,
+          "valid_worlds": 18
+        }
+      ],
+      "manifest_sha256": "da1307133cf55613ce8a8b7e443160588bd779a6063814b9f1c9dd75e1cc614e",
+      "model_condition": {
+        "max_output_tokens": 16384,
+        "model": "gpt-5.6-sol",
+        "reasoning_effort": "high",
+        "temperature": null,
+        "timeout_seconds": 300,
+        "wire": "responses"
+      },
+      "retained_first_proposal_files": [
+        "solution.py",
+        "best_program.py"
+      ],
+      "seed_label": 0,
+      "trajectory_sha256": "cf559b76345c766848a369b5d51b5fc54f3bd8e35299fe46dd93480e27280e41",
+      "usage": {
+        "estimated_cost_usd": null,
+        "input_tokens": 6871,
+        "output_tokens": 9617,
+        "pricing_available": false,
+        "total_tokens": 16488,
+        "usage_available": true
+      }
+    },
+    {
+      "events": [
+        {
+          "all_worlds_valid": true,
+          "candidate_sha256": "0d5255966354ae7b738f7bafa090aead1350fda1f3b663b3dfb9dfc08b3123a1",
+          "error_sha256": null,
+          "full_metrics_sha256": "be088ce89d89dfcf5847de48bfea25bd59e7c8a2f15b4d74ad34e4350634da91",
+          "observed_worlds": 18,
+          "per_instance_sha256": "385a6a1f29aae1bfcff40e1d4de9689012ad4b8276ed9d4fc5fb4081b0ce19a9",
+          "receipt_file_sha256": "05f97251cdcaf6da977a040bcdf68fdc1f8c9e031040f17a88def435b3ea88da",
+          "request_id": "9e92a1404869da0191755fa095b44f5823820a2b9f6e11f43bf46619e9dfd44d",
+          "scalar_metrics": {
+            "combined_score": 0.0,
+            "development_confidence_calibration": 0.3008148333333333,
+            "development_correct_refusal_count": 0,
+            "development_correct_refusal_rate": 0.0,
+            "development_determinable_world_count": 8,
+            "development_discovery_attempt_count": 8,
+            "development_discovery_coverage": 1.0,
+            "development_effect_score": 0.139437125,
+            "development_false_discovery_count": 10,
+            "development_false_discovery_rate": 0.8333333333333334,
+            "development_mean_rows_bought": 0.0,
+            "development_mechanism_score": 0.0,
+            "development_mechanism_score_sum": 1.0384989999999998,
+            "development_raw_mechanism": 0.08654158333333332,
+            "development_set_f1": 0.16666675,
+            "development_unsupported_world_count": 4,
+            "development_valid_count": 12,
+            "development_world_count": 12,
+            "feasibility_rate": 1.0,
+            "heldout_correct_refusal_count": 0,
+            "heldout_correct_refusal_rate": 0.0,
+            "heldout_determinable_world_count": 4,
+            "heldout_discovery_attempt_count": 4,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_effect_score": 0.526568,
+            "heldout_false_discovery_count": 3,
+            "heldout_false_discovery_rate": 0.5,
+            "heldout_mechanism_score": 0.004447000000000006,
+            "heldout_mechanism_score_sum": 2.017788,
+            "heldout_raw_mechanism": 0.336298,
+            "heldout_set_f1": 0.5833335,
+            "heldout_unsupported_world_count": 2,
+            "heldout_valid_count": 6,
+            "heldout_world_count": 6,
+            "raw_score": 0.0,
+            "valid": 1.0
+          },
+          "scientific_score": 0.0,
+          "step": 0,
+          "valid_worlds": 18
+        },
+        {
+          "all_worlds_valid": true,
+          "candidate_sha256": "bb9df84f1181accd51638f14a6237a5f2bba7e97b0cab4ff319ec83ca9de3ab8",
+          "error_sha256": null,
+          "full_metrics_sha256": "666ea9e396d4db8e7c5800026a869016a6b67e06d2cc08aea00790a3422c424f",
+          "observed_worlds": 18,
+          "per_instance_sha256": "f952be824289b200c35825d6046759d3d7a666644609b95739325f7a03bc163b",
+          "receipt_file_sha256": "c253fbaa8c3bd022694840298d7f5db4122397c1a0449ace65dcb2f08e5eddd5",
+          "reference_reached": true,
+          "request_id": "3be78aed3f98b8fe8fa5e750eeed1d41a27bb3a81c7f5ba4000d8a07b06f81c2",
+          "scalar_metrics": {
+            "combined_score": 0.9618342499999997,
+            "development_confidence_calibration": 0.9546508333333334,
+            "development_correct_refusal_count": 4,
+            "development_correct_refusal_rate": 1.0,
+            "development_determinable_world_count": 8,
+            "development_discovery_attempt_count": 8,
+            "development_discovery_coverage": 1.0,
+            "development_effect_score": 0.9236685,
+            "development_false_discovery_count": 0,
+            "development_false_discovery_rate": 0.0,
+            "development_mean_rows_bought": 6.0,
+            "development_mechanism_score": 0.9618342499999997,
+            "development_mechanism_score_sum": 11.694674,
+            "development_raw_mechanism": 0.9745561666666666,
+            "development_set_f1": 1.0,
+            "development_unsupported_world_count": 4,
+            "development_valid_count": 12,
+            "development_world_count": 12,
+            "feasibility_rate": 1.0,
+            "heldout_correct_refusal_count": 2,
+            "heldout_correct_refusal_rate": 1.0,
+            "heldout_determinable_world_count": 4,
+            "heldout_discovery_attempt_count": 4,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_effect_score": 0.8910365,
+            "heldout_false_discovery_count": 0,
+            "heldout_false_discovery_rate": 0.0,
+            "heldout_mechanism_score": 0.9455182499999999,
+            "heldout_mechanism_score_sum": 5.7820730000000005,
+            "heldout_raw_mechanism": 0.9636788333333334,
+            "heldout_set_f1": 1.0,
+            "heldout_unsupported_world_count": 2,
+            "heldout_valid_count": 6,
+            "heldout_world_count": 6,
+            "raw_score": 0.9618342499999997,
+            "valid": 1.0
+          },
+          "scientific_score": 0.9618342499999997,
+          "step": 1,
+          "valid_worlds": 18
+        }
+      ],
+      "manifest_sha256": "7e8e4a008f32032ff8a3da3ae009dcae17c3cdab066b597b40cec583646a7be3",
+      "model_condition": {
+        "max_output_tokens": 16384,
+        "model": "gpt-5.6-sol",
+        "reasoning_effort": "high",
+        "temperature": null,
+        "timeout_seconds": 300,
+        "wire": "responses"
+      },
+      "retained_first_proposal_files": [
+        "solution.py",
+        "best_program.py"
+      ],
+      "seed_label": 1,
+      "trajectory_sha256": "51a7713bf843d03325642f4556ef38c16ac1f32d3983d540bd08b468ce560340",
+      "usage": {
+        "estimated_cost_usd": null,
+        "input_tokens": 6871,
+        "output_tokens": 11135,
+        "pricing_available": false,
+        "total_tokens": 18006,
+        "usage_available": true
+      }
+    },
+    {
+      "events": [
+        {
+          "all_worlds_valid": true,
+          "candidate_sha256": "0d5255966354ae7b738f7bafa090aead1350fda1f3b663b3dfb9dfc08b3123a1",
+          "error_sha256": null,
+          "full_metrics_sha256": "be088ce89d89dfcf5847de48bfea25bd59e7c8a2f15b4d74ad34e4350634da91",
+          "observed_worlds": 18,
+          "per_instance_sha256": "385a6a1f29aae1bfcff40e1d4de9689012ad4b8276ed9d4fc5fb4081b0ce19a9",
+          "receipt_file_sha256": "9d0f1d777915fd489e21cc1797ccbc4fa8d6c53f3a4c1a073fe875bde4d265ec",
+          "request_id": "9e92a1404869da0191755fa095b44f5823820a2b9f6e11f43bf46619e9dfd44d",
+          "scalar_metrics": {
+            "combined_score": 0.0,
+            "development_confidence_calibration": 0.3008148333333333,
+            "development_correct_refusal_count": 0,
+            "development_correct_refusal_rate": 0.0,
+            "development_determinable_world_count": 8,
+            "development_discovery_attempt_count": 8,
+            "development_discovery_coverage": 1.0,
+            "development_effect_score": 0.139437125,
+            "development_false_discovery_count": 10,
+            "development_false_discovery_rate": 0.8333333333333334,
+            "development_mean_rows_bought": 0.0,
+            "development_mechanism_score": 0.0,
+            "development_mechanism_score_sum": 1.0384989999999998,
+            "development_raw_mechanism": 0.08654158333333332,
+            "development_set_f1": 0.16666675,
+            "development_unsupported_world_count": 4,
+            "development_valid_count": 12,
+            "development_world_count": 12,
+            "feasibility_rate": 1.0,
+            "heldout_correct_refusal_count": 0,
+            "heldout_correct_refusal_rate": 0.0,
+            "heldout_determinable_world_count": 4,
+            "heldout_discovery_attempt_count": 4,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_effect_score": 0.526568,
+            "heldout_false_discovery_count": 3,
+            "heldout_false_discovery_rate": 0.5,
+            "heldout_mechanism_score": 0.004447000000000006,
+            "heldout_mechanism_score_sum": 2.017788,
+            "heldout_raw_mechanism": 0.336298,
+            "heldout_set_f1": 0.5833335,
+            "heldout_unsupported_world_count": 2,
+            "heldout_valid_count": 6,
+            "heldout_world_count": 6,
+            "raw_score": 0.0,
+            "valid": 1.0
+          },
+          "scientific_score": 0.0,
+          "step": 0,
+          "valid_worlds": 18
+        },
+        {
+          "all_worlds_valid": true,
+          "candidate_sha256": "f5d164cd83cf1e20aa8eef8d7b09793044951b3e01e5a50645bc3873ebb4b981",
+          "error_sha256": null,
+          "full_metrics_sha256": "60e61d8f5378f72e6f1317fb862eb578278b555cd086c9bbe642b113f576e46d",
+          "observed_worlds": 18,
+          "per_instance_sha256": "dd256a3d4327a820fc10c529f10f8bdda8d08f79a8a3ece6553cc6bf7d46785e",
+          "receipt_file_sha256": "74d29c7e97214ec8068b531bd4ce65d4e30044b12d0e7bb32385b5a12dc209c9",
+          "reference_reached": true,
+          "request_id": "c48a5a255e5d8a95efd775444049d9b252a3fa417b1d392b98b1bbff7b9868e3",
+          "scalar_metrics": {
+            "combined_score": 0.9618342499999997,
+            "development_confidence_calibration": 0.9990336666666667,
+            "development_correct_refusal_count": 4,
+            "development_correct_refusal_rate": 1.0,
+            "development_determinable_world_count": 8,
+            "development_discovery_attempt_count": 8,
+            "development_discovery_coverage": 1.0,
+            "development_effect_score": 0.9236685,
+            "development_false_discovery_count": 0,
+            "development_false_discovery_rate": 0.0,
+            "development_mean_rows_bought": 6.0,
+            "development_mechanism_score": 0.9618342499999997,
+            "development_mechanism_score_sum": 11.694674,
+            "development_raw_mechanism": 0.9745561666666666,
+            "development_set_f1": 1.0,
+            "development_unsupported_world_count": 4,
+            "development_valid_count": 12,
+            "development_world_count": 12,
+            "feasibility_rate": 1.0,
+            "heldout_correct_refusal_count": 2,
+            "heldout_correct_refusal_rate": 1.0,
+            "heldout_determinable_world_count": 4,
+            "heldout_discovery_attempt_count": 4,
+            "heldout_discovery_coverage": 1.0,
+            "heldout_effect_score": 0.8910365,
+            "heldout_false_discovery_count": 0,
+            "heldout_false_discovery_rate": 0.0,
+            "heldout_mechanism_score": 0.9455182499999999,
+            "heldout_mechanism_score_sum": 5.7820730000000005,
+            "heldout_raw_mechanism": 0.9636788333333334,
+            "heldout_set_f1": 1.0,
+            "heldout_unsupported_world_count": 2,
+            "heldout_valid_count": 6,
+            "heldout_world_count": 6,
+            "raw_score": 0.9618342499999997,
+            "valid": 1.0
+          },
+          "scientific_score": 0.9618342499999997,
+          "step": 1,
+          "valid_worlds": 18
+        }
+      ],
+      "manifest_sha256": "368be5dda19959e17c934c32aa3a743b3a390b795b13b8c4587e8b23d4761fa5",
+      "model_condition": {
+        "max_output_tokens": 16384,
+        "model": "gpt-5.6-sol",
+        "reasoning_effort": "high",
+        "temperature": null,
+        "timeout_seconds": 300,
+        "wire": "responses"
+      },
+      "retained_first_proposal_files": [
+        "solution.py",
+        "best_program.py"
+      ],
+      "seed_label": 2,
+      "trajectory_sha256": "4b8ace3bbfdf8f6f63a1345bb20192b50ed51ae3d1188ec7cf8dc7458ece990a",
+      "usage": {
+        "estimated_cost_usd": null,
+        "input_tokens": 6871,
+        "output_tokens": 10835,
+        "pricing_available": false,
+        "total_tokens": 17706,
+        "usage_available": true
+      }
+    }
+  ],
+  "criterion_D16": "failed",
+  "expected_worlds_per_evaluation": 18,
+  "first_proposals_reaching_reference": 3,
+  "interpretation": "A first proposal is judged only when all expected worlds are valid. Failed/partial proposals remain in the denominator and never establish difficulty. A passing comparison is not external scientific certification. Seed labels do not control provider randomness. No oracle or model calls were made by this reviewer.",
+  "model_reported_usage": {
+    "input_tokens": 20613,
+    "output_tokens": 31587,
+    "total_tokens": 52200
+  },
+  "plan_file_sha256": "3c45ea2c4907c1bb749b40e233595ec3ae471f40dc199a06ba4ff1f049f47cec",
+  "plan_sha256": "16ba07b5c28ad2771ae53bbdeeea602282dc34342a1f09f36ddd551e0bc60b6b",
+  "private_artifact_file_hashes": [
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_0/best_program.py",
+      "sha256": "d039d1c55200c24dde10389affe0325c7b92e41c2103470dc95d1268b21180a7"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_0/checkpoint.json",
+      "sha256": "4b1d872e12ab180cd41d4cdd74635a4afdbc999c86cccc9c78a7102718437be1"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_0/evaluation_ledger/attempts/9e92a1404869da0191755fa095b44f5823820a2b9f6e11f43bf46619e9dfd44d/000001.json",
+      "sha256": "e7b62c3ff1560712a2327944142cbe9dde41ca9b6f58de624d18dc08598ad1b1"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_0/evaluation_ledger/attempts/d11a153e847a0c6c1590988b83828cbb6656e1570074cdb732fc2e84388661e8/000001.json",
+      "sha256": "3dbce28eeaa43cfc012292710b1aef3cfeae2315515db2d92aa05d7496d62687"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_0/evaluation_ledger/locks/9e92a1404869da0191755fa095b44f5823820a2b9f6e11f43bf46619e9dfd44d.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_0/evaluation_ledger/locks/d11a153e847a0c6c1590988b83828cbb6656e1570074cdb732fc2e84388661e8.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_0/evaluation_ledger/receipts/9e92a1404869da0191755fa095b44f5823820a2b9f6e11f43bf46619e9dfd44d.json",
+      "sha256": "b71e7aa33c7013081f23a3f6832279d93113df39034fcd02a2e4c7150f10d18c"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_0/evaluation_ledger/receipts/d11a153e847a0c6c1590988b83828cbb6656e1570074cdb732fc2e84388661e8.json",
+      "sha256": "2f5f696d0c4182b0aba6270fda8994aaea058905373a93f3a6555d8c12d76f98"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_0/evaluation_ledger/requests/9e92a1404869da0191755fa095b44f5823820a2b9f6e11f43bf46619e9dfd44d.json",
+      "sha256": "62dc3f5a865b8f48db7b2316bd17abd1a930594724b1f55acfd726afeca10c51"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_0/evaluation_ledger/requests/d11a153e847a0c6c1590988b83828cbb6656e1570074cdb732fc2e84388661e8.json",
+      "sha256": "c35b8f57b05ab2bafdce3ce47e0b758f9d29f4964a41cf2369f9375cc93f6d3f"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_0/run_manifest.json",
+      "sha256": "da1307133cf55613ce8a8b7e443160588bd779a6063814b9f1c9dd75e1cc614e"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_0/solution.py",
+      "sha256": "d039d1c55200c24dde10389affe0325c7b92e41c2103470dc95d1268b21180a7"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_0/summary.json",
+      "sha256": "70db3297dcc466493ba256229567658e1ca0becee06dca11b8532fb01206431c"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_0/trajectory.jsonl",
+      "sha256": "cf559b76345c766848a369b5d51b5fc54f3bd8e35299fe46dd93480e27280e41"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_1/best_program.py",
+      "sha256": "bb9df84f1181accd51638f14a6237a5f2bba7e97b0cab4ff319ec83ca9de3ab8"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_1/checkpoint.json",
+      "sha256": "24736f2a859af434006b47567d9883af2df08d99428dbf8d2506e9a4ab31c323"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_1/evaluation_ledger/attempts/3be78aed3f98b8fe8fa5e750eeed1d41a27bb3a81c7f5ba4000d8a07b06f81c2/000001.json",
+      "sha256": "a449208563d389c22d013a80daf9371aa9e6c2fef4851faea6efe2b8586c2fd9"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_1/evaluation_ledger/attempts/9e92a1404869da0191755fa095b44f5823820a2b9f6e11f43bf46619e9dfd44d/000001.json",
+      "sha256": "adaebd6f7fe1404355fdc9526f9c342b0e82c5d20d4d55784f2cbdf798e34858"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_1/evaluation_ledger/locks/3be78aed3f98b8fe8fa5e750eeed1d41a27bb3a81c7f5ba4000d8a07b06f81c2.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_1/evaluation_ledger/locks/9e92a1404869da0191755fa095b44f5823820a2b9f6e11f43bf46619e9dfd44d.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_1/evaluation_ledger/receipts/3be78aed3f98b8fe8fa5e750eeed1d41a27bb3a81c7f5ba4000d8a07b06f81c2.json",
+      "sha256": "c253fbaa8c3bd022694840298d7f5db4122397c1a0449ace65dcb2f08e5eddd5"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_1/evaluation_ledger/receipts/9e92a1404869da0191755fa095b44f5823820a2b9f6e11f43bf46619e9dfd44d.json",
+      "sha256": "05f97251cdcaf6da977a040bcdf68fdc1f8c9e031040f17a88def435b3ea88da"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_1/evaluation_ledger/requests/3be78aed3f98b8fe8fa5e750eeed1d41a27bb3a81c7f5ba4000d8a07b06f81c2.json",
+      "sha256": "72cfbd6fe35d8584831760602092aeac1f2b68e5465b3786a2a5547265d971e9"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_1/evaluation_ledger/requests/9e92a1404869da0191755fa095b44f5823820a2b9f6e11f43bf46619e9dfd44d.json",
+      "sha256": "62dc3f5a865b8f48db7b2316bd17abd1a930594724b1f55acfd726afeca10c51"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_1/run_manifest.json",
+      "sha256": "7e8e4a008f32032ff8a3da3ae009dcae17c3cdab066b597b40cec583646a7be3"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_1/solution.py",
+      "sha256": "bb9df84f1181accd51638f14a6237a5f2bba7e97b0cab4ff319ec83ca9de3ab8"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_1/summary.json",
+      "sha256": "1365ad745fed1e819a5c35b4504f24407756a4a4fd236011287aee8ddc9b6471"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_1/trajectory.jsonl",
+      "sha256": "51a7713bf843d03325642f4556ef38c16ac1f32d3983d540bd08b468ce560340"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_2/best_program.py",
+      "sha256": "f5d164cd83cf1e20aa8eef8d7b09793044951b3e01e5a50645bc3873ebb4b981"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_2/checkpoint.json",
+      "sha256": "c86f90592eb6ed00d1a27ca3c162a432cd2ac61a6592a1261e0d350f5afc7a3c"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_2/evaluation_ledger/attempts/9e92a1404869da0191755fa095b44f5823820a2b9f6e11f43bf46619e9dfd44d/000001.json",
+      "sha256": "2efde61d35b3010f675da2758f8a6e01e7f4b1b63d9e06871efa6084773490cb"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_2/evaluation_ledger/attempts/c48a5a255e5d8a95efd775444049d9b252a3fa417b1d392b98b1bbff7b9868e3/000001.json",
+      "sha256": "950066f035a7289b6b6cfc9a761cb28ff1a189f97d59818d7d1fdb52cca06fad"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_2/evaluation_ledger/locks/9e92a1404869da0191755fa095b44f5823820a2b9f6e11f43bf46619e9dfd44d.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_2/evaluation_ledger/locks/c48a5a255e5d8a95efd775444049d9b252a3fa417b1d392b98b1bbff7b9868e3.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_2/evaluation_ledger/receipts/9e92a1404869da0191755fa095b44f5823820a2b9f6e11f43bf46619e9dfd44d.json",
+      "sha256": "9d0f1d777915fd489e21cc1797ccbc4fa8d6c53f3a4c1a073fe875bde4d265ec"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_2/evaluation_ledger/receipts/c48a5a255e5d8a95efd775444049d9b252a3fa417b1d392b98b1bbff7b9868e3.json",
+      "sha256": "74d29c7e97214ec8068b531bd4ce65d4e30044b12d0e7bb32385b5a12dc209c9"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_2/evaluation_ledger/requests/9e92a1404869da0191755fa095b44f5823820a2b9f6e11f43bf46619e9dfd44d.json",
+      "sha256": "62dc3f5a865b8f48db7b2316bd17abd1a930594724b1f55acfd726afeca10c51"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_2/evaluation_ledger/requests/c48a5a255e5d8a95efd775444049d9b252a3fa417b1d392b98b1bbff7b9868e3.json",
+      "sha256": "1cec754f6ffb7b37b4b1981236785de348dc08af58cdf34e05dc289050990a0d"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_2/run_manifest.json",
+      "sha256": "368be5dda19959e17c934c32aa3a743b3a390b795b13b8c4587e8b23d4761fa5"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_2/solution.py",
+      "sha256": "f5d164cd83cf1e20aa8eef8d7b09793044951b3e01e5a50645bc3873ebb4b981"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_2/summary.json",
+      "sha256": "a6fa2442a0a0a6a51a067201909d13b8bf1382dd14ad2ef79eb2761285a854cd"
+    },
+    {
+      "path": "budget_00/PopulationGenetics__LDMismatchFineMapping/greedy_rewrite/selection_blind/seed_2/trajectory.jsonl",
+      "sha256": "4b8ace3bbfdf8f6f63a1345bb20192b50ed51ae3d1188ec7cf8dc7458ece990a"
+    }
+  ],
+  "reference_score": 0.9618342499999997,
+  "replay_file_sha256": "3148ced98b96f5594fedd0ff82df83c2c16285f200deaf3dc3354deb3655c4c6",
+  "reviewer_script_sha256": "f4c43943d194573b1cc1176ad025f751e4266b811b39a59a112b4a4f8301d3dd",
+  "scheduled_first_proposals": 3,
+  "schema_version": 1,
+  "scientific_certification": "not_assessed",
+  "source_revision": "766aff5fab3c347b2d982ae76417a342845a9029",
+  "source_unchanged": true,
+  "task_id": "PopulationGenetics/LDMismatchFineMapping",
+  "trusted_frozen_evidence": false,
+  "usage_available_for_all_events": true,
+  "valid_complete_first_proposals": 3
+}
