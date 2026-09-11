@@ -1,0 +1,72 @@
+{
+  "additional_evaluations": 0,
+  "evaluations_verified": 8,
+  "fixed_probe_comparisons": {
+    "fixed_mass_57_8": {
+      "development": {
+        "absolute_gap_below_reference": 0.25830076110000005,
+        "reference": 0.5486397428,
+        "score": 0.2903389817,
+        "score_to_reference_ratio": 0.5291978671071949
+      },
+      "heldout": {
+        "absolute_gap_below_reference": 0.25607050200000003,
+        "reference": 0.5000127063,
+        "score": 0.2439422043,
+        "score_to_reference_ratio": 0.4878720105037458
+      }
+    },
+    "published_four_way_probe": {
+      "development": {
+        "absolute_gap_below_reference": 0.29910469180000004,
+        "previously_declared_fixed_probe_gate_passed": true,
+        "reference": 0.5486397428,
+        "score": 0.249535051,
+        "score_to_reference_ratio": 0.45482496351155693
+      },
+      "heldout": {
+        "absolute_gap_below_reference": 0.3693424873000001,
+        "previously_declared_fixed_probe_gate_passed": true,
+        "reference": 0.5000127063,
+        "score": 0.130670219,
+        "score_to_reference_ratio": 0.2613337968287547
+      }
+    }
+  },
+  "full_private_metrics_file_mode": "0600",
+  "passed": true,
+  "per_candidate": {
+    "baseline": {
+      "charged_experiment_units_two_runs": 112,
+      "saved_full_metrics_repeat_identical": true,
+      "source_sha256": "aee48d712ad9a1a4ac557e1b9805714f607af28da1e214d322367c0b99642070",
+      "valid_worlds": 112
+    },
+    "fixed_mass_57_8": {
+      "charged_experiment_units_two_runs": 1344,
+      "saved_full_metrics_repeat_identical": true,
+      "source_sha256": "7dde497168dee1d28b203be29db0731a94d034fded5358f5bda072624f2c502e",
+      "valid_worlds": 112
+    },
+    "published_four_way_probe": {
+      "charged_experiment_units_two_runs": 112,
+      "saved_full_metrics_repeat_identical": true,
+      "source_sha256": "10d00d59ef42f48a946c4f4062e218ce0c59f4f49839cbf5c2232768ddaabbaa",
+      "valid_worlds": 112
+    },
+    "reference": {
+      "charged_experiment_units_two_runs": 1344,
+      "saved_full_metrics_repeat_identical": true,
+      "source_sha256": "78da166c44b216e3f69a492ba1a4aa605af0cc21d3223f2168196a9d68325d2c",
+      "valid_worlds": 112
+    }
+  },
+  "private_directory_mode": "0700",
+  "report_file_sha256": "522bb977871dd93c7b977764aa1cfcdb678318b6ae2c6a302015ce19be59450d",
+  "schema_version": 1,
+  "scientific_admission": "not_assessed",
+  "scope": "read-only verification of all eight saved evaluations; no additional evaluate_candidate call",
+  "source_integration_head": "2660c38a413fb7281d0e7012a6446eb384a934d1",
+  "task_head": "8497bd455d3090087e6a15e99fb85f5fae75e5cd",
+  "world_records_verified": 448
+}
