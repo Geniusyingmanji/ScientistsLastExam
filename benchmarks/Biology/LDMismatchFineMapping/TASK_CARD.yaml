@@ -45,16 +45,16 @@ invariants:
 - rows are charged and overspend fails closed; the candidate receives a closure and not the ledger, so it cannot raise its own budget; buying a row twice returns the same row and is charged once; malformed submissions score zero and never raise out of the evaluator
 - held-out split, per-world rows and the discovery axes remain evaluator-only
 known_shortcuts: >-
-  a 1120-strategy sweep over the purchase rule (panel only, rows for the two, four or six largest
-  |z|, the residual chase with zero, two or four proxy rows by predicted z-score), the model (top
-  variant, clumping at three thresholds, stepwise conditional selection at three thresholds, the
-  extended BIC at three penalties), the refusal (never, a near-duplicate at three thresholds, a
-  swap margin at three thresholds, a residual t above 4) and the effects (joint or marginal) tops
-  out at 0.557 on the development split and 0.257 held out, 69 per cent of the reference, by rows
-  for the two largest |z| with stepwise conditional selection and a residual-t refusal; none of
-  the 1120 reaches 0.6, the chase family with proxies by predicted z-score tops out at 0.556, the
-  panel alone at 0.305, clumping at 0.199 and never declining at 0.308; held out no strategy
-  exceeds 0.511; declining everything and any fixed variant score zero
+  The independently rerun fixed 1120-strategy grid at source 83e2e3c executes all 1120 cells
+  with valid results on all 18 worlds. Its best development score is 0.5568645 (heldout
+  0.25574175), 57.90 per cent of the complete reference at 0.96183425; the largest heldout
+  score in the grid is 0.510255. A separate stronger omission probe, the original region-wide
+  reference without the local masked-partner test, scores 0.806301625, below the complete
+  reference by 0.155532625. Panel-only clumping and universal refusal both have combined_score
+  zero. These are a bounded construction screen, not a universal difficulty bound; the
+  machine-readable candidates below must additionally match through the real sandbox, and
+  a new frontier first-draw calibration remains required.
+
 review:
   domain: pending_external_statistical_genetics
   evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
@@ -164,22 +164,22 @@ shortcut_probe:
   metric: combined_score
   reference:
     candidate: verification/reference_masking_aware.py
-    expected_score: null
+    expected_score: 0.96183425
   probes:
     - id: region_wide_without_masking
       candidate: verification/reference_conditional_rows.py
-      expected_score: null
+      expected_score: 0.806301625
     - id: two_ranked_rows_conditional_selection
       candidate: verification/shortcut_ranked_rows.py
-      expected_score: null
+      expected_score: 0.5568645
     - id: public_panel_clumping
       candidate: solution.py
-      expected_score: null
+      expected_score: 0.0
   relative_margin: 0.1
   score_tolerance: 0.000001
 post_builder_admission_review:
   original_pr_head: e58a2b2147cc2d4d661cb545584e3f6d6eb04194
-  status: implementation_corrected_measurements_pending
+  status: construction_screen_measured_pending_sandbox_and_calibration
   original_measurements: >-
     The 0.806 region-wide reference, 0.962 local-test rung and 1120-strategy numbers above
     are builder measurements before correcting the phenotype truth units. They are historical
@@ -189,4 +189,6 @@ post_builder_admission_review:
     promote the masking-aware local test to a standalone truth-blind complete reference;
     use an exact marginal-t-to-joint-effect conversion; publish all discovery denominators;
     use the current fail-closed wrapper and an explicit machine-readable shortcut contract.
+  construction_evidence: .research/ld_mismatch_fine_mapping/admission_2026-09-11.json
+  construction_source_commit: 83e2e3c7
   calibration_status: missing_new_clean_source_draw_required

@@ -1,0 +1,826 @@
+{
+  "schema_version": 1,
+  "task_id": "PopulationGenetics/LDMismatchFineMapping",
+  "evidence_scope": "IN_PROCESS_CONSTRUCTION_SCREEN_ONLY",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "83e2e3c728d1e7b6cba0c5abeaf11f4e899dad14",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "command": [
+      "/usr/bin/python3",
+      ".research/ld_mismatch_fine_mapping/admission_audit.py",
+      "--output-dir",
+      "OPERATOR_PRIVATE_OUTPUT"
+    ],
+    "command_redacted_for_operator_privacy": true
+  },
+  "task_package_sha256": "75993f3845ffdf2ef671652f2ab56dce0e372dbf1f69e33a5899af6ddcf7b939",
+  "task_contract_sha256": "a38a234ccea648171d2d368dea0909693b1b5674ab1373510b11fde9f0df4986",
+  "runtime_source_sha256": "8159a99d54894dd304e3ac48956cd05d4389f12a041f5d5d86a2c079641c2c86",
+  "environment": {
+    "python": "3.8.10",
+    "numpy": "1.24.4",
+    "scipy": "1.10.1",
+    "numerical_threads": 1
+  },
+  "cold_world_seconds": 23.141844617202878,
+  "elapsed_seconds": 112.46361308917403,
+  "planned_grid_cells": 1120,
+  "executed_grid_cells": 1120,
+  "fully_valid_grid_cells": 1120,
+  "best_grid": {
+    "name": "('topk', 2)|('cojo', 4.0)|('maxt', 4.0)|joint",
+    "all_worlds_valid": true,
+    "metrics": {
+      "combined_score": 0.5568645,
+      "valid": 1.0,
+      "feasibility_rate": 1.0,
+      "development_false_discovery_rate": 0.16666666666666666,
+      "development_correct_refusal_rate": 0.5,
+      "development_discovery_coverage": 1.0,
+      "development_set_f1": 0.8750001249999999,
+      "development_effect_score": 0.81285075,
+      "development_mean_rows_bought": 2.0,
+      "heldout_mechanism_score": 0.25574175000000005,
+      "heldout_false_discovery_rate": 0.3333333333333333,
+      "heldout_correct_refusal_rate": 0.5,
+      "heldout_discovery_coverage": 0.75
+    }
+  },
+  "best_heldout_grid": {
+    "name": "('chase', 0)|('clump', 0.1)|('swap', 1.0)|joint",
+    "all_worlds_valid": true,
+    "metrics": {
+      "combined_score": 0.07412149999999999,
+      "valid": 1.0,
+      "feasibility_rate": 1.0,
+      "development_false_discovery_rate": 0.5,
+      "development_correct_refusal_rate": 0.75,
+      "development_discovery_coverage": 0.75,
+      "development_set_f1": 0.250000125,
+      "development_effect_score": 0.22236462499999998,
+      "development_mean_rows_bought": 6.0,
+      "heldout_mechanism_score": 0.5102549999999998,
+      "heldout_false_discovery_rate": 0.16666666666666666,
+      "heldout_correct_refusal_rate": 1.0,
+      "heldout_discovery_coverage": 1.0
+    }
+  },
+  "ablations": [
+    {
+      "name": "complete_masking_aware_reference",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.9618342499999997,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.0,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 1.0,
+        "development_effect_score": 0.9236685,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.9455182499999999,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "standalone_ranked_rows_shortcut",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.5568645,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.16666666666666666,
+        "development_correct_refusal_rate": 0.5,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8750001249999999,
+        "development_effect_score": 0.81285075,
+        "development_mean_rows_bought": 2.0,
+        "heldout_mechanism_score": 0.25574175000000005,
+        "heldout_false_discovery_rate": 0.3333333333333333,
+        "heldout_correct_refusal_rate": 0.5,
+        "heldout_discovery_coverage": 0.75
+      }
+    },
+    {
+      "name": "reference: chase the residual, one proxy row per modelled variant, extended BIC over bought rows, swap-margin refusal, joint effects",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.8063016249999999,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.0,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8750001249999999,
+        "development_effect_score": 0.811725,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.74832275,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, trusting the reference panel instead of buying rows",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.5833333333333334,
+        "development_correct_refusal_rate": 0.25,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.350000125,
+        "development_effect_score": 0.331177875,
+        "development_mean_rows_bought": 0.0,
+        "heldout_mechanism_score": 0.2676739999999999,
+        "heldout_false_discovery_rate": 0.3333333333333333,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, rows bought for the six largest |z| instead of chased",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.3822435,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.25,
+        "development_correct_refusal_rate": 0.25,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8250001250000001,
+        "development_effect_score": 0.8115779999999999,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.37391175,
+        "heldout_false_discovery_rate": 0.16666666666666666,
+        "heldout_correct_refusal_rate": 0.5,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, stopping when the chase stops, no proxy rows at all",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.306301625,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.3333333333333333,
+        "development_correct_refusal_rate": 0.0,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8750001249999999,
+        "development_effect_score": 0.811725,
+        "development_mean_rows_bought": 2.4166666666666665,
+        "heldout_mechanism_score": 0.24832275000000004,
+        "heldout_false_discovery_rate": 0.3333333333333333,
+        "heldout_correct_refusal_rate": 0.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, proxy rows by the largest predicted z-score instead of one per modelled variant",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.4313016250000001,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.25,
+        "development_correct_refusal_rate": 0.25,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8750001249999999,
+        "development_effect_score": 0.811725,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.49832275,
+        "heldout_false_discovery_rate": 0.16666666666666666,
+        "heldout_correct_refusal_rate": 0.5,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, the strongest modelled variant's proxy first instead of the weakest's",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.8063016249999999,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.0,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8750001249999999,
+        "development_effect_score": 0.811725,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.74832275,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, two proxy rows per modelled variant reserved instead of one",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.5072434999999998,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.16666666666666666,
+        "development_correct_refusal_rate": 0.5,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8250001250000001,
+        "development_effect_score": 0.8115779999999999,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.4485755,
+        "heldout_false_discovery_rate": 0.16666666666666666,
+        "heldout_correct_refusal_rate": 0.5,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, no rows reserved for proxies (the chase may spend everything)",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.8063016249999999,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.0,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8750001249999999,
+        "development_effect_score": 0.811725,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.74832275,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, never declining",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.306301625,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.3333333333333333,
+        "development_correct_refusal_rate": 0.0,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8750001249999999,
+        "development_effect_score": 0.811725,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.24832275000000004,
+        "heldout_false_discovery_rate": 0.3333333333333333,
+        "heldout_correct_refusal_rate": 0.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, refusal margin 1 instead of 3",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.4313016250000001,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.25,
+        "development_correct_refusal_rate": 0.25,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8750001249999999,
+        "development_effect_score": 0.811725,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.74832275,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, refusal margin 6 instead of 3",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.8063016249999999,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.0,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8750001249999999,
+        "development_effect_score": 0.811725,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.74832275,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, declining on a near-duplicate at |r| >= 0.95 in the bought rows instead of the swap margin",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.4313016250000001,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.25,
+        "development_correct_refusal_rate": 0.25,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8750001249999999,
+        "development_effect_score": 0.811725,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.49832275,
+        "heldout_false_discovery_rate": 0.16666666666666666,
+        "heldout_correct_refusal_rate": 0.5,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, marginal effects z*se instead of joint",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.42542937499999994,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.25,
+        "development_correct_refusal_rate": 0.25,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8750001249999999,
+        "development_effect_score": 0.7999806249999999,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.49251475,
+        "heldout_false_discovery_rate": 0.16666666666666666,
+        "heldout_correct_refusal_rate": 0.5,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, plain BIC (penalty log n) instead of extended",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.5997354999999999,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.25,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.625,
+        "development_effect_score": 0.574471,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.7076964999999998,
+        "heldout_false_discovery_rate": 0.16666666666666666,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, extended BIC penalty doubled",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.8063016249999999,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.0,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8750001249999999,
+        "development_effect_score": 0.811725,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.74832275,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, extended BIC penalty halved",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.5997354999999999,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.25,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.625,
+        "development_effect_score": 0.574471,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.7076964999999998,
+        "heldout_false_discovery_rate": 0.16666666666666666,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, penalty at the Bonferroni line for sixty variants at 0.05 (11.2)",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.841556125,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.08333333333333333,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.875,
+        "development_effect_score": 0.80811225,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.7076964999999998,
+        "heldout_false_discovery_rate": 0.16666666666666666,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, then a masking-aware local test: the strong-LD neighbours (|r| >= 0.5) of each modelled variant scanned conditionally at a Bonferroni line for that neighbourhood alone",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.9619193749999999,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.0,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 1.0,
+        "development_effect_score": 0.923838875,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.9457642499999996,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, PLINK clumping at r^2 0.1 on the bought rows instead of the extended BIC",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.19912149999999995,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.4166666666666667,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 0.75,
+        "development_set_f1": 0.250000125,
+        "development_effect_score": 0.22236462499999998,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.5102549999999998,
+        "heldout_false_discovery_rate": 0.16666666666666666,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, stepwise conditional selection at t 5 on the bought rows instead of the extended BIC",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.4313016250000001,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.25,
+        "development_correct_refusal_rate": 0.25,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8750001249999999,
+        "development_effect_score": 0.811725,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.49832275,
+        "heldout_false_discovery_rate": 0.16666666666666666,
+        "heldout_correct_refusal_rate": 0.5,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, chase threshold 2 instead of 3",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.8063016249999999,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.0,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8750001249999999,
+        "development_effect_score": 0.811725,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.74832275,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, chase threshold 4.5 instead of 3",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.8063016249999999,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.0,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8750001249999999,
+        "development_effect_score": 0.811725,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.74832275,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, a budget of 3 rows",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.5072434999999998,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.16666666666666666,
+        "development_correct_refusal_rate": 0.5,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8250001250000001,
+        "development_effect_score": 0.8115779999999999,
+        "development_mean_rows_bought": 3.0,
+        "heldout_mechanism_score": 0.4485755,
+        "heldout_false_discovery_rate": 0.16666666666666666,
+        "heldout_correct_refusal_rate": 0.5,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, a budget of 4 rows",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.5072434999999998,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.16666666666666666,
+        "development_correct_refusal_rate": 0.5,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.8250001250000001,
+        "development_effect_score": 0.8115779999999999,
+        "development_mean_rows_bought": 4.0,
+        "heldout_mechanism_score": 0.4485755,
+        "heldout_false_discovery_rate": 0.16666666666666666,
+        "heldout_correct_refusal_rate": 0.5,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "same, a budget of 8 rows (more than the task allows: fails closed)",
+      "all_worlds_valid": false,
+      "metrics": {
+        "combined_score": 0.0,
+        "valid": 0.0,
+        "feasibility_rate": 0.0,
+        "development_false_discovery_rate": 0.0,
+        "development_correct_refusal_rate": 0.0,
+        "development_discovery_coverage": 0.0,
+        "development_set_f1": 0.0,
+        "development_effect_score": 0.0,
+        "development_mean_rows_bought": 6.0,
+        "heldout_mechanism_score": 0.0,
+        "heldout_false_discovery_rate": 0.0,
+        "heldout_correct_refusal_rate": 0.0,
+        "heldout_discovery_coverage": 0.0
+      }
+    },
+    {
+      "name": "baseline: PLINK clumping on the reference panel, marginal effects, never declining",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.8333333333333334,
+        "development_correct_refusal_rate": 0.0,
+        "development_discovery_coverage": 1.0,
+        "development_set_f1": 0.16666675,
+        "development_effect_score": 0.139437125,
+        "development_mean_rows_bought": 0.0,
+        "heldout_mechanism_score": 0.004447000000000006,
+        "heldout_false_discovery_rate": 0.5,
+        "heldout_correct_refusal_rate": 0.0,
+        "heldout_discovery_coverage": 1.0
+      }
+    },
+    {
+      "name": "declining everything",
+      "all_worlds_valid": true,
+      "metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "development_false_discovery_rate": 0.6666666666666666,
+        "development_correct_refusal_rate": 1.0,
+        "development_discovery_coverage": 0.0,
+        "development_set_f1": 0.0,
+        "development_effect_score": 0.0,
+        "development_mean_rows_bought": 0.0,
+        "heldout_mechanism_score": 0.0,
+        "heldout_false_discovery_rate": 0.6666666666666666,
+        "heldout_correct_refusal_rate": 1.0,
+        "heldout_discovery_coverage": 0.0
+      }
+    }
+  ],
+  "global_competitor_gaps": [
+    {
+      "kind": "single",
+      "seed": 51200101,
+      "attempt": 24,
+      "noise_draw": 25,
+      "public_problem_sha256": "0371715c9365eeebc3c3011d9267fd87d366a77cfe74956b59d227baa254b72f",
+      "single_swap_gap": 134.42164513115978,
+      "competitor_count": 59,
+      "gap_to_best_other_configuration": 134.42164513115978
+    },
+    {
+      "kind": "single",
+      "seed": 51200102,
+      "attempt": 1,
+      "noise_draw": 41,
+      "public_problem_sha256": "e39fcb5d38ac5d580a537bcb2bb4f96e2923e2e8b108eee26181f91ec639f09a",
+      "single_swap_gap": 74.06526241472929,
+      "competitor_count": 59,
+      "gap_to_best_other_configuration": 74.06526241472929
+    },
+    {
+      "kind": "single",
+      "seed": 51200103,
+      "attempt": 5,
+      "noise_draw": 58,
+      "public_problem_sha256": "4a80368e7b41ce01a33bbe6b7c25cc49ddd7f37a871e9e0e50c65300223411a1",
+      "single_swap_gap": 86.03854833117569,
+      "competitor_count": 59,
+      "gap_to_best_other_configuration": 86.03854833117569
+    },
+    {
+      "kind": "masked",
+      "seed": 51200104,
+      "attempt": 0,
+      "noise_draw": 24,
+      "public_problem_sha256": "0335baaea4bb8584721784284b52687bbe2ada2f9048a6482f4faf053cc4446c",
+      "single_swap_gap": 8.928447293449807,
+      "competitor_count": 1769,
+      "gap_to_best_other_configuration": 8.928447293449807
+    },
+    {
+      "kind": "masked",
+      "seed": 51200105,
+      "attempt": 0,
+      "noise_draw": 14,
+      "public_problem_sha256": "2e783aca94db3a6a282a0c8c65926c0ab654a0116e5d8f129365f69bcb645701",
+      "single_swap_gap": 9.09170268907991,
+      "competitor_count": 1769,
+      "gap_to_best_other_configuration": 9.09170268907991
+    },
+    {
+      "kind": "masked",
+      "seed": 51200106,
+      "attempt": 2,
+      "noise_draw": 4,
+      "public_problem_sha256": "3ca4e5a523f14c44b42eee60f337c49f80b1efda07c3d2bb6a36d2beeaab3635",
+      "single_swap_gap": 7.317538569548532,
+      "competitor_count": 1769,
+      "gap_to_best_other_configuration": 7.317538569548532
+    },
+    {
+      "kind": "multi",
+      "seed": 51200107,
+      "attempt": 8,
+      "noise_draw": 37,
+      "public_problem_sha256": "3c0355f203ee72864aa318902a71d75cce902bec21412a5a8ea6a85da4008c0e",
+      "single_swap_gap": 24.659339006372818,
+      "competitor_count": 34219,
+      "gap_to_best_other_configuration": 24.659339006372875
+    },
+    {
+      "kind": "multi",
+      "seed": 51200108,
+      "attempt": 16,
+      "noise_draw": 2,
+      "public_problem_sha256": "826a663ccdee7abb19bb40c375b71cdd5539542329aacb2ae2908b26ce2cc9ee",
+      "single_swap_gap": 30.50017464613495,
+      "competitor_count": 34219,
+      "gap_to_best_other_configuration": 30.500174646135008
+    },
+    {
+      "kind": "unresolved",
+      "seed": 51200109,
+      "attempt": 27,
+      "noise_draw": 8,
+      "public_problem_sha256": "cf144f8a1eb922e9ab48a6eaf003a50edb81827f81cd99a6e79f691f8312e61b",
+      "single_swap_gap": 49.713634343407016,
+      "competitor_count": 58,
+      "gap_to_best_other_configuration": 49.713634343407016
+    },
+    {
+      "kind": "unresolved",
+      "seed": 51200110,
+      "attempt": 4,
+      "noise_draw": 49,
+      "public_problem_sha256": "94df11b7dd5ebdb2d5a5f5f471021b4012d51cc58027496e5551797ba6196b0c",
+      "single_swap_gap": 25.489853581713874,
+      "competitor_count": 34218,
+      "gap_to_best_other_configuration": 25.489853581713874
+    },
+    {
+      "kind": "unresolved",
+      "seed": 51200111,
+      "attempt": 58,
+      "noise_draw": 38,
+      "public_problem_sha256": "ba7304931f8759db3ce2d6b0a3a5380251d30d0f22c39a383a1dfbd320adece7",
+      "single_swap_gap": 26.55811249248137,
+      "competitor_count": 34218,
+      "gap_to_best_other_configuration": 26.55811249248137
+    },
+    {
+      "kind": "unresolved",
+      "seed": 51200112,
+      "attempt": 6,
+      "noise_draw": 34,
+      "public_problem_sha256": "b00d70fe7b89bddf06443fe574213d754b7e9766a68dda95780a7bc373b3df34",
+      "single_swap_gap": 48.6917168803767,
+      "competitor_count": 34218,
+      "gap_to_best_other_configuration": 48.6917168803767
+    },
+    {
+      "kind": "single",
+      "seed": 62310201,
+      "attempt": 0,
+      "noise_draw": 38,
+      "public_problem_sha256": "4f9a8b4dd8da070cdb859359f5d57ab21f751672b7502e3b8975113e0f8e9b46",
+      "single_swap_gap": 86.66612146934837,
+      "competitor_count": 59,
+      "gap_to_best_other_configuration": 86.66612146934837
+    },
+    {
+      "kind": "masked",
+      "seed": 62310202,
+      "attempt": 0,
+      "noise_draw": 12,
+      "public_problem_sha256": "3e5279a8e37033e6e9f71d2a385b08487d925272eeb927a56282f825f3027f02",
+      "single_swap_gap": 6.1911935797496085,
+      "competitor_count": 1769,
+      "gap_to_best_other_configuration": 6.1911935797496085
+    },
+    {
+      "kind": "masked",
+      "seed": 62310203,
+      "attempt": 0,
+      "noise_draw": 14,
+      "public_problem_sha256": "cdb5efe0e6db63b74484f9bff12924a63913598a566ada48c638e774c57b13ad",
+      "single_swap_gap": 8.817572642845072,
+      "competitor_count": 1769,
+      "gap_to_best_other_configuration": 8.817572642845072
+    },
+    {
+      "kind": "multi",
+      "seed": 62310204,
+      "attempt": 19,
+      "noise_draw": 54,
+      "public_problem_sha256": "ffb80e7a3f5c275c5b00563930f269b7544e79811f6e1250d59a3c310442481b",
+      "single_swap_gap": 48.22167084502428,
+      "competitor_count": 34219,
+      "gap_to_best_other_configuration": 48.22167084502428
+    },
+    {
+      "kind": "unresolved",
+      "seed": 62310205,
+      "attempt": 3,
+      "noise_draw": 16,
+      "public_problem_sha256": "db83622b6b3a129fb0a2e1f11a2567c5c668db253d3d94a6118d96d7ce355950",
+      "single_swap_gap": 39.01982218982015,
+      "competitor_count": 58,
+      "gap_to_best_other_configuration": 39.01982218982015
+    },
+    {
+      "kind": "unresolved",
+      "seed": 62310206,
+      "attempt": 9,
+      "noise_draw": 53,
+      "public_problem_sha256": "12cf25398a2d632ba855d8b244cce0ff05c5a9b49d0ed45256eba69b4e9c0f2e",
+      "single_swap_gap": 10.981828250120486,
+      "competitor_count": 34218,
+      "gap_to_best_other_configuration": 10.981828250120486
+    }
+  ],
+  "raw_artifact_sha256": {
+    "ablations.jsonl": "538312298eb208007ca5a986d0a2b87d03f82e24c91aa855aa24fa96db3144fd",
+    "construction.json": "fec056dfdc023d3e0d124896a0dc86c41a7cdcdfeceadec9cdfc9e8e9ecc586b",
+    "grid.jsonl": "9a087e0d304f01d66ebe6924205ac7e36afeacaa82797f6efa8b13cef761a7d8",
+    "plan.json": "f8d3295ac1dc24fff7989bcd9381e58e849d0c47fea1a6dbecd11c53c484ac4d",
+    "summary.json": "837501a2fd7c6aa848ac2d362abfdeb6b4ac92f4d8ea2480c3f9fc4553dfeaf1"
+  },
+  "trusted_scientific_evidence": false,
+  "scientific_admission": "not_assessed",
+  "limitations": [
+    "Candidates in this screen execute in the trusted construction process; the fixed standalone candidates require separate real sandbox validation.",
+    "The grid is a prespecified bounded family, not an upper bound over all possible algorithms.",
+    "No frontier-model proposal has been drawn for the corrected task."
+  ]
+}

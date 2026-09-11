@@ -2,6 +2,31 @@
 
 ## Current complete reference and correction
 
+Current Linux construction screen (Python 3.8.10, NumPy 1.24.4, SciPy 1.10.1, one numerical
+thread; source `83e2e3c7`):
+
+| method | development | heldout | development false-verdict rate |
+|---|---:|---:|---:|
+| complete masking-aware reference | 0.96183425 | 0.94551825 | 0.000000 |
+| original region-wide reference, omitting the local test | 0.806301625 | 0.74832275 | 0.000000 |
+| strongest fixed-grid shortcut: two ranked rows and conditional selection | 0.5568645 | 0.25574175 | 0.166667 |
+| baseline panel clumping | 0.000000 | 0.004447 | 0.833333 |
+
+All 1120 prespecified strategies executed and were valid on every world. The grid maximum is
+0.5568645; the largest heldout score among grid cells is 0.510255. The independent enumeration
+of every equal-size causal configuration, including joint replacements, found all alternative
+configurations outside the designated ambiguous pair at least 6.19119 below the generating
+configuration. Twenty-nine reference/ablation/control rungs were rerun; the deliberately
+overspending eight-row control was invalid and is not difficulty evidence. Cold construction
+of the 18 worlds took 23.142 seconds after reusing genotype sufficient statistics; independent
+per-variant least-squares regression tests verify the algebraic optimization.
+
+These measurements were an in-process construction screen, not the sandbox contribution gate
+or model calibration. The full source-bound compact record and raw artifact hashes are in
+`.research/ld_mismatch_fine_mapping/admission_2026-09-11.json`; the machine contract separately
+pins the standalone reference and shortcut candidates for sandbox validation.
+
+
 `verification/reference_masking_aware.py` is standalone and truth-blind: it reads only the public
 problem and ordinary charged LD rows. It adds the local masked-partner test that the original
 reference deliberately omitted and converts marginal t-statistics to correlations before the
