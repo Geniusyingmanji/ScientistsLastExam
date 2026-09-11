@@ -1,0 +1,65 @@
+schema_version: 2
+scientific_question: Can an agent recover stimulus drive and a refractory spike-history kernel from repeated neural spike trains while refusing burst history, latent trial-gain mixtures, and stimulus-dependent refractoriness?
+artifact: Four point-process parameters, sealed conditional firing probabilities, a calibrated model-family diagnosis, and immutable trial evidence.
+oracle:
+  model: deterministic seeded conditional Bernoulli point-process generator with an exponential refractory kernel and three unsupported history or latent-gain mechanisms
+  feasibility: exact output keys, bounded finite parameters and probabilities, allowed diagnosis, boolean refusal, and at least four unique supplied trial IDs
+  deterministic: true
+normalization:
+  baseline: valid undetermined blanket abstention with fixed in-bounds parameters
+  reference: truth-blind regularized logistic fits, exponential time-constant search, and likelihood or BIC comparisons against three structured alternatives
+  score: clipped development joint of parameter recovery, prediction, diagnosis, and confidence normalized above blanket abstention; refusal, false discovery, coverage, attempts, and held-out transfer remain separate
+citations:
+- id: doi:10.1152/jn.00697.2004
+  title: A point process framework for relating neural spiking activity to spiking history, neural ensemble, and extrinsic covariate effects
+- id: doi:10.1088/0954-898X/15/4/009
+  title: Maximum likelihood estimation of cascade point-process neural encoding models
+- id: doi:10.1038/nature07140
+  title: Spatio-temporal correlations and visual signalling in a complete neuronal population
+invariants:
+- supported worlds generate conditional Bernoulli spikes from the published stimulus plus negative exponential spike-history equation
+- a recent spike strictly lowers supported conditional firing probability at fixed stimulus and parameters
+- burst history, trial-level latent gain mixtures, and stimulus-history interactions violate different parts of the supported conditional model
+- every trial has aligned finite stimulus and binary spike sequences with an immutable trial ID
+- blanket abstention is valid and scores zero after normalization
+- malformed, non-finite, incomplete, extra-key, and fabricated-evidence submissions fail closed
+- development and held-out worlds use different seeds and parameters
+- reference outputs are computed from public trials without reading hidden world labels or parameters
+known_shortcuts: A 192-strategy sweep of low-dimensional trial-rate, delayed-spike and stimulus-conditioned frequency thresholds reaches 0.694/0.685 development/held-out with one-third false discovery, below the truth-blind point-process reference's 0.903/0.898. Fixing tau at 20 ms reaches 0.876/0.879, never refusing 0.396/0.300, and rate-only inference 0.234/0.179. The reduced-order laboratory omits continuous-time spike jitter, coupled neurons, sorting errors, nonstationary stimulus filters and long adaptation.
+review:
+  domain: pending_external_computational_neuroscience_review
+  evaluator_security: automated_bad_candidate_determinism_contract_probability_and_fault_refusal_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic repeated-trial point-process generator with development and held-out supported and misspecified worlds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: No repository or Frontier-Eng task performs neural point-process inference. GeneNetworkIntervention uses active multi-gene ODE perturbations and HamiltonianLearning uses coherent spin dynamics; neither estimates spike-history likelihoods or attributes refractory-model failure.
+lineage:
+  status: complete
+  builder_model_ids:
+  - codex-science-benchmark-construction
+  builder_scaffolds:
+  - deterministic_spike_train_discovery
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: DeepSeek calibration will be recorded only after the oracle and public contract are frozen.
+  shortcut_discoverer: builder_self_audit
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: computational_neuroscience
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: baseline, truth-blind reference, malformed-candidate checks, and scientific invariants are executable from the task package
