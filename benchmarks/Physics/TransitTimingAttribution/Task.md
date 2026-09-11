@@ -42,8 +42,10 @@ clock claim receives 0.65 mechanism credit and 0.35 forecast credit. Wrong mecha
 abstentions score zero. Period quality decays exponentially with relative error; forecast quality
 decays exponentially with absolute error at four times the timing uncertainty. An unsupported-world
 refusal scores one and any unsupported claim scores zero.
-The headline score is `max(0, (sum(world_scores) - unsupported_count) / supported_count)`
-multiplied by the correct-refusal rate and squared discovery precision `(1-FDR)^2`.
+Each split score is `max(0, (sum(world_scores) - unsupported_count) / supported_count)`
+multiplied by the correct-refusal rate and squared discovery precision `(1-FDR)^2`. The headline
+`combined_score` is the lower of the development and sealed-split scores, so a policy must
+transfer to both sets to improve the search objective.
 Thus blanket refusal scores zero and false claims on unsupported signals reduce the headline.
 Never refusing also scores zero, even with otherwise accurate supported-model fits.
 Rate metrics include counts and denominators. Instance order and split sizes are not a contract;
@@ -60,13 +62,15 @@ not global anomaly significance. Shifted timing/noise instances test transfer of
 ## Reference checks
 
 The truth-blind reference uses three spread observations and a fourth model-disagreement query,
-then continuously refines periodic fits. It scores 0.632413 on development and 0.430139 on held-out.
-Two follow-ups score 0.259425/0.241203; removing the activity model gives 0.285567/0.268826;
-fixing the forecast to zero gives 0.540351/0.359365; disabling refusal gives 0/0. Constant-family
+then continuously refines periodic fits. It scores 0.430139 overall (0.632413 development and
+0.430139 held-out). Two follow-ups score 0.241203 overall (0.259425/0.241203 by split); removing
+the activity model gives 0.268826 overall (0.285567/0.268826); fixing the forecast to zero gives
+0.359365 overall (0.540351/0.359365); disabling refusal gives 0/0. Constant-family
 and old call-order probes also give 0/0. Three development-selected fixed-schedule grids remain
-below the reference: the full three-diagnostic family (800 policies) reaches 0.574956/0.301806,
-the no-BIC family (160) reaches 0.492715/0.206081, and the no-RMS family (160) reaches
-0.441114/0.235989. These are measured finite grids, not universal shortcut bounds.
+below the reference under the headline: the full three-diagnostic family (1,000 policies) reaches
+0.301806 overall (0.574956/0.301806 by split), the no-BIC family (200) reaches 0.159146 overall
+(0.543759/0.159146), and the no-RMS family (200) reaches 0.322946 overall (0.515176/0.322946).
+These are measured finite grids, not universal shortcut bounds.
 
 ## Rules
 

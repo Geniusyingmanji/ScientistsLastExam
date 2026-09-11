@@ -26,6 +26,11 @@ SCHEDULES = (
     (14, 28, 45, 59),
     (15, 30, 47, 59),
     (16, 32, 49, 59),
+    # Neighbours of the reference's late-model-discrimination cadence.  These are kept in
+    # the development-selected regression grid because moving one observation was the issue
+    # reported during PR review.
+    (16, 32, 48, 59),
+    (16, 32, 50, 59),
     (17, 34, 51, 59),
     (18, 36, 53, 59),
     (20, 38, 55, 59),
@@ -106,12 +111,14 @@ def _scan(dev_cache,held_cache,rms_values,gap_values,correlation_values):
             SCHEDULES,rms_values,gap_values,correlation_values):
         limits=(rms_limit,gap_limit,correlation_limit)
         dev=_cached_score(dev_cache[schedule],limits)
-        row=(dev,_cached_score(held_cache[schedule],limits),
-             (schedule,rms_limit,gap_limit,correlation_limit))
+        held=_cached_score(held_cache[schedule],limits)
+        # This is a development-selected shortcut probe: held-out is deliberately read only
+        # after selection, matching the overfitting channel the regression is meant to catch.
+        row=(dev,min(dev,held),held,(schedule,rms_limit,gap_limit,correlation_limit))
         if best is None or row[0]>best[0]:
             best=row
-    result=evaluator.evaluate(fitted_policy(*best[2]))
-    if (result["combined_score"],result["robustness_score"]) != best[:2]:
+    result=evaluator.evaluate(fitted_policy(*best[3]))
+    if (result["development_score"],result["combined_score"],result["robustness_score"]) != best[:3]:
         raise AssertionError("cached and evaluator shortcut scores differ")
     return best
 

@@ -43,6 +43,7 @@ class TransitMechanismMetricsTests(unittest.TestCase):
             self.assertEqual(result[split + "_mechanism_score"], 0.4)
             self.assertEqual(result[split + "_false_discovery_denominator"], 3)
         self.assertEqual(evaluator._score(worlds[1], evaluator._parse_submission(claim("clock"))), (0.0, True))
+        self.assertEqual(result["combined_score"], min(result["development_score"], result["robustness_score"]))
 
     def test_refusal_changes_headline_and_all_abstain_is_zero(self):
         def row(supported, score, abstain=False):
@@ -136,10 +137,11 @@ class TransitMechanismMetricsTests(unittest.TestCase):
             observation, measure, min(budget, 2), 1.0, 6.0, 0.8))
         shortcut = evaluator.evaluate(calibrate.fitted_policy(
             (13, 26, 43, 59), 1.2, 3.0, 0.8))
-        self.assertGreater(full["combined_score"] - half["combined_score"], 0.30)
+        self.assertGreater(full["combined_score"] - half["combined_score"], 0.15)
         self.assertGreater(full["robustness_score"] - half["robustness_score"], 0.15)
         self.assertGreater(full["combined_score"] - shortcut["combined_score"], 0.05)
         self.assertGreater(full["robustness_score"] - shortcut["robustness_score"], 0.10)
+        self.assertEqual(full["combined_score"], min(full["development_score"], full["robustness_score"]))
         self.assertEqual(full["development_correct_refusal_denominator"], 10)
         self.assertEqual(full["heldout_correct_refusal_denominator"], 10)
 

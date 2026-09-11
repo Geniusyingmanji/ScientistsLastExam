@@ -12,12 +12,12 @@ The executable revision and complete metrics are recorded in
 twice through the trusted Linux driver and bubblewrap; the two complete metric dictionaries must
 match before the record is accepted.
 
-| Candidate | Development | Held-out |
-|---|---:|---:|
-| Truth-blind active reference | 0.632413 | 0.430139 |
-| Baseline, one measurement then refusal | 0.000000 | 0.000000 |
+| Candidate | Combined | Development | Held-out |
+|---|---:|---:|---:|
+| Truth-blind active reference | 0.430139 | 0.632413 | 0.430139 |
+| Baseline, one measurement then refusal | 0.000000 | 0.000000 | 0.000000 |
 
-The reference recovers 16/23 supported mechanisms on development and 17/24 on held-out. Its false
+`combined_score` is the lower of the development and held-out split scores. The reference recovers 16/23 supported mechanisms on development and 17/24 on held-out. Its false
 discovery counts are 0/16 and 2/19; correct refusals are 10/10 and 9/10; supported coverage is
 16/23 and 18/24. Headroom remains in continuous-period inference, model-discriminating schedules,
 forecasting and rejection of both unmodelled processes. The reference is a capable witness, not a
@@ -38,30 +38,31 @@ credit.
 
 ## Ablation ladder
 
-| Reference change | Development | Held-out |
-|---|---:|---:|
-| Full active reference, four follow-ups | 0.632413 | 0.430139 |
-| Forecast fixed to zero | 0.540351 | 0.359365 |
-| Activity model removed | 0.285567 | 0.268826 |
-| Only three follow-ups | 0.277997 | 0.232742 |
-| Only two follow-ups | 0.259425 | 0.241203 |
-| Refusal disabled | 0.000000 | 0.000000 |
+| Reference change | Combined | Development | Held-out |
+|---|---:|---:|---:|
+| Full active reference, four follow-ups | 0.430139 | 0.632413 | 0.430139 |
+| Forecast fixed to zero | 0.359365 | 0.540351 | 0.359365 |
+| Activity model removed | 0.268826 | 0.285567 | 0.268826 |
+| Only three follow-ups | 0.232742 | 0.277997 | 0.232742 |
+| Only two follow-ups | 0.241203 | 0.259425 | 0.241203 |
+| Refusal disabled | 0.000000 | 0.000000 | 0.000000 |
 
-The fourth follow-up adds 0.354416 development and 0.197398 held-out over the three-follow-up
+The fourth follow-up adds 0.197398 combined, 0.354416 development and 0.197398 held-out over the three-follow-up
 version. Removing model-disagreement evidence, a supported family, forecast skill or refusal all
 cost score.
 
 ## Shortcut probes
 
 The three grids use fixed four-transit schedules and coarse periodic fits. Selection uses only
-development `combined_score`; held-out metrics are read afterward.
+development score; the sealed score and new combined score are read afterward. The schedule grid
+also includes the 48/50-transit neighbours of the review-identified late follow-up.
 
-| Family | Policies | Development | Held-out |
+| Family | Policies | Combined | Development | Held-out |
 |---|---:|---:|---:|
-| A: RMS, BIC-gap and residual-correlation thresholds | 800 | 0.574956 | 0.301806 |
-| B: RMS and residual correlation, no BIC gate | 160 | 0.492715 | 0.206081 |
-| C: BIC gap and residual correlation, no RMS gate | 160 | 0.441114 | 0.235989 |
-| Reference | - | 0.632413 | 0.430139 |
+| A: RMS, BIC-gap and residual-correlation thresholds | 1,000 | 0.301806 | 0.574956 | 0.301806 |
+| B: RMS and residual correlation, no BIC gate | 200 | 0.159146 | 0.543759 | 0.159146 |
+| C: BIC gap and residual correlation, no RMS gate | 200 | 0.322946 | 0.515176 | 0.322946 |
+| Reference | - | 0.430139 | 0.632413 | 0.430139 |
 
 `verification/calibrate.py` caches the repeated fits, selects each family on development, then
 checks each selected witness with the full in-process evaluator. The strongest family-A witness is

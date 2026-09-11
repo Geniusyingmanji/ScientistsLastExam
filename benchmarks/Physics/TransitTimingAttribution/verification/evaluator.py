@@ -132,7 +132,8 @@ def _aggregate(rows):
 
 
 def _invalid_metrics():
-    metrics = {"combined_score": 0.0, "robustness_score": 0.0, "valid": 0.0}
+    metrics = {"combined_score": 0.0, "development_score": 0.0,
+               "robustness_score": 0.0, "valid": 0.0}
     for prefix in ("development", "validation", "heldout"):
         metrics.update({prefix + "_" + key: 0.0 for key in _aggregate([])})
     return metrics
@@ -156,9 +157,15 @@ def evaluate(candidate):
                              "correct": supported and not s["abstain"] and s["mechanism"] == w["kind"]})
             summary = _aggregate(rows)
             metrics.update({prefix + "_" + key: value for key, value in summary.items()})
-            metrics["combined_score" if prefix == "development" else "robustness_score"] = summary["combined_score"]
+            if prefix == "development":
+                metrics["development_score"] = summary["combined_score"]
+            else:
+                metrics["robustness_score"] = summary["combined_score"]
             if prefix == "validation":
                 metrics.update({"heldout_" + key: value for key, value in summary.items()})
+        # Search receives only combined_score.  Gate it by the independently seeded shifted
+        # split so a schedule selected for development-only noise cannot be promoted.
+        metrics["combined_score"] = min(metrics["development_score"], metrics["robustness_score"])
     except Exception:
         return _invalid_metrics()
     return metrics
