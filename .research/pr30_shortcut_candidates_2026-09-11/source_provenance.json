@@ -1,0 +1,42 @@
+{
+  "task_head": "90366563a7605e8f6eb6226200b1463615419b4a",
+  "original_source_path": "tests/affine_ranking_lp.py",
+  "original_source_url": "https://github.com/Geniusyingmanji/ScientistsLastExam/blob/90366563a7605e8f6eb6226200b1463615419b4a/tests/affine_ranking_lp.py",
+  "original_sha256": "6d5a9d2b8550cc84f93aae27935ca02abe2d3c8a1d2175fb75f8ccfbfa4f9207",
+  "original_byte_length": 3931,
+  "original_git_blob_sha1": "d37f67344252969a104a0b24736f60074e754125",
+  "candidate_sha256": "0edd2d00f3d22286e7e33daad4ec1cfb6bc5610f1a1de1e7ceca2521a96f623d",
+  "appended_adapter_utf8": "\n\n# Fixed serialization adapter over public instance values only.\ndef _public_fraction(value):\n    if isinstance(value, int) and not isinstance(value, bool):\n        return Fraction(value)\n    if isinstance(value, (list, tuple)) and len(value) == 2:\n        return Fraction(value[0], value[1])\n    raise ValueError(\"public rational must be integer or [numerator, denominator]\")\n\n\ndef _public_ratio(value):\n    return [value.numerator, value.denominator]\n\n\ndef build_ranking(instance):\n    guards = [([_public_fraction(x) for x in row[\"g\"]],\n               _public_fraction(row[\"d\"])) for row in instance[\"guards\"]]\n    a = [[_public_fraction(x) for x in row] for row in instance[\"A\"]]\n    b = [_public_fraction(x) for x in instance[\"b\"]]\n    witness = exact_maximum_delta(guards, a, b)\n    return {\"r\": [_public_ratio(x) for x in witness[\"r\"]],\n            \"s\": _public_ratio(witness[\"s\"]),\n            \"delta\": _public_ratio(witness[\"delta\"]),\n            \"nonneg_lambdas\": [_public_ratio(x) for x in witness[\"nonneg_lambdas\"]],\n            \"decrease_lambdas\": [_public_ratio(x) for x in witness[\"decrease_lambdas\"]]}\n",
+  "adapter_sha256": "e9af130437db7b5d23b100bb16d1f273b00a785c28204c0dc8bb9bd8692e951e",
+  "algorithm": {
+    "numeric_basis": "scipy.optimize.linprog(method=highs), exactly unchanged helper defaults",
+    "exact_reconstruction": "Fraction Gaussian elimination; exact equality and nonnegativity checks retained",
+    "norm_formulation": "helper split positive/negative slope variables with sum=1; final candidate still subjected to oracle exact one-norm and Farkas validation",
+    "new_search_or_parameters": false
+  },
+  "public_input_review": {
+    "imports": [
+      "__future__.annotations",
+      "fractions.Fraction",
+      "numpy",
+      "scipy.optimize.linprog"
+    ],
+    "inputs": [
+      "instance.guards[*].g",
+      "instance.guards[*].d",
+      "instance.A",
+      "instance.b"
+    ],
+    "unused_public_fields": [
+      "name",
+      "dimension",
+      "max_numerator",
+      "max_denominator"
+    ],
+    "oracle_or_reference_import": false,
+    "hidden_optimum_or_answer_table": false,
+    "filesystem_or_network_access": false,
+    "code_change": "complete original helper source retained, only public rational decode/encode and build_ranking entrypoint appended"
+  },
+  "scope": "related current fixed LP helper, not original missing issue78 155-line pure-standard-library candidate"
+}
