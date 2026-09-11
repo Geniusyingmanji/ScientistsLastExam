@@ -95,6 +95,7 @@ tasks:
   CausalDiscovery/SurvivorshipConfoundedDesign: {form: discovery, kind: structure, note: selection_not_clone_of_interventional_scm}
   Algorithm/GraphFromDistances: {form: discovery, kind: structure}
   SystemsBiology/GeneNetworkIntervention: {form: discovery, kind: structure}
+  Phylogenomics/AnomalyZoneSpeciesTree: {form: discovery, kind: structure, note: species_tree_and_coalescent_branch_lengths_from_budgeted_loci_in_the_anomaly_zone_not_gene_network_or_distance_graph}
   # --- discovery / evidence ---------------------------------------------------
   ParticlePhysics/DiscrepantMeasurements: {form: discovery, kind: evidence, note: on_ramp_do_not_pair}
   ParticlePhysics/LookElsewhereAnomaly: {form: discovery, kind: evidence, note: trials_factor_not_clone_of_discrepant_measurements}

@@ -99,6 +99,7 @@ CHINESE_NAMES = {
     "Photonics/MultilayerThinFilm": "多层减反射膜",
     "Physics/ComplexBoseLaw": "复玻色占据律",
     "Physics/HiddenCouplingNetwork": "隐藏耦合网络重建",
+    "Phylogenomics/AnomalyZoneSpeciesTree": "反常区物种树",
     "PopulationGenetics/DemographicSFS": "位点频率谱人口史反演",
     "ProteinEngineering/ProteinStabilityDesign": "蛋白稳定性批次设计",
     "QuantumDynamics/HamiltonianLearning": "哈密顿量学习",
@@ -351,6 +352,9 @@ CHINESE_BRIEFS = {
     "Physics/HiddenCouplingNetwork": (
         "实验次数少于单元数,从多单元驱动的稳态里恢复带符号的直接耦合图;存在未观测单元时拒答",
         "带符号边 F1;间接路径、tanh 非线性与隐藏单元造成的稠密低秩耦合分别记误发现"),
+    "Phylogenomics/AnomalyZoneSpeciesTree": (
+        "在测序预算内自选位点,从多物种溯祖的基因树中恢复八个物种的无根物种树与溯祖单位枝长;物种树处在反常区,两个快演化物种诱发长枝吸引,存在杂交物种时须拒答",
+        "拓扑精确门控 + 枝长对数误差评分;树世界拒答与网状世界给树均记误发现,分数标尺锚在全拒答为零"),
     "PopulationGenetics/DemographicSFS": (
         "在测序预算内跨样本量分配测序,从位点频率谱恢复常量或三期人口史",
         "参数恢复 + 留出样本量预测 + 模型不足拒答 + 预算设计"),

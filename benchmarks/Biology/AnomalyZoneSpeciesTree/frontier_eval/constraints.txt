@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep infer_species_tree(problem, sequence).
+2) Return {"verdict", "newick", "confidence"}. `verdict` is "tree" or "reticulate". When it is "tree", `newick` must be an unrooted binary tree on exactly the eight taxa in problem["taxa"], each once, with a finite non-negative branch length on every edge; the internal branch lengths are read in coalescent units. `confidence` in [0,1]. `abstain: true` is accepted as a synonym for the reticulate verdict.
+3) sequence(locus) charges that locus's catalogue cost and returns its alignment and an unrooted neighbour-joining gene tree; `locus` must be an integer index into problem["catalogue"]. Buying a locus twice returns the same data and is charged once. Do not exceed problem["locus_budget"] per world.
+4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

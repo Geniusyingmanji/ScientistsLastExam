@@ -1,0 +1,13 @@
+domain: Phylogenomics
+task: AnomalyZoneSpeciesTree
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: physical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 120
+science_metric: species_tree_topology_and_coalescent_branch_lengths_from_budgeted_loci_in_the_anomaly_zone_with_long_branch_confound_and_reticulation_refusal
+reference_baseline: concatenation of the longest fast loci, neighbour joining on the plain Jukes-Cantor distance, never declining
+reference_sota: site-rate shape estimated from the constant-site share, gamma-corrected distance gene trees at that shape, exhaustive quartet consensus, quartet-frequency branch lengths, minority-imbalance refusal
+citation: "Degnan and Rosenberg 2006, DOI 10.1371/journal.pgen.0020068; Degnan 2013, DOI 10.1093/sysbio/syt023; Kubatko and Degnan 2007, DOI 10.1080/10635150601146041; Allman, Degnan and Rhodes 2011, DOI 10.1007/s00285-010-0355-7; Mirarab et al. 2014, DOI 10.1093/bioinformatics/btu462; Solis-Lemus and Ane 2016, DOI 10.1371/journal.pgen.1005896; Meng and Kubatko 2009, DOI 10.1016/j.tpb.2008.10.004; Felsenstein 1978, DOI 10.2307/2412923; Roch, Nute and Warnow 2019, DOI 10.1093/sysbio/syy061; Rannala and Yang 2003, DOI 10.1093/genetics/164.4.1645"

@@ -20,6 +20,7 @@ RECORDED_LINEAGE = {
     "Physics/HiddenCouplingNetwork",
     "ClimateScience/ForcedSignalAttribution",
     "StructuralEngineering/ModalDamageAttribution",
+    "Phylogenomics/AnomalyZoneSpeciesTree",
     "Mathematics/BlackBoxGroupIdentification",
     "Spectroscopy/CrowdedSpectrumAssignment",
     "Mathematics/RamseyLowerBound",
