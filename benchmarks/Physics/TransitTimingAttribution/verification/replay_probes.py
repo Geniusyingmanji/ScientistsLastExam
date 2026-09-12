@@ -30,21 +30,9 @@ def attribute_ttv(observation, measure, budget_units):
     return {"mechanism": kind, "period": 5.2, "next_offset_days": 0.0,
             "confidence": 1.0, "evidence_query_ids": ids, "abstain": False}
 '''
-FIXED_SCHEDULE = '''
+NEVER_ABSTAIN = '''
 def attribute_ttv(observation, measure, budget_units):
-    ids=[]; extra_x=[]; extra_y=[]
-    for number in (13,26,43,59)[:int(budget_units)]:
-        row=measure(number)
-        ids.append(row["query_id"]); extra_x.append(float(number))
-        extra_y.append(float(row["timing_offset_days"]))
-    if len(ids)<2: return {"abstain":True}
-    x=list(map(float,observation["transit_numbers"]))+extra_x
-    y=list(map(float,observation["timing_offsets_days"]))+extra_y
-    best,gap,relative_rms,correlation=_diagnostics(observation,x,y)
-    if relative_rms>1.2 or gap<3.0 or correlation>0.8: return {"abstain":True}
-    return {"mechanism":best[0],"period":best[1],
-            "next_offset_days":_predict(best[2],float(observation["forecast_transit_number"])),
-            "confidence":0.8,"evidence_query_ids":ids,"abstain":False}
+    return _attribute_ttv(observation, measure, budget_units, 99.0, -99.0, 99.0)
 '''
 
 
@@ -58,11 +46,9 @@ def main():
         "reference": reference,
         "always_abstain": 'def attribute_ttv(*args): return {"abstain": True}\n',
         "order_keyed": ORDER,
-        "never_abstain_reference": reference.replace(
-            'if relative_rms > rms_limit:', 'if False:').replace(
-            'if gap < gap_limit:', 'if False:').replace(
-            'if correlation > correlation_limit:', 'if False:'),
-        "fixed_schedule_shortcut": reference + "\n" + FIXED_SCHEDULE,
+        "never_abstain_reference": reference + "\n" + NEVER_ABSTAIN,
+        "fixed_schedule_shortcut": (TASK / "verification/shortcut_family_a.py").read_text(
+            encoding="utf-8"),
     }
     for kind in ("planet", "activity", "clock"):
         candidates["constant_" + kind] = CONSTANT.replace("KIND", repr(kind))

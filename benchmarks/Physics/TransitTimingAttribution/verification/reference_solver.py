@@ -34,16 +34,45 @@ def _models(observation, x, y):
                  lambda t,w=sec:math.sin(w*t),lambda t,w=sec:math.cos(w*t)])))
     return sorted(models,key=lambda z:z[2][0])
 
-def _next_transit(models, used, start, limit):
+def _misspecification_models(observation,x,y):
+    one=lambda t:1.0
+    center=float(sum(x)/len(x)); span=max(1.0,float(max(x)-min(x)))
+    u=lambda t:(t-center)/span
+    penalty=math.log(len(y))
+    periods=sorted({float(p)*float(scale)
+                    for key in ("planet_period_grid","activity_period_grid")
+                    for p in observation[key] for scale in (0.9,1.0,1.1)})
+    models=[]
+    for period in periods:
+        w=2*math.pi/period
+        for drift in (-2*math.pi,-math.pi,-0.5*math.pi,0.5*math.pi,math.pi,2*math.pi):
+            phase=lambda t,w=w,drift=drift:w*t+drift*u(t)*u(t)
+            fit=_fit(x,y,[one,lambda t,phase=phase:math.sin(phase(t)),
+                          lambda t,phase=phase:math.cos(phase(t))])
+            models.append(("phase_evolution",period,(fit[0]+penalty,fit[1],fit[2])))
+    secondary=sorted({float(p) for key in ("planet_period_grid","activity_period_grid")
+                      for p in observation[key]} | {float(observation["activity_secondary_period"])})
+    for p1 in periods:
+        w1=2*math.pi/p1
+        for p2 in secondary:
+            if abs(math.log(p1/p2))<0.08:
+                continue
+            w2=2*math.pi/p2
+            fit=_fit(x,y,[one,lambda t,w=w1:math.sin(w*t),lambda t,w=w1:math.cos(w*t),
+                          lambda t,w=w2:math.sin(w*t),lambda t,w=w2:math.cos(w*t)])
+            models.append(("extra_component",p1,(fit[0]+2*penalty,fit[1],fit[2])))
+    return sorted(models,key=lambda z:z[2][0])
+
+def _next_transit(models, used, start, limit, model_limit=12, bic_temperature=0.01):
     # Active model discrimination: retain period uncertainty within each mechanism instead of
     # collapsing every family to one fit. This makes late follow-up choices informative for both
     # attribution and continuous-period recovery.
-    representatives=models[:18]
+    representatives=models[:model_limit]
     pool=[n for n in range(start,limit+1) if n not in used]
     if not pool: return limit
     def utility(n):
         predictions=[_predict(m[2],float(n)) for m in representatives]
-        weights=[math.exp(-0.05*(m[2][0]-models[0][2][0])) for m in representatives]
+        weights=[math.exp(-bic_temperature*(m[2][0]-models[0][2][0])) for m in representatives]
         total=sum(weights)
         mean=sum(w*v for w,v in zip(weights,predictions))/total
         disagreement=sum(w*(v-mean)**2 for w,v in zip(weights,predictions))/total
@@ -90,22 +119,31 @@ def _diagnostics(observation,x,y,refine=False):
     energy=sum(a*a for a in residual)+1e-15
     return best,gap,rms/noise,abs(lag/energy)
 
-def _attribute_ttv(observation, measure, budget_units, rms_limit, gap_limit, correlation_limit):
+def _attribute_ttv(observation, measure, budget_units, rms_limit, gap_limit, correlation_limit,
+                   rescue_gap=6.0, rescue_rms=1.2, rescue_mechanism_gap=0.0,
+                   rescue_correlation=0.8, anchors=(20,38,55),
+                   model_limit=12, bic_temperature=0.01):
     initial=list(map(int,observation["transit_numbers"])); limit=int(observation["maximum_followup_transit_number"])
     start=max(initial)+1
     ids=[]; nums=[]; vals=[]; used=set(initial)
     x=list(map(float,observation["transit_numbers"])); y=list(map(float,observation["timing_offsets_days"]))
-    anchors=(20,38,55)
     for step in range(int(budget_units)):
         p=(anchors[step] if step<len(anchors) and anchors[step]>=start
-           else _next_transit(_models(observation,x,y),used,start,limit))
+           else _next_transit(_models(observation,x,y),used,start,limit,
+                              model_limit,bic_temperature))
         r=measure(int(p)); ids.append(r["query_id"]); nums.append(float(p)); vals.append(float(r["timing_offset_days"]))
         x.append(float(p)); y.append(float(r["timing_offset_days"])); used.add(int(p))
     if len(ids)<2: return {"abstain":True}
     best,gap,relative_rms,correlation=_diagnostics(observation,x,y,refine=True)
-    if relative_rms > rms_limit: return {"abstain":True}
-    if gap < gap_limit: return {"abstain":True}
-    if correlation > correlation_limit: return {"abstain":True}
+    accepted=(relative_rms<=rms_limit and gap>=gap_limit and correlation<=correlation_limit)
+    if not accepted:
+        alternatives=_misspecification_models(observation,x,y)
+        alternative_gap=(alternatives[0][2][0]-best[2][0]) if alternatives else -math.inf
+        rescued=(len(ids)>=4 and relative_rms<=rescue_rms and gap>=rescue_mechanism_gap and
+                 correlation<=rescue_correlation and
+                 alternative_gap>=rescue_gap)
+        if not rescued:
+            return {"abstain":True}
     forecast=float(observation["forecast_transit_number"])
     return {"mechanism":best[0],"period":best[1],"next_offset_days":_predict(best[2],forecast),"confidence":min(0.95,0.5+gap/20.0),"evidence_query_ids":ids,"abstain":False}
 

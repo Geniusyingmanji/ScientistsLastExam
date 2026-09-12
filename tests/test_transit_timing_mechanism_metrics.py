@@ -202,10 +202,17 @@ class TransitMechanismMetricsTests(unittest.TestCase):
             observation, measure, min(budget, 2), 1.0, 6.0, 0.8))
         shortcut = evaluator.evaluate(calibrate.fitted_policy(
             (13, 26, 43, 59), 1.2, 3.0, 0.8))
+        legacy_design = evaluator.evaluate(calibrate.reference_ablation("legacy_active_posterior"))
+        no_misspecification = evaluator.evaluate(
+            calibrate.reference_ablation("no_misspecification_rescue"))
         self.assertGreater(full["combined_score"] - half["combined_score"], 0.15)
         self.assertGreater(full["robustness_score"] - half["robustness_score"], 0.15)
-        self.assertGreater(full["combined_score"] - shortcut["combined_score"], 0.05)
+        self.assertLess(shortcut["combined_score"], 0.8 * full["combined_score"])
         self.assertGreater(full["robustness_score"] - shortcut["robustness_score"], 0.10)
+        self.assertGreater(full["combined_score"] - legacy_design["combined_score"], 0.03)
+        self.assertGreater(full["combined_score"] - no_misspecification["combined_score"], 0.10)
+        self.assertGreater(full["robustness_score"] - legacy_design["robustness_score"], 0.0)
+        self.assertGreater(full["robustness_score"] - no_misspecification["robustness_score"], 0.0)
         self.assertEqual(full["combined_score"], full["development_score"])
         self.assertEqual(full["development_correct_refusal_denominator"], 10)
         self.assertEqual(full["heldout_correct_refusal_denominator"], 10)

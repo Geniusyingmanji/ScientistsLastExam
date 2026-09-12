@@ -65,12 +65,12 @@ not global anomaly significance. Shifted timing/noise instances test transfer of
 ## Reference checks
 
 The truth-blind reference uses three spread observations and a fourth model-disagreement query,
-then continuously refines periodic fits. The current contract registers its previously recorded
-development score, 0.632413, as the expected public score. The same frozen development-selected
-fixed schedules are registered at 0.574956 (three-diagnostic family A, 1,000 policies), 0.543759
-(no-BIC family B, 200), and 0.515176 (no-RMS family C, 200). No schedule is reselected using the
-sealed split. These declarations require current-source verification and do not meet the retained
-20% shortcut separation margin; this task has not completed scientific admission.
+continuously refines periodic fits, and compares supported fits with stationary-extra-component
+and phase-evolution alternatives before rescuing a rejected claim. Its development score is
+0.754681. The same frozen development-selected fixed schedules remain 0.574956 (three-diagnostic
+family A, 1,000 policies), 0.543759 (no-BIC family B, 200), and 0.515176 (no-RMS family C, 200).
+No schedule is reselected using the sealed split. The strongest frozen shortcut is 76.18% of the
+reference, below the retained 80% limit; canonical clean-source verification remains required.
 
 Earlier records used the minimum of development and held-out scores as the public headline.
 That feedback defect has been removed. The original reference, ablation, grid and model records

@@ -1,5 +1,6 @@
 """Known fixed schedules must reach the real shortcut guard unchanged."""
 import ast
+import hashlib
 import importlib.util
 from pathlib import Path
 import types
@@ -30,7 +31,7 @@ class TransitTimingShortcutContractTests(unittest.TestCase):
         card = yaml.safe_load((TASK / "TASK_CARD.yaml").read_text())
         contract = card["shortcut_probe"]
         self.assertEqual(contract["reference"], {
-            "candidate": "verification/reference_solver.py", "expected_score": 0.632413})
+            "candidate": "verification/reference_solver.py", "expected_score": 0.754681})
         self.assertEqual(contract["relative_margin"], 0.2)
         self.assertEqual(contract["score_tolerance"], 0.000001)
         probes = {row["id"]: row for row in contract["probes"]}
@@ -42,14 +43,12 @@ class TransitTimingShortcutContractTests(unittest.TestCase):
             self.assertEqual(row["expected_score"], expected)
             self.assertTrue((TASK / row["candidate"]).is_file())
 
-    def test_family_a_is_the_original_external_replay_candidate(self):
-        tree = ast.parse((VERIFICATION / "replay_probes.py").read_text())
-        fixed = next(ast.literal_eval(node.value) for node in tree.body
-                     if isinstance(node, ast.Assign)
-                     and any(isinstance(target, ast.Name) and target.id == "FIXED_SCHEDULE"
-                             for target in node.targets))
-        original = (VERIFICATION / "reference_solver.py").read_text() + "\n" + fixed
-        self.assertEqual((VERIFICATION / "shortcut_family_a.py").read_text(), original)
+    def test_family_a_remains_frozen_and_is_replayed_directly(self):
+        candidate=(VERIFICATION / "shortcut_family_a.py").read_bytes()
+        self.assertEqual(hashlib.sha256(candidate).hexdigest(),
+                         "534ed09d974ef9e9e2798eb9486dca8b81f6422a89336ce7a4ac406cf8c1ee99")
+        replay=(VERIFICATION / "replay_probes.py").read_text()
+        self.assertIn('verification/shortcut_family_a.py',replay)
 
     def test_standalone_candidates_preserve_budget_and_refusal_boundaries(self):
         # Extract the historical public-input policy without importing calibrate.py,

@@ -65,6 +65,12 @@ def reference_ablation(kind):
         limit=2 if kind=="half_budget" else int(budget_units)
         if kind=="never_refuse":
             result=reference._attribute_ttv(visible,measure,limit,99.0,-99.0,99.0)
+        elif kind=="legacy_active_posterior":
+            result=reference._attribute_ttv(visible,measure,limit,1.0,6.0,0.8,
+                                            model_limit=18,bic_temperature=0.05)
+        elif kind=="no_misspecification_rescue":
+            result=reference._attribute_ttv(visible,measure,limit,1.0,6.0,0.8,
+                                            rescue_gap=1e9)
         else:
             result=reference._attribute_ttv(visible,measure,limit,1.0,6.0,0.8)
         if kind=="constant_forecast" and not result.get("abstain"):
@@ -140,7 +146,8 @@ def main():
         print(name+"_best",_scan(dev_cache,held_cache,*axes))
     reference_result=evaluator.evaluate(reference.attribute_ttv)
     print("reference",reference_result["combined_score"],reference_result["robustness_score"])
-    for name in ("half_budget","no_activity_model","constant_forecast","never_refuse"):
+    for name in ("half_budget","no_activity_model","constant_forecast","legacy_active_posterior",
+                 "no_misspecification_rescue","never_refuse"):
         result=evaluator.evaluate(reference_ablation(name))
         print(name,result["combined_score"],result["robustness_score"])
 

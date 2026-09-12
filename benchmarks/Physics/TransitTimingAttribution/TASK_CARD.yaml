@@ -4,7 +4,7 @@ shortcut_probe:
   metric: combined_score
   reference:
     candidate: verification/reference_solver.py
-    expected_score: 0.632413
+    expected_score: 0.754681
   probes:
   - id: legal_baseline
     candidate: solution.py
@@ -28,7 +28,7 @@ oracle:
   deterministic: true
 normalization:
   baseline: one legal follow-up timing followed by abstention
-  reference: three spread follow-ups plus one model-disagreement query, continuous-period least-squares/BIC refinement, and residual diagnostics; development-only expected combined 0.632413, with original measurements preserved in known_best
+  reference: three spread follow-ups plus one model-disagreement query using a 12-model BIC-weighted posterior, continuous-period least-squares/BIC refinement, residual diagnostics, and explicit stationary-extra-component and phase-evolution checks; development-only expected combined 0.754681, with original measurements preserved in known_best
   score: each split uses all-world reward minus blanket-refusal reward, divided by supported count and bounded below at zero, multiplied by correct-refusal rate and squared discovery precision; for candidates valid on every world combined_score is development_score only, held-out scientific scores remain private, any invalid world rejects the entire submission with public valid=0 and combined_score=0, and wrong mechanisms receive no period or forecast credit
 citations:
 - id: doi:10.1111/j.1365-2966.2005.08922.x
@@ -43,7 +43,7 @@ invariants:
 - mechanism, forecast, coverage and false-discovery metrics remain separate
 - held-out worlds, unsupported-family labels and exact descriptors remain evaluator-only
 - development and held-out each include both unsupported reasons with non-unit denominators
-known_shortcuts: The search score now uses development only; the previous min(development,heldout) headline violated the sealed-feedback boundary and its results remain historical. The same frozen A/B/C schedules are retained without reselection. Their registered development-score expectations are 0.574956 (A, 1000 policies), 0.543759 (B, 200), and 0.515176 (C, 200), versus reference 0.632413. These values do not satisfy the unchanged 20% separation margin; current-source secure verification must retain any failure. Original grids and limited-scope replay results are preserved in known_best; they are not universal shortcut bounds. Constant-family, counter and fitted no-refusal probes remain separate degenerate controls.
+known_shortcuts: The search score uses development only; the previous min(development,heldout) headline violated the sealed-feedback boundary and its results remain historical. The same frozen A/B/C schedules are retained byte-for-byte without reselection. Their registered development-score expectations are 0.574956 (A, 1000 policies), 0.543759 (B, 200), and 0.515176 (C, 200), versus reference 0.754681. The strongest is 76.18% of reference, below the unchanged 80% limit. Original grids and limited-scope replay results are preserved in known_best; they are not universal shortcut bounds. Constant-family, counter and fitted no-refusal probes remain separate degenerate controls.
 review:
   domain: pending_external_astronomy
   evaluator_security: automated_determinism_budget_lineage_and_bad_candidate_checks_passed
@@ -51,7 +51,7 @@ provenance:
   class: procedural
   target_source: repository-visible deterministic TTV generator with development and shifted held-out worlds
   task_contract_public_before_evaluation: true
-  fresh_confirmation_status: ali_linux_secure_replay_2026_09_10_pending_maintainer_review
+  fresh_confirmation_status: ali_linux_system_python_precheck_2026_09_12_pending_canonical_runtime
   license: procedural repository-local code; no external dataset bundled
 novelty_risk:
   level: medium
@@ -83,6 +83,6 @@ construction_audit:
   author_domain: computational_astronomy
   reviewer_domain: pending_external_astronomy
   expert_hours: null
-  red_team_rounds: 3
+  red_team_rounds: 4
   oracle_disagreement_status: not_quantified
   independent_recomputation_status: baseline and reference replayed; independent photodynamical recomputation pending

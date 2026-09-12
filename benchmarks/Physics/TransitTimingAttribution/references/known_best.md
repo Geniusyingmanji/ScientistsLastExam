@@ -2,8 +2,9 @@
 
 This candidate is a deterministic reduced-order transit-timing laboratory. The truth-blind
 reference compares quadratic-clock and periodic models with least squares and BIC, refines the
-period continuously, chooses its fourth follow-up by model disagreement, and refuses residual
-histories inconsistent with the declared families.
+period continuously, and chooses its fourth follow-up from a BIC-weighted model ensemble. When
+the original residual gates reject a claim, explicit stationary-extra-component and smooth
+phase-evolution fits provide an independent misspecification check before a full-budget rescue.
 
 ## Current reference
 
@@ -13,13 +14,21 @@ a public feasibility gate: malformed output, candidate exceptions and budget vio
 either split reject the entire submission with `valid=0` and `combined_score=0`.
 Taking `min(development, heldout)` previously let evaluator-only evidence
 influence proposal selection, contrary to the benchmark's feedback boundary. The world generator,
-query budget, reference program and frozen A/B/C candidate bytes are unchanged by this repair.
+query budget and frozen A/B/C candidate bytes remain unchanged. The reference was subsequently
+upgraded without changing the evaluator or reselecting any shortcut on the sealed split.
 
-The development-only contract declares reference 0.632413, A 0.574956, B 0.543759 and C 0.515176,
-using their already recorded development values. These are declarations to verify on the repaired
-source, not new measurements. They do not meet the retained 20% reference separation margin, and
-the guard must preserve that failure if reproduced. None of the three schedules is reselected,
-and no model draw is authorized before the scientific gap is resolved.
+The current development-only contract declares reference 0.754681, A 0.574956, B 0.543759 and
+C 0.515176. A/B/C are the same frozen candidates selected before this upgrade. The strongest is
+76.18% of the reference, below the retained 80% limit. A Linux system-Python precheck evaluated
+all four candidates twice: complete result dictionaries were identical within candidate, reference
+was 0.7546806731724828, and A/B/C were 0.5749563462412424, 0.5437588656539143 and
+0.5151760972753121. This precheck used Python 3 with NumPy 1.26.4 and SciPy 1.11.4; clean-source
+canonical Python 3.8.10 / NumPy 1.24.4 / SciPy 1.10.1 sandbox replay remains required.
+
+Development-only ablations from the same preliminary environment were 0.7118805708796355 with
+the previous 18-model/0.05-BIC active-design posterior and 0.5892975036069101 without the explicit
+misspecification rescue. These are independent public-score losses from the two retained changes;
+they are not sealed confirmation or admission evidence.
 
 The old guard's 10 secure calls and 41 passing local tests remain frozen at code revision
 `e1cd1ee4a02778addc115c7a15d238995f2697be`; their source-bound report is
@@ -101,8 +110,9 @@ baseline. Its reference, 20% relative margin, score tolerance, score and query b
 Each `verification/shortcut_family_*.py` is a standalone public-input candidate; none imports the
 offline calibration script or private evaluator.
 
-Family A is the byte-identical candidate formed by the existing external replay script from
-`reference_solver.py` and its `FIXED_SCHEDULE` string. The committed materials did not preserve
+Family A is the byte-identical candidate originally formed by the external replay script from
+the former `reference_solver.py` and its fixed-schedule override; it is now replayed directly from
+`verification/shortcut_family_a.py` so later reference upgrades cannot change its bytes. The committed materials did not preserve
 winner parameter tuples for B/C. Their candidates were newly reconstructed on source
 `00cdb02a02e451259af4abe5ca0da66445773011` from the existing development-only finite grid; this is
 new reconstruction evidence, not recovery of the original B/C programs or measurements.
