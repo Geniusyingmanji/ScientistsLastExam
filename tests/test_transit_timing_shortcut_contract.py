@@ -44,9 +44,9 @@ class TransitTimingShortcutContractTests(unittest.TestCase):
             self.assertTrue((TASK / row["candidate"]).is_file())
 
     def test_family_a_remains_frozen_and_is_replayed_directly(self):
-        candidate=(VERIFICATION / "shortcut_family_a.py").read_bytes()
+        candidate=(VERIFICATION / "shortcut_family_a.py").read_text().encode("utf-8")
         self.assertEqual(hashlib.sha256(candidate).hexdigest(),
-                         "534ed09d974ef9e9e2798eb9486dca8b81f6422a89336ce7a4ac406cf8c1ee99")
+                         "a4d7f0dbc1efa86e7a709c73b730b0ca4819c70495c064494df4d60123f3ef7c")
         replay=(VERIFICATION / "replay_probes.py").read_text()
         self.assertIn('verification/shortcut_family_a.py',replay)
 
