@@ -3,6 +3,8 @@ from pathlib import Path
 import unittest
 from unittest.mock import patch
 
+from sle.metric_visibility import search_visible_metrics
+
 ROOT = Path(__file__).resolve().parents[1]
 PATH = ROOT / "benchmarks/Physics/TransitTimingAttribution/verification/evaluator.py"
 spec = importlib.util.spec_from_file_location("ttv_metrics", PATH)
@@ -43,7 +45,42 @@ class TransitMechanismMetricsTests(unittest.TestCase):
             self.assertEqual(result[split + "_mechanism_score"], 0.4)
             self.assertEqual(result[split + "_false_discovery_denominator"], 3)
         self.assertEqual(evaluator._score(worlds[1], evaluator._parse_submission(claim("clock"))), (0.0, True))
-        self.assertEqual(result["combined_score"], min(result["development_score"], result["robustness_score"]))
+        self.assertEqual(result["combined_score"], result["development_score"])
+
+    def test_sealed_only_changes_do_not_change_public_score(self):
+        candidate = calibrate.fitted_policy((13, 26, 43, 59), 1.2, 3.0, 0.8)
+        original = evaluator.evaluate(candidate)
+        # Alter only the evaluator's sealed confirmation panel. The old min(dev, held)
+        # headline changed to zero here even though no development observation changed.
+        with patch.object(evaluator, "sealed_worlds", return_value=[]):
+            changed = evaluator.evaluate(candidate)
+        self.assertEqual(original["valid"], 1)
+        self.assertEqual(changed["valid"], 1)
+        self.assertGreater(original["development_score"], 0)
+        self.assertEqual(original["development_score"], changed["development_score"])
+        self.assertNotEqual(original["robustness_score"], changed["robustness_score"])
+        self.assertEqual(search_visible_metrics(original), search_visible_metrics(changed))
+        self.assertEqual(search_visible_metrics(original)["combined_score"], original["development_score"])
+        self.assertNotIn("robustness_score", search_visible_metrics(original))
+        self.assertFalse(any(key.startswith("heldout_") for key in search_visible_metrics(original)))
+
+    def test_development_scan_reads_sealed_score_only_for_frozen_winner(self):
+        first, second = ((13, 26, 43, 59), (16, 32, 48, 59))
+        calls = []
+        values = {"dev_first": 0.6, "dev_second": 0.5, "held_first": 0.1, "held_second": 0.9}
+        def score(record, limits):
+            calls.append(record)
+            return values[record]
+        with patch.object(calibrate, "SCHEDULES", (first, second)), \
+             patch.object(calibrate, "_cached_score", side_effect=score), \
+             patch.object(calibrate, "fitted_policy", return_value=object()), \
+             patch.object(calibrate.evaluator, "evaluate", return_value={
+                 "development_score": 0.6, "combined_score": 0.6, "robustness_score": 0.1}):
+            selected = calibrate._scan({first: "dev_first", second: "dev_second"},
+                                      {first: "held_first", second: "held_second"},
+                                      (1.2,), (3.0,), (0.8,))
+        self.assertEqual(selected, (0.6, 0.6, 0.1, (first, 1.2, 3.0, 0.8)))
+        self.assertEqual(calls, ["dev_first", "dev_second", "held_first"])
 
     def test_refusal_changes_headline_and_all_abstain_is_zero(self):
         def row(supported, score, abstain=False):
@@ -141,7 +178,7 @@ class TransitMechanismMetricsTests(unittest.TestCase):
         self.assertGreater(full["robustness_score"] - half["robustness_score"], 0.15)
         self.assertGreater(full["combined_score"] - shortcut["combined_score"], 0.05)
         self.assertGreater(full["robustness_score"] - shortcut["robustness_score"], 0.10)
-        self.assertEqual(full["combined_score"], min(full["development_score"], full["robustness_score"]))
+        self.assertEqual(full["combined_score"], full["development_score"])
         self.assertEqual(full["development_correct_refusal_denominator"], 10)
         self.assertEqual(full["heldout_correct_refusal_denominator"], 10)
 

@@ -30,13 +30,13 @@ class TransitTimingShortcutContractTests(unittest.TestCase):
         card = yaml.safe_load((TASK / "TASK_CARD.yaml").read_text())
         contract = card["shortcut_probe"]
         self.assertEqual(contract["reference"], {
-            "candidate": "verification/reference_solver.py", "expected_score": 0.430139})
+            "candidate": "verification/reference_solver.py", "expected_score": 0.632413})
         self.assertEqual(contract["relative_margin"], 0.2)
         self.assertEqual(contract["score_tolerance"], 0.000001)
         probes = {row["id"]: row for row in contract["probes"]}
         self.assertEqual(set(probes), {"legal_baseline", *(
             "fixed_schedule_family_" + family for family in FAMILIES)})
-        for family, expected in zip(FAMILIES, (0.301806, 0.159146, 0.322946)):
+        for family, expected in zip(FAMILIES, (0.574956, 0.543759, 0.515176)):
             row = probes["fixed_schedule_family_" + family]
             self.assertEqual(row["candidate"], "verification/shortcut_family_" + family + ".py")
             self.assertEqual(row["expected_score"], expected)

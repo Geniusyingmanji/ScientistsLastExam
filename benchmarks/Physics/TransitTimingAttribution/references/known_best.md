@@ -7,6 +7,26 @@ histories inconsistent with the declared families.
 
 ## Current reference
 
+The public `combined_score` now equals `development_score`; the sealed split remains private
+confirmation evidence. Taking `min(development, heldout)` previously let evaluator-only evidence
+influence proposal selection, contrary to the benchmark's feedback boundary. The world generator,
+query budget, reference program and frozen A/B/C candidate bytes are unchanged by this repair.
+
+The development-only contract declares reference 0.632413, A 0.574956, B 0.543759 and C 0.515176,
+using their already recorded development values. These are declarations to verify on the repaired
+source, not new measurements. They do not meet the retained 20% reference separation margin, and
+the guard must preserve that failure if reproduced. None of the three schedules is reselected,
+and no model draw is authorized before the scientific gap is resolved.
+
+The old guard's 10 secure calls and 41 passing local tests remain frozen at code revision
+`e1cd1ee4a02778addc115c7a15d238995f2697be`; their source-bound report is
+`.research/pr11_shortcut_guard_review_2026-09-12.json`. Its numeric pass belongs to the old
+min-headline contract and is not evidence that the development-only contract passes. The current
+framework is integrated from main `dbed927128606051ffe483f4b5f192366dbad313`, separately from that
+historical evaluation runtime. Current model evidence remains `historical_only`.
+
+## Historical reference record (min-headline contract)
+
 The executable revision and complete metrics are recorded in
 `experiments/transit_timing_review_replay_2026-09-11.json`. Every candidate below is evaluated
 twice through the trusted Linux driver and bubblewrap; the two complete metric dictionaries must
@@ -36,7 +56,7 @@ to select the current evaluator or thresholds.
 0.000000 on both splits by construction. It tests the public callback without receiving discovery
 credit.
 
-## Ablation ladder
+## Ablation ladder (historical min-headline record)
 
 | Reference change | Combined | Development | Held-out |
 |---|---:|---:|---:|
@@ -51,7 +71,7 @@ The fourth follow-up adds 0.197398 combined, 0.354416 development and 0.197398 h
 version. Removing model-disagreement evidence, a supported family, forecast skill or refusal all
 cost score.
 
-## Shortcut probes
+## Shortcut probes (historical min-headline record)
 
 The three grids use fixed four-transit schedules and coarse periodic fits. Selection uses only
 development score; the sealed score and new combined score are read afterward. The schedule grid
@@ -71,9 +91,9 @@ planet/activity/clock claims, the old call-order counter and reference fitting w
 all score exactly zero on both splits. These are measured finite families rather than a universal
 shortcut bound.
 
-### Executable shortcut contract (2026-09-12)
+### Frozen candidate extraction (2026-09-12, before score repair)
 
-The machine-readable guard now includes all three fixed schedule families, alongside the zero
+The first machine-readable guard repair included all three fixed schedule families, alongside the zero
 baseline. Its reference, 20% relative margin, score tolerance, score and query budget are unchanged.
 Each `verification/shortcut_family_*.py` is a standalone public-input candidate; none imports the
 offline calibration script or private evaluator.
@@ -103,6 +123,9 @@ historical model records or complete scientific admission.
 
 - The first score ignored unsupported claims in the headline. Refusal and precision now gate the
   score, so blanket refusal and never refusing both earn zero.
+- A later minimum-of-splits headline fed private sealed performance into the public search score.
+  The public score now uses development only; old results remain historical, and a failed
+  fixed-probe margin is retained rather than hidden behind sealed-split aggregation.
 - Fixed world order exposed the label sequence to a module counter. Split-specific deterministic
   shuffling, unequal split sizes and a session reset at every world boundary remove that channel.
 - A noise-seeding edit referred to a missing world key and made every measuring candidate invalid.
@@ -115,9 +138,11 @@ historical model records or complete scientific admission.
 
 ## Robustness
 
-Successful and invalid evaluations publish identical metric-key sets, including `heldout_*`
-aliases. Malformed output, exceptions, invented or duplicate evidence, nonfinite values and caught
-budget overspend fail closed. Per-world coordinate seeding is invariant to query order, while
+Successful and invalid trusted evaluations retain identical diagnostic metric-key sets, including
+`heldout_*` aliases. The shared entrypoint excludes these private fields from public feedback,
+and the public score no longer depends on their values. Malformed output, exceptions, invented
+or duplicate evidence, nonfinite values and caught budget overspend fail closed.
+Per-world coordinate seeding is invariant to query order, while
 different worlds receive different noise. The baseline, reference and selected probes are replayed
 twice and the task-specific contribution gate is run on the clean Linux revision. Candidate status
 remains unchanged; external astronomy review and independent photodynamical replication remain

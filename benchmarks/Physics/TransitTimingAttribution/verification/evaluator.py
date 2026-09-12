@@ -163,9 +163,9 @@ def evaluate(candidate):
                 metrics["robustness_score"] = summary["combined_score"]
             if prefix == "validation":
                 metrics.update({"heldout_" + key: value for key, value in summary.items()})
-        # Search receives only combined_score.  Gate it by the independently seeded shifted
-        # split so a schedule selected for development-only noise cannot be promoted.
-        metrics["combined_score"] = min(metrics["development_score"], metrics["robustness_score"])
+        # Search receives development evidence only. The shifted split remains a private
+        # evaluator diagnostic and must not influence the score used to select proposals.
+        metrics["combined_score"] = metrics["development_score"]
     except Exception:
         return _invalid_metrics()
     return metrics

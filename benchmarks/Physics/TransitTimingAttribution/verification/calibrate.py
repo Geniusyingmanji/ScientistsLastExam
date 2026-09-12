@@ -111,16 +111,17 @@ def _scan(dev_cache,held_cache,rms_values,gap_values,correlation_values):
             SCHEDULES,rms_values,gap_values,correlation_values):
         limits=(rms_limit,gap_limit,correlation_limit)
         dev=_cached_score(dev_cache[schedule],limits)
-        held=_cached_score(held_cache[schedule],limits)
-        # This is a development-selected shortcut probe: held-out is deliberately read only
-        # after selection, matching the overfitting channel the regression is meant to catch.
-        row=(dev,min(dev,held),held,(schedule,rms_limit,gap_limit,correlation_limit))
+        # Preserve development-only selection and the first maximum on ties.
+        row=(dev,(schedule,rms_limit,gap_limit,correlation_limit))
         if best is None or row[0]>best[0]:
             best=row
-    result=evaluator.evaluate(fitted_policy(*best[3]))
-    if (result["development_score"],result["combined_score"],result["robustness_score"]) != best[:3]:
+    dev,parameters=best
+    held=_cached_score(held_cache[parameters[0]],parameters[1:])
+    result=evaluator.evaluate(fitted_policy(*parameters))
+    expected=(dev,dev,held)
+    if (result["development_score"],result["combined_score"],result["robustness_score"]) != expected:
         raise AssertionError("cached and evaluator shortcut scores differ")
-    return best
+    return (*expected,parameters)
 
 
 def main():

@@ -9,7 +9,7 @@ gpu_required: false
 eval_time_seconds: 30
 science_metric: active_transit_timing_mechanism_attribution_with_clock_activity_refusal
 reference_baseline: abstain after one legal low-cost follow-up timing
-reference_sota: truth-blind active least-squares/BIC comparison with continuous-period refinement and two-reason refusal; combined 0.430139 (development 0.632413, held-out 0.430139)
+reference_sota: truth-blind active least-squares/BIC comparison with continuous-period refinement and two-reason refusal; development-only expected combined 0.632413, with held-out confirmation kept private and prior results preserved as historical
 tool_level: L2
 tools_suggested:
   - literature_search

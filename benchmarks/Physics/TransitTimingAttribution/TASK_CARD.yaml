@@ -4,20 +4,20 @@ shortcut_probe:
   metric: combined_score
   reference:
     candidate: verification/reference_solver.py
-    expected_score: 0.430139
+    expected_score: 0.632413
   probes:
   - id: legal_baseline
     candidate: solution.py
     expected_score: 0.0
   - id: fixed_schedule_family_a
     candidate: verification/shortcut_family_a.py
-    expected_score: 0.301806
+    expected_score: 0.574956
   - id: fixed_schedule_family_b
     candidate: verification/shortcut_family_b.py
-    expected_score: 0.159146
+    expected_score: 0.543759
   - id: fixed_schedule_family_c
     candidate: verification/shortcut_family_c.py
-    expected_score: 0.322946
+    expected_score: 0.515176
   relative_margin: 0.2
   score_tolerance: 0.000001
 scientific_question: Can an agent actively distinguish planet-induced transit-timing variations from stellar activity, clock drift, and unsupported mixtures under a follow-up observation budget?
@@ -28,8 +28,8 @@ oracle:
   deterministic: true
 normalization:
   baseline: one legal follow-up timing followed by abstention
-  reference: three spread follow-ups plus one model-disagreement query, continuous-period least-squares/BIC refinement, and residual diagnostics; clean replay combined 0.430139 (development 0.632413, held-out 0.430139)
-  score: each split uses all-world reward minus blanket-refusal reward, divided by supported count and bounded below at zero, multiplied by correct-refusal rate and squared discovery precision; combined_score is the lower split score, and wrong mechanisms receive no period or forecast credit
+  reference: three spread follow-ups plus one model-disagreement query, continuous-period least-squares/BIC refinement, and residual diagnostics; development-only expected combined 0.632413, with original measurements preserved in known_best
+  score: each split uses all-world reward minus blanket-refusal reward, divided by supported count and bounded below at zero, multiplied by correct-refusal rate and squared discovery precision; combined_score is development_score only, held-out transfer remains a private evaluator diagnostic, and wrong mechanisms receive no period or forecast credit
 citations:
 - id: doi:10.1111/j.1365-2966.2005.08922.x
   title: On detecting terrestrial planets with timing of giant planet transits
@@ -43,7 +43,7 @@ invariants:
 - mechanism, forecast, coverage and false-discovery metrics remain separate
 - held-out worlds, unsupported-family labels and exact descriptors remain evaluator-only
 - development and held-out each include both unsupported reasons with non-unit denominators
-known_shortcuts: PR11 review identified fixed-order, free-unsupported-claim, shared-noise and threshold-grid exploits. Per-world coordinate-seeded noise, shuffled unequal splits, fresh sessions, two unsupported reasons and the precision/refusal gates block those paths. The headline is the lower of development and held-out split scores, so development-selected schedules cannot gain from split-specific variance. Constant-family, counter and fitted no-refusal probes score 0 on both splits. The expanded development-selected fixed-schedule grids, including the 48/50-transit neighbours, reach combined 0.301806 for family A (1,000 policies; split scores 0.574956/0.301806), 0.159146 for family B (200; 0.543759/0.159146), and 0.322946 for family C (200; 0.515176/0.322946), below the 0.430139 reference. Reproduce all grids with verification/calibrate.py and the strongest witness plus degenerate probes with verification/replay_probes.py; these are finite measured families, not universal bounds.
+known_shortcuts: The search score now uses development only; the previous min(development,heldout) headline violated the sealed-feedback boundary and its results remain historical. The same frozen A/B/C schedules are retained without reselection. Their registered development-score expectations are 0.574956 (A, 1000 policies), 0.543759 (B, 200), and 0.515176 (C, 200), versus reference 0.632413. These values do not satisfy the unchanged 20% separation margin; current-source secure verification must retain any failure. Original grids and limited-scope replay results are preserved in known_best; they are not universal shortcut bounds. Constant-family, counter and fitted no-refusal probes remain separate degenerate controls.
 review:
   domain: pending_external_astronomy
   evaluator_security: automated_determinism_budget_lineage_and_bad_candidate_checks_passed

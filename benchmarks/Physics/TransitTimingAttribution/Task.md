@@ -44,8 +44,8 @@ decays exponentially with absolute error at four times the timing uncertainty. A
 refusal scores one and any unsupported claim scores zero.
 Each split score is `max(0, (sum(world_scores) - unsupported_count) / supported_count)`
 multiplied by the correct-refusal rate and squared discovery precision `(1-FDR)^2`. The headline
-`combined_score` is the lower of the development and sealed-split scores, so a policy must
-transfer to both sets to improve the search objective.
+`combined_score` equals the development split score only. The sealed-split score and held-out
+diagnostics are evaluator-only confirmation evidence and do not influence proposal selection.
 Thus blanket refusal scores zero and false claims on unsupported signals reduce the headline.
 Never refusing also scores zero, even with otherwise accurate supported-model fits.
 Rate metrics include counts and denominators. Instance order and split sizes are not a contract;
@@ -62,15 +62,17 @@ not global anomaly significance. Shifted timing/noise instances test transfer of
 ## Reference checks
 
 The truth-blind reference uses three spread observations and a fourth model-disagreement query,
-then continuously refines periodic fits. It scores 0.430139 overall (0.632413 development and
-0.430139 held-out). Two follow-ups score 0.241203 overall (0.259425/0.241203 by split); removing
-the activity model gives 0.268826 overall (0.285567/0.268826); fixing the forecast to zero gives
-0.359365 overall (0.540351/0.359365); disabling refusal gives 0/0. Constant-family
-and old call-order probes also give 0/0. Three development-selected fixed-schedule grids remain
-below the reference under the headline: the full three-diagnostic family (1,000 policies) reaches
-0.301806 overall (0.574956/0.301806 by split), the no-BIC family (200) reaches 0.159146 overall
-(0.543759/0.159146), and the no-RMS family (200) reaches 0.322946 overall (0.515176/0.322946).
-These are measured finite grids, not universal shortcut bounds.
+then continuously refines periodic fits. The current contract registers its previously recorded
+development score, 0.632413, as the expected public score. The same frozen development-selected
+fixed schedules are registered at 0.574956 (three-diagnostic family A, 1,000 policies), 0.543759
+(no-BIC family B, 200), and 0.515176 (no-RMS family C, 200). No schedule is reselected using the
+sealed split. These declarations require current-source verification and do not meet the retained
+20% shortcut separation margin; this task has not completed scientific admission.
+
+Earlier records used the minimum of development and held-out scores as the public headline.
+That feedback defect has been removed. The original reference, ablation, grid and model records
+remain explicitly historical in `references/known_best.md`; they are not new measurements under
+the development-only contract. The finite grids are not universal shortcut bounds.
 
 ## Rules
 
