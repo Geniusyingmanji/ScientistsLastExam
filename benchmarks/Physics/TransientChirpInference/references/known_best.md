@@ -1,6 +1,29 @@
 # TransientChirpInference reference results
 
-## Independent shortcut guard: hold
+## Current admission: hold after reference range repair
+
+The [2026-09-12 reference-range review](../../../../experiments/transient_chirp_reference_bounds_2026-09-12.json)
+binds clean source `55e6f83ad8b3b9239c87391978ad38041ea6fb88`, including main
+`dbed927128606051ffe483f4b5f192366dbad313` and the current trusted framework.
+The old coarse slope grid ended at 0.04; its three local refinements could reach at most
+0.042625, below the public 0.05 limit. Extending the grid to 0.05 preserves every old grid
+entry and the 0.002 spacing. Fixed noiseless public-formula regressions at slopes
+0.041, 0.045, 0.049 and 0.05 verify frequency/slope recovery without hidden-world tuning.
+
+The reference, baseline, original development-selected probes and declared reduced policies
+were frozen before 24 independent Linux sandbox calls. All 720 world evaluations were valid;
+all 12 complete metric pairs matched. The reference still scores 0.821949084347924 and the
+five-slope witness 0.6611830494930327, above the unchanged 20 percent margin's strict
+0.6575592674783393 line. C remains blocked. There are 27 passing Linux task/guard tests,
+zero failures and zero skips, including the four boundary cases. No new model D campaign
+or modern trusted formal coverage is claimed. The prior 87 task packages are unchanged;
+the inventory contains 88 tasks while global evidence retains its original 87-task scope.
+
+Fixed reference/probe source remains public in `verification/` for reproduction. New complete
+metrics, execution receipts and captured execution copies are private outside Git. The older
+report's private-program wording refers to captured copies, not the published source.
+
+## Original independent shortcut guard before range repair
 
 The [2026-09-12 independent Linux report](../../../../experiments/transient_chirp_shortcut_guard_2026-09-12.json)
 binds clean source `8134f597b5f5cf194ae5f4eb1d0046e5087d0b79`. The published five-slope
@@ -20,23 +43,24 @@ The first Python 3.8 fixture run retained one failure and 25 passes. Dictionary 
 raised before a score assertion and made the malformed-output matrix fail for the wrong
 reason. A separate fixture-only commit uses dictionary unpacking; all 26 Linux tests
 then passed with zero skips. Earlier shape checks that never reached validation are not
-counted as effective coverage. Full metrics and candidate files stay private outside Git.
+counted as effective coverage. Full metrics and captured execution copies stay private outside Git;
+the fixed reference and probe source is published in `verification/`.
 
 ## Current reference and baseline
 
-Executable revision `9bc9157d00c22a2f3f73c34a5162de7ea66204d2` was replayed on clean ali Linux
-through the trusted driver and bubblewrap. The reference scores **0.8219490843** development and
+The current clean Linux replay at `55e6f83ad8b3b9239c87391978ad38041ea6fb88` uses the
+trusted driver and bubblewrap. The reference scores **0.8219490843** development and
 **0.6853203742** held-out normalized score. The baseline and blanket refusal each score zero.
 All twelve replay policies were valid and their complete metrics were identical on two runs each.
 The reference locally refines its coarse frequency/slope fit, so its reported frequency is not tied
 to a discrete grid.
 
-Reference mechanism accuracy is 9/10 development and 10/12 held-out. FDR is 0/9 and 1/11 claims;
-correct refusal is 4/4 in both splits. Coverage is 9/10 and 11/12 supported worlds. Mechanism
+Reference mechanism accuracy is 10/10 development and 10/12 held-out. FDR is 0/10 and 1/11 claims;
+correct refusal is 4/4 in both splits. Coverage is 10/10 and 11/12 supported worlds. Mechanism
 accuracy now measures labels, while `*_science_score` retains the separate unnormalized composite.
 Both splits also have a consistently normalized score (`combined_score` / `robustness_score`).
 
-The t=0..11 reference cadence misses a late localized event in each split. Finite-grid slope error,
+The t=0..11 reference cadence limits late-event localization. Finite-grid slope error,
 remaining slow-chirp/line confusion and more adaptive observation design provide headroom; this
 is not a full compact-binary waveform solver or an optimal observation policy.
 
@@ -50,7 +74,7 @@ is not a full compact-binary waveform solver or an optimal observation policy.
 | Reference with all reported slopes fixed at 0.02 | 0.660241 | 0.533228 |
 | Never refuse | 0.000000 | 0.000000 |
 
-The constant-slope comparison retains fitted labels and amplitudes; losing 0.300000 development
+The constant-slope comparison retains fitted labels and amplitudes; losing 0.161708 development
 score demonstrates that slope estimation now contributes real credit, including on line worlds.
 The H1-only and no-chirp-grid implementations retain their documented simpler refusal rules;
 they are operational reduced policies, not claims that all other decisions are identical.
@@ -65,12 +89,13 @@ they are operational reduced policies, not claims that all other decisions are i
 | No-fit RMS/median/sign-count morphology family | 216 | 0.584719 | 0.519672 |
 | No-fit morphology with five-slope lookup | 324 | 0.661183 | 0.556308 |
 
-The expanded grid varies paired sample count, glitch threshold, amplitude refusal, uncertainty
+The author's earlier expanded grid varies paired sample count, glitch threshold, amplitude refusal, uncertainty
 refusal, sign-count difference and fixed chirp slope. The selected enhanced parameters are
 `(12, 0.28, 0.08, 0.05, 0, 0.006)`. Selection uses development score only; held-out metrics are
-reported after selection, not used for tuning. The sweep is trusted in-process Linux analysis;
-the selected policies, reference and ablations are then independently executed through the
-trusted driver and bubblewrap. The direct and sandbox results agree.
+reported after selection, not used for tuning. The author reported the original sweep as
+trusted in-process Linux analysis and then replayed selected programs through the sandbox.
+The current independent review reuses those preselected parameters without rerunning any grid;
+the current sandbox reference, selected policies and ablations are reported above.
 
 The 216-policy morphology family varies H1 sample count, RMS refusal, median-magnitude glitch
 threshold, sign-count difference and fixed chirp slope. Its selected parameters are
@@ -92,7 +117,7 @@ python benchmarks/Physics/TransientChirpInference/verification/replay_review.py 
   --sweep /tmp/chirp-sweep.json --output /tmp/chirp-replay.json
 ```
 
-## Current model draws
+## Historical model draws before range repair
 
 One proposal each from `deepseek-v4-flash` and `deepseek-v4-pro`, seed 29, temperature 0,
 greedy_rewrite, normal feedback, `run-role=calibration`, 16000 output-token cap, on clean revision
@@ -111,7 +136,8 @@ Flash made valid claims on every world and never refused: its mechanism accuracy
 failure or evidence that no inference was performed. Pro refused 3/4 ambiguous worlds on each
 split. Both draws remain below reference. A single draw per model cannot establish broad
 difficulty or the frontier-model entry condition; DeepSeek is not represented as a frontier draw.
-There were no oracle or reference changes after seeing these model results.
+The later reference-range repair was motivated by the public parameter bounds. These old model
+records retain their original source bindings and are not current-source or frontier-model D evidence.
 
 ## Current construction findings
 
@@ -120,7 +146,7 @@ now share sigma=0.04; ambiguity is low amplitude rather than a distinct uncertai
 chirps are paired with constant-frequency lines matched in midpoint phase/frequency. Tests verify
 overlapping early/late sign-count features in both splits. The supported recovery term now weighs
 0.50 (formerly 0.10 for chirp slope), with slope error tested for lines as well; its tolerance is
-0.003 cycles/day^2. Model credit is 0.20, amplitude 0.20 and correct-claim confidence 0.10.
+0.003 cycles/day^2. Model credit is 0.30 and amplitude credit is 0.20; confidence is a separate diagnostic.
 Glitches use event-time recovery for the same parameter term, avoiding irrelevant free credit.
 
 The score subtracts all-refusal reward and multiplies by correct-refusal rate. The latter makes
@@ -134,7 +160,8 @@ wrong declarations, rather than presenting raw submitted confidence as calibrati
 ## Current robustness and evidence
 
 The earlier ali Linux contribution gate passed with only the zero baseline registered;
-the independent guard above now correctly fails on the published stronger witness.
+the original independent guard correctly failed on the published stronger witness. The new
+24-call reference-range review still fails the same unchanged margin.
 The task tests cover noise-label independence,
 sign-count collisions, line-slope penalties, independent metric bookkeeping, claim/refusal
 denominators, session reset, selected-probe separation and 11 malformed output cases. Standard
