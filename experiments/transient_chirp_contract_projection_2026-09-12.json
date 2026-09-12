@@ -1,0 +1,115 @@
+{
+  "artifact_visibility": "Published reference/probe source remains public; complete metrics, receipts and captured execution copies remain private outside Git.",
+  "decision": "hold_declared_shortcut_margin_failed",
+  "evaluator_timeout_seconds_of_reused_measurements": 300,
+  "evidence_scope": "bounded_manual_admission_review",
+  "limitations": [
+    "No new complete contribution-gate run is claimed.",
+    "The 24 Linux measurements keep their original 55e6 source/package bindings.",
+    "C remains blocked; no current frontier-model D or global evidence refresh."
+  ],
+  "measured_source_revision": "55e6f83ad8b3b9239c87391978ad38041ea6fb88",
+  "measured_task_package_sha256": "6e35e60203cb77736f5fa49949a4495dcdeb1dcde39db521e21f262a4f96a9e1",
+  "measurement_plan_sha256": "ced298dda5123992b9cba651a8ea6b01061ba111aa22e599d6924947f9288cbe",
+  "measurement_report": "experiments/transient_chirp_reference_bounds_2026-09-12.json",
+  "modern_trusted_formal_coverage": 0,
+  "new_evaluator_calls": 0,
+  "new_model_calls": 0,
+  "operator_driver_sha256": "eacb6d50a94b8f041a37ddf3759c7c227f17a51bbc80eeecd03b6d2d410d1fce",
+  "projection_preconditions": {
+    "all_executable_task_files_byte_identical_to_measured_source": true,
+    "changed_task_files": [
+      "TASK_CARD.yaml",
+      "references/known_best.md"
+    ],
+    "shortcut_contract_change": "Only the rounded reference expected score was replaced with its exact measured value; candidates, margin, tolerance and budgets unchanged.",
+    "task_contract_and_runtime_equal_to_measured_source": true
+  },
+  "reused_complete_payload_count": 6,
+  "reused_payloads": [
+    {
+      "candidate": "verification/reference_solver.py",
+      "candidate_sha256": "4543251fb4dbf4467be6efcbbb577339fa7a7d703cb966e3660a88be0432f227",
+      "measured_source_revision": "55e6f83ad8b3b9239c87391978ad38041ea6fb88",
+      "metrics_sha256": "b52adc6e31cb280e05ff792fd52b8c75909de36c626a2b81f327ee3378af049c",
+      "repeat": 0
+    },
+    {
+      "candidate": "verification/reference_solver.py",
+      "candidate_sha256": "4543251fb4dbf4467be6efcbbb577339fa7a7d703cb966e3660a88be0432f227",
+      "measured_source_revision": "55e6f83ad8b3b9239c87391978ad38041ea6fb88",
+      "metrics_sha256": "b52adc6e31cb280e05ff792fd52b8c75909de36c626a2b81f327ee3378af049c",
+      "repeat": 1
+    },
+    {
+      "candidate": "solution.py",
+      "candidate_sha256": "6bb3cf96de160ec234c38dd3d273eb9fb6ac8cd4770f103f0aa5ab8155893e8e",
+      "measured_source_revision": "55e6f83ad8b3b9239c87391978ad38041ea6fb88",
+      "metrics_sha256": "9ee3d4138f31e7fe7c91c7b985ce5bc058bd979e3bc90b57d40378b5d605c33b",
+      "repeat": 0
+    },
+    {
+      "candidate": "solution.py",
+      "candidate_sha256": "6bb3cf96de160ec234c38dd3d273eb9fb6ac8cd4770f103f0aa5ab8155893e8e",
+      "measured_source_revision": "55e6f83ad8b3b9239c87391978ad38041ea6fb88",
+      "metrics_sha256": "9ee3d4138f31e7fe7c91c7b985ce5bc058bd979e3bc90b57d40378b5d605c33b",
+      "repeat": 1
+    },
+    {
+      "candidate": "verification/probe_fixed_five_slope.py",
+      "candidate_sha256": "9c1a7499eddcb4b2891ed1867c5f6b834c2d46dab005e1ba2073b6fc72f287bc",
+      "measured_source_revision": "55e6f83ad8b3b9239c87391978ad38041ea6fb88",
+      "metrics_sha256": "fcfafd194b26424418827fbdfbd781772fe303ab13e48783ff9c5248b3db2c8e",
+      "repeat": 0
+    },
+    {
+      "candidate": "verification/probe_fixed_five_slope.py",
+      "candidate_sha256": "9c1a7499eddcb4b2891ed1867c5f6b834c2d46dab005e1ba2073b6fc72f287bc",
+      "measured_source_revision": "55e6f83ad8b3b9239c87391978ad38041ea6fb88",
+      "metrics_sha256": "fcfafd194b26424418827fbdfbd781772fe303ab13e48783ff9c5248b3db2c8e",
+      "repeat": 1
+    }
+  ],
+  "reviewed_git_clean": true,
+  "reviewed_source_revision": "8614f45485b36e408bf4ab1967be53c51b42c36a",
+  "reviewed_task_package_sha256": "ee95dad4eb80f8d5b6da6093f27a6b91505e4654da14830f6b533fc67c2f6711",
+  "runtime_source_sha256": "6f8344cdd2d15811803a07dd7d299f6348630deaecd2ee2601b57cfff14fab25",
+  "schema_version": 1,
+  "scope": "Offline contract projection of six existing complete frozen Linux payloads; not a new evaluator run or current-source measurement.",
+  "shortcut_probe": {
+    "contract_sha256": "d085793ccb2d3f8abdf50aa347748547e4f8a7aafcec50df19084765263b9e18",
+    "detail": "best declared shortcut must be strictly below the reference margin",
+    "observations": [
+      {
+        "candidate": "verification/reference_solver.py",
+        "expected_score": 0.821949084347924,
+        "id": "reference",
+        "measured_score": 0.821949084347924,
+        "source_sha256": "4543251fb4dbf4467be6efcbbb577339fa7a7d703cb966e3660a88be0432f227"
+      },
+      {
+        "candidate": "solution.py",
+        "expected_score": 0.0,
+        "id": "legal_baseline",
+        "measured_score": 0.0,
+        "source_sha256": "6bb3cf96de160ec234c38dd3d273eb9fb6ac8cd4770f103f0aa5ab8155893e8e"
+      },
+      {
+        "candidate": "verification/probe_fixed_five_slope.py",
+        "expected_score": 0.6611830494930327,
+        "id": "development_selected_five_slope_lookup",
+        "measured_score": 0.6611830494930327,
+        "source_sha256": "9c1a7499eddcb4b2891ed1867c5f6b834c2d46dab005e1ba2073b6fc72f287bc"
+      }
+    ],
+    "passed": false,
+    "probe_best": 0.6611830494930327,
+    "reference_score": 0.821949084347924,
+    "scope": "declared shortcut guard only; independent model calibration still required",
+    "status": "failed",
+    "threshold": 0.6575592674783393
+  },
+  "task_contract_sha256": "ec3b2c99dca3eec37a1730ff5ddb5d139b50cac1edf0417c99d781133c81b44a",
+  "task_id": "Gravitation/TransientChirpInference",
+  "trusted_evidence": false
+}
