@@ -101,6 +101,12 @@ def never_refuse(problem, observe):
     return answer
 
 
+def front_loaded_cadence(problem, observe):
+    """Reference ablation restricted to the first twelve public epochs."""
+    times = [float(value) for value in problem["candidate_times"][:12]]
+    return REFERENCE._infer_at_times(problem, observe, times)
+
+
 def threshold_policy(sample_count, glitch_threshold, refusal_threshold, chirp_threshold):
     def infer(problem, observe):
         times = [float(value) for value in problem["candidate_times"][:sample_count]]
@@ -227,6 +233,7 @@ def main():
     args = parser.parse_args()
     strategies = {
         "reference": REFERENCE.infer_transient,
+        "front_loaded_cadence": front_loaded_cadence,
         "h1_only": h1_only,
         "no_chirp_grid": no_chirp_grid,
         "never_refuse": never_refuse,

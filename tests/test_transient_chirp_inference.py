@@ -44,6 +44,13 @@ class TransientChirpInferenceTests(unittest.TestCase):
                 self.assertAlmostEqual(fit[1], 0.11, places=8)
                 self.assertAlmostEqual(fit[2], slope, places=8)
 
+    def test_reference_cadence_spans_the_public_time_baseline(self):
+        problem = {"candidate_times": list(range(19))}
+        self.assertEqual(
+            self.ref._reference_times(problem),
+            [0.0, 2.0, 3.0, 5.0, 7.0, 8.0, 10.0, 11.0, 13.0, 15.0, 16.0, 18.0],
+        )
+
     def test_blanket_abstention_is_zero(self):
         def abstain(problem, observe):
             rows = [observe(float(t), "H1") for t in problem["candidate_times"][:6]]

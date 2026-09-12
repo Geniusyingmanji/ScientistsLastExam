@@ -21,15 +21,17 @@ def main():
     sweep = json.loads(Path(args.sweep).read_text())
     ref = (HERE / "reference_solver.py").read_text().replace("def infer_transient(", "def reference_infer_transient(")
     calibration = (HERE / "calibrate.py").read_text()
-    names = {"_line_fit", "no_chirp_grid", "h1_only", "never_refuse", "threshold_policy",
+    names = {"_line_fit", "no_chirp_grid", "h1_only", "never_refuse", "front_loaded_cadence", "threshold_policy",
              "sign_count_policy", "morphology_policy", "lookup_morphology_policy"}
     functions = [ast.get_source_segment(calibration, node) for node in ast.parse(calibration).body
                  if isinstance(node, ast.FunctionDef) and node.name in names]
     library = ref + "\n\n" + "\n\n".join(functions)
     library = library.replace("REFERENCE._fit_grid", "_fit_grid").replace(
+        "REFERENCE._infer_at_times", "_infer_at_times").replace(
         "REFERENCE.infer_transient", "reference_infer_transient")
     candidates = {name: library + "\ninfer_transient = " + entry + "\n"
                   for name, entry in (("reference", "reference_infer_transient"),
+                      ("front_loaded_cadence", "front_loaded_cadence"),
                       ("h1_only", "h1_only"), ("no_chirp_grid", "no_chirp_grid"),
                       ("never_refuse", "never_refuse"), ("maintainer_sign_count", "sign_count_policy()"))}
     for name, factory in (("shortcut_probe", "threshold_policy"),

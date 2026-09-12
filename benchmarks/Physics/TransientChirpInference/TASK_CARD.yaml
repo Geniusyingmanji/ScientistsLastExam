@@ -4,7 +4,7 @@ shortcut_probe:
   metric: combined_score
   reference:
     candidate: verification/reference_solver.py
-    expected_score: 0.821949084347924
+    expected_score: 0.8804117953896933
   probes:
   - id: legal_baseline
     candidate: solution.py
