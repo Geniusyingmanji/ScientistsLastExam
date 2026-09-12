@@ -29,7 +29,7 @@ oracle:
 normalization:
   baseline: one legal follow-up timing followed by abstention
   reference: three spread follow-ups plus one model-disagreement query, continuous-period least-squares/BIC refinement, and residual diagnostics; development-only expected combined 0.632413, with original measurements preserved in known_best
-  score: each split uses all-world reward minus blanket-refusal reward, divided by supported count and bounded below at zero, multiplied by correct-refusal rate and squared discovery precision; combined_score is development_score only, held-out transfer remains a private evaluator diagnostic, and wrong mechanisms receive no period or forecast credit
+  score: each split uses all-world reward minus blanket-refusal reward, divided by supported count and bounded below at zero, multiplied by correct-refusal rate and squared discovery precision; for candidates valid on every world combined_score is development_score only, held-out scientific scores remain private, any invalid world rejects the entire submission with public valid=0 and combined_score=0, and wrong mechanisms receive no period or forecast credit
 citations:
 - id: doi:10.1111/j.1365-2966.2005.08922.x
   title: On detecting terrestrial planets with timing of giant planet transits

@@ -47,7 +47,7 @@ class TransitMechanismMetricsTests(unittest.TestCase):
         self.assertEqual(evaluator._score(worlds[1], evaluator._parse_submission(claim("clock"))), (0.0, True))
         self.assertEqual(result["combined_score"], result["development_score"])
 
-    def test_sealed_only_changes_do_not_change_public_score(self):
+    def test_valid_sealed_only_changes_do_not_change_public_score(self):
         candidate = calibrate.fitted_policy((13, 26, 43, 59), 1.2, 3.0, 0.8)
         original = evaluator.evaluate(candidate)
         # Alter only the evaluator's sealed confirmation panel. The old min(dev, held)
@@ -63,6 +63,34 @@ class TransitMechanismMetricsTests(unittest.TestCase):
         self.assertEqual(search_visible_metrics(original)["combined_score"], original["development_score"])
         self.assertNotIn("robustness_score", search_visible_metrics(original))
         self.assertFalse(any(key.startswith("heldout_") for key in search_visible_metrics(original)))
+
+    def test_sealed_invalid_output_exception_and_caught_overspend_fail_closed(self):
+        policy = calibrate.fitted_policy((13, 26, 43, 59), 1.2, 3.0, 0.8)
+        development_count = len(evaluator.development_worlds())
+        for mode in ("malformed", "exception", "caught_overspend"):
+            with self.subTest(mode=mode):
+                calls = []
+                def candidate(observation, measure, budget):
+                    calls.append(None)
+                    if len(calls) <= development_count:
+                        return policy(observation, measure, budget)
+                    if mode == "malformed":
+                        return {}
+                    if mode == "exception":
+                        raise RuntimeError("sealed-world candidate failure")
+                    for _ in range(budget + 1):
+                        try:
+                            measure(20)
+                        except RuntimeError:
+                            pass
+                    return {"abstain": True}
+                result = evaluator.evaluate(candidate)
+                # All development worlds were legal. A failure first occurs on sealed
+                # confirmation, which must still reject the complete submission.
+                self.assertEqual(len(calls), development_count + 1)
+                self.assertEqual(result, evaluator._invalid_metrics())
+                self.assertEqual(search_visible_metrics(result)["valid"], 0)
+                self.assertEqual(search_visible_metrics(result)["combined_score"], 0)
 
     def test_development_scan_reads_sealed_score_only_for_frozen_winner(self):
         first, second = ((13, 26, 43, 59), (16, 32, 48, 59))

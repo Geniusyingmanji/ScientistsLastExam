@@ -7,8 +7,11 @@ histories inconsistent with the declared families.
 
 ## Current reference
 
-The public `combined_score` now equals `development_score`; the sealed split remains private
-confirmation evidence. Taking `min(development, heldout)` previously let evaluator-only evidence
+For candidates valid on every world, public `combined_score` now equals `development_score`;
+the sealed scientific score remains private confirmation evidence. All-world validity is still
+a public feasibility gate: malformed output, candidate exceptions and budget violations on
+either split reject the entire submission with `valid=0` and `combined_score=0`.
+Taking `min(development, heldout)` previously let evaluator-only evidence
 influence proposal selection, contrary to the benchmark's feedback boundary. The world generator,
 query budget, reference program and frozen A/B/C candidate bytes are unchanged by this repair.
 

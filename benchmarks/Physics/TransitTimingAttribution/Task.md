@@ -44,13 +44,16 @@ decays exponentially with absolute error at four times the timing uncertainty. A
 refusal scores one and any unsupported claim scores zero.
 Each split score is `max(0, (sum(world_scores) - unsupported_count) / supported_count)`
 multiplied by the correct-refusal rate and squared discovery precision `(1-FDR)^2`. The headline
-`combined_score` equals the development split score only. The sealed-split score and held-out
-diagnostics are evaluator-only confirmation evidence and do not influence proposal selection.
+`combined_score` equals the development split score for candidates valid on every world.
+The sealed-split scientific score and held-out diagnostics are evaluator-only confirmation
+evidence and do not influence the public objective for those valid candidates.
 Thus blanket refusal scores zero and false claims on unsupported signals reduce the headline.
 Never refusing also scores zero, even with otherwise accurate supported-model fits.
 Rate metrics include counts and denominators. Instance order and split sizes are not a contract;
 each world starts a fresh candidate session, and the follow-up budget is four measurements.
-Malformed output, invented evidence, and budget overspend fail closed.
+All-world validity remains a public feasibility gate: malformed output, invented evidence,
+candidate exceptions, or budget overspend on any development or sealed world reject the entire
+submission with `valid=0` and `combined_score=0`.
 
 ## Relationship to nearby tasks
 

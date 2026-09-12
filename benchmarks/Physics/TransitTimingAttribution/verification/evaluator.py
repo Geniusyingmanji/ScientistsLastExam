@@ -163,8 +163,8 @@ def evaluate(candidate):
                 metrics["robustness_score"] = summary["combined_score"]
             if prefix == "validation":
                 metrics.update({"heldout_" + key: value for key, value in summary.items()})
-        # Search receives development evidence only. The shifted split remains a private
-        # evaluator diagnostic and must not influence the score used to select proposals.
+        # For candidates valid on every world, only development scientific performance
+        # selects proposals. All-world validity remains a public feasibility gate above.
         metrics["combined_score"] = metrics["development_score"]
     except Exception:
         return _invalid_metrics()
