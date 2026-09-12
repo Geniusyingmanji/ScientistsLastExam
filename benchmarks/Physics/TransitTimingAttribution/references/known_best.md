@@ -71,6 +71,34 @@ planet/activity/clock claims, the old call-order counter and reference fitting w
 all score exactly zero on both splits. These are measured finite families rather than a universal
 shortcut bound.
 
+### Executable shortcut contract (2026-09-12)
+
+The machine-readable guard now includes all three fixed schedule families, alongside the zero
+baseline. Its reference, 20% relative margin, score tolerance, score and query budget are unchanged.
+Each `verification/shortcut_family_*.py` is a standalone public-input candidate; none imports the
+offline calibration script or private evaluator.
+
+Family A is the byte-identical candidate formed by the existing external replay script from
+`reference_solver.py` and its `FIXED_SCHEDULE` string. The committed materials did not preserve
+winner parameter tuples for B/C. Their candidates were newly reconstructed on source
+`00cdb02a02e451259af4abe5ca0da66445773011` from the existing development-only finite grid; this is
+new reconstruction evidence, not recovery of the original B/C programs or measurements.
+
+| Family | Schedule | RMS limit | BIC-gap limit | Correlation limit | Grid size |
+|---|---|---:|---:|---:|---:|
+| A | `(13, 26, 43, 59)` | 1.2 | 3.0 | 0.8 | 1,000 |
+| B | `(16, 32, 48, 59)` | 1.0 | 0.0 | 0.35 | 200 |
+| C | `(16, 32, 48, 59)` | 99.0 | 6.0 | 0.5 | 200 |
+
+All 1,400 policies completed the original parser and query-validity checks on all 33 development
+worlds. Selection maximized only the development score in the original `itertools.product`
+order; a strict improvement replaces the incumbent, so ties retain the first policy. Family C
+had two equal development maxima; the first was retained. The sealed-world accessor was blocked
+and called zero times. All candidate bytes and parameters were frozen before full sandbox replay.
+The original inactive limits `gap=0.0` and `RMS=99.0`, unrefined diagnostics, strict threshold
+comparisons, budget slicing and confidence `0.8` are preserved. This repair does not upgrade the
+historical model records or complete scientific admission.
+
 ## Construction errors
 
 - The first score ignored unsupported claims in the headline. Refusal and precision now gate the

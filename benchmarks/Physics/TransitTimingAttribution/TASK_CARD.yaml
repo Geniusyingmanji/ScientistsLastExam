@@ -9,6 +9,15 @@ shortcut_probe:
   - id: legal_baseline
     candidate: solution.py
     expected_score: 0.0
+  - id: fixed_schedule_family_a
+    candidate: verification/shortcut_family_a.py
+    expected_score: 0.301806
+  - id: fixed_schedule_family_b
+    candidate: verification/shortcut_family_b.py
+    expected_score: 0.159146
+  - id: fixed_schedule_family_c
+    candidate: verification/shortcut_family_c.py
+    expected_score: 0.322946
   relative_margin: 0.2
   score_tolerance: 0.000001
 scientific_question: Can an agent actively distinguish planet-induced transit-timing variations from stellar activity, clock drift, and unsupported mixtures under a follow-up observation budget?
