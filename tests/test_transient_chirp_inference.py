@@ -68,8 +68,8 @@ class TransientChirpInferenceTests(unittest.TestCase):
         good = {"abstain": False, "model": "line", "frequency": 0.12, "slope": 0.0,
                 "amplitude": 0.6, "event_time": 9.0, "confidence": 0.8}
         right = self.ev._score(world, good)
-        wrong_slope = self.ev._score(world, good | {"slope": 0.02})
-        wrong_label = self.ev._score(world, good | {"model": "chirp"})
+        wrong_slope = self.ev._score(world, {**good, "slope": 0.02})
+        wrong_label = self.ev._score(world, {**good, "model": "chirp"})
         self.assertAlmostEqual(right["science_score"] - wrong_slope["science_score"], 0.25)
         self.assertEqual(wrong_label["science_score"], 0.0)
         self.assertEqual(wrong_label["parameter_score"], 0.0)
@@ -116,7 +116,7 @@ class TransientChirpInferenceTests(unittest.TestCase):
                    {"evidence_query_ids": []}, {"evidence_query_ids": ["fake"] * 6}]
         for change in changes:
             def candidate(problem, observe):
-                return self.base.infer_transient(problem, observe) | change
+                return {**self.base.infer_transient(problem, observe), **change}
             result = self.ev.evaluate(candidate)
             self.assertEqual(result["valid"], 0)
             self.assertEqual(result["combined_score"], 0)
