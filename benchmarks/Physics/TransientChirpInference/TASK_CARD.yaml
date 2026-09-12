@@ -80,3 +80,15 @@ construction_audit:
   red_team_rounds: 3
   oracle_disagreement_status: not_quantified
   independent_recomputation_status: task-local reference, ablation sweep and deterministic tests replayed on a clean Linux worktree
+post_builder_shortcut_review:
+  status: hold_declared_shortcut_margin_failed
+  measured_source_revision: 8134f597b5f5cf194ae5f4eb1d0046e5087d0b79
+  evidence: experiments/transient_chirp_shortcut_guard_2026-09-12.json
+  finding: >-
+    The previously declared legal baseline omitted the published strongest development-selected
+    five-slope witness. Its original factory and selected parameters are now an executable probe.
+    Independent Linux double runs were valid in all 30 worlds and had identical full metrics:
+    reference 0.821949084347924, probe 0.6611830494930327. The unchanged 20 percent margin
+    requires the probe strictly below 0.6575592674783393. The real contribution gate therefore
+    has 15 passed checks and one failed shortcut guard; structural and runtime checks pass.
+    No new model calibration, parameter selection, oracle change or margin relaxation occurred.

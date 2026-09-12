@@ -1,5 +1,27 @@
 # TransientChirpInference reference results
 
+## Independent shortcut guard: hold
+
+The [2026-09-12 independent Linux report](../../../../experiments/transient_chirp_shortcut_guard_2026-09-12.json)
+binds clean source `8134f597b5f5cf194ae5f4eb1d0046e5087d0b79`. The published five-slope
+witness is now available as `verification/probe_fixed_five_slope.py` and registered in the
+machine-readable guard. Its factory and development-selected parameters are unchanged.
+The reference, baseline and witness were each evaluated twice through the real trusted
+sandbox: all 30 worlds were valid and each complete metric pair was identical.
+
+The reference scored 0.821949084347924 and the witness 0.6611830494930327. The declared
+20 percent margin requires a score strictly below 0.6575592674783393; the witness exceeds
+that line by 0.0036237820146934885. The full contribution check performed 13 actual
+evaluations and returned 15 passed checks, one failed shortcut guard and zero skips.
+The earlier baseline-only guard did not test this condition. Scientific admission stays
+on hold; neither the margin nor the measured scores are adjusted to turn it into a pass.
+
+The first Python 3.8 fixture run retained one failure and 25 passes. Dictionary union
+raised before a score assertion and made the malformed-output matrix fail for the wrong
+reason. A separate fixture-only commit uses dictionary unpacking; all 26 Linux tests
+then passed with zero skips. Earlier shape checks that never reached validation are not
+counted as effective coverage. Full metrics and candidate files stay private outside Git.
+
 ## Current reference and baseline
 
 Executable revision `9bc9157d00c22a2f3f73c34a5162de7ea66204d2` was replayed on clean ali Linux
@@ -111,7 +133,9 @@ wrong declarations, rather than presenting raw submitted confidence as calibrati
 
 ## Current robustness and evidence
 
-Full task contribution gate: 15/15 on ali Linux. The task tests cover noise-label independence,
+The earlier ali Linux contribution gate passed with only the zero baseline registered;
+the independent guard above now correctly fails on the published stronger witness.
+The task tests cover noise-label independence,
 sign-count collisions, line-slope penalties, independent metric bookkeeping, claim/refusal
 denominators, session reset, selected-probe separation and 11 malformed output cases. Standard
 CLI bad candidates and the external run_eval path are checked separately. No full-repository
