@@ -9,6 +9,9 @@ shortcut_probe:
   - id: legal_baseline
     candidate: solution.py
     expected_score: 0.0
+  - id: development_selected_five_slope_lookup
+    candidate: verification/probe_fixed_five_slope.py
+    expected_score: 0.6611830494930327
   relative_margin: 0.2
   score_tolerance: 0.000001
 scientific_question: Can an agent distinguish coherent chirps, narrow-band lines and detector-localized glitches under a finite two-detector strain-observation budget, recover key transient parameters, and refuse low-SNR ambiguity?

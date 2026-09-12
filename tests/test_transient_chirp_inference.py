@@ -149,6 +149,28 @@ class TransientChirpInferenceTests(unittest.TestCase):
         for key in ("combined_score", "robustness_score"):
             self.assertGreater(reference[key] - probe[key], 0.12)
 
+    def test_declared_lookup_witness_enforces_the_twenty_percent_margin(self):
+        from scripts.shortcut_probe_contract import inspect_probe
+        from sle.registry import find_task
+
+        calibration = load(TASK / "verification/calibrate.py", "chirp_declared_lookup_source")
+        standalone = load(TASK / "verification/probe_fixed_five_slope.py", "chirp_declared_lookup")
+        original = self.ev.evaluate(calibration.lookup_morphology_policy(
+            16, 0.08, 0.08, 7, (0.0, 0.006, 0.018, 0.028, 0.028), 1))
+        self.assertEqual(self.ev.evaluate(standalone.infer_transient), original)
+
+        def evaluate_local(spec, path, *, timeout_s):
+            candidate = load(path, "chirp_declared_" + path.stem)
+            return self.ev.evaluate(candidate.infer_transient)
+
+        spec = find_task("Gravitation/TransientChirpInference", include_uncertified=True)
+        guard = inspect_probe(spec, evaluate_local)
+        self.assertEqual(guard["status"], "failed")
+        self.assertFalse(guard["passed"])
+        self.assertAlmostEqual(guard["probe_best"], original["combined_score"])
+        self.assertAlmostEqual(guard["threshold"], guard["reference_score"] * 0.8)
+        self.assertGreater(guard["probe_best"], guard["threshold"])
+
     def test_reset_session_hook_is_called_before_every_world(self):
         baseline = self.base.infer_transient
         class Counter:
