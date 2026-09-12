@@ -6,7 +6,7 @@ import numpy as np
 def _fit_grid(t, y):
     best = (float("inf"), 0.0, 0.0, 0.0, 0.0)
     for f0 in np.linspace(.04, .18, 29):
-        for slope in np.linspace(0.0, .04, 21):
+        for slope in np.linspace(0.0, .05, 26):
             phase = 2 * math.pi * (f0 * t + .5 * slope * t * t)
             x = np.column_stack([np.ones(len(t)), np.sin(phase), np.cos(phase)])
             coef, _, _, _ = np.linalg.lstsq(x, y, rcond=None)

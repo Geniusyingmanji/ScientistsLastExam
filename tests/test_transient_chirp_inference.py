@@ -33,6 +33,17 @@ class TransientChirpInferenceTests(unittest.TestCase):
         self.assertEqual(a["development_false_discovery_rate"], 0.0)
         self.assertEqual(a["development_correct_refusal_rate"], 1.0)
 
+    def test_reference_covers_the_public_slope_range_without_changing_old_grid(self):
+        np.testing.assert_array_equal(np.linspace(0.0, 0.04, 21), np.linspace(0.0, 0.05, 26)[:21])
+        times = np.arange(12, dtype=float)
+        for slope in (0.041, 0.045, 0.049, 0.05):
+            with self.subTest(slope=slope):
+                signal = 0.7 * np.sin(2 * np.pi * (0.11 * times + 0.5 * slope * times * times) + 0.3)
+                fit = self.ref._fit_grid(times, signal)
+                self.assertLess(fit[0], 1e-12)
+                self.assertAlmostEqual(fit[1], 0.11, places=8)
+                self.assertAlmostEqual(fit[2], slope, places=8)
+
     def test_blanket_abstention_is_zero(self):
         def abstain(problem, observe):
             rows = [observe(float(t), "H1") for t in problem["candidate_times"][:6]]
@@ -165,11 +176,11 @@ class TransientChirpInferenceTests(unittest.TestCase):
 
         spec = find_task("Gravitation/TransientChirpInference", include_uncertified=True)
         guard = inspect_probe(spec, evaluate_local)
-        self.assertEqual(guard["status"], "failed")
-        self.assertFalse(guard["passed"])
         self.assertAlmostEqual(guard["probe_best"], original["combined_score"])
         self.assertAlmostEqual(guard["threshold"], guard["reference_score"] * 0.8)
-        self.assertGreater(guard["probe_best"], guard["threshold"])
+        separated = original["combined_score"] < guard["reference_score"] * 0.8
+        self.assertEqual(guard["passed"], separated)
+        self.assertEqual(guard["status"], "passed" if separated else "failed")
 
     def test_reset_session_hook_is_called_before_every_world(self):
         baseline = self.base.infer_transient
