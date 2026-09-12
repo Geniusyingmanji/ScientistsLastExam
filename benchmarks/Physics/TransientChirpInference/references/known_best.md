@@ -1,6 +1,26 @@
 # TransientChirpInference reference results
 
-## Current admission: hold after reference range repair
+## Current admission: candidate after long-baseline reference repair
+
+The [2026-09-12 cadence repair](../../../../experiments/transient_chirp_reference_cadence_2026-09-12.json)
+binds clean source `0bc037e277fee8857b035ef9d61359a9c22985a3`. The reference now distributes
+twelve paired H1/L1 epochs across the full public 0--18 day window and uses the selected
+line fit's amplitude for line claims. This design was selected from public-contract reasoning
+and development `combined_score` only; held-out metrics were first inspected after the design
+was frozen, and no subsequent tuning occurred.
+
+On pinned Linux with the trusted driver and bubblewrap, the reference scores
+**0.8804117954** development and **0.8972976728** held out. The frozen five-slope witness
+remains **0.6611830495** development. The unchanged 20 percent guard line is
+**0.7043294363**, leaving the witness 0.0431463868 below it. The full task contribution gate
+passes with structural, runtime and shortcut phases passed; difficulty remains unassessed and
+external gravitational-wave review remains pending, so the task remains a candidate.
+
+Thirteen fixed policies were each replayed twice: all 780 world evaluations were valid and all
+13 complete metric pairs were identical. The 28 Linux task/guard tests plus four subtests passed.
+No full-repository suite, new model draw or maintainer-owned global evidence refresh was run.
+
+## Prior hold after reference range repair
 
 The [2026-09-12 reference-range review](../../../../experiments/transient_chirp_reference_bounds_2026-09-12.json)
 binds clean source `55e6f83ad8b3b9239c87391978ad38041ea6fb88`, including main
@@ -48,34 +68,37 @@ the fixed reference and probe source is published in `verification/`.
 
 ## Current reference and baseline
 
-The current clean Linux replay at `55e6f83ad8b3b9239c87391978ad38041ea6fb88` uses the
-trusted driver and bubblewrap. The reference scores **0.8219490843** development and
-**0.6853203742** held-out normalized score. The baseline and blanket refusal each score zero.
-All twelve replay policies were valid and their complete metrics were identical on two runs each.
+The current clean Linux replay at `0bc037e277fee8857b035ef9d61359a9c22985a3` uses the
+trusted driver and bubblewrap. The reference scores **0.8804117954** development and
+**0.8972976728** held-out normalized score. The baseline and blanket refusal each score zero.
+All thirteen replay policies were valid and their complete metrics were identical on two runs each.
 The reference locally refines its coarse frequency/slope fit, so its reported frequency is not tied
 to a discrete grid.
 
-Reference mechanism accuracy is 10/10 development and 10/12 held-out. FDR is 0/10 and 1/11 claims;
-correct refusal is 4/4 in both splits. Coverage is 10/10 and 11/12 supported worlds. Mechanism
+Reference mechanism accuracy is 10/10 development and 12/12 held-out. FDR is 0/10 and 0/12 claims;
+correct refusal is 4/4 in both splits. Coverage is 10/10 and 12/12 supported worlds. Mechanism
 accuracy now measures labels, while `*_science_score` retains the separate unnormalized composite.
 Both splits also have a consistently normalized score (`combined_score` / `robustness_score`).
 
-The t=0..11 reference cadence limits late-event localization. Finite-grid slope error,
-remaining slow-chirp/line confusion and more adaptive observation design provide headroom; this
-is not a full compact-binary waveform solver or an optimal observation policy.
+The full-baseline fixed cadence remains non-adaptive and fits H1 rather than a joint detector
+likelihood. Finite-grid slope error, adaptive observation design and coherent joint fitting provide
+headroom; this is not a full compact-binary waveform solver or an optimal observation policy.
 
 ## Current ablation ladder
 
 | Policy | Development normalized | Held-out normalized |
 |---|---:|---:|
-| Reference | 0.821949 | 0.685320 |
+| Reference | 0.880412 | 0.897298 |
+| First-twelve-epoch cadence | 0.821766 | 0.685347 |
 | H1 only | 0.480612 | 0.476616 |
 | No chirp grid | 0.459307 | 0.377229 |
-| Reference with all reported slopes fixed at 0.02 | 0.660241 | 0.533228 |
+| Reference with all reported slopes fixed at 0.02 | 0.692985 | 0.695588 |
 | Never refuse | 0.000000 | 0.000000 |
 
-The constant-slope comparison retains fitted labels and amplitudes; losing 0.161708 development
-score demonstrates that slope estimation now contributes real credit, including on line worlds.
+Restricting only the cadence loses 0.058646 development and 0.211951 held-out score, demonstrating
+that the added temporal baseline contributes real recovery and transfer capability. The constant-slope
+comparison retains fitted labels and amplitudes; losing 0.187427 development score demonstrates that
+slope estimation contributes real credit, including on line worlds.
 The H1-only and no-chirp-grid implementations retain their documented simpler refusal rules;
 they are operational reduced policies, not claims that all other decisions are identical.
 
@@ -103,8 +126,8 @@ threshold, sign-count difference and fixed chirp slope. Its selected parameters 
 scans the review-supplied five-slope lookup tables; its selected member is
 `(16, 0.08, 0.08, 7, [0.0, 0.006, 0.018, 0.028, 0.028], 1)`.
 
-The review-supplied lookup-table family is the strongest measured no-fit family. It reaches 80.4%
-of reference development and 81.2% held out, leaving gaps of 0.160766 and 0.129012. Continuous
+The review-supplied lookup-table family is the strongest measured no-fit family. It reaches 75.1%
+of reference development and 62.0% held out, leaving gaps of 0.219229 and 0.340990. Continuous
 initial-frequency recovery prevents a fixed slope table from collecting full coherent parameter
 credit. Regression tests pin the maintained witnesses and their positive gaps on both splits.
 No exhaustive algorithmic upper bound is claimed.
@@ -159,16 +182,18 @@ wrong declarations, rather than presenting raw submitted confidence as calibrati
 
 ## Current robustness and evidence
 
-The earlier ali Linux contribution gate passed with only the zero baseline registered;
-the original independent guard correctly failed on the published stronger witness. The new
-24-call reference-range review still fails the same unchanged margin.
+The earlier ali Linux contribution gate passed with only the zero baseline registered, and the
+original independent guard correctly failed on the published stronger witness. The clean
+26-call cadence replay and current contribution gate pass the same unchanged margin without
+changing the evaluator, worlds, budget, frozen witness or threshold rule.
 The task tests cover noise-label independence,
 sign-count collisions, line-slope penalties, independent metric bookkeeping, claim/refusal
 denominators, session reset, selected-probe separation and 11 malformed output cases. Standard
 CLI bad candidates and the external run_eval path are checked separately. No full-repository
 test suite or maintainer-owned global evidence refresh is run for this revision.
 Compact records: `experiments/transient_chirp_review_replay_2026-09-11.json` and
-`experiments/transient_chirp_deepseek_review_2026-09-08.json`.
+`experiments/transient_chirp_deepseek_review_2026-09-08.json`; the current repair record is
+`experiments/transient_chirp_reference_cadence_2026-09-12.json`.
 
 ## Historical version
 

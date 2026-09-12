@@ -9,5 +9,5 @@ gpu_required: false
 eval_time_seconds: 20
 science_metric: transient_waveform_model_selection_and_parameter_recovery
 reference_baseline: six H1 observations followed by a fixed coherent-line claim
-reference_sota: dual-detector cadence, locally refined sinusoid/chirp comparison, coherence glitch test and low-SNR refusal; reference 0.821949 development and 0.685320 held-out
+reference_sota: full-baseline dual-detector cadence, locally refined sinusoid/chirp comparison, coherence glitch test and low-SNR refusal; reference 0.880412 development and 0.897298 held-out
 citation: "Abbott et al., Phys. Rev. X, 2016, DOI 10.1103/PhysRevX.6.041015; Allen et al., Phys. Rev. D, 2012, DOI 10.1103/PhysRevD.85.122006"

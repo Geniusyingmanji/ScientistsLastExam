@@ -22,7 +22,7 @@ oracle:
   deterministic: true
 normalization:
   baseline: six fixed H1 observations followed by a fixed coherent-line claim
-  reference: dual-detector cadence, locally refined chirp/line comparison, localization check and low-SNR refusal; clean replay 0.821949 development and 0.685320 held-out
+  reference: full-baseline dual-detector cadence, locally refined chirp/line comparison, localization check and low-SNR refusal; clean replay 0.880412 development and 0.897298 held-out
   score: correct-label science quality with 0.30 model, 0.50 joint initial-frequency/slope or event-time parameter, and 0.20 amplitude weights; confidence is a separate calibration diagnostic; normalized above blanket refusal and multiplied by correct-refusal rate
 citations:
 - id: doi:10.1103/PhysRevX.6.041015
@@ -36,7 +36,7 @@ invariants:
 - duplicate queries, overspending, unknown epochs/detectors and malformed candidates fail closed
 - every answer cites at least six distinct current-world observations
 - model accuracy, false discovery, refusal, feasibility and held-out transfer are separate axes
-known_shortcuts: PR48's original noise/sign-count heuristic scores 0/0 development/held-out. The maintained development-selected grids reach 0.584719/0.519672 (216-policy morphology), 0.565033/0.459472 (1,620-policy sign-count), 0.440667/0.286497 (2,916-policy threshold), and 0.661183/0.556308 (324-policy morphology with a five-slope lookup table), versus reference 0.821949/0.685320. Selected candidates were replayed twice in the Linux sandbox. These are finite-grid maxima, not universal bounds. All families share one reported noise standard deviation, paired slow chirps/lines overlap in sign counts, and continuous initial-frequency plus slope recovery is scored for both coherent families. Full inspiral waveforms, colored noise, detector calibration and sky delays remain out of scope.
+known_shortcuts: PR48's original noise/sign-count heuristic scores 0/0 development/held-out. The maintained development-selected grids reach 0.584719/0.519672 (216-policy morphology), 0.565033/0.459472 (1,620-policy sign-count), 0.440667/0.286497 (2,916-policy threshold), and 0.661183/0.556308 (324-policy morphology with a five-slope lookup table), versus reference 0.880412/0.897298. The strongest probe is 75.10% of reference development score and passes the unchanged 20% margin. Selected candidates were replayed twice in the Linux sandbox. These are finite-grid maxima, not universal bounds. All families share one reported noise standard deviation, paired slow chirps/lines overlap in sign counts, and continuous initial-frequency plus slope recovery is scored for both coherent families. Full inspiral waveforms, colored noise, detector calibration and sky delays remain out of scope.
 review:
   domain: pending_external_gravitational_wave
   evaluator_security: automated_budget_determinism_refusal_and_malformed_candidate_checks_passed_clean_linux_replay
@@ -79,20 +79,23 @@ construction_audit:
   expert_hours: null
   red_team_rounds: 3
   oracle_disagreement_status: not_quantified
-  independent_recomputation_status: bounded manual review on source 55e6f83ad8b3b9239c87391978ad38041ea6fb88 with current framework; 24 fixed evaluations, 12 identical full-metric pairs, 720 valid world evaluations and 27 passing Linux tests; the declared shortcut margin still fails; no current frontier-model D or modern trusted formal evidence
+  independent_recomputation_status: bounded author replay on clean source 0bc037e277fee8857b035ef9d61359a9c22985a3 with the current framework; 26 fixed evaluations, 13 identical full-metric pairs, 780 valid world evaluations, 28 passing Linux task tests plus 4 subtests, and the full task contribution gate passed; no current frontier-model D, external domain review or modern trusted formal evidence
 post_builder_shortcut_review:
-  status: hold_declared_shortcut_margin_failed
-  measured_source_revision: 55e6f83ad8b3b9239c87391978ad38041ea6fb88
-  evidence: experiments/transient_chirp_reference_bounds_2026-09-12.json
+  status: declared_shortcut_margin_passed_pending_external_difficulty_review
+  measured_source_revision: 0bc037e277fee8857b035ef9d61359a9c22985a3
+  evidence: experiments/transient_chirp_reference_cadence_2026-09-12.json
+  prior_range_evidence: experiments/transient_chirp_reference_bounds_2026-09-12.json
   original_guard_evidence: experiments/transient_chirp_shortcut_guard_2026-09-12.json
   finding: >-
     The previously declared legal baseline omitted the published strongest development-selected
     five-slope witness. Its original factory and selected parameters are now an executable probe.
     The reference coarse slope grid now covers the full public [0,0.05] interval while retaining
-    its original grid points and spacing. Twelve fixed policies were independently replayed twice
-    with the current framework: all 720 world evaluations were valid and all complete pairs identical.
-    The scores remain reference 0.821949084347924, probe 0.6611830494930327. The unchanged
-    20 percent margin requires the probe strictly below 0.6575592674783393, so C remains on hold.
-    The earlier source-bound 15-pass/1-fail real contribution gate is retained separately.
-    No new model calibration, parameter selection, oracle change or margin relaxation occurred;
+    its original grid points and spacing. A public-development-only comparison then selected a
+    twelve-pair cadence spanning the full public 0--18 day baseline before held-out inspection;
+    the old first-twelve-epoch cadence is retained as an executable ablation. Thirteen fixed policies
+    were independently replayed twice with the current framework: all 780 world evaluations were
+    valid and all complete pairs identical. Reference 0.8804117953896933 places the unchanged
+    five-slope probe 0.6611830494930327 below the unchanged 20 percent line 0.7043294363117547.
+    The task contribution gate passes; the earlier failed reports remain historical evidence.
+    No new model calibration, evaluator change, hidden-world selection or margin relaxation occurred;
     the existing DeepSeek records remain historical and do not supply a current D result.

@@ -68,12 +68,14 @@ Chirps and lines may have identical early/late sign-change counts, requiring pha
 Each world receives a fresh copy of `problem`. If a candidate object defines `reset_session()`, the
 evaluator calls that hook before each world; ordinary module-level state is otherwise retained.
 The initial frequency is in [0.04, 0.18] cycles/day.
-The reference observes t=0..11, leaving later localized transients and more adaptive schedules
-as explicit headroom. This is a reduced-order phase model, not a full inspiral waveform.
+The reference distributes twelve paired H1/L1 epochs across the full 0--18 day baseline; adaptive
+cadences and joint detector fits remain explicit headroom. This is a reduced-order phase model,
+not a full inspiral waveform.
 
-Current reference: 0.821949 development / 0.685320 held-out normalized score. Removing H1/L1
-coherence gives 0.480612/0.476616; removing chirp fitting gives 0.459307/0.377229; fixing slopes
-to 0.02 gives 0.660241/0.533228; never refusing gives 0/0. The original noise/sign-count shortcut
+Current reference: 0.880412 development / 0.897298 held-out normalized score. Restricting the
+same reference to the first twelve epochs gives 0.821766/0.685347; removing H1/L1 coherence gives
+0.480612/0.476616; removing chirp fitting gives 0.459307/0.377229; fixing slopes to 0.02 gives
+0.692985/0.695588; never refusing gives 0/0. The original noise/sign-count shortcut
 gives 0/0. Development-selected finite grids reach 0.584719/0.519672 (216-policy morphology),
 0.565033/0.459472 (1,620-policy sign-count), 0.440667/0.286497 (2,916-policy threshold), and
 0.661183/0.556308 (324-policy five-slope lookup). These are finite-grid maxima, not exhaustive

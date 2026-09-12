@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "task_id": "Gravitation/TransientChirpInference",
+  "source_revision": "0bc037e277fee8857b035ef9d61359a9c22985a3",
+  "source_tree_clean": true,
+  "evidence_scope": "bounded_author_linux_replay",
+  "trusted_evidence": false,
+  "environment": {
+    "platform": "Linux x86_64",
+    "python": "3.10.12",
+    "numpy": "1.24.4",
+    "scipy": "1.10.1",
+    "sandbox": "trusted driver and bubblewrap"
+  },
+  "selection_protocol": "The full-baseline cadence and line-model amplitude estimator were selected using only public-contract reasoning and combined_score on the development split. Held-out metrics were first inspected after this design was frozen, and no follow-up tuning was performed.",
+  "repair": "Distribute twelve paired H1/L1 epochs across the full public 0--18 day baseline and report the amplitude from the selected line fit for line claims. The evaluator, worlds, scoring, budgets, shortcut probe and 20 percent margin are unchanged.",
+  "reference": {
+    "candidate": "verification/reference_solver.py",
+    "source_sha256": "fd2d974b5f22aa52e54dceeb1acad6ef57972f3c73f58cb04002a0064c511fd7",
+    "combined_score": 0.8804117953896933,
+    "robustness_score": 0.8972976727941955,
+    "development_mechanism_score": 1.0,
+    "heldout_mechanism_score": 1.0,
+    "development_false_discovery_rate": 0.0,
+    "heldout_false_discovery_rate": 0.0,
+    "development_correct_refusal_rate": 1.0,
+    "heldout_correct_refusal_rate": 1.0,
+    "complete_metrics_identical_twice": true
+  },
+  "front_loaded_cadence_ablation": {
+    "combined_score": 0.8217661356539743,
+    "robustness_score": 0.6853465987706362,
+    "development_gain_from_full_baseline": 0.058645659735719,
+    "heldout_gain_from_full_baseline": 0.21195107402355928,
+    "complete_metrics_identical_twice": true
+  },
+  "frozen_shortcut": {
+    "candidate": "verification/probe_fixed_five_slope.py",
+    "source_sha256": "9c1a7499eddcb4b2891ed1867c5f6b834c2d46dab005e1ba2073b6fc72f287bc",
+    "combined_score": 0.6611830494930327,
+    "robustness_score": 0.5563081267357214,
+    "relative_margin": 0.2,
+    "strict_upper_line": 0.7043294363117547,
+    "distance_below_line": 0.04314638681872196,
+    "fraction_of_reference": 0.7509929477948167,
+    "complete_metrics_identical_twice": true
+  },
+  "ablation_scores": {
+    "h1_only": [0.4806116356894016, 0.47661551916736267],
+    "no_chirp_grid": [0.4593071748578602, 0.3772289181397864],
+    "constant_slope_0.02": [0.69298471205636, 0.6955876033497509],
+    "never_refuse": [0.0, 0.0]
+  },
+  "validation": {
+    "fixed_policies": 13,
+    "sandbox_evaluations": 26,
+    "valid_world_evaluations": 780,
+    "complete_metric_pairs_identical": 13,
+    "task_tests_passed": 28,
+    "pytest_subtests_passed": 4,
+    "contribution_checks_passed": 17,
+    "contribution_gate": {
+      "structural": "passed",
+      "runtime": "passed",
+      "shortcut_guard": "passed",
+      "difficulty": "unassessed"
+    },
+    "full_repository_tests_run": false
+  },
+  "private_artifacts": {
+    "replay_sha256": "dd176e36f633f5abeb485cea837a120effbdfd0d5565186eb29302a1b8e379d1",
+    "contribution_report_sha256": "f929731ae2198a53c8a5300f480d2026c6d755a0cc3a8c2891f674e2c831d234",
+    "note": "Complete metrics, receipts and captured execution copies remain outside Git; this file contains only aggregate measurements and hashes."
+  },
+  "limitations": [
+    "Passing the declared shortcut guard does not establish frontier-model difficulty or certification.",
+    "No new DeepSeek or frontier-model draw was used for this repair.",
+    "External gravitational-wave domain review remains pending."
+  ]
+}
