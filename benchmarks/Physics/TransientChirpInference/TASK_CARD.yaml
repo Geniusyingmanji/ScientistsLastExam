@@ -62,7 +62,8 @@ lineage:
   calibration_runs:
   - experiments/transient_chirp_deepseek_calibration_2026-09-07.json
   - experiments/transient_chirp_deepseek_review_2026-09-08.json
-  calibration_evidence_status: historical_only
+  - experiments/transient_chirp_deepseek_cadence_2026-09-12.json
+  calibration_evidence_status: current_or_migration_replayed
   edits_triggered_by_model: none
   shortcut_discoverer: maintainer_PR48_sign_count_probe_and_expanded_development_only_grid
   frozen_before_eval: false
@@ -97,5 +98,6 @@ post_builder_shortcut_review:
     valid and all complete pairs identical. Reference 0.8804117953896933 places the unchanged
     five-slope probe 0.6611830494930327 below the unchanged 20 percent line 0.7043294363117547.
     The task contribution gate passes; the earlier failed reports remain historical evidence.
-    No new model calibration, evaluator change, hidden-world selection or margin relaxation occurred;
-    the existing DeepSeek records remain historical and do not supply a current D result.
+    A post-freeze current-source DeepSeek check produced one valid Flash proposal at zero and one
+    invalid Pro proposal; it did not trigger edits and is not frontier-model D evidence. No evaluator
+    change, hidden-world selection or margin relaxation occurred.

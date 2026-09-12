@@ -18,7 +18,7 @@ external gravitational-wave review remains pending, so the task remains a candid
 
 Thirteen fixed policies were each replayed twice: all 780 world evaluations were valid and all
 13 complete metric pairs were identical. The 28 Linux task/guard tests plus four subtests passed.
-No full-repository suite, new model draw or maintainer-owned global evidence refresh was run.
+No full-repository suite, frontier-model draw or maintainer-owned global evidence refresh was run.
 
 ## Prior hold after reference range repair
 
@@ -139,6 +139,29 @@ python benchmarks/Physics/TransientChirpInference/verification/calibrate.py --ou
 python benchmarks/Physics/TransientChirpInference/verification/replay_review.py \
   --sweep /tmp/chirp-sweep.json --output /tmp/chirp-replay.json
 ```
+
+## Current DeepSeek protocol check after cadence repair
+
+After the cadence design and held-out confirmation were frozen, one proposal each from
+`deepseek-v4-flash` and `deepseek-v4-pro` was run on clean source `43345bf0`, seed 29,
+temperature 0, `greedy_rewrite`, normal feedback, calibration role and a 16,000-token output cap.
+Both exact IDs first returned visible `OK` smoke responses. The repository's old
+`chat_thinking: disabled` key is ignored by the current config class, so a local-only in-memory
+adapter explicitly injected `thinking: {type: disabled}` into each chat request. Configurations,
+prompts, generated candidates, endpoints and credentials are not committed.
+
+| Model | Valid proposals | Development | Held-out normalized | Outcome |
+|---|---:|---:|---:|---|
+| DeepSeek V4 Flash | 1/1 | 0.000000 | 0.000000 | valid, never refused |
+| DeepSeek V4 Pro | 0/1 | n/a | n/a | candidate invalid |
+
+Flash used 1,997 input and 4,001 output tokens. Its valid proposal had 0.8/0.9167 mechanism
+accuracy but zero correct-refusal rate in both splits, so the normalized scores are genuinely zero.
+Pro used 1,996 input and 2,549 output tokens and produced visible content, but only 76.7% of world
+calls were feasible; that draw is protocol evidence, not evidence about model difficulty. Neither
+draw triggered a task change. DeepSeek is not represented as frontier-model D evidence, and one
+draw per ID does not establish a difficulty distribution. Compact record:
+`experiments/transient_chirp_deepseek_cadence_2026-09-12.json`.
 
 ## Historical model draws before range repair
 

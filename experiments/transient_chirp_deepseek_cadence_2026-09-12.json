@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "task_id": "Gravitation/TransientChirpInference",
+  "source_revision": "43345bf0535342794f514417952b8dd88a921a7e",
+  "source_tree_clean": true,
+  "run_role": "calibration",
+  "algorithm": "greedy_rewrite",
+  "feedback_mode": "normal",
+  "proposal_budget": 1,
+  "seed": 29,
+  "temperature": 0.0,
+  "max_output_tokens": 16000,
+  "thinking_condition": "disabled by a local-only in-memory adapter that injected thinking.type=disabled into every chat request; the legacy chat_thinking YAML key is ignored by the current config class",
+  "smoke_test": {
+    "deepseek-v4-flash": "visible OK",
+    "deepseek-v4-pro": "visible OK"
+  },
+  "runs": [
+    {
+      "model": "deepseek-v4-flash",
+      "valid_proposals": 1,
+      "proposals": 1,
+      "accepted": 0,
+      "development_score": 0.0,
+      "heldout_score": 0.0,
+      "development_mechanism_score": 0.8,
+      "heldout_mechanism_score": 0.9166666666666666,
+      "development_correct_refusal_rate": 0.0,
+      "heldout_correct_refusal_rate": 0.0,
+      "failure_category": null,
+      "input_tokens": 1997,
+      "output_tokens": 4001,
+      "report_sha256": "265fefb1eb3aa71ff30f1f4f8d1799d8fbb4e85639dd15b3974a1f00b3b5eee6"
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "valid_proposals": 0,
+      "proposals": 1,
+      "accepted": 0,
+      "development_score": null,
+      "heldout_score": null,
+      "feasibility_rate": 0.7666666666666667,
+      "failure_category": "candidate_invalid",
+      "input_tokens": 1996,
+      "output_tokens": 2549,
+      "report_sha256": "6965b6c7c8a570a9b7927a5ee00b6aa3b3659841cfc84822022df9955423f36f"
+    }
+  ],
+  "interpretation": "Flash produced a valid but never-refusing zero-score proposal. Pro produced visible output but no valid proposal, so its draw is not difficulty evidence. Neither run triggered task, reference, evaluator, world, margin or budget changes.",
+  "limitations": [
+    "One proposal per model does not characterize a performance distribution.",
+    "DeepSeek is not represented as the repository's frontier-model D check.",
+    "The Pro draw is protocol evidence only because its candidate was invalid."
+  ],
+  "excluded": [
+    "prompts",
+    "generated candidate programs",
+    "API endpoint",
+    "API credentials",
+    "local configuration",
+    "run directories"
+  ]
+}

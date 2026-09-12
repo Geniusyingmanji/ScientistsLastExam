@@ -74,7 +74,7 @@
   },
   "limitations": [
     "Passing the declared shortcut guard does not establish frontier-model difficulty or certification.",
-    "No new DeepSeek or frontier-model draw was used for this repair.",
+    "Post-freeze single-proposal DeepSeek checks are recorded separately and did not trigger changes; no frontier-model draw was run.",
     "External gravitational-wave domain review remains pending."
   ]
 }
