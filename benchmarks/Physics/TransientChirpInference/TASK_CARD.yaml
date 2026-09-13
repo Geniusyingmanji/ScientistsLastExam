@@ -1,4 +1,5 @@
 schema_version: 2
+current_admission_report: experiments/transient_chirp_maintainer_admission_2026-09-14.json
 shortcut_probe:
   schema_version: 1
   metric: combined_score
@@ -14,10 +15,10 @@ shortcut_probe:
     expected_score: 0.6611830494930327
   relative_margin: 0.2
   score_tolerance: 0.000001
-scientific_question: Can an agent distinguish coherent chirps, narrow-band lines and detector-localized glitches under a finite two-detector strain-observation budget, recover key transient parameters, and refuse low-SNR ambiguity?
+scientific_question: Within declared synthetic waveform families, can an agent distinguish coherent chirps, narrow-band lines and detector-localized glitches under a finite two-detector strain-observation budget, recover key transient parameters, and refuse low-SNR ambiguity?
 artifact: A transient model label, initial frequency, frequency slope, event time, amplitude, confidence and immutable observation evidence, or a calibrated refusal.
 oracle:
-  model: deterministic coherent sinusoidal/chirping strain families, detector-localized Gaussian glitches and evaluator-only low-SNR ambiguous worlds
+  model: reduced-order linear-frequency chirps and constant-frequency sinusoids, with procedural constant envelopes, rescaled day-valued coordinates, fixed synthetic channel responses, independent Gaussian noise, Gaussian localized nuisances and low-SNR refusal worlds; not physical LIGO detector or source-parameter inference
   feasibility: 24 unit-cost observations over fixed epochs and H1/L1 detectors, at most one query per epoch/detector pair, bounded finite claims and current-world evidence only
   deterministic: true
 normalization:
@@ -25,10 +26,14 @@ normalization:
   reference: full-baseline dual-detector cadence, locally refined chirp/line comparison, localization check and low-SNR refusal; clean replay 0.880412 development and 0.897298 held-out
   score: correct-label science quality with 0.30 model, 0.50 joint initial-frequency/slope or event-time parameter, and 0.20 amplitude weights; confidence is a separate calibration diagnostic; normalized above blanket refusal and multiplied by correct-refusal rate
 citations:
-- id: doi:10.1103/PhysRevX.6.041015
+- id: doi:10.1103/PhysRevD.93.122004
   title: Observing gravitational-wave transient GW150914 with minimal assumptions
 - id: doi:10.1103/PhysRevD.85.122006
   title: FINDCHIRP an algorithm for detection of gravitational waves from inspiraling compact binaries
+- id: doi:10.1088/1742-6596/363/1/012031
+  title: Performance of a Chirplet-based analysis for gravitational waves from binary black hole mergers
+- id: doi:10.1103/PhysRevD.96.102008
+  title: Spline Based Search Method For Unmodeled Transient Gravitational Wave Chirps
 invariants:
 - coherent chirp worlds have positive frequency slope in both detectors while line worlds have zero slope
 - glitch worlds are localized primarily to H1 and have a finite event time
@@ -49,7 +54,8 @@ provenance:
   pollution_note: Hidden waveform parameters, world family and split membership remain evaluator-only.
 novelty_risk:
   level: medium
-  rationale: Unlike Gravitation/PTAHellingsDowns, this is single-event time-domain waveform and detector-coherence inference rather than angular correlation evidence across pulsars; unlike microlensing, it analyzes strain phase evolution and detector-localized glitches.
+  evidence: experiments/transit_timing_transient_chirp_frontier_comparisons_2026-09-14.json
+  rationale: Unlike Gravitation/PTAHellingsDowns, this is single-event time-domain waveform and detector-coherence inference rather than angular correlation evidence across pulsars; unlike Exoplanets/RadialVelocityPlanets, it acquires paired-channel observations and estimates transient frequency/slope/event time/amplitude rather than returning periods from a fixed Doppler series.
 lineage:
   status: complete
   builder_model_ids:
