@@ -20,8 +20,8 @@ shortcut_probe:
     expected_score: 0.515176
   relative_margin: 0.2
   score_tolerance: 0.000001
-scientific_question: Can an agent actively distinguish planet-induced transit-timing variations from stellar activity, clock drift, and unsupported mixtures under a follow-up observation budget?
-artifact: A TTV mechanism claim, perturbation period, next-offset forecast, confidence and immutable evidence lineage, or calibrated refusal.
+scientific_question: Can an agent actively distinguish the declared synthetic periodic, activity-surrogate and quadratic-clock residual families, forecast timing offsets and refuse out-of-family histories under a follow-up observation budget?
+artifact: A claim within the declared synthetic TTV residual families, timing-modulation period in transit-number units, next-offset forecast, confidence and immutable evidence lineage, or calibrated refusal; no unique astrophysical cause or unseen-planet orbital parameters are inferred.
 oracle:
   model: deterministic reduced-order transit-timing residual laboratory with continuous-period planet and activity signals, clock drift, and two distinct unsupported families
   feasibility: bounded integer transit queries, finite mechanism parameters, evidence IDs from current measurements and calibrated refusal
@@ -35,6 +35,12 @@ citations:
   title: On detecting terrestrial planets with timing of giant planet transits
 - id: doi:10.1126/science.1107822
   title: The Use of Transit Timing to Detect Terrestrial-Mass Extrasolar Planets
+- id: doi:10.1088/0004-637X/761/2/122
+  title: Extracting Planet Mass and Eccentricity From TTV Data
+- id: doi:10.1051/0004-6361/201321309
+  title: Effect of stellar spots on high-precision transit light-curve
+- id: https://tf.nist.gov/general/pdf/74.pdf
+  title: The Measurement of Frequency and Frequency Stability of Precision Oscillators (Allan, 1975, NBS Technical Note 669)
 invariants:
 - repeated evaluation is deterministic
 - unsupported-world refusals and false discoveries are reported separately from supported-world quality
@@ -51,11 +57,11 @@ provenance:
   class: procedural
   target_source: repository-visible deterministic TTV generator with development and shifted held-out worlds
   task_contract_public_before_evaluation: true
-  fresh_confirmation_status: ali_linux_system_python_precheck_2026_09_12_pending_canonical_runtime
+  fresh_confirmation_status: maintainer_canonical_linux_C_2026_09_14_on_4817b21a; current D campaign status is recorded separately in the source-bound admission report
   license: procedural repository-local code; no external dataset bundled
 novelty_risk:
   level: medium
-  rationale: Unlike Exoplanets/RadialVelocityPlanets, this task attributes transit-timing residuals under an active follow-up schedule rather than detecting planets in a fixed radial-velocity series; unlike ParticlePhysics/LookElsewhereAnomaly, refusal is triggered by physically unsupported or non-identifiable timing histories rather than insufficient global statistical significance, and the claimed object is a physical timing mechanism rather than an anomaly significance class.
+  rationale: Unlike Exoplanets/RadialVelocityPlanets, this task attributes transit-timing residuals under an active follow-up schedule rather than detecting planets in a fixed radial-velocity series; unlike ParticlePhysics/LookElsewhereAnomaly, refusal is triggered by histories outside the declared stationary periodic/quadratic families rather than insufficient global statistical significance, and the claimed object is a declared synthetic timing family rather than an anomaly significance class.
 lineage:
   status: complete
   builder_model_ids:
@@ -69,6 +75,7 @@ lineage:
   - experiments/transit_timing_deepseek_flash_2026-09-05.json
   - experiments/transit_timing_deepseek_calibration_2026-09-06.json
   calibration_evidence_status: historical_only
+  current_admission_report: experiments/transit_timing_admission_2026-09-14.json
   edits_triggered_by_model: none
   shortcut_discoverer: maintainer_PR11_review_and_regression_probes
   frozen_before_eval: false

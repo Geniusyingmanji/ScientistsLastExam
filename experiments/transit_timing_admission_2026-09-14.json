@@ -1,0 +1,565 @@
+{
+  "schema_version": 1,
+  "task_id": "Exoplanets/TransitTimingAttribution",
+  "status": "C_passed_current_D_planned",
+  "trusted_evidence": false,
+  "scope": "Independent bounded maintainer C review. Fixed control programs and full private metrics are source-bound; no certified, formal full-inventory, or long-horizon readiness claim. Current D is separate from the historical model runs listed in the task card.",
+  "C": {
+    "source_revision": "4817b21a3c19cad5e3ab2f49b63734d5a62574b7",
+    "task_package_sha256": "554c376529a1585513a3a7fdb8cffaeca777a5f6f9e396e1384b6036671ffc34",
+    "task_contract_sha256": "6138305458643bb61f1cf1bb8c769f3c99e08b847ba5b2d7d987a5a5a70a2000",
+    "runtime_source_sha256": "6f8344cdd2d15811803a07dd7d299f6348630deaecd2ee2601b57cfff14fab25",
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "timeout_s": 300,
+    "tests": {
+      "passed": 44
+    },
+    "junit_sha256": "0f7369e922eabc4b2d7967abeaef5492289806e661213a0d883fec560dde0f5d",
+    "contribution": {
+      "schema_version": 2,
+      "task": "Exoplanets/TransitTimingAttribution",
+      "passed": true,
+      "status": "passed",
+      "phases": {
+        "structural": "passed",
+        "runtime": "passed",
+        "shortcut_guard": "passed",
+        "difficulty": "unassessed"
+      },
+      "scientific_admission": "not_assessed",
+      "note": "Passing declared probes does not establish model difficulty or iterative improvement.",
+      "checks": [
+        {
+          "check": "listed_in_all",
+          "ok": true,
+          "status": "passed",
+          "detail": "Exoplanets/TransitTimingAttribution"
+        },
+        {
+          "check": "registered_in_certification",
+          "ok": true,
+          "status": "passed",
+          "detail": "Exoplanets/TransitTimingAttribution"
+        },
+        {
+          "check": "certification_status",
+          "ok": true,
+          "status": "passed",
+          "detail": "candidate"
+        },
+        {
+          "check": "not_self_certified",
+          "ok": true,
+          "status": "passed",
+          "detail": "candidate"
+        },
+        {
+          "check": "required_files",
+          "ok": true,
+          "status": "passed",
+          "detail": ""
+        },
+        {
+          "check": "task_card",
+          "ok": true,
+          "status": "passed",
+          "detail": "benchmarks/Physics/TransitTimingAttribution/TASK_CARD.yaml"
+        },
+        {
+          "check": "metadata",
+          "ok": true,
+          "status": "passed",
+          "detail": "discovery"
+        },
+        {
+          "check": "frontier_wave",
+          "ok": true,
+          "status": "passed",
+          "detail": "legacy single wave"
+        },
+        {
+          "check": "discovery_contract_lint_documented",
+          "ok": true,
+          "status": "passed",
+          "detail": ""
+        },
+        {
+          "check": "numeric_keys",
+          "ok": true,
+          "status": "passed",
+          "detail": ""
+        },
+        {
+          "check": "documented_keys",
+          "ok": true,
+          "status": "passed",
+          "detail": "0 baseline keys"
+        },
+        {
+          "check": "baseline_eval",
+          "ok": true,
+          "status": "passed",
+          "detail": "combined_score=0.0"
+        },
+        {
+          "check": "deterministic_baseline",
+          "ok": true,
+          "status": "passed",
+          "detail": ""
+        },
+        {
+          "check": "discovery_axes",
+          "ok": true,
+          "status": "passed",
+          "detail": "mechanism/fdr/refusal/coverage rates present"
+        },
+        {
+          "check": "degenerate_candidates_score_zero",
+          "ok": true,
+          "status": "passed",
+          "detail": "blanket abstention earns nothing"
+        },
+        {
+          "check": "bad_candidates_score_zero",
+          "ok": true,
+          "status": "passed",
+          "detail": "raises/empty/wrong_type scored"
+        },
+        {
+          "check": "shortcut_probe",
+          "ok": true,
+          "status": "passed",
+          "detail": "best declared shortcut must be strictly below the reference margin"
+        }
+      ],
+      "shortcut_probe": {
+        "status": "passed",
+        "passed": true,
+        "observations": [
+          {
+            "id": "reference",
+            "candidate": "verification/reference_solver.py",
+            "expected_score": 0.754681,
+            "source_sha256": "f046fd7cafd60d39a021a95870c092184bd4dd0e5259e009c90e673b31c0df5b",
+            "measured_score": 0.754680673172482
+          },
+          {
+            "id": "legal_baseline",
+            "candidate": "solution.py",
+            "expected_score": 0.0,
+            "source_sha256": "f0ea28a94995fead3dea7fa75e44c5d1c6e28e2bb079e60c51829bf22dd4ed03",
+            "measured_score": 0.0
+          },
+          {
+            "id": "fixed_schedule_family_a",
+            "candidate": "verification/shortcut_family_a.py",
+            "expected_score": 0.574956,
+            "source_sha256": "a4d7f0dbc1efa86e7a709c73b730b0ca4819c70495c064494df4d60123f3ef7c",
+            "measured_score": 0.5749563462412421
+          },
+          {
+            "id": "fixed_schedule_family_b",
+            "candidate": "verification/shortcut_family_b.py",
+            "expected_score": 0.543759,
+            "source_sha256": "19689a4a7984eae9d68723be4a364f329c2d000e51ec8bdc79e71560f600844b",
+            "measured_score": 0.5437588656539148
+          },
+          {
+            "id": "fixed_schedule_family_c",
+            "candidate": "verification/shortcut_family_c.py",
+            "expected_score": 0.515176,
+            "source_sha256": "79bfc8f0e4b79e0c3c1b126f0dee7a2277f24bb713d288a62990c23f8729ea71",
+            "measured_score": 0.5151760972753122
+          }
+        ],
+        "scope": "declared shortcut guard only; independent model calibration still required",
+        "contract_sha256": "c5a7c3152d63dccdf82d95714cfc0cfdc9b8f290f10f0fc463fab6d6be851d51",
+        "reference_score": 0.754680673172482,
+        "probe_best": 0.5749563462412421,
+        "threshold": 0.6037445385379856,
+        "detail": "best declared shortcut must be strictly below the reference margin"
+      },
+      "baseline_combined_score": 0.0
+    },
+    "ability_ablations": [
+      {
+        "name": "half_budget",
+        "metrics_equal": true,
+        "valid": 1.0,
+        "score": 0.25942513785761284,
+        "heldout_score": 0.24120346786042554
+      },
+      {
+        "name": "no_activity_model",
+        "metrics_equal": true,
+        "valid": 1.0,
+        "score": 0.2803739024041322,
+        "heldout_score": 0.2982646222935688
+      },
+      {
+        "name": "constant_forecast",
+        "metrics_equal": true,
+        "valid": 1.0,
+        "score": 0.6574813576429916,
+        "heldout_score": 0.3997757306536078
+      },
+      {
+        "name": "legacy_active_posterior",
+        "metrics_equal": true,
+        "valid": 1.0,
+        "score": 0.6727268006955495,
+        "heldout_score": 0.3209841204294668
+      },
+      {
+        "name": "no_misspecification_rescue",
+        "metrics_equal": true,
+        "valid": 1.0,
+        "score": 0.5892975036069099,
+        "heldout_score": 0.45173669869425304
+      },
+      {
+        "name": "never_refuse",
+        "metrics_equal": true,
+        "valid": 1.0,
+        "score": 0.0,
+        "heldout_score": 0.0
+      }
+    ],
+    "additional_no_active_design": {
+      "plan": {
+        "source_revision": "4817b21a3c19cad5e3ab2f49b63734d5a62574b7",
+        "candidate_sha256": "a830a4a32540e40ba9f5f49ee44cbaad0f041032f18a16eac46beb838ef09347",
+        "task_package_sha256": "554c376529a1585513a3a7fdb8cffaeca777a5f6f9e396e1384b6036671ffc34",
+        "task_contract_sha256": "6138305458643bb61f1cf1bb8c769f3c99e08b847ba5b2d7d987a5a5a70a2000",
+        "runtime_source_sha256": "6f8344cdd2d15811803a07dd7d299f6348630deaecd2ee2601b57cfff14fab25",
+        "timeout_s": 300,
+        "repeats": 2,
+        "purpose": "C13 removal of actual active fourth measurement while retaining current complete inference and refusal capabilities. One fixed public cadence, no grid or selection. No change to oracle/worlds/budget/probes/margins.",
+        "model_calls": 0
+      },
+      "results": [
+        {
+          "repeat": 0,
+          "valid": 1.0,
+          "development_score": 0.27355804967457387,
+          "robustness_score": 0.4475998936198863,
+          "metrics_file": "metrics-0.json",
+          "metrics_sha256": "b676c5bb7318cbfc03816a37cca92db4acc94d0d4fa4cc707b9a8c4aac3470e3",
+          "elapsed_s": 86.91752862930298
+        },
+        {
+          "repeat": 1,
+          "valid": 1.0,
+          "development_score": 0.27355804967457387,
+          "robustness_score": 0.4475998936198863,
+          "metrics_file": "metrics-1.json",
+          "metrics_sha256": "b676c5bb7318cbfc03816a37cca92db4acc94d0d4fa4cc707b9a8c4aac3470e3",
+          "elapsed_s": 76.27852010726929
+        }
+      ],
+      "full_metrics_identical": true,
+      "evaluation_calls": 2,
+      "model_calls": 0
+    },
+    "evaluation_calls": 31,
+    "metrics_digests": [
+      {
+        "call": 0,
+        "candidate_name": "solution.py",
+        "candidate_sha256": "f0ea28a94995fead3dea7fa75e44c5d1c6e28e2bb079e60c51829bf22dd4ed03",
+        "metrics_sha256": "819451bf3739df9179b76313209f2f686801dc863a6e3754d8d0f15550ff7066",
+        "valid": 1.0,
+        "combined_score": 0.0,
+        "robustness_score": 0.0
+      },
+      {
+        "call": 1,
+        "candidate_name": "solution.py",
+        "candidate_sha256": "f0ea28a94995fead3dea7fa75e44c5d1c6e28e2bb079e60c51829bf22dd4ed03",
+        "metrics_sha256": "819451bf3739df9179b76313209f2f686801dc863a6e3754d8d0f15550ff7066",
+        "valid": 1.0,
+        "combined_score": 0.0,
+        "robustness_score": 0.0
+      },
+      {
+        "call": 2,
+        "candidate_name": "candidate.py",
+        "candidate_sha256": "bbf08274aaec63d55473a4e03505c9371b3e2cdd0d9fa8e3d5915aeb237aeb52",
+        "metrics_sha256": "819451bf3739df9179b76313209f2f686801dc863a6e3754d8d0f15550ff7066",
+        "valid": 1.0,
+        "combined_score": 0.0,
+        "robustness_score": 0.0
+      },
+      {
+        "call": 3,
+        "candidate_name": "candidate.py",
+        "candidate_sha256": "ee343e4e60dc623789aa15c847c7d9a462ca40150e9fa9e3da37ff3084cfeaec",
+        "metrics_sha256": "819451bf3739df9179b76313209f2f686801dc863a6e3754d8d0f15550ff7066",
+        "valid": 1.0,
+        "combined_score": 0.0,
+        "robustness_score": 0.0
+      },
+      {
+        "call": 4,
+        "candidate_name": "candidate.py",
+        "candidate_sha256": "927d7fd2692aab3613146afe2c1c39a60b6b56f336ce7535a4463df24ce4ceeb",
+        "metrics_sha256": "accbfb5835d00f0e32fc206e350f9e34ec0ad3d0275d2f6803e3bdbd92c1b7f7",
+        "valid": 0.0,
+        "combined_score": -1e+18,
+        "robustness_score": null
+      },
+      {
+        "call": 5,
+        "candidate_name": "candidate.py",
+        "candidate_sha256": "974e4456b32f7513c49a91182790e6aab3f19992bdae2e8769c48d239ccd03e9",
+        "metrics_sha256": "8f2088dd2740a6e065bad11cff6b657613b5bf9644b25a3d102133e9d86dcf33",
+        "valid": 0.0,
+        "combined_score": 0.0,
+        "robustness_score": 0.0
+      },
+      {
+        "call": 6,
+        "candidate_name": "candidate.py",
+        "candidate_sha256": "53f02cad1bb0b6e498aa91d3ff4afa715b21f5cdbd77b1db1d4c8eab5508fb38",
+        "metrics_sha256": "8f2088dd2740a6e065bad11cff6b657613b5bf9644b25a3d102133e9d86dcf33",
+        "valid": 0.0,
+        "combined_score": 0.0,
+        "robustness_score": 0.0
+      },
+      {
+        "call": 7,
+        "candidate_name": "reference_solver.py",
+        "candidate_sha256": "f046fd7cafd60d39a021a95870c092184bd4dd0e5259e009c90e673b31c0df5b",
+        "metrics_sha256": "ce19a504312fa78e011dd28d61187e801721ee428504a14783b442a79939b059",
+        "valid": 1.0,
+        "combined_score": 0.754680673172482,
+        "robustness_score": 0.48410852988060304
+      },
+      {
+        "call": 8,
+        "candidate_name": "reference_solver.py",
+        "candidate_sha256": "f046fd7cafd60d39a021a95870c092184bd4dd0e5259e009c90e673b31c0df5b",
+        "metrics_sha256": "ce19a504312fa78e011dd28d61187e801721ee428504a14783b442a79939b059",
+        "valid": 1.0,
+        "combined_score": 0.754680673172482,
+        "robustness_score": 0.48410852988060304
+      },
+      {
+        "call": 9,
+        "candidate_name": "solution.py",
+        "candidate_sha256": "f0ea28a94995fead3dea7fa75e44c5d1c6e28e2bb079e60c51829bf22dd4ed03",
+        "metrics_sha256": "819451bf3739df9179b76313209f2f686801dc863a6e3754d8d0f15550ff7066",
+        "valid": 1.0,
+        "combined_score": 0.0,
+        "robustness_score": 0.0
+      },
+      {
+        "call": 10,
+        "candidate_name": "solution.py",
+        "candidate_sha256": "f0ea28a94995fead3dea7fa75e44c5d1c6e28e2bb079e60c51829bf22dd4ed03",
+        "metrics_sha256": "819451bf3739df9179b76313209f2f686801dc863a6e3754d8d0f15550ff7066",
+        "valid": 1.0,
+        "combined_score": 0.0,
+        "robustness_score": 0.0
+      },
+      {
+        "call": 11,
+        "candidate_name": "shortcut_family_a.py",
+        "candidate_sha256": "a4d7f0dbc1efa86e7a709c73b730b0ca4819c70495c064494df4d60123f3ef7c",
+        "metrics_sha256": "1bca5f662d3525537f7f6dc1e2d6582f4dd2c8e0eb424495d1ddd8909e9a8918",
+        "valid": 1.0,
+        "combined_score": 0.5749563462412421,
+        "robustness_score": 0.30180648337735455
+      },
+      {
+        "call": 12,
+        "candidate_name": "shortcut_family_a.py",
+        "candidate_sha256": "a4d7f0dbc1efa86e7a709c73b730b0ca4819c70495c064494df4d60123f3ef7c",
+        "metrics_sha256": "1bca5f662d3525537f7f6dc1e2d6582f4dd2c8e0eb424495d1ddd8909e9a8918",
+        "valid": 1.0,
+        "combined_score": 0.5749563462412421,
+        "robustness_score": 0.30180648337735455
+      },
+      {
+        "call": 13,
+        "candidate_name": "shortcut_family_b.py",
+        "candidate_sha256": "19689a4a7984eae9d68723be4a364f329c2d000e51ec8bdc79e71560f600844b",
+        "metrics_sha256": "e8e5c8973b4da4f47f31b5f3e0bdd5842e17bc2a7da27da6d89487d02779d5ac",
+        "valid": 1.0,
+        "combined_score": 0.5437588656539148,
+        "robustness_score": 0.1591458363625744
+      },
+      {
+        "call": 14,
+        "candidate_name": "shortcut_family_b.py",
+        "candidate_sha256": "19689a4a7984eae9d68723be4a364f329c2d000e51ec8bdc79e71560f600844b",
+        "metrics_sha256": "e8e5c8973b4da4f47f31b5f3e0bdd5842e17bc2a7da27da6d89487d02779d5ac",
+        "valid": 1.0,
+        "combined_score": 0.5437588656539148,
+        "robustness_score": 0.1591458363625744
+      },
+      {
+        "call": 15,
+        "candidate_name": "shortcut_family_c.py",
+        "candidate_sha256": "79bfc8f0e4b79e0c3c1b126f0dee7a2277f24bb713d288a62990c23f8729ea71",
+        "metrics_sha256": "3c6fff19b3f5fcf14322bfa15db08e33f71d9420fe880634007b1a0a371c90db",
+        "valid": 1.0,
+        "combined_score": 0.5151760972753122,
+        "robustness_score": 0.322946471437792
+      },
+      {
+        "call": 16,
+        "candidate_name": "shortcut_family_c.py",
+        "candidate_sha256": "79bfc8f0e4b79e0c3c1b126f0dee7a2277f24bb713d288a62990c23f8729ea71",
+        "metrics_sha256": "3c6fff19b3f5fcf14322bfa15db08e33f71d9420fe880634007b1a0a371c90db",
+        "valid": 1.0,
+        "combined_score": 0.5151760972753122,
+        "robustness_score": 0.322946471437792
+      },
+      {
+        "call": 17,
+        "candidate_name": "half_budget.py",
+        "candidate_sha256": "5bc474a0ebd2e02b2308ca4a82e4d3b37dfc758e21d75c9b4a1b3633adedf81d",
+        "metrics_sha256": "95472c57db74f6f6d91300cf529742bcda61988f0f9fc79eecb8816af828fba1",
+        "valid": 1.0,
+        "combined_score": 0.25942513785761284,
+        "robustness_score": 0.24120346786042554
+      },
+      {
+        "call": 18,
+        "candidate_name": "half_budget.py",
+        "candidate_sha256": "5bc474a0ebd2e02b2308ca4a82e4d3b37dfc758e21d75c9b4a1b3633adedf81d",
+        "metrics_sha256": "95472c57db74f6f6d91300cf529742bcda61988f0f9fc79eecb8816af828fba1",
+        "valid": 1.0,
+        "combined_score": 0.25942513785761284,
+        "robustness_score": 0.24120346786042554
+      },
+      {
+        "call": 19,
+        "candidate_name": "no_activity_model.py",
+        "candidate_sha256": "685dc437843c8ba2b9db5e87e5142c2c34711c2ef5007e0d68f196a520299966",
+        "metrics_sha256": "df9b7eb5ce00ccdf809476d4d7a9b8d7881d1940df277112dc1fbe63c348b613",
+        "valid": 1.0,
+        "combined_score": 0.2803739024041322,
+        "robustness_score": 0.2982646222935688
+      },
+      {
+        "call": 20,
+        "candidate_name": "no_activity_model.py",
+        "candidate_sha256": "685dc437843c8ba2b9db5e87e5142c2c34711c2ef5007e0d68f196a520299966",
+        "metrics_sha256": "df9b7eb5ce00ccdf809476d4d7a9b8d7881d1940df277112dc1fbe63c348b613",
+        "valid": 1.0,
+        "combined_score": 0.2803739024041322,
+        "robustness_score": 0.2982646222935688
+      },
+      {
+        "call": 21,
+        "candidate_name": "constant_forecast.py",
+        "candidate_sha256": "7192a9f4a27243633d7e26833c153d560356388133612fe07fbb94253f4def4f",
+        "metrics_sha256": "bf1f785cf60fd91955a32b8b3d7af54cdd76086216aa8930bf497f46310fa6a0",
+        "valid": 1.0,
+        "combined_score": 0.6574813576429916,
+        "robustness_score": 0.3997757306536078
+      },
+      {
+        "call": 22,
+        "candidate_name": "constant_forecast.py",
+        "candidate_sha256": "7192a9f4a27243633d7e26833c153d560356388133612fe07fbb94253f4def4f",
+        "metrics_sha256": "bf1f785cf60fd91955a32b8b3d7af54cdd76086216aa8930bf497f46310fa6a0",
+        "valid": 1.0,
+        "combined_score": 0.6574813576429916,
+        "robustness_score": 0.3997757306536078
+      },
+      {
+        "call": 23,
+        "candidate_name": "legacy_active_posterior.py",
+        "candidate_sha256": "7d4959957c73d6ed74dbbae92d70dafcb20175194a92ab3ca250921f21817dd7",
+        "metrics_sha256": "aa08ba09ea4d7cac44754d89ffe326fdf659406f7f53c76bc41abdf7ce9ca9cc",
+        "valid": 1.0,
+        "combined_score": 0.6727268006955495,
+        "robustness_score": 0.3209841204294668
+      },
+      {
+        "call": 24,
+        "candidate_name": "legacy_active_posterior.py",
+        "candidate_sha256": "7d4959957c73d6ed74dbbae92d70dafcb20175194a92ab3ca250921f21817dd7",
+        "metrics_sha256": "aa08ba09ea4d7cac44754d89ffe326fdf659406f7f53c76bc41abdf7ce9ca9cc",
+        "valid": 1.0,
+        "combined_score": 0.6727268006955495,
+        "robustness_score": 0.3209841204294668
+      },
+      {
+        "call": 25,
+        "candidate_name": "no_misspecification_rescue.py",
+        "candidate_sha256": "77abf8f2b773c1d5f02a3a052e339018b2ec8a14e57373dc4fd6946866e623d7",
+        "metrics_sha256": "15f59355b5e9c998576cbb27610a5bdc67d7cff109c28792d22edd7c2c0d8ea5",
+        "valid": 1.0,
+        "combined_score": 0.5892975036069099,
+        "robustness_score": 0.45173669869425304
+      },
+      {
+        "call": 26,
+        "candidate_name": "no_misspecification_rescue.py",
+        "candidate_sha256": "77abf8f2b773c1d5f02a3a052e339018b2ec8a14e57373dc4fd6946866e623d7",
+        "metrics_sha256": "15f59355b5e9c998576cbb27610a5bdc67d7cff109c28792d22edd7c2c0d8ea5",
+        "valid": 1.0,
+        "combined_score": 0.5892975036069099,
+        "robustness_score": 0.45173669869425304
+      },
+      {
+        "call": 27,
+        "candidate_name": "never_refuse.py",
+        "candidate_sha256": "dc4a7beee985a36982ed7373ef2378f24265326f920c0ea6e6ed6ae4fc1f3453",
+        "metrics_sha256": "22deadd88a1cd7d17ab8099032acac133b4b00c73801f182dfed1a619edc72e3",
+        "valid": 1.0,
+        "combined_score": 0.0,
+        "robustness_score": 0.0
+      },
+      {
+        "call": 28,
+        "candidate_name": "never_refuse.py",
+        "candidate_sha256": "dc4a7beee985a36982ed7373ef2378f24265326f920c0ea6e6ed6ae4fc1f3453",
+        "metrics_sha256": "22deadd88a1cd7d17ab8099032acac133b4b00c73801f182dfed1a619edc72e3",
+        "valid": 1.0,
+        "combined_score": 0.0,
+        "robustness_score": 0.0
+      }
+    ],
+    "private_summary_sha256": "17be8e193f81c88dd0ccb68c9788ec91bec0b01f7e3028539ffdb419fcf48ad3",
+    "valid_complete_calls": 28,
+    "deliberate_malformed_invalid_calls": 3,
+    "valid_world_evaluations": 1876,
+    "legacy_posterior_note": "Canonical current replay 0.6727268006955495 differs from the earlier author preliminary 0.7118805708796355. Both source/environment-scoped records are preserved; the canonical pair is bitwise equal, and no measurement was replaced to match the earlier number."
+  },
+  "A": {
+    "scientific_review_sha256": "ebed34bb0ebf154e2e008bd66b73422251a5abda22f832e9d3dc931ee11fd839",
+    "frontier_row_comparisons_sha256": "0f479153668348582b9a28e1464c161485b20ede4ec94eb0b4d24c6d7598e771",
+    "scope_repair": "Task.md and card now distinguish declared synthetic residual families from unique astrophysical causal attribution; timing-modulation period is not an unseen planet orbital period. References support sinusoidal TTV, starspot timing bias and quadratic oscillator time drift within stated limits.",
+    "scientific_review_path": "experiments/transit_timing_transient_chirp_scientific_review_2026-09-14.json",
+    "frontier_row_comparisons_path": "experiments/transit_timing_transient_chirp_frontier_comparisons_2026-09-14.json"
+  },
+  "D": {
+    "status": "planned_not_executed",
+    "planned_proposals": 3,
+    "feedback_mode": "selection_blind",
+    "proposal_budget": 1,
+    "seed_labels": [
+      0,
+      1,
+      2
+    ],
+    "model_calls": 0,
+    "source_freeze": "A new immutable plan must bind the final repaired Task.md and package before the first provider request."
+  },
+  "documentation_migration": {
+    "C_measurements_resigned": false,
+    "oracle_reference_world_budget_score_probe_bytes_changed": false,
+    "published_no_active_design_candidate_matches_measured_bytes": true,
+    "new_D_required_after_agent_visible_prompt_change": true
+  },
+  "difficulty_ladder": {
+    "current_release_level": 1,
+    "level2_status": "unavailable_missing_sealed_profile",
+    "fixture_scope": "local pure-Python diagnosis, not a secure evaluation or model difficulty measurement"
+  }
+}

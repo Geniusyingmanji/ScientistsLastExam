@@ -7,6 +7,17 @@ perturbing planet, stellar activity, a drifting clock, or a signal outside the d
 The agent may buy a limited number of follow-up transit timings and must choose which transit numbers
 to observe before reporting a mechanism and a forecast.
 
+This is a reduced-order model-selection laboratory. `planet`, `activity`, and `clock` name the
+declared synthetic residual families, and a correct label establishes a match within this laboratory.
+It is not a unique causal identification from real stellar observations. The returned periodic
+parameter describes the timing-modulation period in transit-number units; it is not the orbital
+period or mass of an unseen planet. Sinusoidal TTV approximations and the possibility of spot-induced
+timing biases motivate the periodic families. The activity family's extra periodic component is a
+phenomenological nuisance surrogate, not a derivation of a starspot light curve. The clock family uses
+the quadratic time-error form induced by a constant frequency offset plus linear frequency drift.
+Noise, component coefficients, and unsupported alternatives are controlled benchmark design choices.
+The task tests acquisition, family discrimination, forecasting, and refusal under these declared assumptions.
+
 ## Entrypoint
 
 ```python
@@ -27,7 +38,7 @@ world.
 
 ## Scoring and safety
 
-Development worlds contain planet, activity, clock, and two physically distinct unsupported
+Development worlds contain planet, activity, clock, and two distinct out-of-family
 processes: a stationary extra component and a non-stationary phase evolution. Valid claims receive
 mechanism, period, forecast, coverage, and false-discovery metrics; correctly abstaining on an
 unsupported process is rewarded. A sealed shifted set tests transfer to new noise and phases.
@@ -59,7 +70,7 @@ submission with `valid=0` and `combined_score=0`.
 
 Unlike `Exoplanets/RadialVelocityPlanets`, this task attributes transit residuals with paid follow-up
 choices rather than searching a fixed radial-velocity series. Unlike `ParticlePhysics/LookElsewhereAnomaly`,
-the claim is a physical timing mechanism, and refusal concerns unsupported residual structure,
+the claim identifies a declared synthetic timing family, and refusal concerns out-of-family residual structure,
 not global anomaly significance. Shifted timing/noise instances test transfer of that attribution.
 
 ## Reference checks
@@ -70,7 +81,11 @@ and phase-evolution alternatives before rescuing a rejected claim. Its developme
 0.754681. The same frozen development-selected fixed schedules remain 0.574956 (three-diagnostic
 family A, 1,000 policies), 0.543759 (no-BIC family B, 200), and 0.515176 (no-RMS family C, 200).
 No schedule is reselected using the sealed split. The strongest frozen shortcut is 76.18% of the
-reference, below the retained 80% limit; canonical clean-source verification remains required.
+reference, below the retained 80% limit. Independent canonical Linux C verification on revision
+`4817b21a` reproduces these values; the source-bound record is
+`experiments/transit_timing_admission_2026-09-14.json`. Removing only the active fourth measurement
+while preserving current fitting and refusal abilities gives 0.273558 on the fixed (20, 38, 55, 59)
+cadence. This is a single declared ablation, not a bound over all fixed schedules.
 
 Earlier records used the minimum of development and held-out scores as the public headline.
 That feedback defect has been removed. The original reference, ablation, grid and model records
@@ -83,3 +98,19 @@ the development-only contract. The finite grids are not universal shortcut bound
 - Use deterministic CPU code with Python, NumPy, SciPy, and the standard library.
 - Do not read `verification/` or `frontier_eval/`, use the network, or create processes.
 - `sle.contract_lint` is available for checking the submission shape and costs no follow-up budget.
+
+## Scientific grounding and limits
+
+- Agol et al. (2005), DOI `10.1111/j.1365-2966.2005.08922.x`, and Holman and Murray (2005),
+  DOI `10.1126/science.1107822`, provide the physical motivation for TTV observations.
+- Lithwick, Xie and Wu (2012), *Extracting Planet Mass and Eccentricity From TTV Data*,
+  [DOI 10.1088/0004-637X/761/2/122](https://arxiv.org/abs/1207.4192v2), supports analytic sinusoidal
+  TTV approximations near first-order resonance. It does not validate arbitrary orbital or mass
+  recovery from this laboratory's fitted timing-modulation period.
+- Oshagh et al. (2013), *Effect of stellar spots on high-precision transit light-curve*,
+  [DOI 10.1051/0004-6361/201321309](https://www.aanda.org/articles/aa/full_html/2013/08/aa21309-13/aa21309-13.html),
+  supports spot-induced timing bias; the fixed secondary sinusoid here is a phenomenological choice.
+- Allan (1975), *The Measurement of Frequency and Frequency Stability of Precision Oscillators*,
+  [NBS Technical Note 669, Fig. 7](https://tf.nist.gov/general/pdf/74.pdf), describes linear frequency
+  drift producing quadratic time deviation. The coefficients, noise and query budget here are
+  benchmark choices, not measured oscillator or stellar parameters.

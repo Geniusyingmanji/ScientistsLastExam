@@ -116,7 +116,7 @@
 | [`DiscrepantMeasurements`](benchmarks/Physics/DiscrepantMeasurements/)<br>不相容测量调和 | Physics | ParticlePhysics | clipped | statistical_sim | candidate | Eight groups have measured the same physical constant. · on-ramp,不配对 | 八组测量同一常数但彼此不相容,诊断这批证据出了什么问题并给最佳值或判定没有最佳值 | 缺陷诊断 + 收费的内部一致性检验 + 拒答 |
 | [`LookElsewhereAnomaly`](benchmarks/Physics/LookElsewhereAnomaly/)<br>多窗口扫描的全局显著性 | Physics | ParticlePhysics | clipped | physical_sim | candidate | local 5σ is not a discovery | 一张质量谱在多个窗口里扫描,判定局域 5σ 在计入试验因子后还剩多少 | look-elsewhere 后的全局显著性;边带拒绝公开本底时须拒答 |
 | [`PTAHellingsDowns`](benchmarks/Physics/PTAHellingsDowns/)<br>脉冲星阵四极相关 | Physics | Gravitation | clipped | physical_sim | candidate | a common process is not a gravitational-wave background | 脉冲星计时阵里区分 Hellings-Downs 四极相关(引力波背景)与钟差单极、星历偶极、共同红噪声 | 四极 vs 单极判别与拒答;共同过程不等于引力波背景 |
-| [`TransitTimingAttribution`](benchmarks/Physics/TransitTimingAttribution/)<br>凌星时刻变化归因 | Physics | Exoplanets | clipped | physical_sim | candidate | what causes the transit-time variations? | 主动选择后续凌星时刻,区分行星扰动、恒星活动与时钟漂移 | 机制、周期预测与拒答;误发现率和留出迁移分开报告 |
+| [`TransitTimingAttribution`](benchmarks/Physics/TransitTimingAttribution/)<br>凌星时刻变化归因 | Physics | Exoplanets | clipped | physical_sim | candidate | what causes the transit-time variations? | 主动选择后续凌星时刻,区分模拟的周期、活动代理与时钟漂移族 | 机制、周期预测与拒答;误发现率和留出迁移分开报告 |
 
 ### 物质(substance) — 6
 

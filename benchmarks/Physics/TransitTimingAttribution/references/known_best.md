@@ -35,7 +35,8 @@ The old guard's 10 secure calls and 41 passing local tests remain frozen at code
 `.research/pr11_shortcut_guard_review_2026-09-12.json`. Its numeric pass belongs to the old
 min-headline contract and is not evidence that the development-only contract passes. The current
 framework is integrated from main `dbed927128606051ffe483f4b5f192366dbad313`, separately from that
-historical evaluation runtime. Current model evidence remains `historical_only`.
+historical evaluation runtime. The legacy model records cited below remain `historical_only`; the independent admission report
+records the status of any new source-bound calibration.
 
 ## Historical reference record (min-headline contract)
 
@@ -151,6 +152,18 @@ historical model records or complete scientific admission.
 
 ## Robustness
 
+The independent canonical Linux C review on source `4817b21a` is recorded in
+`experiments/transit_timing_admission_2026-09-14.json`. Its measurements retain their original source
+and package identities after the subsequent documentation-only scope/citation repair. The additional
+standalone `verification/reference_no_active_design.py` preserves current fitting and refusal, replacing
+only the fourth active query with transit 59; its two complete payloads agree and development score
+is 0.273558. This single fixed schedule is an ability ablation, not a new grid-search maximum.
+
+The optional development profile labelled 2 has no matching sealed profile in this revision. A local
+fixture found that blanket abstention is valid at level 1 but invalid at level 2. Only the fixed level-1
+release is evaluated here; the unavailable second level is not evidence of increased difficulty.
+No new worlds or difficulty thresholds were introduced.
+
 Successful and invalid trusted evaluations retain identical diagnostic metric-key sets, including
 `heldout_*` aliases. The shared entrypoint excludes these private fields from public feedback,
 and the public score no longer depends on their values. Malformed output, exceptions, invented
@@ -163,3 +176,30 @@ pending.
 
 Scientific grounding: Agol et al. (DOI `10.1111/j.1365-2966.2005.08922.x`) and Holman and Murray
 (DOI `10.1126/science.1107822`).
+
+## Model-family citations and scope
+
+- Agol et al. (2005), DOI `10.1111/j.1365-2966.2005.08922.x`, and Holman and Murray (2005),
+  DOI `10.1126/science.1107822`, provide the physical motivation for TTV observations.
+- Lithwick, Xie and Wu (2012), *Extracting Planet Mass and Eccentricity From TTV Data*,
+  [DOI 10.1088/0004-637X/761/2/122](https://arxiv.org/abs/1207.4192v2), supports analytic sinusoidal
+  TTV approximations near first-order resonance. It does not validate arbitrary orbital or mass
+  recovery from this laboratory's fitted timing-modulation period.
+- Oshagh et al. (2013), *Effect of stellar spots on high-precision transit light-curve*,
+  [DOI 10.1051/0004-6361/201321309](https://www.aanda.org/articles/aa/full_html/2013/08/aa21309-13/aa21309-13.html),
+  supports spot-induced timing bias; the fixed secondary sinusoid here is a phenomenological choice.
+- Allan (1975), *The Measurement of Frequency and Frequency Stability of Precision Oscillators*,
+  [NBS Technical Note 669, Fig. 7](https://tf.nist.gov/general/pdf/74.pdf), describes linear frequency
+  drift producing quadratic time deviation. The coefficients, noise and query budget here are
+  benchmark choices, not measured oscillator or stellar parameters.
+
+This is a reduced-order model-selection laboratory. `planet`, `activity`, and `clock` name the
+declared synthetic residual families, and a correct label establishes a match within this laboratory.
+It is not a unique causal identification from real stellar observations. The returned periodic
+parameter describes the timing-modulation period in transit-number units; it is not the orbital
+period or mass of an unseen planet. Sinusoidal TTV approximations and the possibility of spot-induced
+timing biases motivate the periodic families. The activity family's extra periodic component is a
+phenomenological nuisance surrogate, not a derivation of a starspot light curve. The clock family uses
+the quadratic time-error form induced by a constant frequency offset plus linear frequency drift.
+Noise, component coefficients, and unsupported alternatives are controlled benchmark design choices.
+The task tests acquisition, family discrimination, forecasting, and refusal under these declared assumptions.
