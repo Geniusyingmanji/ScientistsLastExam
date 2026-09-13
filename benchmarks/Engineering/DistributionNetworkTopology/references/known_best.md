@@ -40,6 +40,11 @@ must reduce development score when removed: the three-pipe family, adaptive rout
 choice, structural-group refusal, telemetry-model check and cardinality prior.
 The regression test checks the degradation, not a hardcoded score.
 
+That statement is deliberately development-scoped. Removing the cardinality prior
+reduces development from 0.927083 to 0.875000 but raises heldout from 0.802469 to
+0.847222. The prior is therefore part of this reference, not evidence of a
+split-robust necessary capability or a scientific difficulty claim.
+
 ## 4. Shortcut probes and old failures
 
 The maintainer's [898e28e review](https://github.com/Geniusyingmanji/ScientistsLastExam/pull/51#issuecomment-5583243149)

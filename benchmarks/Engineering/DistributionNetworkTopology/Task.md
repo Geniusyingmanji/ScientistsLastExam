@@ -101,6 +101,8 @@ Measured capability comparisons (development / heldout):
 | Without structural ambiguity refusal | 0.635417 / 0.469136 |
 
 These are diagnostic capability comparisons, not model calibration.
+In particular, the no-cardinality-prior variant is better on heldout, so that prior
+is not claimed as a split-robust necessary capability.
 
 The external `frontier_eval/run_eval.py` writes only search-visible metrics. Full
 diagnostics can be saved with `--full-metrics-dir` to an explicitly private

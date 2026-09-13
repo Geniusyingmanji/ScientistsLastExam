@@ -38,9 +38,11 @@ invariants:
 known_shortcuts: 'Historical reviewer grid 0.960 > reference 0.600 at 898e28e. Revised clean Linux replay:
   1680-point grid best 0.502037 development / 0.110247 heldout, 0 points above reference 0.927083 / 0.802469.
   Removing three-pipe support, active selection, structural refusal, telemetry checking or the cardinality
-  prior lowers development to 0.722222, 0.416667, 0.635417, 0.843750 and 0.875000 respectively. Source-bound
-  full results: references/review_evidence.json; executable sandbox guard in shortcut_probe. No frontier
-  calibration.'
+  prior lowers development to 0.722222, 0.416667, 0.635417, 0.843750 and 0.875000 respectively. The no-prior
+  ablation raises heldout from 0.802469 to 0.847222, so the prior is not claimed as a split-robust necessary
+  capability. Source-bound shortcut results: references/review_evidence.json; executable sandbox guard in
+  shortcut_probe. A fully valid frontier first proposal reached 1.000000 development and fails D16; source-bound
+  summary: experiments/distribution_network_topology_first_draw_2026-09-14.json.'
 licensing:
   task_package: repository_license_not_declared
   external_assets: none
