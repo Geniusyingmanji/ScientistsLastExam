@@ -78,7 +78,9 @@ The Frontier-Eng comparison is in
 The pinned available catalog has 78 rows / 84 expanded entries; the documented
 95-entry source remains unresolved. This package remains **candidate**. Review
 replays and capability ablations are in `references/known_best.md`; they do not
-establish expert difficulty or replace fresh worlds and frontier calibration.
+establish expert difficulty or replace fresh worlds. A frozen current-source
+gpt-5.6-sol first-proposal campaign also failed the D16 admission check because one
+fully valid proposal scored 1.000000 development against the 0.927083 reference.
 
 Each sandbox world starts a fresh candidate session. Module globals and temporary
 files cannot carry a world index or previous answers across worlds.

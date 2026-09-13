@@ -58,11 +58,32 @@ through the same sandbox as the reference, with a 10% relative margin.
 
 ## 5. Frontier-model calibration
 
-No current-revision clean frontier calibration draw exists. The package remains
-candidate, with calibration_evidence_status: missing. Builder lineage remains
-complete: the maintainer explicitly withdrew the claim that an empty calibration
-list contradicts recorded builder history. Neither this replay nor a high reference
-score establishes expert difficulty.
+A frozen, selection-blind gpt-5.6-sol (high reasoning) first-proposal campaign was
+run on clean Linux source `4ba261bb864388dc4c55787f07870def5cb33c0f` with
+one proposal for each of seed labels 0, 1 and 2. All three programs were fully valid,
+attempted discovery, and reproduced exactly in two additional sandbox evaluations.
+
+| Seed label | Development | Heldout | Reference reached on development |
+|---:|---:|---:|:---:|
+| 0 | 0.811852 | 0.927469 | no |
+| 1 | **1.000000** | 0.861111 | **yes** |
+| 2 | 0.862269 | 0.833333 | no |
+| Reference | 0.927083 | 0.802469 | — |
+
+The seed-1 result is not an abstention artifact: development set F1, correct-refusal
+rate and discovery coverage are all 1.0, with false-discovery rate 0.0. It therefore
+fails the current CONTRIBUTING.md D16 first-proposal admission check. The package
+remains **candidate/Draft** and must not be promoted on the strength of its reference
+score, shortcut grid or engineering gate. The source-bound summary, hashes, transport
+limitations and replay result are retained in
+`experiments/distribution_network_topology_first_draw_2026-09-14.json`; raw proposals
+remain private.
+
+This documentation update changes the task-package and contract hashes after the
+draw, so TASK_CARD records the receipt as `historical_only`. Any scientifically
+motivated redesign needs a new frozen first-proposal campaign. Budget cuts, threshold
+changes or world edits chosen after seeing this result would be post-hoc and are not
+used as admission evidence.
 
 ## 6. Construction and review corrections
 

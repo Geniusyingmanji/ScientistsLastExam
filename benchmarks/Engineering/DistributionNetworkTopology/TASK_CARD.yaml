@@ -70,16 +70,20 @@ lineage:
   - glm-5.3
   builder_scaffolds:
   - repository-native-engineering-task-pattern
-  calibrator_model_ids: []
-  calibration_runs: []
-  calibration_evidence_status: missing
+  calibrator_model_ids:
+  - gpt-5.6-sol
+  calibration_runs:
+  - experiments/distribution_network_topology_first_draw_2026-09-14.json
+  calibration_evidence_status: historical_only
   edits_triggered_by_model: 2026-09-05 local build caught a route enumeration that looped without a visited
     set, an alphabetical truncation of the route family that left pipes untestable, mirror-symmetric break
     sets in supported worlds (now signature-filtered at generation), twin ids that did not match the route
     table, a tie rule that widened the failed set under flips, and a reference that swept routes alphabetically
     instead of greedily; each was fixed and pinned by tests. 2026-09-12 maintainer review drove larger
-    cohorts, per-world validity, source-bound shortcut replays and capability ablations; missing calibration
-    remains disclosed separately from builder lineage.
+    cohorts, per-world validity, source-bound shortcut replays and capability ablations. A frozen current-source
+    gpt-5.6-sol first-proposal campaign on 2026-09-14 then produced a fully valid development score of 1.000000,
+    above the 0.927083 reference; no task parameter was changed from that result. This documentation update
+    makes the receipt historical-only and a redesigned task would require a new frozen draw.
   shortcut_discoverer: initial_internal_red_team
   frozen_before_eval: false
   freeze_timestamp: null
@@ -97,11 +101,12 @@ long_horizon:
   material_headroom_after_2h: false
   evidence: []
 difficulty_assessment:
-  status: unverified_candidate
+  status: failed_current_first_draw
   requirement: standard-method and low-dimensional shortcut sweeps, capability ablations and clean frontier-model
     calibration before certification
-  remaining_risk: Fixed repository-visible procedural worlds are not generalization evidence. Greedy experimental
-    design leaves unresolved worlds, but expert difficulty and frontier-model calibration remain unverified.
+  remaining_risk: Fixed repository-visible procedural worlds are not generalization evidence. A fully valid
+    gpt-5.6-sol first proposal reached 1.000000 development against the 0.927083 reference, so the current task
+    fails the current first-draw difficulty check. Expert review and server-held confirmation also remain missing.
 frontier_eng_overlap_review:
   date: '2026-09-07'
   classification: 无

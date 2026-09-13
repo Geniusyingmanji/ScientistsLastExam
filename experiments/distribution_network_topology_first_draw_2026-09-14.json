@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "kind": "frontier_first_proposal_review",
+  "task_id": "WaterDistribution/DistributionNetworkTopology",
+  "date": "2026-09-14",
+  "trusted_evidence": false,
+  "source": {
+    "git_revision": "4ba261bb864388dc4c55787f07870def5cb33c0f",
+    "source_tree_dirty": false,
+    "environment": "Ubuntu 22.04; Python 3.10.12; NumPy 1.24.4; SciPy 1.10.1; bubblewrap sandbox",
+    "task_package_sha256": "ca807500037e0573311d798967004507086ca7ed4453bc8e6699ac938b17f53e",
+    "task_contract_sha256": "413e16e5748cb675fb4ce985271e3ab42226c50ecf6a61f6105c041d690ebede",
+    "runtime_source_sha256": "ecf3e87246a653629b743b9a97090a005f07c06e375dd5126afa87724e8499c9"
+  },
+  "campaign": {
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "high",
+    "feedback_mode": "selection_blind",
+    "budget": 1,
+    "seed_labels": [0, 1, 2],
+    "plan_sha256": "df28d4e2c264d56d6d8308cebd34c56c20aff01e10eafe9ed16838d69b14fb04",
+    "llm_condition_sha256": "f6fc2bce46c9b1d3b6084a61798351e6726996638183118f50bf3b92da3f9570",
+    "orchestration_sha256": "d26fd139ce726d76e33e3d38670d68e1bfa7bc035d2ad95260c9eba2bf68942a",
+    "scheduled_cells": 3,
+    "complete_cells": 3,
+    "provider_calls": 3,
+    "input_tokens": 5265,
+    "output_tokens": 33489,
+    "total_tokens": 38754
+  },
+  "reference": {
+    "development_score": 0.9270833333333333,
+    "heldout_score": 0.802469135802469
+  },
+  "cells": [
+    {
+      "seed_label": 0,
+      "candidate_sha256": "1b939608d951fb3a9fb4f9f26f0766e0eaf8f4bcd7f4af6aa22d7e942844f29d",
+      "trajectory_sha256": "b9ee962a0c738bd536e0fedfdc818cb613836a3518e7adbc63339dd612971475",
+      "manifest_sha256": "b6f733add3d52f66ac09dc009448764457732232d794190efb3d4e649af9ba21",
+      "development_score": 0.8118518518518516,
+      "heldout_score": 0.9274691358024689,
+      "fully_valid": true,
+      "replay_count": 2,
+      "replays_equal_original_full_metrics": true
+    },
+    {
+      "seed_label": 1,
+      "candidate_sha256": "1d194f60e20764c60ccaf33c369c9a22c49aad46f6e6a872b713e6f50edace7a",
+      "trajectory_sha256": "3b90af9262187065da6cf34ac8976d2841280b0f0ab94167f3b45cb0f6f73371",
+      "manifest_sha256": "f6450253f386e31fcf2b624e149179f67ba56ff70ca123f0346a6f7fed1f9cf5",
+      "development_score": 1.0,
+      "heldout_score": 0.861111111111111,
+      "development_set_f1": 1.0,
+      "development_false_discovery_rate": 0.0,
+      "development_correct_refusal_rate": 1.0,
+      "development_discovery_coverage": 1.0,
+      "fully_valid": true,
+      "replay_count": 2,
+      "replays_equal_original_full_metrics": true
+    },
+    {
+      "seed_label": 2,
+      "candidate_sha256": "ee4aaac91e76415dda4a871e8ec23cf1a7fb5e3c061389805dcaf02753b2a528",
+      "trajectory_sha256": "f65af9be337e5b3f2b8373bba37eafb43d2d94bf41fb083de4bf88f9baf44040",
+      "manifest_sha256": "b7ec97c8e446a36bf0049e51d809a7a127aeed6059a0ab12de731f0cc09a3b9b",
+      "development_score": 0.8622685185185185,
+      "heldout_score": 0.8333333333333334,
+      "fully_valid": true,
+      "replay_count": 2,
+      "replays_equal_original_full_metrics": true
+    }
+  ],
+  "admission": {
+    "protocol": "CONTRIBUTING.md D16 current-first-proposal check",
+    "passed": false,
+    "reason": "A fully valid first proposal reached development score 1.0, above the reference score 0.9270833333333333.",
+    "all_first_proposals_attempted_discovery": true,
+    "all_first_proposals_fully_valid": true,
+    "all_replay_pairs_and_original_full_metrics_equal": true
+  },
+  "limitations": [
+    "This is current-source author-operated evidence, not independent maintainer certification, expert review, or server-held generalization evidence.",
+    "Seed labels partition campaign cells; they do not seed the model provider.",
+    "The official Codex transport was reached through a loopback-only SSE-to-JSON adapter with source SHA-256 f76f10c15c58d3d1bc37e87a4d89e3d8fc5bbf2c44f9e22cfaebc929181e380b. Credentials stayed on the local host.",
+    "The transport does not accept the public max_output_tokens field, so the adapter removed that field. Every response completed normally below the declared 16384-token ceiling, but the provider-side ceiling was not independently recorded.",
+    "Two earlier executions failed before any provider call because host run directories were not traversable by the sandbox. They are infrastructure failures and are excluded from model evidence.",
+    "No task, threshold, world, score, budget, or reference change was selected from this result; any redesign requires a new frozen draw."
+  ]
+}
