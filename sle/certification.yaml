@@ -14,8 +14,10 @@ tasks:
     status: candidate
     reason: Active two-detector transient strain inference distinguishes coherent chirps, narrow-band lines and detector-localized glitches with continuous parameter recovery and calibrated low-SNR refusal; retained as a candidate pending server-held waveforms, detector calibration/systematics review and independent gravitational-wave analysis.
     citation_ids:
-      - doi:10.1103/PhysRevX.6.041015
+      - doi:10.1103/PhysRevD.93.122004
       - doi:10.1103/PhysRevD.85.122006
+      - doi:10.1088/1742-6596/363/1/012031
+      - doi:10.1103/PhysRevD.96.102008
   Ecology/OccupancyDetectionDesign:
     status: candidate
     reason: Active repeat-survey allocation and latent occupancy inference under imperfect detection, with explicit refusal for nonlinear habitat and spatially structured worlds; retained as a candidate pending server-held surveys, real field-data replication and independent ecology review.

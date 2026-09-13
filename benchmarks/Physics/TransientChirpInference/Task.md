@@ -71,6 +71,13 @@ The initial frequency is in [0.04, 0.18] cycles/day.
 The reference distributes twelve paired H1/L1 epochs across the full 0--18 day baseline; adaptive
 cadences and joint detector fits remain explicit headroom. This is a reduced-order phase model,
 not a full inspiral waveform.
+The quadratic phase is a linear-frequency chirp approximation of the kind used in chirplet
+analyses. The constant envelope, day-valued observation coordinates, fixed detector response
+scaling, independent Gaussian noise, and localized Gaussian nuisance are procedural laboratory
+choices. H1/L1 denote two synthetic channels; the task does not reproduce LIGO's physical time
+scales, antenna response, inter-site delay, nonstationary noise, or a complete inspiral waveform.
+A correct answer identifies the declared waveform family and its synthetic parameters, not
+astrophysical source parameters or a publishable gravitational-wave detection.
 
 Current reference: 0.880412 development / 0.897298 held-out normalized score. Restricting the
 same reference to the first twelve epochs gives 0.821766/0.685347; removing H1/L1 coherence gives
@@ -84,9 +91,9 @@ algorithmic upper bounds.
 ## Relationship to nearby tasks
 
 `Gravitation/PTAHellingsDowns` uses angular correlations across many pulsars; this task fits one
-time-domain transient using coherence between two detectors. It also differs from photometric
-microlensing tasks, which select lensing models from flux measurements rather than strain phase
-evolution and detector localization.
+time-domain transient using coherence between two detectors. `Exoplanets/RadialVelocityPlanets`
+returns planet periods from a fixed Doppler series with activity and aliases; this task acquires
+paired-channel samples and recovers transient phase evolution and detector localization.
 
 ## Rules and references
 
@@ -96,6 +103,19 @@ evolution and detector localization.
 - `sle.contract_lint` is importable and free to call for shape checks.
 
 The waveform model is a reduced-order analogue of compact-binary chirp searches and detector
-glitch vetting. Scientific context: Abbott et al., *Phys. Rev. X* 6, 041015 (2016), DOI
-`10.1103/PhysRevX.6.041015`; Allen et al., *Phys. Rev. D* 85, 122006 (2012), DOI
+glitch vetting. Scientific context: Abbott et al., *Observing gravitational-wave transient GW150914 with minimal assumptions*,
+*Phys. Rev. D* 93, 122004 (2016), DOI
+`10.1103/PhysRevD.93.122004`; Allen et al., *Phys. Rev. D* 85, 122006 (2012), DOI
 `10.1103/PhysRevD.85.122006`.
+
+The linear-frequency model family is motivated by Mohapatra, Nemtzow, Chassande-Mottin and
+Cadonati, *Performance of a Chirplet-based analysis for gravitational waves from binary black
+hole mergers* (2012), DOI `10.1088/1742-6596/363/1/012031`,
+<https://arxiv.org/abs/1111.3621v1>. The cited waveform methods motivate model families and
+inference practice; the exact generator, observation budget and score are benchmark design choices.
+
+Mohanty, *Spline Based Search Method For Unmodeled Transient Gravitational Wave Chirps* (2017),
+DOI `10.1103/PhysRevD.96.102008`, Section IV.1,
+<https://arxiv.org/html/1709.08870v3#S4.I1.i4>, explicitly uses a constant-amplitude quadratic-phase
+linear chirp. Its zero-slope limit is the sinusoidal line family used here. This is a model-family
+precedent, not a calibration of this laboratory's chosen parameters or physical time scale.

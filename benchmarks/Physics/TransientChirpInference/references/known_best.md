@@ -1,5 +1,51 @@
 # TransientChirpInference reference results
 
+## Maintainer review and scientific scope, 2026-09-14
+
+The clean-source C review at `e356f64f869763d9a2ea31495fd1e89270ab806f` independently
+replayed the current reference and twelve existing fixed policies twice under canonical Linux
+Python 3.8.10 / NumPy 1.24.4 / SciPy 1.10.1 and the trusted driver with bubblewrap.
+The original 20 percent margin is unchanged. Its source-bound measurements are preserved;
+the subsequent citation/scope clarification and added fixed ablation sources do not alter the
+worlds, oracle, reference, original probes, budgets or scoring.
+
+Two additional controlled ability removals derive from the current full-baseline reference and preserve
+its cadence and all other decisions. `verification/ablation_without_coherence.py` replaces L1 information with
+already-acquired H1 values without extra observations and preserves unique evidence citations.
+`verification/ablation_without_chirp_grid.py` restricts both slope-search stages to zero.
+Each was fixed before evaluation and run twice, with 30/30 valid worlds and identical full
+metric payloads in each pair. Their development/held-out scores are respectively
+0.7424348102/0.7903370871 and 0.5267325581/0.5137497490, below reference
+0.8804117954/0.8972976728. They supplement the existing operational reduced policies;
+they do not replace the frozen development-selected shortcut or change its margin.
+
+The task is a reduced-order synthetic model-selection laboratory. Mohanty (2017),
+*Spline Based Search Method For Unmodeled Transient Gravitational Wave Chirps*, DOI
+`10.1103/PhysRevD.96.102008`, Section IV.1,
+<https://arxiv.org/html/1709.08870v3#S4.I1.i4>, explicitly supplies the constant-amplitude
+quadratic-phase linear-chirp family; its zero-slope limit gives the sinusoidal line family.
+The 2026-09-14 pinned Frontier-Engineering comparison covers all 47 paper entries and 78
+repository rows / 84 expanded entries, finding no same problem class. It compares objectives,
+artifacts and scoring descriptions, not every external evaluator's implementation. See
+`experiments/transit_timing_transient_chirp_frontier_comparisons_2026-09-14.json` and the current admission report
+`experiments/transient_chirp_maintainer_admission_2026-09-14.json`.
+ Mohapatra et al. (2012),
+*Performance of a Chirplet-based analysis for gravitational waves from binary black hole mergers*,
+DOI `10.1088/1742-6596/363/1/012031`, <https://arxiv.org/abs/1111.3621v1>, provides a
+linear-frequency chirp model precedent. The intended Abbott et al. *Observing gravitational-wave
+transient GW150914 with minimal assumptions* citation is DOI `10.1103/PhysRevD.93.122004`;
+the previously associated PRX DOI named a different paper. FINDCHIRP, DOI
+`10.1103/PhysRevD.85.122006`, motivates inference practice rather than validating this exact
+generator. Constant envelopes, days as rescaled coordinates, synthetic H1/L1 responses,
+independent Gaussian noise and localized Gaussian nuisances are procedural choices. Recovery
+here identifies declared synthetic families and their parameters, not astrophysical source
+parameters or publishable detections. External gravitational-wave review remains pending.
+
+A new selection-blind frontier calibration is prepared only after this final prompt/package
+is frozen. Earlier author records below retain their dates, source bindings and evidence limits;
+their absence-of-D statements describe those historical records. New measurements, including
+any failures, are reported outside the task package to preserve its frozen identity.
+
 ## Current admission: candidate after long-baseline reference repair
 
 The [2026-09-12 cadence repair](../../../../experiments/transient_chirp_reference_cadence_2026-09-12.json)
