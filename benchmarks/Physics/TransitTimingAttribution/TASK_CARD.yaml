@@ -27,7 +27,7 @@ oracle:
   feasibility: bounded integer transit queries, finite mechanism parameters, evidence IDs from current measurements and calibrated refusal
   deterministic: true
 normalization:
-  baseline: one legal follow-up timing followed by a deterministic, overconfident fixed-planet claim using public evidence
+  baseline: two legal follow-up timings, both cited, followed by a deterministic, overconfident fixed-planet claim; never abstains and scores exactly zero
   reference: three spread follow-ups plus one model-disagreement query using a 12-model BIC-weighted posterior, continuous-period least-squares/BIC refinement, residual diagnostics, and explicit stationary-extra-component and phase-evolution checks; development-only expected combined 0.754681, with original measurements preserved in known_best
   score: each split uses all-world reward minus blanket-refusal reward, divided by supported count and bounded below at zero, multiplied by correct-refusal rate and squared discovery precision; for candidates valid on every world combined_score is development_score only, held-out scientific scores remain private, any invalid world rejects the entire submission with public valid=0 and combined_score=0, and wrong mechanisms receive no period or forecast credit
 citations:

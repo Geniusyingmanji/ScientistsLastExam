@@ -65,9 +65,13 @@ to select the current evaluator or thresholds.
 
 ## Baseline
 
-`solution.py` buys one legal follow-up and declines every world. It is valid and scores exactly
-0.000000 on both splits by construction. It tests the public callback without receiving discovery
-credit.
+`solution.py` buys two legal follow-ups, cites both real query ids, and then commits to a fixed
+planet claim at the shortest grid period with confidence 0.95. It never abstains. It is valid and
+scores exactly 0.000000 on both splits by construction: it earns nothing on supported worlds and is
+a false discovery on every unsupported world (development false-discovery rate 0.7576, held-out
+0.7647, correct-refusal rate 0.0 on both). This is CONTRIBUTING checkpoint 15, a baseline that is
+confidently wrong rather than one that declines; a one-measurement claim cannot be valid here
+because a claim must cite at least two distinct query ids.
 
 ## Ablation ladder (historical min-headline record)
 
