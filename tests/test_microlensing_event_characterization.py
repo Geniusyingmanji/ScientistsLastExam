@@ -84,6 +84,31 @@ class MicrolensingEventCharacterizationTests(unittest.TestCase):
         self.assertGreater(first["combined_score"], 0.5)
         self.assertEqual(first["development_correct_refusal_rate"], 1.0)
 
+    def test_reference_recovers_variables_and_refuses_ambiguous_worlds(self):
+        for worlds in (EVALUATOR.DEVELOPMENT_WORLDS, EVALUATOR.HELDOUT_WORLDS):
+            for world in worlds:
+                observer = EVALUATOR._Observer(world)
+                claim = REFERENCE.infer_microlensing(EVALUATOR.PUBLIC_PROBLEM, observer)
+                if world["kind"] == "variable":
+                    self.assertFalse(claim["abstain"])
+                    self.assertEqual(claim["model"], "variable_source")
+                    self.assertLessEqual(abs(claim["timescale_days"] - world["period"]), 1.0)
+                elif world["kind"] == "ambiguous":
+                    self.assertTrue(claim["abstain"])
+
+    def test_public_timescale_range_covers_supported_worlds(self):
+        lower, upper = EVALUATOR.PUBLIC_PROBLEM["timescale_bounds_days"]
+        for worlds in (EVALUATOR.DEVELOPMENT_WORLDS, EVALUATOR.HELDOUT_WORLDS):
+            for world in worlds:
+                if world["kind"] == "variable":
+                    value = world["period"]
+                elif world["kind"] in {"point", "binary"}:
+                    value = world["timescale"]
+                else:
+                    continue
+                self.assertLessEqual(lower, value)
+                self.assertLessEqual(value, upper)
+
     def test_blanket_abstention_is_zero(self):
         def blanket(problem, observe):
             ids = [observe(float(t), "r")["query_id"] for t in problem["candidate_times"][:6]]

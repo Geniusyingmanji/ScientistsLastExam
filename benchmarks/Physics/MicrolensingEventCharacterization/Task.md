@@ -8,6 +8,11 @@ intrinsic variable-source activity; estimate its characteristic time scale and a
 amplitude. Abstain when the available observations do not distinguish a supported model from a
 low-signal ambiguous event.
 
+Point-lens, binary-lens, and variable-source worlds are supported and intended to be recoverable
+when their fitted parameters lie inside the public bounds. The ambiguous family is deliberately
+outside that model set: candidates should abstain when no supported fit is distinguishable at the
+reported measurement precision.
+
 This reduced-order laboratory uses the same band scaling for every event family. It does not
 model the achromatic-lensing versus chromatic-variability discriminator. Either filter may provide
 photometric samples, but color is not a separate mechanism-identification signal here.
