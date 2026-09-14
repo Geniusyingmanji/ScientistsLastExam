@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "task_id": "Exoplanets/TransitTimingAttribution",
-  "status": "C_passed_current_D_planned",
+  "status": "hold_C15_after_completed_bounded_D",
   "trusted_evidence": false,
-  "scope": "Independent bounded maintainer C review. Fixed control programs and full private metrics are source-bound; no certified, formal full-inventory, or long-horizon readiness claim. Current D is separate from the historical model runs listed in the task card.",
+  "scope": "Independent bounded maintainer review. Declared shortcut guard and measured ablations pass; C15 remains unresolved. Current source-bound D consists of three first proposals and is not certification, formal full-inventory coverage, or long-horizon readiness.",
   "C": {
     "source_revision": "4817b21a3c19cad5e3ab2f49b63734d5a62574b7",
     "task_package_sha256": "554c376529a1585513a3a7fdb8cffaeca777a5f6f9e396e1384b6036671ffc34",
@@ -529,7 +529,16 @@
     "valid_complete_calls": 28,
     "deliberate_malformed_invalid_calls": 3,
     "valid_world_evaluations": 1876,
-    "legacy_posterior_note": "Canonical current replay 0.6727268006955495 differs from the earlier author preliminary 0.7118805708796355. Both source/environment-scoped records are preserved; the canonical pair is bitwise equal, and no measurement was replaced to match the earlier number."
+    "legacy_posterior_note": "Canonical current replay 0.6727268006955495 differs from the earlier author preliminary 0.7118805708796355. Both source/environment-scoped records are preserved; the canonical pair is bitwise equal, and no measurement was replaced to match the earlier number.",
+    "C15": {
+      "satisfied": false,
+      "baseline": "spends one measurement then blanket abstention",
+      "attempted_discovery": 0,
+      "explicit_PR11_exception_found": false,
+      "policy": "CONTRIBUTING.md:227 requires a confidently wrong zero-score baseline. README.md:78 says usually confidently wrong, but no task-specific new-task exception was found. Native contribution gate validates legality/near-zero/determinism without establishing this literal C15 claim."
+    },
+    "status": "declared_shortcut_and_ablation_checks_passed_C15_hold",
+    "world_count_scope": "1876 is derived from 28 complete valid calls times 67 worlds; retained metrics are aggregate payloads, not 1876 individual-world log rows."
   },
   "A": {
     "scientific_review_sha256": "ebed34bb0ebf154e2e008bd66b73422251a5abda22f832e9d3dc931ee11fd839",
@@ -539,8 +548,25 @@
     "frontier_row_comparisons_path": "experiments/transit_timing_transient_chirp_frontier_comparisons_2026-09-14.json"
   },
   "D": {
-    "status": "planned_not_executed",
-    "planned_proposals": 3,
+    "status": "complete_bounded_D16_pass_C15_hold",
+    "source_revision": "4141718060372593cb7a0e334bef356c5ae983d5",
+    "source_clean_before_calls": true,
+    "bindings": {
+      "task_id": "Exoplanets/TransitTimingAttribution",
+      "task_package_sha256": "1753717fa21981af1dfed9b72a11668cd3db4561b791a4582d83c468d12ff877",
+      "task_contract_sha256": "8969339887f7ec9f0ffb2950d32e36b542e9ff3b9b8eac6d9c5e1951fc9859d0",
+      "runtime_source_sha256": "6f8344cdd2d15811803a07dd7d299f6348630deaecd2ee2601b57cfff14fab25",
+      "llm_condition_sha256": "967fb197a1603c8c9bd881997ba02cfde1336f0cbb2e1c3a369c3cec24d50d07",
+      "model": "gpt-5.6-sol",
+      "orchestration_sha256": "d26fd139ce726d76e33e3d38670d68e1bfa7bc035d2ad95260c9eba2bf68942a"
+    },
+    "plan_sha256": "7c80c68e01654a9793b49a1f50d9c7ceff1858cf9696197f737d1247de93f8c0",
+    "plan_file_sha256": "7c2e67a805faac0ef92505351d5e73b9a0d641c6e95463241abf19678fbf152a",
+    "private_verification_sha256": "a7ed3bca6d1374d2e3ebfcfb343d69fad47b637ec202aa03a596ed8bb8e9176d",
+    "native_entrypoint": "calibrate_task.py --execute delegates batch_evolve.py --run-role calibration",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "high",
+    "max_output_tokens": 16384,
     "feedback_mode": "selection_blind",
     "proposal_budget": 1,
     "seed_labels": [
@@ -548,8 +574,116 @@
       1,
       2
     ],
-    "model_calls": 0,
-    "source_freeze": "A new immutable plan must bind the final repaired Task.md and package before the first provider request."
+    "server_side_seed_control": false,
+    "model_calls": 3,
+    "http_successes": 3,
+    "http_failures": 0,
+    "retries_used": 0,
+    "reference_development_score": 0.754680673172482,
+    "reference_heldout_score": 0.48410852988060304,
+    "D16_bounded_sample_pass": true,
+    "first_proposals": [
+      {
+        "seed_label": 0,
+        "valid": true,
+        "development_score": 0.2787353095532717,
+        "heldout_score": 0.08376129580343873,
+        "candidate_sha256": "ab10dd8fa609c14e268c6111a44aeb431e27c9952930c0b1b6ca252298ad432c",
+        "trajectory_sha256": "7889c91619fb29428499a7e07e6ed484dfa17263ea0395caacc548df6619ba80",
+        "manifest_sha256": "9c666f2f128621b219a6580bbcc866e71863372d4cd23217ed415ad241f271ce",
+        "native_verified": true,
+        "verified_receipt_metrics_sha256": {
+          "840b22618e703ead5293bb13ade27e2bc93fddc24c3f31ecfca302fc37c4da33": "819451bf3739df9179b76313209f2f686801dc863a6e3754d8d0f15550ff7066",
+          "ccdb99f9758b1f903b65788fa0371fdd4bf59fd1f822c62677c6842617d8f6a7": "a8cbfad5f7543fcb8b2f1b713ae4e5b46e6e61e3127ba83f5a1643acb88d7069"
+        },
+        "discovery_axes": {
+          "development_mechanism_score": 0.9565217391304348,
+          "development_correct_refusal_rate": 0.6,
+          "development_false_discovery_rate": 0.18518518518518517,
+          "heldout_mechanism_score": 0.7916666666666666,
+          "heldout_correct_refusal_rate": 0.4,
+          "heldout_false_discovery_rate": 0.3448275862068966
+        },
+        "provider_reported_usage": {
+          "usage_available": true,
+          "pricing_available": false,
+          "input_tokens": 2082,
+          "output_tokens": 14225,
+          "total_tokens": 16307,
+          "estimated_cost_usd": null
+        }
+      },
+      {
+        "seed_label": 1,
+        "valid": true,
+        "development_score": 0.31849960199390914,
+        "heldout_score": 0.03319925517589843,
+        "candidate_sha256": "4213aa8a83f683da545265e564d71b74a5f859b6df5cd4d1d3fdf3caf65b7429",
+        "trajectory_sha256": "bd6b29737d82b9c7435ed3cb6311dcb6f6e62477c544f90426b4a11a58272717",
+        "manifest_sha256": "c76972c704acb410621e5613af9b06c73d1afdf67a8bfcee0de263416af9a218",
+        "native_verified": true,
+        "verified_receipt_metrics_sha256": {
+          "4774e0a87a2730dc5a78670a6fbed0655a2eb3964b62189f0b774df351e464f9": "71d98b72756d574f4d67e5038b1c721c94c9088ecd2255059b3b3b72f1853dfc",
+          "c1d8083a1fe784a91aa7acb5c8bafee8a3f2622a82adfabb6ce52c229872f67f": "819451bf3739df9179b76313209f2f686801dc863a6e3754d8d0f15550ff7066"
+        },
+        "discovery_axes": {
+          "development_mechanism_score": 0.8695652173913043,
+          "development_correct_refusal_rate": 0.7,
+          "development_false_discovery_rate": 0.16666666666666666,
+          "heldout_mechanism_score": 0.6666666666666666,
+          "heldout_correct_refusal_rate": 0.3,
+          "heldout_false_discovery_rate": 0.4074074074074074
+        },
+        "provider_reported_usage": {
+          "usage_available": true,
+          "pricing_available": false,
+          "input_tokens": 2082,
+          "output_tokens": 13224,
+          "total_tokens": 15306,
+          "estimated_cost_usd": null
+        }
+      },
+      {
+        "seed_label": 2,
+        "valid": true,
+        "development_score": 0.27557665223795885,
+        "heldout_score": 0.03919886787076706,
+        "candidate_sha256": "6654d68ef5cd5d9c8f0a8eabe6d7e27c9393655c2d109956ee9da5c37e9c1513",
+        "trajectory_sha256": "29e7a7075060e6a4e1c13db9081516d2df0d70509828de5d76c738934113f05a",
+        "manifest_sha256": "2ecf96660b70f57b206c78817dda8346dc2e824c405d7bff51bf4db42067e060",
+        "native_verified": true,
+        "verified_receipt_metrics_sha256": {
+          "8ec9e6b41eecab30c094b85060ced448eeb99b341ee01ddfb1044854dc22dedd": "6988f45526d81067b69b8e5624548fd6caf2b152e132720bf4d32d3c0e84ca5b",
+          "945153c37e9e57cff2659568b3703e09ef5ed8660334b9c9007558bd0fb058f8": "819451bf3739df9179b76313209f2f686801dc863a6e3754d8d0f15550ff7066"
+        },
+        "discovery_axes": {
+          "development_mechanism_score": 0.9565217391304348,
+          "development_correct_refusal_rate": 0.6,
+          "development_false_discovery_rate": 0.18518518518518517,
+          "heldout_mechanism_score": 0.75,
+          "heldout_correct_refusal_rate": 0.3,
+          "heldout_false_discovery_rate": 0.41935483870967744
+        },
+        "provider_reported_usage": {
+          "usage_available": true,
+          "pricing_available": false,
+          "input_tokens": 2082,
+          "output_tokens": 12995,
+          "total_tokens": 15077,
+          "estimated_cost_usd": null
+        }
+      }
+    ],
+    "raw_reply_source": "Passive Git-external HTTP recorder; completed ordinary evaluation receipts do not themselves retain full provider replies. Prompt/response/candidate correspondence and native ledgers were independently checked.",
+    "claim_limits": [
+      "Only these three source-bound first proposals; no iterative difficulty curve or formal full-inventory coverage claim.",
+      "Full successful provider replies are retained from the passive HTTP capture, not inferred from ordinary evaluation receipts.",
+      "Failed HTTP error bodies are not consumed; their usage remains unknown if any fail.",
+      "No prompt, candidate, baseline or task package changed during the campaign; no redraw, resume, or extra model call."
+    ],
+    "extra_evaluator_calls_for_verification": 0,
+    "extra_model_calls_for_verification": 0,
+    "difficulty_interpretation": "All three valid first proposals remain below the development reference. Mechanism fitting is substantially recovered, while refusal, false discoveries and heldout transfer reduce scores. This is a bounded model-condition result, not a whole-task-set hardness classification."
   },
   "documentation_migration": {
     "C_measurements_resigned": false,
@@ -561,5 +695,18 @@
     "current_release_level": 1,
     "level2_status": "unavailable_missing_sealed_profile",
     "fixture_scope": "local pure-Python diagnosis, not a secure evaluation or model difficulty measurement"
-  }
+  },
+  "scientific_admission": "hold_C15",
+  "integration": {
+    "ready_to_merge": false,
+    "blocking_rule": "C15",
+    "global_evidence_refreshed": false,
+    "full_repository_CI_for_this_integration_run": false,
+    "final_source_targeted_tests": {
+      "passed": 44
+    },
+    "final_source_targeted_junit_sha256": "84ab6dd737a112c3412acff8a1e65a3596f522301e68a9aa244689f0b934d93e",
+    "report_only_followup": "Only this package-external report changes after D. The task, prompt, baseline, oracle, reference, worlds, scoring and runtime retain their measured source bytes. Resolving C15 requires a separate source change and new applicable calibration; the frozen campaign is retained."
+  },
+  "private_artifacts": "Full responses, model candidate source, full metrics and native runs remain outside Git. This report publishes bounded aggregate summaries and source hashes only."
 }
