@@ -14,7 +14,7 @@ def _point_feature(times, t0, scale, u0):
 def _fit_point(times, flux):
     best = None
     for t0 in np.linspace(-6.0, 6.0, 25):
-        for scale in np.linspace(3.0, 17.0, 29):
+        for scale in np.linspace(3.0, 23.0, 41):
             for u0 in (0.18, 0.28, 0.40, 0.55, 0.75):
                 feature = _point_feature(times, t0, scale, u0)
                 design = np.column_stack([np.ones(len(times)), feature])
@@ -27,7 +27,7 @@ def _fit_point(times, flux):
 
 def _sinusoid(times, flux):
     best = (float("inf"), 0.0, 0.0)
-    for period in np.linspace(8.0, 20.0, 25):
+    for period in np.linspace(8.0, 24.0, 33):
         design = np.column_stack([np.ones(len(times)), np.sin(2.0 * math.pi * times / period),
                                    np.cos(2.0 * math.pi * times / period)])
         coef, _, _, _ = np.linalg.lstsq(design, flux, rcond=None)
@@ -67,7 +67,9 @@ def _infer(problem, observe, *, collect_g=False, refuse=True):
     else:
         model, amplitude, confidence = "variable_source", float(np.clip(sine_amp, 0.0, 1.0)), 0.74
         scale = period
-    return {"abstain": False, "model": model, "timescale_days": float(np.clip(scale, 2.0, 20.0)),
+    if not 2.0 <= scale <= 24.0:
+        return {"abstain": True, "confidence": 0.60, "evidence_query_ids": evidence}
+    return {"abstain": False, "model": model, "timescale_days": float(np.clip(scale, 2.0, 24.0)),
             "amplitude": amplitude, "confidence": confidence, "evidence_query_ids": evidence}
 
 

@@ -93,8 +93,9 @@ reference ablations, and that g-band measurements were unused. The corrected ana
 the same reference implementation with explicit measurement/refusal switches. Regression tests
 verify that arbitrary g flux values cannot change the decision and that the reference now buys
 only 18 r-band observations. The 81-policy threshold selection is also disclosed in card lineage.
-Another nonblocking review limitation remains: one development variable-source period exceeds
-the public output limit of 20 days, so exact recovery is not attainable on that instance.
+The public output range is now 2--24 days, covering the full declared development and held-out
+variable-source period range. Candidates should still abstain when a fit is not distinguishable
+from the low-signal ambiguous family rather than clipping an unsupported period to a boundary.
 
 ## Robustness
 

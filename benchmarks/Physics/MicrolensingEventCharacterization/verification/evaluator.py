@@ -94,7 +94,7 @@ PUBLIC_PROBLEM = {
     "observation_budget_units": BUDGET,
     "minimum_evidence_queries": MIN_EVIDENCE,
     "model_labels": ["point_lens", "binary_lens", "variable_source"],
-    "timescale_bounds_days": [2.0, 20.0],
+    "timescale_bounds_days": [2.0, 24.0],
     "amplitude_bounds": [0.0, 1.0],
     "magnification_model": "Paczynski point-lens magnification with a possible localized binary-lens anomaly",
     "variability_model": "smooth sinusoidal source variability with a band-independent period",
@@ -125,7 +125,7 @@ def _validate(submission, query_ids):
         raise ValueError("unknown model")
     timescale = float(submission.get("timescale_days", float("nan")))
     amplitude = float(submission.get("amplitude", float("nan")))
-    if not math.isfinite(timescale) or not 2.0 <= timescale <= 20.0:
+    if not math.isfinite(timescale) or not 2.0 <= timescale <= 24.0:
         raise ValueError("timescale_days outside bounds")
     if not math.isfinite(amplitude) or not 0.0 <= amplitude <= 1.0:
         raise ValueError("amplitude outside bounds")

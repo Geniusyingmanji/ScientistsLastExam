@@ -26,7 +26,7 @@ Implement `infer_microlensing(problem, observe)`.
 | `observation_budget_units` | total observation allowance, 24 |
 | `minimum_evidence_queries` | minimum distinct query IDs to cite, 6 |
 | `model_labels` | allowed non-abstaining labels: `point_lens`, `binary_lens`, `variable_source` |
-| `timescale_bounds_days` | inclusive output bounds `[2, 20]` |
+| `timescale_bounds_days` | inclusive output bounds `[2, 24]`; abstain when the observations do not support a value in this range |
 | `amplitude_bounds` | inclusive output bounds `[0, 1]` |
 | `magnification_model` | prose description of the supported point/binary lens family |
 | `variability_model` | prose description of the supported variable-source family |
@@ -58,7 +58,9 @@ model accuracy, false discovery, refusal, budget, feasibility and held-out trans
 separately. Held-out worlds and per-world truth are not search-visible.
 
 The task-local reference uses 24 r-band observations, performs independent point-lens and
-continuous-period variability fits, and reports calibrated confidence. Calibration values are
+continuous-period variability fits over the public 2--24 day range, and reports calibrated confidence.
+Events whose supported fit is outside that declared range are treated as out-of-model and should be
+reported as abstentions rather than clipped claims. Calibration values are
 recorded in `references/known_best.md`; fixed-parameter threshold policies are remeasured with
 the current evaluator before release.
 

@@ -58,7 +58,7 @@ def reference_policy(fit_cutoff, point_signal_cutoff, sine_signal_cutoff,
         return {
             "abstain": False,
             "model": model,
-            "timescale_days": float(np.clip(scale, 2, 20)),
+            "timescale_days": float(np.clip(scale, 2, 24)),
             "amplitude": amplitude,
             "confidence": confidence,
             "evidence_query_ids": evidence,
