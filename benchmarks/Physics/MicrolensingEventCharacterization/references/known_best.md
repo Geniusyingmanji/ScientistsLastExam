@@ -13,10 +13,10 @@ python benchmarks/Physics/MicrolensingEventCharacterization/frontier_eval/run_ev
 
 ## Reference
 
-The reference uses 18 r-band observations at a broad cadence and targeted epochs around the
-expected event center, a grid point-lens fit, a periodic alternative and a low-signal refusal.
-The former six g-band queries contributed evidence IDs only, not fit data or color checks.
-They have been removed. All event families share the same band scaling, so this reduced-order
+The reference uses 24 r-band observations across the public cadence, a grid point-lens fit, a
+periodic alternative and a low-signal refusal. The former six g-band queries contributed evidence
+IDs only, not fit data or color checks, and were removed before the current 24-r cadence was frozen.
+All event families share the same band scaling, so this reduced-order
 oracle does not implement the classic achromatic-lensing versus chromatic-variability test.
 Its current task-local calibration is **0.652036** development and **0.748829** held out; the
 reference is an anchor rather than a ceiling and leaves headroom in model selection and continuous
@@ -25,12 +25,14 @@ parameter recovery. The legal baseline is 0.000000.
 Here and in the historical tables below, development means `combined_score` (normalized),
 whereas held-out means `heldout_mechanism_score` (an unnormalized composite). They are not
 the same normalization. In particular, 0.770906 held-out is not a normalized held-out headline.
-The reference mislabels both development variable-source worlds as binary lenses; variable-source
-recognition is an explicit source of remaining headroom.
+The current reference recovers all development and held-out variable-source worlds and correctly
+refuses every ambiguous world. Its remaining model-selection errors are point/binary distinctions;
+continuous time-scale and anomaly-amplitude recovery retain additional headroom.
 
 ## Model draws
 
-With explicit `chat_thinking: disabled`, ten-proposal DeepSeek V4 Flash and Pro runs reached
+Historical runs with explicit `chat_thinking: disabled` used an earlier world/scoring revision.
+Ten-proposal DeepSeek V4 Flash and Pro runs reached
 **0.250000** and **0.260876**. Flash produced nine valid proposals and Pro eight; neither reached
 the improved reference. These are descriptive calibration draws, not certification evidence.
 
@@ -40,6 +42,20 @@ The legal baseline takes six r-band observations and reports a fixed point-lens 
 deliberately weak and is expected to normalize to zero.
 
 ## Historical ablations and current shortcut probe
+
+Current-source deterministic capability controls are:
+
+| Candidate | Development combined | Held-out raw composite | Observations |
+|---|---:|---:|---:|
+| Reference | 0.652036 | 0.748829 | 24 |
+| Reference with refusal disabled | 0.318702 | 0.498829 | 24 |
+| Reference with an eight-epoch sparse cadence | 0.413061 | 0.684601 | 8 |
+| Strongest declared 4,116-policy shortcut | 0.227593 | 0.416684 | 6 |
+| Baseline | 0.000000 | 0.183750 | 6 |
+| Blanket refusal | 0.000000 | 0.250000 | 6 |
+
+The sparse-cadence and no-refusal rows preserve the reference's fitting and decision logic while
+removing one capability. They are capability ablations; the threshold policies below are not.
 
 Removing the six unused g queries from the reference preserves scientific metrics exactly;
 only mean budget use changes from 24 to 18. This is a zero-effect removal, not a difficulty step.
@@ -91,8 +107,8 @@ The benchmark remains a reduced-order microlensing laboratory, not a deployment 
 PR46 review found that the earlier analysis compared different algorithms while calling them
 reference ablations, and that g-band measurements were unused. The corrected analysis uses
 the same reference implementation with explicit measurement/refusal switches. Regression tests
-verify that arbitrary g flux values cannot change the decision and that the reference now buys
-only 18 r-band observations. The 81-policy threshold selection is also disclosed in card lineage.
+verify that arbitrary g flux values cannot change the legacy decision path and that the current
+reference buys 24 r-band observations. The 81-policy threshold selection is also disclosed in card lineage.
 The public output range is now 2--24 days, covering the full declared development and held-out
 variable-source period range. Candidates should still abstain when a fit is not distinguishable
 from the low-signal ambiguous family rather than clipping an unsupported period to a boundary.

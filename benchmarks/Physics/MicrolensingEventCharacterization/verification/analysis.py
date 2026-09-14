@@ -54,6 +54,8 @@ def main():
             lambda problem, observe: REFERENCE._infer(problem, observe, collect_g=True))),
         "reference_without_refusal": compact(EVALUATOR.evaluate(
             lambda problem, observe: REFERENCE._infer(problem, observe, refuse=False))),
+        "reference_sparse_cadence": compact(EVALUATOR.evaluate(
+            lambda problem, observe: REFERENCE._infer(problem, observe, cadence_step=3))),
         "baseline": compact(EVALUATOR.evaluate(BASELINE.infer_microlensing)),
         "weak_threshold_r_only": compact(EVALUATOR.evaluate(threshold_policy(use_g=False))),
         "weak_threshold_never_refuse": compact(EVALUATOR.evaluate(threshold_policy(refuse=False))),

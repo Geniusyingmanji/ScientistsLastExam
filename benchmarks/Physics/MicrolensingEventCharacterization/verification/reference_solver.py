@@ -38,9 +38,9 @@ def _sinusoid(times, flux):
     return best
 
 
-def _infer(problem, observe, *, collect_g=False, refuse=True):
+def _infer(problem, observe, *, collect_g=False, refuse=True, cadence_step=1):
     times = np.asarray(problem["candidate_times"], dtype=float)
-    chosen = [float(x) for x in times[:-1]]
+    chosen = [float(x) for x in times[:-1:cadence_step]]
     rows = [observe(float(t), "r") for t in chosen]
     # Legacy g-band observations never entered either fit; retained only for replay.
     if collect_g:

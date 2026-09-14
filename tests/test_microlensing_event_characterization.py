@@ -109,6 +109,16 @@ class MicrolensingEventCharacterizationTests(unittest.TestCase):
                 self.assertLessEqual(lower, value)
                 self.assertLessEqual(value, upper)
 
+    def test_sparse_cadence_loses_reference_capability(self):
+        full = EVALUATOR.evaluate(REFERENCE.infer_microlensing)
+        sparse = EVALUATOR.evaluate(
+            lambda problem, observe: REFERENCE._infer(
+                problem, observe, cadence_step=3))
+        self.assertEqual(sparse["development_mean_budget_used"], 8.0)
+        self.assertGreater(full["combined_score"] - sparse["combined_score"], 0.20)
+        self.assertGreater(
+            full["heldout_mechanism_score"], sparse["heldout_mechanism_score"])
+
     def test_blanket_abstention_is_zero(self):
         def blanket(problem, observe):
             ids = [observe(float(t), "r")["query_id"] for t in problem["candidate_times"][:6]]
