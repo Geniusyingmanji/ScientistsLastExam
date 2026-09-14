@@ -9,5 +9,5 @@ gpu_required: false
 eval_time_seconds: 5
 science_metric: active_photometric_lens_model_selection_and_ambiguity_refusal
 reference_baseline: six fixed r-band observations followed by a fixed point-lens claim
-reference_sota: r-band grid point-lens fit plus sinusoidal comparison, targeted anomaly epochs and calibrated refusal; development 0.494434, held-out 0.725384; no color discriminator
-citation: "Paczynski, ApJ, 1986, DOI 10.1086/164140; Gaudi, ARA&A, 2012, DOI 10.1146/annurev-astro-081811-125518"
+reference_sota: r-band grid point-lens fit plus sinusoidal comparison, targeted anomaly epochs and calibrated refusal; development 0.652036, held-out mechanism 0.748829; no color discriminator
+citation: "Paczynski, ApJ, 1986, DOI 10.1086/164140; Gould, ApJ, 1992, DOI 10.1086/171443; Gaudi, ARA&A, 2012, DOI 10.1146/annurev-astro-081811-125518"

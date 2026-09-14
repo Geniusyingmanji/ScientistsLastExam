@@ -1,4 +1,16 @@
 schema_version: 2
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.652036
+  probes:
+  - id: legal_baseline
+    candidate: solution.py
+    expected_score: 0.0
+  relative_margin: 0.2
+  score_tolerance: 0.000001
 scientific_question: Can an agent actively distinguish point-lens, binary-lens and variable-source microlensing events under a finite photometric follow-up budget, recover characteristic time scales and amplitudes, and refuse low-signal ambiguity?
 artifact: A model label, time-scale estimate, anomaly or variability amplitude, confidence and immutable photometric evidence, or a calibrated refusal.
 oracle:
@@ -7,7 +19,7 @@ oracle:
   deterministic: true
 normalization:
   baseline: six fixed r-band observations followed by a point-lens claim with fixed parameters
-  reference: broad r-band cadence, targeted anomaly epochs, grid point-lens fit, sinusoidal comparison and calibrated ambiguity refusal; updated parameter tolerances are 2.5 days and 0.10 amplitude
+  reference: broad r-band cadence, targeted anomaly epochs, grid point-lens fit, sinusoidal comparison and calibrated ambiguity refusal; continuous parameters use 1.8-day and 0.075-amplitude tolerances
   score: development mechanism recovery normalized above blanket abstention; model accuracy, false discovery, refusal, budget, feasibility and held-out transfer remain separate
 citations:
 - id: doi:10.1086/164140
@@ -23,7 +35,7 @@ invariants:
 - duplicate queries, overspending, unknown epochs or malformed candidates fail closed
 - every answer cites at least six distinct current-world observations
 - model accuracy, false discovery, refusal, feasibility and held-out transfer are separate axes
-known_shortcuts: A fixed point-lens claim scores zero. After tightening parameter tolerances to 2.5 days and 0.10 amplitude, the reference scores 0.494434 development and 0.725384 held out; prior shortcut sweeps must be remeasured under this scoring revision. Color discrimination, parallax, finite-source limb darkening, blending, binary orbital motion and real cadence/weather systematics are not modeled; certification requires server-held events and independent astrophysical review.
+known_shortcuts: The current 4,116-policy range/roughness/peak fixed-parameter sweep reaches 0.227593 versus the truth-blind reference at 0.652036. The instrument reports a common uncertainty floor rather than world noise, continuous world parameters are non-round values, and confidence is calibrated against continuous correctness. Color discrimination, parallax, finite-source limb darkening, blending, binary orbital motion and real cadence/weather systematics are not modeled; certification requires server-held events and independent astrophysical review.
 review:
   domain: pending_external_astronomy
   evaluator_security: automated_budget_determinism_refusal_and_malformed_candidate_checks_passed_clean_linux_replay
@@ -50,7 +62,7 @@ lineage:
   - experiments/microlensing_deepseek_calibration_2026-09-07.json
   calibration_evidence_status: current_or_migration_replayed
   edits_triggered_by_model: none
-  reference_selection_note: The four reference decision thresholds were chosen by the recorded 81-policy development-score grid search; held-out scores were reporting-only. PR46 removes unused g queries without changing fitting thresholds, oracle or scoring.
+  reference_selection_note: The four reference decision thresholds were selected by an 81-policy development-score grid; held-out scores were reporting-only. The current revision changes world values and confidence scoring, so earlier replay and model-draw scores are historical only.
   shortcut_discoverer: builder_self_audit_with_task_local_ablation_sweep_and_deepseek_flash_pro_calibration
   frozen_before_eval: false
   freeze_timestamp: null

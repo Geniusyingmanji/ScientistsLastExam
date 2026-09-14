@@ -1,40 +1,32 @@
-"""Black-box eval entrypoint for MicrolensingEventCharacterization."""
-from __future__ import annotations
-
+"""Launch the shared trusted evaluator."""
 import argparse
-import json
-import os
+import math
 import subprocess
 import sys
 from pathlib import Path
 
-INVALID = -1e18
-TASK_ID = "Exoplanets/MicrolensingEventCharacterization"
 ROOT = Path(__file__).resolve().parents[4]
+TASK_ID = "Exoplanets/MicrolensingEventCharacterization"
+EVAL_TIMEOUT_S = 360
 
-
-def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--candidate", required=True)
-    parser.add_argument("--metrics-out", required=True)
-    parser.add_argument("--timeout", type=float, default=360)
-    args = parser.parse_args()
-    metrics = {"combined_score": INVALID, "valid": 0.0}
+def main(argv=None):
+    p = argparse.ArgumentParser()
+    p.add_argument("--candidate", required=True); p.add_argument("--metrics-out", required=True)
+    p.add_argument("--timeout", type=float, default=EVAL_TIMEOUT_S); p.add_argument("--full-metrics-dir")
+    a = p.parse_args(argv)
+    if not math.isfinite(a.timeout) or a.timeout <= 0: return 2
+    cmd = [sys.executable, str(ROOT / "sle/frontier_eval_entrypoint.py"), "--task", TASK_ID,
+           "--root", str(ROOT), "--timeout", str(a.timeout), "--candidate", a.candidate,
+           "--metrics-out", a.metrics_out]
+    if a.full_metrics_dir: cmd += ["--full-metrics-dir", a.full_metrics_dir]
     try:
-        completed = subprocess.run(
-            [sys.executable, "-m", "sle", "eval", "--task", TASK_ID, "--allow-uncertified",
-             "--candidate", str(Path(args.candidate).resolve()), "--timeout", str(args.timeout)],
-            cwd=str(ROOT), capture_output=True, text=True, timeout=args.timeout + 120,
-            env={**os.environ, "PYTHONPATH": str(ROOT)})
-        if completed.returncode != 0:
-            raise RuntimeError("sle eval exited %d: %s" % (completed.returncode, completed.stderr[-500:]))
-        metrics.update(json.loads(completed.stdout))
-    except Exception as exc:  # noqa: BLE001
-        metrics["error_message"] = "%s: %s" % (type(exc).__name__, exc)
-    Path(args.metrics_out).write_text(json.dumps(metrics, indent=2), encoding="utf-8")
-    print(json.dumps({key: metrics.get(key) for key in ("combined_score", "valid")}))
-    return 0
-
+        Path(a.metrics_out).unlink(missing_ok=True)
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=a.timeout + 150)
+        if r.returncode:
+            Path(a.metrics_out).unlink(missing_ok=True); return 2
+        print(r.stdout, end=""); return 0
+    except (OSError, subprocess.TimeoutExpired):
+        Path(a.metrics_out).unlink(missing_ok=True); return 2
 
 if __name__ == "__main__":
     raise SystemExit(main())

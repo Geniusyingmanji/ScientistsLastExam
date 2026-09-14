@@ -18,7 +18,7 @@ expected event center, a grid point-lens fit, a periodic alternative and a low-s
 The former six g-band queries contributed evidence IDs only, not fit data or color checks.
 They have been removed. All event families share the same band scaling, so this reduced-order
 oracle does not implement the classic achromatic-lensing versus chromatic-variability test.
-Its current task-local calibration is **0.494434** development and **0.725384** held out; the
+Its current task-local calibration is **0.652036** development and **0.748829** held out; the
 reference is an anchor rather than a ceiling and leaves headroom in model selection and continuous
 parameter recovery. The legal baseline is 0.000000.
 
@@ -39,14 +39,15 @@ the improved reference. These are descriptive calibration draws, not certificati
 The legal baseline takes six r-band observations and reports a fixed point-lens claim. It is
 deliberately weak and is expected to normalize to zero.
 
-## Corrected ablations and weak-policy comparisons
+## Historical ablations and current shortcut probe
 
 Removing the six unused g queries from the reference preserves scientific metrics exactly;
 only mean budget use changes from 24 to 18. This is a zero-effect removal, not a difficulty step.
 `analysis.py` now reports this comparison and a genuine reference-without-refusal variant
 separately from its simple threshold policies.
 
-Clean Linux sandbox replay, executable revision `571e130bf5c9539190bdd9c230919f70102c62d4`:
+The following 2026-09-08 replay table is retained as historical evidence for the earlier
+scoring revision (`571e130bf5c9539190bdd9c230919f70102c62d4`), not as current calibration:
 
 | Candidate | Development combined | Held-out raw composite | Observations |
 |---|---:|---:|---:|
@@ -73,14 +74,11 @@ reference capability is necessary. The earlier color-ablation claim is withdrawn
 ## Shortcut probe
 
 `verification/calibrate.py` evaluates 4,116 policies over observation count, range refusal,
-roughness, peak shape and one fixed time scale. The best development policy scores **0.276213**,
-below the reference's **0.560636**; it reaches **0.444646** held out with only 0.333 model accuracy.
-That sweep excludes uncertainty. PR46 review supplied a stronger six-observation shortcut:
-refuse when the first reported uncertainty exceeds 0.05, otherwise make a constant point-lens
-claim. We reproduced the maintainer's 0.300 development result. Thus 0.276213 is only the maximum within
-the recorded range/roughness grid, not a general shortcut ceiling. A matching public-input probe
-is included in `replay_review.py`. The uncertainty separation remains a known limitation; this
-revision corrects the unsupported evidence claims without changing the frozen worlds or scores.
+roughness, peak shape and one fixed time scale. Under the current world and scoring revision, its
+best development policy scores **0.227593**, below the reference's **0.652036**; the 81-policy
+reference-parameter approximation reaches **0.346138**. The reported uncertainty is now a common
+instrument floor, so a threshold on it cannot identify ambiguous worlds. The current probe is a
+finite measured family, not a universal bound.
 
 ## Construction findings
 

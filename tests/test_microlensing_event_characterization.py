@@ -79,7 +79,7 @@ class MicrolensingEventCharacterizationTests(unittest.TestCase):
         first = EVALUATOR.evaluate(REFERENCE.infer_microlensing)
         second = EVALUATOR.evaluate(REFERENCE.infer_microlensing)
         self.assertEqual(first, second)
-        self.assertGreater(first["combined_score"], 0.45)
+        self.assertGreater(first["combined_score"], 0.5)
         self.assertEqual(first["development_correct_refusal_rate"], 1.0)
 
     def test_blanket_abstention_is_zero(self):
