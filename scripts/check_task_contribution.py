@@ -362,7 +362,11 @@ def main() -> int:
     report = check_task(args.task, timeout_s=args.timeout, skip_eval=args.skip_eval)
     for row in report["checks"]:
         mark = "ok  " if row["ok"] is True else "FAIL" if row["ok"] is False else "SKIP"
-        detail = ("  " + row["detail"]) if row["detail"] else ""
+        # A check that reports a structured detail should not take the whole gate down with a
+        # TypeError before the verdict is printed; the JSON report keeps the structure either way.
+        text = row["detail"] if isinstance(row["detail"], str) else json.dumps(
+            row["detail"], ensure_ascii=False, sort_keys=True, default=str)
+        detail = ("  " + text) if row["detail"] else ""
         print("%s  %-36s%s" % (mark, row["check"], detail))
     print()
     print(report["status"], report["task"], report["phases"])
