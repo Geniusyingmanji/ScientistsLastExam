@@ -44,7 +44,7 @@ closed. The callback returns exactly `query_id`, `time`, `band`, `flux`, `uncert
 
 Return a mapping with boolean `abstain`, finite `confidence` in `[0, 1]`, and at least six distinct
 current-world `evidence_query_ids`. A non-abstaining answer additionally contains `model`, finite
-`timescale_days` in `[2, 20]`, and finite `amplitude` in `[0, 1]`. Malformed output or callback
+`timescale_days` in `[2, 24]`, and finite `amplitude` in `[0, 1]`. Malformed output or callback
 violations score invalid instead of crashing the evaluator. `sle.contract_lint` is importable and
 free to call for shape checks.
 
