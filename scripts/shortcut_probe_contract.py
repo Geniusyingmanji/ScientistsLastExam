@@ -82,8 +82,20 @@ def inspect_probe(spec, evaluate, *, timeout_s=180.0, skip_eval=False):
     contract = card.get("shortcut_probe")
     if contract is None:
         migration = json.loads(MIGRATION.read_text()).get("tasks", {}).get(spec.task_id)
-        result.update(status="migration_pending" if migration else "failed",
-                      detail=migration or "new task is missing TASK_CARD.yaml shortcut_probe")
+        if migration:
+            # `detail` is the human-readable line the gate's CLI prints, so it stays a string
+            # even when the structured record is the more useful thing to keep. The record
+            # itself moves to `migration`, where a reader that wants the reason and the
+            # recorded probe paths can still find it. Putting the mapping in `detail` made
+            # `check_task_contribution.py` raise TypeError for all 85 pending tasks - every
+            # task in the tree except the two that already declare a contract - including the
+            # example command in docs/task_admission_workflows.md.
+            result.update(status="migration_pending", detail=str(
+                migration.get("reason") or "listed in the shortcut-probe migration inventory"))
+            result["migration"] = migration
+        else:
+            result.update(status="failed",
+                          detail="new task is missing TASK_CARD.yaml shortcut_probe")
         return result
     try:
         entries = validate_contract(contract, spec.task_dir)
