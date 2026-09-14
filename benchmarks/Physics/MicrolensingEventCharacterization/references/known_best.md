@@ -36,6 +36,13 @@ Ten-proposal DeepSeek V4 Flash and Pro runs reached
 **0.250000** and **0.260876**. Flash produced nine valid proposals and Pro eight; neither reached
 the improved reference. These are descriptive calibration draws, not certification evidence.
 
+On the frozen current executable revision `9a208cf45782592aaf12215b9917d63d4159d122`, one
+selection-blind first proposal per model was generated with seed 0, temperature 0 and thinking
+explicitly disabled. Flash was valid and scored **0.287244** development / **0.336396** held-out
+raw composite. Pro was valid but refused every world and scored **0.000000** / **0.250000**.
+Neither first proposal reached the current reference. The compact record is
+`experiments/microlensing_current_admission_2026-09-14.json`.
+
 ## Baseline
 
 The legal baseline takes six r-band observations and reports a fixed point-lens claim. It is

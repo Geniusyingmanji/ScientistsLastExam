@@ -60,6 +60,7 @@ lineage:
   - deepseek-v4-pro
   calibration_runs:
   - experiments/microlensing_deepseek_calibration_2026-09-07.json
+  - experiments/microlensing_current_admission_2026-09-14.json
   calibration_evidence_status: current_or_migration_replayed
   edits_triggered_by_model: none
   reference_selection_note: The four reference decision thresholds were selected by an 81-policy development-score grid; held-out scores were reporting-only. The current revision changes world values and confidence scoring, so earlier replay and model-draw scores are historical only.
