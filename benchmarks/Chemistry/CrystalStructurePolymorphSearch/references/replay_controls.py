@@ -22,6 +22,8 @@ if subprocess.check_output(["git", "-C", str(root), "status", "--porcelain"], te
  raise SystemExit("freeze a clean source revision before replay")
 out.mkdir(parents=True,exist_ok=True); os.chmod(out,0o700)
 os.chdir(root); sys.path.insert(0,str(root))
+for variable in ("OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS", "NUMEXPR_NUM_THREADS"):
+ os.environ[variable] = "1"
 import numpy, scipy
 from sle.secure_eval import CandidateProxy, CandidateError, sanitized_candidate_failure, validate_metrics
 from sle.runtime_identity import current_runtime_descriptor, task_runtime_distributions
