@@ -34,6 +34,7 @@ CERTIFICATION = ROOT / "sle" / "certification.yaml"
 # Chinese name per task, shown in the first column beside the English directory name. The
 # directory name is the identifier and never changes; this is what a Chinese reader scans for.
 CHINESE_NAMES = {
+    "WaterDistribution/DistributionNetworkTopology": "供水管网布尔断层扫描",
     'Microbiology/MetagenomeCompositionAssignment': "宏基因组组成指认",
     "Acoustics/RoomImpulseResponse": "房间声学处理设计",
     "Algorithm/GraphFromDistances": "距离查询重建图",
@@ -128,6 +129,9 @@ CHINESE_NAMES = {
 # people deciding which task to look at. A task without an entry fails the inventory test,
 # so a new package cannot silently ship without one.
 CHINESE_BRIEFS = {
+    "WaterDistribution/DistributionNetworkTopology": (
+        "在路径探针预算下定位管网破损管段,孪生服务廊道不可辨识须拒答",
+        "破损集 Jaccard 平方;收费廊道检测、结构别名及遥测失配拒答,全面弃权为零"),
     'Microbiology/MetagenomeCompositionAssignment': (
         "从收费 marker 计数中恢复分类单元与丰度,保留近缘别名并识别参考库不足",
         "组成恢复、别名/库外拒答与假发现率分列"),

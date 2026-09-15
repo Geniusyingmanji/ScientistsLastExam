@@ -1,0 +1,15 @@
+domain: WaterDistribution
+task: DistributionNetworkTopology
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 10
+science_metric: evidence-supported Boolean failure recovery with squared Jaccard, alias and telemetry-fault refusal
+reference_baseline: probe one route and blame its first pipe, never refusing
+reference_sota: standalone truth-blind greedy experimental-design witness; see source-bound review_evidence.json,
+  not a published optimum
+citation: Ma et al., IMC 2014, doi:10.1145/2663716.2663723 (Boolean model); Ostfeld et al. 2008, doi:10.1061/(ASCE)0733-9496(2008)134:6(556)
+  (application context only)

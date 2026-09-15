@@ -1,0 +1,138 @@
+schema_version: 2
+scientific_question: Can paid noisy Boolean route tests recover sparse link failures and distinguish structural
+  aliases from telemetry model inadequacy?
+artifact: A broken-pipe id set, optional abstention and a confidence scalar.
+oracle:
+  model: 4x4 Boolean route graph with 641 routes, stratified one-to-three-break identifiable worlds, service-twin
+    aliases and independent fair-coin telemetry faults; development 24+6+6 and heldout 18+6+6 worlds.
+  feasibility: known pipe ids, unique nonempty claims of at most six pipes, charged probes within a twenty-six-unit
+    budget
+  deterministic: true
+  external_tooling: none beyond NumPy
+difficulty_ladder:
+  default_level: 3
+  levels:
+    1: single breaks, two percent flips
+    2: up to two breaks, four percent flips
+    3: up to three breaks, seven percent flips
+normalization:
+  baseline: one probe blaming the first pipe of the first failed route
+  reference: Complete one-to-three-pipe likelihood family, cardinality prior, published noise rate, posterior
+    route splitting, signature-group refusal and a fair-coin telemetry alternative.
+  score: Squared set Jaccard on supported worlds, normalized above always abstaining; three mandatory
+    paid corridor reports consume 3 of the 26 units.
+citations:
+- id: doi:10.1145/2663716.2663723
+  title: Node Failure Localization via Network Tomography
+- id: doi:10.1061/(ASCE)0733-9496(2008)134:6(556)
+  title: The battle of the water sensor networks
+invariants:
+- supported-world break sets are signature-unique over the full route family
+- twin pipes share exactly the same route signatures
+- repeated probes of one route draw fresh flip noise
+- a full abstention scores exactly zero after normalization
+- three initial corridor reports are charged within the same budget
+- independent fair-coin telemetry faults provide a second refusal cause
+- one malformed world does not erase valid-world recovery
+- fresh sandbox sessions isolate module globals and temporary files between worlds
+known_shortcuts: 'Historical reviewer grid 0.960 > reference 0.600 at 898e28e. Revised clean Linux replay:
+  1680-point grid best 0.502037 development / 0.110247 heldout, 0 points above reference 0.927083 / 0.802469.
+  Removing three-pipe support, active selection, structural refusal, telemetry checking or the cardinality
+  prior lowers development to 0.722222, 0.416667, 0.635417, 0.843750 and 0.875000 respectively. The no-prior
+  ablation raises heldout from 0.802469 to 0.847222, so the prior is not claimed as a split-robust necessary
+  capability. Source-bound shortcut results: references/review_evidence.json; executable sandbox guard in
+  shortcut_probe. A fully valid frontier first proposal reached 1.000000 development and fails D16; source-bound
+  summary: experiments/distribution_network_topology_first_draw_2026-09-14.json.'
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All runtime worlds are generated from original repository code; cited publications are not redistributed.
+contamination:
+  status: repository_visible_procedural
+  rationale: Fixed seeds and generated worlds are repository-visible. Procedural origin does not rule
+    out memorization or benchmark-specific fingerprinting; server-held fresh worlds are required for generalization
+    claims.
+review:
+  domain: pending_external_boolean_tomography
+  evaluator_security: clean_linux_ci_dependency_replay_and_regressions; full_suite_and_sandbox_guard_results_in_PR
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic route-probe worlds with development and held-out break
+    sets and twin-corridor regimes.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: GraphFromDistances recovers weighted edges from distances; HiddenCouplingNetwork infers dynamical
+    coupling; ModalDamageAttribution localizes stiffness damage. This package infers sparse Boolean link
+    failures and tests structural ambiguity and telemetry model inadequacy.
+lineage:
+  status: complete
+  builder_model_ids:
+  - glm-5.3
+  builder_scaffolds:
+  - repository-native-engineering-task-pattern
+  calibrator_model_ids:
+  - gpt-5.6-sol
+  calibration_runs:
+  - experiments/distribution_network_topology_first_draw_2026-09-14.json
+  calibration_evidence_status: historical_only
+  edits_triggered_by_model: 2026-09-05 local build caught a route enumeration that looped without a visited
+    set, an alphabetical truncation of the route family that left pipes untestable, mirror-symmetric break
+    sets in supported worlds (now signature-filtered at generation), twin ids that did not match the route
+    table, a tie rule that widened the failed set under flips, and a reference that swept routes alphabetically
+    instead of greedily; each was fixed and pinned by tests. 2026-09-12 maintainer review drove larger
+    cohorts, per-world validity, source-bound shortcut replays and capability ablations. A frozen current-source
+    gpt-5.6-sol first-proposal campaign on 2026-09-14 then produced a fully valid development score of 1.000000,
+    above the 0.927083 reference; no task parameter was changed from that result. This documentation update
+    makes the receipt historical-only and a redesigned task would require a new frozen draw.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_water_systems
+  expert_hours: null
+  red_team_rounds: 3
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: failed_current_first_draw
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations and clean frontier-model
+    calibration before certification
+  remaining_risk: Fixed repository-visible procedural worlds are not generalization evidence. A fully valid
+    gpt-5.6-sol first proposal reached 1.000000 development against the 0.927083 reference, so the current task
+    fails the current first-draw difficulty check. Expert review and server-held confirmation also remain missing.
+frontier_eng_overlap_review:
+  date: '2026-09-07'
+  classification: 无
+  nearest: EV2GymSmartCharging; tree_gsm_safety_stock
+  distinction: Paid path tests identify failed water pipes with inseparable twin-line refusal. FE chooses
+    charging schedules or inventory service times on known graphs. Despite the name, this task diagnoses
+    failures on a supplied route graph; it is not network-layout or energy-dispatch optimization.
+  evidence: .research/distribution_network_topology_frontier_eng_overlap_2026-09-07.md
+  status: source_count_discrepancy_pending_maintainer_confirmation
+evaluation_budget:
+  units_per_world: 26
+  development_worlds: 36
+  heldout_worlds: 30
+  timeout_seconds: 300
+  hardware: CPU; Linux bubblewrap sandbox
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  relative_margin: 0.1
+  score_tolerance: 1.0e-09
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.9270833333333333
+  probes:
+  - id: route_grid
+    candidate: verification/shortcut_grid.py
+    expected_score: 0.502037037037037
