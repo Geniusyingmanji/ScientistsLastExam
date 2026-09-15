@@ -12,7 +12,7 @@ policy:
 tasks:
   Exoplanets/MicrolensingEventCharacterization:
     status: candidate
-    reason: Active time-and-filter photometric follow-up distinguishes point-lens, binary-lens and variable-source events with calibrated refusal for low-signal ambiguity; retained as a candidate pending server-held events, realistic cadence/weather/blending, real survey replay and independent microlensing review.
+    reason: Active photometric follow-up distinguishes point-lens, binary-lens and variable-source events, recovers observable duration, amplitude and feature time, and refuses mixed out-of-family events; retained as a candidate pending server-held events, realistic cadence/weather/blending, real survey replay and independent microlensing review.
     citation_ids:
       - doi:10.1086/164140
       - doi:10.1086/171443

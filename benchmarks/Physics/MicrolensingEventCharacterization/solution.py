@@ -9,6 +9,7 @@ def infer_microlensing(problem, observe):
         "model": "point_lens",
         "timescale_days": 8.0,
         "amplitude": 0.0,
+        "feature_time_days": 0.0,
         "confidence": 0.5,
         "evidence_query_ids": [row["query_id"] for row in rows],
     }

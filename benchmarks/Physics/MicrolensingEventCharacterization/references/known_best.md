@@ -1,138 +1,99 @@
 # MicrolensingEventCharacterization reference results
 
-Task-local diagnostics and clean Linux replay are separate. To reproduce the review comparisons
-through the trusted driver and bubblewrap, run:
-
-```bash
-python benchmarks/Physics/MicrolensingEventCharacterization/verification/replay_review.py \
-  --output /tmp/microlensing-review.json
-python benchmarks/Physics/MicrolensingEventCharacterization/frontier_eval/run_eval.py \
-  --candidate benchmarks/Physics/MicrolensingEventCharacterization/verification/reference_solver.py \
-  --metrics-out /tmp/microlensing-reference.json
-```
-
 ## Reference
 
-The reference uses 24 r-band observations across the public cadence, a grid point-lens fit, a
-periodic alternative and a low-signal refusal. The former six g-band queries contributed evidence
-IDs only, not fit data or color checks, and were removed before the current 24-r cadence was frozen.
-All event families share the same band scaling, so this reduced-order
-oracle does not implement the classic achromatic-lensing versus chromatic-variability test.
-Its current task-local calibration is **0.652036** development and **0.748829** held out; the
-reference is an anchor rather than a ceiling and leaves headroom in model selection and continuous
-parameter recovery. The legal baseline is 0.000000.
+The truth-blind reference uses all 24 r-band observations. It profiles a bounded source fraction
+over a Paczynski grid, uses a robust preliminary fit before jointly profiling a positive Gaussian
+anomaly, and independently fits sinusoidal variability. BIC selects among the three supported
+families; an excessive best-fit residual triggers refusal of a mixed out-of-family event.
 
-Here and in the historical tables below, development means `combined_score` (normalized),
-whereas held-out means `heldout_mechanism_score` (an unnormalized composite). They are not
-the same normalization. In particular, 0.770906 held-out is not a normalized held-out headline.
-The current reference recovers all development and held-out variable-source worlds and correctly
-refuses every ambiguous world. Its remaining model-selection errors are point/binary distinctions;
-continuous time-scale and anomaly-amplitude recovery retain additional headroom.
+The current deterministic calibration is **0.926256** development `combined_score` and
+**0.933409** held-out raw mechanism composite. Model accuracy, supported-world coverage and
+ambiguous-world refusal are all 1.0 on both splits. The remaining headroom is continuous duration,
+anomaly-amplitude and feature-time recovery, principally in binary-lens events. The reference is a
+capable anchor, not a ceiling.
+
+For point and binary lenses, `timescale_days` is the observable full width at half maximum of the
+underlying point-lens excess flux. This avoids rewarding guesses of a blending-degenerate latent
+Einstein time. For variable sources it remains the period.
 
 ## Model draws
 
-Historical runs with explicit `chat_thinking: disabled` used an earlier world/scoring revision.
-Ten-proposal DeepSeek V4 Flash and Pro runs reached
-**0.250000** and **0.260876**. Flash produced nine valid proposals and Pro eight; neither reached
-the improved reference. These are descriptive calibration draws, not certification evidence.
+All existing DeepSeek measurements predate the current mixed-family worlds and feature-time/FWHM
+contract and are historical only. On revision `9a208cf45782592aaf12215b9917d63d4159d122`, one
+selection-blind proposal per model was generated with seed 0, temperature 0 and thinking explicitly
+disabled. DeepSeek V4 Flash scored 0.287244 development; Pro produced a valid blanket refusal and
+scored 0.000000. Earlier ten-proposal runs on another scoring revision reached 0.250000 and
+0.260876. None of these values is presented as current calibration.
 
-On the frozen current executable revision `9a208cf45782592aaf12215b9917d63d4159d122`, one
-selection-blind first proposal per model was generated with seed 0, temperature 0 and thinking
-explicitly disabled. Flash was valid and scored **0.287244** development / **0.336396** held-out
-raw composite. Pro was valid but refused every world and scored **0.000000** / **0.250000**.
-Neither first proposal reached the current reference. The compact record is
-`experiments/microlensing_current_admission_2026-09-14.json`.
+Fresh model draws are required after the executable design and shortcut margin are frozen.
 
 ## Baseline
 
-The legal baseline takes six r-band observations and reports a fixed point-lens claim. It is
-deliberately weak and is expected to normalize to zero.
+The legal baseline takes six r-band observations and reports fixed point-lens values. It scores
+**0.000000** development and **0.169350** held-out raw mechanism, with `valid=1`. Blanket refusal
+also scores exactly **0.000000** development by construction.
 
-## Historical ablations and current shortcut probe
+## Ablations
 
-Current-source deterministic capability controls are:
-
-| Candidate | Development combined | Held-out raw composite | Observations |
-|---|---:|---:|---:|
-| Reference | 0.652036 | 0.748829 | 24 |
-| Reference with refusal disabled | 0.318702 | 0.498829 | 24 |
-| Reference with an eight-epoch sparse cadence | 0.413061 | 0.684601 | 8 |
-| Strongest declared 4,116-policy shortcut | 0.227593 | 0.416684 | 6 |
-| Baseline | 0.000000 | 0.183750 | 6 |
-| Blanket refusal | 0.000000 | 0.250000 | 6 |
-
-The sparse-cadence and no-refusal rows preserve the reference's fitting and decision logic while
-removing one capability. They are capability ablations; the threshold policies below are not.
-
-Removing the six unused g queries from the reference preserves scientific metrics exactly;
-only mean budget use changes from 24 to 18. This is a zero-effect removal, not a difficulty step.
-`analysis.py` now reports this comparison and a genuine reference-without-refusal variant
-separately from its simple threshold policies.
-
-The following 2026-09-08 replay table is retained as historical evidence for the earlier
-scoring revision (`571e130bf5c9539190bdd9c230919f70102c62d4`), not as current calibration:
+Current task-local deterministic capability controls are:
 
 | Candidate | Development combined | Held-out raw composite | Observations |
 |---|---:|---:|---:|
-| Reference, r only | 0.560636 | 0.770906 | 18 |
-| Legacy reference with unused g queries | 0.560636 | 0.770906 | 24 |
-| Reference with refusal disabled | 0.227303 | 0.520906 | 18 |
-| Weak range-threshold fixed point claim, r only | 0.118333 | 0.191875 | 13 |
-| Weak fixed point claim without refusal | 0.000000 | 0.191875 | 19 |
-| Baseline | 0.000000 | 0.190625 | 6 |
+| Full bounded reference | 0.926256 | 0.933409 | 24 |
+| Reference with eight-epoch cadence | 0.694989 | 0.710742 | 8 |
+| Reference with refusal disabled | 0.592923 | 0.683409 | 24 |
+| Baseline | 0.000000 | 0.169350 | 6 |
 | Blanket refusal | 0.000000 | 0.250000 | 6 |
-| Uncertainty-threshold refusal and fixed point claim | 0.300000 | 0.453125 | 6 |
 
-All eight candidates were valid, with identical complete metrics on two runs each. Legacy and
-r-only reference metrics are identical after excluding budget counters, including per-world scores.
-Refusal removal costs 0.333333 development score, while g removal costs zero scientific score.
-Compact evidence is in `experiments/microlensing_review_replay_2026-09-08.json`.
-
-The previously labeled "no-g-band" result, 0.118333 / 0.191875, is actually a fixed point-lens
-policy with range-threshold refusal. The previously labeled "never-refuse" result,
-0.000000 / 0.191875, is that weak fixed policy without refusal, not the reference without refusal.
-Both are retained under descriptive `weak_threshold_*` names; neither establishes that a
-reference capability is necessary. The earlier color-ablation claim is withdrawn.
+Sparse cadence loses both model identification and continuous recovery. Disabling refusal preserves
+supported-family fits but loses the full unsupported-family axis. The full reference therefore uses
+both capabilities materially.
 
 ## Shortcut probe
 
-`verification/calibrate.py` evaluates 4,116 policies over observation count, range refusal,
-roughness, peak shape and one fixed time scale. Under the current world and scoring revision, its
-best development policy scores **0.227593**, below the reference's **0.652036**; the 81-policy
-reference-parameter approximation reaches **0.346138**. The reported uncertainty is now a common
-instrument floor, so a threshold on it cannot identify ambiguous worlds. The current probe is a
-finite measured family, not a universal bound.
+Two executable probes are registered in `TASK_CARD.yaml`:
+
+| Probe | Development combined | Held-out raw composite | Reference ratio |
+|---|---:|---:|---:|
+| Best of 576 no-fit statistic policies | 0.542283 | 0.590183 | 0.5855 |
+| Fixed-source Paczynski/residual/sinusoid fit | 0.417203 | 0.613960 | 0.4504 |
+
+The no-fit family scans round thresholds for mean flux, fraction below baseline and second
+difference, plus fixed lens duration and variable period. Its winner is shipped as
+`verification/shortcut_constant.py`. The second probe implements the maintainer's C12 attack:
+fixed source fraction, a cheap Paczynski SSE grid, maximum positive residual for a binary anomaly,
+and sinusoidal least squares. It is shipped as `verification/shortcut_textbook.py`.
+
+The 20% relative-margin ceiling is 0.741005. Both probes remain below it. All four world families
+have overlapping r-band flux-range intervals, so the old range classifier no longer separates the
+labels. The reported uncertainty is a common instrument floor and cannot identify refusal worlds.
 
 ## Construction findings
 
-The first reference scored 0.269340 and was narrowly beaten by the low-dimensional probe at
-0.276213. An 81-policy development-only search over four public decision thresholds exposed an
-under-built refusal/anomaly rule. The corrected truth-blind reference scores 0.560636 development
-and improves held-out performance from 0.645906 to 0.770906 without changing worlds or scoring.
-The benchmark remains a reduced-order microlensing laboratory, not a deployment prescription.
+Earlier revisions were broken by successively stronger review probes. A nine-observation constant
+candidate first reached 0.888889 against a 0.560636 reference. After tighter continuous scoring and
+constant uncertainty, a 24-observation textbook candidate still reached 0.929167 against a 0.652036
+reference, and a development fingerprint lookup reached 0.999236. Those failures showed that
+implementation-level hardening alone was insufficient.
 
-PR46 review found that the earlier analysis compared different algorithms while calling them
-reference ablations, and that g-band measurements were unused. The corrected analysis uses
-the same reference implementation with explicit measurement/refusal switches. Regression tests
-verify that arbitrary g flux values cannot change the legacy decision path and that the current
-reference buys 24 r-band observations. The 81-policy threshold selection is also disclosed in card lineage.
-The public output range is now 2--24 days, covering the full declared development and held-out
-variable-source period range. Candidates should still abstain when a fit is not distinguishable
-from the low-signal ambiguous family rather than clipping an unsupported period to a boundary.
+The current revision changes the scientific recovery problem rather than merely its normalization:
+source fraction and impact parameter span wider ranges; point, binary, variable and mixed events
+overlap in flux range; anomaly position, width and amplitude vary; unsupported worlds combine lensing
+and variability; non-refusing claims must also locate a defining feature; and invalidity anywhere
+forces `combined_score=0`. The reference was rebuilt as a bounded physical fit instead of a free
+linear-scale fit.
 
 ## Robustness
 
 The evaluator rejects malformed outputs, duplicate observations, overspending, unknown epochs and
-fabricated evidence. The reference is key-identical across consecutive evaluations. Reproduce the
-reference parameter probe and shortcut sweep with:
+fabricated evidence. It resets a sandboxed candidate session before every world, including the split
+boundary. Any invalid world forces `valid=0` and `combined_score=0`. The reference and registered
+probes are deterministic in local replay; final pinned-Linux sandbox replay and the complete
+task-specific contribution gate must be recorded after committing the frozen executable revision.
+
+Reproduce the current task-local calibration with:
 
 ```bash
-python3 benchmarks/Physics/MicrolensingEventCharacterization/verification/calibrate.py
+python benchmarks/Physics/MicrolensingEventCharacterization/verification/calibrate.py
 ```
-
-The 2026-09-08 review revision passed the full task contribution gate (15/15), 78 related pytest
-tests, and all three CLI bad-candidate checks on ali Linux. The task tests additionally cover
-11 malformed submissions, duplicate observations, editable-solution contract and unused-g
-invariance. No full-repository tests, new DeepSeek generation, or global evidence refresh were
-run. The oracle, candidate input schema and score are unchanged; previous model scores remain
-historical draws on that same objective, not newly generated results under the corrected prose.

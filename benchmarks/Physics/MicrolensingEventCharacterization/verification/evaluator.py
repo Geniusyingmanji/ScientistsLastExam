@@ -18,6 +18,22 @@ def _paczynski(t, t0, timescale, u0):
     return (u * u + 2.0) / (u * math.sqrt(u * u + 4.0))
 
 
+def _point_duration(timescale, u0):
+    """Full width at half maximum of the point-lens excess flux."""
+    peak = _paczynski(0.0, 0.0, 1.0, u0)
+    target = 1.0 + 0.5 * (peak - 1.0)
+    lower, upper = u0, 10.0
+    for _ in range(60):
+        middle = 0.5 * (lower + upper)
+        value = (middle * middle + 2.0) / (middle * math.sqrt(middle * middle + 4.0))
+        if value > target:
+            lower = middle
+        else:
+            upper = middle
+    half_width = timescale * math.sqrt((0.5 * (lower + upper)) ** 2 - u0 * u0)
+    return 2.0 * half_width
+
+
 def _world(spec):
     return dict(spec)
 
@@ -33,10 +49,12 @@ def _flux(world, time, band):
         if kind == "binary":
             value += world["anomaly_amp"] * band_scale * math.exp(
                 -0.5 * ((t - world["anomaly_time"]) / world["anomaly_width"]) ** 2)
+        elif kind == "ambiguous":
+            value += world["variability_amp"] * band_scale * math.sin(
+                2.0 * math.pi * (t - world["phase"]) / world["period"])
     else:
         value = base + world["variability_amp"] * band_scale * math.sin(
             2.0 * math.pi * (t - world["phase"]) / world["period"])
-        value += 0.035 * band_scale * math.cos(2.0 * math.pi * t / 11.0)
     digest = hashlib.sha256(
         ("%d|%.3f|%s" % (world["seed"], t, band)).encode("ascii")
     ).digest()
@@ -95,10 +113,16 @@ PUBLIC_PROBLEM = {
     "minimum_evidence_queries": MIN_EVIDENCE,
     "model_labels": ["point_lens", "binary_lens", "variable_source"],
     "timescale_bounds_days": [2.0, 24.0],
+    "timescale_definition": "point/binary: full width at half maximum of the underlying point-lens excess flux; variable: period",
+    "feature_time_bounds_days": [-24.0, 24.0],
     "amplitude_bounds": [0.0, 1.0],
-    "magnification_model": "Paczynski point-lens magnification with a possible localized binary-lens anomaly",
+    "r_band_baseline_flux": 1.0,
+    "source_fraction_bounds": [0.08, 1.0],
+    "impact_parameter_bounds": [0.15, 1.05],
+    "anomaly_width_bounds_days": [0.55, 3.25],
+    "magnification_model": "Paczynski point-lens magnification with a possible positive Gaussian binary-lens anomaly",
     "variability_model": "smooth sinusoidal source variability with a band-independent period",
-    "abstain_when": "the observations do not distinguish a supported model from the ambiguous low-SNR family",
+    "abstain_when": "the observations do not distinguish a supported single-family model from a mixed out-of-family event",
     "evidence_requirement": "cite at least six distinct query_id values from current-world observations",
 }
 
@@ -125,17 +149,22 @@ def _validate(submission, query_ids):
         raise ValueError("unknown model")
     timescale = float(submission.get("timescale_days", float("nan")))
     amplitude = float(submission.get("amplitude", float("nan")))
+    feature_time = float(submission.get("feature_time_days", float("nan")))
     if not math.isfinite(timescale) or not 2.0 <= timescale <= 24.0:
         raise ValueError("timescale_days outside bounds")
     if not math.isfinite(amplitude) or not 0.0 <= amplitude <= 1.0:
         raise ValueError("amplitude outside bounds")
+    if not math.isfinite(feature_time) or not -24.0 <= feature_time <= 24.0:
+        raise ValueError("feature_time_days outside bounds")
     return {"abstain": False, "model": model, "timescale": timescale,
-            "amplitude": amplitude, "confidence": confidence, "evidence": evidence}
+            "amplitude": amplitude, "feature_time": feature_time,
+            "confidence": confidence, "evidence": evidence}
 
 
 def _score(world, claim):
     unsupported = world["kind"] == "ambiguous"
     row = {"model_correct": False, "parameter_score": 0.0, "amplitude_score": 0.0,
+           "feature_time_score": 0.0,
            "mechanism_score": 0.0, "false_discovery": False, "correct_refusal": False}
     if unsupported:
         row["correct_refusal"] = bool(claim["abstain"])
@@ -149,42 +178,67 @@ def _score(world, claim):
     row["false_discovery"] = not row["model_correct"]
     if not row["model_correct"]:
         return row
-    true_scale = world["period"] if world["kind"] == "variable" else world["timescale"]
+    true_scale = (world["period"] if world["kind"] == "variable" else
+                  _point_duration(world["timescale"], world["u0"]))
     true_amp = world.get("anomaly_amp", 0.0) if world["kind"] == "binary" else world.get("variability_amp", 0.0)
     row["parameter_score"] = max(0.0, 1.0 - abs(claim["timescale"] - true_scale) / 1.8)
     row["amplitude_score"] = max(0.0, 1.0 - abs(claim["amplitude"] - true_amp) / 0.075)
-    continuous_correctness = 0.50 + 0.25 * row["parameter_score"] + 0.15 * row["amplitude_score"]
+    if world["kind"] == "point":
+        true_feature_time = world["t0"]
+        feature_error = abs(claim["feature_time"] - true_feature_time)
+    elif world["kind"] == "binary":
+        true_feature_time = world["anomaly_time"]
+        feature_error = abs(claim["feature_time"] - true_feature_time)
+    else:
+        true_feature_time = world["phase"] + 0.25 * world["period"]
+        feature_error = abs((claim["feature_time"] - true_feature_time
+                             + 0.5 * world["period"]) % world["period"]
+                            - 0.5 * world["period"])
+    row["feature_time_score"] = max(0.0, 1.0 - feature_error / 1.5)
+    continuous_correctness = (0.40 + 0.20 * row["parameter_score"]
+                              + 0.15 * row["amplitude_score"]
+                              + 0.15 * row["feature_time_score"])
     calibration = max(0.0, 1.0 - abs(claim["confidence"] - continuous_correctness))
     row["mechanism_score"] = continuous_correctness + 0.10 * calibration
     return row
 
 
 DEVELOPMENT_WORLDS = tuple(_world(spec) for spec in (
-    {"kind": "point", "seed": 4101, "t0": -1.37, "timescale": 6.73, "u0": 0.23, "source_scale": 0.84, "noise": 0.024},
-    {"kind": "point", "seed": 4102, "t0": 2.47, "timescale": 11.38, "u0": 0.36, "source_scale": 0.73, "noise": 0.026},
-    {"kind": "binary", "seed": 4103, "t0": -2.36, "timescale": 8.42, "u0": 0.28, "source_scale": 0.81, "anomaly_time": 5.63, "anomaly_width": 1.22, "anomaly_amp": 0.205, "noise": 0.025},
-    {"kind": "binary", "seed": 4104, "t0": 3.18, "timescale": 10.74, "u0": 0.32, "source_scale": 0.75, "anomaly_time": -4.67, "anomaly_width": 1.11, "anomaly_amp": 0.176, "noise": 0.026},
-    {"kind": "variable", "seed": 4105, "period": 14.37, "phase": -3.71, "variability_amp": 0.235, "noise": 0.025},
-    {"kind": "variable", "seed": 4106, "period": 18.63, "phase": 3.27, "variability_amp": 0.196, "noise": 0.026},
-    {"kind": "ambiguous", "seed": 4107, "t0": 0.43, "timescale": 8.17, "u0": 0.72, "source_scale": 0.20, "noise": 0.066},
-    {"kind": "ambiguous", "seed": 4108, "t0": 1.29, "timescale": 10.41, "u0": 0.65, "source_scale": 0.19, "noise": 0.064},
+    {"kind": "point", "seed": 5101, "t0": -3.37, "timescale": 6.73, "u0": 0.32, "source_scale": 0.30, "noise": 0.030},
+    {"kind": "point", "seed": 5102, "t0": 2.47, "timescale": 11.38, "u0": 0.50, "source_scale": 0.65, "noise": 0.032},
+    {"kind": "point", "seed": 5103, "t0": 0.83, "timescale": 15.27, "u0": 0.21, "source_scale": 0.22, "noise": 0.029},
+    {"kind": "binary", "seed": 5111, "t0": -2.36, "timescale": 8.42, "u0": 0.42, "source_scale": 0.38, "anomaly_time": 5.63, "anomaly_width": 0.82, "anomaly_amp": 0.31, "noise": 0.030},
+    {"kind": "binary", "seed": 5112, "t0": 3.18, "timescale": 10.74, "u0": 0.58, "source_scale": 0.72, "anomaly_time": -4.67, "anomaly_width": 1.47, "anomaly_amp": 0.19, "noise": 0.032},
+    {"kind": "binary", "seed": 5113, "t0": -0.71, "timescale": 14.16, "u0": 0.27, "source_scale": 0.24, "anomaly_time": 8.34, "anomaly_width": 2.18, "anomaly_amp": 0.14, "noise": 0.029},
+    {"kind": "variable", "seed": 5121, "period": 9.73, "phase": -1.91, "variability_amp": 0.34, "noise": 0.031},
+    {"kind": "variable", "seed": 5122, "period": 14.37, "phase": -3.71, "variability_amp": 0.47, "noise": 0.030},
+    {"kind": "variable", "seed": 5123, "period": 20.63, "phase": 3.27, "variability_amp": 0.58, "noise": 0.033},
+    {"kind": "ambiguous", "seed": 5131, "t0": 0.43, "timescale": 8.17, "u0": 0.62, "source_scale": 0.31, "period": 12.41, "phase": -2.2, "variability_amp": 0.24, "noise": 0.032},
+    {"kind": "ambiguous", "seed": 5132, "t0": 1.29, "timescale": 10.41, "u0": 0.73, "source_scale": 0.42, "period": 17.63, "phase": 2.7, "variability_amp": 0.31, "noise": 0.031},
+    {"kind": "ambiguous", "seed": 5133, "t0": -2.18, "timescale": 15.22, "u0": 0.48, "source_scale": 0.20, "period": 22.17, "phase": -4.1, "variability_amp": 0.39, "noise": 0.034},
 ))
 
 HELDOUT_WORLDS = tuple(_world(spec) for spec in (
-    {"kind": "point", "seed": 4201, "t0": -3.24, "timescale": 5.61, "u0": 0.26, "source_scale": 0.80, "noise": 0.026},
-    {"kind": "point", "seed": 4202, "t0": 4.16, "timescale": 12.71, "u0": 0.33, "source_scale": 0.71, "noise": 0.027},
-    {"kind": "binary", "seed": 4203, "t0": 0.31, "timescale": 9.27, "u0": 0.30, "source_scale": 0.79, "anomaly_time": 6.74, "anomaly_width": 1.16, "anomaly_amp": 0.193, "noise": 0.026},
-    {"kind": "binary", "seed": 4204, "t0": 2.42, "timescale": 12.16, "u0": 0.35, "source_scale": 0.74, "anomaly_time": -5.82, "anomaly_width": 1.33, "anomaly_amp": 0.184, "noise": 0.027},
-    {"kind": "variable", "seed": 4205, "period": 16.42, "phase": -2.38, "variability_amp": 0.218, "noise": 0.026},
-    {"kind": "variable", "seed": 4206, "period": 19.14, "phase": 4.63, "variability_amp": 0.187, "noise": 0.027},
-    {"kind": "ambiguous", "seed": 4207, "t0": -1.18, "timescale": 9.23, "u0": 0.70, "source_scale": 0.20, "noise": 0.067},
-    {"kind": "ambiguous", "seed": 4208, "t0": 2.31, "timescale": 10.84, "u0": 0.68, "source_scale": 0.19, "noise": 0.065},
+    {"kind": "point", "seed": 5201, "t0": -4.24, "timescale": 5.61, "u0": 0.39, "source_scale": 0.43, "noise": 0.031},
+    {"kind": "point", "seed": 5202, "t0": 4.16, "timescale": 12.71, "u0": 0.61, "source_scale": 0.78, "noise": 0.033},
+    {"kind": "point", "seed": 5203, "t0": -0.42, "timescale": 17.31, "u0": 0.24, "source_scale": 0.19, "noise": 0.030},
+    {"kind": "binary", "seed": 5211, "t0": 0.31, "timescale": 9.27, "u0": 0.47, "source_scale": 0.44, "anomaly_time": 6.74, "anomaly_width": 1.03, "anomaly_amp": 0.27, "noise": 0.031},
+    {"kind": "binary", "seed": 5212, "t0": 2.42, "timescale": 12.16, "u0": 0.66, "source_scale": 0.83, "anomaly_time": -5.82, "anomaly_width": 1.71, "anomaly_amp": 0.17, "noise": 0.033},
+    {"kind": "binary", "seed": 5213, "t0": -1.73, "timescale": 16.08, "u0": 0.31, "source_scale": 0.27, "anomaly_time": 9.18, "anomaly_width": 2.36, "anomaly_amp": 0.12, "noise": 0.030},
+    {"kind": "variable", "seed": 5221, "period": 10.42, "phase": 1.38, "variability_amp": 0.37, "noise": 0.032},
+    {"kind": "variable", "seed": 5222, "period": 16.42, "phase": -2.38, "variability_amp": 0.51, "noise": 0.031},
+    {"kind": "variable", "seed": 5223, "period": 22.14, "phase": 4.63, "variability_amp": 0.55, "noise": 0.034},
+    {"kind": "ambiguous", "seed": 5231, "t0": -1.18, "timescale": 9.23, "u0": 0.67, "source_scale": 0.36, "period": 13.57, "phase": 1.4, "variability_amp": 0.27, "noise": 0.033},
+    {"kind": "ambiguous", "seed": 5232, "t0": 2.31, "timescale": 10.84, "u0": 0.78, "source_scale": 0.48, "period": 18.29, "phase": -3.0, "variability_amp": 0.34, "noise": 0.032},
+    {"kind": "ambiguous", "seed": 5233, "t0": -3.07, "timescale": 14.33, "u0": 0.53, "source_scale": 0.24, "period": 21.36, "phase": 3.8, "variability_amp": 0.41, "noise": 0.035},
 ))
 
 
 def _evaluate_one(candidate, world):
     observer = _Observer(world)
     try:
+        if hasattr(candidate, "reset_session"):
+            candidate.reset_session()
         submission = candidate(PUBLIC_PROBLEM | {"candidate_times": list(TIMES)}, observer)
         claim = _validate(submission, {"q%02d" % i for i in range(1, observer.calls + 1)})
         if observer.violated:
@@ -218,8 +272,11 @@ def evaluate(candidate):
     dev_unsupported = len(DEVELOPMENT_WORLDS) - dev_supported
     held_supported = sum(w["kind"] != "ambiguous" for w in HELDOUT_WORLDS)
     held_unsupported = len(HELDOUT_WORLDS) - held_supported
+    all_valid = all(r["valid"] for r in records)
+    if not all_valid:
+        combined = 0.0
     return {
-        "combined_score": combined, "valid": 1.0 if all(r["valid"] for r in records) else 0.0,
+        "combined_score": combined, "valid": 1.0 if all_valid else 0.0,
         "feasibility_rate": float(np.mean([r["valid"] for r in records])),
         "development_mechanism_score": mean("mechanism_score", "development"),
         "heldout_mechanism_score": mean("mechanism_score", "heldout"),

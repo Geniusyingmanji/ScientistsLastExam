@@ -3,7 +3,6 @@ from __future__ import annotations
 import importlib.util
 import unittest
 from pathlib import Path
-from unittest.mock import patch
 
 import numpy as np
 
@@ -21,32 +20,16 @@ def _load(name, path):
 EVALUATOR = _load("test_microlensing_evaluator", TASK / "verification" / "evaluator.py")
 REFERENCE = _load("test_microlensing_reference", TASK / "verification" / "reference_solver.py")
 BASELINE = _load("test_microlensing_baseline", TASK / "solution.py")
+CONSTANT = _load("test_microlensing_constant", TASK / "verification" / "shortcut_constant.py")
+TEXTBOOK = _load("test_microlensing_textbook", TASK / "verification" / "shortcut_textbook.py")
 
 
 class MicrolensingEventCharacterizationTests(unittest.TestCase):
-    def test_g_band_is_unused_and_reference_spends_only_r_budget(self):
-        def run(collect_g, g_flux):
-            calls = []
-            def observe(time, band):
-                calls.append((time, band))
-                return {"query_id": "q%02d" % len(calls), "time": time, "band": band,
-                        "flux": 1.0 + 0.5 * np.exp(-time * time / 20) if band == "r" else g_flux}
-            def point_fit(times, flux):
-                return (0.001, 8.0, np.ones(len(times)), np.array([1.0, 0.0]))
-            with patch.object(REFERENCE, "_fit_point", side_effect=point_fit), \
-                 patch.object(REFERENCE, "_sinusoid", return_value=(0.01, 15.0, 0.1)):
-                result = REFERENCE._infer(EVALUATOR.PUBLIC_PROBLEM, observe, collect_g=collect_g)
-            return result, calls
-        r_only, r_calls = run(False, 0.0)
-        legacy, old_calls = run(True, 1.0)
-        corrupted, _ = run(True, float("nan"))
-        self.assertEqual(legacy, corrupted)
-        self.assertEqual(len(r_calls), 24)
-        self.assertEqual(len(old_calls), 30)
-        self.assertTrue(all(band == "r" for _, band in r_calls))
-        for result in (r_only, legacy):
-            result.pop("evidence_query_ids")
-        self.assertEqual(r_only, legacy)
+    def test_reference_spends_full_budget_in_r_band(self):
+        observer = EVALUATOR._Observer(EVALUATOR.DEVELOPMENT_WORLDS[0])
+        REFERENCE.infer_microlensing(EVALUATOR.PUBLIC_PROBLEM, observer)
+        self.assertEqual(observer.used, 24)
+        self.assertTrue(all(band == "r" for _, band in observer.seen))
 
     def test_external_contract_keeps_solution_editable(self):
         readonly = (TASK / "frontier_eval/readonly_files.txt").read_text().splitlines()
@@ -60,6 +43,7 @@ class MicrolensingEventCharacterizationTests(unittest.TestCase):
         changes = [{"model": "invalid"}, {"timescale_days": float("nan")},
                    {"timescale_days": 100}, {"timescale_days": -1},
                    {"amplitude": float("inf")}, {"amplitude": -1},
+                   {"feature_time_days": float("nan")}, {"feature_time_days": 25},
                    {"confidence": float("nan")}, {"confidence": 2},
                    {"abstain": "yes"}, {"evidence_query_ids": []},
                    {"evidence_query_ids": ["invented"] * 6}]
@@ -67,7 +51,8 @@ class MicrolensingEventCharacterizationTests(unittest.TestCase):
             def bad(problem, observe):
                 ids = [observe(float(t), "r")["query_id"] for t in problem["candidate_times"][:6]]
                 return {"abstain": False, "confidence": 0.5, "evidence_query_ids": ids,
-                        "model": "point_lens", "timescale_days": 8.0, "amplitude": 0.0} | update
+                        "model": "point_lens", "timescale_days": 8.0, "amplitude": 0.0,
+                        "feature_time_days": 0.0} | update
             result = EVALUATOR.evaluate(bad)
             self.assertEqual(result["valid"], 0)
             self.assertEqual(result["combined_score"], 0)
@@ -81,7 +66,7 @@ class MicrolensingEventCharacterizationTests(unittest.TestCase):
         first = EVALUATOR.evaluate(REFERENCE.infer_microlensing)
         second = EVALUATOR.evaluate(REFERENCE.infer_microlensing)
         self.assertEqual(first, second)
-        self.assertGreater(first["combined_score"], 0.5)
+        self.assertGreater(first["combined_score"], 0.85)
         self.assertEqual(first["development_correct_refusal_rate"], 1.0)
 
     def test_reference_recovers_variables_and_refuses_ambiguous_worlds(self):
@@ -103,7 +88,7 @@ class MicrolensingEventCharacterizationTests(unittest.TestCase):
                 if world["kind"] == "variable":
                     value = world["period"]
                 elif world["kind"] in {"point", "binary"}:
-                    value = world["timescale"]
+                    value = EVALUATOR._point_duration(world["timescale"], world["u0"])
                 else:
                     continue
                 self.assertLessEqual(lower, value)
@@ -133,9 +118,51 @@ class MicrolensingEventCharacterizationTests(unittest.TestCase):
         self.assertEqual(metrics["valid"], 0.0)
         self.assertEqual(metrics["combined_score"], 0.0)
 
+    def test_one_invalid_world_zeroes_the_headline_and_sessions_reset(self):
+        class PartiallyInvalid:
+            def __init__(self):
+                self.resets = 0
+
+            def reset_session(self):
+                self.resets += 1
+
+            def __call__(self, problem, observe):
+                ids = [observe(float(time), "r")["query_id"]
+                       for time in problem["candidate_times"][:6]]
+                if self.resets == 2:
+                    return None
+                return {"abstain": True, "confidence": 0.5,
+                        "evidence_query_ids": ids}
+
+        candidate = PartiallyInvalid()
+        metrics = EVALUATOR.evaluate(candidate)
+        self.assertEqual(candidate.resets, 24)
+        self.assertEqual(metrics["valid"], 0.0)
+        self.assertEqual(metrics["combined_score"], 0.0)
+
     def test_world_families_are_present(self):
         self.assertEqual({w["kind"] for w in EVALUATOR.DEVELOPMENT_WORLDS},
                          {"point", "binary", "variable", "ambiguous"})
+
+    def test_flux_ranges_overlap_across_families(self):
+        intervals = []
+        for kind in ("point", "binary", "variable", "ambiguous"):
+            ranges = []
+            for world in EVALUATOR.DEVELOPMENT_WORLDS:
+                if world["kind"] == kind:
+                    values = [EVALUATOR._flux(world, time, "r")
+                              for time in EVALUATOR.TIMES[:-1]]
+                    ranges.append(float(np.ptp(values)))
+            intervals.append((min(ranges), max(ranges)))
+        self.assertLessEqual(max(low for low, _ in intervals),
+                             min(high for _, high in intervals))
+
+    def test_declared_shortcuts_stay_below_reference_margin(self):
+        reference = EVALUATOR.evaluate(REFERENCE.infer_microlensing)["combined_score"]
+        for candidate in (CONSTANT.infer_microlensing, TEXTBOOK.infer_microlensing):
+            metrics = EVALUATOR.evaluate(candidate)
+            self.assertEqual(metrics["valid"], 1.0)
+            self.assertLess(metrics["combined_score"], 0.8 * reference)
 
 
 if __name__ == "__main__":

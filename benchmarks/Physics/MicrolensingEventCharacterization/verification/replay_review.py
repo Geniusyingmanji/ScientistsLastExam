@@ -1,7 +1,6 @@
 """Replay PR46's corrected comparisons through the trusted Linux sandbox."""
 from __future__ import annotations
 import argparse
-import ast
 import json
 from pathlib import Path
 import subprocess
@@ -12,13 +11,10 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[3]
 TASK_ID = "Exoplanets/MicrolensingEventCharacterization"
 
-UNCERTAINTY_POLICY = '''
+BLANKET = '''
 def infer_microlensing(problem, observe):
-    rows = [observe(float(t), "r") for t in problem["candidate_times"][:6]]
-    ids = [row["query_id"] for row in rows]
-    return {"abstain": rows[0]["uncertainty"] > 0.05, "confidence": 1.0,
-            "model": "point_lens", "timescale_days": 10.0, "amplitude": 0.0,
-            "evidence_query_ids": ids}
+    ids = [observe(float(t), "r")["query_id"] for t in problem["candidate_times"][:6]]
+    return {"abstain": True, "confidence": 0.5, "evidence_query_ids": ids}
 '''
 
 
@@ -27,15 +23,6 @@ def main():
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
     reference = (HERE / "reference_solver.py").read_text(encoding="utf-8")
-    analysis = (HERE / "analysis.py").read_text(encoding="utf-8")
-    calibration = (HERE / "calibrate.py").read_text(encoding="utf-8")
-    functions = {node.name: ast.get_source_segment(analysis, node)
-                 for node in ast.parse(analysis).body if isinstance(node, ast.FunctionDef)}
-    calibration_functions = {node.name: ast.get_source_segment(calibration, node)
-                             for node in ast.parse(calibration).body
-                             if isinstance(node, ast.FunctionDef)}
-    weak_source = "import numpy as np\n\n" + functions["threshold_policy"]
-    shortcut_source = "import numpy as np\n\n" + calibration_functions["threshold_policy"]
     candidates = {
         "reference": reference,
         "reference_without_refusal": reference.replace(
@@ -43,14 +30,9 @@ def main():
         "reference_sparse_cadence": reference.replace(
             "return _infer(problem, observe)", "return _infer(problem, observe, cadence_step=3)"),
         "baseline": (HERE.parent / "solution.py").read_text(encoding="utf-8"),
-        "strongest_declared_shortcut": shortcut_source +
-            "\ninfer_microlensing = threshold_policy(6, .24, .04, .08, 10.0)\n",
-        "weak_threshold_r_only": weak_source +
-            "\ninfer_microlensing = threshold_policy(use_g=False)\n",
-        "weak_threshold_never_refuse": weak_source +
-            "\ninfer_microlensing = threshold_policy(refuse=False)\n",
-        "blanket_abstain": functions["blanket"] + "\ninfer_microlensing = blanket\n",
-        "uncertainty_threshold": UNCERTAINTY_POLICY,
+        "constant_shortcut": (HERE / "shortcut_constant.py").read_text(encoding="utf-8"),
+        "textbook_fixed_source_shortcut": (HERE / "shortcut_textbook.py").read_text(encoding="utf-8"),
+        "blanket_abstain": BLANKET,
     }
     report = {"task": TASK_ID, "execution": "Linux trusted driver and bubblewrap; no model generation",
               "source_revision": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),

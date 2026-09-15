@@ -31,7 +31,8 @@ def threshold_policy(use_g=True, refuse=True):
         if refuse and max(values) - min(values) < 0.22:
             return {"abstain": True, "confidence": 0.6, "evidence_query_ids": evidence}
         return {"abstain": False, "model": "point_lens", "timescale_days": 8.0,
-                "amplitude": 0.0, "confidence": 0.55, "evidence_query_ids": evidence}
+                "amplitude": 0.0, "feature_time_days": 0.0,
+                "confidence": 0.55, "evidence_query_ids": evidence}
     return run
 
 
@@ -50,8 +51,6 @@ def compact(metrics):
 def main():
     report = {
         "reference": compact(EVALUATOR.evaluate(REFERENCE.infer_microlensing)),
-        "legacy_reference_with_unused_g": compact(EVALUATOR.evaluate(
-            lambda problem, observe: REFERENCE._infer(problem, observe, collect_g=True))),
         "reference_without_refusal": compact(EVALUATOR.evaluate(
             lambda problem, observe: REFERENCE._infer(problem, observe, refuse=False))),
         "reference_sparse_cadence": compact(EVALUATOR.evaluate(
