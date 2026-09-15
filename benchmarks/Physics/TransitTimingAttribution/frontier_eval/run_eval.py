@@ -1,41 +1,44 @@
-"""Use the trusted driver and sandbox; never import a candidate beside the oracle."""
-from __future__ import annotations
+"""Launch the shared trusted evaluator without importing project code."""
 import argparse
-import json
-import os
-from pathlib import Path
+import math
 import subprocess
 import sys
+from pathlib import Path
 
-TASK_ID = "Exoplanets/TransitTimingAttribution"
 ROOT = Path(__file__).resolve().parents[4]
+TASK_ID = "Exoplanets/TransitTimingAttribution"
 EVAL_TIMEOUT_S = 300
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("--candidate", required=True)
     parser.add_argument("--metrics-out", required=True)
     parser.add_argument("--timeout", type=float, default=EVAL_TIMEOUT_S)
-    args = parser.parse_args()
-    metrics = {"combined_score": 0.0, "valid": 0.0}
-    exit_code = 0
+    parser.add_argument("--full-metrics-dir")
+    args = parser.parse_args(argv)
+    command = [sys.executable, str(ROOT / "sle/frontier_eval_entrypoint.py"),
+               "--task", TASK_ID, "--root", str(ROOT), "--timeout", str(args.timeout),
+               "--candidate", args.candidate, "--metrics-out", args.metrics_out]
+    if args.full_metrics_dir:
+        command.extend(["--full-metrics-dir", args.full_metrics_dir])
     try:
-        result = subprocess.run(
-            [sys.executable, "-m", "sle", "eval", "--allow-uncertified", "--task", TASK_ID,
-             "--candidate", str(Path(args.candidate).resolve()), "--timeout", str(args.timeout)],
-            cwd=ROOT, capture_output=True, text=True, timeout=args.timeout + 120,
-            env={**os.environ, "PYTHONPATH": str(ROOT)})
+        Path(args.metrics_out).unlink(missing_ok=True)
+        if not math.isfinite(args.timeout) or args.timeout <= 0:
+            print("evaluation timeout must be positive and finite", file=sys.stderr)
+            return 2
+        result = subprocess.run(command, capture_output=True, text=True, timeout=args.timeout + 150)
         if result.returncode:
-            exit_code = result.returncode
-            raise RuntimeError("sle eval exited %d: %s" % (exit_code, result.stderr[-500:]))
-        metrics.update(json.loads(result.stdout))
-    except Exception as exc:
-        exit_code = exit_code or 1
-        metrics["error_message"] = "%s: %s" % (type(exc).__name__, exc)
-    Path(args.metrics_out).write_text(json.dumps(metrics, indent=2), encoding="utf-8")
-    print(json.dumps({k: metrics[k] for k in ("combined_score", "valid")}))
-    return exit_code
+            Path(args.metrics_out).unlink(missing_ok=True)
+            print("evaluation entrypoint unavailable or infrastructure failure (exit %d)" % result.returncode,
+                  file=sys.stderr)
+            return 2
+        print(result.stdout, end="")
+        return 0
+    except (OSError, subprocess.TimeoutExpired):
+        Path(args.metrics_out).unlink(missing_ok=True)
+        print("evaluation entrypoint could not be launched or report cleared", file=sys.stderr)
+        return 2
 
 
 if __name__ == "__main__":
