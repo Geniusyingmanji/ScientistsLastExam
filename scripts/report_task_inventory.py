@@ -34,6 +34,7 @@ CERTIFICATION = ROOT / "sle" / "certification.yaml"
 # Chinese name per task, shown in the first column beside the English directory name. The
 # directory name is the identifier and never changes; this is what a Chinese reader scans for.
 CHINESE_NAMES = {
+    "Algorithm/ScalingLawIdentification": "渐近复杂度定律辨识",
     'Microbiology/MetagenomeCompositionAssignment': "宏基因组组成指认",
     "Acoustics/RoomImpulseResponse": "房间声学处理设计",
     "Algorithm/GraphFromDistances": "距离查询重建图",
@@ -128,6 +129,9 @@ CHINESE_NAMES = {
 # people deciding which task to look at. A task without an entry fails the inventory test,
 # so a new package cannot silently ship without one.
 CHINESE_BRIEFS = {
+    "Algorithm/ScalingLawIdentification": (
+        "在有限规模计时预算下拟合有限尺寸修正并辨识复杂度类,模型不足或类别不可辨识时拒答",
+        "类概率、尺度与概率加权外推几何均值;拟合不足和类别证据不足分别检验"),
     'Microbiology/MetagenomeCompositionAssignment': (
         "从收费 marker 计数中恢复分类单元与丰度,保留近缘别名并识别参考库不足",
         "组成恢复、别名/库外拒答与假发现率分列"),

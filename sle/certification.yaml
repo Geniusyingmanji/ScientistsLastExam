@@ -10,6 +10,11 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Algorithm/ScalingLawIdentification:
+    status: candidate
+    reason: finite-size complexity evidence with public nuisance fitting, independent adequacy and class-separation checks, and budget-limited ambiguity; retained as candidate pending clean frontier-model calibration and independent algorithms review
+    citation_ids:
+      - isbn:9780262033848
   Ecology/OccupancyDetectionDesign:
     status: candidate
     reason: Active repeat-survey allocation and latent occupancy inference under imperfect detection, with explicit refusal for nonlinear habitat and spatially structured worlds; retained as a candidate pending server-held surveys, real field-data replication and independent ecology review.

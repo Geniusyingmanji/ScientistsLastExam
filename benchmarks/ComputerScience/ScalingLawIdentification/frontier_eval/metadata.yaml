@@ -1,0 +1,15 @@
+domain: Algorithm
+task: ScalingLawIdentification
+scientific_role: discovery
+difficulty: unmeasured
+tier: candidate
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 60
+science_metric: finite-size empirical complexity evidence with nuisance and adequacy
+  uncertainty
+reference_baseline: one timing at the smallest size followed by uniform class probabilities
+reference_sota: Public-only bounded nuisance likelihood fits, adequacy and class-separation
+  checks
+citation: CLRS ISBN 9780262033848; McGeoch ISBN 9781107001732

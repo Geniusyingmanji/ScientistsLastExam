@@ -1,0 +1,212 @@
+{
+  "scope": "Contributor Linux validation; not GitHub workflow approval or scientific admission",
+  "integrated_main": "dbed927128606051ffe483f4b5f192366dbad313",
+  "test_revision": "a3a20e0f036a5965e0c8f3cb1095abdad767d472",
+  "runtime_gate_revision": "af0a1ddd8fff632817f11b3031e7e1d1d14104b1",
+  "later_changes": "Only runner regression tests differ between the runtime gate and final test revisions. Evaluator, reference, metadata, wrapper and trusted runtime hashes are unchanged.",
+  "environment": {
+    "python": "3.10",
+    "numpy": "1.24.4",
+    "scipy": "1.10.1",
+    "image": "sle-attribution-ci:20260912",
+    "sandbox": "Privileged trusted Docker launcher with normal candidate UID/GID 65534, network/process isolation, explicit readonly mounts and seccomp; no harness restrictions relaxed"
+  },
+  "current_main_tests": {
+    "summary": "184 passed, 17 subtests passed in 66.05s (0:01:06)",
+    "passed_testcases": 184,
+    "failed": 0,
+    "skipped": 0,
+    "junit_sha256": "4d5c02e5fd6417473d1e3ef7a90a9d6e0568638cb1864966b707467cde180de7",
+    "scope": "Task regressions, shared entrypoint/generator, taxonomy, task cards, inventory, layout and contribution gate unit tests"
+  },
+  "world_isolation": {
+    "passed": 1,
+    "summary": "1 passed, 20 deselected in 1.66s"
+  },
+  "public_metrics": {
+    "combined_score": 0.6813484496390636,
+    "valid": 1.0,
+    "feasibility_rate": 1.0,
+    "raw_score": 0.6813484496390636
+  },
+  "private_reference_scores": {
+    "combined_score": 0.6813484496390636,
+    "robustness_score": 0.6446847790503922,
+    "valid": 1.0
+  },
+  "contribution": {
+    "schema_version": 2,
+    "task": "Algorithm/ScalingLawIdentification",
+    "passed": true,
+    "status": "passed",
+    "phases": {
+      "structural": "passed",
+      "runtime": "passed",
+      "shortcut_guard": "passed",
+      "difficulty": "unassessed"
+    },
+    "scientific_admission": "not_assessed",
+    "note": "Passing declared probes does not establish model difficulty or iterative improvement.",
+    "checks": [
+      {
+        "check": "listed_in_all",
+        "ok": true,
+        "status": "passed",
+        "detail": "Algorithm/ScalingLawIdentification"
+      },
+      {
+        "check": "registered_in_certification",
+        "ok": true,
+        "status": "passed",
+        "detail": "Algorithm/ScalingLawIdentification"
+      },
+      {
+        "check": "certification_status",
+        "ok": true,
+        "status": "passed",
+        "detail": "candidate"
+      },
+      {
+        "check": "not_self_certified",
+        "ok": true,
+        "status": "passed",
+        "detail": "candidate"
+      },
+      {
+        "check": "required_files",
+        "ok": true,
+        "status": "passed",
+        "detail": ""
+      },
+      {
+        "check": "task_card",
+        "ok": true,
+        "status": "passed",
+        "detail": "benchmarks/ComputerScience/ScalingLawIdentification/TASK_CARD.yaml"
+      },
+      {
+        "check": "metadata",
+        "ok": true,
+        "status": "passed",
+        "detail": "discovery"
+      },
+      {
+        "check": "frontier_wave",
+        "ok": true,
+        "status": "passed",
+        "detail": "legacy single wave"
+      },
+      {
+        "check": "discovery_contract_lint_documented",
+        "ok": true,
+        "status": "passed",
+        "detail": ""
+      },
+      {
+        "check": "numeric_keys",
+        "ok": true,
+        "status": "passed",
+        "detail": ""
+      },
+      {
+        "check": "documented_keys",
+        "ok": true,
+        "status": "passed",
+        "detail": "9 baseline keys"
+      },
+      {
+        "check": "baseline_eval",
+        "ok": true,
+        "status": "passed",
+        "detail": "combined_score=0.0"
+      },
+      {
+        "check": "deterministic_baseline",
+        "ok": true,
+        "status": "passed",
+        "detail": ""
+      },
+      {
+        "check": "discovery_axes",
+        "ok": true,
+        "status": "passed",
+        "detail": "mechanism/fdr/refusal/coverage rates present"
+      },
+      {
+        "check": "degenerate_candidates_score_zero",
+        "ok": true,
+        "status": "passed",
+        "detail": "blanket abstention earns nothing"
+      },
+      {
+        "check": "bad_candidates_score_zero",
+        "ok": true,
+        "status": "passed",
+        "detail": "raises/empty/wrong_type scored"
+      },
+      {
+        "check": "shortcut_probe",
+        "ok": true,
+        "status": "passed",
+        "detail": "best declared shortcut must be strictly below the reference margin"
+      }
+    ],
+    "shortcut_probe": {
+      "status": "passed",
+      "passed": true,
+      "observations": [
+        {
+          "id": "reference",
+          "candidate": "verification/reference_solver.py",
+          "expected_score": 0.681348,
+          "source_sha256": "7cc2ff411ce9b3e0a74a614a3433f601bd024fcdbd6d2ceb7db7431c144dbded",
+          "measured_score": 0.6813484496390636
+        },
+        {
+          "id": "review_grid_best",
+          "candidate": "verification/shortcut_rms.py",
+          "expected_score": 0.413705,
+          "source_sha256": "416d6c8987ef7ae474144e6193ad659e90deccf27b511f58e851a117fccad69f",
+          "measured_score": 0.4137050227538237
+        }
+      ],
+      "scope": "declared shortcut guard only; independent model calibration still required",
+      "contract_sha256": "08a3108db87f910133ad7182c6197b35e56ac6cd4c4829a8bce9245f9a1c2f98",
+      "reference_score": 0.6813484496390636,
+      "probe_best": 0.4137050227538237,
+      "threshold": 0.4769439147473445,
+      "detail": "best declared shortcut must be strictly below the reference margin"
+    },
+    "baseline_combined_score": 0.0
+  },
+  "prior_full_suite": {
+    "revision": "bee50a3536438d0d23afb377bfeb2c2edfb3cf48",
+    "main_base": "58e4b8e560253bdafc8bb3d6c9baa268712eafb3",
+    "counts": {
+      "passed": 1460,
+      "failed": 2,
+      "error": 0,
+      "skipped": 48
+    },
+    "subtests_passed": 511,
+    "failure_resolution": "Both old-wrapper failures were corrected by the shared-entrypoint migration. The subsequent main-integration suite also exposed stale task-specific runner assertions; these now verify the public/private metric split and failure behavior, and the final targeted suite passes.",
+    "skips": "48 historical-analysis checks lacked their private run artifacts. They are not credited as passed.",
+    "all_required_at_that_revision_passed": true,
+    "not_a_current_main_full_suite": true
+  },
+  "source_sha256": {
+    "sle/secure_eval.py": "5cdf27f0cd73d5a5e24d092d1c330fa17148cdd2108db14973d690a142f063da",
+    "sle/trusted_driver.py": "fbe11f6a114caa2b71e4a348c32a8b3046e47be81589dee60689cc4cc6c2a762",
+    "sle/frontier_eval_entrypoint.py": "4d95fb2d698d7d4966f1335fa63e4bc136e9bfb5c87eb0f1ed6dfa1593b75c4a",
+    "benchmarks/ComputerScience/ScalingLawIdentification/verification/evaluator.py": "4c61e4797894c08f5975d9ad1bb764b36ed28703f7eb8b64695e0fee135fb2e3",
+    "benchmarks/ComputerScience/ScalingLawIdentification/verification/reference_solver.py": "7cc2ff411ce9b3e0a74a614a3433f601bd024fcdbd6d2ceb7db7431c144dbded",
+    "benchmarks/ComputerScience/ScalingLawIdentification/frontier_eval/run_eval.py": "d2a2b6ebd0219c60b65226585c48e317489b101106224eee921a524b6686ca26",
+    "benchmarks/ComputerScience/ScalingLawIdentification/frontier_eval/metadata.yaml": "cc79af4de77c37db723d51ed62b2b80783768d1faab71d04aabb0b02b2133289"
+  },
+  "pending": [
+    "Current-tree frontier-model calibration; no active LLM configuration or credentials available",
+    "Independent scientific review and fresh-world confirmation",
+    "Maintainer reconciliation of the Frontier-Eng source-count discrepancy",
+    "Upstream GitHub workflow approval and current-main full-suite CI"
+  ]
+}

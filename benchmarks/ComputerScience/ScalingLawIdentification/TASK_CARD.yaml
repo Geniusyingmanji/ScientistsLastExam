@@ -1,0 +1,134 @@
+schema_version: 2
+scientific_question: Can finite-size timing experiments separate asymptotic families after fitting a bounded
+  nuisance correction, while refusing model inadequacy and budget-limited class ambiguity?
+artifact: Six-class probabilities, a positive scale constant, optional abstention and a confidence scalar.
+oracle:
+  model: Gaussian log timing errors with publicly reported standard deviation; log runtime = log(c*f(m))
+    + a*64/m, a in [-2,2]; replicated wide and narrow domains, smooth misspecification, and linear/linearithmic
+    ambiguity with a policy-independent KL bound.
+  feasibility: Six scalar probabilities, positive finite scale, public size bounds and cost tiers within
+    18 units; integer-valued floats accepted; invalid worlds do not erase valid worlds.
+  deterministic: true
+  external_tooling: none beyond NumPy
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: Finite-size nuisance fitting and domain-dependent likelihood separation; the narrow supported control
+      prevents domain-only refusal.
+normalization:
+  baseline: one timing, uniform probabilities and a fixed mid-range scale
+  reference: Public-domain geometric design, bounded nuisance least squares, known-noise adequacy and
+    profile-likelihood separation.
+  score: Class probability, scale skill and probability-weighted asymptotic size-700 extrapolation geometric
+    mean above always abstaining. No artificial budget discount.
+citations:
+- id: isbn:9780262033848
+  title: Introduction to Algorithms
+- id: isbn:9781107001732
+  title: A Guide to Experimental Algorithmics (McGeoch, 2012)
+invariants:
+- Integer-valued float queries equal integer queries.
+- Every charged query stays within its public domain and total budget.
+- Under the Gaussian generative model, ambiguous paired linear/linearithmic worlds have adaptive transcript KL <= 0.13 and binary accuracy
+  <= 0.63.
+- A narrow supported exponential control remains distinguishable.
+- Full abstention has zero normalized score; per-world failures retain other valid results.
+known_shortcuts: 'Historical reviewed head: a 275-point grid reached 0.863028/0.858821 and the untuned
+  doubling ladder reached 0.792895/0.799391, both above the 0.710786/0.702993 reference. The contrary
+  old claim is withdrawn. verification/replay_review.py replays 2304 ladder x RMS gate x probability mass
+  x nuisance-fit settings plus four capability ablations on the redesigned worlds. See references/review_replay.json
+  and known_best.md for current Linux results; no frontier-model calibration is claimed. Current clean
+  Linux replay: best 0.413705/0.360038, reference 0.681348/0.644685; 2304 grid settings. A stronger five-point control retains all inference
+  and scores 0.572169/0.626147 (84.0%/97.1% of reference); the 30% guard covers only the restricted
+  single-RMS family, not a universal shortcut gap. See references/reduced_design_control.json.'
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All runtime worlds are generated from original repository code; cited publications are not redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: Fixed seeds and generated worlds are repository-visible. Procedural origin does not rule
+    out memorization or benchmark-specific fingerprinting; server-held fresh worlds are required for generalization
+    claims.
+review:
+  domain: pending_external_algorithms
+  evaluator_security: native_and_ci_pinned_linux_sandbox_replayed_independent_security_review_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic profiler worlds with development and held-out classes,
+    scales and failures.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: SequenceLawRecovery recovers exact recurrences; ActiveLawDiscovery selects physical-law experiments;
+    ComplexBoseLaw fits complex many-body responses; ChronoamperometryLawID fits electrochemical transients.
+    This task targets nuisance-corrected timing-family evidence under bounded input sizes. It implements
+    the finite-n nonidentifiability direction of .research/next_task_candidates_2026-09-06.md; taxonomy
+    is now evidence rather than a separate formula variant. Empirical fitting is standard, so expert-level
+    difficulty remains subject to model calibration.
+lineage:
+  status: complete
+  builder_model_ids:
+  - glm-5.3
+  - openai-codex
+  builder_scaffolds:
+  - repository-native-computer-science-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local build caught jitter worlds carrying a non-class family field,
+    a degenerate constant-class regression, a repeated-size index that no longer repeated after the ladder
+    grew, a one-point branch split, and an exponent-difference branch criterion that could never fire;
+    each was fixed and pinned by tests. 2026-09-12 maintainer review prompted removal of hidden residue
+    and arbitrary jitter gates, bounded finite-size nuisance modeling, certified pairwise ambiguity, a
+    public-only reference, replicated worlds and explicit shortcut replay. No new frontier-model draw.
+    Independent world-session resets and runnable task-card shortcut guards were added during current-main
+    integration.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_algorithms
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations and clean frontier-model
+    calibration before certification
+  remaining_risk: A five-point design retaining all inference reaches 97.1% of reference held-out score.
+    Finite frozen ensembles and low-dimensional nuisance fits may admit still better designs;
+    independent red teaming, fresh worlds and a clean frontier-model draw remain required.
+frontier_eng_overlap_review:
+  date: '2026-09-07'
+  classification: 无
+  nearest: MallocLab; MLA; FlashAttention; TriMul
+  distinction: Infer complexity evidence from charged finite-size timings after nuisance correction; Frontier-Eng
+    optimizes implementations rather than adjudicating timing-family identifiability.
+  evidence: .research/scaling_law_identification_frontier_eng_overlap_2026-09-07.md
+  status: source_count_discrepancy_pending_maintainer_confirmation
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  relative_margin: 0.3
+  score_tolerance: 0.01
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.681348
+  probes:
+  - id: review_grid_best
+    candidate: verification/shortcut_rms.py
+    expected_score: 0.413705
+evaluation_budget:
+  cpu_only: true
+  timeout_seconds: 300
+  note: 77 independent world sessions; process isolation retained at every boundary.

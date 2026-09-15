@@ -57,6 +57,7 @@ CASES = (
     ('EarthScience/UPbConcordiaInference', 'world', 'DEVELOPMENT_WORLDS', 'HELDOUT_WORLDS'),
     ('Engineering/HeatExchangerDesign', 'instance', 'DEVELOPMENT_INSTANCES', 'HELDOUT_INSTANCES'),
     ('Engineering/ModalDamageAttribution', 'world', 'DEVELOPMENT_WORLDS', 'HELDOUT_WORLDS'),
+    ('ComputerScience/ScalingLawIdentification', 'world', '_BASE_DEVELOPMENT_SPECS', 'HELDOUT_SPECS'),
     ('Engineering/TrussWeightMinimization', 'instance', 'DEVELOPMENT_INSTANCES', 'HELDOUT_INSTANCES'),
     ('Mathematics/BlackBoxGroupIdentification', 'world', 'DEVELOPMENT_WORLDS', 'HELDOUT_WORLDS'),
     ('Mathematics/SequenceLawRecovery', 'split', 'development_worlds', 'sealed_worlds'),
