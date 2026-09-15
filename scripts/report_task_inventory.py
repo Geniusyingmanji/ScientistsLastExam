@@ -61,6 +61,7 @@ CHINESE_NAMES = {
     "Geophysics/GravityInversion": "重力反演",
     "Geophysics/UPbConcordiaInference": "铀铅谐和图事件归因",
     "Gravitation/PTAHellingsDowns": "脉冲星阵四极相关",
+    "Gravitation/TransientChirpInference": "瞬态引力波啁啾辨识",
     "HeatTransfer/ConvectionDiffusionOpt": "对流扩散辨识与加热器设计",
     "MaterialsScience/AlloyHardnessOptimization": "合金硬度实验设计",
     "MaterialsScience/PhaseDiagramDiscovery": "相图发现",
@@ -209,6 +210,9 @@ CHINESE_BRIEFS = {
     "Gravitation/PTAHellingsDowns": (
         "脉冲星计时阵里区分 Hellings-Downs 四极相关(引力波背景)与钟差单极、星历偶极、共同红噪声",
         "四极 vs 单极判别与拒答;共同过程不等于引力波背景"),
+    "Gravitation/TransientChirpInference": (
+        "在双探测器应变观测预算下区分相干啁啾、窄带仪器线与局部 glitch,估计频率演化并拒答低信号事件",
+        "瞬态模型归因、频率斜率/事件时刻/幅度恢复;误发现、拒答、预算和留出迁移分列"),
     "HeatTransfer/ConvectionDiffusionOpt": (
         "在预算内辨识各向异性对流扩散参数,并设计使温度场达标的加热器布局",
         "机制恢复 + 目标场设计 + 物理偏移稳健性 + 模型不足拒答"),
