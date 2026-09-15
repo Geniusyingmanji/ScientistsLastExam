@@ -33,6 +33,9 @@ discovery_kind:
   parameter_inversion: recover numbers of a form that is already named
 
 tasks:
+  Mathematics/ChowlaCosineCertificate: {form: optimization, analogue: certificate_bound, note: exact_rational_Laurent_lower_bound_for_a_constructed_cosine_set_not_asymptotic_Chowla_progress}
+  QuantumFoundations/MutuallyUnbiasedBases6: {form: optimization, analogue: engineering_design, note: approximate_measurement_basis_design_in_a_finite_Qi_ray_family_not_exact_MUB_existence}
+  QuantumFoundations/DephrasureCodeDesign: {form: optimization, analogue: engineering_design, note: finite_block_channel_input_state_not_decoder_or_asymptotic_quantum_capacity}
   Microbiology/MetagenomeCompositionAssignment: {form: discovery, kind: substance, note: marker_mixture_alias_inadequacy_candidate}
   Ecology/OccupancyDetectionDesign: {form: discovery, kind: evidence, note: latent_occupancy_and_repeat_detection_not_population_history_or_climate_fingerprinting}
   Physics/CriticalPhenomenaLab: {form: discovery, kind: parameter_inversion, note: finite_size_scaling_not_microscopic_law}

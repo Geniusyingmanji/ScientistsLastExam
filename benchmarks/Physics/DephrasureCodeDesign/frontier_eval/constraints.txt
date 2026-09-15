@@ -1,0 +1,10 @@
+1) Only edit solution.py. Keep design_code(problem).
+2) Return exactly {"real": rows, "imag": rows}: equally shaped finite ordinary-number
+   nested lists with dimension rows and 1..max_rank columns, nonzero as a complex factor,
+   with every component bounded by max_abs_coefficient. Return .tolist() for NumPy arrays.
+3) Optimize coherent information per channel use for the public n, p, q. Task.md gives
+   the complete channel, complement, factor convention, input keys and score. Reference
+   excess uses a 1e-9 bits/use numerical margin and is not a formal capacity certificate.
+4) Deterministic CPU Python with NumPy/SciPy. No network or process creation. Do not read
+   or import verification/, frontier_eval/, or references/. Reimplement public constructions
+   in solution.py; trusted reference resources are not candidate-visible imports.

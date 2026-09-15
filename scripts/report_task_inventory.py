@@ -34,6 +34,9 @@ CERTIFICATION = ROOT / "sle" / "certification.yaml"
 # Chinese name per task, shown in the first column beside the English directory name. The
 # directory name is the identifier and never changes; this is what a Chinese reader scans for.
 CHINESE_NAMES = {
+    "Mathematics/ChowlaCosineCertificate": "Chowla 余弦下界证书",
+    "QuantumFoundations/MutuallyUnbiasedBases6": "六维近似互无偏基",
+    "QuantumFoundations/DephrasureCodeDesign": "退相位擦除信道有限块码态设计",
     'Microbiology/MetagenomeCompositionAssignment': "宏基因组组成指认",
     "Acoustics/RoomImpulseResponse": "房间声学处理设计",
     "Algorithm/GraphFromDistances": "距离查询重建图",
@@ -128,6 +131,15 @@ CHINESE_NAMES = {
 # people deciding which task to look at. A task without an entry fails the inventory test,
 # so a new package cannot silently ship without one.
 CHINESE_BRIEFS = {
+    "Mathematics/ChowlaCosineCertificate": (
+        "选择有限个整数频率,并用有理平方模的完整 Laurent 恒等式证明余弦和在整条圆周上的全局下界",
+        "三个规模的精确证书进度取均值且 1 以上不截断;1 是公开的贪心 Sidon 构造而非全局最优,廉价局部搜索已到约 1.0074"),
+    "QuantumFoundations/MutuallyUnbiasedBases6": (
+        "在六维复空间构造四组尽量互无偏的测量基,用有界 Gaussian 整数射线表示并精确验证正交性与跃迁概率",
+        "精确 ASD 对固定 Raynal 有理重构归一化且不截断;公式可廉价达到 1,真正超越另由严谨代数区间旗标判定,本表示不覆盖精确 MUB 存在性"),
+    "QuantumFoundations/DephrasureCodeDesign": (
+        "为退相位擦除信道的三次或四次使用设计输入密度矩阵因子,提高每次使用的相干信息",
+        "四例相干信息相对单字母率和已重算公开见证包络的进度均值,不截断;另报超过包络 1e-9 bits/use 的量,不宣称全局纪录或渐近容量"),
     'Microbiology/MetagenomeCompositionAssignment': (
         "从收费 marker 计数中恢复分类单元与丰度,保留近缘别名并识别参考库不足",
         "组成恢复、别名/库外拒答与假发现率分列"),

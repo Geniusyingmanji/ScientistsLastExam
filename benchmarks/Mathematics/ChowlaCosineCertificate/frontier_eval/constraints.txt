@@ -1,0 +1,10 @@
+1) Only edit solution.py. Keep build_certificate(problem).
+2) Return frequencies, a positive exact rational bound, and nonnegative weighted sparse factors
+   whose complete Laurent expansion equals bound + sum_a (z^a+z^-a)/2. Every rational is an
+   integer or [numerator, denominator]; floats and booleans are rejected.
+3) Respect max_frequency, max_factors, max_total_terms, max_pair_products, max_rational_bits and
+   max_denominator_lcm_bits. Unsupported harmonics and repeated frequencies or exponents invalidate
+   the affected world.
+4) NumPy/SciPy only if numerical search is useful; the final certificate is exact rational data.
+   Deterministic CPU code. No network/process creation. Do not read or import verification/,
+   frontier_eval/, or references/.

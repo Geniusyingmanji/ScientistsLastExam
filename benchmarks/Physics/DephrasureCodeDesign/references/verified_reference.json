@@ -1,0 +1,459 @@
+{
+  "winners": [
+    {
+      "n": 3,
+      "p": 0.08,
+      "q": 0.4,
+      "reference_id": "Dephrasure_008_R2_n3.mat",
+      "reference_rate": 0.00004789974718208585,
+      "single_letter_rate": 0.000003267128353753781
+    },
+    {
+      "n": 4,
+      "p": 0.08,
+      "q": 0.4,
+      "reference_id": "Dephrasure_008_R3_n4.mat",
+      "reference_rate": 0.00007560948545808554,
+      "single_letter_rate": 0.000003267128353753781
+    },
+    {
+      "n": 3,
+      "p": 0.32,
+      "q": 0.1,
+      "reference_id": "Dephrasure_032_R3_n3.mat",
+      "reference_rate": 0.00011178287051553156,
+      "single_letter_rate": 0.000036954920223299104
+    },
+    {
+      "n": 4,
+      "p": 0.32,
+      "q": 0.1,
+      "reference_id": "nn032n4",
+      "reference_rate": 0.00011801746871108513,
+      "single_letter_rate": 0.000036954920223299104
+    }
+  ],
+  "witnesses": [
+    {
+      "id": "repetition",
+      "n": 1,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": 0.0000032671283535228458,
+      "kraus_rate": 0.000003267128353856563,
+      "dual_error": 3.3371742869103826e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "pi008n1",
+      "n": 1,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": -0.00026225559015398414,
+      "kraus_rate": -0.00026225559015391475,
+      "dual_error": 6.938893903907228e-17,
+      "reported_rate": null
+    },
+    {
+      "id": "repetition",
+      "n": 2,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": 0.000022502011704555493,
+      "kraus_rate": 0.000022502011704617075,
+      "dual_error": 6.158268339717665e-17,
+      "reported_rate": null
+    },
+    {
+      "id": "nn008n2",
+      "n": 2,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": -0.00004710586623601757,
+      "kraus_rate": -0.00004710586623590807,
+      "dual_error": 1.0950441942103595e-16,
+      "reported_rate": 0.000022502
+    },
+    {
+      "id": "pi008n2",
+      "n": 2,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": -0.0001853179983498255,
+      "kraus_rate": -0.00018531799834997642,
+      "dual_error": 1.5092094240998222e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "product(repetition,repetition)",
+      "n": 2,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": 0.0000032671283540855467,
+      "kraus_rate": 0.0000032671283544116747,
+      "dual_error": 3.2612801348363973e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "repetition",
+      "n": 3,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": 0.000040195149653976817,
+      "kraus_rate": 0.00004019514965477219,
+      "dual_error": 7.953707137353661e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "nn008n3",
+      "n": 3,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": 0.00004788138192212433,
+      "kraus_rate": 0.000047881381921577315,
+      "dual_error": 5.470138773368272e-16,
+      "reported_rate": 0.000047881
+    },
+    {
+      "id": "pi008n3",
+      "n": 3,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": -0.00012252966901197515,
+      "kraus_rate": -0.0001225296690120873,
+      "dual_error": 1.1216071474362543e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "Dephrasure_008_R2_n3.mat",
+      "n": 3,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": 0.00004789974718208585,
+      "kraus_rate": 0.000047899747180224495,
+      "dual_error": 1.861358289723114e-15,
+      "reported_rate": 0.00004789974718244494
+    },
+    {
+      "id": "Dephrasure_008_R3_n3.mat",
+      "n": 3,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": 0.0000013663303542139507,
+      "kraus_rate": 0.0000013663303524147352,
+      "dual_error": 1.7992155057895655e-15,
+      "reported_rate": 0.000001366330352562765
+    },
+    {
+      "id": "product(repetition,repetition)",
+      "n": 3,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": 0.00001609038392112406,
+      "kraus_rate": 0.000016090383919327895,
+      "dual_error": 1.796163857838845e-15,
+      "reported_rate": null
+    },
+    {
+      "id": "product(repetition,repetition)",
+      "n": 3,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": 0.000016090383920952897,
+      "kraus_rate": 0.000016090383920512135,
+      "dual_error": 4.407620644332477e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "repetition",
+      "n": 4,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": 0.00004438931342445993,
+      "kraus_rate": 0.000044389313419435084,
+      "dual_error": 5.024843388601319e-15,
+      "reported_rate": null
+    },
+    {
+      "id": "nn008n4",
+      "n": 4,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": 0.0000656994045083912,
+      "kraus_rate": 0.00006569940450384948,
+      "dual_error": 4.541722900541778e-15,
+      "reported_rate": 0.000065699
+    },
+    {
+      "id": "pi008n4",
+      "n": 4,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": -0.00007250374610250684,
+      "kraus_rate": -0.00007250374610623389,
+      "dual_error": 3.72705338813617e-15,
+      "reported_rate": null
+    },
+    {
+      "id": "Dephrasure_008_R2_n4.mat",
+      "n": 4,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": 8.167820864509603e-7,
+      "kraus_rate": 8.167820819693361e-7,
+      "dual_error": 4.481624218868191e-15,
+      "reported_rate": 8.16782087076362e-7
+    },
+    {
+      "id": "Dephrasure_008_R3_n4.mat",
+      "n": 4,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": 0.00007560948545808554,
+      "kraus_rate": 0.00007560948545526358,
+      "dual_error": 2.821961414545271e-15,
+      "reported_rate": 0.00007560948545726198
+    },
+    {
+      "id": "product(repetition,Dephrasure_008_R2_n3.mat)",
+      "n": 4,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": 0.00003674159247448632,
+      "kraus_rate": 0.00003674159247224473,
+      "dual_error": 2.2415879916137804e-15,
+      "reported_rate": null
+    },
+    {
+      "id": "product(repetition,repetition)",
+      "n": 4,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": 0.000022502011703597275,
+      "kraus_rate": 0.000022502011699621072,
+      "dual_error": 3.976203047373339e-15,
+      "reported_rate": null
+    },
+    {
+      "id": "product(Dephrasure_008_R2_n3.mat,repetition)",
+      "n": 4,
+      "p": 0.08,
+      "q": 0.4,
+      "rate": 0.00003674159247352485,
+      "kraus_rate": 0.00003674159247291087,
+      "dual_error": 6.139836902785412e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "repetition",
+      "n": 1,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.00003695492022318353,
+      "kraus_rate": 0.00003695492022337543,
+      "dual_error": 1.9190378452993428e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "pi032n1",
+      "n": 1,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": -0.0012338102388047383,
+      "kraus_rate": -0.0012338102388040895,
+      "dual_error": 6.487865800153259e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "repetition",
+      "n": 2,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.00009734492736152207,
+      "kraus_rate": 0.00009734492736135358,
+      "dual_error": 1.684850176042474e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "nn032n2",
+      "n": 2,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.00009920445636712885,
+      "kraus_rate": 0.00009920445636757425,
+      "dual_error": 4.453902524570452e-16,
+      "reported_rate": 0.000099204
+    },
+    {
+      "id": "pi032n2",
+      "n": 2,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": -0.0008090669844106942,
+      "kraus_rate": -0.0008090669844109666,
+      "dual_error": 2.723515857283587e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "product(repetition,repetition)",
+      "n": 2,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.00003695492022281533,
+      "kraus_rate": 0.0000369549202237085,
+      "dual_error": 8.931657496935586e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "repetition",
+      "n": 3,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.000048367836504595524,
+      "kraus_rate": 0.00004836783650382278,
+      "dual_error": 7.727447696483092e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "nn032n3",
+      "n": 3,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.00011171930413021985,
+      "kraus_rate": 0.00011171930412875082,
+      "dual_error": 1.4690261810820782e-15,
+      "reported_rate": 0.00011172
+    },
+    {
+      "id": "pi032n3",
+      "n": 3,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": -0.0005104157094209331,
+      "kraus_rate": -0.0005104157094188988,
+      "dual_error": 2.034288536234552e-15,
+      "reported_rate": null
+    },
+    {
+      "id": "Dephrasure_032_R2_n3.mat",
+      "n": 3,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.00007463355242060639,
+      "kraus_rate": 0.00007463355242028531,
+      "dual_error": 3.2107292085442607e-16,
+      "reported_rate": 0.00007463355242102547
+    },
+    {
+      "id": "Dephrasure_032_R3_n3.mat",
+      "n": 3,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.00011178287051553156,
+      "kraus_rate": 0.00011178287051520168,
+      "dual_error": 3.298820635058708e-16,
+      "reported_rate": 0.00011178287051379539
+    },
+    {
+      "id": "product(repetition,nn032n2)",
+      "n": 3,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.000078454610985708,
+      "kraus_rate": 0.00007845461098635968,
+      "dual_error": 6.516868208267246e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "product(nn032n2,repetition)",
+      "n": 3,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.00007845461098631458,
+      "kraus_rate": 0.00007845461098717384,
+      "dual_error": 8.592573267490744e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "repetition",
+      "n": 4,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.000008380667552301683,
+      "kraus_rate": 0.000008380667545604403,
+      "dual_error": 6.697279449768834e-15,
+      "reported_rate": null
+    },
+    {
+      "id": "nn032n4",
+      "n": 4,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.00011801746871108513,
+      "kraus_rate": 0.00011801746871009655,
+      "dual_error": 9.88575540872283e-16,
+      "reported_rate": 0.00011802
+    },
+    {
+      "id": "pi032n4",
+      "n": 4,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": -0.00030325931604063654,
+      "kraus_rate": -0.0003032593160423591,
+      "dual_error": 1.7225804116449694e-15,
+      "reported_rate": null
+    },
+    {
+      "id": "Dephrasure_032_R2_n4.mat",
+      "n": 4,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.00008636464304502328,
+      "kraus_rate": 0.00008636464304434543,
+      "dual_error": 6.778431982379374e-16,
+      "reported_rate": 0.0000863646430436793
+    },
+    {
+      "id": "Dephrasure_032_R3_n4.mat",
+      "n": 4,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.00007976745284000585,
+      "kraus_rate": 0.00007976745283999609,
+      "dual_error": 9.75781955236954e-18,
+      "reported_rate": 0.00007976745283966302
+    },
+    {
+      "id": "product(repetition,Dephrasure_032_R3_n3.mat)",
+      "n": 4,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.00009307588294259878,
+      "kraus_rate": 0.00009307588294227287,
+      "dual_error": 3.2591117304914263e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "product(nn032n2,nn032n2)",
+      "n": 4,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.00009920445636724942,
+      "kraus_rate": 0.00009920445636690811,
+      "dual_error": 3.413068438984368e-16,
+      "reported_rate": null
+    },
+    {
+      "id": "product(Dephrasure_032_R3_n3.mat,repetition)",
+      "n": 4,
+      "p": 0.32,
+      "q": 0.1,
+      "rate": 0.00009307588294242487,
+      "kraus_rate": 0.00009307588294305003,
+      "dual_error": 6.251509726551419e-16,
+      "reported_rate": null
+    }
+  ],
+  "max_dual_error": 6.697279449768834e-15
+}
