@@ -78,8 +78,8 @@ lineage:
   current_admission_report: experiments/transit_timing_admission_2026-09-16.json
   edits_triggered_by_model: none
   shortcut_discoverer: maintainer_PR11_review_and_regression_probes
-  frozen_before_eval: true
-  freeze_timestamp: '2026-09-15T16:54:16Z'
+  frozen_before_eval: false
+  freeze_timestamp: null
 long_horizon:
   status: not_tested
   measurement_health_passed: false
