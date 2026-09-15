@@ -6,7 +6,7 @@ import unittest
 import yaml
 
 from scripts.shortcut_probe_contract import undeclared_candidates, validate_contract
-from sle.registry import get_task
+from sle.registry import list_tasks
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -48,7 +48,11 @@ class TransitTimingShortcutContractTests(unittest.TestCase):
 
     def test_every_in_tree_entrypoint_is_declared_or_excluded(self):
         card = yaml.safe_load((TASK / "TASK_CARD.yaml").read_text(encoding="utf-8"))
-        spec = get_task("Exoplanets/TransitTimingAttribution")
+        spec = next(
+            spec
+            for spec in list_tasks(None)
+            if spec.task_id == "Exoplanets/TransitTimingAttribution"
+        )
         self.assertEqual(undeclared_candidates(card["shortcut_probe"], spec), [])
 
     def test_fixed_candidate_matches_the_grid_winner_parameters(self):
