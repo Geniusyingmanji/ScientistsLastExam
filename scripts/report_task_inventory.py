@@ -63,6 +63,7 @@ CHINESE_NAMES = {
     "Gravitation/PTAHellingsDowns": "脉冲星阵四极相关",
     "HeatTransfer/ConvectionDiffusionOpt": "对流扩散辨识与加热器设计",
     "MaterialsScience/AlloyHardnessOptimization": "合金硬度实验设计",
+    "MaterialsScience/CrystalStructurePolymorphSearch": "晶体结构与多晶型搜索",
     "MaterialsScience/PhaseDiagramDiscovery": "相图发现",
     "MaterialsScience/QuinaryConvexHull": "五元凸包稳定相",
     "Mathematics/BlackBoxGroupIdentification": "黑盒群同构辨识",
@@ -128,6 +129,7 @@ CHINESE_NAMES = {
 # people deciding which task to look at. A task without an entry fails the inventory test,
 # so a new package cannot silently ship without one.
 CHINESE_BRIEFS = {
+    "MaterialsScience/CrystalStructurePolymorphSearch": ("在固定二元组成和周期势下搜索低焓晶体及不同低能多晶型", "24次局部弛豫后返回三个结构，按最低焓与低能结构多样性计分"),
     'Microbiology/MetagenomeCompositionAssignment': (
         "从收费 marker 计数中恢复分类单元与丰度,保留近缘别名并识别参考库不足",
         "组成恢复、别名/库外拒答与假发现率分列"),

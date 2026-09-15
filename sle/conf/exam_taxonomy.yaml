@@ -84,6 +84,7 @@ tasks:
   RNAEngineering/RNAInverseDesign: {form: optimization, analogue: molecular_design}
   RNAEngineering/RNAEnsembleDesign: {form: optimization, analogue: molecular_design}
   Chemistry/LennardJonesCluster: {form: optimization, analogue: molecular_design}
+  MaterialsScience/CrystalStructurePolymorphSearch: {form: optimization, analogue: molecular_design, note: fixed_composition_periodic_cell_and_low_energy_polymorph_archive_not_isolated_lj_cluster_or_phase_identification}
   # --- discovery / formula ----------------------------------------------------
   Mathematics/SequenceLawRecovery: {form: discovery, kind: formula}
   DynamicalSystems/ActiveLawDiscovery: {form: discovery, kind: formula}

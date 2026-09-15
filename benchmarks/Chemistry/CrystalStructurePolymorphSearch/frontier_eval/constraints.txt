@@ -1,0 +1,5 @@
+1) Only edit solution.py and keep search_crystals(problem, relax_structure).
+2) Use at most 24 relaxation calls per composition; caught invalid calls and overruns still fail.
+3) Return exactly three distinct candidate_ids issued by the current callback session.
+4) Deterministic CPU code only; NumPy/SciPy/standard library, no network or process creation.
+5) Do not read or import verification/ or frontier_eval/.

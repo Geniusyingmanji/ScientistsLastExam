@@ -1,0 +1,13 @@
+domain: MaterialsScience
+task: CrystalStructurePolymorphSearch
+scientific_role: optimization
+difficulty: unmeasured
+tier: candidate
+oracle_type: physical_sim
+score_mode: uncapped
+gpu_required: false
+eval_time_seconds: 140
+science_metric: relaxed_enthalpy_and_low_energy_polymorph_diversity
+reference_baseline: three_deterministic_random_seeds
+reference_sota: 24_call_multistart_with_exact_archive_selection_witness
+citation: "Abraham & Probert, Phys. Rev. B 73, 224104 (2006), DOI 10.1103/PhysRevB.73.224104; Oganov & Glass, Comput. Phys. Commun. 175 (2006), DOI 10.1016/j.cpc.2006.07.020"

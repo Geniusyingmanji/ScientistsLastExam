@@ -4,16 +4,16 @@
 
 | | |
 |---|---:|
-| 任务包 | 87 |
-| optimization | 42 |
+| 任务包 | 88 |
+| optimization | 43 |
 | discovery | 45 |
 | certified | 5 |
-| candidate | 82 |
-| 学科 | 7(Biology 9,Chemistry 13,ComputerScience 9,EarthScience 7,Engineering 13,Mathematics 19,Physics 17) |
+| candidate | 83 |
+| 学科 | 7(Biology 9,Chemistry 14,ComputerScience 9,EarthScience 7,Engineering 13,Mathematics 19,Physics 17) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
-## Optimization(42)
+## Optimization(43)
 
 ### 工程设计(engineering_design) — 16
 
@@ -58,13 +58,14 @@
 | [`ZarankiewiczMatrix`](benchmarks/Mathematics/ZarankiewiczMatrix/)<br>Zarankiewicz 极值矩阵 | Mathematics | Mathematics | uncapped | analytical | candidate | build a denser K3,3-free 0/1 matrix than the published record | 在三组给定的 (m,n) 规模上构造不含 3x3 全一子矩阵的更密 0/1 矩阵——2026 年 LLM 进化搜索(OpenEvolve,本仓库自带的搜索后端之一)刚刷新过的极值图论问题 | 对最新发表下界(z(m,n;3,3) 的已发表值)的平均进度;无上限,且这些是尚未被上界证明封顶的下界纪录 |
 | [`QuantumErrorDecoder`](benchmarks/Physics/QuantumErrorDecoder/)<br>表面码解码器 | Physics | QuantumErrorCorrection | uncapped | stim_stabilizer_circuit_sampling | candidate | decode rotated surface-code memory below threshold | 为旋转表面码存储设计阈值以下的解码器 | 相对最小权完美匹配的逻辑错误率对数下降;无上限 |
 
-### 分子与大分子设计(molecular_design) — 5
+### 分子与大分子设计(molecular_design) — 6
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
 | [`ProteinStabilityDesign`](benchmarks/Biology/ProteinStabilityDesign/)<br>蛋白稳定性批次设计 | Biology | ProteinEngineering | uncapped | real_data_replay | candidate | allocate assays and design a stable protein batch | 在蛋白稳定性实验回放里分配测定预算,设计双点突变批次 | 留出稳定性前十分位 + 多样性 + 蛋白酶稳健性 + 结构域迁移;无上限 |
 | [`RNAEnsembleDesign`](benchmarks/Biology/RNAEnsembleDesign/)<br>RNA 系综设计 | Biology | RNAEngineering | uncapped | community_thermodynamics_viennarna | candidate | Design an RNA sequence that folds into a given secondary structure — not merely as its | 设计 RNA 序列,使目标二级结构在整个玻尔兹曼系综上而非仅 MFE 上成立 | 对 ViennaRNA 反折叠的系综缺陷;密封目标,无上限 |
 | [`RNAInverseDesign`](benchmarks/Biology/RNAInverseDesign/)<br>RNA 约束反折叠 | Biology | RNAEngineering | uncapped | exact_dynamic_programming | candidate | design a constrained sequence for a target ensemble | 在长度、字母表、GC 与基序约束下设计目标系综概率高的 RNA 序列 | 目标系综概率 + MFE 迁移 + 代理误升迁;配对相容只是代理,无上限 |
+| [`CrystalStructurePolymorphSearch`](benchmarks/Chemistry/CrystalStructurePolymorphSearch/)<br>晶体结构与多晶型搜索 | Chemistry | MaterialsScience | uncapped | physical_sim | candidate | predict low-enthalpy periodic structures from composition | 在固定二元组成和周期势下搜索低焓晶体及不同低能多晶型 | 24次局部弛豫后返回三个结构，按最低焓与低能结构多样性计分 |
 | [`LennardJonesCluster`](benchmarks/Chemistry/LennardJonesCluster/)<br>Lennard-Jones 团簇 | Chemistry | Chemistry | uncapped | analytical | certified | minimize the energy of atomic clusters | 求 Lennard-Jones 原子簇的最低能量几何构型 | 对全局最小的平均缺口闭合;无上限 |
 | [`MolecularLeadOptimization`](benchmarks/Chemistry/MolecularLeadOptimization/)<br>分子先导组合优化 | Chemistry | MedicinalChemistry | uncapped | rdkit_cheminformatics_property_filter | candidate | build a diverse portfolio of novel, developable leads | 构建结构多样、可开发的新颖先导化合物组合,而非单个分子 | 多样性约束下的组合价值,对标已上市药物;无上限 |
 

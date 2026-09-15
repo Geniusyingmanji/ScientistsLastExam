@@ -1,0 +1,110 @@
+schema_version: 2
+scientific_question: Given only a binary composition and frozen periodic pair potential, can a budgeted global search find a low-enthalpy crystal while retaining structurally distinct low-energy polymorphs?
+artifact: A deterministic search policy that proposes periodic orthorhombic seeds through a charged local-relaxation callback and returns three callback-issued candidate identifiers.
+oracle:
+  model: periodic shifted 12-6 binary Lennard-Jones energy over the complete 5 by 5 by 5 image stencil covering the largest cutoff plus external-pressure volume work, followed by deterministic L-BFGS-B relaxation of coordinates, volume, and orthorhombic shape
+  feasibility: exact species count and order, finite three-vector cell, finite N by 3 fractional coordinates, public length/volume/aspect/separation bounds, three distinct session-issued candidates, and no callback-budget violation
+  deterministic: true
+normalization:
+  baseline: three deterministic random seeds followed by the same local relaxation
+  reference: twenty-four deterministic multistarts spanning cubic and anisotropic cells, followed by exact three-member archive selection; a witness rather than a global-optimality certificate
+  score: best relaxed enthalpy plus a small species-aware low-energy fingerprint-diversity term, normalized to baseline zero and witness one with no upper clip; held-out transfer and raw scientific metrics remain separate
+citations:
+- id: doi:10.1103/PhysRevB.73.224104
+  title: A periodic genetic algorithm with real-space representation for crystal structure and polymorph prediction
+- id: doi:10.1016/j.cpc.2006.07.020
+  title: Crystal structure prediction using ab initio evolutionary techniques principles and applications
+invariants:
+- energy is invariant to a common fractional translation of all atoms
+- the five-by-five-by-five periodic image stencil completely covers the largest pair cutoff under the minimum relaxed cell length
+- every final candidate was locally relaxed by the trusted callback in the current world
+- atom identities and stoichiometric order cannot be changed by a submission
+- cell volume is parameterized to remain within its frozen bounds throughout relaxation
+- the shipped three-seed archive is valid in all five worlds and defines score zero
+- the twenty-four-start witness is valid in all five worlds and defines score one
+- caught invalid queries and callback-budget overruns fail the world
+- development score is search-visible while held-out, raw enthalpy, diversity, polymorph count, and per-world metrics are sealed
+known_shortcuts: >-
+  Current admission is blocked. In two canonical Linux Python 3.11 / NumPy 1.24.4 /
+  SciPy 1.10.1 sandbox passes, pure 24-call cubic multistart scores 1.0910731033536747,
+  incumbent perturbation/restarts score 1.299970759773847, and replaying only the three
+  development-world witness records scores 1.6247986523685534 with three online calls.
+  All beat the original 1.0 reference or 0.9 guard threshold. Record replay falls back
+  to baseline on the two unseen compositions and has zero source-heldout score, which
+  does not affect the development-only primary score. All five worlds are public
+  source constants; no private or open-instance anti-memorization guarantee exists.
+  Energy-only archive selection retains 0.9922909569748118, so strong diversity-driven
+  difficulty is unsupported. The 25-iteration local optimizer does not verify convergence.
+  This small binary LJ surrogate omits electronic structure, many-body interactions,
+  variable stoichiometry, space-group constraints, phonons, temperature, kinetics and DFT.
+  No output is a real-material discovery claim.
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_multistart.py
+    expected_score: 1.0
+  probes:
+  - id: three_cubic_random_starts
+    candidate: verification/shortcut_cubic.py
+    expected_score: 0.17081851642267407
+  - id: cubic_multistart_24
+    candidate: verification/shortcut_cubic24.py
+    expected_score: 1.0910731033536747
+  - id: anisotropic_multistart_24
+    candidate: verification/shortcut_anisotropic24.py
+    expected_score: 0.8802728981904205
+  - id: incumbent_restarts_24
+    candidate: verification/shortcut_restarts24.py
+    expected_score: 1.299970759773847
+  - id: development_record_replay
+    candidate: verification/shortcut_record_replay.py
+    expected_score: 1.6247986523685534
+  relative_margin: 0.1
+  score_tolerance: 0.000001
+review:
+  domain: pending_external_computational_materials
+  evaluator_security: author_linux_sandbox_session_isolation_and_budget_checks_passed_pending_independent_review
+provenance:
+  class: procedural
+  target_source: Deterministic analytic potential and frozen procedural compositions defined in the evaluator.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_applicable_synthetic
+novelty_risk:
+  level: medium
+  rationale: Crystal global optimization is established, but the SLE inventory and audited Frontier-Eng catalogue contain no fixed-composition periodic structure plus polymorph archive search.
+lineage:
+  status: complete
+  builder_model_ids: [openai:gpt-5]
+  builder_scaffolds: [SLE_contribution_contract_and_merged_PR6_exemplar]
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: none_before_first_frontier_draw
+  shortcut_discoverer: builder_multistart_and_cubic_seed_probe
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_checked_pending_independent_review
+  author_domain: AI_assisted_pending_human_verification
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 1
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: periodic_energy_invariance_and_anchor_recomputation_covered_by_task_tests
+
+evaluation_budget:
+  relaxation_calls_per_world: 24
+  evaluator_timeout_seconds: 300
+revision_evidence:
+  summary: experiments/crystal_structure_polymorph_search_revision_2026-09-15.json
+  measured_source: 1a82e9ab53bb6506ffe981d6589de816ea12f212
+  scope: author_linux_sandbox_comparison_not_certification
+  admission_status: blocked_by_strong_controls_and_record_reuse
+  operator: AI_assisted_author_revision
+  independent_domain_review: false

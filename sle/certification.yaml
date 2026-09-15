@@ -10,6 +10,10 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  MaterialsScience/CrystalStructurePolymorphSearch:
+    status: candidate
+    reason: Deterministic fixed-composition periodic binary-crystal search with charged local relaxation, pressure, cell optimization, and a three-member low-energy polymorph archive; retained as unmeasured after Linux strong-control failure (24-call cubic multistart 1.091073, incumbent restarts 1.299971, development-record replay 1.624799 against reference 1.0); requires a stronger reference, convergence-qualified relaxation, record-resistant instance protocol, independent computational-materials review, and fresh model admission.
+    citation_ids: [doi:10.1103/PhysRevB.73.224104, doi:10.1016/j.cpc.2006.07.020]
   Ecology/OccupancyDetectionDesign:
     status: candidate
     reason: Active repeat-survey allocation and latent occupancy inference under imperfect detection, with explicit refusal for nonlinear habitat and spatially structured worlds; retained as a candidate pending server-held surveys, real field-data replication and independent ecology review.
