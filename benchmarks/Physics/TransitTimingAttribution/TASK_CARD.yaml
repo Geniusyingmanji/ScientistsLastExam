@@ -56,11 +56,11 @@ provenance:
   class: procedural
   target_source: repository-visible deterministic TTV generator with development and shifted held-out worlds
   task_contract_public_before_evaluation: true
-  fresh_confirmation_status: pending_clean_linux_replay_after_C12_scoring_revision
+  fresh_confirmation_status: clean_linux_task_gate_probe_replay_and_D16_completed_2026_09_16_on_270e7df2
   license: procedural repository-local code; no external dataset bundled
 novelty_risk:
   level: medium
-  rationale: Unlike Exoplanets/RadialVelocityPlanets, this task attributes transit-timing residuals under an active follow-up schedule rather than detecting planets in a fixed radial-velocity series; unlike ParticlePhysics/LookElsewhereAnomaly, refusal is triggered by histories outside the declared stationary periodic/quadratic families rather than insufficient global statistical significance, and the claimed object is a declared synthetic timing family rather than an anomaly significance class.
+  rationale: Unlike Exoplanets/RadialVelocityPlanets, this task attributes transit-timing residuals under an active follow-up schedule rather than detecting planets in a fixed radial-velocity series; unlike ParticlePhysics/LookElsewhereAnomaly, refusal is triggered by histories outside the declared stationary periodic/quadratic families rather than insufficient global statistical significance. Physics/CriticalPhenomenaLab also couples active experiments to mechanism attribution, but estimates scaling-law classes rather than timing families and forecasts; Exoplanets/TransmissionSpectrumSpecies resolves fixed spectral mixtures, whereas this task chooses future time coordinates and scores extrapolation and acquisition design.
 lineage:
   status: complete
   builder_model_ids:
@@ -73,12 +73,13 @@ lineage:
   calibration_runs:
   - experiments/transit_timing_deepseek_flash_2026-09-05.json
   - experiments/transit_timing_deepseek_calibration_2026-09-06.json
-  calibration_evidence_status: historical_only
-  current_admission_report: null
+  - experiments/transit_timing_admission_2026-09-16.json
+  calibration_evidence_status: current_or_migration_replayed
+  current_admission_report: experiments/transit_timing_admission_2026-09-16.json
   edits_triggered_by_model: none
   shortcut_discoverer: maintainer_PR11_review_and_regression_probes
-  frozen_before_eval: false
-  freeze_timestamp: null
+  frozen_before_eval: true
+  freeze_timestamp: '2026-09-15T16:54:16Z'
 long_horizon:
   status: not_tested
   measurement_health_passed: false

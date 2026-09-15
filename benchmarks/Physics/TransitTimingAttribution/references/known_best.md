@@ -25,14 +25,21 @@ presented as measurements of the current evaluator.
 
 ## Model calibration
 
-The committed DeepSeek Flash and Pro draws predate the current multi-panel worlds, variable
-horizons, acquisition-design term, and cubic precision penalty. They remain protocol history only.
-The three gpt-5.6-sol/high first proposals in the 2026-09-14 admission record likewise bind to an
-older task-package hash and do not establish current difficulty. A fresh D16 first-proposal record is
-required after the current executable revision is committed and replayed on Linux.
+Older DeepSeek and gpt-5.6-sol/high draws predate the current multi-panel worlds, variable horizons,
+acquisition-design term, and cubic precision penalty. They remain protocol history only.
 
-No model output was used to select the current development seeds, fixed-policy winner, score weights,
-or reference constants.
+On clean Linux revision `270e7df2`, DeepSeek Flash and Pro each made two independent
+selection-blind first proposals with proposal budget one and replicate identifiers 17 and 29.
+Thinking was disabled by a repository-external localhost adapter that injected
+`thinking.type=disabled`; both exact model IDs first returned visible smoke output. All four
+proposals were valid. Flash scored `0` and `0.000862`; Pro scored `0.018452` and `0`. The maximum
+is 3.10% of the `0.594835` reference. These are endpoint draws without server-side seed control,
+not paired seeded samples or iterative improvement. The compact source-bound record is
+`experiments/transit_timing_admission_2026-09-16.json`; prompts, generated programs, endpoints,
+credentials, and local run directories are excluded.
+
+No model output was used to select development seeds, the fixed-policy winner, score weights, or
+reference constants.
 
 ## Baseline
 
@@ -44,8 +51,8 @@ baseline requirement rather than obtaining zero by blanket abstention.
 ## Ablation ladder
 
 All current ablations reuse the reference fitting and evidence logic and change one declared
-capability. Values below were measured in-process on the current deterministic evaluator and must be
-replayed through the clean Linux sandbox before admission evidence is finalized.
+capability. Values below were replayed twice through the clean Linux trusted driver and bubblewrap;
+each pair produced identical complete metrics.
 
 | Candidate | Development | Held-out |
 |---|---:|---:|
