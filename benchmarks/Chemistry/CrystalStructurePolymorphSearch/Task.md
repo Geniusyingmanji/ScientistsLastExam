@@ -90,6 +90,16 @@ ranges from synthetic powder patterns, while `QuinaryConvexHull` identifies stab
 from formation energies. This task instead searches periodic atomic structures at fixed composition.
 The audited Frontier-Eng catalogue contains no crystal-structure or polymorph search task.
 
+## Current validation status
+
+This is an uncalibrated candidate. On the frozen five-world suite, the current reference's
+24 seed structures with an energy-only final archive score 0.992291 rather than 1.0;
+removing diversity-aware archive selection therefore costs only 0.007709. Equal-budget
+cubic multistart and incumbent perturbation controls exceed the current witness, and
+reusing development-instance records also defeats the shortcut guard. These results do
+not establish expert-level difficulty. See `references/known_best.md` for the fixed
+comparison protocol and limitations; that file is not an allowed candidate input.
+
 ## Rules and scientific scope
 
 - Only edit `solution.py`; keep `search_crystals(problem, relax_structure)`.

@@ -1,0 +1,352 @@
+{
+  "schema_version": 1,
+  "task_id": "MaterialsScience/CrystalStructurePolymorphSearch",
+  "date": "2026-09-15",
+  "status": "admission_blocked_by_strong_controls",
+  "reviewed_head": "1bdade62097ad30174125ac60c02ddbc473e48be",
+  "upstream_main": "dab91e350c254970068686c1485ed989c55bb8f3",
+  "comparison_source": {
+    "commit": "1a82e9ab53bb6506ffe981d6589de816ea12f212",
+    "dirty": "",
+    "runtime": {
+      "schema_version": 1,
+      "implementation": "cpython",
+      "python_version": "3.11.15",
+      "cache_tag": "cpython-311",
+      "soabi": "cpython-311-x86_64-linux-gnu",
+      "distributions": {
+        "numpy": "1.24.4",
+        "scipy": "1.10.1"
+      },
+      "fingerprint_sha256": "b4ecb0f599cb7d87c424294e3f5d7bc629c5076ce2f17bddf01d8c4ec9616fd8"
+    },
+    "platform": "Linux-6.8.0-101-generic-x86_64-with-glibc2.39",
+    "numpy": "1.24.4",
+    "scipy": "1.10.1",
+    "timeout_s": 300,
+    "seed_selection": "fixed in candidate source before measurement; no heldout selection",
+    "sandbox": "canonical CandidateProxy + validate_metrics; shared trusted anchor cache within pass; separate process per pass"
+  },
+  "comparison_protocol": "Two fresh trusted processes recompute anchors independently; each method runs in canonical CandidateProxy with reset at each world; trusted anchor cache is reused within each pass. Unmodified evaluate_candidate and contribution gate are recorded separately. No heldout selection.",
+  "original_standard_replay": [
+    {
+      "candidate": "solution.py",
+      "sha256": "fda6f82111be9980efc6c16d7dc6d0d01926335ef6622bb22e21fd136c55f314",
+      "score": 0.0,
+      "valid": 1.0,
+      "full_metrics_equal": true,
+      "wall_seconds": [
+        76.42958307266235,
+        76.79772019386292
+      ]
+    },
+    {
+      "candidate": "verification/reference_multistart.py",
+      "sha256": "cab3b65228c68e958c6f5ba1f221ba350e646982d09a96c1ae084092eaa72824",
+      "score": 1.0,
+      "valid": 1.0,
+      "full_metrics_equal": true,
+      "wall_seconds": [
+        135.70914483070374,
+        140.68902564048767
+      ]
+    },
+    {
+      "candidate": "verification/shortcut_cubic.py",
+      "sha256": "a682fdb10aba6d80aa66b1c87ac0c920183c5bfe53c1376e9ecfc3041cf56e4e",
+      "score": 0.17081851642267407,
+      "valid": 1.0,
+      "full_metrics_equal": true,
+      "wall_seconds": [
+        82.30514097213745,
+        80.90368175506592
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "candidate": "solution.py",
+      "sha256": "fda6f82111be9980efc6c16d7dc6d0d01926335ef6622bb22e21fd136c55f314",
+      "development_score": 0.0,
+      "heldout_score": 0.0,
+      "valid_worlds": 5,
+      "total_worlds": 5,
+      "calls_per_world": 3.0,
+      "mean_development_enthalpy_per_atom": -4.095045913535035,
+      "mean_development_diversity": 0.04461524595853337,
+      "full_metrics_equal": true,
+      "wall_seconds": [
+        8.228714248165488,
+        8.183770309202373
+      ],
+      "trusted_cpu_seconds": [
+        7.267208000000004,
+        7.266017999999999
+      ],
+      "reaped_children_cpu_seconds": [
+        0.02995700000000001,
+        0.029285000000000005
+      ]
+    },
+    {
+      "candidate": "verification/reference_multistart.py",
+      "sha256": "8944e9df4afc047d7c65178d50ee5c40709153678029efd6fd6a9755c9020625",
+      "development_score": 1.0,
+      "heldout_score": 1.0,
+      "valid_worlds": 5,
+      "total_worlds": 5,
+      "calls_per_world": 24.0,
+      "mean_development_enthalpy_per_atom": -4.4572521763522746,
+      "mean_development_diversity": 0.059086769592641114,
+      "full_metrics_equal": true,
+      "wall_seconds": [
+        65.05842970078811,
+        64.66496324213222
+      ],
+      "trusted_cpu_seconds": [
+        58.320770999999986,
+        58.745429999999985
+      ],
+      "reaped_children_cpu_seconds": [
+        0.03071400000000002,
+        0.030899999999999928
+      ]
+    },
+    {
+      "candidate": "verification/shortcut_cubic.py",
+      "sha256": "a682fdb10aba6d80aa66b1c87ac0c920183c5bfe53c1376e9ecfc3041cf56e4e",
+      "development_score": 0.17081851642267407,
+      "heldout_score": 0.3386319718689703,
+      "valid_worlds": 5,
+      "total_worlds": 5,
+      "calls_per_world": 3.0,
+      "mean_development_enthalpy_per_atom": -4.017544846992646,
+      "mean_development_diversity": 0.044922998986798635,
+      "full_metrics_equal": true,
+      "wall_seconds": [
+        8.184687287081033,
+        8.122418852057308
+      ],
+      "trusted_cpu_seconds": [
+        7.118056000000009,
+        7.1323630000000104
+      ],
+      "reaped_children_cpu_seconds": [
+        0.02903200000000017,
+        0.03154400000000007
+      ]
+    },
+    {
+      "candidate": "verification/shortcut_cubic24.py",
+      "sha256": "621b29c9427a7ac2b472bfc581342f6ed6e9a899faeb42f5d5b6f937754d439d",
+      "development_score": 1.0910731033536747,
+      "heldout_score": 1.0660626062083591,
+      "valid_worlds": 5,
+      "total_worlds": 5,
+      "calls_per_world": 24.0,
+      "mean_development_enthalpy_per_atom": -4.492634517151726,
+      "mean_development_diversity": 0.05384522136810379,
+      "full_metrics_equal": true,
+      "wall_seconds": [
+        65.93703228188679,
+        65.77926990017295
+      ],
+      "trusted_cpu_seconds": [
+        59.42985099999997,
+        58.99056499999998
+      ],
+      "reaped_children_cpu_seconds": [
+        0.029717999999999967,
+        0.031396000000000035
+      ]
+    },
+    {
+      "candidate": "verification/shortcut_anisotropic24.py",
+      "sha256": "a09d94fc2e8113c5b91df40b07b4465f2053f4585e3cddd1ccd5796e609d625e",
+      "development_score": 0.8802728981904205,
+      "heldout_score": 1.2205661069032723,
+      "valid_worlds": 5,
+      "total_worlds": 5,
+      "calls_per_world": 24.0,
+      "mean_development_enthalpy_per_atom": -4.435683558429958,
+      "mean_development_diversity": 0.05698709849824666,
+      "full_metrics_equal": true,
+      "wall_seconds": [
+        64.20082669891417,
+        65.28630985086784
+      ],
+      "trusted_cpu_seconds": [
+        58.125795999999994,
+        59.027936000000025
+      ],
+      "reaped_children_cpu_seconds": [
+        0.02894999999999981,
+        0.029188999999999965
+      ]
+    },
+    {
+      "candidate": "verification/shortcut_restarts24.py",
+      "sha256": "bad36e5650bac0302b8114e130313073d58e7826d16a2a1ead5047dce4e2a4d9",
+      "development_score": 1.299970759773847,
+      "heldout_score": 1.9269982937625905,
+      "valid_worlds": 5,
+      "total_worlds": 5,
+      "calls_per_world": 24.0,
+      "mean_development_enthalpy_per_atom": -4.537432063957617,
+      "mean_development_diversity": 0.05872852899390967,
+      "full_metrics_equal": true,
+      "wall_seconds": [
+        64.45258766599,
+        65.0312425820157
+      ],
+      "trusted_cpu_seconds": [
+        56.18964399999998,
+        56.61908899999998
+      ],
+      "reaped_children_cpu_seconds": [
+        0.0291180000000002,
+        0.030413999999999886
+      ]
+    },
+    {
+      "candidate": "verification/ablation_energy_only.py",
+      "sha256": "a4f132123e51baeb02168b76a921954133ac87b9596b5fa9301c8ffd576fcf0c",
+      "development_score": 0.9922909569748118,
+      "heldout_score": 0.9909501100098388,
+      "valid_worlds": 5,
+      "total_worlds": 5,
+      "calls_per_world": 24.0,
+      "mean_development_enthalpy_per_atom": -4.4572521763522746,
+      "mean_development_diversity": 0.03913320457027939,
+      "full_metrics_equal": true,
+      "wall_seconds": [
+        60.04812841722742,
+        61.65038006333634
+      ],
+      "trusted_cpu_seconds": [
+        57.80579400000001,
+        59.302837000000046
+      ],
+      "reaped_children_cpu_seconds": [
+        0.03034600000000004,
+        0.03001400000000004
+      ]
+    },
+    {
+      "candidate": "verification/shortcut_record_replay.py",
+      "sha256": "d1e5f8de6923ac59c5aecb375a514921e9b071b21f19ca08a707b09a01715a75",
+      "development_score": 1.6247986523685534,
+      "heldout_score": 0.0,
+      "valid_worlds": 5,
+      "total_worlds": 5,
+      "calls_per_world": 3.0,
+      "mean_development_enthalpy_per_atom": -4.668402311162097,
+      "mean_development_diversity": 0.03373217049040056,
+      "full_metrics_equal": true,
+      "wall_seconds": [
+        8.65178282558918,
+        8.688348324038088
+      ],
+      "trusted_cpu_seconds": [
+        6.776317999999998,
+        6.829179
+      ],
+      "reaped_children_cpu_seconds": [
+        0.61369,
+        0.6225580000000001
+      ]
+    }
+  ],
+  "threshold": 0.9,
+  "targeted_tests": {
+    "passed": 21,
+    "subtests_passed": 5,
+    "skipped": 0,
+    "source": "1a82e9ab53bb6506ffe981d6589de816ea12f212"
+  },
+  "model_calibration": {
+    "executed": false,
+    "reason": "C12 guard defeated before D16; no difficulty claim"
+  },
+  "full_suite": "not_run; task-focused Linux tests and structural audits only",
+  "raw_metrics": "Retained outside Git in pr87-revision-2026-09-15; public summary omits per-world structures and raw metrics.",
+  "artifact_sha256": {
+    "comparison-1/environment.json": "a3379a3b48155227c3c280acf67273f7b9d1044f4ce0ab1ba342779ab8235d6b",
+    "comparison-2/environment.json": "a3379a3b48155227c3c280acf67273f7b9d1044f4ce0ab1ba342779ab8235d6b",
+    "original/environment.json": "1afdc4af48f345f63d09a5a569aeefbed928afd0dd1feedd3ad4d7a6c5e847b3",
+    "targeted-tests.xml": "2ab0537d7ae0d83b93a8c1fcae22bb4b0d23ca8ef6867d6847325e27dc3c7cd0"
+  },
+  "cpu_accounting_limit": "CPU values are trusted-process and reaped-child resource accounting, not independently verified total candidate-subtree CPU. Common callback and wall limits do not establish equal total compute.",
+  "supported_python312_probe_replay": {
+    "environment": {
+      "commit": "1a82e9ab53bb6506ffe981d6589de816ea12f212",
+      "dirty": "",
+      "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+      "platform": "Linux-6.8.0-101-generic-x86_64-with-glibc2.39",
+      "numpy": "1.26.4",
+      "scipy": "1.11.4",
+      "timeout_s": 300,
+      "runs_per_candidate": 2,
+      "selection": "All preregistered candidates, no heldout selection; sequential complete runs."
+    },
+    "score": 0.17081851642267407,
+    "full_metrics_equal": true,
+    "matches_python311_full_metrics": true
+  },
+  "record_continuation_diagnosis": {
+    "extra_relaxation_calls": 0,
+    "method": "evaluate original record energies and compare to previously measured single-call replay",
+    "rows": [
+      {
+        "world_index": 0,
+        "record_enthalpies_per_atom": [
+          -3.3012524408470076,
+          -4.072076465373971,
+          -3.9182151955281608
+        ],
+        "best_before_replay": -4.072076465373971,
+        "best_after_one_additional_relaxation": -4.072578992231548,
+        "improvement": 0.0005025268575762354
+      },
+      {
+        "world_index": 1,
+        "record_enthalpies_per_atom": [
+          -3.7616733819552564,
+          -4.256944175349935,
+          -4.552215295193872
+        ],
+        "best_before_replay": -4.552215295193872,
+        "best_after_one_additional_relaxation": -4.912534050977146,
+        "improvement": 0.36031875578327366
+      },
+      {
+        "world_index": 2,
+        "record_enthalpies_per_atom": [
+          -4.010241480167661,
+          -4.738215657647695,
+          -4.546968542532842
+        ],
+        "best_before_replay": -4.738215657647695,
+        "best_after_one_additional_relaxation": -5.0200938902775984,
+        "improvement": 0.28187823262990364
+      }
+    ]
+  },
+  "contribution_gate": {
+    "state": "running",
+    "source": "7c66f7e",
+    "command": "python scripts/check_task_contribution.py --task MaterialsScience/CrystalStructurePolymorphSearch --timeout 300 --output <private>/contribution-gate.json"
+  },
+  "scientific_source_sha256": {
+    "benchmarks/Chemistry/CrystalStructurePolymorphSearch/solution.py": "fda6f82111be9980efc6c16d7dc6d0d01926335ef6622bb22e21fd136c55f314",
+    "benchmarks/Chemistry/CrystalStructurePolymorphSearch/verification/ablation_energy_only.py": "a4f132123e51baeb02168b76a921954133ac87b9596b5fa9301c8ffd576fcf0c",
+    "benchmarks/Chemistry/CrystalStructurePolymorphSearch/verification/evaluator.py": "0c3b98b0e5a8e70fdeb415e787bca3d6a8b279e01e003aebf435fe22d2134205",
+    "benchmarks/Chemistry/CrystalStructurePolymorphSearch/verification/reference_multistart.py": "8944e9df4afc047d7c65178d50ee5c40709153678029efd6fd6a9755c9020625",
+    "benchmarks/Chemistry/CrystalStructurePolymorphSearch/verification/shortcut_anisotropic24.py": "a09d94fc2e8113c5b91df40b07b4465f2053f4585e3cddd1ccd5796e609d625e",
+    "benchmarks/Chemistry/CrystalStructurePolymorphSearch/verification/shortcut_cubic.py": "a682fdb10aba6d80aa66b1c87ac0c920183c5bfe53c1376e9ecfc3041cf56e4e",
+    "benchmarks/Chemistry/CrystalStructurePolymorphSearch/verification/shortcut_cubic24.py": "621b29c9427a7ac2b472bfc581342f6ed6e9a899faeb42f5d5b6f937754d439d",
+    "benchmarks/Chemistry/CrystalStructurePolymorphSearch/verification/shortcut_record_replay.py": "d1e5f8de6923ac59c5aecb375a514921e9b071b21f19ca08a707b09a01715a75",
+    "benchmarks/Chemistry/CrystalStructurePolymorphSearch/verification/shortcut_restarts24.py": "bad36e5650bac0302b8114e130313073d58e7826d16a2a1ead5047dce4e2a4d9"
+  },
+  "evidence_applicability": "Scientific source files are byte-identical to measured 1a82e9a. Later changes update declarations, budget documentation, validation-status prose and evidence only; there is no preexisting model calibration to migrate."
+}
