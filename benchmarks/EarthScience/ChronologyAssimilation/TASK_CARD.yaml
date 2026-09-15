@@ -1,0 +1,130 @@
+schema_version: 2
+scientific_question: Can a bounded dating program jointly recover chronology and a probabilistic paleotemperature
+  history while refusing null or nonstationary proxy systems?
+artifact: Temperature mean/std and monotone sample ages, with legacy constant offsets accepted.
+oracle:
+  model: Monotone piecewise-linear variable-accumulation age-depth maps, linear pseudoproxies, red-noise
+    climate, dating noise and unsupported regimes; NumPy climate scoring.
+  feasibility: finite aligned reconstructions, positive uncertainty and charged per-record dating under
+    a sixteen-unit budget
+  deterministic: true
+  external_tooling: NumPy for fixed-grid climate time-series alignment, CE and RMSE reduction
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: 6 accumulation segments, offset <=150 years
+    2: 9 accumulation segments, offset <=190 years and elevated noise
+    3: 12 accumulation segments, offset <=230 years and elevated noise
+normalization:
+  baseline: three sparse dating calls, constant age offsets and an overconfident proxy-average reconstruction
+    on every world
+  reference: Public-input joint monotone accumulation/climate MAP fitting followed by age-error-aware
+    GP reconstruction.
+  score: Geometric mean of clipped CE, exp(-age_MAE/65 - age_increment_MAE/12), and exp(-CRPS/0.45), normalized
+    above always abstaining.
+citations:
+- id: doi:10.1029/2020GL090485
+  title: Quantifying Structural Uncertainty in Paleoclimate Data Assimilation
+- id: doi:10.5194/cp-16-1325-2020
+  title: Greenland temperature and precipitation over the last 20,000 years using data assimilation
+invariants:
+- exact climate and chronology attain unit mechanism skill on supported pseudoproxies
+- coefficient of efficiency and RMSE agree with independent direct formulas
+- normal CRPS is finite, proper and decreases for sharper calibrated reconstructions
+- null and resolvable nonlinear or nonstationary proxy systems reward refusal
+- every date consumes budget and invalid or overspent requests fail closed
+- Age curves with correct endpoints but wrong internal increments lose chronology skill.
+known_shortcuts: 'Historical reviewed head: five-date linear interpolation / unweighted mean / constant
+  std attained 0.698764/0.682105 against 0.736298/0.708775. This invalidated the earlier shortcut claim.
+  The revised curve-increment score and joint public-input reference are audited by verification/replay_review.py
+  (1008 fixed cheap strategies and six ablations); current Linux results are in references/review_replay.json
+  and known_best.md. No calibration draw is claimed. Current clean Linux replay: best 0.435979/0.387287,
+  reference 0.797985/0.714963; 1008 grid settings.'
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All pseudoproxy records are generated from original repository code; cited publications are not
+    redistributed.
+contamination:
+  status: cannot_be_ruled_out
+  rationale: The pseudoproxy family and scaffold are public and AI-assisted; server-held records and independent
+    data-assimilation validation are still required.
+review:
+  domain: pending_external_paleoclimate
+  evaluator_security: native_and_ci_pinned_linux_sandbox_replayed_independent_security_review_pending
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic pseudoproxy generator with development and held-out
+    spectra, proxy mixes, chronology noise, null and misspecified regimes.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Nearest UPbConcordiaInference recovers two scalar intercept ages under a decay/loss model
+    (evidence); this task recovers 81 Gaussian temperatures and 8x36 monotone age curves (parameter_inversion),
+    with calibration and coherence refusal. GravityInversion and RadiativeTransferFit share paid field
+    inversion but have no uncertain chronology. EnergyBalanceModel and ForcedSignalAttribution infer dynamics/forcing
+    rather than age-depth and temperature jointly.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex
+  builder_scaffolds:
+  - repository-native-earth-science-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: No frontier-model draw has been run. Local code review added variable positive
+    accumulation, noisy proxy calibration, non-clipped dating endpoints and a full age-curve artifact;
+    the scalar-offset collapse is retained as a measured local probe. 2026-09-12 maintainer comments triggered
+    local age-increment scoring, a joint age/field MAP reference, the fixed cheap grid, six legal ablations,
+    and corrected nearest-neighbor documentation. Independent world-session resets and runnable task-card
+    shortcut guards were added during current-main integration.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_paleoclimate
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: standalone_public_model_references_high_fidelity_replication_pending
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations and clean frontier-model
+    calibration before certification
+  remaining_risk: Variable positive accumulation across 6/9/12 segments; joint age/climate inference remains
+    approximate.
+frontier_eng_overlap_review:
+  date: '2026-09-07'
+  classification: 无
+  nearest: predict_modality; denoising
+  distinction: Paid dating observations jointly constrain sample ages and climate reconstruction with
+    unsupported-world refusal; FE predicts cell modalities or removes image/RNA noise without an age-depth
+    chronology.
+  evidence: .research/chronology_assimilation_frontier_eng_overlap_2026-09-07.md
+  status: source_count_discrepancy_pending_maintainer_confirmation
+evaluation_budget:
+  cpu_only: true
+  timeout_seconds: 300
+  reference_eval_seconds_estimate: 12
+  note: Joint least-squares reference; platform-dependent runtime, measured in Linux wrapper replay.
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  relative_margin: 0.3
+  score_tolerance: 0.01
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.797115
+  probes:
+  - id: review_grid_best
+    candidate: verification/shortcut_linear.py
+    expected_score: 0.435979

@@ -10,6 +10,12 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Paleoclimate/ChronologyAssimilation:
+    status: candidate
+    reason: active chronology and climate-field reconstruction with charged dates, supported/null/nonstationary-proxy worlds, CE/RMSE/CRPS diagnostics and separate discovery/refusal axes; the reference reaches 0.736/0.709 while scalar-offset, per-record affine and shared-three-knot chronology probes remain at 0.520, 0.569 and 0.516 development respectively; pending independent paleoclimate review, public-data replay, server-held proxy systems and frozen frontier-model calibration
+    citation_ids:
+      - doi:10.1029/2020GL090485
+      - doi:10.5194/cp-16-1325-2020
   Ecology/OccupancyDetectionDesign:
     status: candidate
     reason: Active repeat-survey allocation and latent occupancy inference under imperfect detection, with explicit refusal for nonlinear habitat and spatially structured worlds; retained as a candidate pending server-held surveys, real field-data replication and independent ecology review.
