@@ -4,12 +4,12 @@
 
 | | |
 |---|---:|
-| 任务包 | 87 |
+| 任务包 | 88 |
 | optimization | 43 |
-| discovery | 44 |
+| discovery | 45 |
 | certified | 5 |
-| candidate | 82 |
-| 学科 | 7(Biology 9,Chemistry 14,ComputerScience 8,EarthScience 7,Engineering 13,Mathematics 19,Physics 17) |
+| candidate | 83 |
+| 学科 | 7(Biology 9,Chemistry 14,ComputerScience 9,EarthScience 7,Engineering 13,Mathematics 19,Physics 17) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
@@ -65,7 +65,7 @@
 | [`ProteinStabilityDesign`](benchmarks/Biology/ProteinStabilityDesign/)<br>蛋白稳定性批次设计 | Biology | ProteinEngineering | uncapped | real_data_replay | candidate | allocate assays and design a stable protein batch | 在蛋白稳定性实验回放里分配测定预算,设计双点突变批次 | 留出稳定性前十分位 + 多样性 + 蛋白酶稳健性 + 结构域迁移;无上限 |
 | [`RNAEnsembleDesign`](benchmarks/Biology/RNAEnsembleDesign/)<br>RNA 系综设计 | Biology | RNAEngineering | uncapped | community_thermodynamics_viennarna | candidate | Design an RNA sequence that folds into a given secondary structure — not merely as its | 设计 RNA 序列,使目标二级结构在整个玻尔兹曼系综上而非仅 MFE 上成立 | 对 ViennaRNA 反折叠的系综缺陷;密封目标,无上限 |
 | [`RNAInverseDesign`](benchmarks/Biology/RNAInverseDesign/)<br>RNA 约束反折叠 | Biology | RNAEngineering | uncapped | exact_dynamic_programming | candidate | design a constrained sequence for a target ensemble | 在长度、字母表、GC 与基序约束下设计目标系综概率高的 RNA 序列 | 目标系综概率 + MFE 迁移 + 代理误升迁;配对相容只是代理,无上限 |
-| [`CrystalStructurePolymorphSearch`](benchmarks/Chemistry/CrystalStructurePolymorphSearch/)<br> | Chemistry | MaterialsScience | uncapped | physical_sim | candidate | predict low-enthalpy periodic structures from composition |  |  |
+| [`CrystalStructurePolymorphSearch`](benchmarks/Chemistry/CrystalStructurePolymorphSearch/)<br>晶体结构与多晶型搜索 | Chemistry | MaterialsScience | uncapped | physical_sim | candidate | predict low-enthalpy periodic structures from composition | 在固定二元组成和周期势下搜索低焓晶体及不同低能多晶型 | 24次局部弛豫后返回三个结构，按最低焓与低能结构多样性计分 |
 | [`LennardJonesCluster`](benchmarks/Chemistry/LennardJonesCluster/)<br>Lennard-Jones 团簇 | Chemistry | Chemistry | uncapped | analytical | certified | minimize the energy of atomic clusters | 求 Lennard-Jones 原子簇的最低能量几何构型 | 对全局最小的平均缺口闭合;无上限 |
 | [`MolecularLeadOptimization`](benchmarks/Chemistry/MolecularLeadOptimization/)<br>分子先导组合优化 | Chemistry | MedicinalChemistry | uncapped | rdkit_cheminformatics_property_filter | candidate | build a diverse portfolio of novel, developable leads | 构建结构多样、可开发的新颖先导化合物组合,而非单个分子 | 多样性约束下的组合价值,对标已上市药物;无上限 |
 
@@ -78,13 +78,14 @@
 | [`BellBoundCertificate`](benchmarks/Physics/BellBoundCertificate/)<br>贝尔不等式上界证书 | Physics | QuantumFoundations | uncapped | analytical | candidate | prove an upper bound, do not just compute one | 为贝尔泛函的量子最大值给出一份可精确验证的上界证明:提交一组基词与若干加权平方,使它们的和恰好等于 beta*I - B。CHSH 的答案是无理数 2√2,只能逼近;I3322 的量子值至今未知,NPA 层级 1 给 0.375、层级 2 给 0.25102173、已知最好值 0.25087538 要到层级 4 以上。 | 四个实例(CHSH 与三种基词预算下的 I3322)取均值,不设上限。分数是所证界到已知量子值距离的对数进步:免费的层级 1 界记 0,已发表的层级 2 界记 1,超过则大于 1。有理数精确验证,提交浮点数直接判零——数值 SDP 解不是证明。 |
 | [`FourSettingMomentCertificate`](benchmarks/Physics/FourSettingMomentCertificate/)<br>四设置矩子集证书 | Physics | QuantumFoundations | uncapped | analytical | candidate | exact SOS on I_4422^{13} with a frozen moment pool | I_4422^13 的精确 SOS,额外矩必须是冻结 NPA2 池的 Hamming-k 子集,不是 I3322 自由选词。 | 从精确层级 1 最优 5/8 到全池有理证书约 0.455331 的对数进度;参考约 0.58,无上限。 |
 
-## Discovery(44)
+## Discovery(45)
 
-### 公式(formula) — 6
+### 公式(formula) — 7
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
 | [`EnzymeKineticsLaw`](benchmarks/Biology/EnzymeKineticsLaw/)<br>酶动力学律辨识 | Biology | SystemsBiology | clipped | physical_sim | candidate | A purified enzyme is in front of you. · on-ramp,不配对 | 在测定预算内自选底物与抑制剂浓度,判定这个酶服从六条已发表速率律中的哪条,或都不服从 | 速率律辨识 + 拒答 + 密封外推预测 |
+| [`CacheReplacementPolicyID`](benchmarks/ComputerScience/CacheReplacementPolicyID/)<br>缓存替换策略辨识 | ComputerScience | ComputerArchitecture | clipped | analytical | candidate | which replacement policy does this cache set run? | 在带噪声的命中/缺失计时通道上对一个缓存组做受预算约束的访问实验,把隐藏的替换策略写成以路为输入的确定性状态机,或判定策略含随机性而拒答 | 提交的状态机与真实策略做精确的可观测等价判定;错误状态机记误发现并扣一个世界,随机策略世界须拒答,分数标尺锚在全拒答为零 |
 | [`AMOCTippingRefusal`](benchmarks/EarthScience/AMOCTippingRefusal/)<br>AMOC 折叠拒答 | EarthScience | Oceanography | clipped | physical_sim | candidate | a dip in the fingerprint is not a fold | AMOC 指纹序列里区分尚未发生的立方折叠、纯红噪声与冰约束唯一吸引子 | 折叠恢复 + 红噪声与冰约束拒答;指纹下降不等于将要崩溃 |
 | [`WallClosureDiscovery`](benchmarks/Engineering/WallClosureDiscovery/)<br>壁面湍流闭合律发现 | Engineering | Turbulence | clipped | analytical | candidate | find the closure, or say the data cannot pin one | 在有限的剖面测量预算下,把湍流壁面闭合律作为公式找出来——以及在观测撑不起任何律时说出撑不起。数据驱动湍流闭合是整个领域在做的问题,它公认的批评不是拟合得不好,而是只在训练它的地方被验证过。三类世界只有一类可解:雷诺数跨度够宽时参数被钉住;跨度太窄时一整段 kappa 都拟合得同样好而在留出工况上互相矛盾;还有一类根本没有单一闭合能同时解释各条剖面。 | 三轴分开报、永不平均:机制恢复率(在从未观测的留出雷诺数上检验公式)、假发现率(带分母)、校准拒答率,外加是否尝试过的计数。总分是三者之积,全弃权与从不弃权都恰好得零。两个拒答理由是正交的:不一致那类残差大,而不可辨识那类残差反而最小、拟合看起来最漂亮,要靠答案的宽度而不是残差来识别。把教科书的 van Driest 闭合直接交上去得零分、假发现率 1.00。 |
 | [`ActiveLawDiscovery`](benchmarks/Mathematics/ActiveLawDiscovery/)<br>主动定律发现 | Mathematics | DynamicalSystems | clipped | physical_sim | candidate | discover dynamical laws by choosing experiments | 自选初值与外部驱动,从候选项库里恢复二维受控系统的稀疏控制方程 | 稀疏律恢复 + 密封轨迹外推;库不足时拒答 |

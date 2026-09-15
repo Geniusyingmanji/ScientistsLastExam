@@ -1,0 +1,55 @@
+{
+  "case_identities": [
+    {
+      "classname": "tests.test_cache_replacement_admission_contract.CacheReplacementAdmissionContractTests",
+      "name": "test_real_process_tmpfs_and_import_state_reset_across_all_worlds"
+    },
+    {
+      "classname": "tests.test_cache_replacement_admission_contract.CacheReplacementAdmissionContractTests",
+      "name": "test_caught_malformed_trace_remains_invalid_through_real_rpc"
+    },
+    {
+      "classname": "tests.test_cache_replacement_admission_contract.CacheReplacementAdmissionContractTests",
+      "name": "test_reset_failure_escapes_scientific_scoring"
+    }
+  ],
+  "counts": {
+    "error": 0,
+    "failed": 0,
+    "passed": 3,
+    "skipped": 0
+  },
+  "executed_count": 3,
+  "execution_passed": true,
+  "git_clean": true,
+  "junit_sha256": "8e3ffe443a114fe495b8d062e766fa314afc33d4ae23b2ee9ba89d0fda4abee9",
+  "passed": true,
+  "pytest": "8.3.5",
+  "python": "3.8.10",
+  "required_count": 3,
+  "required_coverage_complete": true,
+  "schema_version": 1,
+  "scientific_model_calls": 0,
+  "scope": "Exactly three PR82 isolation regression fixtures. Two use real CandidateProxy across all 18 worlds; the third ensures reset failure escapes scientific scoring. This is not the full test suite.",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "42a1b825457d608e19e0a14ee420d7adf25084c6",
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "source_tree_dirty": false
+  },
+  "source_revision": "42a1b825457d608e19e0a14ee420d7adf25084c6",
+  "task_id": "ComputerArchitecture/CacheReplacementPolicyID",
+  "test_source_sha256": {
+    "tests/test_cache_replacement_admission_contract.py": "794ed7bbdfb23b27760a7a4d82b3edc632d81d07d038907d055401d3a1e0fe72"
+  },
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "trusted_runtime_sha256": "8cad1019b951184e04197f205a7df765c161e06cf83c64b45504c52c6cb38d29"
+}

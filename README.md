@@ -51,8 +51,8 @@ optimization(43 个):在受约束的设计空间里把目标做得更好。分�
 分数是论证证明出的界有多强)。
 分数由做出来的东西有多好决定;公开纪录是 score = 1 的见证,不是封顶。
 
-discovery(44 个):从受预算约束的观测里恢复一个机制,或判断根本没有机制可恢复。
-分五类:公式 6、结构 6、证据 10、物质 6、参数反演 16。每题包含三种世界:
+discovery(45 个):从受预算约束的观测里恢复一个机制,或判断根本没有机制可恢复。
+分五类:公式 7、结构 6、证据 10、物质 6、参数反演 16。每题包含三种世界:
 机制在候选可表达的模型族内(该找出来)、机制在族外、根本没有机制(后两种该拒答)。
 候选看不到自己面对的是哪一类。
 
@@ -86,6 +86,14 @@ discovery(44 个):从受预算约束的观测里恢复一个机制,或判断根�
 
 分数按各任务的归一化契约解释;基线不保证恰为 0,uncapped 任务不设上限。
 发现类的归一化让全面弃权恰好得零。evaluator 至少返回有限数值的 `combined_score` 与 `valid`。
+
+需要跨版本持续优化或发现的任务可选择加入 **frontier family**。同一
+`task_family_id` 下的每个 `wave_id` 都有冻结的 `frontier_eval/wave.yaml`；运行清单同时绑定
+wave、task package 与 runtime hash。固定 wave 的 `combined_score` 用于公平比较，跨 wave 的
+`lifetime_frontier_credit` 只累计通过 trusted evaluator 规范化、去重且超过最小科学增量的记录。
+代码拒绝候选自造 cell,并在同一 cell/namespace 内去重;跨契约的语义重复、新增容易 cell 与高保真确认由 wave 评审把关。
+credit 不包含假发现/弃权惩罚,不是提交质量综合分。完整契约见
+[`docs/frontier_families.md`](docs/frontier_families.md)。
 `python -m sle list --all` 是权威的实时清单。
 
 ## 评测形式

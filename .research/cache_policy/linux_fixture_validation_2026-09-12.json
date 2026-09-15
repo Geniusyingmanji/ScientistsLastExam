@@ -1,0 +1,127 @@
+{
+  "case_identities": [
+    {
+      "classname": "tests.test_cache_replacement_policy_id.CacheReplacementPolicyIDTests",
+      "name": "test_a_wrong_machine_costs_a_world_wherever_it_is_made"
+    },
+    {
+      "classname": "tests.test_cache_replacement_policy_id.CacheReplacementPolicyIDTests",
+      "name": "test_blanket_refusal_in_both_forms_and_a_blind_claim_score_zero"
+    },
+    {
+      "classname": "tests.test_cache_replacement_policy_id.CacheReplacementPolicyIDTests",
+      "name": "test_hidden_axes_stay_out_of_the_search_view"
+    },
+    {
+      "classname": "tests.test_cache_replacement_policy_id.CacheReplacementPolicyIDTests",
+      "name": "test_malformed_candidates_score_zero_without_raising"
+    },
+    {
+      "classname": "tests.test_cache_replacement_policy_id.CacheReplacementPolicyIDTests",
+      "name": "test_one_policy_differs_from_lru_only_after_six_misses_in_a_row"
+    },
+    {
+      "classname": "tests.test_cache_replacement_policy_id.CacheReplacementPolicyIDTests",
+      "name": "test_runs_are_charged_and_the_budget_fails_closed"
+    },
+    {
+      "classname": "tests.test_cache_replacement_policy_id.CacheReplacementPolicyIDTests",
+      "name": "test_the_cache_and_the_scored_machine_are_the_same_policy"
+    },
+    {
+      "classname": "tests.test_cache_replacement_policy_id.CacheReplacementPolicyIDTests",
+      "name": "test_the_library_and_lstar_both_earn"
+    },
+    {
+      "classname": "tests.test_cache_replacement_policy_id.CacheReplacementPolicyIDTests",
+      "name": "test_the_pooled_determinism_test_keeps_rare_randomness_from_being_claimed"
+    },
+    {
+      "classname": "tests.test_cache_replacement_policy_id.CacheReplacementPolicyIDTests",
+      "name": "test_the_reference_and_the_baseline"
+    },
+    {
+      "classname": "tests.test_cache_replacement_policy_id.CacheReplacementPolicyIDTests",
+      "name": "test_the_worlds_are_distinct_minimal_machines_of_the_recorded_sizes"
+    },
+    {
+      "classname": "tests.test_cache_replacement_policy_id.CacheReplacementPolicyIDTests",
+      "name": "test_two_evaluations_are_identical"
+    },
+    {
+      "classname": "tests.test_cache_replacement_admission_contract.CacheReplacementAdmissionContractTests",
+      "name": "test_augmented_reference_uses_permutation_family_before_generic_learner"
+    },
+    {
+      "classname": "tests.test_cache_replacement_admission_contract.CacheReplacementAdmissionContractTests",
+      "name": "test_caught_malformed_trace_never_earns_refusal_credit"
+    },
+    {
+      "classname": "tests.test_cache_replacement_admission_contract.CacheReplacementAdmissionContractTests",
+      "name": "test_caught_malformed_trace_remains_invalid_through_real_rpc"
+    },
+    {
+      "classname": "tests.test_cache_replacement_admission_contract.CacheReplacementAdmissionContractTests",
+      "name": "test_claim_conditional_fdr_excludes_refusals_and_invalid_worlds"
+    },
+    {
+      "classname": "tests.test_cache_replacement_admission_contract.CacheReplacementAdmissionContractTests",
+      "name": "test_permutation_inference_algebra_with_exact_victim_fixture"
+    },
+    {
+      "classname": "tests.test_cache_replacement_admission_contract.CacheReplacementAdmissionContractTests",
+      "name": "test_ratios_recompute_from_planned_world_counts"
+    },
+    {
+      "classname": "tests.test_cache_replacement_admission_contract.CacheReplacementAdmissionContractTests",
+      "name": "test_real_process_tmpfs_and_import_state_reset_across_all_worlds"
+    },
+    {
+      "classname": "tests.test_cache_replacement_admission_contract.CacheReplacementAdmissionContractTests",
+      "name": "test_reset_failure_escapes_scientific_scoring"
+    },
+    {
+      "classname": "tests.test_cache_replacement_admission_contract.CacheReplacementAdmissionContractTests",
+      "name": "test_written_permutation_tables_match_recorded_generator_seeds"
+    },
+    {
+      "classname": "tests.test_cache_grid_research_integrity",
+      "name": "test_heldout_changes_cannot_change_selection_or_break_development_ties"
+    },
+    {
+      "classname": "tests.test_cache_grid_research_integrity",
+      "name": "test_invalid_grid_cell_is_never_selected_as_scientific_candidate"
+    },
+    {
+      "classname": "tests.test_cache_grid_research_integrity",
+      "name": "test_duplicate_missing_and_unmeasured_rows_fail_closed"
+    },
+    {
+      "classname": "tests.test_cache_grid_research_integrity",
+      "name": "test_failed_grid_evaluation_restores_seeds_and_discards_shifted_cache"
+    }
+  ],
+  "environment": {
+    "numerical_threads": 1,
+    "numpy": "1.24.4",
+    "platform": "Linux",
+    "pytest": "8.3.5",
+    "python": "3.8.10",
+    "scipy": "1.10.1"
+  },
+  "errors": 0,
+  "failures": 0,
+  "junit_sha256": "dcf95f95c83f094e9e8d6e0b1d8ed01b8bd0113629077df139e71488883c9555",
+  "passed": 25,
+  "schema_version": 1,
+  "scope": "Frozen task fixtures plus research selection-integrity regressions. Real Linux CandidateProxy reset/RPC checks ran, no sandbox skip. Test fixtures do not substitute for full scientific calibration.",
+  "skipped": 0,
+  "source_files": {
+    "tests/test_cache_grid_research_integrity.py": "1a86a0c16c629d7cd3445355e2da0206d9174baa76e94be425b09c2ccc514f6a",
+    "tests/test_cache_replacement_admission_contract.py": "794ed7bbdfb23b27760a7a4d82b3edc632d81d07d038907d055401d3a1e0fe72",
+    "tests/test_cache_replacement_policy_id.py": "11cd3575238b8d1b405c2d43919b0534813cfd63946856f6f6e00b3f84bc4543"
+  },
+  "source_revision": "02189f6cc31cb738e9be13725109e41915b85a0d",
+  "source_tree_dirty": false,
+  "tests": 25
+}

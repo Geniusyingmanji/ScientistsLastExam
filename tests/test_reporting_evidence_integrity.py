@@ -189,6 +189,10 @@ def test_plan_denominator_is_fixed_and_legacy_scope_explicit():
     run = {"task": "T/X", "algorithm": "greedy_rewrite", "feedback_mode": "normal",
            "seed": 0, "best": .4, "summary": {"best_so_far_auc": .4,
            "budget_units": 3, "oracle_calls": 4, "wall_seconds": 1, "llm": {}}}
+    from sle.runtime_identity import current_runtime_descriptor
+    runtime = current_runtime_descriptor(())
+    run.update(trusted_evaluator_runtime=runtime,
+               trusted_evaluator_runtime_sha256=runtime["fingerprint_sha256"])
     report = batch.aggregate_runs([run], config=config)
     assert report["schema_version"] == 2
     assert report["denominator_scope"] == "fixed_plan"
@@ -233,7 +237,9 @@ def test_real_run_manifest_uses_summary_budget_and_sums_per_call_tokens(tmp_path
     assert row["best"] == .6
     assert row["input_tokens"] == 23
     assert row["output_tokens"] == 43
-    assert cross.attributable_score_run(row)
+    assert row["trusted_evidence"] is False
+    assert row["verification_status"] == "unverified"
+    assert not cross.attributable_score_run(row)
     summary["budget"] = 3
     write_summary(directory, summary)
     row = cross.read_runs(tmp_path)[0]

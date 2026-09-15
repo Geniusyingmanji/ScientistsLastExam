@@ -43,6 +43,7 @@ sys.path.insert(0, str(ROOT))
 
 from sle.task_versions import version_class  # noqa: E402
 
+from scripts.reporting_runtime import report_runtime_binding  # noqa: E402
 from scripts.reporting_trajectory import read_incumbents, read_events, trajectory_selection_evidence
 
 # Budgets the gap is reported at. The shape across these matters more than any single endpoint:
@@ -117,6 +118,9 @@ class RunCurve(list):
                     "budget": manifest.get("budget"),
                     "selection_evidence": trajectory_selection_evidence(
                         read_events(workdir / "trajectory.jsonl"))}
+        self.run.update(report_runtime_binding(workdir, manifest))
+        if self.run["trusted_evidence"]:
+            self.run["budget"] = self.run["proposal_budget"]
 
 
 def score_modes() -> dict[str, str]:
@@ -286,6 +290,7 @@ def collect(runs_root: Path) -> dict[tuple[str, str, str, str, str, str, str],
     found: dict[tuple[str, str, str, str, str, str, str], dict[str, dict[int, list[float]]]] = defaultdict(
         lambda: defaultdict(dict)
     )
+    trusted_runtimes = {}
     for trajectory in sorted(runs_root.rglob("trajectory.jsonl")):
         workdir = trajectory.parent
         identity = run_identity(workdir)
@@ -303,6 +308,11 @@ def collect(runs_root: Path) -> dict[tuple[str, str, str, str, str, str, str],
         manifest = json.loads((workdir / "run_manifest.json").read_text(encoding="utf-8"))
         algorithm = str(manifest.get("algorithm") or "unrecorded")
         curve = RunCurve(curve, workdir, manifest)
+        runtime_key = (task, model, condition, contract, runtime, algorithm)
+        fingerprint = curve.run["trusted_evaluator_runtime_sha256"]
+        if runtime_key in trusted_runtimes and trusted_runtimes[runtime_key] != fingerprint:
+            raise ValueError("mixed trusted evaluator runtimes in admission group")
+        trusted_runtimes[runtime_key] = fingerprint
         key = (task, _cohort_of(workdir, runs_root), model, condition, contract, runtime, algorithm)
         existing = found[key][mode].get(seed)
         if existing is not None:
@@ -583,6 +593,23 @@ def main(argv: list[str] | None = None) -> int:
             "saturation": sat,
             "gap_by_budget": best["gaps"] if best else [],
         })
+
+    for row in rows:
+        records = row["runs"]
+        row["trusted_evidence"] = bool(records) and all(
+            record.get("trusted_evidence") is True for record in records)
+        row["verification_status"] = (
+            "verified" if row["trusted_evidence"] else
+            "legacy_format" if all(record.get("verification_status") == "legacy_format"
+                                   for record in records) else "unverified")
+        if row["verification_status"] != "legacy_format":
+            row["evidence_runs"] = records
+            row["trusted_evaluator_runtime_sha256"] = (
+                records[0].get("trusted_evaluator_runtime_sha256") if records else None)
+        if row["verification_status"] == "unverified":
+            row["diagnostic_verdict"] = row["verdict"]
+            row["verdict"] = "unattributable_evidence"
+            row["reason"] = "new-format run did not pass durable receipt verification"
 
     # Every verdict carries how many open-loop seeds stand behind it. Most of this inventory was
     # screened one seed per task, and one seed misled in the case that was checked, so a verdict

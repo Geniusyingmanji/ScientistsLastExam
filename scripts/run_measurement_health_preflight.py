@@ -81,13 +81,13 @@ def load_inert_evaluators(spec_path: Any = None) -> dict[str, Any]:
     return _record_inert_evaluators(evidence_spec)
 
 
-DEFAULT_MANIFEST = ROOT / ".research/exploratory_2h_cohort_manifest_2026-09-11_v11.json"
+DEFAULT_MANIFEST = ROOT / ".research/exploratory_2h_cohort_manifest_2026-09-12_v14.json"
 LEGACY_SPEC = ROOT / ".research/measurement_health_preflight_spec_2026-07-27_v1.json"
 # The manifest that legacy spec binds. Kept beside it because the default manifest moved when the
 # cohort was rebound, and a legacy spec checked against the current manifest fails on the binding
 # rather than on the thing a caller wanted to test.
 LEGACY_MANIFEST = ROOT / ".research/exploratory_2h_cohort_manifest_2026-07-27_v1.json"
-DEFAULT_SPEC = ROOT / ".research/measurement_health_preflight_spec_2026-09-11_v14.json"
+DEFAULT_SPEC = ROOT / ".research/measurement_health_preflight_spec_2026-09-12_v17.json"
 STATUS_VALUES = {"pass", "fail", "missing"}
 
 Evaluator = Callable[[Any, Path, float], Dict[str, Any]]

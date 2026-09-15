@@ -1,0 +1,230 @@
+{
+  "schema_version": 1,
+  "evidence_scope": "COMBINED_FRAMEWORK_AND_CANDIDATE_ADMISSION_INTEGRATION_INDEX",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "37efb11e4bfdf65e580bcb9df562c7c1dbb2a0ce",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ]
+  },
+  "runtime_source_sha256": "6f8344cdd2d15811803a07dd7d299f6348630deaecd2ee2601b57cfff14fab25",
+  "components": {
+    "certification": {
+      "path": "experiments/task_certification_audit_2026-09-12_v88.json",
+      "sha256": "d0b445115124ed91837efb50b77d0e0f607d3ece9e728933b820e2397239fed8",
+      "schema_version": 1,
+      "passed": true,
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "inventory_count": 87,
+      "measurement_source_revision": "235935e70cc3dccc873513305e834f2bb14023ea"
+    },
+    "baseline": {
+      "path": "experiments/secure_baseline_determinism_2026-09-12_v72.json",
+      "sha256": "45a499d058fbcdf1d71fcb6bd5cc3b5a0b72bb8510fd994bd7e0c34a4cbeefd1",
+      "schema_version": 2,
+      "passed": true,
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "summary": {
+        "inventory_count": 87,
+        "deterministic_count": 87,
+        "valid_count": 87,
+        "fail_closed_count": 87,
+        "infrastructure_failure_count": 0,
+        "invalid_baseline_run_count": 0,
+        "malformed_candidate_evaluations": 0
+      },
+      "evidence_scope": "BASELINE_DETERMINISM_ONLY_NOT_MALFORMED_CANDIDATE_COVERAGE",
+      "measurement_source_revision": "235935e70cc3dccc873513305e834f2bb14023ea"
+    },
+    "maturity": {
+      "path": "experiments/task_maturity_audit_2026-09-12_v30.json",
+      "sha256": "32a61289b9a27d97e72cfa8fe5962e30c07cb3c8569a7646e45ff5c0e0ed780d",
+      "schema_version": 1,
+      "passed": true,
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "inventory_count": 87,
+      "gate_counts": {
+        "internal_science_admission": 87,
+        "open_release_ready": 0,
+        "externally_validated": 0,
+        "long_horizon_ready": 0
+      },
+      "evidence_scope": "CONSERVATIVE_TASK_MATURITY_AND_EVIDENCE_BINDING_AUDIT_NOT_EXTERNAL_DOMAIN_REVIEW_PHYSICAL_VALIDATION_LONG_HORIZON_RESULT_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
+      "measurement_source_revision": "a2ff0483e3ac379f77811dfaf7d941014074a29d"
+    },
+    "wrapper": {
+      "path": "experiments/public_wrapper_baseline_replay_2026-09-12_v6.json",
+      "sha256": "7834852f1d9e61d26e5605bef9bc48d9902738b3aaaaf1e8c4f2d3b07fe50756",
+      "schema_version": 1,
+      "passed": true,
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "inventory_count": 87,
+      "passed_count": 87,
+      "evidence_scope": "PUBLIC_WRAPPER_BASELINE_REPLAY_ONLY",
+      "actual_wrapper_calls": 87,
+      "measurement_source_revision": "235935e70cc3dccc873513305e834f2bb14023ea"
+    },
+    "recovery": {
+      "path": "experiments/evaluation_recovery_fault_audit_2026-09-12_v13.json",
+      "sha256": "9b3faed839a13832715435db780783f92fa434adf4a39baac14af6b7637831d2",
+      "schema_version": 1,
+      "passed": true,
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "scenario_count": 8,
+      "evidence_scope": "PROCESS_CRASH_DURABLE_RECEIPT_LOGICAL_EXACTLY_ONCE_OUTCOME_AND_ORACLE_BUDGET_FOR_DETERMINISTIC_LOCAL_EVALUATORS_NOT_PHYSICAL_EXACTLY_ONCE_LIVE_LAB_EXECUTION",
+      "measurement_source_revision": "235935e70cc3dccc873513305e834f2bb14023ea"
+    },
+    "compatibility": {
+      "path": "experiments/framework_frozen_artifact_compatibility_2026-09-12_v2.json",
+      "sha256": "2e1c3198ef00f7628d4b55de21dd1832b96e2cc367e2588b90ddc61ea14a2cfa",
+      "schema_version": 2,
+      "passed": true,
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "passed_count": 7,
+      "evidence_scope": "FIXED_ARTIFACT_CROSS_RUNTIME_CANONICAL_PAYLOAD_COMPARISON_ONLY",
+      "measurement_source_revision": "84de68b9f9abab8f48cd225f37b7919fd1faa12d"
+    },
+    "preflight": {
+      "path": "experiments/measurement_health_preflight_2026-09-12_v5.json",
+      "sha256": "4831b18e09b6a503374bd47f9048b0a1607ff681dc50b801e5be710ba5080fb0",
+      "schema_version": 2,
+      "passed": true,
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "task_count": 7,
+      "check_status_counts": {
+        "pass": 70,
+        "fail": 0,
+        "missing": 0
+      },
+      "evidence_scope": "SEVEN_TASK_FIXED_ARTIFACT_NOISE_BASELINE_REFERENCE_NUMERICAL_RESOLUTION_SHORTCUT_AND_PROTOCOL_PREFLIGHT_NOT_POST_2H_HEADROOM_CONFIRMATORY_EXTERNAL_VALIDATION_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
+      "measurement_source_revision": "84de68b9f9abab8f48cd225f37b7919fd1faa12d"
+    },
+    "preflight_spec": {
+      "path": ".research/measurement_health_preflight_spec_2026-09-12_v17.json",
+      "sha256": "a5ffbc4dc1c33d7890418e63dc67f5a6b2bd6bc7b956f4a1dffaf99c8aeda35c",
+      "schema_version": 2,
+      "measurement_source_revision": "f1163d5c23e31e7238658dd44ed6cbac22125a05"
+    },
+    "preflight_manifest": {
+      "path": ".research/exploratory_2h_cohort_manifest_2026-09-12_v14.json",
+      "sha256": "4324a8c05ed8df802751d375179805653a1b23fc639b394e0f8ba88a39ba386b",
+      "schema_version": 1,
+      "measurement_source_revision": null
+    },
+    "preflight_artifacts": {
+      "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json",
+      "sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185",
+      "schema_version": 1,
+      "measurement_source_revision": null
+    },
+    "cache_model_review": {
+      "path": "experiments/cache_replacement_policy_id_first_proposal_2026-09-12.json",
+      "sha256": "407b460ec5047bf11dfb53942c1364dddad27e8476d065a3e36c8d5c381d3dd4",
+      "schema_version": 1,
+      "trusted_evidence": false,
+      "evidence_scope": "bounded_manual_admission_review",
+      "modern_trusted_formal_coverage": 0,
+      "measurement_source_revision": "c0b000c90b3ded1b8fb2d5e4cc392f091ede3591"
+    },
+    "cache_framework_compatibility": {
+      "path": ".research/cache_policy/framework_compatibility_2026-09-12.json",
+      "sha256": "24fe83d2b93a235b8d466ccb29f89ff1abea9dd837359511fa7890f3bb55b72f",
+      "schema_version": 1,
+      "passed": true,
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "measurement_source_revision": "42a1b825457d608e19e0a14ee420d7adf25084c6"
+    },
+    "cache_framework_fixtures": {
+      "path": ".research/cache_policy/framework_fixtures_2026-09-12.json",
+      "sha256": "0ba7cdefc9bfd5e670ed99cf1a9a9210103bc04dad2339ead494dc06738c5bdf",
+      "schema_version": 1,
+      "passed": true,
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "measurement_source_revision": "42a1b825457d608e19e0a14ee420d7adf25084c6"
+    },
+    "cache_final_package_fixtures": {
+      "path": ".research/cache_policy/final_package_fixtures_2026-09-12.json",
+      "sha256": "502a3823cbe6ab0e4d058bff211db89e9d86590aa3dd5d62b87382763f8d69d3",
+      "schema_version": 1,
+      "passed": true,
+      "evidence_scope": "TEST_EXECUTION_COVERAGE_ONLY",
+      "measurement_source_revision": "235935e70cc3dccc873513305e834f2bb14023ea"
+    },
+    "cache_metadata_diff": {
+      "path": ".research/cache_policy/integration_metadata_2026-09-12.json",
+      "sha256": "a51155292e00955982bb131f329f79e018e0b53faea982e79ace0eca4bfb2e6a",
+      "schema_version": 1,
+      "measurement_source_revision": "235935e70cc3dccc873513305e834f2bb14023ea"
+    }
+  },
+  "inventory": {
+    "total": 87,
+    "optimization": 42,
+    "discovery": 45,
+    "certified": 5,
+    "candidate": 82,
+    "family_opted_in": 0
+  },
+  "actual_global_evaluations": {
+    "baseline": 174,
+    "wrapper": 87,
+    "preflight": 21
+  },
+  "compatibility_calls": {
+    "old_preflight_calls_reused": 21,
+    "new_calls_shared_with_preflight": 21,
+    "additional_calls": 0
+  },
+  "cache_manual_review": {
+    "original_source": "c0b000c90b3ded1b8fb2d5e4cc392f091ede3591",
+    "fixed_successful_logical_model_responses": 3,
+    "replayed_development_scores_matching_original": [
+      0.22222222222222224,
+      0.11111111111111109,
+      0.11111111111111109
+    ],
+    "reference_development_score": 0.7777777777777778,
+    "old_runtime_program_replays": 6,
+    "new_runtime_fixed_program_evaluations": 10,
+    "successful_returned_tokens": 50344,
+    "failed_http_usage": null,
+    "http_attempt_count": null,
+    "modern_formal_model_coverage_added": 0
+  },
+  "first_github_ci": {
+    "run": 34675975274,
+    "source": "dcd68f007099b69f07624a07b3f9b9f6d72d9b42",
+    "passed": 1630,
+    "skipped": 45,
+    "errors": 6,
+    "conclusion": "failure",
+    "repair_commit": "87c1a323b8464a0f2629528dc5b5f033cfdee1c8"
+  },
+  "required_ci_tests": 67,
+  "required_ci_manifest_sha256": "f8ea65b7c6aeb41f9db28c21deb28aa4d5996ead6deb9f4caab5e1f92aae5515",
+  "new_complete_github_ci_required_before_merge": true,
+  "limitations": [
+    "Manual admission uses three fixed original model responses; it is not universal model difficulty or a modern formal campaign.",
+    "The original C0 prompt/runtime and missing raw replies remain historical; documentation updates and compatibility replays do not re-sign them.",
+    "Frozen-artifact compatibility covers only the evaluated programs, not all possible candidates.",
+    "Completed-budget greedy verification only; early active-wall termination is not a completed proposal budget.",
+    "No real wave task, scientific lifetime-credit validation, external domain certification or long-horizon readiness is added.",
+    "New full metric reports, model candidates and provider replies remain private outside Git."
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "scope": "TWO_FIXED_DATA_FREE_CANDIDATE_RPC_IMPORT_PROBES",
+  "source_revision": "981b4f236900461862853e87f8ce9bd37affa443",
+  "runtime_source_sha256": "6043a3f8767956dfe75716e90602552985596f34b15bd7e8fdf9dcf68af6c170",
+  "driver_sha256": "7240f4ca7430022d5cdee02864d67e50b99247275fa0fa7487d80177a655a823",
+  "scientific_evaluate_candidate_calls": 0,
+  "model_draws": 0,
+  "rows": [
+    {
+      "name": "base",
+      "candidate_sha256": "1da64b5a75b0b4296655938f0ca6e8fcb054185c3ed4df422aaf9d507a22d8d5",
+      "preflight": "passed",
+      "trusted_distribution_versions": {
+        "numpy": "1.24.4",
+        "scipy": "1.10.1"
+      },
+      "observed": {
+        "numpy": "1.24.4",
+        "scipy": "1.10.1",
+        "soabi": "cpython-38-x86_64-linux-gnu",
+        "reference_anchor_visible": false
+      },
+      "status": "passed"
+    },
+    {
+      "name": "qutip",
+      "candidate_sha256": "a800dc4e3724aa526df51deca69765ab51dec8e892e0c8395a0124688b2dcefe",
+      "preflight": "passed",
+      "trusted_distribution_versions": {
+        "qutip": "4.7.6",
+        "packaging": "26.2"
+      },
+      "observed": {
+        "qutip": "4.7.6",
+        "packaging": "24.2"
+      },
+      "status": "version_binding_mismatch"
+    }
+  ]
+}

@@ -7,14 +7,13 @@ import hashlib
 import importlib.metadata
 import math
 import os
-import platform
-import sys
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable, Optional
 
 from ..evaluate import INVALID_SCORE
+from ..frontier import frontier_binding
 from ..llm import LLMClient
 from ..spec import TaskSpec
 from ..protocol import (
@@ -25,6 +24,7 @@ from ..protocol import (
     sha256_text,
     summarize_trajectory,
 )
+from ..runtime_identity import TrustedRuntime, current_runtime_descriptor
 
 from ..metric_visibility import METRIC_VISIBILITY_SCOPE
 
@@ -87,6 +87,9 @@ def task_contract_sha256(spec: TaskSpec) -> str:
         spec.eval_dir / "constraints.txt",
         spec.eval_dir / "entrypoint.txt",
     ]
+    wave_manifest = spec.eval_dir / "wave.yaml"
+    if wave_manifest.is_file():
+        paths.append(wave_manifest)
     digest = hashlib.sha256()
     for path in paths:
         digest.update(str(path.relative_to(spec.task_dir)).encode("utf-8") + b"\0")
@@ -176,6 +179,10 @@ def llm_condition_descriptor(llm: LLMClient) -> dict[str, Any]:
     return {
         "model": getattr(config, "model", None),
         "wire": getattr(config, "wire", None),
+        "endpoint_sha256": (
+            hashlib.sha256(str(base_url).encode("utf-8")).hexdigest()
+            if base_url is not None else None
+        ),
         "reasoning_effort": getattr(config, "reasoning_effort", None),
         "temperature": getattr(config, "temperature", None),
         "max_output_tokens": getattr(config, "max_output_tokens", None),
@@ -188,6 +195,7 @@ def llm_condition_descriptor(llm: LLMClient) -> dict[str, Any]:
         "chat_reasoning_fallback": bool(
             getattr(config, "chat_reasoning_fallback", False)
         ),
+        "server_side_seed_control": False,
     }
 
 
@@ -275,7 +283,12 @@ def ensure_run_manifest(
     resume: bool,
     upstream: Optional[dict[str, Any]] = None,
     protocol: Optional[dict[str, Any]] = None,
+    trusted_runtime: TrustedRuntime | None = None,
 ) -> dict[str, Any]:
+    if trusted_runtime is None:
+        from ..evaluate import resolve_trusted_runtime
+
+        trusted_runtime = resolve_trusted_runtime(getattr(spec, "task_dir", None))
     expected = {
         "schema_version": 1,
         "algorithm": algorithm,
@@ -283,11 +296,8 @@ def ensure_run_manifest(
         "task_contract_sha256": task_contract_sha256(spec),
         "task_package_sha256": task_package_sha256(spec),
         "runtime_source_sha256": runtime_source_sha256(),
-        "runtime_environment": {
-            "python": sys.version,
-            "executable": str(Path(sys.executable).resolve()),
-            "platform": platform.platform(),
-        },
+        "runtime_environment": current_runtime_descriptor(()),
+        "trusted_evaluator_runtime": trusted_runtime.descriptor,
         "seed": int(seed),
         "feedback_mode": feedback_mode,
         "feedback_scope": feedback_scope(feedback_mode),
@@ -295,6 +305,12 @@ def ensure_run_manifest(
         "llm_condition": llm_condition_descriptor(llm),
         "upstream": upstream,
     }
+    frontier = frontier_binding(spec)
+    if frontier and algorithm != "greedy_rewrite":
+        raise ValueError(
+            "frontier-family tasks require greedy_rewrite evaluation receipts"
+        )
+    expected.update(frontier)
     if protocol is not None:
         expected["protocol"] = protocol
     path = Path(workdir) / "run_manifest.json"

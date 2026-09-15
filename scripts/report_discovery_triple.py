@@ -20,6 +20,7 @@ sys.path.insert(0, str(ROOT))
 
 from sle.registry import list_tasks  # noqa: E402
 from sle.task_versions import version_class  # noqa: E402
+from scripts.reporting_runtime import report_runtime_binding  # noqa: E402
 from scripts.reporting_trajectory import read_incumbents, read_events, trajectory_selection_evidence  # noqa: E402
 
 
@@ -182,6 +183,9 @@ def main(argv: list[str] | None = None) -> int:
                "budget": document.get("budget"), "algorithm": document.get("algorithm"),
                "run_directory": str(manifest.parent.resolve()), "split": args.split,
                "endpoint": "incumbent"}
+        row.update(report_runtime_binding(manifest.parent, document))
+        if row["trusted_evidence"]:
+            row["budget"] = row["proposal_budget"]
         try:
             metrics = best_metrics(manifest.parent)
             if metrics is not None:
@@ -206,6 +210,9 @@ def main(argv: list[str] | None = None) -> int:
                         if v is not None and v.get("status") == "published_on_other_split"
                     ],
                 )
+        if row["verification_status"] == "unverified":
+            row["diagnostic_status"] = row.get("status")
+            row["status"] = "unverified_run"
         rows.append(row)
     rows.extend({"task": name, "status": "missing_run"} for name in sorted(wanted - represented))
     report = {"schema_version": 3, "split": args.split,

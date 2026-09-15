@@ -2,9 +2,13 @@ from __future__ import annotations
 
 import copy
 import importlib.util
+import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
+
+from test_report_runtime_identity import write_verified_run
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,6 +24,68 @@ def _analysis():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+class ProspectiveMetaAnalysisInputAvailabilityTests(unittest.TestCase):
+    """Missing private data is distinct from existing, unverifiable evidence."""
+
+    def setUp(self):
+        self.module = _analysis()
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        self.run_dir = Path(self.temporary.name) / "run"
+
+    def load(self):
+        with patch.object(self.module, "resolve_run_workdir", return_value=self.run_dir):
+            return self.module._load_model("budget_one", self.module.REPORTS["budget_one"])
+
+    def verified_fixture(self):
+        self.run_dir.mkdir()
+        write_verified_run(self.run_dir, budget=1)
+        self.assertTrue(self.module.verify_run(self.run_dir)["verified"])
+
+    def test_absent_private_run_directory_is_missing_data(self):
+        with patch.object(self.module, "verify_run", wraps=self.module.verify_run) as verifier:
+            with self.assertRaises(FileNotFoundError):
+                self.load()
+        verifier.assert_not_called()
+        self.assertFalse(self.run_dir.exists())
+
+    def test_existing_run_without_manifest_is_invalid_evidence(self):
+        self.run_dir.mkdir()
+        with self.assertRaisesRegex(ValueError, "valid run_manifest.json"):
+            self.load()
+
+    def test_existing_run_with_malformed_manifest_is_invalid_evidence(self):
+        self.run_dir.mkdir()
+        (self.run_dir / "run_manifest.json").write_text("{broken", encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "valid run_manifest.json"):
+            self.load()
+
+    def test_legacy_manifest_does_not_acquire_modern_trust(self):
+        self.verified_fixture()
+        path = self.run_dir / "run_manifest.json"
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+        manifest.pop("trusted_evaluator_runtime")
+        path.write_text(json.dumps(manifest), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "trusted runtime descriptor"):
+            self.load()
+
+    def test_missing_modern_receipt_is_invalid_evidence(self):
+        self.verified_fixture()
+        receipt = next((self.run_dir / "evaluation_ledger" / "receipts").glob("*.json"))
+        receipt.unlink()
+        with self.assertRaisesRegex(ValueError, "durable evaluation receipt"):
+            self.load()
+
+    def test_tampered_modern_receipt_is_invalid_evidence(self):
+        self.verified_fixture()
+        path = next((self.run_dir / "evaluation_ledger" / "receipts").glob("*.json"))
+        receipt = json.loads(path.read_text(encoding="utf-8"))
+        receipt["metrics"]["combined_score"] = 0.5
+        path.write_text(json.dumps(receipt), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "receipt"):
+            self.load()
 
 
 class ProspectiveMetaAnalysisCalibrationAnalysisTests(unittest.TestCase):
@@ -121,6 +187,12 @@ class ProspectiveMetaAnalysisCalibrationAnalysisTests(unittest.TestCase):
         records = copy.deepcopy(self.records)
         records["normal_budget_three"]["integrity_passed"] = False
         self.assertFalse(self.report(records)["execution_passed"])
+
+        records = copy.deepcopy(self.records)
+        records["normal_budget_three"]["trusted_evaluator_runtime_sha256"] = "f" * 64
+        altered = self.report(records)
+        self.assertFalse(altered["execution_passed"])
+        self.assertFalse(altered["input_trusted_evaluator_runtime_equivalent"])
 
         records = copy.deepcopy(self.records)
         event = records["normal_budget_three"]["trajectory"][2]

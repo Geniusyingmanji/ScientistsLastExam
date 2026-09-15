@@ -7,7 +7,8 @@ Usage:
     create_task({
         "domain": "Physics",
         "task": "HarmonicOscillatorControl",
-        "difficulty": "hard",        # hard | flagship only
+        "difficulty": "hard",        # unmeasured | hard | flagship
+        "tier": "T2",                # candidate | T2 | T3
         "oracle_type": "physical_sim",
         "score_mode": "clipped",
         "eval_time_seconds": 5,
@@ -101,6 +102,7 @@ if __name__ == "__main__":
 METADATA_TEMPLATE = """domain: {domain}
 task: {task}
 difficulty: {difficulty}
+tier: {tier}
 oracle_type: {oracle_type}
 score_mode: {score_mode}
 gpu_required: false
@@ -116,11 +118,13 @@ def create_task(spec: dict, repo: Path = REPO) -> Path:
     domain = spec["domain"]
     task = spec["task"]
     difficulty = str(spec.get("difficulty", "")).strip().lower()
-    if difficulty not in {"hard", "flagship"}:
-        raise ValueError(
-            "Frontier-Science tasks must be PhD/expert difficulty: "
-            "set difficulty to 'hard' or 'flagship'."
-        )
+    if difficulty not in {"unmeasured", "hard", "flagship"}:
+        raise ValueError("difficulty must be unmeasured, hard or flagship")
+    default_tier = {"unmeasured": "candidate", "hard": "T2", "flagship": "T3"}[difficulty]
+    tier = str(spec.get("tier", default_tier)).strip()
+    if tier not in {"candidate", "T2", "T3"}:
+        raise ValueError("tier must be candidate, T2 or T3")
+    spec = {**spec, "difficulty": difficulty, "tier": tier}
     discipline = discipline_for_domain(domain)
     requested_discipline = spec.get("discipline")
     if requested_discipline not in {None, discipline}:
@@ -187,7 +191,7 @@ def create_task(spec: dict, repo: Path = REPO) -> Path:
         ), encoding="utf-8")
     (eval_dir / "metadata.yaml").write_text(
         METADATA_TEMPLATE.format(**{k: spec.get(k, "") for k in
-            ["domain","task","difficulty","oracle_type","score_mode",
+            ["domain","task","difficulty","tier","oracle_type","score_mode",
              "eval_time_seconds","science_metric","reference_baseline",
              "reference_sota","citation"]}), encoding="utf-8")
     (eval_dir / "initial_program.txt").write_text("solution.py\n", encoding="utf-8")

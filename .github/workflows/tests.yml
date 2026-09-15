@@ -46,13 +46,16 @@ jobs:
           sudo /usr/bin/python3 -m pip install --upgrade pip
           # The required world-isolation tests generate real oracle worlds before probing
           # CandidateProxy. Their trusted-parent dependencies must exist on a fresh runner.
-          # Match the tested g450 versions, including nmrsim's sparse/plotting dependency
-          # chain; this does not change any task's candidate-package allowlist or mounts.
+          # Match the canonical runtime pins in sle/oracle_package_pins.py, including
+          # nmrsim's complete candidate dependency chain. The serial profile masks the
+          # optional TBB backend; it does not install or expose extra threading libraries.
           sudo /usr/bin/python3 -m pip install \
-            "numpy==1.24.4" "scipy==1.10.1" pyyaml pytest \
-            "nmrsim==0.6.0.post1" "qutip==4.7.6" "networkx==3.1" "sympy==1.13.3" \
+            "numpy==1.24.4" "scipy==1.10.1" "pyyaml==6.0.2" pytest \
+            "nmrsim==0.6.0" "qutip==4.7.6" "networkx==3.1" "sympy==1.13.3" \
             "mpmath==1.3.0" "sparse==0.15.5" "numba==0.58.1" "llvmlite==0.41.1" \
-            "matplotlib==3.7.5" "packaging==24.2" "contourpy==1.1.1" "cycler==0.12.1" \
+            "matplotlib==3.7.5" "packaging==26.2" "contourpy==1.1.1" "cycler==0.12.1" \
+            "numpy-groupies==0.9.22" "importlib-metadata==8.5.0" \
+            "typing-extensions==4.12.2" "zipp==3.20.2" \
             "fonttools==4.57.0" "kiwisolver==1.4.7" "pillow==10.4.0" "pyparsing==3.1.4" \
             "python-dateutil==2.9.0.post0" "six==1.17.0"
           # The sandbox resolves site-packages for the interpreter it execs; prove they are there.

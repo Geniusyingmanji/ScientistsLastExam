@@ -1,0 +1,159 @@
+{
+  "actual_evaluations": 15,
+  "baseline_combined_score": 0.0,
+  "checks": [
+    {
+      "check": "listed_in_all",
+      "detail": "ComputerArchitecture/CacheReplacementPolicyID",
+      "ok": true,
+      "status": "passed"
+    },
+    {
+      "check": "registered_in_certification",
+      "detail": "ComputerArchitecture/CacheReplacementPolicyID",
+      "ok": true,
+      "status": "passed"
+    },
+    {
+      "check": "certification_status",
+      "detail": "candidate",
+      "ok": true,
+      "status": "passed"
+    },
+    {
+      "check": "not_self_certified",
+      "detail": "candidate",
+      "ok": true,
+      "status": "passed"
+    },
+    {
+      "check": "required_files",
+      "detail": "",
+      "ok": true,
+      "status": "passed"
+    },
+    {
+      "check": "task_card",
+      "detail": "benchmarks/ComputerScience/CacheReplacementPolicyID/TASK_CARD.yaml",
+      "ok": true,
+      "status": "passed"
+    },
+    {
+      "check": "metadata",
+      "detail": "discovery",
+      "ok": true,
+      "status": "passed"
+    },
+    {
+      "check": "discovery_contract_lint_documented",
+      "detail": "",
+      "ok": true,
+      "status": "passed"
+    },
+    {
+      "check": "numeric_keys",
+      "detail": "",
+      "ok": true,
+      "status": "passed"
+    },
+    {
+      "check": "documented_keys",
+      "detail": "2 baseline keys",
+      "ok": true,
+      "status": "passed"
+    },
+    {
+      "check": "baseline_eval",
+      "detail": "combined_score=0.0",
+      "ok": true,
+      "status": "passed"
+    },
+    {
+      "check": "deterministic_baseline",
+      "detail": "",
+      "ok": true,
+      "status": "passed"
+    },
+    {
+      "check": "discovery_axes",
+      "detail": "mechanism/fdr/refusal/coverage rates present",
+      "ok": true,
+      "status": "passed"
+    },
+    {
+      "check": "degenerate_candidates_score_zero",
+      "detail": "blanket abstention earns nothing",
+      "ok": true,
+      "status": "passed"
+    },
+    {
+      "check": "bad_candidates_score_zero",
+      "detail": "raises/empty/wrong_type scored",
+      "ok": true,
+      "status": "passed"
+    },
+    {
+      "check": "shortcut_probe",
+      "detail": "best declared shortcut must be strictly below the reference margin",
+      "ok": true,
+      "status": "passed"
+    }
+  ],
+  "execution_environment": "Linux system Python 3.8.10 with real CandidateProxy",
+  "note": "Passing declared probes does not establish model difficulty or iterative improvement.",
+  "operator_report_sha256": "a63ef7f393ced51d385e170a2e15c971e396acf32492efb78dcce4a052201aa0",
+  "passed": true,
+  "phases": {
+    "difficulty": "unassessed",
+    "runtime": "passed",
+    "shortcut_guard": "passed",
+    "structural": "passed"
+  },
+  "schema_version": 2,
+  "scientific_admission": "not_assessed",
+  "shortcut_probe": {
+    "contract_sha256": "b65a96edd19ca17ace012d8219eff839971c373fae9013efc1eaea202f480001",
+    "detail": "best declared shortcut must be strictly below the reference margin",
+    "observations": [
+      {
+        "candidate": "verification/reference_permutation_augmented.py",
+        "expected_score": 0.7777777777777778,
+        "id": "reference",
+        "measured_score": 0.7777777777777778,
+        "source_sha256": "bb208e1ac0e403229fc269bbae4b9c41d7f67849714e54ecb54b323cb4c42af9"
+      },
+      {
+        "candidate": "verification/probe_without_age_table.py",
+        "expected_score": 0.6666666666666666,
+        "id": "permutation_and_lstar_without_age_table",
+        "measured_score": 0.6666666666666666,
+        "source_sha256": "0fc43bec6ef5772083b309e844bd97e67dade30d584e032b2d94505a39030812"
+      },
+      {
+        "candidate": "verification/reference_lstar_family.py",
+        "expected_score": 0.5555555555555555,
+        "id": "original_reference_without_permutation_family",
+        "measured_score": 0.5555555555555555,
+        "source_sha256": "2c4f0049032aed87ee5c15e82dc2f386cab90459139be134353d00f880bd7ccb"
+      },
+      {
+        "candidate": "solution.py",
+        "expected_score": 0.0,
+        "id": "textbook_closest_baseline",
+        "measured_score": 0.0,
+        "source_sha256": "71ad5cfcd8115f309a56462874ec39615fb6ae968cccd5a3d59c785d8b194699"
+      }
+    ],
+    "passed": true,
+    "probe_best": 0.6666666666666666,
+    "reference_score": 0.7777777777777778,
+    "scope": "declared shortcut guard only; independent model calibration still required",
+    "status": "passed",
+    "threshold": 0.7000000000000001
+  },
+  "source_revision": "e625bce208dab820d025056ba0421f6cedef97ef",
+  "source_tree_dirty": false,
+  "status": "passed",
+  "task": "ComputerArchitecture/CacheReplacementPolicyID",
+  "timeout_s": 360
+}

@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "evidence_scope": "Fixed_artifact_runtime_compatibility_only_not_universal_equivalence",
+  "before_revision": "58e4b8e560253bdafc8bb3d6c9baa268712eafb3",
+  "after_revision": "cdfdec526efce03cf7622a8b7e2e4234b97ebfad",
+  "before_runtime_source_sha256": "e29d3b1d7b0e0f9f5b1b09a8c0a45ace098ad8790547d0333c1940e0a421bea9",
+  "after_runtime_source_sha256": "945d9cf3689d0045860006c6d188725c7c4e334d960080ac6ec339b474f63ca7",
+  "before_plan_sha256": "14e77359c087e95fada355ec97b08cadabed993429d9a89bafef33f3e9bd5fa0",
+  "after_plan_sha256": "eeaaba4e21b05a5d2982fe5d5d22299d5616856a27a36e243dcbb7a4c6a8cdb2",
+  "actual_evaluations": 28,
+  "model_calls": 0,
+  "raw_published": false,
+  "rows": [
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "status": "inert",
+      "candidate_sha256": "2e3e95b75b33e87664b71ff1b9c0c10703317b06de8a653903b129a6f3e947a8",
+      "metrics_compared": 46,
+      "before_full_metrics_sha256": [
+        "d8a6efe0f91e5c31750f926d08f1d0de3963932ef1562d636476f40e7b02e193",
+        "d8a6efe0f91e5c31750f926d08f1d0de3963932ef1562d636476f40e7b02e193"
+      ],
+      "after_full_metrics_sha256": [
+        "d8a6efe0f91e5c31750f926d08f1d0de3963932ef1562d636476f40e7b02e193",
+        "d8a6efe0f91e5c31750f926d08f1d0de3963932ef1562d636476f40e7b02e193"
+      ],
+      "all_four_evaluations_valid": true,
+      "complete_metrics_identical": true
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "status": "inert",
+      "candidate_sha256": "d1aef652e4c0a4a936f138d3db8401276095d1660b41521613036b38781505f9",
+      "metrics_compared": 23,
+      "before_full_metrics_sha256": [
+        "f935cea5306b6b892a4f00b61b4cdafc51d38e77c2cb18f08da3eccde6104816",
+        "f935cea5306b6b892a4f00b61b4cdafc51d38e77c2cb18f08da3eccde6104816"
+      ],
+      "after_full_metrics_sha256": [
+        "f935cea5306b6b892a4f00b61b4cdafc51d38e77c2cb18f08da3eccde6104816",
+        "f935cea5306b6b892a4f00b61b4cdafc51d38e77c2cb18f08da3eccde6104816"
+      ],
+      "all_four_evaluations_valid": true,
+      "complete_metrics_identical": true
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "status": "inert",
+      "candidate_sha256": "7a8d6e3060c3a667b16677fce3651e30babec2bfb8f5d159a5f660eebb05f2d4",
+      "metrics_compared": 22,
+      "before_full_metrics_sha256": [
+        "a0bbc4ee9808c15b8a0e5753532e76d69cf8c8e678e3dd7ef67c4f7212486d58",
+        "a0bbc4ee9808c15b8a0e5753532e76d69cf8c8e678e3dd7ef67c4f7212486d58"
+      ],
+      "after_full_metrics_sha256": [
+        "a0bbc4ee9808c15b8a0e5753532e76d69cf8c8e678e3dd7ef67c4f7212486d58",
+        "a0bbc4ee9808c15b8a0e5753532e76d69cf8c8e678e3dd7ef67c4f7212486d58"
+      ],
+      "all_four_evaluations_valid": true,
+      "complete_metrics_identical": true
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "status": "inert",
+      "candidate_sha256": "d5af76e6256f27c5dcf2623b852c8d4fdc7907e7807368ea17555289d516af0e",
+      "metrics_compared": 15,
+      "before_full_metrics_sha256": [
+        "8a231ac73a03dc0ffd3cc63c42ec2a2a3d98602719b0d5687eb521255b9e5655",
+        "8a231ac73a03dc0ffd3cc63c42ec2a2a3d98602719b0d5687eb521255b9e5655"
+      ],
+      "after_full_metrics_sha256": [
+        "8a231ac73a03dc0ffd3cc63c42ec2a2a3d98602719b0d5687eb521255b9e5655",
+        "8a231ac73a03dc0ffd3cc63c42ec2a2a3d98602719b0d5687eb521255b9e5655"
+      ],
+      "all_four_evaluations_valid": true,
+      "complete_metrics_identical": true
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "status": "inert",
+      "candidate_sha256": "61d1073ad2b6d62ce8fd4a70c2c8dace00082b959f2b554ca9b87e6ca66382bf",
+      "metrics_compared": 13,
+      "before_full_metrics_sha256": [
+        "b2c6ae2cf91378df85fa56b8f302f8f9eae0d5c230a9b96c2520915080786875",
+        "b2c6ae2cf91378df85fa56b8f302f8f9eae0d5c230a9b96c2520915080786875"
+      ],
+      "after_full_metrics_sha256": [
+        "b2c6ae2cf91378df85fa56b8f302f8f9eae0d5c230a9b96c2520915080786875",
+        "b2c6ae2cf91378df85fa56b8f302f8f9eae0d5c230a9b96c2520915080786875"
+      ],
+      "all_four_evaluations_valid": true,
+      "complete_metrics_identical": true
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "status": "inert",
+      "candidate_sha256": "5ef7f3122546589af264e52a00abb2cf5538aeac991ddcc051ce6198d562dfd8",
+      "metrics_compared": 17,
+      "before_full_metrics_sha256": [
+        "4c214d5155e5ba0005269de8d62e6403737baf7dfce7f5ee3585b5853b965313",
+        "4c214d5155e5ba0005269de8d62e6403737baf7dfce7f5ee3585b5853b965313"
+      ],
+      "after_full_metrics_sha256": [
+        "4c214d5155e5ba0005269de8d62e6403737baf7dfce7f5ee3585b5853b965313",
+        "4c214d5155e5ba0005269de8d62e6403737baf7dfce7f5ee3585b5853b965313"
+      ],
+      "all_four_evaluations_valid": true,
+      "complete_metrics_identical": true
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "status": "inert",
+      "candidate_sha256": "401c81126a27e4d998f3d8519c74eeb8b4b88dfa6fbafd1fcdb44a3b04b9dba6",
+      "metrics_compared": 24,
+      "before_full_metrics_sha256": [
+        "b5c93985a2ca88d6e5a58b366085754d76b6c4c78c3dc3235a976a89d29bc21d",
+        "b5c93985a2ca88d6e5a58b366085754d76b6c4c78c3dc3235a976a89d29bc21d"
+      ],
+      "after_full_metrics_sha256": [
+        "b5c93985a2ca88d6e5a58b366085754d76b6c4c78c3dc3235a976a89d29bc21d",
+        "b5c93985a2ca88d6e5a58b366085754d76b6c4c78c3dc3235a976a89d29bc21d"
+      ],
+      "all_four_evaluations_valid": true,
+      "complete_metrics_identical": true
+    }
+  ],
+  "passed": true,
+  "trusted_evaluator_interpreter_note": "Both drivers launched by isolated canonical Python3.8.10. Old main resolves its venv entrypoint to system Python; the new runtime preserves that entrypoint. This measures the real migration, not identical full environments."
+}

@@ -47,6 +47,11 @@ class RunManifestModelAttributionTests(unittest.TestCase):
         self.assertEqual(descriptor["max_output_tokens"], 8000)
         self.assertEqual(descriptor["timeout_seconds"], 900)
         self.assertFalse(descriptor["chat_reasoning_fallback"])
+        self.assertFalse(descriptor["server_side_seed_control"])
+        self.assertEqual(
+            descriptor["endpoint_sha256"],
+            "d3bdaecabc50dadbfd9a8e477c2708be23914bac0ad13d2977d2af5adf732a1d",
+        )
 
     def test_descriptor_never_writes_a_credential_to_disk(self):
         descriptor = common.llm_condition_descriptor(_Client())

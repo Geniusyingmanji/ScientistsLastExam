@@ -39,6 +39,7 @@ from sle.provenance import (  # noqa: E402
 )
 from scripts.repo_paths import resolve_run_workdir  # noqa: E402
 from sle.registry import find_task  # noqa: E402
+from sle.run_verification import verify_run  # noqa: E402
 from sle.runtime_migration import (  # noqa: E402
     RUNTIME_PATHS,
     runtime_migration_status,
@@ -749,6 +750,7 @@ def _load_model(
     checkpoint_path = workdir / "checkpoint.json"
     summary_path = workdir / "summary.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    verification = verify_run(workdir)
     checkpoint = json.loads(checkpoint_path.read_text(encoding="utf-8"))
     expected_policy = (
         "offline_best_of_open_loop_batch"
@@ -818,6 +820,9 @@ def _load_model(
         "summary_sha256": _sha256(summary_path),
         "task_contract_sha256": manifest.get("task_contract_sha256"),
         "runtime_source_sha256": manifest.get("runtime_source_sha256"),
+        "trusted_evaluator_runtime_sha256": (
+            manifest.get("trusted_evaluator_runtime") or {}
+        ).get("fingerprint_sha256"),
         "baseline_candidate_sha256": trajectory[0]["candidate_sha256"],
         "best_program": str(relative_workdir / "best_program.py"),
         "best_program_sha256": best_hash,
@@ -871,6 +876,9 @@ def _load_model(
         == config.get("llm_condition_sha256")
         and isinstance(record["task_contract_sha256"], str)
         and isinstance(record["runtime_source_sha256"], str)
+        and isinstance(record["trusted_evaluator_runtime_sha256"], str)
+        and verification.get("trusted_evaluator_runtime_sha256")
+        == record["trusted_evaluator_runtime_sha256"]
     )
     if not record["integrity_passed"]:
         raise ValueError("alloy lineage, replay, accounting, or shortcut gate failed")
@@ -892,6 +900,9 @@ def _analyze_records(
     conditions = {record["llm_condition_sha256"] for record in records.values()}
     task_contracts = {record["task_contract_sha256"] for record in records.values()}
     runtime_sources = {record["runtime_source_sha256"] for record in records.values()}
+    trusted_runtimes = {
+        record["trusted_evaluator_runtime_sha256"] for record in records.values()
+    }
     selected_hashes = {
         record["selected_candidate_sha256"] for record in records.values()
     }
@@ -972,6 +983,8 @@ def _analyze_records(
         and None not in task_contracts
         and len(runtime_sources) == 1
         and None not in runtime_sources
+        and len(trusted_runtimes) == 1
+        and None not in trusted_runtimes
         and len(selected_hashes) == 3
         and all(record["integrity_passed"] for record in records.values())
         and one["proposal_budget"] == 1
@@ -994,7 +1007,7 @@ def _analyze_records(
         and not blind_step_two["accepted"]
     )
     report: dict[str, Any] = {
-        "schema_version": 1,
+        "schema_version": 2,
         "trust_status": "TRUSTED_DERIVED_EVIDENCE",
         "evidence_scope": (
             "RETROSPECTIVE_PUBLIC_DOI_GROUPED_ALLOY_HARDNESS_REPLAY_"
@@ -1017,6 +1030,7 @@ def _analyze_records(
         "input_llm_condition_equivalent": len(conditions) == 1,
         "input_task_contract_equivalent": len(task_contracts) == 1,
         "input_runtime_source_hash_equivalent": len(runtime_sources) == 1,
+        "input_trusted_evaluator_runtime_equivalent": len(trusted_runtimes) == 1,
         "task_calibration": calibration,
         "records": records,
         "proposal_hurdle_summary": {

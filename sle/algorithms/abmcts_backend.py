@@ -15,7 +15,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable, Optional
 
-from ..evaluate import INVALID_SCORE, evaluate_candidate
+from ..evaluate import INVALID_SCORE, evaluate_candidate, resolve_trusted_runtime
 from ..llm import LLMClient
 from ..metric_visibility import (
     EvaluationInfrastructureError, require_healthy_evaluations, require_scientific_result,
@@ -40,9 +40,11 @@ TREEQUEST_VERSION = "0.3.2"
 TREEQUEST_COMMIT = "96047d712d66bbbf4dcc86dcd3e2eaab98c35f83"
 
 
-def _evaluate_for_search(spec, candidate, timeout_s, diagnostics):
+def _evaluate_for_search(spec, candidate, timeout_s, diagnostics, trusted_runtime):
     try:
-        metrics = evaluate_candidate(spec, candidate, timeout_s=timeout_s)
+        metrics = evaluate_candidate(
+            spec, candidate, timeout_s=timeout_s, trusted_runtime=trusted_runtime,
+        )
         require_scientific_result(metrics)
         return metrics
     except Exception as exc:
@@ -103,6 +105,7 @@ def abmcts(
         workdir or spec.task_dir / "runs" / ("abmcts_%s" % time.strftime("%Y%m%d_%H%M%S"))
     ).resolve()
     workdir.mkdir(parents=True, exist_ok=True)
+    trusted_runtime = resolve_trusted_runtime(spec.task_dir)
     diagnostics = workdir / "trusted_full_metrics"
     require_healthy_evaluations(diagnostics)
     ensure_run_manifest(
@@ -110,6 +113,7 @@ def abmcts(
         feedback_mode=feedback_mode, resume=resume,
         upstream={"name": "treequest", "version": TREEQUEST_VERSION,
                   "commit": TREEQUEST_COMMIT},
+        trusted_runtime=trusted_runtime,
     )
     candidate_path = workdir / Path(spec.candidate_destination).name
     checkpoint_path = workdir / "checkpoint.pkl"
@@ -154,7 +158,9 @@ def abmcts(
     if not resume:
         candidate_path.write_text(baseline_code, encoding="utf-8")
         started = time.monotonic()
-        baseline_metrics = _evaluate_for_search(spec, candidate_path, timeout_s, diagnostics)
+        baseline_metrics = _evaluate_for_search(
+            spec, candidate_path, timeout_s, diagnostics, trusted_runtime,
+        )
         baseline_score, baseline_valid = metrics_score(baseline_metrics)
         # TreeQuest search state must never contain evaluator-only science metrics.
         baseline_state = ProgramState(
@@ -246,7 +252,9 @@ def abmcts(
 
         if code:
             candidate_path.write_text(code, encoding="utf-8")
-            metrics = _evaluate_for_search(spec, candidate_path, timeout_s, diagnostics)
+            metrics = _evaluate_for_search(
+                spec, candidate_path, timeout_s, diagnostics, trusted_runtime,
+            )
             oracle_calls += 1
         else:
             code = parent_state.code

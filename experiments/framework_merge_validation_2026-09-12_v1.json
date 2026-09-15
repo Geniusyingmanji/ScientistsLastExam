@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "evidence_scope": "FRAMEWORK_INTEGRATION_VALIDATION_NOT_MODEL_PERFORMANCE_OR_FAMILY_SCIENCE",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "4a69e02179eb16330d7f2117a43494ca4b85c75c",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ]
+  },
+  "runtime_source_sha256": "945d9cf3689d0045860006c6d188725c7c4e334d960080ac6ec339b474f63ca7",
+  "components": {
+    "certification": {
+      "path": "experiments/task_certification_audit_2026-09-12_v87.json",
+      "sha256": "56ec1e90bdfd618873f0e44d36935fd4b6311037a8061c9bc78b911890a1edd6",
+      "schema_version": 1,
+      "passed": true,
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "inventory_count": 86,
+      "measurement_source_revision": "cdfdec526efce03cf7622a8b7e2e4234b97ebfad"
+    },
+    "baseline": {
+      "path": "experiments/secure_baseline_determinism_2026-09-12_v71.json",
+      "sha256": "fb53e1e2f0a098d432a5f41340ffc9f31c677691d1871dc9fc84b210c388a844",
+      "schema_version": 2,
+      "passed": true,
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "summary": {
+        "inventory_count": 86,
+        "deterministic_count": 86,
+        "valid_count": 86,
+        "fail_closed_count": 86,
+        "infrastructure_failure_count": 0,
+        "invalid_baseline_run_count": 0,
+        "malformed_candidate_evaluations": 0
+      },
+      "measurement_source_revision": "cdfdec526efce03cf7622a8b7e2e4234b97ebfad"
+    },
+    "maturity": {
+      "path": "experiments/task_maturity_audit_2026-09-12_v29.json",
+      "sha256": "87d33423c712dc639be159ff2a0226b3017d898dc88ad8ae0402ed01b79653e2",
+      "schema_version": 1,
+      "passed": true,
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "gate_counts": {
+        "internal_science_admission": 86,
+        "open_release_ready": 0,
+        "externally_validated": 0,
+        "long_horizon_ready": 0
+      },
+      "inventory_count": 86,
+      "measurement_source_revision": "f9dbfe5710a722a208daf71c0544afb2f436b0ca"
+    },
+    "wrapper": {
+      "path": "experiments/public_wrapper_baseline_replay_2026-09-12_v5.json",
+      "sha256": "4f9437e3dfcdbdcb47ac7cedb119fa14de7db35b813df778ef595e290b1df660",
+      "schema_version": 1,
+      "passed": true,
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "inventory_count": 86,
+      "passed_count": 86,
+      "actual_wrapper_calls": 86,
+      "measurement_source_revision": "cdfdec526efce03cf7622a8b7e2e4234b97ebfad"
+    },
+    "recovery": {
+      "path": "experiments/evaluation_recovery_fault_audit_2026-09-12_v12.json",
+      "sha256": "edde8908d23efadf9e0a4ad1f225750511560f8c6d92f360aa0c3c514d8d6138",
+      "schema_version": 1,
+      "passed": true,
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "scenario_count": 8,
+      "measurement_source_revision": "cdfdec526efce03cf7622a8b7e2e4234b97ebfad"
+    },
+    "compatibility": {
+      "path": "experiments/framework_frozen_artifact_compatibility_2026-09-12_v1.json",
+      "sha256": "c84f1e961b03ac6aea07287eebe55116cfcf3d04e683dec9fb813831ee363f95",
+      "schema_version": 1,
+      "passed": true,
+      "actual_evaluations": 28,
+      "measurement_source_revision": "cdfdec526efce03cf7622a8b7e2e4234b97ebfad"
+    },
+    "preflight": {
+      "path": "experiments/measurement_health_preflight_2026-09-12_v4.json",
+      "sha256": "d5cd2e666fadfe342d950a0de91e8f15ec3a249b87eb92786e8601fe04c159e9",
+      "schema_version": 2,
+      "passed": true,
+      "execution_passed": true,
+      "trusted_evidence": true,
+      "task_count": 7,
+      "check_status_counts": {
+        "pass": 70,
+        "fail": 0,
+        "missing": 0
+      },
+      "measurement_source_revision": "4fd69ebb2d09f99cc2cf25d1c1a3e26bce09d4f1"
+    },
+    "preflight_spec": {
+      "path": ".research/measurement_health_preflight_spec_2026-09-12_v16.json",
+      "sha256": "7751ac911e0fa7de3bf6a1d3df6902c426eecef38a8be526b59bc57764d0a8b9",
+      "schema_version": 2,
+      "measurement_source_revision": "ee85155238996e7411f7cb75db67893efab3216b"
+    },
+    "preflight_manifest": {
+      "path": ".research/exploratory_2h_cohort_manifest_2026-09-12_v13.json",
+      "sha256": "411961be0e567a374e851c2d39cae9abdec9eef819acd4c29c7db7ddc10a7183",
+      "schema_version": 1,
+      "measurement_source_revision": null
+    },
+    "preflight_artifacts": {
+      "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v13.json",
+      "sha256": "e2a9dd507a39bd91cccf70071e79f5aa17bffbf19a6e2f49ec9aa2cf26d52d17",
+      "schema_version": 1,
+      "measurement_source_revision": null
+    }
+  },
+  "inventory": {
+    "total": 86,
+    "optimization": 42,
+    "discovery": 44,
+    "certified": 5,
+    "candidate": 81,
+    "family_opted_in": 0
+  },
+  "actual_evaluations_by_scope": {
+    "baseline": 172,
+    "wrapper": 86,
+    "frozen_artifact_compatibility": 28,
+    "preflight": 21
+  },
+  "scientific_model_calls": 0,
+  "ci310_required_regressions": {
+    "source_revision": "cdfdec526efce03cf7622a8b7e2e4234b97ebfad",
+    "python": "3.10.20",
+    "passed": 58,
+    "failed": 0,
+    "skipped": 0,
+    "subtests_passed": 21,
+    "junit_sha256": "f2c389204320ecf19e971ade8e125885d76628b83097ea0453bf3f7765181313",
+    "coverage_sha256": "0af0c4784988e2b667b12f3112e9968ea7ccfb95074db56cc573ce99f62c7234"
+  },
+  "required_ci_manifest_sha256": "f446391781ef9dcf8169fe72d47989dff3270a997a060f57346f66a88f85a65f",
+  "github_ci_must_pass_before_merge": true,
+  "limitations": [
+    "Completed-proposal-budget greedy verification only; early active-wall termination cannot yet be verified as a completed budget.",
+    "No opted-in family task, no lifetime-credit scientific validity claim, no historical model run migrated.",
+    "Frozen-artifact equivalence is measured only for the seven preserved programs, not all candidates.",
+    "New full metrics remain in operator-owned Git-external storage; public projections retain hashes and permitted aggregates."
+  ]
+}

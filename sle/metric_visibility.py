@@ -14,7 +14,7 @@ import json
 import os
 import tempfile
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Mapping, Sequence
 
 
 SEARCH_VISIBLE_KEYS = (
@@ -117,6 +117,19 @@ def score_only_metrics(metrics: Mapping[str, Any]) -> dict[str, Any]:
     """
     visible = search_visible_metrics(metrics)
     return {key: visible[key] for key in SCORE_ONLY_KEYS if key in visible}
+
+
+def shuffled_feedback_metrics(
+    history: Sequence[Mapping[str, Any]], *, seed: int, proposal_step: int
+) -> dict[str, Any]:
+    """Select one prior metric record without resume-dependent RNG state."""
+    if not history:
+        raise ValueError("shuffled feedback requires prior metrics")
+    selector = hashlib.sha256(
+        ("%d:%d" % (seed, proposal_step)).encode("ascii")
+    ).digest()
+    index = int.from_bytes(selector[:8], "big") % len(history)
+    return dict(history[index])
 
 
 def source_sha256(source: str) -> str:

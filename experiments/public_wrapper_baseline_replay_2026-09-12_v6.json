@@ -1,0 +1,1593 @@
+{
+  "schema_version": 1,
+  "evidence_scope": "PUBLIC_WRAPPER_BASELINE_REPLAY_ONLY",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ]
+  },
+  "baseline": "experiments/secure_baseline_determinism_2026-09-12_v72.json",
+  "baseline_sha256": "45a499d058fbcdf1d71fcb6bd5cc3b5a0b72bb8510fd994bd7e0c34a4cbeefd1",
+  "inventory_count": 87,
+  "passed_count": 87,
+  "tasks": [
+    {
+      "task": "PopulationGenetics/DemographicSFS",
+      "candidate_sha256": "775efcfe3b36377c94afc5a3c8a1f2150d49bed8b86327a0cf0ecfe5277e3370",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "SystemsBiology/EnzymeKineticsLaw",
+      "candidate_sha256": "2ccf82a8a7a22654a3ced7e884b51ade076ff1ac8c51095f1a6a9333d4bc3b15",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "SystemsBiology/GeneNetworkIntervention",
+      "candidate_sha256": "504a24de072a36533b84a004999f0221cc90ea80c9afcf95c84f5ee31e471073",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Microbiology/MetagenomeCompositionAssignment",
+      "candidate_sha256": "7e155a66035c10f8bc28fafd9cab5c6463610059c54774ba7e940dd7cf612401",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Ecology/OccupancyDetectionDesign",
+      "candidate_sha256": "cd026e3eaa355ba51613b4e1e289f13ba609ad8f7680384fcb8b4014c2952c97",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "EvidenceSynthesis/ProspectiveMetaAnalysis",
+      "candidate_sha256": "786149e35c177dc6080df6d968fb0402661b6c0212c65b4d0b5e25e5b81e5e78",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "ProteinEngineering/ProteinStabilityDesign",
+      "candidate_sha256": "1d7b7d2dd319c246d235f33f207f5470bcd7d984ed92f85b63903a6ddb098455",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "RNAEngineering/RNAEnsembleDesign",
+      "candidate_sha256": "2b4927da1b36097aa4a94f1c80fab3bd3eebcb0827669f473f0688605db4e603",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "candidate_sha256": "323cf61512a5763b12bdf7c97e1b85ed84f6c1d690c38db77f0b0b53269bb48f",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "MaterialsScience/AlloyHardnessOptimization",
+      "candidate_sha256": "9079971176c51f75a0363e59286f29d0f42bf3b78310c8bc65a515b376165bc5",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Catalysis/CatalystDeactivationLab",
+      "candidate_sha256": "0bb775d2138978c154dd2683c6006d646b985966d5774e9f011f4ea157d3d4a9",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Spectroscopy/CrowdedSpectrumAssignment",
+      "candidate_sha256": "2e29744abfbd01635e9663a1f1d65650b7e1d601c41c08b2ca42a5eae58866db",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "ChemicalProcess/DistillationColumnDesign",
+      "candidate_sha256": "05026baf28092bc8b53caaf3330a0e5571bf2584eac97d43cadd83ce2dc4edda",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "candidate_sha256": "a55e04a4239e8f469a908f41924c0555041b432793cab89ac589a43dc4b1772f",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "MolecularDynamics/ForceFieldCalibration",
+      "candidate_sha256": "8edee96aeb0ee22f10838110e0d600c1e540d2fba411ced0e13ca27721eab23b",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.041930443440283925,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.041930443440283925
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.041930443440283925,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.041930443440283925
+      },
+      "passed": true
+    },
+    {
+      "task": "MedicinalChemistry/MolecularLeadOptimization",
+      "candidate_sha256": "2352f21d32f0a00f9984f506d9e7cd1f17fc6b68f3299d91583099a973732d30",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 0.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 0.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Spectroscopy/NMRSpectrumFitting",
+      "candidate_sha256": "8c947b81fad9fe34f73dec6e2a058c15ef05ab0ee651a9b7403c1314bc27079f",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "MaterialsScience/PhaseDiagramDiscovery",
+      "candidate_sha256": "090952ccadf59b3bb2c0b766e6de8657e9c834cf86f5d6dd020061cd0343ed88",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 0.8888888888888888,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 0.8888888888888888,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "MaterialsScience/QuinaryConvexHull",
+      "candidate_sha256": "4042b9b71ba3be73b5086e74418c028913795be0153dc883d61eed656e0ce815",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "ChemicalKinetics/ReactionMechanismFitting",
+      "candidate_sha256": "e84d66c597d9808caa51a0b4ec840280496bd8debc823939c4f9d4d66313e2e3",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Spectroscopy/SpinSystemInference",
+      "candidate_sha256": "675c6211f1d20c99a3ab04e08993c8089fc1dbfbb68c1bf9d2d6477d138d7be1",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.041666666666666664,
+        "valid": 1.0,
+        "raw_score": 0.041666666666666664
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.041666666666666664,
+        "valid": 1.0,
+        "raw_score": 0.041666666666666664
+      },
+      "passed": true
+    },
+    {
+      "task": "ComputerArchitecture/CacheReplacementPolicyID",
+      "candidate_sha256": "71ad5cfcd8115f309a56462874ec39615fb6ae968cccd5a3d59c785d8b194699",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Algorithm/GraphFromDistances",
+      "candidate_sha256": "c29f785314b330a45df83d7193e1fb4815ff2a2b2de435a3f52988063b276e79",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.43081395348837204,
+        "valid": 1.0,
+        "raw_score": 0.43081395348837204
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.43081395348837204,
+        "valid": 1.0,
+        "raw_score": 0.43081395348837204
+      },
+      "passed": true
+    },
+    {
+      "task": "CausalDiscovery/InterventionalSCM",
+      "candidate_sha256": "e00399f59ccd3e7845f64ec861e043f22bef6804ddc8fcefaf43b40a4ea657fe",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.16666666666666666
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.16666666666666666
+      },
+      "passed": true
+    },
+    {
+      "task": "Algorithm/MatrixMultiplicationRank",
+      "candidate_sha256": "cb394c23be55857134a630cbef1cf12bb0eb2b295d56ffcf5b85504d0132db6f",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "InformationTheory/ShannonCapacityCertificate",
+      "candidate_sha256": "d385360c97df6dcdc9d6240d90189fd72ef7abf45cc8b5d126f77c87f9539582",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "SignalProcessing/SparseRecovery",
+      "candidate_sha256": "d4ae359138bd6dc62ab465f60d5221f496e0b36287dde2f3a5e3d0fb0be120bc",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "DataPrivacy/SparseVectorAudit",
+      "candidate_sha256": "cd6ec9e0c0b43ecb2e83c3980b983d4ca5f0b49c37cbf9330f38b1e541690917",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "CausalDiscovery/SurvivorshipConfoundedDesign",
+      "candidate_sha256": "b9977af9ef8eb3ebc4f9a5f0beee6ffb583809e6f97bab981fd5c98deaa79e35",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Algorithm/TensorRank555",
+      "candidate_sha256": "9a37d37053dfacfe10b035e43261a55768ea6a52437813814594a9f12e348925",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Oceanography/AMOCTippingRefusal",
+      "candidate_sha256": "895138d109f894477e74979c9c370e8c9c63b9be99c28e3a9455e2a2e8a967e4",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "ClimateScience/EnergyBalanceModel",
+      "candidate_sha256": "9b4ff24deeaa96eba6a4cf31bed96d72e0a3fbf4a82f936883e11545adc92794",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "ClimateScience/ForcedSignalAttribution",
+      "candidate_sha256": "935e24a6ac3507b421bd948d16773fc67f7144d38798769f104bb935a90ad0c3",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.02542828571428576,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.02542828571428576
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.02542828571428576,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.02542828571428576
+      },
+      "passed": true
+    },
+    {
+      "task": "Geophysics/GravityInversion",
+      "candidate_sha256": "d16e06ab8b4d30a01b74a1830e8c5bb95d245ffa04f8f34adda6331fc3b7082a",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "AtmosphericChemistry/MethaneSourceAttribution",
+      "candidate_sha256": "91aa2aa2aa9e892b24d7e97299372747e733f65a3f24777f72ac7293728bf4d4",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "AtmosphericScience/RadiativeTransferFit",
+      "candidate_sha256": "dbacb6ca73f4d5e908aa771cb314061975f3cabf42fddd95f9f60d650421b540",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Geophysics/UPbConcordiaInference",
+      "candidate_sha256": "519b9afdb50545e948420e8b162fb2fedbb7948e96367134f08f88ea61ecef34",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "HeatTransfer/ConvectionDiffusionOpt",
+      "candidate_sha256": "2f1758be1dfd4f024c95374adeb392013cf9adb7aadbd2da7ea89b066ef15991",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "candidate_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Sensors/IMUBiasCalibration",
+      "candidate_sha256": "0c40ad1fad8bd3a949c64a268385ad45bab06d4aa5343c170906cb3c38ea55bf",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "candidate_sha256": "a238ad8399a344671ed871e7d27a06de80adaf1b5c9483c1141c929520a4b44b",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 2.1076699100262634e-05,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 2.1076699100262634e-05
+      },
+      "expected_public_metrics": {
+        "combined_score": 2.1076699100262634e-05,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 2.1076699100262634e-05
+      },
+      "passed": true
+    },
+    {
+      "task": "Astrodynamics/LowThrustTransfer",
+      "candidate_sha256": "ef95244e9f991d565bbb2ba8cff687af39f587d4a739e0295983673e2b68fc99",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 0.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 0.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "candidate_sha256": "243f1a3fe6bca79989c47a8945e69dc9de419544c02f5f737a754ec56acac5e6",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "StructuralEngineering/ModalDamageAttribution",
+      "candidate_sha256": "148669f7ff4060ad4d041e7b84181120b4f3c325646e5fabdc09eff5d8d4811a",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "NuclearEngineering/NeutronDiffusionCriticality",
+      "candidate_sha256": "5257d7dabbfc42e0b7175f1e45945079cb57ae91a602c1096dc0944a0ea99500",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.9841790542199828
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.9841790542199828
+      },
+      "passed": true
+    },
+    {
+      "task": "Sensors/QuartzCrystalMicrobalanceLab",
+      "candidate_sha256": "f8c1150b84cec9fdd8bb58e5a93ae485f5ef8f7036f618ca14ea739062d85c4d",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "candidate_sha256": "08d77d5949beb6d20b7459805f4834306fd6daebc982cc38e1f38c03b7d371e5",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Acoustics/RoomImpulseResponse",
+      "candidate_sha256": "657b90622f24ad4362ed9d8500dbbf98d116a054c1ada457a22f560c2f913611",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "candidate_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Turbulence/WallClosureDiscovery",
+      "candidate_sha256": "213794f18ad40f85d5a844ff4d0b9ebb107bc26d6866360fc4fd11623169c514",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "candidate_sha256": "2386f20f4c54a118ebf66187a97e3f1a0b04c47bd182d5db48a733b2d1c4f331",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Mathematics/BlackBoxGroupIdentification",
+      "candidate_sha256": "d9849295c3c3e065b2ec9be2da4922a57170e4314d57db5f8515f114b1d2ddb6",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Mathematics/CapSet",
+      "candidate_sha256": "a52d292c05a65500e8fb3d527233b6762408a4d1200877921cfe6ae0705cd55c",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Mathematics/CapSetFrontier",
+      "candidate_sha256": "36b71b98a309562fcbe53fbff9024581de75c79bcb1af7367b7ed81664acdcbf",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Optimization/CirclePacking",
+      "candidate_sha256": "4189f1c26472a29105d61e3f6475c6de6555f254e73fe68eb504a830b75f6b7a",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Mathematics/DegreeDiameterGraph",
+      "candidate_sha256": "5c91e5f9175607d98e966fadbd89b50da4f27e32bfc46f0211a4a86d813019eb",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Mathematics/ErdosMinimumOverlap",
+      "candidate_sha256": "e1d91bc1621a65a4f9384073da17236271f485aca84dfc098b752e59697d75d0",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Mathematics/HeavyTailEvidence",
+      "candidate_sha256": "6f070faa6bcaafcf00157f56c3600b59494eedf30da391bdcba7e18fd1f75f75",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Mathematics/HeilbronnTrianglePacking",
+      "candidate_sha256": "707d0b6dfa275e79328b21949576377fd2152befa814d747a22d3f0a383e2e78",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Mathematics/KissingNumber",
+      "candidate_sha256": "f239237ffa5c51859216f79c0bb9381c692e2a3dc6c9a91ad118576c349b4b2a",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Mathematics/NarrowAdmissibleTuple",
+      "candidate_sha256": "1eb338abe47742e7759b83fdb6160610046b7b58926c7fc3bb82e4c65be00df7",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Mathematics/NonlinearCodeRecords",
+      "candidate_sha256": "e518f8252c65529ddbea1130544da3cf558ab29374edfd03dcf5e186dd81cec9",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Mathematics/RamseyLowerBound",
+      "candidate_sha256": "aef15b215b12850bbd0d54a42497922be9207444b0f14129ca6520ec7b54c49a",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Mathematics/SchurPartition",
+      "candidate_sha256": "759ac60d5902d905d627b0bf7fb542582ca9028dc336a3ff63b0b80c4828cbc1",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Mathematics/SequenceLawRecovery",
+      "candidate_sha256": "d3cb4ddce112129387c322524a798e35d5cf5461096f02c4c81a1af15274d70e",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "DiscreteGeometry/SpherePackingCertificate",
+      "candidate_sha256": "cb62cf0a96bfe4f91214d6b378dbc991ecb8e595b414e20826d90ee4fd172766",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Mathematics/Superpermutation",
+      "candidate_sha256": "60d390519fdc59672c1f505f2fd34b9608f48d757ba0b2c359a5d21be4bbb268",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Mathematics/VanDerWaerdenColoring",
+      "candidate_sha256": "d7b5c919a0eb869129c578b220dc3bbb2ad3a26f3caa54656193fb59b37095f6",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Mathematics/ZarankiewiczMatrix",
+      "candidate_sha256": "7460d0a0a040670ce909c8cba5e7be95db85c0a4cebe9d4c652a42b203e62920",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "QuantumControl/ActiveNoiseSpectroscopy",
+      "candidate_sha256": "e7fa9963b4f03fcb21664ac8ad51a955c7ca8dd8ebecbb31987ac357746f6724",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "QuantumFoundations/BellBoundCertificate",
+      "candidate_sha256": "14ab15fcc2775807b28fb3081908bbb84e390bd3493d4a6bcf8d335574e2ce74",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "ParticlePhysics/CalorimeterDesign",
+      "candidate_sha256": "67c2b8bb34e4d69b81e416f7624085a847eb8d3cd6dd570bd7be30f7a68c4142",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Physics/ComplexBoseLaw",
+      "candidate_sha256": "2e5969bffd3e327655ceb480b79e43c0dfc9fd869511665b965bcdf286c0a7bc",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Physics/CriticalPhenomenaLab",
+      "candidate_sha256": "9700076eccba52bdd9fd9b729363c9d1503f77b2174deeb0abf09f27c8621735",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "candidate_sha256": "f2abe37d10285154574c5805325f5a0fdcc863e058e8503a5087359fdeba3046",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "ParticlePhysics/DiscrepantMeasurements",
+      "candidate_sha256": "5a5ddfbe2feea75c370d466d055db5d1235add29db9f893fe2fc1ff61c20786b",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "QuantumFoundations/FourSettingMomentCertificate",
+      "candidate_sha256": "14ab15fcc2775807b28fb3081908bbb84e390bd3493d4a6bcf8d335574e2ce74",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "QuantumDynamics/HamiltonianLearning",
+      "candidate_sha256": "14a434c963ef15fd69e3ac0100744b70328b7fce639d1028c62b04ae3bba6809",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.08333333333333333,
+        "valid": 1.0,
+        "raw_score": 0.08333333333333333
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.08333333333333333,
+        "valid": 1.0,
+        "raw_score": 0.08333333333333333
+      },
+      "passed": true
+    },
+    {
+      "task": "Physics/HiddenCouplingNetwork",
+      "candidate_sha256": "75eba884aee847c4d7e8488826f72a9268c4dd27856b0adae1dbcabd7924df24",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "ParticlePhysics/LookElsewhereAnomaly",
+      "candidate_sha256": "710fa713b7a0cdd2f4828d5a0a7480f7a9f237542d8a5b2cc2cb39f56f33a58c",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Photonics/MultilayerThinFilm",
+      "candidate_sha256": "d6d43007ed7eadd9f999f7010a716fc40ce9714a916c827c2efea239063c1904",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.5908038368710128,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.5908038368710128
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.5908038368710128,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.5908038368710128
+      },
+      "passed": true
+    },
+    {
+      "task": "Gravitation/PTAHellingsDowns",
+      "candidate_sha256": "67d6b9cbbc9aa36215debfb8179ad76d1b4f662065ed9dbb1daf007290b9e4fd",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "QuantumErrorCorrection/QuantumErrorDecoder",
+      "candidate_sha256": "d1eb0d4b794997a33d81ef2a8d3ba9e11e9698af32688882c2eeae1b29202c4d",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Exoplanets/RadialVelocityPlanets",
+      "candidate_sha256": "75daaa19f30acd3ec2c477c1fbf2125ac91b2ff51d7383da1a91146eeac2b79c",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.5,
+        "valid": 1.0,
+        "raw_score": 0.5
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.5,
+        "valid": 1.0,
+        "raw_score": 0.5
+      },
+      "passed": true
+    },
+    {
+      "task": "Superconductivity/SuperconductorTcRecord",
+      "candidate_sha256": "f1d6101ab75300782fcc131df6d12fa8a42464e048b59bb4cddd53a4c85cfdf4",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    },
+    {
+      "task": "Exoplanets/TransmissionSpectrumSpecies",
+      "candidate_sha256": "8843c52935624d797e224e8e95772d761911e55c662d5c24218ae0246b93bd0c",
+      "returncode": 0,
+      "public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "expected_public_metrics": {
+        "combined_score": 0.0,
+        "valid": 1.0,
+        "feasibility_rate": 1.0,
+        "raw_score": 0.0
+      },
+      "passed": true
+    }
+  ],
+  "execution_strategy": "All 87 source-bound wrapper calls frozen in advance; two workers; compared with independently collected baseline after both completed.",
+  "plan_sha256": "744d651fe12014efb472e25cfff6a4053d56cd153d0a29c228de87f6a6214c26",
+  "private_execution_sha256": "c8ce0d84d4544391f84790fb69d2acd3db79e6dfac3cd074b45cd5d0a778a91b",
+  "export_source_revision": "f292d39c5d82c8ee506389267f4e23e2cacd4344",
+  "source_compatibility": {
+    "scope": [
+      "sle",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "changed_paths": []
+  },
+  "actual_wrapper_calls": 87,
+  "model_calls": 0,
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}

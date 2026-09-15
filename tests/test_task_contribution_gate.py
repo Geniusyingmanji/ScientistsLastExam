@@ -39,6 +39,7 @@ class TaskContributionGateTests(unittest.TestCase):
             "required_files",
             "task_card",
             "metadata",
+            "frontier_wave",
             "discovery_contract_lint_documented",
             "numeric_keys",
             "documented_keys",
@@ -90,6 +91,27 @@ class TaskContributionGateTests(unittest.TestCase):
         report = check_task("ParticlePhysics/LookElsewhereAnomaly")
         checks = {row["check"]: row for row in report["checks"]}
         self.assertFalse(checks["bad_candidates_score_zero"]["ok"])
+
+    @mock.patch("scripts.check_task_contribution.load_frozen_wave")
+    @mock.patch("scripts.check_task_contribution.evaluate_candidate")
+    def test_zero_release_score_cannot_hide_degenerate_frontier_records(self, evaluate, wave):
+        wave.return_value = mock.Mock(task_family_id="fixture", wave_id="wave-1")
+        baseline = {"combined_score": 0.0, "valid": 1.0, "frontier_records": []}
+        abstention = {**baseline, "frontier_records": [{"cell_id": "claim", "canonical_id": "empty"}]}
+        malformed = {"combined_score": 0.0, "valid": 0.0}
+        evaluate.side_effect = [baseline, dict(baseline), abstention, abstention,
+                                malformed, malformed, malformed]
+        report = check_task("MaterialsScience/PhaseDiagramDiscovery")
+        checks = {r["check"]: r for r in report["checks"]}
+        self.assertFalse(checks["frontier_degenerate_credit_zero"]["ok"])
+        self.assertIn("blanket_abstention", checks["frontier_degenerate_credit_zero"]["detail"])
+
+    @mock.patch("scripts.check_task_contribution.evaluate_candidate")
+    def test_repeated_infrastructure_failure_is_not_deterministic_science(self, evaluate):
+        evaluate.return_value = {"combined_score": -1e18, "valid": 0.0, "infrastructure_failure": 1.0}
+        report = check_task("Mathematics/RamseyLowerBound")
+        checks = {r["check"]: r for r in report["checks"]}
+        self.assertFalse(checks["deterministic_baseline"]["ok"])
 
     @mock.patch("scripts.check_task_contribution.load_certification")
     def test_structural_gate_requires_an_explicit_certification_record(self, load_certification):

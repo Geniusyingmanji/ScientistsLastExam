@@ -1,0 +1,3559 @@
+{
+  "schema_version": 2,
+  "trust_status": "TRUSTED_SECURE_EVAL",
+  "evidence_scope": "BASELINE_DETERMINISM_ONLY_NOT_MALFORMED_CANDIDATE_COVERAGE",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ]
+  },
+  "evaluation_source_provenance_sha256": "5d27e709d31e2208fb65fd064943f7fccf5735fbdadb4e07dc8d7b92fc4b3a63",
+  "export_provenance": {
+    "git_available": true,
+    "git_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ]
+  },
+  "export_runtime_compatibility": {
+    "evaluation_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+    "export_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+    "scope": [
+      "sle",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ],
+    "changed_paths": [],
+    "evaluation_revision_is_ancestor": true,
+    "unchanged": true
+  },
+  "private_evidence": {
+    "sha256": "b0bdceae6fcb7aa4ad9eda18d910a1751daeac7bee0e2a9bcdced6ada5db42ff",
+    "schema_version": 1,
+    "access": "operator_private_original; not published"
+  },
+  "created_at": "2026-09-12T06:03:55.483652+00:00",
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "config": {
+    "repeats": 2,
+    "timeout_s": 300.0
+  },
+  "determinism_excluded_metrics": [
+    "runtime_s"
+  ],
+  "tasks": [
+    {
+      "task": "PopulationGenetics/DemographicSFS",
+      "candidate_sha256": "775efcfe3b36377c94afc5a3c8a1f2150d49bed8b86327a0cf0ecfe5277e3370",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 9.187992407009006,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "77a309e3b50e46d29bba95f4f90837d69744c138b96853643fa1d1844d2df836",
+          "comparable_metrics_sha256": "77a309e3b50e46d29bba95f4f90837d69744c138b96853643fa1d1844d2df836",
+          "nested_payload_sha256": {
+            "per_world": "eb9915be6377f1cafbe5db9986dfdb5e8a49f5c17e2c5c18e295de8ae2007c0f"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 8.949741661548615,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "77a309e3b50e46d29bba95f4f90837d69744c138b96853643fa1d1844d2df836",
+          "comparable_metrics_sha256": "77a309e3b50e46d29bba95f4f90837d69744c138b96853643fa1d1844d2df836",
+          "nested_payload_sha256": {
+            "per_world": "eb9915be6377f1cafbe5db9986dfdb5e8a49f5c17e2c5c18e295de8ae2007c0f"
+          }
+        }
+      ]
+    },
+    {
+      "task": "SystemsBiology/EnzymeKineticsLaw",
+      "candidate_sha256": "2ccf82a8a7a22654a3ced7e884b51ade076ff1ac8c51095f1a6a9333d4bc3b15",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 13.20569060370326,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "09a016654b1744b4a302827c59efcfadc2638def434d0f51bb0bf51bce81237f",
+          "comparable_metrics_sha256": "09a016654b1744b4a302827c59efcfadc2638def434d0f51bb0bf51bce81237f",
+          "nested_payload_sha256": {
+            "per_instance": "f6704af3f79cf8d12393d6226a2c11340026794aa459765d87260bb63fa479e6"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 13.335386557504535,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "09a016654b1744b4a302827c59efcfadc2638def434d0f51bb0bf51bce81237f",
+          "comparable_metrics_sha256": "09a016654b1744b4a302827c59efcfadc2638def434d0f51bb0bf51bce81237f",
+          "nested_payload_sha256": {
+            "per_instance": "f6704af3f79cf8d12393d6226a2c11340026794aa459765d87260bb63fa479e6"
+          }
+        }
+      ]
+    },
+    {
+      "task": "SystemsBiology/GeneNetworkIntervention",
+      "candidate_sha256": "504a24de072a36533b84a004999f0221cc90ea80c9afcf95c84f5ee31e471073",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 9.788628187030554,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "503c23b357251358a9947bd154965a5c8193d1f7f72db0ccfbe7f7ea83c10d3f",
+          "comparable_metrics_sha256": "503c23b357251358a9947bd154965a5c8193d1f7f72db0ccfbe7f7ea83c10d3f",
+          "nested_payload_sha256": {
+            "per_world": "bc72ecfb307ce25ee2d90a1246772e5583e7534c3572288fce49bc70b3ee0e8e"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 9.635002240538597,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "503c23b357251358a9947bd154965a5c8193d1f7f72db0ccfbe7f7ea83c10d3f",
+          "comparable_metrics_sha256": "503c23b357251358a9947bd154965a5c8193d1f7f72db0ccfbe7f7ea83c10d3f",
+          "nested_payload_sha256": {
+            "per_world": "bc72ecfb307ce25ee2d90a1246772e5583e7534c3572288fce49bc70b3ee0e8e"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Microbiology/MetagenomeCompositionAssignment",
+      "candidate_sha256": "7e155a66035c10f8bc28fafd9cab5c6463610059c54774ba7e940dd7cf612401",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 4.133827732875943,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "efc7c9ddaf83300582394185333800dacf2ac7db11405d05b22d14a89211ee12",
+          "comparable_metrics_sha256": "efc7c9ddaf83300582394185333800dacf2ac7db11405d05b22d14a89211ee12",
+          "nested_payload_sha256": {
+            "per_world": "ddc8e8564546c805f10284c2a6c2145a7fd57e474b832fee9606eaa7b0dce45e"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 4.144545966759324,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "efc7c9ddaf83300582394185333800dacf2ac7db11405d05b22d14a89211ee12",
+          "comparable_metrics_sha256": "efc7c9ddaf83300582394185333800dacf2ac7db11405d05b22d14a89211ee12",
+          "nested_payload_sha256": {
+            "per_world": "ddc8e8564546c805f10284c2a6c2145a7fd57e474b832fee9606eaa7b0dce45e"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Ecology/OccupancyDetectionDesign",
+      "candidate_sha256": "cd026e3eaa355ba51613b4e1e289f13ba609ad8f7680384fcb8b4014c2952c97",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 14.637951111420989,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "2453d80b120f99cf4c858e3170c30f7139beacf55c3b399fee9e6e2ea0dd703e",
+          "comparable_metrics_sha256": "2453d80b120f99cf4c858e3170c30f7139beacf55c3b399fee9e6e2ea0dd703e",
+          "nested_payload_sha256": {
+            "per_instance": "69a92bf57f27637fa61e3640f3c687b894b4ad9416716e0872270b3bcf429e58"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 14.815658347681165,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "2453d80b120f99cf4c858e3170c30f7139beacf55c3b399fee9e6e2ea0dd703e",
+          "comparable_metrics_sha256": "2453d80b120f99cf4c858e3170c30f7139beacf55c3b399fee9e6e2ea0dd703e",
+          "nested_payload_sha256": {
+            "per_instance": "69a92bf57f27637fa61e3640f3c687b894b4ad9416716e0872270b3bcf429e58"
+          }
+        }
+      ]
+    },
+    {
+      "task": "EvidenceSynthesis/ProspectiveMetaAnalysis",
+      "candidate_sha256": "786149e35c177dc6080df6d968fb0402661b6c0212c65b4d0b5e25e5b81e5e78",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 11.710768856108189,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "328028d86f7aab03644fb08efc11a54fd569281034b20038e73382ae6657bb28",
+          "comparable_metrics_sha256": "328028d86f7aab03644fb08efc11a54fd569281034b20038e73382ae6657bb28",
+          "nested_payload_sha256": {
+            "per_world": "883b887e25d8097bb353fd6be59bab9e5cebce3dc9aac6191f1754ccbeba86bc"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 10.639817740768194,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "328028d86f7aab03644fb08efc11a54fd569281034b20038e73382ae6657bb28",
+          "comparable_metrics_sha256": "328028d86f7aab03644fb08efc11a54fd569281034b20038e73382ae6657bb28",
+          "nested_payload_sha256": {
+            "per_world": "883b887e25d8097bb353fd6be59bab9e5cebce3dc9aac6191f1754ccbeba86bc"
+          }
+        }
+      ]
+    },
+    {
+      "task": "ProteinEngineering/ProteinStabilityDesign",
+      "candidate_sha256": "1d7b7d2dd319c246d235f33f207f5470bcd7d984ed92f85b63903a6ddb098455",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 9.946035671979189,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "ef1cffa985469e1716146741d09a9331af5f547797cfcf5776231107628863fc",
+          "comparable_metrics_sha256": "ef1cffa985469e1716146741d09a9331af5f547797cfcf5776231107628863fc",
+          "nested_payload_sha256": {
+            "per_world": "54befc1bf64c0805df77f780e442efe358bedc9315509655bc6a4391a6669f33"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 9.269297761842608,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "ef1cffa985469e1716146741d09a9331af5f547797cfcf5776231107628863fc",
+          "comparable_metrics_sha256": "ef1cffa985469e1716146741d09a9331af5f547797cfcf5776231107628863fc",
+          "nested_payload_sha256": {
+            "per_world": "54befc1bf64c0805df77f780e442efe358bedc9315509655bc6a4391a6669f33"
+          }
+        }
+      ]
+    },
+    {
+      "task": "RNAEngineering/RNAEnsembleDesign",
+      "candidate_sha256": "2b4927da1b36097aa4a94f1c80fab3bd3eebcb0827669f473f0688605db4e603",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 77.11204406060278,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "c16b6cfc5284606ccf21ad8f402077143cda4641f44e4fa3857536ecd8e45278",
+          "comparable_metrics_sha256": "c16b6cfc5284606ccf21ad8f402077143cda4641f44e4fa3857536ecd8e45278",
+          "nested_payload_sha256": {
+            "per_instance": "a41b34d1c0f0cfb97382efbc5c9468e2d93bb0bc35d2467929a68b539b0c552f",
+            "sealed_per_instance": "7ec689c8a2eec928f3cd3801c894361e2e5247acb5c9349a89f3c9cc27cd3004"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 76.01509073004127,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "c16b6cfc5284606ccf21ad8f402077143cda4641f44e4fa3857536ecd8e45278",
+          "comparable_metrics_sha256": "c16b6cfc5284606ccf21ad8f402077143cda4641f44e4fa3857536ecd8e45278",
+          "nested_payload_sha256": {
+            "per_instance": "a41b34d1c0f0cfb97382efbc5c9468e2d93bb0bc35d2467929a68b539b0c552f",
+            "sealed_per_instance": "7ec689c8a2eec928f3cd3801c894361e2e5247acb5c9349a89f3c9cc27cd3004"
+          }
+        }
+      ]
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "candidate_sha256": "323cf61512a5763b12bdf7c97e1b85ed84f6c1d690c38db77f0b0b53269bb48f",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 9.306668912991881,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "020e33b4bc93475ea4888533dda7de07fe4c6920277e9d5f04e059d007672229",
+          "comparable_metrics_sha256": "020e33b4bc93475ea4888533dda7de07fe4c6920277e9d5f04e059d007672229",
+          "nested_payload_sha256": {
+            "per_instance": "951d58fc8c79f6ad299ce517fd72fa12c778667c697325d2a69d96e2a4b641af"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 10.484632406383753,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "020e33b4bc93475ea4888533dda7de07fe4c6920277e9d5f04e059d007672229",
+          "comparable_metrics_sha256": "020e33b4bc93475ea4888533dda7de07fe4c6920277e9d5f04e059d007672229",
+          "nested_payload_sha256": {
+            "per_instance": "951d58fc8c79f6ad299ce517fd72fa12c778667c697325d2a69d96e2a4b641af"
+          }
+        }
+      ]
+    },
+    {
+      "task": "MaterialsScience/AlloyHardnessOptimization",
+      "candidate_sha256": "9079971176c51f75a0363e59286f29d0f42bf3b78310c8bc65a515b376165bc5",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 13.28145800717175,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "8da339ff9e5ab07249733e8dc7fb55abb4ac67d95bd502073fef8de4828d3935",
+          "comparable_metrics_sha256": "8da339ff9e5ab07249733e8dc7fb55abb4ac67d95bd502073fef8de4828d3935",
+          "nested_payload_sha256": {
+            "per_world": "6cac2f1b489c85c5ac857ca1ff038544d3afd6deb245c3694c91cb8220892ac5"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 12.715066473931074,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "8da339ff9e5ab07249733e8dc7fb55abb4ac67d95bd502073fef8de4828d3935",
+          "comparable_metrics_sha256": "8da339ff9e5ab07249733e8dc7fb55abb4ac67d95bd502073fef8de4828d3935",
+          "nested_payload_sha256": {
+            "per_world": "6cac2f1b489c85c5ac857ca1ff038544d3afd6deb245c3694c91cb8220892ac5"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Catalysis/CatalystDeactivationLab",
+      "candidate_sha256": "0bb775d2138978c154dd2683c6006d646b985966d5774e9f011f4ea157d3d4a9",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 9.132008574903011,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "ac26ce309290e54b59469b7d05fe6efe2fd2d9059004cc842f052a7c8b3cea24",
+          "comparable_metrics_sha256": "ac26ce309290e54b59469b7d05fe6efe2fd2d9059004cc842f052a7c8b3cea24",
+          "nested_payload_sha256": {
+            "per_world": "d35e91e2e5070c389c619ae2d3e6846d7b0f26a62db8b8422813cd455c82dd6f"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 8.86356263794005,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "ac26ce309290e54b59469b7d05fe6efe2fd2d9059004cc842f052a7c8b3cea24",
+          "comparable_metrics_sha256": "ac26ce309290e54b59469b7d05fe6efe2fd2d9059004cc842f052a7c8b3cea24",
+          "nested_payload_sha256": {
+            "per_world": "d35e91e2e5070c389c619ae2d3e6846d7b0f26a62db8b8422813cd455c82dd6f"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Spectroscopy/CrowdedSpectrumAssignment",
+      "candidate_sha256": "2e29744abfbd01635e9663a1f1d65650b7e1d601c41c08b2ca42a5eae58866db",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 16.234455723315477,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "5f81084ac467dbabebf9e5f03447e71dc6751642a16ccaf1191172060419ce68",
+          "comparable_metrics_sha256": "5f81084ac467dbabebf9e5f03447e71dc6751642a16ccaf1191172060419ce68",
+          "nested_payload_sha256": {
+            "per_instance": "c6f275557c82480b1c17ca217c88a0c3b4ad04b0d912b6b1306189844989c3d7"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 15.303958171978593,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "5f81084ac467dbabebf9e5f03447e71dc6751642a16ccaf1191172060419ce68",
+          "comparable_metrics_sha256": "5f81084ac467dbabebf9e5f03447e71dc6751642a16ccaf1191172060419ce68",
+          "nested_payload_sha256": {
+            "per_instance": "c6f275557c82480b1c17ca217c88a0c3b4ad04b0d912b6b1306189844989c3d7"
+          }
+        }
+      ]
+    },
+    {
+      "task": "ChemicalProcess/DistillationColumnDesign",
+      "candidate_sha256": "05026baf28092bc8b53caaf3330a0e5571bf2584eac97d43cadd83ce2dc4edda",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 7.7649174723774195,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "95d77a403f3d0a2286fc1b57559de90745d122899c833e8f5c0bd03517c931de",
+          "comparable_metrics_sha256": "95d77a403f3d0a2286fc1b57559de90745d122899c833e8f5c0bd03517c931de",
+          "nested_payload_sha256": {
+            "per_instance": "b559a62f8ffff15f406be167950287218c8f3b531cd69f070c4b01f4e28f7f7a"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 8.033648816868663,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "95d77a403f3d0a2286fc1b57559de90745d122899c833e8f5c0bd03517c931de",
+          "comparable_metrics_sha256": "95d77a403f3d0a2286fc1b57559de90745d122899c833e8f5c0bd03517c931de",
+          "nested_payload_sha256": {
+            "per_instance": "b559a62f8ffff15f406be167950287218c8f3b531cd69f070c4b01f4e28f7f7a"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "candidate_sha256": "a55e04a4239e8f469a908f41924c0555041b432793cab89ac589a43dc4b1772f",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 16.939339267089963,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "40d5514e95b23ed8abdf8952e374c0c24fd5b528026a6ab55e83b05bdddddc1c",
+          "comparable_metrics_sha256": "40d5514e95b23ed8abdf8952e374c0c24fd5b528026a6ab55e83b05bdddddc1c",
+          "nested_payload_sha256": {
+            "per_world": "82893ed6991071bc901f69778db4c6c7584327c4d6b53aa51a7534431a1fd542"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 17.17574978619814,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "40d5514e95b23ed8abdf8952e374c0c24fd5b528026a6ab55e83b05bdddddc1c",
+          "comparable_metrics_sha256": "40d5514e95b23ed8abdf8952e374c0c24fd5b528026a6ab55e83b05bdddddc1c",
+          "nested_payload_sha256": {
+            "per_world": "82893ed6991071bc901f69778db4c6c7584327c4d6b53aa51a7534431a1fd542"
+          }
+        }
+      ]
+    },
+    {
+      "task": "MolecularDynamics/ForceFieldCalibration",
+      "candidate_sha256": "8edee96aeb0ee22f10838110e0d600c1e540d2fba411ced0e13ca27721eab23b",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 27.7998989764601,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "7d5444d6d7adb9f8ef49adc950ec3eec3767c6ee1320ed8fc8c5a3e40876513c",
+          "comparable_metrics_sha256": "7d5444d6d7adb9f8ef49adc950ec3eec3767c6ee1320ed8fc8c5a3e40876513c",
+          "nested_payload_sha256": {
+            "per_world": "f9ca96937ed7c9231ab5cb83f68d21138bef3c31fde74918fdd2117e33a8a6da"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 28.79782579652965,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "7d5444d6d7adb9f8ef49adc950ec3eec3767c6ee1320ed8fc8c5a3e40876513c",
+          "comparable_metrics_sha256": "7d5444d6d7adb9f8ef49adc950ec3eec3767c6ee1320ed8fc8c5a3e40876513c",
+          "nested_payload_sha256": {
+            "per_world": "f9ca96937ed7c9231ab5cb83f68d21138bef3c31fde74918fdd2117e33a8a6da"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Chemistry/LennardJonesCluster",
+      "candidate_sha256": "f1d92591c49a8aea08abbc548539d7a5c097b15938ed4152cbd2ebbbcf878a60",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.8818565383553505,
+          "metrics": {
+            "combined_score": 0.041930443440283925,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.041930443440283925
+          },
+          "full_metrics_sha256": "41a873a5d1a788794ad5ff0ba6413f108007de22d401efc010e625addba904c2",
+          "comparable_metrics_sha256": "41a873a5d1a788794ad5ff0ba6413f108007de22d401efc010e625addba904c2",
+          "nested_payload_sha256": {
+            "per_size": "c7a9eb239f8a01b160bd23387571758c97601828642437d294a40292164a3001"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.7904173471033573,
+          "metrics": {
+            "combined_score": 0.041930443440283925,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.041930443440283925
+          },
+          "full_metrics_sha256": "41a873a5d1a788794ad5ff0ba6413f108007de22d401efc010e625addba904c2",
+          "comparable_metrics_sha256": "41a873a5d1a788794ad5ff0ba6413f108007de22d401efc010e625addba904c2",
+          "nested_payload_sha256": {
+            "per_size": "c7a9eb239f8a01b160bd23387571758c97601828642437d294a40292164a3001"
+          }
+        }
+      ]
+    },
+    {
+      "task": "MedicinalChemistry/MolecularLeadOptimization",
+      "candidate_sha256": "2352f21d32f0a00f9984f506d9e7cd1f17fc6b68f3299d91583099a973732d30",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 5.097987515851855,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 0.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "e646386b8a42c1336fe9a73840506277291c90ffd3b687a81cacf8680564e929",
+          "comparable_metrics_sha256": "e646386b8a42c1336fe9a73840506277291c90ffd3b687a81cacf8680564e929",
+          "nested_payload_sha256": {
+            "development": "b67fdfe44db89cf134b146acb734904aab768cb044c8f93fde3d2b02d1aa5b62",
+            "sealed": "94cf855b1c2e74c64b901a1329ad3bad23ac45a644b732bed8842a2ac92f2b24"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 5.168743381276727,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 0.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "e646386b8a42c1336fe9a73840506277291c90ffd3b687a81cacf8680564e929",
+          "comparable_metrics_sha256": "e646386b8a42c1336fe9a73840506277291c90ffd3b687a81cacf8680564e929",
+          "nested_payload_sha256": {
+            "development": "b67fdfe44db89cf134b146acb734904aab768cb044c8f93fde3d2b02d1aa5b62",
+            "sealed": "94cf855b1c2e74c64b901a1329ad3bad23ac45a644b732bed8842a2ac92f2b24"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Spectroscopy/NMRSpectrumFitting",
+      "candidate_sha256": "8c947b81fad9fe34f73dec6e2a058c15ef05ab0ee651a9b7403c1314bc27079f",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 11.138504413887858,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "4afcaca7909581311bd36f2f688f075212f183d50319eb969319742e6adad06e",
+          "comparable_metrics_sha256": "4afcaca7909581311bd36f2f688f075212f183d50319eb969319742e6adad06e",
+          "nested_payload_sha256": {
+            "per_instance": "561be34ceb07904f8de71c94d243ad9f606904028ec42dbeaaddb9183001578e"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 11.996278516948223,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "4afcaca7909581311bd36f2f688f075212f183d50319eb969319742e6adad06e",
+          "comparable_metrics_sha256": "4afcaca7909581311bd36f2f688f075212f183d50319eb969319742e6adad06e",
+          "nested_payload_sha256": {
+            "per_instance": "561be34ceb07904f8de71c94d243ad9f606904028ec42dbeaaddb9183001578e"
+          }
+        }
+      ]
+    },
+    {
+      "task": "MaterialsScience/PhaseDiagramDiscovery",
+      "candidate_sha256": "090952ccadf59b3bb2c0b766e6de8657e9c834cf86f5d6dd020061cd0343ed88",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 17.06371619179845,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 0.8888888888888888,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "61e59092b5d14b4a81f1ecbd61068d3968e014f50247c2fa3205a5a87935bcdf",
+          "comparable_metrics_sha256": "61e59092b5d14b4a81f1ecbd61068d3968e014f50247c2fa3205a5a87935bcdf",
+          "nested_payload_sha256": {
+            "per_instance": "ac954ef742c541b2643a9ae2649b9731ae0ca1cff5d95ba57bd93a7c475fddaa"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 14.629475170746446,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 0.8888888888888888,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "61e59092b5d14b4a81f1ecbd61068d3968e014f50247c2fa3205a5a87935bcdf",
+          "comparable_metrics_sha256": "61e59092b5d14b4a81f1ecbd61068d3968e014f50247c2fa3205a5a87935bcdf",
+          "nested_payload_sha256": {
+            "per_instance": "ac954ef742c541b2643a9ae2649b9731ae0ca1cff5d95ba57bd93a7c475fddaa"
+          }
+        }
+      ]
+    },
+    {
+      "task": "MaterialsScience/QuinaryConvexHull",
+      "candidate_sha256": "4042b9b71ba3be73b5086e74418c028913795be0153dc883d61eed656e0ce815",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 9.380887195467949,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "608ed9ba06e4e7ff0e2eb2672805dd6199378115002f16cd9a89f17442d7ef13",
+          "comparable_metrics_sha256": "608ed9ba06e4e7ff0e2eb2672805dd6199378115002f16cd9a89f17442d7ef13",
+          "nested_payload_sha256": {
+            "per_instance": "bf6960d5943a6226df02d42de46c324776692c1cba22190859436f327b893fd2"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 9.429358987137675,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "608ed9ba06e4e7ff0e2eb2672805dd6199378115002f16cd9a89f17442d7ef13",
+          "comparable_metrics_sha256": "608ed9ba06e4e7ff0e2eb2672805dd6199378115002f16cd9a89f17442d7ef13",
+          "nested_payload_sha256": {
+            "per_instance": "bf6960d5943a6226df02d42de46c324776692c1cba22190859436f327b893fd2"
+          }
+        }
+      ]
+    },
+    {
+      "task": "ChemicalKinetics/ReactionMechanismFitting",
+      "candidate_sha256": "e84d66c597d9808caa51a0b4ec840280496bd8debc823939c4f9d4d66313e2e3",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 11.102332906797528,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "91689115fae8ea3ccf09626cb465d2f24c233f57fe54890ceb3733d8041b6bda",
+          "comparable_metrics_sha256": "91689115fae8ea3ccf09626cb465d2f24c233f57fe54890ceb3733d8041b6bda",
+          "nested_payload_sha256": {
+            "per_world": "08569b14b31b8b96b4f527e7d05578f30d44a6f62356ae98c75e17c2ac512f04"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 10.931186821311712,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "91689115fae8ea3ccf09626cb465d2f24c233f57fe54890ceb3733d8041b6bda",
+          "comparable_metrics_sha256": "91689115fae8ea3ccf09626cb465d2f24c233f57fe54890ceb3733d8041b6bda",
+          "nested_payload_sha256": {
+            "per_world": "08569b14b31b8b96b4f527e7d05578f30d44a6f62356ae98c75e17c2ac512f04"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Spectroscopy/SpinSystemInference",
+      "candidate_sha256": "675c6211f1d20c99a3ab04e08993c8089fc1dbfbb68c1bf9d2d6477d138d7be1",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 11.949494909495115,
+          "metrics": {
+            "combined_score": 0.041666666666666664,
+            "valid": 1.0,
+            "raw_score": 0.041666666666666664
+          },
+          "full_metrics_sha256": "517dfdfb9f45d4e5e345172f09e1c7a9624efa6e3c6c5839421a3ef1d31fbbc0",
+          "comparable_metrics_sha256": "517dfdfb9f45d4e5e345172f09e1c7a9624efa6e3c6c5839421a3ef1d31fbbc0",
+          "nested_payload_sha256": {
+            "per_instance": "9fd11858b437439ecdcbd4a49103d8e5dc010b6223f31db9b3222f1187eb7767",
+            "sealed_per_instance": "bcecb24759eaeb44f855813238dc5b83aa3ac454ec5f0d8bec318452f28d4556"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 11.339420152828097,
+          "metrics": {
+            "combined_score": 0.041666666666666664,
+            "valid": 1.0,
+            "raw_score": 0.041666666666666664
+          },
+          "full_metrics_sha256": "517dfdfb9f45d4e5e345172f09e1c7a9624efa6e3c6c5839421a3ef1d31fbbc0",
+          "comparable_metrics_sha256": "517dfdfb9f45d4e5e345172f09e1c7a9624efa6e3c6c5839421a3ef1d31fbbc0",
+          "nested_payload_sha256": {
+            "per_instance": "9fd11858b437439ecdcbd4a49103d8e5dc010b6223f31db9b3222f1187eb7767",
+            "sealed_per_instance": "bcecb24759eaeb44f855813238dc5b83aa3ac454ec5f0d8bec318452f28d4556"
+          }
+        }
+      ]
+    },
+    {
+      "task": "ComputerArchitecture/CacheReplacementPolicyID",
+      "candidate_sha256": "71ad5cfcd8115f309a56462874ec39615fb6ae968cccd5a3d59c785d8b194699",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 13.683072447776794,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "eeae8aacc80bbb979780d20c60e8e1baab0c5b7810794a12373f5c72e139ce13",
+          "comparable_metrics_sha256": "eeae8aacc80bbb979780d20c60e8e1baab0c5b7810794a12373f5c72e139ce13",
+          "nested_payload_sha256": {
+            "per_instance": "5ccdcec035de635bebf7b7f07b95de3279f829bf0793f12cd079cabbb8b82aa7"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 13.946097403764725,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "eeae8aacc80bbb979780d20c60e8e1baab0c5b7810794a12373f5c72e139ce13",
+          "comparable_metrics_sha256": "eeae8aacc80bbb979780d20c60e8e1baab0c5b7810794a12373f5c72e139ce13",
+          "nested_payload_sha256": {
+            "per_instance": "5ccdcec035de635bebf7b7f07b95de3279f829bf0793f12cd079cabbb8b82aa7"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Algorithm/GraphFromDistances",
+      "candidate_sha256": "c29f785314b330a45df83d7193e1fb4815ff2a2b2de435a3f52988063b276e79",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 6.405516866594553,
+          "metrics": {
+            "combined_score": 0.43081395348837204,
+            "valid": 1.0,
+            "raw_score": 0.43081395348837204
+          },
+          "full_metrics_sha256": "6235ef390a2d787c82d2c99edaadb7afd37a627d17d97959c35e52b094896a95",
+          "comparable_metrics_sha256": "6235ef390a2d787c82d2c99edaadb7afd37a627d17d97959c35e52b094896a95",
+          "nested_payload_sha256": {
+            "per_instance": "92c0a094c64f645ccdf4430544a8b43e547d780b82af22508954737240ff993e",
+            "sealed_per_instance": "5ea9293e90d0779a6c6e55891d29f0588050a68a63528c2e255bbe4e9a56cdc8"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 6.385522434487939,
+          "metrics": {
+            "combined_score": 0.43081395348837204,
+            "valid": 1.0,
+            "raw_score": 0.43081395348837204
+          },
+          "full_metrics_sha256": "6235ef390a2d787c82d2c99edaadb7afd37a627d17d97959c35e52b094896a95",
+          "comparable_metrics_sha256": "6235ef390a2d787c82d2c99edaadb7afd37a627d17d97959c35e52b094896a95",
+          "nested_payload_sha256": {
+            "per_instance": "92c0a094c64f645ccdf4430544a8b43e547d780b82af22508954737240ff993e",
+            "sealed_per_instance": "5ea9293e90d0779a6c6e55891d29f0588050a68a63528c2e255bbe4e9a56cdc8"
+          }
+        }
+      ]
+    },
+    {
+      "task": "CausalDiscovery/InterventionalSCM",
+      "candidate_sha256": "e00399f59ccd3e7845f64ec861e043f22bef6804ddc8fcefaf43b40a4ea657fe",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 6.276457792147994,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.16666666666666666
+          },
+          "full_metrics_sha256": "ef3e1811104243b390fbe1c68a8370c29fad05039ffae5816e59f7a64d20702d",
+          "comparable_metrics_sha256": "ef3e1811104243b390fbe1c68a8370c29fad05039ffae5816e59f7a64d20702d",
+          "nested_payload_sha256": {
+            "per_world": "06d7746c76f0ed5fb53ffc0d19abec4f46fe79ffecd045b0a82ea0b83d480ec9"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 6.18712337128818,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.16666666666666666
+          },
+          "full_metrics_sha256": "ef3e1811104243b390fbe1c68a8370c29fad05039ffae5816e59f7a64d20702d",
+          "comparable_metrics_sha256": "ef3e1811104243b390fbe1c68a8370c29fad05039ffae5816e59f7a64d20702d",
+          "nested_payload_sha256": {
+            "per_world": "06d7746c76f0ed5fb53ffc0d19abec4f46fe79ffecd045b0a82ea0b83d480ec9"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Algorithm/MatrixMultiplicationRank",
+      "candidate_sha256": "cb394c23be55857134a630cbef1cf12bb0eb2b295d56ffcf5b85504d0132db6f",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.4581634923815727,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "6129217f5d2c94928861a7a54fd93a3a8ef1ff112e867daea861e7c8ce93a289",
+          "comparable_metrics_sha256": "6129217f5d2c94928861a7a54fd93a3a8ef1ff112e867daea861e7c8ce93a289",
+          "nested_payload_sha256": {
+            "per_size": "6b44790463f0e96598ee7b21e9405a78dd13f83fce23a9e73976307a9fdabe9d"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.5191698130220175,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "6129217f5d2c94928861a7a54fd93a3a8ef1ff112e867daea861e7c8ce93a289",
+          "comparable_metrics_sha256": "6129217f5d2c94928861a7a54fd93a3a8ef1ff112e867daea861e7c8ce93a289",
+          "nested_payload_sha256": {
+            "per_size": "6b44790463f0e96598ee7b21e9405a78dd13f83fce23a9e73976307a9fdabe9d"
+          }
+        }
+      ]
+    },
+    {
+      "task": "InformationTheory/ShannonCapacityCertificate",
+      "candidate_sha256": "d385360c97df6dcdc9d6240d90189fd72ef7abf45cc8b5d126f77c87f9539582",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.5380748081952333,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "8bd9d7e67edb302db7df946757eff2765997e0c0995c8188fe3407f2af1e1d37",
+          "comparable_metrics_sha256": "8bd9d7e67edb302db7df946757eff2765997e0c0995c8188fe3407f2af1e1d37",
+          "nested_payload_sha256": {
+            "per_instance": "fc5ca4bfb467140d395621767da39d647b317c7df78753b66135bb59e06af8e4"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.5117549262940884,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "8bd9d7e67edb302db7df946757eff2765997e0c0995c8188fe3407f2af1e1d37",
+          "comparable_metrics_sha256": "8bd9d7e67edb302db7df946757eff2765997e0c0995c8188fe3407f2af1e1d37",
+          "nested_payload_sha256": {
+            "per_instance": "fc5ca4bfb467140d395621767da39d647b317c7df78753b66135bb59e06af8e4"
+          }
+        }
+      ]
+    },
+    {
+      "task": "SignalProcessing/SparseRecovery",
+      "candidate_sha256": "d4ae359138bd6dc62ab465f60d5221f496e0b36287dde2f3a5e3d0fb0be120bc",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.5070397201925516,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "2599313172868011e3fdec213f5d536392c534934a4a6672fe616caf9f962c12",
+          "comparable_metrics_sha256": "2599313172868011e3fdec213f5d536392c534934a4a6672fe616caf9f962c12",
+          "nested_payload_sha256": {
+            "per_instance": "c6f417092da7c01561e43a84c4708f4e89bef94ce2e2703d5d12f20c7c204420"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.4619382172822952,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "2599313172868011e3fdec213f5d536392c534934a4a6672fe616caf9f962c12",
+          "comparable_metrics_sha256": "2599313172868011e3fdec213f5d536392c534934a4a6672fe616caf9f962c12",
+          "nested_payload_sha256": {
+            "per_instance": "c6f417092da7c01561e43a84c4708f4e89bef94ce2e2703d5d12f20c7c204420"
+          }
+        }
+      ]
+    },
+    {
+      "task": "DataPrivacy/SparseVectorAudit",
+      "candidate_sha256": "cd6ec9e0c0b43ecb2e83c3980b983d4ca5f0b49c37cbf9330f38b1e541690917",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 13.775521287694573,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "38853d9f99f11a7a75e4c9e2b2d9ff2a053090f649078fde5cacdb73e6e58a9c",
+          "comparable_metrics_sha256": "38853d9f99f11a7a75e4c9e2b2d9ff2a053090f649078fde5cacdb73e6e58a9c",
+          "nested_payload_sha256": {
+            "per_instance": "464c2edb863ea540394fe589a1e341a0b1b382132b282b02160ebb984b275f8b"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 13.761746991425753,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "38853d9f99f11a7a75e4c9e2b2d9ff2a053090f649078fde5cacdb73e6e58a9c",
+          "comparable_metrics_sha256": "38853d9f99f11a7a75e4c9e2b2d9ff2a053090f649078fde5cacdb73e6e58a9c",
+          "nested_payload_sha256": {
+            "per_instance": "464c2edb863ea540394fe589a1e341a0b1b382132b282b02160ebb984b275f8b"
+          }
+        }
+      ]
+    },
+    {
+      "task": "CausalDiscovery/SurvivorshipConfoundedDesign",
+      "candidate_sha256": "b9977af9ef8eb3ebc4f9a5f0beee6ffb583809e6f97bab981fd5c98deaa79e35",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 9.992676651105285,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "9cd1003dd75f584ec86443d846b995efd3029d05bec1835747d4a2480f66ff8b",
+          "comparable_metrics_sha256": "9cd1003dd75f584ec86443d846b995efd3029d05bec1835747d4a2480f66ff8b",
+          "nested_payload_sha256": {
+            "per_instance": "df1fb8252e9250c5167ad6852ac9093f52c100309bcfbd8d3283353f04b9e3a9"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 9.965936198830605,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "9cd1003dd75f584ec86443d846b995efd3029d05bec1835747d4a2480f66ff8b",
+          "comparable_metrics_sha256": "9cd1003dd75f584ec86443d846b995efd3029d05bec1835747d4a2480f66ff8b",
+          "nested_payload_sha256": {
+            "per_instance": "df1fb8252e9250c5167ad6852ac9093f52c100309bcfbd8d3283353f04b9e3a9"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Algorithm/TensorRank555",
+      "candidate_sha256": "9a37d37053dfacfe10b035e43261a55768ea6a52437813814594a9f12e348925",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.561741180717945,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "b3db601428def7bd14a4e693a4dec128beaca0a56bad3cf1082cdc9586fa596d",
+          "comparable_metrics_sha256": "b3db601428def7bd14a4e693a4dec128beaca0a56bad3cf1082cdc9586fa596d",
+          "nested_payload_sha256": {
+            "per_size": "b68d1177355732bcafca4c303b1c7c6cfd5dc9e7906e39cac4ac62581cac3071"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.5660628266632557,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "b3db601428def7bd14a4e693a4dec128beaca0a56bad3cf1082cdc9586fa596d",
+          "comparable_metrics_sha256": "b3db601428def7bd14a4e693a4dec128beaca0a56bad3cf1082cdc9586fa596d",
+          "nested_payload_sha256": {
+            "per_size": "b68d1177355732bcafca4c303b1c7c6cfd5dc9e7906e39cac4ac62581cac3071"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Oceanography/AMOCTippingRefusal",
+      "candidate_sha256": "895138d109f894477e74979c9c370e8c9c63b9be99c28e3a9455e2a2e8a967e4",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 10.149525122717023,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "6cefcf51afbfa6bd620536b2ce0332dca61b42ef6037f4d348cda6a6c2bbc45c",
+          "comparable_metrics_sha256": "6cefcf51afbfa6bd620536b2ce0332dca61b42ef6037f4d348cda6a6c2bbc45c",
+          "nested_payload_sha256": {
+            "per_instance": "0235111e15cd7878e922738872512a4aa61f0f63b57f9dd582f8f1dc0f1b6915"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 10.704537272453308,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "6cefcf51afbfa6bd620536b2ce0332dca61b42ef6037f4d348cda6a6c2bbc45c",
+          "comparable_metrics_sha256": "6cefcf51afbfa6bd620536b2ce0332dca61b42ef6037f4d348cda6a6c2bbc45c",
+          "nested_payload_sha256": {
+            "per_instance": "0235111e15cd7878e922738872512a4aa61f0f63b57f9dd582f8f1dc0f1b6915"
+          }
+        }
+      ]
+    },
+    {
+      "task": "ClimateScience/EnergyBalanceModel",
+      "candidate_sha256": "9b4ff24deeaa96eba6a4cf31bed96d72e0a3fbf4a82f936883e11545adc92794",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 9.316875696182251,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "c0c8bd0b80414474565b390de005f0bd6d746b2a72272fa383fe592aff824860",
+          "comparable_metrics_sha256": "c0c8bd0b80414474565b390de005f0bd6d746b2a72272fa383fe592aff824860",
+          "nested_payload_sha256": {
+            "per_world": "a3dcec560bb6fa52e4f9aef69789f76a15321268721654521e5e7b3f4b07ff4d"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 9.603632252663374,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "c0c8bd0b80414474565b390de005f0bd6d746b2a72272fa383fe592aff824860",
+          "comparable_metrics_sha256": "c0c8bd0b80414474565b390de005f0bd6d746b2a72272fa383fe592aff824860",
+          "nested_payload_sha256": {
+            "per_world": "a3dcec560bb6fa52e4f9aef69789f76a15321268721654521e5e7b3f4b07ff4d"
+          }
+        }
+      ]
+    },
+    {
+      "task": "ClimateScience/ForcedSignalAttribution",
+      "candidate_sha256": "935e24a6ac3507b421bd948d16773fc67f7144d38798769f104bb935a90ad0c3",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 14.66834444925189,
+          "metrics": {
+            "combined_score": 0.02542828571428576,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.02542828571428576
+          },
+          "full_metrics_sha256": "2f0fb7e86b07d32c5865db624526d99d5d16135470194fbed1a15639014c3db5",
+          "comparable_metrics_sha256": "2f0fb7e86b07d32c5865db624526d99d5d16135470194fbed1a15639014c3db5",
+          "nested_payload_sha256": {
+            "per_instance": "b815c9344634ed890cce65df7f41bd06163b985edee975c1f091618df0d0d847"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 14.981381580233574,
+          "metrics": {
+            "combined_score": 0.02542828571428576,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.02542828571428576
+          },
+          "full_metrics_sha256": "2f0fb7e86b07d32c5865db624526d99d5d16135470194fbed1a15639014c3db5",
+          "comparable_metrics_sha256": "2f0fb7e86b07d32c5865db624526d99d5d16135470194fbed1a15639014c3db5",
+          "nested_payload_sha256": {
+            "per_instance": "b815c9344634ed890cce65df7f41bd06163b985edee975c1f091618df0d0d847"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Geophysics/GravityInversion",
+      "candidate_sha256": "d16e06ab8b4d30a01b74a1830e8c5bb95d245ffa04f8f34adda6331fc3b7082a",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 9.819829238578677,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "ff9a43072ebe9bed91181db2d6e54cc4e0efb6aaa2c586f5cbdcaf286d152e49",
+          "comparable_metrics_sha256": "ff9a43072ebe9bed91181db2d6e54cc4e0efb6aaa2c586f5cbdcaf286d152e49",
+          "nested_payload_sha256": {
+            "per_world": "20c2eb3e83e33b21fda02b31c5d74b885f8f85f6f741dc49af70576b0fbb0696"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 9.811179226264358,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "ff9a43072ebe9bed91181db2d6e54cc4e0efb6aaa2c586f5cbdcaf286d152e49",
+          "comparable_metrics_sha256": "ff9a43072ebe9bed91181db2d6e54cc4e0efb6aaa2c586f5cbdcaf286d152e49",
+          "nested_payload_sha256": {
+            "per_world": "20c2eb3e83e33b21fda02b31c5d74b885f8f85f6f741dc49af70576b0fbb0696"
+          }
+        }
+      ]
+    },
+    {
+      "task": "AtmosphericChemistry/MethaneSourceAttribution",
+      "candidate_sha256": "91aa2aa2aa9e892b24d7e97299372747e733f65a3f24777f72ac7293728bf4d4",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.5632294081151485,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "fc27dcc63c1845a98ca73bc30eaa1977808db4405386f9baf62d5286b7a00fde",
+          "comparable_metrics_sha256": "fc27dcc63c1845a98ca73bc30eaa1977808db4405386f9baf62d5286b7a00fde",
+          "nested_payload_sha256": {
+            "per_case": "b45172d32bf03b318fa2e2c10178b4cb4d33996940c29bde3018f46e9f406b3c"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.5413072761148214,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "fc27dcc63c1845a98ca73bc30eaa1977808db4405386f9baf62d5286b7a00fde",
+          "comparable_metrics_sha256": "fc27dcc63c1845a98ca73bc30eaa1977808db4405386f9baf62d5286b7a00fde",
+          "nested_payload_sha256": {
+            "per_case": "b45172d32bf03b318fa2e2c10178b4cb4d33996940c29bde3018f46e9f406b3c"
+          }
+        }
+      ]
+    },
+    {
+      "task": "AtmosphericScience/RadiativeTransferFit",
+      "candidate_sha256": "dbacb6ca73f4d5e908aa771cb314061975f3cabf42fddd95f9f60d650421b540",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 9.405822932720184,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "aad32038d8489ef470cfb7df355f9b2dc5cc60eacc7ebc67f841e97cd5b4991c",
+          "comparable_metrics_sha256": "aad32038d8489ef470cfb7df355f9b2dc5cc60eacc7ebc67f841e97cd5b4991c",
+          "nested_payload_sha256": {
+            "per_world": "900d461ff6deae86244155eec0e4a0a4273270f3cf12fc247b453dd9262ed6db"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 9.218723729252815,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "aad32038d8489ef470cfb7df355f9b2dc5cc60eacc7ebc67f841e97cd5b4991c",
+          "comparable_metrics_sha256": "aad32038d8489ef470cfb7df355f9b2dc5cc60eacc7ebc67f841e97cd5b4991c",
+          "nested_payload_sha256": {
+            "per_world": "900d461ff6deae86244155eec0e4a0a4273270f3cf12fc247b453dd9262ed6db"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Geophysics/UPbConcordiaInference",
+      "candidate_sha256": "519b9afdb50545e948420e8b162fb2fedbb7948e96367134f08f88ea61ecef34",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 15.486763687804341,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "f787b1ac7e1a29f2455cd8b7492706ffd85cba8a13d8a0cbb361cb17f75a74a8",
+          "comparable_metrics_sha256": "f787b1ac7e1a29f2455cd8b7492706ffd85cba8a13d8a0cbb361cb17f75a74a8",
+          "nested_payload_sha256": {
+            "per_instance": "5e2482846168c65d2a1d5bcef4219d69dea21a19f516bc734746480db288bd2f"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 15.296461191028357,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "f787b1ac7e1a29f2455cd8b7492706ffd85cba8a13d8a0cbb361cb17f75a74a8",
+          "comparable_metrics_sha256": "f787b1ac7e1a29f2455cd8b7492706ffd85cba8a13d8a0cbb361cb17f75a74a8",
+          "nested_payload_sha256": {
+            "per_instance": "5e2482846168c65d2a1d5bcef4219d69dea21a19f516bc734746480db288bd2f"
+          }
+        }
+      ]
+    },
+    {
+      "task": "HeatTransfer/ConvectionDiffusionOpt",
+      "candidate_sha256": "2f1758be1dfd4f024c95374adeb392013cf9adb7aadbd2da7ea89b066ef15991",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 9.486839395016432,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "723e7aafd2174b5ca5b2549fb20ddbbc77604ffe35e94d70809fecb45a817a7b",
+          "comparable_metrics_sha256": "723e7aafd2174b5ca5b2549fb20ddbbc77604ffe35e94d70809fecb45a817a7b",
+          "nested_payload_sha256": {
+            "per_world": "e17038e7f3571a0b495ddbc0175f0a0a63d2b54fb21bac0e992ad11a45c2d6f7"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 9.336055148392916,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "723e7aafd2174b5ca5b2549fb20ddbbc77604ffe35e94d70809fecb45a817a7b",
+          "comparable_metrics_sha256": "723e7aafd2174b5ca5b2549fb20ddbbc77604ffe35e94d70809fecb45a817a7b",
+          "nested_payload_sha256": {
+            "per_world": "e17038e7f3571a0b495ddbc0175f0a0a63d2b54fb21bac0e992ad11a45c2d6f7"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "candidate_sha256": "104eaeb22cc15acfb50eda224ceb260e5fbb567cae918729cdb78ee5632ca4c4",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 9.070413978770375,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "55b90802c1568d32f3d5dba3d228a602fa7ccdf209d2c8e67907b3ee23a2bb25",
+          "comparable_metrics_sha256": "55b90802c1568d32f3d5dba3d228a602fa7ccdf209d2c8e67907b3ee23a2bb25",
+          "nested_payload_sha256": {
+            "per_instance": "a34c870032ad5b253043da44c5612c7474ddf36b449f1dc7f7140846c7c2d312"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 8.56060165911913,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "55b90802c1568d32f3d5dba3d228a602fa7ccdf209d2c8e67907b3ee23a2bb25",
+          "comparable_metrics_sha256": "55b90802c1568d32f3d5dba3d228a602fa7ccdf209d2c8e67907b3ee23a2bb25",
+          "nested_payload_sha256": {
+            "per_instance": "a34c870032ad5b253043da44c5612c7474ddf36b449f1dc7f7140846c7c2d312"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Sensors/IMUBiasCalibration",
+      "candidate_sha256": "0c40ad1fad8bd3a949c64a268385ad45bab06d4aa5343c170906cb3c38ea55bf",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 29.945316487923265,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "21961d31297227dc64bbe05a13e161a1f55ccba7e5b163f52d5f58a238a149d1",
+          "comparable_metrics_sha256": "21961d31297227dc64bbe05a13e161a1f55ccba7e5b163f52d5f58a238a149d1",
+          "nested_payload_sha256": {
+            "per_instance": "8cef78832c56b2179d7907b9da1480cbbf280d11b1abff2f3e9a1e19d85c19bc"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 31.1440865714103,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "21961d31297227dc64bbe05a13e161a1f55ccba7e5b163f52d5f58a238a149d1",
+          "comparable_metrics_sha256": "21961d31297227dc64bbe05a13e161a1f55ccba7e5b163f52d5f58a238a149d1",
+          "nested_payload_sha256": {
+            "per_instance": "8cef78832c56b2179d7907b9da1480cbbf280d11b1abff2f3e9a1e19d85c19bc"
+          }
+        }
+      ]
+    },
+    {
+      "task": "ControlTheory/InvertedPendulumSwingUp",
+      "candidate_sha256": "a238ad8399a344671ed871e7d27a06de80adaf1b5c9483c1141c929520a4b44b",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 4.456509178504348,
+          "metrics": {
+            "combined_score": 2.1076699100262634e-05,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 2.1076699100262634e-05
+          },
+          "full_metrics_sha256": "5e21517084bec36b20a59203aaf60f9d8d65c163be9dd3d28bb5020928d041bd",
+          "comparable_metrics_sha256": "5e21517084bec36b20a59203aaf60f9d8d65c163be9dd3d28bb5020928d041bd",
+          "nested_payload_sha256": {
+            "per_scenario": "1a665358675499da9d38e701cbcea0b339c28c36161c434ce83430dd401af14f"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 4.461633875966072,
+          "metrics": {
+            "combined_score": 2.1076699100262634e-05,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 2.1076699100262634e-05
+          },
+          "full_metrics_sha256": "5e21517084bec36b20a59203aaf60f9d8d65c163be9dd3d28bb5020928d041bd",
+          "comparable_metrics_sha256": "5e21517084bec36b20a59203aaf60f9d8d65c163be9dd3d28bb5020928d041bd",
+          "nested_payload_sha256": {
+            "per_scenario": "1a665358675499da9d38e701cbcea0b339c28c36161c434ce83430dd401af14f"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Astrodynamics/LowThrustTransfer",
+      "candidate_sha256": "ef95244e9f991d565bbb2ba8cff687af39f587d4a739e0295983673e2b68fc99",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 15.117128979414701,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 0.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "ac356649b58b04af549d33182ccd3c921a04139c9befecae0fbb2bb39fa5b7cc",
+          "comparable_metrics_sha256": "ac356649b58b04af549d33182ccd3c921a04139c9befecae0fbb2bb39fa5b7cc",
+          "nested_payload_sha256": {
+            "per_instance": "f1a99c471903cea6f83130df2f1f1f991d05ca4798a5a4f9747da24ab1cd42a7"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 15.430264374241233,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 0.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "ac356649b58b04af549d33182ccd3c921a04139c9befecae0fbb2bb39fa5b7cc",
+          "comparable_metrics_sha256": "ac356649b58b04af549d33182ccd3c921a04139c9befecae0fbb2bb39fa5b7cc",
+          "nested_payload_sha256": {
+            "per_instance": "f1a99c471903cea6f83130df2f1f1f991d05ca4798a5a4f9747da24ab1cd42a7"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "candidate_sha256": "243f1a3fe6bca79989c47a8945e69dc9de419544c02f5f737a754ec56acac5e6",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 6.36043700389564,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "72c7296b1cc1f1e145752ae9d9628c2d5f3252cb00d626780484695f955ae51b",
+          "comparable_metrics_sha256": "72c7296b1cc1f1e145752ae9d9628c2d5f3252cb00d626780484695f955ae51b",
+          "nested_payload_sha256": {
+            "per_instance": "153f2b958aa3c4d82ac71bd9ccd0a1ae1397cc05aa83f0b729bb5cce7692a5ce"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 6.180715475231409,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "72c7296b1cc1f1e145752ae9d9628c2d5f3252cb00d626780484695f955ae51b",
+          "comparable_metrics_sha256": "72c7296b1cc1f1e145752ae9d9628c2d5f3252cb00d626780484695f955ae51b",
+          "nested_payload_sha256": {
+            "per_instance": "153f2b958aa3c4d82ac71bd9ccd0a1ae1397cc05aa83f0b729bb5cce7692a5ce"
+          }
+        }
+      ]
+    },
+    {
+      "task": "StructuralEngineering/ModalDamageAttribution",
+      "candidate_sha256": "148669f7ff4060ad4d041e7b84181120b4f3c325646e5fabdc09eff5d8d4811a",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 15.204253999516368,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "8d9447a77516ea459350947544f8df30049887e5c1dc7a2781e13af82a6faaf9",
+          "comparable_metrics_sha256": "8d9447a77516ea459350947544f8df30049887e5c1dc7a2781e13af82a6faaf9",
+          "nested_payload_sha256": {
+            "per_instance": "8c08f4657fd09724212189d02e123d0b718c5a9ab53ed037dd06996ce04b9596"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 15.647572666406631,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "8d9447a77516ea459350947544f8df30049887e5c1dc7a2781e13af82a6faaf9",
+          "comparable_metrics_sha256": "8d9447a77516ea459350947544f8df30049887e5c1dc7a2781e13af82a6faaf9",
+          "nested_payload_sha256": {
+            "per_instance": "8c08f4657fd09724212189d02e123d0b718c5a9ab53ed037dd06996ce04b9596"
+          }
+        }
+      ]
+    },
+    {
+      "task": "NuclearEngineering/NeutronDiffusionCriticality",
+      "candidate_sha256": "5257d7dabbfc42e0b7175f1e45945079cb57ae91a602c1096dc0944a0ea99500",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.625866610556841,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.9841790542199828
+          },
+          "full_metrics_sha256": "5494670634e17fa9e82a42ef05c0472ae78528918de2a0eb2ba24f4d46df5853",
+          "comparable_metrics_sha256": "5494670634e17fa9e82a42ef05c0472ae78528918de2a0eb2ba24f4d46df5853",
+          "nested_payload_sha256": {}
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.6586665473878384,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.9841790542199828
+          },
+          "full_metrics_sha256": "5494670634e17fa9e82a42ef05c0472ae78528918de2a0eb2ba24f4d46df5853",
+          "comparable_metrics_sha256": "5494670634e17fa9e82a42ef05c0472ae78528918de2a0eb2ba24f4d46df5853",
+          "nested_payload_sha256": {}
+        }
+      ]
+    },
+    {
+      "task": "Sensors/QuartzCrystalMicrobalanceLab",
+      "candidate_sha256": "f8c1150b84cec9fdd8bb58e5a93ae485f5ef8f7036f618ca14ea739062d85c4d",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 10.954697815701365,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "e81810ec749352db3bd9f6e2b8cf264c5f06cee692e4a9c977cbe1d312c28463",
+          "comparable_metrics_sha256": "e81810ec749352db3bd9f6e2b8cf264c5f06cee692e4a9c977cbe1d312c28463",
+          "nested_payload_sha256": {
+            "per_world": "d4d348e2fef18e906bfce154178615e524ed102bfb75bbaaf06fe03becd17dcc"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 11.107645919546485,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "e81810ec749352db3bd9f6e2b8cf264c5f06cee692e4a9c977cbe1d312c28463",
+          "comparable_metrics_sha256": "e81810ec749352db3bd9f6e2b8cf264c5f06cee692e4a9c977cbe1d312c28463",
+          "nested_payload_sha256": {
+            "per_world": "d4d348e2fef18e906bfce154178615e524ed102bfb75bbaaf06fe03becd17dcc"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "candidate_sha256": "08d77d5949beb6d20b7459805f4834306fd6daebc982cc38e1f38c03b7d371e5",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.755554746836424,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "a5a2c1e83ee532c45f798c97f286cc31dc687c5ae29f43b72ab3fef7490115b7",
+          "comparable_metrics_sha256": "a5a2c1e83ee532c45f798c97f286cc31dc687c5ae29f43b72ab3fef7490115b7",
+          "nested_payload_sha256": {
+            "candidate_parameter_vector": "9ea7257673899bfcfa630b7abecb59bc9ce267aea29d287e0189e12d2b577e36",
+            "loss_anchors": "08ce124febdfb03ed5439523a81b823dd38287e232a785c146c5c83d00d42e40",
+            "per_condition": "d41541c4e7221164aec898e6a728fcb4394463c5b471aa78c0757017630fc18a",
+            "shift_conditions": "0707d52d0ccf2cb451cf1023ce89c2f8552270650cc71084a3ea27cc55edf79c"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.6191701646894217,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "a5a2c1e83ee532c45f798c97f286cc31dc687c5ae29f43b72ab3fef7490115b7",
+          "comparable_metrics_sha256": "a5a2c1e83ee532c45f798c97f286cc31dc687c5ae29f43b72ab3fef7490115b7",
+          "nested_payload_sha256": {
+            "candidate_parameter_vector": "9ea7257673899bfcfa630b7abecb59bc9ce267aea29d287e0189e12d2b577e36",
+            "loss_anchors": "08ce124febdfb03ed5439523a81b823dd38287e232a785c146c5c83d00d42e40",
+            "per_condition": "d41541c4e7221164aec898e6a728fcb4394463c5b471aa78c0757017630fc18a",
+            "shift_conditions": "0707d52d0ccf2cb451cf1023ce89c2f8552270650cc71084a3ea27cc55edf79c"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Acoustics/RoomImpulseResponse",
+      "candidate_sha256": "657b90622f24ad4362ed9d8500dbbf98d116a054c1ada457a22f560c2f913611",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 10.659495079889894,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "cbd287708f7a5247ff7572f32c98923ebcba8033923ece8f941443de919cb38f",
+          "comparable_metrics_sha256": "cbd287708f7a5247ff7572f32c98923ebcba8033923ece8f941443de919cb38f",
+          "nested_payload_sha256": {
+            "per_instance": "c8d2b31ad20dbf48459c628cc3f652cd5cdab927693b33e29986e6b95121fc43"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 10.678159408271313,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "cbd287708f7a5247ff7572f32c98923ebcba8033923ece8f941443de919cb38f",
+          "comparable_metrics_sha256": "cbd287708f7a5247ff7572f32c98923ebcba8033923ece8f941443de919cb38f",
+          "nested_payload_sha256": {
+            "per_instance": "c8d2b31ad20dbf48459c628cc3f652cd5cdab927693b33e29986e6b95121fc43"
+          }
+        }
+      ]
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "candidate_sha256": "dd89ba5c3aff3d54eb84802cd80cb9da210e60811085a0dcdcf70c4a5e735661",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 8.670386016368866,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "7e4c172ed99e6fccfc1314c227266e1d7e57c9235d0ee15aa11efc4328c0c3a5",
+          "comparable_metrics_sha256": "7e4c172ed99e6fccfc1314c227266e1d7e57c9235d0ee15aa11efc4328c0c3a5",
+          "nested_payload_sha256": {
+            "per_instance": "590a1a5f96af44025572036f12e0e77f4806738cd6ff1a085d58899e32bc77e2"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 6.51035001501441,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "7e4c172ed99e6fccfc1314c227266e1d7e57c9235d0ee15aa11efc4328c0c3a5",
+          "comparable_metrics_sha256": "7e4c172ed99e6fccfc1314c227266e1d7e57c9235d0ee15aa11efc4328c0c3a5",
+          "nested_payload_sha256": {
+            "per_instance": "590a1a5f96af44025572036f12e0e77f4806738cd6ff1a085d58899e32bc77e2"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Turbulence/WallClosureDiscovery",
+      "candidate_sha256": "213794f18ad40f85d5a844ff4d0b9ebb107bc26d6866360fc4fd11623169c514",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 3.3941666316241026,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "b4527e5c5f708f277b500c0497ededa711acd27089d505d445e1051e2a699a29",
+          "comparable_metrics_sha256": "b4527e5c5f708f277b500c0497ededa711acd27089d505d445e1051e2a699a29",
+          "nested_payload_sha256": {
+            "per_case": "32b87cc71cb64dc58dfe2c6e8ada1d0299551ff007cf1df2c58b764b6251d4c4"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 3.5759746730327606,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "b4527e5c5f708f277b500c0497ededa711acd27089d505d445e1051e2a699a29",
+          "comparable_metrics_sha256": "b4527e5c5f708f277b500c0497ededa711acd27089d505d445e1051e2a699a29",
+          "nested_payload_sha256": {
+            "per_case": "32b87cc71cb64dc58dfe2c6e8ada1d0299551ff007cf1df2c58b764b6251d4c4"
+          }
+        }
+      ]
+    },
+    {
+      "task": "DynamicalSystems/ActiveLawDiscovery",
+      "candidate_sha256": "2386f20f4c54a118ebf66187a97e3f1a0b04c47bd182d5db48a733b2d1c4f331",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 13.08516238629818,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "cad16b144d133f9584ea16ee45c3b1a15060c17e141423cb6295b9ca87ad7918",
+          "comparable_metrics_sha256": "cad16b144d133f9584ea16ee45c3b1a15060c17e141423cb6295b9ca87ad7918",
+          "nested_payload_sha256": {
+            "per_world": "9407b2e317c3f9becb40f4e9aba4b0723e4887016e094ca094b4ba2b964ed6fa"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 15.075754636898637,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "cad16b144d133f9584ea16ee45c3b1a15060c17e141423cb6295b9ca87ad7918",
+          "comparable_metrics_sha256": "cad16b144d133f9584ea16ee45c3b1a15060c17e141423cb6295b9ca87ad7918",
+          "nested_payload_sha256": {
+            "per_world": "9407b2e317c3f9becb40f4e9aba4b0723e4887016e094ca094b4ba2b964ed6fa"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/BlackBoxGroupIdentification",
+      "candidate_sha256": "d9849295c3c3e065b2ec9be2da4922a57170e4314d57db5f8515f114b1d2ddb6",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 21.301219645887613,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "d11fbb5dc8fd7c810ba9f9010b4c8c4d7fac397d3e1b1c8d06cfafe9827507ae",
+          "comparable_metrics_sha256": "d11fbb5dc8fd7c810ba9f9010b4c8c4d7fac397d3e1b1c8d06cfafe9827507ae",
+          "nested_payload_sha256": {
+            "per_instance": "9c826498b2eedc9ee60357dd48aacc06e9117d86df3e2c81cd2ea99c74713f77"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 14.030296366661787,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "d11fbb5dc8fd7c810ba9f9010b4c8c4d7fac397d3e1b1c8d06cfafe9827507ae",
+          "comparable_metrics_sha256": "d11fbb5dc8fd7c810ba9f9010b4c8c4d7fac397d3e1b1c8d06cfafe9827507ae",
+          "nested_payload_sha256": {
+            "per_instance": "9c826498b2eedc9ee60357dd48aacc06e9117d86df3e2c81cd2ea99c74713f77"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/CapSet",
+      "candidate_sha256": "a52d292c05a65500e8fb3d527233b6762408a4d1200877921cfe6ae0705cd55c",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.7187022734433413,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "81cb03f92d79d34f3f7bc16377a8022babe4d969412bd187b9c2a36452c5f2d6",
+          "comparable_metrics_sha256": "81cb03f92d79d34f3f7bc16377a8022babe4d969412bd187b9c2a36452c5f2d6",
+          "nested_payload_sha256": {
+            "per_dim": "0499cea7fd814e07d10c751785dd3f424cc81c5e744bd3369e437b429179aff0"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 3.0461509581655264,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "81cb03f92d79d34f3f7bc16377a8022babe4d969412bd187b9c2a36452c5f2d6",
+          "comparable_metrics_sha256": "81cb03f92d79d34f3f7bc16377a8022babe4d969412bd187b9c2a36452c5f2d6",
+          "nested_payload_sha256": {
+            "per_dim": "0499cea7fd814e07d10c751785dd3f424cc81c5e744bd3369e437b429179aff0"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/CapSetFrontier",
+      "candidate_sha256": "36b71b98a309562fcbe53fbff9024581de75c79bcb1af7367b7ed81664acdcbf",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 3.227658050134778,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "eb9640ca1450da3c6b93b6c1b2791208b6bb7851014a78501a4a9a2120e589c8",
+          "comparable_metrics_sha256": "eb9640ca1450da3c6b93b6c1b2791208b6bb7851014a78501a4a9a2120e589c8",
+          "nested_payload_sha256": {
+            "per_dim": "6b572c7f855f9ed1e477459971530b9874aa4703d892b0f3af93abbca3b960d5"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.81636312417686,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "eb9640ca1450da3c6b93b6c1b2791208b6bb7851014a78501a4a9a2120e589c8",
+          "comparable_metrics_sha256": "eb9640ca1450da3c6b93b6c1b2791208b6bb7851014a78501a4a9a2120e589c8",
+          "nested_payload_sha256": {
+            "per_dim": "6b572c7f855f9ed1e477459971530b9874aa4703d892b0f3af93abbca3b960d5"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Optimization/CirclePacking",
+      "candidate_sha256": "4189f1c26472a29105d61e3f6475c6de6555f254e73fe68eb504a830b75f6b7a",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.6312715150415897,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "db58d29e12152eb1e8072a74acd2e26995b37c521bb82edffbe3ec0cfa4c8278",
+          "comparable_metrics_sha256": "db58d29e12152eb1e8072a74acd2e26995b37c521bb82edffbe3ec0cfa4c8278",
+          "nested_payload_sha256": {
+            "per_instance": "f44007cd7c3f795f3fb0e79b2d45990d9e7f47b351ee7ca793945265bcf64dea"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.754321103915572,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "db58d29e12152eb1e8072a74acd2e26995b37c521bb82edffbe3ec0cfa4c8278",
+          "comparable_metrics_sha256": "db58d29e12152eb1e8072a74acd2e26995b37c521bb82edffbe3ec0cfa4c8278",
+          "nested_payload_sha256": {
+            "per_instance": "f44007cd7c3f795f3fb0e79b2d45990d9e7f47b351ee7ca793945265bcf64dea"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/DegreeDiameterGraph",
+      "candidate_sha256": "5c91e5f9175607d98e966fadbd89b50da4f27e32bfc46f0211a4a86d813019eb",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 3.0190454963594675,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "9c092dd37ce8838feec01333a17fbacef61e31bb79657ff80d6d5fae4694bb7b",
+          "comparable_metrics_sha256": "9c092dd37ce8838feec01333a17fbacef61e31bb79657ff80d6d5fae4694bb7b",
+          "nested_payload_sha256": {
+            "per_size": "f0a73397840348c1f89165da3985b5d13e83bb8160ad3466cfe641cae93f6ff5"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.5753268878906965,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "9c092dd37ce8838feec01333a17fbacef61e31bb79657ff80d6d5fae4694bb7b",
+          "comparable_metrics_sha256": "9c092dd37ce8838feec01333a17fbacef61e31bb79657ff80d6d5fae4694bb7b",
+          "nested_payload_sha256": {
+            "per_size": "f0a73397840348c1f89165da3985b5d13e83bb8160ad3466cfe641cae93f6ff5"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/ErdosMinimumOverlap",
+      "candidate_sha256": "e1d91bc1621a65a4f9384073da17236271f485aca84dfc098b752e59697d75d0",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.5542388893663883,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "5283cf9e32b796ddaf1bf4af3f1a697dd3a58fcfb4d37f40465994276f0a96da",
+          "comparable_metrics_sha256": "5283cf9e32b796ddaf1bf4af3f1a697dd3a58fcfb4d37f40465994276f0a96da",
+          "nested_payload_sha256": {
+            "per_size": "e5d876451bd50ca89955228efee0ee796251e236e97b20f277e6e28e769c314e"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.6301759500056505,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "5283cf9e32b796ddaf1bf4af3f1a697dd3a58fcfb4d37f40465994276f0a96da",
+          "comparable_metrics_sha256": "5283cf9e32b796ddaf1bf4af3f1a697dd3a58fcfb4d37f40465994276f0a96da",
+          "nested_payload_sha256": {
+            "per_size": "e5d876451bd50ca89955228efee0ee796251e236e97b20f277e6e28e769c314e"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/HeavyTailEvidence",
+      "candidate_sha256": "6f070faa6bcaafcf00157f56c3600b59494eedf30da391bdcba7e18fd1f75f75",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 10.120522279292345,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "53fa9236a80bfa70478b7d3b84d45c182d9f7d06962704d1d9a24cf2dd09d273",
+          "comparable_metrics_sha256": "53fa9236a80bfa70478b7d3b84d45c182d9f7d06962704d1d9a24cf2dd09d273",
+          "nested_payload_sha256": {
+            "per_instance": "d6219955f6000120f2593c2d4cc939e33e8be7752460b376f0e1f8075a928665"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 11.1098010558635,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "53fa9236a80bfa70478b7d3b84d45c182d9f7d06962704d1d9a24cf2dd09d273",
+          "comparable_metrics_sha256": "53fa9236a80bfa70478b7d3b84d45c182d9f7d06962704d1d9a24cf2dd09d273",
+          "nested_payload_sha256": {
+            "per_instance": "d6219955f6000120f2593c2d4cc939e33e8be7752460b376f0e1f8075a928665"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/HeilbronnTrianglePacking",
+      "candidate_sha256": "707d0b6dfa275e79328b21949576377fd2152befa814d747a22d3f0a383e2e78",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.7585932575166225,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "0874fcf3573ea86557f6fd451a9f48e643c900398abe44266ff989203187a9e3",
+          "comparable_metrics_sha256": "0874fcf3573ea86557f6fd451a9f48e643c900398abe44266ff989203187a9e3",
+          "nested_payload_sha256": {
+            "per_size": "a13fe3c46a734adc1e92505ea807bed71a9bf16af7a54c65bb4751dca9930579"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.862424150109291,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "0874fcf3573ea86557f6fd451a9f48e643c900398abe44266ff989203187a9e3",
+          "comparable_metrics_sha256": "0874fcf3573ea86557f6fd451a9f48e643c900398abe44266ff989203187a9e3",
+          "nested_payload_sha256": {
+            "per_size": "a13fe3c46a734adc1e92505ea807bed71a9bf16af7a54c65bb4751dca9930579"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/KissingNumber",
+      "candidate_sha256": "f239237ffa5c51859216f79c0bb9381c692e2a3dc6c9a91ad118576c349b4b2a",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.722333397716284,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "f41cae7bf5758071089b1d33e43d1e6304bd600b2977e20928d5d29d46e841bd",
+          "comparable_metrics_sha256": "f41cae7bf5758071089b1d33e43d1e6304bd600b2977e20928d5d29d46e841bd",
+          "nested_payload_sha256": {
+            "per_dim": "5fb9b12dfe0012be83d2fec2ddaafac0dc0b501d67984cd4a108cd75b0d956b1"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.6226065568625927,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "f41cae7bf5758071089b1d33e43d1e6304bd600b2977e20928d5d29d46e841bd",
+          "comparable_metrics_sha256": "f41cae7bf5758071089b1d33e43d1e6304bd600b2977e20928d5d29d46e841bd",
+          "nested_payload_sha256": {
+            "per_dim": "5fb9b12dfe0012be83d2fec2ddaafac0dc0b501d67984cd4a108cd75b0d956b1"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/NarrowAdmissibleTuple",
+      "candidate_sha256": "1eb338abe47742e7759b83fdb6160610046b7b58926c7fc3bb82e4c65be00df7",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.494090447202325,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "81db58324e9602e74671f0e101cf829ba50d39b36d2a0d65cdb792bcd1f58963",
+          "comparable_metrics_sha256": "81db58324e9602e74671f0e101cf829ba50d39b36d2a0d65cdb792bcd1f58963",
+          "nested_payload_sha256": {
+            "per_size": "4086d781d977e71bd8bd6df03a096012b72e2272bff36787d40ae59af120144a"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.5279217306524515,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "81db58324e9602e74671f0e101cf829ba50d39b36d2a0d65cdb792bcd1f58963",
+          "comparable_metrics_sha256": "81db58324e9602e74671f0e101cf829ba50d39b36d2a0d65cdb792bcd1f58963",
+          "nested_payload_sha256": {
+            "per_size": "4086d781d977e71bd8bd6df03a096012b72e2272bff36787d40ae59af120144a"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/NonlinearCodeRecords",
+      "candidate_sha256": "e518f8252c65529ddbea1130544da3cf558ab29374edfd03dcf5e186dd81cec9",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.470973724499345,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "62e9e77a28ca6e6a0e3a770ab977f35aa56373c7da34f632b8e5138845264c2e",
+          "comparable_metrics_sha256": "62e9e77a28ca6e6a0e3a770ab977f35aa56373c7da34f632b8e5138845264c2e",
+          "nested_payload_sha256": {
+            "per_instance": "d6fe44f97beeed98b1e9e3b9e358f55ffec6d5ea9ae0bf81bd02105677043fdd"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.720523064956069,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "62e9e77a28ca6e6a0e3a770ab977f35aa56373c7da34f632b8e5138845264c2e",
+          "comparable_metrics_sha256": "62e9e77a28ca6e6a0e3a770ab977f35aa56373c7da34f632b8e5138845264c2e",
+          "nested_payload_sha256": {
+            "per_instance": "d6fe44f97beeed98b1e9e3b9e358f55ffec6d5ea9ae0bf81bd02105677043fdd"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/RamseyLowerBound",
+      "candidate_sha256": "aef15b215b12850bbd0d54a42497922be9207444b0f14129ca6520ec7b54c49a",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.7487505804747343,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "c15dccabf005a7236d1f01717a392e146b646666fcd0f19ff3e248683b091bfe",
+          "comparable_metrics_sha256": "c15dccabf005a7236d1f01717a392e146b646666fcd0f19ff3e248683b091bfe",
+          "nested_payload_sha256": {
+            "per_pair": "f22b84df253b74e34686a0ed56f8199f7159ffd523328ef35374fc09f1db9041"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.6048396322876215,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "c15dccabf005a7236d1f01717a392e146b646666fcd0f19ff3e248683b091bfe",
+          "comparable_metrics_sha256": "c15dccabf005a7236d1f01717a392e146b646666fcd0f19ff3e248683b091bfe",
+          "nested_payload_sha256": {
+            "per_pair": "f22b84df253b74e34686a0ed56f8199f7159ffd523328ef35374fc09f1db9041"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/SchurPartition",
+      "candidate_sha256": "759ac60d5902d905d627b0bf7fb542582ca9028dc336a3ff63b0b80c4828cbc1",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.806454159319401,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "3b08f42f9979cbc65c04b8eb401b04db6377d4f0a811761929a793087a759e93",
+          "comparable_metrics_sha256": "3b08f42f9979cbc65c04b8eb401b04db6377d4f0a811761929a793087a759e93",
+          "nested_payload_sha256": {
+            "per_size": "3cfa6931ddfb69bffa654cd209cc918be66b71c90338775599e55b902b704a69"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.485288731753826,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "3b08f42f9979cbc65c04b8eb401b04db6377d4f0a811761929a793087a759e93",
+          "comparable_metrics_sha256": "3b08f42f9979cbc65c04b8eb401b04db6377d4f0a811761929a793087a759e93",
+          "nested_payload_sha256": {
+            "per_size": "3cfa6931ddfb69bffa654cd209cc918be66b71c90338775599e55b902b704a69"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/SequenceLawRecovery",
+      "candidate_sha256": "d3cb4ddce112129387c322524a798e35d5cf5461096f02c4c81a1af15274d70e",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 9.061650546267629,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "d108659a51f57a9934aa332f7581ba874650e2a1710ff8bc4c8963f43eadf5a0",
+          "comparable_metrics_sha256": "d108659a51f57a9934aa332f7581ba874650e2a1710ff8bc4c8963f43eadf5a0",
+          "nested_payload_sha256": {
+            "per_instance": "d8a62270e033fb1070fa81ef989e0fb7ff1debe79b68bab4b8a37fb341c15115",
+            "sealed_per_instance": "c64060c7d9853a72e3810e139a956038b8049518ab124d5eaab3252b41d2a76d"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 8.88603931106627,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "d108659a51f57a9934aa332f7581ba874650e2a1710ff8bc4c8963f43eadf5a0",
+          "comparable_metrics_sha256": "d108659a51f57a9934aa332f7581ba874650e2a1710ff8bc4c8963f43eadf5a0",
+          "nested_payload_sha256": {
+            "per_instance": "d8a62270e033fb1070fa81ef989e0fb7ff1debe79b68bab4b8a37fb341c15115",
+            "sealed_per_instance": "c64060c7d9853a72e3810e139a956038b8049518ab124d5eaab3252b41d2a76d"
+          }
+        }
+      ]
+    },
+    {
+      "task": "DiscreteGeometry/SpherePackingCertificate",
+      "candidate_sha256": "cb62cf0a96bfe4f91214d6b378dbc991ecb8e595b414e20826d90ee4fd172766",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.4947168324142694,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "6e7fa57d72ee331d092ec7b11814d3ece0fc3e270fcb1f61e7df60823cf8ce1e",
+          "comparable_metrics_sha256": "6e7fa57d72ee331d092ec7b11814d3ece0fc3e270fcb1f61e7df60823cf8ce1e",
+          "nested_payload_sha256": {
+            "per_instance": "e8c96601b689564e70932b5b1625a5f061866f505b6472f28a385f3766f0f115"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.508703749626875,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "6e7fa57d72ee331d092ec7b11814d3ece0fc3e270fcb1f61e7df60823cf8ce1e",
+          "comparable_metrics_sha256": "6e7fa57d72ee331d092ec7b11814d3ece0fc3e270fcb1f61e7df60823cf8ce1e",
+          "nested_payload_sha256": {
+            "per_instance": "e8c96601b689564e70932b5b1625a5f061866f505b6472f28a385f3766f0f115"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/Superpermutation",
+      "candidate_sha256": "60d390519fdc59672c1f505f2fd34b9608f48d757ba0b2c359a5d21be4bbb268",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.762995630502701,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "123b768f78dce11cc0cded82647a063f2de030defa48a267bb6cccd01736cd4f",
+          "comparable_metrics_sha256": "123b768f78dce11cc0cded82647a063f2de030defa48a267bb6cccd01736cd4f",
+          "nested_payload_sha256": {
+            "per_n": "09dba0636b2520c9851eebad381d7e0d53d44d9bb241856c738c6ad4061d8deb"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.7119046356528997,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "123b768f78dce11cc0cded82647a063f2de030defa48a267bb6cccd01736cd4f",
+          "comparable_metrics_sha256": "123b768f78dce11cc0cded82647a063f2de030defa48a267bb6cccd01736cd4f",
+          "nested_payload_sha256": {
+            "per_n": "09dba0636b2520c9851eebad381d7e0d53d44d9bb241856c738c6ad4061d8deb"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/VanDerWaerdenColoring",
+      "candidate_sha256": "d7b5c919a0eb869129c578b220dc3bbb2ad3a26f3caa54656193fb59b37095f6",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.4912303760647774,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "a4d30b774c2933acbc50ef77fd2fa450cf4549a4a60c800fcadf23344b6f4a7a",
+          "comparable_metrics_sha256": "a4d30b774c2933acbc50ef77fd2fa450cf4549a4a60c800fcadf23344b6f4a7a",
+          "nested_payload_sha256": {
+            "per_size": "7f58172b76bdfb32c4cc09df061fbf8a623f4343132119274b5ce6dd1ebd86c7"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.7133998963981867,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "a4d30b774c2933acbc50ef77fd2fa450cf4549a4a60c800fcadf23344b6f4a7a",
+          "comparable_metrics_sha256": "a4d30b774c2933acbc50ef77fd2fa450cf4549a4a60c800fcadf23344b6f4a7a",
+          "nested_payload_sha256": {
+            "per_size": "7f58172b76bdfb32c4cc09df061fbf8a623f4343132119274b5ce6dd1ebd86c7"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Mathematics/ZarankiewiczMatrix",
+      "candidate_sha256": "7460d0a0a040670ce909c8cba5e7be95db85c0a4cebe9d4c652a42b203e62920",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.535560078918934,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "672cf634465dcadda35d2cdba156fc1004592611d00ef7f5dfa726950931c4fb",
+          "comparable_metrics_sha256": "672cf634465dcadda35d2cdba156fc1004592611d00ef7f5dfa726950931c4fb",
+          "nested_payload_sha256": {
+            "per_size": "cfa083db0400a7a72caa1c4cd78a4686cdcc2666b7fe680c3990cdf1f9a605d2"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.5756737142801285,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "672cf634465dcadda35d2cdba156fc1004592611d00ef7f5dfa726950931c4fb",
+          "comparable_metrics_sha256": "672cf634465dcadda35d2cdba156fc1004592611d00ef7f5dfa726950931c4fb",
+          "nested_payload_sha256": {
+            "per_size": "cfa083db0400a7a72caa1c4cd78a4686cdcc2666b7fe680c3990cdf1f9a605d2"
+          }
+        }
+      ]
+    },
+    {
+      "task": "QuantumControl/ActiveNoiseSpectroscopy",
+      "candidate_sha256": "e7fa9963b4f03fcb21664ac8ad51a955c7ca8dd8ebecbb31987ac357746f6724",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 13.31525555998087,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "9abb9540492a0dddae99986cc16dc4e5f4810150b16ecc8d81d5d6f720a54e65",
+          "comparable_metrics_sha256": "9abb9540492a0dddae99986cc16dc4e5f4810150b16ecc8d81d5d6f720a54e65",
+          "nested_payload_sha256": {
+            "per_instance": "104cf5e24c04604e79ef0def3d5eee257ef7db3470437e9e2a7131b0bcab6294",
+            "frontier_records": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 12.99958579801023,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "9abb9540492a0dddae99986cc16dc4e5f4810150b16ecc8d81d5d6f720a54e65",
+          "comparable_metrics_sha256": "9abb9540492a0dddae99986cc16dc4e5f4810150b16ecc8d81d5d6f720a54e65",
+          "nested_payload_sha256": {
+            "per_instance": "104cf5e24c04604e79ef0def3d5eee257ef7db3470437e9e2a7131b0bcab6294",
+            "frontier_records": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          }
+        }
+      ]
+    },
+    {
+      "task": "QuantumFoundations/BellBoundCertificate",
+      "candidate_sha256": "14ab15fcc2775807b28fb3081908bbb84e390bd3493d4a6bcf8d335574e2ce74",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.547924404963851,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "14d7d8489163b2b09feb717b45a31fffe98e020299b17a19a1355e7ac1670853",
+          "comparable_metrics_sha256": "14d7d8489163b2b09feb717b45a31fffe98e020299b17a19a1355e7ac1670853",
+          "nested_payload_sha256": {
+            "per_instance": "c7e6e82d80c990e8681498fe83889f0be8433a86a8ab09ecb292810e9bf53f13"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.904815662652254,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "14d7d8489163b2b09feb717b45a31fffe98e020299b17a19a1355e7ac1670853",
+          "comparable_metrics_sha256": "14d7d8489163b2b09feb717b45a31fffe98e020299b17a19a1355e7ac1670853",
+          "nested_payload_sha256": {
+            "per_instance": "c7e6e82d80c990e8681498fe83889f0be8433a86a8ab09ecb292810e9bf53f13"
+          }
+        }
+      ]
+    },
+    {
+      "task": "ParticlePhysics/CalorimeterDesign",
+      "candidate_sha256": "67c2b8bb34e4d69b81e416f7624085a847eb8d3cd6dd570bd7be30f7a68c4142",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 8.285690696910024,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "43ebd4f2b6a32ee7a85703b58f289833c3c5643bd44c52ee11b160aa699c7c06",
+          "comparable_metrics_sha256": "43ebd4f2b6a32ee7a85703b58f289833c3c5643bd44c52ee11b160aa699c7c06",
+          "nested_payload_sha256": {
+            "per_instance": "01606b4654ccac199e1e1a53a94b373bb9b2c55c20b59d5607ceefa4c8ae42ca"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 6.7480740789324045,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "43ebd4f2b6a32ee7a85703b58f289833c3c5643bd44c52ee11b160aa699c7c06",
+          "comparable_metrics_sha256": "43ebd4f2b6a32ee7a85703b58f289833c3c5643bd44c52ee11b160aa699c7c06",
+          "nested_payload_sha256": {
+            "per_instance": "01606b4654ccac199e1e1a53a94b373bb9b2c55c20b59d5607ceefa4c8ae42ca"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Physics/ComplexBoseLaw",
+      "candidate_sha256": "2e5969bffd3e327655ceb480b79e43c0dfc9fd869511665b965bcdf286c0a7bc",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 9.705276776105165,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "790d2a5fef83a6616f4d60fed673fbed7337c8e61291480088e5a72d2b7cc867",
+          "comparable_metrics_sha256": "790d2a5fef83a6616f4d60fed673fbed7337c8e61291480088e5a72d2b7cc867",
+          "nested_payload_sha256": {
+            "per_instance": "356366c227576e9cbed97ce6f4a0512b58e11ebaf905fc7233cfa7cd0e2b1375"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 9.692033313214779,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "790d2a5fef83a6616f4d60fed673fbed7337c8e61291480088e5a72d2b7cc867",
+          "comparable_metrics_sha256": "790d2a5fef83a6616f4d60fed673fbed7337c8e61291480088e5a72d2b7cc867",
+          "nested_payload_sha256": {
+            "per_instance": "356366c227576e9cbed97ce6f4a0512b58e11ebaf905fc7233cfa7cd0e2b1375"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Physics/CriticalPhenomenaLab",
+      "candidate_sha256": "9700076eccba52bdd9fd9b729363c9d1503f77b2174deeb0abf09f27c8621735",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 10.035226533189416,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "95680f5d00875dedfd898a64978d51012191b791069d7fa4f47481d6f3dbb201",
+          "comparable_metrics_sha256": "95680f5d00875dedfd898a64978d51012191b791069d7fa4f47481d6f3dbb201",
+          "nested_payload_sha256": {
+            "per_world": "b54d71aa1622c2d851a1ee65b8b66946b8fabd9d4db9d0c7e16c07a7c2b68a6a"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 10.492998352274299,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "95680f5d00875dedfd898a64978d51012191b791069d7fa4f47481d6f3dbb201",
+          "comparable_metrics_sha256": "95680f5d00875dedfd898a64978d51012191b791069d7fa4f47481d6f3dbb201",
+          "nested_payload_sha256": {
+            "per_world": "b54d71aa1622c2d851a1ee65b8b66946b8fabd9d4db9d0c7e16c07a7c2b68a6a"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "candidate_sha256": "f2abe37d10285154574c5805325f5a0fdcc863e058e8503a5087359fdeba3046",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 13.22789030149579,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "9b609b6a52ffe0840400774d80db116c146ccb631fd0a4f0f1e487e0089509d3",
+          "comparable_metrics_sha256": "9b609b6a52ffe0840400774d80db116c146ccb631fd0a4f0f1e487e0089509d3",
+          "nested_payload_sha256": {
+            "per_instance": "0b428ad4564c9fa467492a027e76a242f6c1232eb45590c93e24bfc917461a3a"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 12.546353442594409,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "9b609b6a52ffe0840400774d80db116c146ccb631fd0a4f0f1e487e0089509d3",
+          "comparable_metrics_sha256": "9b609b6a52ffe0840400774d80db116c146ccb631fd0a4f0f1e487e0089509d3",
+          "nested_payload_sha256": {
+            "per_instance": "0b428ad4564c9fa467492a027e76a242f6c1232eb45590c93e24bfc917461a3a"
+          }
+        }
+      ]
+    },
+    {
+      "task": "ParticlePhysics/DiscrepantMeasurements",
+      "candidate_sha256": "5a5ddfbe2feea75c370d466d055db5d1235add29db9f893fe2fc1ff61c20786b",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 12.55929358676076,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "51a2ed54b80d62576763ac8819ecb090b0be2051e061a5b4e711849d97564dbf",
+          "comparable_metrics_sha256": "51a2ed54b80d62576763ac8819ecb090b0be2051e061a5b4e711849d97564dbf",
+          "nested_payload_sha256": {
+            "per_instance": "25de4e9140478fb231f5b7a647cd0be284f2d98e136317fd019bccf5cf101a22"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 13.102544959634542,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "51a2ed54b80d62576763ac8819ecb090b0be2051e061a5b4e711849d97564dbf",
+          "comparable_metrics_sha256": "51a2ed54b80d62576763ac8819ecb090b0be2051e061a5b4e711849d97564dbf",
+          "nested_payload_sha256": {
+            "per_instance": "25de4e9140478fb231f5b7a647cd0be284f2d98e136317fd019bccf5cf101a22"
+          }
+        }
+      ]
+    },
+    {
+      "task": "QuantumFoundations/FourSettingMomentCertificate",
+      "candidate_sha256": "14ab15fcc2775807b28fb3081908bbb84e390bd3493d4a6bcf8d335574e2ce74",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.3693576492369175,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "0317622a1d7be51fbd71d3b0f3e3a1c5bf91a2237ceffb81f5da114c1a690474",
+          "comparable_metrics_sha256": "0317622a1d7be51fbd71d3b0f3e3a1c5bf91a2237ceffb81f5da114c1a690474",
+          "nested_payload_sha256": {
+            "per_instance": "3715fc4dcf11542fd61ca2f0973fbf23d88329383b137f182e8e5c5851041411"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.611438998952508,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "0317622a1d7be51fbd71d3b0f3e3a1c5bf91a2237ceffb81f5da114c1a690474",
+          "comparable_metrics_sha256": "0317622a1d7be51fbd71d3b0f3e3a1c5bf91a2237ceffb81f5da114c1a690474",
+          "nested_payload_sha256": {
+            "per_instance": "3715fc4dcf11542fd61ca2f0973fbf23d88329383b137f182e8e5c5851041411"
+          }
+        }
+      ]
+    },
+    {
+      "task": "QuantumDynamics/HamiltonianLearning",
+      "candidate_sha256": "14a434c963ef15fd69e3ac0100744b70328b7fce639d1028c62b04ae3bba6809",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 7.535675933584571,
+          "metrics": {
+            "combined_score": 0.08333333333333333,
+            "valid": 1.0,
+            "raw_score": 0.08333333333333333
+          },
+          "full_metrics_sha256": "8c62b4cdaead5d22d1f8dd8e8bf312a1c2c087320b32ff6f38eed25eece2c491",
+          "comparable_metrics_sha256": "8c62b4cdaead5d22d1f8dd8e8bf312a1c2c087320b32ff6f38eed25eece2c491",
+          "nested_payload_sha256": {
+            "per_instance": "ffef54eba3a253d2d84a5adb913e0d2617957641157fa921772fddc8e580130f",
+            "sealed_per_instance": "71d9251ee96ac3f4b2a7a9838153b61e51177c513eceb2ad4aeed7d283b8ef74"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 7.425691559910774,
+          "metrics": {
+            "combined_score": 0.08333333333333333,
+            "valid": 1.0,
+            "raw_score": 0.08333333333333333
+          },
+          "full_metrics_sha256": "8c62b4cdaead5d22d1f8dd8e8bf312a1c2c087320b32ff6f38eed25eece2c491",
+          "comparable_metrics_sha256": "8c62b4cdaead5d22d1f8dd8e8bf312a1c2c087320b32ff6f38eed25eece2c491",
+          "nested_payload_sha256": {
+            "per_instance": "ffef54eba3a253d2d84a5adb913e0d2617957641157fa921772fddc8e580130f",
+            "sealed_per_instance": "71d9251ee96ac3f4b2a7a9838153b61e51177c513eceb2ad4aeed7d283b8ef74"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Physics/HiddenCouplingNetwork",
+      "candidate_sha256": "75eba884aee847c4d7e8488826f72a9268c4dd27856b0adae1dbcabd7924df24",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 14.456273879855871,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "058057257e7577250b363da0956a67fba08c5c55927f738a4d153d48d6679301",
+          "comparable_metrics_sha256": "058057257e7577250b363da0956a67fba08c5c55927f738a4d153d48d6679301",
+          "nested_payload_sha256": {
+            "per_instance": "968396946293a50366299c7ad46b37cc6cd9fdba0be914f6a2ed4501d61456b1"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 14.753170128911734,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "058057257e7577250b363da0956a67fba08c5c55927f738a4d153d48d6679301",
+          "comparable_metrics_sha256": "058057257e7577250b363da0956a67fba08c5c55927f738a4d153d48d6679301",
+          "nested_payload_sha256": {
+            "per_instance": "968396946293a50366299c7ad46b37cc6cd9fdba0be914f6a2ed4501d61456b1"
+          }
+        }
+      ]
+    },
+    {
+      "task": "ParticlePhysics/LookElsewhereAnomaly",
+      "candidate_sha256": "710fa713b7a0cdd2f4828d5a0a7480f7a9f237542d8a5b2cc2cb39f56f33a58c",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 13.951150633394718,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "1cad00d7c8c311a397a111f7ba91f80f9b9d38beb327d94ccbdef73d9dcb4f1e",
+          "comparable_metrics_sha256": "1cad00d7c8c311a397a111f7ba91f80f9b9d38beb327d94ccbdef73d9dcb4f1e",
+          "nested_payload_sha256": {
+            "per_instance": "4884fd20b21658f5c7392a44d0d4e201dcb02fbdcc81d4f48d6c0be804bbd251"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 12.503088576719165,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "1cad00d7c8c311a397a111f7ba91f80f9b9d38beb327d94ccbdef73d9dcb4f1e",
+          "comparable_metrics_sha256": "1cad00d7c8c311a397a111f7ba91f80f9b9d38beb327d94ccbdef73d9dcb4f1e",
+          "nested_payload_sha256": {
+            "per_instance": "4884fd20b21658f5c7392a44d0d4e201dcb02fbdcc81d4f48d6c0be804bbd251"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Photonics/MultilayerThinFilm",
+      "candidate_sha256": "d6d43007ed7eadd9f999f7010a716fc40ce9714a916c827c2efea239063c1904",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 2.552585892379284,
+          "metrics": {
+            "combined_score": 0.5908038368710128,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.5908038368710128
+          },
+          "full_metrics_sha256": "6273810e636e586bc474233e7b6a7fabd9f9d53d3259172903a4e09e995de244",
+          "comparable_metrics_sha256": "6273810e636e586bc474233e7b6a7fabd9f9d53d3259172903a4e09e995de244",
+          "nested_payload_sha256": {}
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.469068570062518,
+          "metrics": {
+            "combined_score": 0.5908038368710128,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.5908038368710128
+          },
+          "full_metrics_sha256": "6273810e636e586bc474233e7b6a7fabd9f9d53d3259172903a4e09e995de244",
+          "comparable_metrics_sha256": "6273810e636e586bc474233e7b6a7fabd9f9d53d3259172903a4e09e995de244",
+          "nested_payload_sha256": {}
+        }
+      ]
+    },
+    {
+      "task": "Gravitation/PTAHellingsDowns",
+      "candidate_sha256": "67d6b9cbbc9aa36215debfb8179ad76d1b4f662065ed9dbb1daf007290b9e4fd",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 10.247728383168578,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "09d2280b6c73afbde13f5d7f5785fe98584e1bda61a82c0c975f967b73be4502",
+          "comparable_metrics_sha256": "09d2280b6c73afbde13f5d7f5785fe98584e1bda61a82c0c975f967b73be4502",
+          "nested_payload_sha256": {
+            "per_instance": "94b94638a4b1a3c9d9bb908aa16688affd87d294b5d117b94b6429ec2d538bb6"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 10.329393083229661,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "09d2280b6c73afbde13f5d7f5785fe98584e1bda61a82c0c975f967b73be4502",
+          "comparable_metrics_sha256": "09d2280b6c73afbde13f5d7f5785fe98584e1bda61a82c0c975f967b73be4502",
+          "nested_payload_sha256": {
+            "per_instance": "94b94638a4b1a3c9d9bb908aa16688affd87d294b5d117b94b6429ec2d538bb6"
+          }
+        }
+      ]
+    },
+    {
+      "task": "QuantumErrorCorrection/QuantumErrorDecoder",
+      "candidate_sha256": "d1eb0d4b794997a33d81ef2a8d3ba9e11e9698af32688882c2eeae1b29202c4d",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 4.387295158579946,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "df1ba56b6de2002ab6ef53f38a0976e258cbb5fb47debf71943d2be0de273cb4",
+          "comparable_metrics_sha256": "df1ba56b6de2002ab6ef53f38a0976e258cbb5fb47debf71943d2be0de273cb4",
+          "nested_payload_sha256": {
+            "per_instance": "80e39caaa0582a3bdaef4eb49276d8f6b01dac7458ae1bdea89a848f4612de47",
+            "sealed_per_instance": "98b0fa65872f485812e8c4ddb8d5ac548baf401091a3452375883dbc05a9d417"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 3.833147741854191,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "df1ba56b6de2002ab6ef53f38a0976e258cbb5fb47debf71943d2be0de273cb4",
+          "comparable_metrics_sha256": "df1ba56b6de2002ab6ef53f38a0976e258cbb5fb47debf71943d2be0de273cb4",
+          "nested_payload_sha256": {
+            "per_instance": "80e39caaa0582a3bdaef4eb49276d8f6b01dac7458ae1bdea89a848f4612de47",
+            "sealed_per_instance": "98b0fa65872f485812e8c4ddb8d5ac548baf401091a3452375883dbc05a9d417"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Exoplanets/RadialVelocityPlanets",
+      "candidate_sha256": "75daaa19f30acd3ec2c477c1fbf2125ac91b2ff51d7383da1a91146eeac2b79c",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 11.322192711755633,
+          "metrics": {
+            "combined_score": 0.5,
+            "valid": 1.0,
+            "raw_score": 0.5
+          },
+          "full_metrics_sha256": "c430da807e2897dd56a3c39a946eb93646fa0c3e45c51772ace31096d7561197",
+          "comparable_metrics_sha256": "c430da807e2897dd56a3c39a946eb93646fa0c3e45c51772ace31096d7561197",
+          "nested_payload_sha256": {
+            "per_instance": "ca7de0a4d3e617152afca55b63d220b44a692d4eeca5c8b3a75e581ecb3528ed",
+            "sealed_per_instance": "1ab447865b53503002c301d387ef2269b6909a7c61ff75ed0c066b27ec2c33d2"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 11.480007262900472,
+          "metrics": {
+            "combined_score": 0.5,
+            "valid": 1.0,
+            "raw_score": 0.5
+          },
+          "full_metrics_sha256": "c430da807e2897dd56a3c39a946eb93646fa0c3e45c51772ace31096d7561197",
+          "comparable_metrics_sha256": "c430da807e2897dd56a3c39a946eb93646fa0c3e45c51772ace31096d7561197",
+          "nested_payload_sha256": {
+            "per_instance": "ca7de0a4d3e617152afca55b63d220b44a692d4eeca5c8b3a75e581ecb3528ed",
+            "sealed_per_instance": "1ab447865b53503002c301d387ef2269b6909a7c61ff75ed0c066b27ec2c33d2"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Superconductivity/SuperconductorTcRecord",
+      "candidate_sha256": "f1d6101ab75300782fcc131df6d12fa8a42464e048b59bb4cddd53a4c85cfdf4",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 3.292845157906413,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "7c95695973add5a032fd4e24bcf719d22906c16d130c7f9cb0bd934a1bda9624",
+          "comparable_metrics_sha256": "7c95695973add5a032fd4e24bcf719d22906c16d130c7f9cb0bd934a1bda9624",
+          "nested_payload_sha256": {
+            "per_instance": "7007ac403992911efe060d83b2af1d5f2ae8550495a109e53e7e10f09ac0eb10"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 3.2989033684134483,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "7c95695973add5a032fd4e24bcf719d22906c16d130c7f9cb0bd934a1bda9624",
+          "comparable_metrics_sha256": "7c95695973add5a032fd4e24bcf719d22906c16d130c7f9cb0bd934a1bda9624",
+          "nested_payload_sha256": {
+            "per_instance": "7007ac403992911efe060d83b2af1d5f2ae8550495a109e53e7e10f09ac0eb10"
+          }
+        }
+      ]
+    },
+    {
+      "task": "Exoplanets/TransmissionSpectrumSpecies",
+      "candidate_sha256": "8843c52935624d797e224e8e95772d761911e55c662d5c24218ae0246b93bd0c",
+      "deterministic": true,
+      "valid_all": true,
+      "fail_closed_all": true,
+      "infrastructure_failure": false,
+      "runs": [
+        {
+          "repeat": 0,
+          "wall_seconds": 3.076922979205847,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "5006db4280251b30fafde0be093b80230d4953a4dcc4b23d28ba0dee86328169",
+          "comparable_metrics_sha256": "5006db4280251b30fafde0be093b80230d4953a4dcc4b23d28ba0dee86328169",
+          "nested_payload_sha256": {
+            "per_system": "08561899409a1781a1eec76ab523eeb217279870b87727c563459ce3ce30ff56"
+          }
+        },
+        {
+          "repeat": 1,
+          "wall_seconds": 2.792736640200019,
+          "metrics": {
+            "combined_score": 0.0,
+            "valid": 1.0,
+            "feasibility_rate": 1.0,
+            "raw_score": 0.0
+          },
+          "full_metrics_sha256": "5006db4280251b30fafde0be093b80230d4953a4dcc4b23d28ba0dee86328169",
+          "comparable_metrics_sha256": "5006db4280251b30fafde0be093b80230d4953a4dcc4b23d28ba0dee86328169",
+          "nested_payload_sha256": {
+            "per_system": "08561899409a1781a1eec76ab523eeb217279870b87727c563459ce3ce30ff56"
+          }
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "inventory_count": 87,
+    "deterministic_count": 87,
+    "valid_count": 87,
+    "fail_closed_count": 87,
+    "infrastructure_failure_count": 0,
+    "invalid_baseline_run_count": 0,
+    "malformed_candidate_evaluations": 0
+  },
+  "fail_closed_scope": "The compatibility field checks observed baselines only: valid>=1 or score==INVALID_SCORE. Valid baselines do not test malformed candidates.",
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}

@@ -36,6 +36,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from scripts.reporting_runtime import report_runtime_binding  # noqa: E402
 from sle.task_versions import version_class  # noqa: E402
 from scripts.reporting_trajectory import read_events, read_incumbents, trajectory_selection_evidence
 
@@ -108,6 +109,7 @@ def read_runs(runs_root: Path) -> list[dict]:
                                       str(document.get("task_package_sha256") or "unknown"))[:14],
             "input_tokens": 0, "output_tokens": 0,
         }
+        run.update(report_runtime_binding(workdir, document))
         trajectory = workdir / "trajectory.jsonl"
         try:
             rows = read_events(trajectory)
@@ -121,7 +123,8 @@ def read_runs(runs_root: Path) -> list[dict]:
             # ensure_run_manifest does not record the proposal budget. The runner
             # records it in summary.json; trajectory length is the observed count,
             # never a substitute for the planned horizon.
-            recorded_budget = summary.get("budget")
+            recorded_budget = (run["proposal_budget"] if run["trusted_evidence"]
+                               else summary.get("budget"))
             if run["budget"] is not None and recorded_budget is not None and run["budget"] != recorded_budget:
                 raise ValueError("manifest and summary proposal budgets disagree")
             if run["budget"] is None:
@@ -156,12 +159,14 @@ def read_runs(runs_root: Path) -> list[dict]:
 
 
 def comparison_scope(run: dict) -> tuple:
-    return (run["contract"], run["runtime"], run["algorithm"],
+    return (run["contract"], run["runtime"], run.get("trusted_evaluator_runtime_sha256"), run["algorithm"],
             run["budget"], run.get("observed_budget"), run["endpoint"])
 
 
 def attributable_score_run(run: dict) -> bool:
     return (run.get("status") == "ok"
+            and (run.get("verification_status") == "legacy_format"
+                 or run.get("trusted_evidence") is True)
             and all(run.get(field) not in (None, "", "unknown", "unrecorded")
                     for field in ("model", "condition", "runtime", "algorithm", "contract", "budget"))
             and run.get("selection_evidence", {}).get("status") == "recorded")

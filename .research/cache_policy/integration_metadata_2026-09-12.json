@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "scope": "ADMINISTRATIVE_METADATA_DIFF; original model prompt and run bindings remain at c0b000c9",
+  "before_source": "42a1b825457d608e19e0a14ee420d7adf25084c6",
+  "after_source": "235935e70cc3dccc873513305e834f2bb14023ea",
+  "source_clean": true,
+  "changed_files": [
+    ".research/cache_policy/review_2026-09-12.md",
+    "benchmarks/ComputerScience/CacheReplacementPolicyID/TASK_CARD.yaml",
+    "benchmarks/ComputerScience/CacheReplacementPolicyID/Task.md",
+    "benchmarks/ComputerScience/CacheReplacementPolicyID/references/known_best.md",
+    "experiments/cache_replacement_policy_id_first_proposal_2026-09-12.json",
+    "sle/certification.yaml"
+  ],
+  "all_executable_task_files_and_resources_unchanged": true,
+  "task_md_body_from_world_isolation_onward_unchanged": true,
+  "task_md_preamble_changed": true,
+  "original_prompt_re_signed": false,
+  "after_task_package_sha256": "7047432b04c909b3642ae78d0dd4971057b73892ce49f8859b7b72c22cf9424e",
+  "after_task_contract_sha256": "88a3938c041289a9c284d83ddc9fd0bf1b8a660fb96c52744b500ae7ec84d620",
+  "runtime_source_sha256": "6f8344cdd2d15811803a07dd7d299f6348630deaecd2ee2601b57cfff14fab25",
+  "manual_model_report_sha256": "407b460ec5047bf11dfb53942c1364dddad27e8476d065a3e36c8d5c381d3dd4",
+  "modern_formal_model_measurement_coverage_added": 0,
+  "local_metadata_validation": {
+    "passed": 15,
+    "subtests_passed": 5,
+    "skipped": 0,
+    "scope": "macOS structural checks only"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "source_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+  "source_clean_before": true,
+  "source_clean_after": true,
+  "task_package_sha256": "7047432b04c909b3642ae78d0dd4971057b73892ce49f8859b7b72c22cf9424e",
+  "task_contract_sha256": "88a3938c041289a9c284d83ddc9fd0bf1b8a660fb96c52744b500ae7ec84d620",
+  "runtime_source_sha256": "6f8344cdd2d15811803a07dd7d299f6348630deaecd2ee2601b57cfff14fab25",
+  "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+  "pytest": "8.3.5",
+  "counts": {
+    "passed": 45,
+    "failed": 0,
+    "error": 0,
+    "skipped": 0
+  },
+  "file_test_counts": {
+    "test_cache_grid_research_integrity": 4,
+    "test_cache_replacement_admission_contract": 9,
+    "test_cache_replacement_policy_id": 12,
+    "test_exam_taxonomy": 5,
+    "test_readme_inventory_counts": 4,
+    "test_task_cards": 6,
+    "test_task_inventory_document": 5
+  },
+  "all_collected_checks_executed": true,
+  "required_tests_all_passed": true,
+  "required_tests": [
+    {
+      "test": "tests.test_cache_replacement_admission_contract.CacheReplacementAdmissionContractTests::test_caught_malformed_trace_remains_invalid_through_real_rpc",
+      "status": "passed",
+      "reason": ""
+    },
+    {
+      "test": "tests.test_cache_replacement_admission_contract.CacheReplacementAdmissionContractTests::test_real_process_tmpfs_and_import_state_reset_across_all_worlds",
+      "status": "passed",
+      "reason": ""
+    },
+    {
+      "test": "tests.test_cache_replacement_admission_contract.CacheReplacementAdmissionContractTests::test_reset_failure_escapes_scientific_scoring",
+      "status": "passed",
+      "reason": ""
+    }
+  ],
+  "elapsed_seconds": 84.361403465271,
+  "junit_sha256": "48d1355d88c9c4b0a95c17995ba8fe3ca1ca5f0a3c1ffc6d3dff60dae4d1ea35",
+  "scientific_model_calls": 0,
+  "scope": "All three cache task/research fixture files plus card/taxonomy/inventory regression checks. No new model/D evidence, no global freeze, no full suite.",
+  "schema_version": 1,
+  "evidence_scope": "TEST_EXECUTION_COVERAGE_ONLY",
+  "operator_record_sha256": "96039347b96def5ecd19b0a2b4df5b4f89771eeff4e2c355eecb0160050f0c37",
+  "passed": true
+}

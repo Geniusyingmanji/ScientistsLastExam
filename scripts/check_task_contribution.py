@@ -36,6 +36,7 @@ from scripts.check_evaluator_survives_bad_candidates import BAD_CANDIDATES  # no
 from scripts.check_numeric_keys_hold_numbers import offending_keys  # noqa: E402
 from sle.certification import certification_status, load_certification  # noqa: E402
 from sle.evaluate import INVALID_SCORE, evaluate_candidate  # noqa: E402
+from sle.frontier import load_frozen_wave  # noqa: E402
 from sle.registry import find_task, list_tasks  # noqa: E402
 from scripts.shortcut_probe_contract import inspect_probe  # noqa: E402
 
@@ -141,6 +142,17 @@ def check_task(task_id: str, timeout_s: float = 180.0, *, skip_eval: bool = Fals
     else:
         _ok(rows, "metadata", spec.metadata.get("scientific_role", ""))
 
+    wave = None
+    try:
+        wave = load_frozen_wave(spec)
+    except ValueError as exc:
+        _fail(rows, "frontier_wave", str(exc))
+    else:
+        detail = "legacy single wave" if wave is None else "%s/%s" % (
+            wave.task_family_id, wave.wave_id
+        )
+        _ok(rows, "frontier_wave", detail)
+
     role = str(spec.metadata.get("scientific_role") or "")
     task_md = spec.task_dir / "Task.md"
     prose = task_md.read_text(encoding="utf-8") if task_md.is_file() else ""
@@ -189,6 +201,8 @@ def check_task(task_id: str, timeout_s: float = 180.0, *, skip_eval: bool = Fals
             _skip(rows, "discovery_axes")
             _skip(rows, "degenerate_candidates_score_zero")
         _skip(rows, "bad_candidates_score_zero")
+        if wave is not None:
+            _skip(rows, "frontier_degenerate_credit_zero")
     else:
         baseline = _evaluate(spec, spec.initial_program_path, timeout_s=timeout_s)
         score = float(baseline.get("combined_score", -1e18))
@@ -211,6 +225,12 @@ def check_task(task_id: str, timeout_s: float = 180.0, *, skip_eval: bool = Fals
                   "full metric payload changed between identical evaluations")
         else:
             _ok(rows, "deterministic_baseline", "")
+
+        frontier_offenders = []
+        if wave is not None:
+            for label, metrics in (("baseline", baseline), ("repeat_baseline", repeat)):
+                if metrics.get("infrastructure_failure") or metrics.get("frontier_records") != []:
+                    frontier_offenders.append(label + ": expected empty frontier_records")
 
         if role == "discovery":
             has_mechanism = any(key in baseline for key in DISCOVERY_MECHANISM)
@@ -250,15 +270,19 @@ def check_task(task_id: str, timeout_s: float = 180.0, *, skip_eval: bool = Fals
                         metrics = evaluate_candidate(spec, candidate, timeout_s=timeout_s)
                     except Exception as exc:  # noqa: BLE001
                         offenders.append("%s:%s" % (kind, exc))
+                        frontier_offenders.append("%s:evaluation failed" % kind)
                         continue
                     if metrics.get("infrastructure_failure"):
                         offenders.append("%s:infrastructure_failure" % kind)
+                        frontier_offenders.append("%s:infrastructure_failure" % kind)
                         continue
                     degenerate_score = float(metrics.get("combined_score", INVALID_SCORE))
                     # Scoring zero is the requirement. Being rejected outright is acceptable too:
                     # a task whose contract has no abstain key simply cannot be gamed this way.
                     if float(metrics.get("valid", 0.0)) == 0.0:
                         continue
+                    if wave is not None and metrics.get("frontier_records") != []:
+                        frontier_offenders.append(kind + ": expected empty frontier_records")
                     if abs(degenerate_score) > BASELINE_ZERO_TOLERANCE:
                         offenders.append("%s scores %s, not zero" % (kind, degenerate_score))
             if offenders:
@@ -266,6 +290,12 @@ def check_task(task_id: str, timeout_s: float = 180.0, *, skip_eval: bool = Fals
             else:
                 _ok(rows, "degenerate_candidates_score_zero",
                     "blanket abstention earns nothing")
+
+        if wave is not None:
+            if frontier_offenders:
+                _fail(rows, "frontier_degenerate_credit_zero", "; ".join(frontier_offenders))
+            else:
+                _ok(rows, "frontier_degenerate_credit_zero", "baseline and valid abstentions emit no records")
 
         crashes = []
         for kind, template in BAD_CANDIDATES.items():
@@ -332,7 +362,11 @@ def main() -> int:
     report = check_task(args.task, timeout_s=args.timeout, skip_eval=args.skip_eval)
     for row in report["checks"]:
         mark = "ok  " if row["ok"] is True else "FAIL" if row["ok"] is False else "SKIP"
-        detail = ("  " + row["detail"]) if row["detail"] else ""
+        # A check that reports a structured detail should not take the whole gate down with a
+        # TypeError before the verdict is printed; the JSON report keeps the structure either way.
+        text = row["detail"] if isinstance(row["detail"], str) else json.dumps(
+            row["detail"], ensure_ascii=False, sort_keys=True, default=str)
+        detail = ("  " + text) if row["detail"] else ""
         print("%s  %-36s%s" % (mark, row["check"], detail))
     print()
     print(report["status"], report["task"], report["phases"])

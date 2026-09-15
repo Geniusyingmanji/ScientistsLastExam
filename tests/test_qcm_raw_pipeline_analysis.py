@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import copy
 import tempfile
 import unittest
 from pathlib import Path
@@ -61,6 +62,7 @@ def _record(label, mode, events, tokens):
         "llm_condition_sha256": "condition",
         "task_contract_sha256": "contract",
         "runtime_source_sha256": "runtime",
+        "trusted_evaluator_runtime_sha256": "trusted-runtime",
         "feedback_mode": mode,
         "seed": 0 if label == "budget_one" else 1,
         "proposal_budget": budget,
@@ -136,6 +138,7 @@ class QCMRawPipelineAnalysisTests(unittest.TestCase):
             model_source_revision="model",
         )
         self.assertTrue(report["execution_passed"], report)
+        self.assertTrue(report["input_trusted_evaluator_runtime_equivalent"])
         hurdle = report["proposal_hurdle_summary"]
         self.assertEqual(hurdle["proposal_count"], 7)
         self.assertEqual(hurdle["valid_proposal_count"], 7)
@@ -201,6 +204,18 @@ class QCMRawPipelineAnalysisTests(unittest.TestCase):
             _records(),
             runtime_source_equivalent=False,
             runtime_source_changes=["benchmarks/Engineering/QuartzCrystalMicrobalanceLab/x.py"],
+            calibration_source_revision="calibration",
+            model_source_revision="model",
+        )
+        self.assertFalse(report["execution_passed"])
+
+    def test_trusted_evaluator_runtime_mismatch_fails_closed(self):
+        records = copy.deepcopy(_records())
+        records["blind_budget_three"][
+            "trusted_evaluator_runtime_sha256"
+        ] = "other-runtime"
+        report = ANALYSIS._analyze_records(
+            {"source_revision": "calibration"}, records,
             calibration_source_revision="calibration",
             model_source_revision="model",
         )

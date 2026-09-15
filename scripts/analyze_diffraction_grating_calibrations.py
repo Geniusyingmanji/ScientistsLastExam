@@ -40,6 +40,7 @@ from sle.provenance import (  # noqa: E402
 )
 from scripts.repo_paths import resolve_run_workdir  # noqa: E402
 from sle.registry import find_task  # noqa: E402
+from sle.run_verification import verify_run  # noqa: E402
 from sle.runtime_migration import (  # noqa: E402
     compare_json_values,
     runtime_migration_status,
@@ -695,6 +696,7 @@ def _load_model(
     checkpoint_path = workdir / "checkpoint.json"
     summary_path = workdir / "summary.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    verification = verify_run(workdir)
     checkpoint = json.loads(checkpoint_path.read_text(encoding="utf-8"))
     expected_policy = (
         "offline_best_of_open_loop_batch"
@@ -763,6 +765,9 @@ def _load_model(
         "summary_sha256": _sha256(summary_path),
         "task_contract_sha256": manifest.get("task_contract_sha256"),
         "runtime_source_sha256": manifest.get("runtime_source_sha256"),
+        "trusted_evaluator_runtime_sha256": (
+            manifest.get("trusted_evaluator_runtime") or {}
+        ).get("fingerprint_sha256"),
         "baseline_candidate_sha256": trajectory[0]["candidate_sha256"],
         "best_program": str(relative_workdir / "best_program.py"),
         "best_program_sha256": best_hash,
@@ -815,6 +820,9 @@ def _load_model(
         and manifest.get("llm_condition_sha256") == EXPECTED_LLM_CONDITION_SHA256
         and record["task_contract_sha256"] == EXPECTED_TASK_CONTRACT_SHA256
         and record["runtime_source_sha256"] == EXPECTED_RUNTIME_SOURCE_SHA256
+        and isinstance(record["trusted_evaluator_runtime_sha256"], str)
+        and verification.get("trusted_evaluator_runtime_sha256")
+        == record["trusted_evaluator_runtime_sha256"]
     )
     if not record["integrity_passed"]:
         raise ValueError(
@@ -841,6 +849,9 @@ def _analyze_records(
     conditions = {record["llm_condition_sha256"] for record in records.values()}
     task_contracts = {record["task_contract_sha256"] for record in records.values()}
     runtime_sources = {record["runtime_source_sha256"] for record in records.values()}
+    trusted_runtimes = {
+        record["trusted_evaluator_runtime_sha256"] for record in records.values()
+    }
     proposals = [
         event for record in records.values() for event in record["trajectory"][1:]
     ]
@@ -885,6 +896,8 @@ def _analyze_records(
         and conditions == {EXPECTED_LLM_CONDITION_SHA256}
         and task_contracts == {EXPECTED_TASK_CONTRACT_SHA256}
         and runtime_sources == {EXPECTED_RUNTIME_SOURCE_SHA256}
+        and len(trusted_runtimes) == 1
+        and None not in trusted_runtimes
         and all(record["integrity_passed"] for record in records.values())
         and one["proposal_budget"] == 1
         and one["seed"] == 0
@@ -917,7 +930,7 @@ def _analyze_records(
         and blind_diag["shift_infeasible_heldout_world_count"] == 2
     )
     report: dict[str, Any] = {
-        "schema_version": 1,
+        "schema_version": 2,
         "trust_status": "TRUSTED_DERIVED_EVIDENCE",
         "evidence_scope": (
             "DETERMINISTIC_1D_RCWA_GRATING_SINGLE_RUN_GPT55_CALIBRATION_"
@@ -949,6 +962,7 @@ def _analyze_records(
         "input_llm_condition_equivalent": len(conditions) == 1,
         "input_task_contract_equivalent": len(task_contracts) == 1,
         "input_runtime_source_hash_equivalent": len(runtime_sources) == 1,
+        "input_trusted_evaluator_runtime_equivalent": len(trusted_runtimes) == 1,
         "task_calibration": calibration,
         "independent_grcwa_crosscheck": crosscheck,
         "records": records,

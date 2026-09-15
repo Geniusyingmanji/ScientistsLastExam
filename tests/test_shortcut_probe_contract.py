@@ -94,6 +94,35 @@ class ShortcutContractTests(unittest.TestCase):
         self.assertEqual(len(migration), 85)
         self.assertTrue(set(migration).issubset({spec.task_id for spec in list_tasks(None)}))
 
+    def test_a_pending_task_reports_a_printable_reason_and_keeps_the_record(self):
+        """The gate's CLI prints `detail`, so a structured value took the whole gate down.
+
+        `detail` used to be the migration mapping itself, and
+        `scripts/check_task_contribution.py` renders it as `"  " + row["detail"]`. That raised
+        TypeError for all 85 tasks listed in the migration inventory - every task in the tree
+        except the two that already declare a contract - including the example command in
+        `docs/task_admission_workflows.md`, and it surfaced as exit 1 (a failed check) rather
+        than exit 2 (incomplete). The structured record is still worth keeping, so it moved to
+        its own key instead of being dropped.
+        """
+        (self.root / "TASK_CARD.yaml").write_text("{}\n")
+        self.spec.task_id = "Chemistry/LennardJonesCluster"
+        result = inspect_probe(self.spec, None, skip_eval=True)
+        self.assertEqual(result["status"], "migration_pending")
+        self.assertIsInstance(result["detail"], str)
+        self.assertTrue(result["detail"])
+        record = json.loads(MIGRATION.read_text())["tasks"][self.spec.task_id]
+        self.assertEqual(result["migration"], record)
+        self.assertEqual(result["detail"], record["reason"])
+
+    def test_every_task_in_the_tree_renders_without_raising(self):
+        """The property the crash actually violated, checked over the real inventory."""
+        for spec in list_tasks(None):
+            with self.subTest(task=spec.task_id):
+                detail = inspect_probe(spec, None, skip_eval=True)["detail"]
+                self.assertIsInstance(detail, str, spec.task_id)
+                self.assertEqual("  " + detail, "  %s" % detail)
+
     def test_missing_and_malformed_task_cards_fail_as_structured_results(self):
         card = self.root / "TASK_CARD.yaml"
         self.assertEqual(inspect_probe(self.spec, None, skip_eval=True)["status"], "failed")

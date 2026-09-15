@@ -70,6 +70,17 @@ class TaskSpec:
         return str(self.metadata.get("domain", self.task_id.split("/")[0]))
 
     @property
+    def task_family_id(self) -> str:
+        """Stable family identity; legacy one-wave tasks are their own family."""
+
+        return str(self.metadata.get("task_family_id", self.task_id))
+
+    @property
+    def wave_id(self) -> str | None:
+        value = self.metadata.get("wave_id")
+        return str(value) if value is not None else None
+
+    @property
     def discipline(self) -> str:
         """Broad physical directory category; not part of the stable task id."""
 

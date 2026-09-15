@@ -76,6 +76,27 @@ def _finite_nonnegative(value: Any, label: str) -> float:
     return float(value)
 
 
+def validate_proposal_budget(
+    request: dict[str, Any], *, current_budget: int, previous_budget: int = 0,
+) -> int:
+    """Validate an immutable request's allocation within a monotone run extension.
+
+    A completed checkpoint may be extended without rewriting its old request hashes.
+    Each allocation still covers its step, cannot shrink, and cannot exceed the
+    completed run's (or resume caller's) externally checkable proposal budget.
+    """
+    allocation = request.get("proposal_budget")
+    step = request.get("step")
+    if not (
+        isinstance(allocation, int) and not isinstance(allocation, bool)
+        and isinstance(step, int) and not isinstance(step, bool)
+        and 0 <= step <= allocation <= current_budget
+        and allocation >= previous_budget
+    ):
+        raise ValueError("evaluation receipt proposal_budget violates monotone allocation")
+    return allocation
+
+
 class EvaluationLedger:
     """Persist one logical result for every content-bound evaluator request."""
 
@@ -164,8 +185,13 @@ class EvaluationLedger:
             raise ValueError("committed trajectory lacks a durable evaluation receipt")
         return receipt
 
+    def require_request_id(self, request_id: str) -> dict[str, Any]:
+        if not isinstance(request_id, str) or len(request_id) != 64:
+            raise ValueError("evaluation request id is invalid")
+        return self._load_request(request_id)
+
     def require_bound_record(self, request_id: str) -> dict[str, Any]:
-        request = self._load_request(request_id)
+        request = self.require_request_id(request_id)
         receipt = self.require_receipt_id(request_id)
         return {"request": request["request"], "receipt": receipt}
 

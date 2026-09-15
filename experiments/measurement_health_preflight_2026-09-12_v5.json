@@ -1,0 +1,4644 @@
+{
+  "schema_version": 2,
+  "trust_status": "MEASUREMENT_HEALTH_PREFLIGHT",
+  "evidence_scope": "SEVEN_TASK_FIXED_ARTIFACT_NOISE_BASELINE_REFERENCE_NUMERICAL_RESOLUTION_SHORTCUT_AND_PROTOCOL_PREFLIGHT_NOT_POST_2H_HEADROOM_CONFIRMATORY_EXTERNAL_VALIDATION_OR_AUTONOMOUS_DISCOVERY_EVIDENCE",
+  "created_at": "2026-09-12T06:38:41.056633+00:00",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "84de68b9f9abab8f48cd225f37b7919fd1faa12d",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ]
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "inputs": [
+    {
+      "path": ".research/exploratory_2h_cohort_manifest_2026-09-12_v14.json",
+      "sha256": "4324a8c05ed8df802751d375179805653a1b23fc639b394e0f8ba88a39ba386b"
+    },
+    {
+      "path": ".research/measurement_health_preflight_spec_2026-09-12_v17.json",
+      "sha256": "a5ffbc4dc1c33d7890418e63dc67f5a6b2bd6bc7b956f4a1dffaf99c8aeda35c"
+    },
+    {
+      "path": ".research/measurement_health_preflight_spec_2026-09-12_v16.json",
+      "sha256": "7751ac911e0fa7de3bf6a1d3df6902c426eecef38a8be526b59bc57764d0a8b9"
+    },
+    {
+      "path": ".research/measurement_health_preflight_spec_2026-07-27_v1.json",
+      "sha256": "674192b55f49460cad23f9e2b48c8f4ae054aa63c4a2fe2f1b2934eff5d5e4f7"
+    }
+  ],
+  "policy": {
+    "fail_closed": true,
+    "status_values": [
+      "pass",
+      "fail",
+      "missing"
+    ],
+    "fixed_artifact_repetitions": 3,
+    "fixed_artifact_maximum_noise_span": 1e-12,
+    "numerical_resolution_is_not_scientific_materiality": true,
+    "scientific_materiality_requires_domain_grounded_bound_evidence": true,
+    "post_2h_headroom_is_not_tested_by_preflight": true
+  },
+  "task_count": 7,
+  "preflight_passed_count": 7,
+  "long_horizon_run_permitted_count": 7,
+  "check_status_counts": {
+    "pass": 70,
+    "fail": 0,
+    "missing": 0
+  },
+  "tasks": [
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "checks": {
+        "frozen_runtime_contract": {
+          "status": "pass",
+          "passed": true,
+          "expected_sha256": "b194efc6ed63212c1ec7477e2d235739215fcaf9efdf729633fe940fca3ca570",
+          "actual_sha256": "b194efc6ed63212c1ec7477e2d235739215fcaf9efdf729633fe940fca3ca570"
+        },
+        "frozen_task_package": {
+          "status": "pass",
+          "passed": true,
+          "expected_sha256": "9ca2d91c0165d89e0d5677e35b0fc914c02de492a68c992f5365ab560a49a09d",
+          "actual_sha256": "9ca2d91c0165d89e0d5677e35b0fc914c02de492a68c992f5365ab560a49a09d",
+          "scope": "all task source/data files excluding generated output",
+          "mismatch": null
+        },
+        "fixed_artifact_binding": {
+          "status": "pass",
+          "passed": true,
+          "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json#/artifacts/0",
+          "expected_sha256": "2e3e95b75b33e87664b71ff1b9c0c10703317b06de8a653903b129a6f3e947a8",
+          "actual_sha256": "2e3e95b75b33e87664b71ff1b9c0c10703317b06de8a653903b129a6f3e947a8",
+          "portable_artifact": {
+            "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json",
+            "expected_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185",
+            "actual_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185",
+            "hash_matches": true,
+            "trusted_evidence": false,
+            "source_revision": null,
+            "reason": null,
+            "artifact_pointer": "/artifacts/0",
+            "task": "Electrochemistry/ElectrolyteConductivityDesign",
+            "candidate_sha256": "2e3e95b75b33e87664b71ff1b9c0c10703317b06de8a653903b129a6f3e947a8",
+            "candidate_utf8_bytes": 12904,
+            "origin": {
+              "path": "runs/electrolyte_conductivity_v1_formal_b3/Electrochemistry__ElectrolyteConductivityDesign/greedy_rewrite/normal/seed_1/best_program.py",
+              "run_manifest_path": "runs/electrolyte_conductivity_v1_formal_b3/Electrochemistry__ElectrolyteConductivityDesign/greedy_rewrite/normal/seed_1/run_manifest.json",
+              "run_manifest_sha256": "12a39ad4330daec75e50c01b1e6dd9c7a916eeabebcb19f2388dc2eca165a6ae",
+              "task_contract_sha256": "b194efc6ed63212c1ec7477e2d235739215fcaf9efdf729633fe940fca3ca570",
+              "algorithm": "greedy_rewrite",
+              "feedback_mode": "normal",
+              "seed": 1,
+              "superseded_task_contract_sha256": "b194efc6ed63212c1ec7477e2d235739215fcaf9efdf729633fe940fca3ca570"
+            }
+          }
+        },
+        "fixed_artifact_noise": {
+          "status": "pass",
+          "passed": true,
+          "repetitions": 3,
+          "scores": [
+            0.8781836795033664,
+            0.8781836795033664,
+            0.8781836795033664
+          ],
+          "valid": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "noise_span": 0.0,
+          "numeric_field_spans": {
+            "combined_score": 0.0,
+            "feasibility_rate": 0.0,
+            "raw_score": 0.0,
+            "valid": 0.0
+          },
+          "maximum_numeric_field_span": 0.0,
+          "canonical_payload_sha256": [
+            "e893023ece2e3c440c216e4d6cbba407a8483f86a338ea58b490f786050bcca3",
+            "e893023ece2e3c440c216e4d6cbba407a8483f86a338ea58b490f786050bcca3",
+            "e893023ece2e3c440c216e4d6cbba407a8483f86a338ea58b490f786050bcca3"
+          ],
+          "exact_payload_match": true,
+          "maximum_allowed_noise_span": 1e-12,
+          "infrastructure_failure_count": 0,
+          "results": [
+            {
+              "combined_score": 0.8781836795033664,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.8781836795033664
+            },
+            {
+              "combined_score": 0.8781836795033664,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.8781836795033664
+            },
+            {
+              "combined_score": 0.8781836795033664,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.8781836795033664
+            }
+          ],
+          "reason": null,
+          "nested_payload_sha256": [
+            {
+              "per_world": "366ff0162ff18db17a0dbbabc717dcc41f7adae2f5d958f13cdc3aaa2fec7b76"
+            },
+            {
+              "per_world": "366ff0162ff18db17a0dbbabc717dcc41f7adae2f5d958f13cdc3aaa2fec7b76"
+            },
+            {
+              "per_world": "366ff0162ff18db17a0dbbabc717dcc41f7adae2f5d958f13cdc3aaa2fec7b76"
+            }
+          ],
+          "complete_numeric_field_spans_sha256": "3af18dfdffbb6fbda365116a0cac43062bbc6d9603fd38a8b4fb7217a03cba55",
+          "published_results_scope": "search-visible results and per-field spans only; the maximum numeric span, full payload hashes, complete span-map hash and decisions use private complete results"
+        },
+        "baseline_reference_separation": {
+          "status": "pass",
+          "passed": true,
+          "baseline_score": 0.0,
+          "reference_score": 1.0,
+          "score_gap": 1.0,
+          "minimum_score_gap": 0.05,
+          "baseline_valid": 1.0,
+          "reference_valid": 1.0,
+          "evidence": {
+            "path": "experiments/electrolyte_conductivity_design_calibration_2026-07-25.json",
+            "expected_sha256": "b16bb89861bfb154b46595406302e98a0a5b22b040c61c17e87454cb551eb2b6",
+            "actual_sha256": "b16bb89861bfb154b46595406302e98a0a5b22b040c61c17e87454cb551eb2b6",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "903f84b520cf9b9d4668cc73bed6edc3a01cc118",
+            "reason": null,
+            "pointers": [
+              "/direct_baseline/combined_score",
+              "/direct_baseline/valid",
+              "/direct_reference/combined_score",
+              "/direct_reference/valid"
+            ],
+            "missing_pointers": []
+          },
+          "contract_compatibility": {
+            "source_revision": "903f84b520cf9b9d4668cc73bed6edc3a01cc118",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [
+              "benchmarks/Chemistry/ElectrolyteConductivityDesign/Task.md"
+            ],
+            "evaluator_changed_but_measured_inert": [
+              "benchmarks/Chemistry/ElectrolyteConductivityDesign/verification/evaluator.py"
+            ],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Electrochemistry/ElectrolyteConductivityDesign",
+            "current_task_path": "benchmarks/Chemistry/ElectrolyteConductivityDesign",
+            "compared_file_count": 12,
+            "reason": null
+          },
+          "reason": null
+        },
+        "evaluator_numerical_resolution": {
+          "status": "pass",
+          "passed": true,
+          "distinct_scores": [
+            0.0,
+            0.4923536651251249,
+            0.6058333094927615,
+            0.8781836795033664
+          ],
+          "minimum_nonzero_score_gap": 0.11347964436763658,
+          "measured_fixed_artifact_noise_span": 0.0,
+          "minimum_noise_multiplier": 10.0,
+          "absolute_resolution_floor": 1e-12,
+          "required_score_gap": 1e-12,
+          "evidence": {
+            "path": "experiments/electrolyte_conductivity_design_calibration_analysis_2026-07-25.json",
+            "expected_sha256": "2f3fa9d7b0d57375ddfa1f5699129421fae3931895f6f6e3b3d8894db864bb31",
+            "actual_sha256": "2f3fa9d7b0d57375ddfa1f5699129421fae3931895f6f6e3b3d8894db864bb31",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "b0408d71ead266258e8849cd2fdc64239960e34e",
+            "reason": null,
+            "pointers": [
+              "/records/normal_budget_three/trajectory"
+            ],
+            "missing_pointers": []
+          },
+          "contract_compatibility": {
+            "source_revision": "b0408d71ead266258e8849cd2fdc64239960e34e",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [
+              "benchmarks/Chemistry/ElectrolyteConductivityDesign/Task.md"
+            ],
+            "evaluator_changed_but_measured_inert": [
+              "benchmarks/Chemistry/ElectrolyteConductivityDesign/verification/evaluator.py"
+            ],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Electrochemistry/ElectrolyteConductivityDesign",
+            "current_task_path": "benchmarks/Chemistry/ElectrolyteConductivityDesign",
+            "compared_file_count": 12,
+            "reason": null
+          },
+          "reason": null
+        },
+        "scientific_materiality": {
+          "status": "pass",
+          "passed": true,
+          "evidence": {
+            "path": "experiments/scientific_materiality_audit_2026-08-15_v2.json",
+            "expected_sha256": "8484bf4bed778714af31edeb2fcaa8751c96c2cd11e60627bdb087619902625e",
+            "actual_sha256": "8484bf4bed778714af31edeb2fcaa8751c96c2cd11e60627bdb087619902625e",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "f40b1f993c8af9901480dca2ecf26e0f88f53d6c",
+            "reason": null
+          },
+          "task_pointer": "/tasks/0",
+          "task_identity_matches": true,
+          "criterion_count": 6,
+          "criteria_passed_count": 6,
+          "criteria_complete": true,
+          "required_axes": [
+            "development",
+            "heldout",
+            "robustness",
+            "independent_confirmation"
+          ],
+          "covered_axes": [
+            "development",
+            "heldout",
+            "independent_confirmation",
+            "robustness"
+          ],
+          "axes_covered": true,
+          "same_witness_enforced": true,
+          "threshold_basis": "benchmark_preregistered_operational_threshold_not_field_consensus",
+          "scientific_quantity": "independent-repeat temperature-profile ionic conductivity of the selected three-formulation batch",
+          "units": [
+            "S/cm",
+            "relative_fraction"
+          ],
+          "criteria": [
+            {
+              "id": "development_confirmation_minimum_conductivity",
+              "kind": "paired_scalar",
+              "axes": [
+                "development",
+                "robustness",
+                "independent_confirmation"
+              ],
+              "passed": true,
+              "baseline": 0.004206285933571046,
+              "witness": 0.0046387900292242604,
+              "direction": "increase",
+              "signed_absolute_change": 0.00043250409565321474,
+              "signed_relative_change": 0.10282327508962952,
+              "minimum_absolute_change": null,
+              "minimum_relative_change": 0.05,
+              "unit": "S/cm",
+              "reason": null
+            },
+            {
+              "id": "heldout_confirmation_minimum_conductivity",
+              "kind": "paired_scalar",
+              "axes": [
+                "heldout",
+                "robustness",
+                "independent_confirmation"
+              ],
+              "passed": true,
+              "baseline": 0.0042740212014111935,
+              "witness": 0.00508830379490245,
+              "direction": "increase",
+              "signed_absolute_change": 0.0008142825934912565,
+              "signed_relative_change": 0.19051908147353064,
+              "minimum_absolute_change": null,
+              "minimum_relative_change": 0.05,
+              "unit": "S/cm",
+              "reason": null
+            },
+            {
+              "id": "development_confirmation_mean_noninferiority",
+              "kind": "paired_scalar",
+              "axes": [
+                "development",
+                "independent_confirmation"
+              ],
+              "passed": true,
+              "baseline": 0.004672329446913198,
+              "witness": 0.004749384325034162,
+              "direction": "increase",
+              "signed_absolute_change": 7.705487812096398e-05,
+              "signed_relative_change": 0.016491747638187358,
+              "minimum_absolute_change": null,
+              "minimum_relative_change": 0.0,
+              "unit": "S/cm",
+              "reason": null
+            },
+            {
+              "id": "heldout_confirmation_mean_conductivity",
+              "kind": "paired_scalar",
+              "axes": [
+                "heldout",
+                "independent_confirmation"
+              ],
+              "passed": true,
+              "baseline": 0.0049236041135549856,
+              "witness": 0.005229977979918896,
+              "direction": "increase",
+              "signed_absolute_change": 0.0003063738663639107,
+              "signed_relative_change": 0.06222552814927678,
+              "minimum_absolute_change": null,
+              "minimum_relative_change": 0.05,
+              "unit": "S/cm",
+              "reason": null
+            },
+            {
+              "id": "development_confirmation_robust_anchor",
+              "kind": "values_bound",
+              "axes": [
+                "development",
+                "robustness",
+                "independent_confirmation"
+              ],
+              "passed": true,
+              "operator": "gte",
+              "threshold": 0.99,
+              "value_count": 1,
+              "values": [
+                1.0
+              ],
+              "outcomes": [
+                true
+              ],
+              "reason": null
+            },
+            {
+              "id": "heldout_confirmation_robust_anchor",
+              "kind": "values_bound",
+              "axes": [
+                "heldout",
+                "robustness",
+                "independent_confirmation"
+              ],
+              "passed": true,
+              "operator": "gte",
+              "threshold": 0.99,
+              "value_count": 1,
+              "values": [
+                1.0
+              ],
+              "outcomes": [
+                true
+              ],
+              "reason": null
+            }
+          ],
+          "evidence_scope_matches": true,
+          "contract_compatibility": {
+            "source_revision": "f40b1f993c8af9901480dca2ecf26e0f88f53d6c",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [],
+            "evaluator_changed_but_measured_inert": [],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Chemistry/ElectrolyteConductivityDesign",
+            "current_task_path": "benchmarks/Chemistry/ElectrolyteConductivityDesign",
+            "compared_file_count": 12,
+            "reason": null
+          },
+          "claim": "calibrated landscape materiality only; not agent improvement, post-2h headroom, external validation, or autonomous discovery",
+          "reason": null
+        },
+        "shortcut_resistance": {
+          "status": "pass",
+          "passed": true,
+          "predicates": [
+            {
+              "pointer": "/records/normal_budget_three/fixed_instance_shortcut_scans/selected_best/source_sha256",
+              "operator": "eq",
+              "expected": "2e3e95b75b33e87664b71ff1b9c0c10703317b06de8a653903b129a6f3e947a8",
+              "observed": "2e3e95b75b33e87664b71ff1b9c0c10703317b06de8a653903b129a6f3e947a8",
+              "passed": true
+            },
+            {
+              "pointer": "/records/normal_budget_three/fixed_instance_shortcut_scans/selected_best/passed",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            }
+          ],
+          "evidence": {
+            "path": "experiments/electrolyte_conductivity_design_calibration_analysis_2026-07-25.json",
+            "expected_sha256": "2f3fa9d7b0d57375ddfa1f5699129421fae3931895f6f6e3b3d8894db864bb31",
+            "actual_sha256": "2f3fa9d7b0d57375ddfa1f5699129421fae3931895f6f6e3b3d8894db864bb31",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "b0408d71ead266258e8849cd2fdc64239960e34e",
+            "reason": null,
+            "pointers": [
+              "/records/normal_budget_three/fixed_instance_shortcut_scans/selected_best/source_sha256",
+              "/records/normal_budget_three/fixed_instance_shortcut_scans/selected_best/passed"
+            ],
+            "missing_pointers": []
+          },
+          "contract_compatibility": {
+            "source_revision": "b0408d71ead266258e8849cd2fdc64239960e34e",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [
+              "benchmarks/Chemistry/ElectrolyteConductivityDesign/Task.md"
+            ],
+            "evaluator_changed_but_measured_inert": [
+              "benchmarks/Chemistry/ElectrolyteConductivityDesign/verification/evaluator.py"
+            ],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Electrochemistry/ElectrolyteConductivityDesign",
+            "current_task_path": "benchmarks/Chemistry/ElectrolyteConductivityDesign",
+            "compared_file_count": 12,
+            "reason": null
+          },
+          "reason": null
+        },
+        "content_addressed_atomic_capture": {
+          "status": "pass",
+          "passed": true,
+          "predicates": [
+            {
+              "pointer": "/task_audits/0/checks/sentinel_snapshot_hash_matches",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/task_audits/0/checks/sentinel_snapshot_events_match",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/task_audits/0/checks/exact_t0_and_terminal",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            }
+          ],
+          "evidence": {
+            "path": "experiments/exploratory_2h_sentinel_smoke_audit_2026-07-27_v1.json",
+            "expected_sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb",
+            "actual_sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "ba566537f42ae1827ca784d95c5daa3250469e98",
+            "reason": null,
+            "pointers": [
+              "/task_audits/0/checks/sentinel_snapshot_hash_matches",
+              "/task_audits/0/checks/sentinel_snapshot_events_match",
+              "/task_audits/0/checks/exact_t0_and_terminal"
+            ],
+            "missing_pointers": []
+          },
+          "reason": null
+        },
+        "exactly_once_recovery": {
+          "status": "pass",
+          "passed": true,
+          "predicates": [
+            {
+              "pointer": "/execution_passed",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/all_fault_scenarios_passed",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/four_search_commit_windows_exercised",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/request_before_receipt_retry_is_reason_coded",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/receipt_before_attempt_completion_reuses_result",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/concurrent_run_writer_is_rejected",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/receipt_tampering_is_rejected",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            }
+          ],
+          "evidence": {
+            "path": "experiments/evaluation_recovery_fault_audit_2026-09-12_v13.json",
+            "expected_sha256": "9b3faed839a13832715435db780783f92fa434adf4a39baac14af6b7637831d2",
+            "actual_sha256": "9b3faed839a13832715435db780783f92fa434adf4a39baac14af6b7637831d2",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+            "reason": null,
+            "pointers": [
+              "/execution_passed",
+              "/checks/all_fault_scenarios_passed",
+              "/checks/four_search_commit_windows_exercised",
+              "/checks/request_before_receipt_retry_is_reason_coded",
+              "/checks/receipt_before_attempt_completion_reuses_result",
+              "/checks/concurrent_run_writer_is_rejected",
+              "/checks/receipt_tampering_is_rejected"
+            ],
+            "missing_pointers": []
+          },
+          "runtime_compatibility": {
+            "source_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+            "runtime_files_unchanged": true,
+            "paths": [
+              "scripts/audit_evaluation_recovery.py",
+              "scripts/run_recovery_fault_worker.py",
+              "sle/algorithms/common.py",
+              "sle/algorithms/evolve.py",
+              "sle/evaluation_ledger.py",
+              "sle/protocol.py"
+            ],
+            "changed_paths": [],
+            "missing_at_source_revision": [],
+            "reason": null
+          },
+          "task_card_path": "benchmarks/Chemistry/ElectrolyteConductivityDesign/TASK_CARD.yaml",
+          "oracle_deterministic": true,
+          "evidence_scope_matches": true,
+          "claim": "logical exactly-once outcome and oracle-budget accounting for a deterministic local evaluator; not physical exactly-once execution",
+          "reason": null
+        }
+      },
+      "status_counts": {
+        "pass": 10,
+        "fail": 0,
+        "missing": 0
+      },
+      "preflight_passed": true,
+      "long_horizon_run_permitted": true,
+      "not_permitted_reasons": []
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "checks": {
+        "frozen_runtime_contract": {
+          "status": "pass",
+          "passed": true,
+          "expected_sha256": "eff0d8ade431b1bd04479f3bbd984290ee568c0813945979e7975fff964d411c",
+          "actual_sha256": "eff0d8ade431b1bd04479f3bbd984290ee568c0813945979e7975fff964d411c"
+        },
+        "frozen_task_package": {
+          "status": "pass",
+          "passed": true,
+          "expected_sha256": "95fc73cbd999e6a7360bbe3f71acba6907dea2462266b620aa53763887187bf5",
+          "actual_sha256": "95fc73cbd999e6a7360bbe3f71acba6907dea2462266b620aa53763887187bf5",
+          "scope": "all task source/data files excluding generated output",
+          "mismatch": null
+        },
+        "fixed_artifact_binding": {
+          "status": "pass",
+          "passed": true,
+          "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json#/artifacts/1",
+          "expected_sha256": "d1aef652e4c0a4a936f138d3db8401276095d1660b41521613036b38781505f9",
+          "actual_sha256": "d1aef652e4c0a4a936f138d3db8401276095d1660b41521613036b38781505f9",
+          "portable_artifact": {
+            "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json",
+            "expected_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185",
+            "actual_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185",
+            "hash_matches": true,
+            "trusted_evidence": false,
+            "source_revision": null,
+            "reason": null,
+            "artifact_pointer": "/artifacts/1",
+            "task": "Optics/DiffractionGratingDesign",
+            "candidate_sha256": "d1aef652e4c0a4a936f138d3db8401276095d1660b41521613036b38781505f9",
+            "candidate_utf8_bytes": 11543,
+            "origin": {
+              "path": "runs/track_f_main_v1/Optics__DiffractionGratingDesign/greedy_rewrite/normal/seed_4/best_program.py",
+              "run_manifest_path": "runs/track_f_main_v1/Optics__DiffractionGratingDesign/greedy_rewrite/normal/seed_4/run_manifest.json",
+              "run_manifest_sha256": "da398c4c5cae49ebb60e0a932a7493563ff1d0224fefc5203a4da3ccde57f35b",
+              "task_contract_sha256": "eff0d8ade431b1bd04479f3bbd984290ee568c0813945979e7975fff964d411c",
+              "algorithm": "greedy_rewrite",
+              "feedback_mode": "normal",
+              "seed": 4,
+              "superseded_task_contract_sha256": "eff0d8ade431b1bd04479f3bbd984290ee568c0813945979e7975fff964d411c"
+            }
+          }
+        },
+        "fixed_artifact_noise": {
+          "status": "pass",
+          "passed": true,
+          "repetitions": 3,
+          "scores": [
+            0.820376239286796,
+            0.820376239286796,
+            0.820376239286796
+          ],
+          "valid": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "noise_span": 0.0,
+          "numeric_field_spans": {
+            "combined_score": 0.0,
+            "feasibility_rate": 0.0,
+            "raw_score": 0.0,
+            "valid": 0.0
+          },
+          "maximum_numeric_field_span": 0.0,
+          "canonical_payload_sha256": [
+            "ab26727b58880d715b95419c7e97b07c6f86c99986c96f9a7244342a9ac5e1c8",
+            "ab26727b58880d715b95419c7e97b07c6f86c99986c96f9a7244342a9ac5e1c8",
+            "ab26727b58880d715b95419c7e97b07c6f86c99986c96f9a7244342a9ac5e1c8"
+          ],
+          "exact_payload_match": true,
+          "maximum_allowed_noise_span": 1e-12,
+          "infrastructure_failure_count": 0,
+          "results": [
+            {
+              "combined_score": 0.820376239286796,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.820376239286796
+            },
+            {
+              "combined_score": 0.820376239286796,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.820376239286796
+            },
+            {
+              "combined_score": 0.820376239286796,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.820376239286796
+            }
+          ],
+          "reason": null,
+          "nested_payload_sha256": [
+            {
+              "per_instance": "0438912826f57d2dbece7f543ed63cd3a0c6b3da4d51678adc15b2dd755bf20c"
+            },
+            {
+              "per_instance": "0438912826f57d2dbece7f543ed63cd3a0c6b3da4d51678adc15b2dd755bf20c"
+            },
+            {
+              "per_instance": "0438912826f57d2dbece7f543ed63cd3a0c6b3da4d51678adc15b2dd755bf20c"
+            }
+          ],
+          "complete_numeric_field_spans_sha256": "3d487112d3f6af38c171e33c8319be484695069fa7f57b9054a255638236a51b",
+          "published_results_scope": "search-visible results and per-field spans only; the maximum numeric span, full payload hashes, complete span-map hash and decisions use private complete results"
+        },
+        "baseline_reference_separation": {
+          "status": "pass",
+          "passed": true,
+          "baseline_score": 0.0,
+          "reference_score": 0.9999999999999991,
+          "score_gap": 0.9999999999999991,
+          "minimum_score_gap": 0.05,
+          "baseline_valid": 1.0,
+          "reference_valid": 1.0,
+          "evidence": {
+            "path": "experiments/diffraction_grating_v2_calibration_2026-08-15_v3.json",
+            "expected_sha256": "c6d70f098e74e58b41d80a5f34fdb457691c8ede1454d5df339944af0e180e49",
+            "actual_sha256": "c6d70f098e74e58b41d80a5f34fdb457691c8ede1454d5df339944af0e180e49",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "49dfe33637f9bb8a7515e45d847fae667de1ca09",
+            "reason": null,
+            "pointers": [
+              "/direct_weak_baseline/combined_score",
+              "/direct_weak_baseline/valid",
+              "/direct_reference/combined_score",
+              "/direct_reference/valid"
+            ],
+            "missing_pointers": []
+          },
+          "contract_compatibility": {
+            "source_revision": "49dfe33637f9bb8a7515e45d847fae667de1ca09",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [],
+            "evaluator_changed_but_measured_inert": [],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Physics/DiffractionGratingDesign",
+            "current_task_path": "benchmarks/Physics/DiffractionGratingDesign",
+            "compared_file_count": 11,
+            "reason": null
+          },
+          "reason": null
+        },
+        "evaluator_numerical_resolution": {
+          "status": "pass",
+          "passed": true,
+          "distinct_scores": [
+            0.0,
+            0.09130497217886993,
+            0.10843640838222189,
+            0.3572572944248358
+          ],
+          "minimum_nonzero_score_gap": 0.01713143620335196,
+          "measured_fixed_artifact_noise_span": 0.0,
+          "minimum_noise_multiplier": 10.0,
+          "absolute_resolution_floor": 1e-12,
+          "required_score_gap": 1e-12,
+          "evidence": {
+            "path": "experiments/diffraction_trajectory_resolution_2026-08-15_v1.json",
+            "expected_sha256": "bd94078edbbfd929d50b3a7517524456dbe6365b9b76e0b3688938e6d0ed2c10",
+            "actual_sha256": "bd94078edbbfd929d50b3a7517524456dbe6365b9b76e0b3688938e6d0ed2c10",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "02ab019e1ade444ac72bf638882a254521df7994",
+            "reason": null,
+            "pointers": [
+              "/runs/0/trajectory_snapshot/events"
+            ],
+            "missing_pointers": []
+          },
+          "contract_compatibility": {
+            "source_revision": "02ab019e1ade444ac72bf638882a254521df7994",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [],
+            "evaluator_changed_but_measured_inert": [],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Physics/DiffractionGratingDesign",
+            "current_task_path": "benchmarks/Physics/DiffractionGratingDesign",
+            "compared_file_count": 11,
+            "reason": null
+          },
+          "reason": null
+        },
+        "scientific_materiality": {
+          "status": "pass",
+          "passed": true,
+          "evidence": {
+            "path": "experiments/scientific_materiality_audit_2026-08-15_v2.json",
+            "expected_sha256": "8484bf4bed778714af31edeb2fcaa8751c96c2cd11e60627bdb087619902625e",
+            "actual_sha256": "8484bf4bed778714af31edeb2fcaa8751c96c2cd11e60627bdb087619902625e",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "f40b1f993c8af9901480dca2ecf26e0f88f53d6c",
+            "reason": null
+          },
+          "task_pointer": "/tasks/1",
+          "task_identity_matches": true,
+          "criterion_count": 6,
+          "criteria_passed_count": 6,
+          "criteria_complete": true,
+          "required_axes": [
+            "development",
+            "heldout",
+            "robustness"
+          ],
+          "covered_axes": [
+            "development",
+            "heldout",
+            "robustness"
+          ],
+          "axes_covered": true,
+          "same_witness_enforced": true,
+          "threshold_basis": "benchmark_preregistered_operational_threshold_not_field_consensus",
+          "scientific_quantity": "plus-one transmitted diffraction efficiency across wavelength, incidence angle and TE/TM polarization",
+          "units": [
+            "absolute_efficiency_fraction"
+          ],
+          "criteria": [
+            {
+              "id": "development_mean_target_efficiency",
+              "kind": "paired_scalar",
+              "axes": [
+                "development"
+              ],
+              "passed": true,
+              "baseline": 0.22119642065217407,
+              "witness": 0.6000416659940113,
+              "direction": "increase",
+              "signed_absolute_change": 0.3788452453418373,
+              "signed_relative_change": 1.7127096551782006,
+              "minimum_absolute_change": 0.1,
+              "minimum_relative_change": null,
+              "unit": "absolute_efficiency_fraction",
+              "reason": null
+            },
+            {
+              "id": "heldout_mean_target_efficiency",
+              "kind": "paired_scalar",
+              "axes": [
+                "heldout"
+              ],
+              "passed": true,
+              "baseline": 0.2925978310069373,
+              "witness": 0.5757145621942861,
+              "direction": "increase",
+              "signed_absolute_change": 0.28311673118734876,
+              "signed_relative_change": 0.9675968212513381,
+              "minimum_absolute_change": 0.1,
+              "minimum_relative_change": null,
+              "unit": "absolute_efficiency_fraction",
+              "reason": null
+            },
+            {
+              "id": "development_minimum_target_efficiency",
+              "kind": "paired_scalar",
+              "axes": [
+                "development",
+                "robustness"
+              ],
+              "passed": true,
+              "baseline": 0.030937455874890493,
+              "witness": 0.3240771605939754,
+              "direction": "increase",
+              "signed_absolute_change": 0.2931397047190849,
+              "signed_relative_change": 9.475236293007642,
+              "minimum_absolute_change": 0.05,
+              "minimum_relative_change": null,
+              "unit": "absolute_efficiency_fraction",
+              "reason": null
+            },
+            {
+              "id": "heldout_minimum_target_efficiency",
+              "kind": "paired_scalar",
+              "axes": [
+                "heldout",
+                "robustness"
+              ],
+              "passed": true,
+              "baseline": 0.008650390501823084,
+              "witness": 0.21784591330040431,
+              "direction": "increase",
+              "signed_absolute_change": 0.20919552279858122,
+              "signed_relative_change": 24.18336175164496,
+              "minimum_absolute_change": 0.05,
+              "minimum_relative_change": null,
+              "unit": "absolute_efficiency_fraction",
+              "reason": null
+            },
+            {
+              "id": "per_world_shift_robust_utility",
+              "kind": "paired_records",
+              "axes": [
+                "development",
+                "heldout",
+                "robustness"
+              ],
+              "passed": true,
+              "direction": "increase",
+              "record_count": 6,
+              "value_count": 6,
+              "required_splits": [
+                "development",
+                "heldout"
+              ],
+              "observed_splits": [
+                "development",
+                "heldout"
+              ],
+              "split_coverage_passed": true,
+              "minimum_signed_absolute_change": 0.24609184909075346,
+              "minimum_signed_relative_change": 1.5855380278327273,
+              "minimum_absolute_change": 0.05,
+              "minimum_relative_change": null,
+              "unit": "absolute_efficiency_utility",
+              "records": [
+                {
+                  "identity": "dev_blue_titania",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.09020651541347875,
+                      "witness": 0.47752059535012337,
+                      "signed_absolute_change": 0.38731407993664463,
+                      "signed_relative_change": 4.293637528966912,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_green_titania",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.095913600202855,
+                      "witness": 0.4684159871939988,
+                      "signed_absolute_change": 0.3725023869911438,
+                      "signed_relative_change": 3.883728545308591,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_near_ir_silicon_nitride",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.14318642196916834,
+                      "witness": 0.4292864766132386,
+                      "signed_absolute_change": 0.2861000546440703,
+                      "signed_relative_change": 1.9980948661855302,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_visible_titania",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.13483237185212524,
+                      "witness": 0.44019507865384333,
+                      "signed_absolute_change": 0.30536270680171806,
+                      "signed_relative_change": 2.2647581037632314,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "heldout_red_silicon_nitride",
+                  "split": "heldout",
+                  "comparisons": [
+                    {
+                      "baseline": 0.1552103101728418,
+                      "witness": 0.40130215926359525,
+                      "signed_absolute_change": 0.24609184909075346,
+                      "signed_relative_change": 1.5855380278327273,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "heldout_telecom_silicon",
+                  "split": "heldout",
+                  "comparisons": [
+                    {
+                      "baseline": 0.14553387064111,
+                      "witness": 0.3993352497091285,
+                      "signed_absolute_change": 0.2538013790680185,
+                      "signed_relative_change": 1.7439334084221447,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                }
+              ],
+              "reason": null
+            },
+            {
+              "id": "all_shift_geometries_feasible",
+              "kind": "values_bound",
+              "axes": [
+                "development",
+                "heldout",
+                "robustness"
+              ],
+              "passed": true,
+              "operator": "eq",
+              "threshold": true,
+              "value_count": 6,
+              "values": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "outcomes": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "reason": null
+            }
+          ],
+          "evidence_scope_matches": true,
+          "contract_compatibility": {
+            "source_revision": "f40b1f993c8af9901480dca2ecf26e0f88f53d6c",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [],
+            "evaluator_changed_but_measured_inert": [],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Physics/DiffractionGratingDesign",
+            "current_task_path": "benchmarks/Physics/DiffractionGratingDesign",
+            "compared_file_count": 11,
+            "reason": null
+          },
+          "claim": "calibrated landscape materiality only; not agent improvement, post-2h headroom, external validation, or autonomous discovery",
+          "reason": null
+        },
+        "shortcut_resistance": {
+          "status": "pass",
+          "passed": true,
+          "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json#/artifacts/1",
+          "source_sha256": "d1aef652e4c0a4a936f138d3db8401276095d1660b41521613036b38781505f9",
+          "source_utf8_bytes": 11543,
+          "syntax_valid": true,
+          "syntax_error": null,
+          "forbidden_import_hits": [],
+          "forbidden_call_hits": [],
+          "forbidden_literal_hits": [],
+          "runtime_network_and_filesystem_isolation_checked_separately": true,
+          "scope": "narrow retained-source scan plus secure black-box execution; not an exhaustive contamination, memorization, or benchmark-overfitting audit",
+          "reason": null
+        },
+        "content_addressed_atomic_capture": {
+          "status": "pass",
+          "passed": true,
+          "predicates": [
+            {
+              "pointer": "/task_audits/1/checks/sentinel_snapshot_hash_matches",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/task_audits/1/checks/sentinel_snapshot_events_match",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/task_audits/1/checks/exact_t0_and_terminal",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            }
+          ],
+          "evidence": {
+            "path": "experiments/exploratory_2h_sentinel_smoke_audit_2026-07-27_v1.json",
+            "expected_sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb",
+            "actual_sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "ba566537f42ae1827ca784d95c5daa3250469e98",
+            "reason": null,
+            "pointers": [
+              "/task_audits/1/checks/sentinel_snapshot_hash_matches",
+              "/task_audits/1/checks/sentinel_snapshot_events_match",
+              "/task_audits/1/checks/exact_t0_and_terminal"
+            ],
+            "missing_pointers": []
+          },
+          "reason": null
+        },
+        "exactly_once_recovery": {
+          "status": "pass",
+          "passed": true,
+          "predicates": [
+            {
+              "pointer": "/execution_passed",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/all_fault_scenarios_passed",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/four_search_commit_windows_exercised",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/request_before_receipt_retry_is_reason_coded",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/receipt_before_attempt_completion_reuses_result",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/concurrent_run_writer_is_rejected",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/receipt_tampering_is_rejected",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            }
+          ],
+          "evidence": {
+            "path": "experiments/evaluation_recovery_fault_audit_2026-09-12_v13.json",
+            "expected_sha256": "9b3faed839a13832715435db780783f92fa434adf4a39baac14af6b7637831d2",
+            "actual_sha256": "9b3faed839a13832715435db780783f92fa434adf4a39baac14af6b7637831d2",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+            "reason": null,
+            "pointers": [
+              "/execution_passed",
+              "/checks/all_fault_scenarios_passed",
+              "/checks/four_search_commit_windows_exercised",
+              "/checks/request_before_receipt_retry_is_reason_coded",
+              "/checks/receipt_before_attempt_completion_reuses_result",
+              "/checks/concurrent_run_writer_is_rejected",
+              "/checks/receipt_tampering_is_rejected"
+            ],
+            "missing_pointers": []
+          },
+          "runtime_compatibility": {
+            "source_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+            "runtime_files_unchanged": true,
+            "paths": [
+              "scripts/audit_evaluation_recovery.py",
+              "scripts/run_recovery_fault_worker.py",
+              "sle/algorithms/common.py",
+              "sle/algorithms/evolve.py",
+              "sle/evaluation_ledger.py",
+              "sle/protocol.py"
+            ],
+            "changed_paths": [],
+            "missing_at_source_revision": [],
+            "reason": null
+          },
+          "task_card_path": "benchmarks/Physics/DiffractionGratingDesign/TASK_CARD.yaml",
+          "oracle_deterministic": true,
+          "evidence_scope_matches": true,
+          "claim": "logical exactly-once outcome and oracle-budget accounting for a deterministic local evaluator; not physical exactly-once execution",
+          "reason": null
+        }
+      },
+      "status_counts": {
+        "pass": 10,
+        "fail": 0,
+        "missing": 0
+      },
+      "preflight_passed": true,
+      "long_horizon_run_permitted": true,
+      "not_permitted_reasons": []
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "checks": {
+        "frozen_runtime_contract": {
+          "status": "pass",
+          "passed": true,
+          "expected_sha256": "c0fefe1c1fa67e0e5adab9a2423561f53e627ebb41a1df400af8a6c802a3c14f",
+          "actual_sha256": "c0fefe1c1fa67e0e5adab9a2423561f53e627ebb41a1df400af8a6c802a3c14f"
+        },
+        "frozen_task_package": {
+          "status": "pass",
+          "passed": true,
+          "expected_sha256": "8af930f364c9ed94b28849f01dff6b6da9838862a0871a9c9ad2e5e297822c7d",
+          "actual_sha256": "8af930f364c9ed94b28849f01dff6b6da9838862a0871a9c9ad2e5e297822c7d",
+          "scope": "all task source/data files excluding generated output",
+          "mismatch": null
+        },
+        "fixed_artifact_binding": {
+          "status": "pass",
+          "passed": true,
+          "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json#/artifacts/2",
+          "expected_sha256": "7a8d6e3060c3a667b16677fce3651e30babec2bfb8f5d159a5f660eebb05f2d4",
+          "actual_sha256": "7a8d6e3060c3a667b16677fce3651e30babec2bfb8f5d159a5f660eebb05f2d4",
+          "portable_artifact": {
+            "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json",
+            "expected_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185",
+            "actual_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185",
+            "hash_matches": true,
+            "trusted_evidence": false,
+            "source_revision": null,
+            "reason": null,
+            "artifact_pointer": "/artifacts/2",
+            "task": "RNAEngineering/RNAInverseDesign",
+            "candidate_sha256": "7a8d6e3060c3a667b16677fce3651e30babec2bfb8f5d159a5f660eebb05f2d4",
+            "candidate_utf8_bytes": 17283,
+            "origin": {
+              "path": "runs/rna_inverse_v1_b3/RNAEngineering__RNAInverseDesign/greedy_rewrite/normal/seed_1/best_program.py",
+              "run_manifest_path": "runs/rna_inverse_v1_b3/RNAEngineering__RNAInverseDesign/greedy_rewrite/normal/seed_1/run_manifest.json",
+              "run_manifest_sha256": "7c2bf45b79404f30bbfdcec9436be4859f6139f958e81577c443ca45c79da4c7",
+              "task_contract_sha256": "c0fefe1c1fa67e0e5adab9a2423561f53e627ebb41a1df400af8a6c802a3c14f",
+              "algorithm": "greedy_rewrite",
+              "feedback_mode": "normal",
+              "seed": 1,
+              "superseded_task_contract_sha256": "c0fefe1c1fa67e0e5adab9a2423561f53e627ebb41a1df400af8a6c802a3c14f"
+            }
+          }
+        },
+        "fixed_artifact_noise": {
+          "status": "pass",
+          "passed": true,
+          "repetitions": 3,
+          "scores": [
+            0.720397352,
+            0.720397352,
+            0.720397352
+          ],
+          "valid": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "noise_span": 0.0,
+          "numeric_field_spans": {
+            "combined_score": 0.0,
+            "feasibility_rate": 0.0,
+            "raw_score": 0.0,
+            "valid": 0.0
+          },
+          "maximum_numeric_field_span": 0.0,
+          "canonical_payload_sha256": [
+            "33bdd076d2b423d29144f72cbbed34ab34771f9726428ed6d79c5df91180b70d",
+            "33bdd076d2b423d29144f72cbbed34ab34771f9726428ed6d79c5df91180b70d",
+            "33bdd076d2b423d29144f72cbbed34ab34771f9726428ed6d79c5df91180b70d"
+          ],
+          "exact_payload_match": true,
+          "maximum_allowed_noise_span": 1e-12,
+          "infrastructure_failure_count": 0,
+          "results": [
+            {
+              "combined_score": 0.720397352,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.720397352
+            },
+            {
+              "combined_score": 0.720397352,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.720397352
+            },
+            {
+              "combined_score": 0.720397352,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.720397352
+            }
+          ],
+          "reason": null,
+          "nested_payload_sha256": [
+            {
+              "per_instance": "9b7cf3f653c7d939fdc5d8077626bbfa404ffa3224cff8250f9cf65d07185934"
+            },
+            {
+              "per_instance": "9b7cf3f653c7d939fdc5d8077626bbfa404ffa3224cff8250f9cf65d07185934"
+            },
+            {
+              "per_instance": "9b7cf3f653c7d939fdc5d8077626bbfa404ffa3224cff8250f9cf65d07185934"
+            }
+          ],
+          "complete_numeric_field_spans_sha256": "001e606a75d8f733d5b7bbe11dd482e3c261de1ee9563e3fcf5b709bfcbbced1",
+          "published_results_scope": "search-visible results and per-field spans only; the maximum numeric span, full payload hashes, complete span-map hash and decisions use private complete results"
+        },
+        "baseline_reference_separation": {
+          "status": "pass",
+          "passed": true,
+          "baseline_score": 0.0,
+          "reference_score": 1.0,
+          "score_gap": 1.0,
+          "minimum_score_gap": 0.05,
+          "baseline_valid": 1.0,
+          "reference_valid": 1.0,
+          "evidence": {
+            "path": "experiments/rna_inverse_design_calibration_2026-07-24.json",
+            "expected_sha256": "015a27373c8938f9d8c77b64f7e9ae82b14b825b15bf30ba537d70356debf4c4",
+            "actual_sha256": "015a27373c8938f9d8c77b64f7e9ae82b14b825b15bf30ba537d70356debf4c4",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "41f5fb4700f09155a7d23afb67a0d16f4a41f905",
+            "reason": null,
+            "pointers": [
+              "/direct_baseline/combined_score",
+              "/direct_baseline/valid",
+              "/reference/combined_score",
+              "/reference/valid"
+            ],
+            "missing_pointers": []
+          },
+          "contract_compatibility": {
+            "source_revision": "41f5fb4700f09155a7d23afb67a0d16f4a41f905",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [],
+            "evaluator_changed_but_measured_inert": [
+              "benchmarks/Biology/RNAInverseDesign/verification/evaluator.py"
+            ],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/RNAEngineering/RNAInverseDesign",
+            "current_task_path": "benchmarks/Biology/RNAInverseDesign",
+            "compared_file_count": 11,
+            "reason": null
+          },
+          "reason": null
+        },
+        "evaluator_numerical_resolution": {
+          "status": "pass",
+          "passed": true,
+          "distinct_scores": [
+            0.0,
+            0.23924301079999996,
+            0.5073805678000001,
+            0.720397352
+          ],
+          "minimum_nonzero_score_gap": 0.21301678419999992,
+          "measured_fixed_artifact_noise_span": 0.0,
+          "minimum_noise_multiplier": 10.0,
+          "absolute_resolution_floor": 1e-12,
+          "required_score_gap": 1e-12,
+          "evidence": {
+            "path": "experiments/rna_inverse_design_calibration_analysis_2026-07-24.json",
+            "expected_sha256": "760e0f9b20b0deeb7d32c3fecb3c1671b324db70f3d57130ef250e1db84f79df",
+            "actual_sha256": "760e0f9b20b0deeb7d32c3fecb3c1671b324db70f3d57130ef250e1db84f79df",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "9ff42ebafdbaa1f87498553dc3364c2fae07d64a",
+            "reason": null,
+            "pointers": [
+              "/records/normal_budget_three/trajectory"
+            ],
+            "missing_pointers": []
+          },
+          "contract_compatibility": {
+            "source_revision": "9ff42ebafdbaa1f87498553dc3364c2fae07d64a",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [],
+            "evaluator_changed_but_measured_inert": [
+              "benchmarks/Biology/RNAInverseDesign/verification/evaluator.py"
+            ],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/RNAEngineering/RNAInverseDesign",
+            "current_task_path": "benchmarks/Biology/RNAInverseDesign",
+            "compared_file_count": 11,
+            "reason": null
+          },
+          "reason": null
+        },
+        "scientific_materiality": {
+          "status": "pass",
+          "passed": true,
+          "evidence": {
+            "path": "experiments/scientific_materiality_audit_2026-08-15_v2.json",
+            "expected_sha256": "8484bf4bed778714af31edeb2fcaa8751c96c2cd11e60627bdb087619902625e",
+            "actual_sha256": "8484bf4bed778714af31edeb2fcaa8751c96c2cd11e60627bdb087619902625e",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "f40b1f993c8af9901480dca2ecf26e0f88f53d6c",
+            "reason": null
+          },
+          "task_pointer": "/tasks/2",
+          "task_identity_matches": true,
+          "criterion_count": 6,
+          "criteria_passed_count": 6,
+          "criteria_complete": true,
+          "required_axes": [
+            "development",
+            "heldout",
+            "robustness"
+          ],
+          "covered_axes": [
+            "development",
+            "heldout",
+            "robustness"
+          ],
+          "axes_covered": true,
+          "same_witness_enforced": true,
+          "threshold_basis": "benchmark_preregistered_operational_threshold_not_field_consensus",
+          "scientific_quantity": "target-secondary-structure ensemble probability and nucleotide-level ensemble correctness",
+          "units": [
+            "probability",
+            "fraction"
+          ],
+          "criteria": [
+            {
+              "id": "development_target_probability",
+              "kind": "paired_scalar",
+              "axes": [
+                "development"
+              ],
+              "passed": true,
+              "baseline": 6e-10,
+              "witness": 0.5833395626000001,
+              "direction": "increase",
+              "signed_absolute_change": 0.583339562,
+              "signed_relative_change": 972232603.3333334,
+              "minimum_absolute_change": 0.1,
+              "minimum_relative_change": null,
+              "unit": "probability",
+              "reason": null
+            },
+            {
+              "id": "heldout_target_probability",
+              "kind": "paired_scalar",
+              "axes": [
+                "heldout"
+              ],
+              "passed": true,
+              "baseline": 0.0,
+              "witness": 0.8367553023333333,
+              "direction": "increase",
+              "signed_absolute_change": 0.8367553023333333,
+              "signed_relative_change": null,
+              "minimum_absolute_change": 0.1,
+              "minimum_relative_change": null,
+              "unit": "probability",
+              "reason": null
+            },
+            {
+              "id": "development_ensemble_correctness",
+              "kind": "paired_scalar",
+              "axes": [
+                "development",
+                "robustness"
+              ],
+              "passed": true,
+              "baseline": 0.2827200474,
+              "witness": 0.9638046325999999,
+              "direction": "increase",
+              "signed_absolute_change": 0.6810845851999999,
+              "signed_relative_change": 2.409042413028401,
+              "minimum_absolute_change": 0.1,
+              "minimum_relative_change": null,
+              "unit": "fraction",
+              "reason": null
+            },
+            {
+              "id": "heldout_ensemble_correctness",
+              "kind": "paired_scalar",
+              "axes": [
+                "heldout",
+                "robustness"
+              ],
+              "passed": true,
+              "baseline": 0.12906594533333335,
+              "witness": 0.984500964,
+              "direction": "increase",
+              "signed_absolute_change": 0.8554350186666666,
+              "signed_relative_change": 6.627891009184254,
+              "minimum_absolute_change": 0.1,
+              "minimum_relative_change": null,
+              "unit": "fraction",
+              "reason": null
+            },
+            {
+              "id": "development_shift_robustness",
+              "kind": "values_bound",
+              "axes": [
+                "development",
+                "robustness"
+              ],
+              "passed": true,
+              "operator": "gte",
+              "threshold": 0.99,
+              "value_count": 1,
+              "values": [
+                1.0
+              ],
+              "outcomes": [
+                true
+              ],
+              "reason": null
+            },
+            {
+              "id": "heldout_shift_robustness",
+              "kind": "values_bound",
+              "axes": [
+                "heldout",
+                "robustness"
+              ],
+              "passed": true,
+              "operator": "gte",
+              "threshold": 0.99,
+              "value_count": 1,
+              "values": [
+                1.0
+              ],
+              "outcomes": [
+                true
+              ],
+              "reason": null
+            }
+          ],
+          "evidence_scope_matches": true,
+          "contract_compatibility": {
+            "source_revision": "f40b1f993c8af9901480dca2ecf26e0f88f53d6c",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [],
+            "evaluator_changed_but_measured_inert": [],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Biology/RNAInverseDesign",
+            "current_task_path": "benchmarks/Biology/RNAInverseDesign",
+            "compared_file_count": 11,
+            "reason": null
+          },
+          "claim": "calibrated landscape materiality only; not agent improvement, post-2h headroom, external validation, or autonomous discovery",
+          "reason": null
+        },
+        "shortcut_resistance": {
+          "status": "pass",
+          "passed": true,
+          "predicates": [
+            {
+              "pointer": "/records/normal_budget_three/fixed_instance_shortcut_scan/source_sha256",
+              "operator": "eq",
+              "expected": "7a8d6e3060c3a667b16677fce3651e30babec2bfb8f5d159a5f660eebb05f2d4",
+              "observed": "7a8d6e3060c3a667b16677fce3651e30babec2bfb8f5d159a5f660eebb05f2d4",
+              "passed": true
+            },
+            {
+              "pointer": "/records/normal_budget_three/fixed_instance_shortcut_scan/passed",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            }
+          ],
+          "evidence": {
+            "path": "experiments/rna_inverse_design_calibration_analysis_2026-07-24.json",
+            "expected_sha256": "760e0f9b20b0deeb7d32c3fecb3c1671b324db70f3d57130ef250e1db84f79df",
+            "actual_sha256": "760e0f9b20b0deeb7d32c3fecb3c1671b324db70f3d57130ef250e1db84f79df",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "9ff42ebafdbaa1f87498553dc3364c2fae07d64a",
+            "reason": null,
+            "pointers": [
+              "/records/normal_budget_three/fixed_instance_shortcut_scan/source_sha256",
+              "/records/normal_budget_three/fixed_instance_shortcut_scan/passed"
+            ],
+            "missing_pointers": []
+          },
+          "contract_compatibility": {
+            "source_revision": "9ff42ebafdbaa1f87498553dc3364c2fae07d64a",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [],
+            "evaluator_changed_but_measured_inert": [
+              "benchmarks/Biology/RNAInverseDesign/verification/evaluator.py"
+            ],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/RNAEngineering/RNAInverseDesign",
+            "current_task_path": "benchmarks/Biology/RNAInverseDesign",
+            "compared_file_count": 11,
+            "reason": null
+          },
+          "reason": null
+        },
+        "content_addressed_atomic_capture": {
+          "status": "pass",
+          "passed": true,
+          "predicates": [
+            {
+              "pointer": "/task_audits/2/checks/sentinel_snapshot_hash_matches",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/task_audits/2/checks/sentinel_snapshot_events_match",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/task_audits/2/checks/exact_t0_and_terminal",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            }
+          ],
+          "evidence": {
+            "path": "experiments/exploratory_2h_sentinel_smoke_audit_2026-07-27_v1.json",
+            "expected_sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb",
+            "actual_sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "ba566537f42ae1827ca784d95c5daa3250469e98",
+            "reason": null,
+            "pointers": [
+              "/task_audits/2/checks/sentinel_snapshot_hash_matches",
+              "/task_audits/2/checks/sentinel_snapshot_events_match",
+              "/task_audits/2/checks/exact_t0_and_terminal"
+            ],
+            "missing_pointers": []
+          },
+          "reason": null
+        },
+        "exactly_once_recovery": {
+          "status": "pass",
+          "passed": true,
+          "predicates": [
+            {
+              "pointer": "/execution_passed",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/all_fault_scenarios_passed",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/four_search_commit_windows_exercised",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/request_before_receipt_retry_is_reason_coded",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/receipt_before_attempt_completion_reuses_result",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/concurrent_run_writer_is_rejected",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/receipt_tampering_is_rejected",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            }
+          ],
+          "evidence": {
+            "path": "experiments/evaluation_recovery_fault_audit_2026-09-12_v13.json",
+            "expected_sha256": "9b3faed839a13832715435db780783f92fa434adf4a39baac14af6b7637831d2",
+            "actual_sha256": "9b3faed839a13832715435db780783f92fa434adf4a39baac14af6b7637831d2",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+            "reason": null,
+            "pointers": [
+              "/execution_passed",
+              "/checks/all_fault_scenarios_passed",
+              "/checks/four_search_commit_windows_exercised",
+              "/checks/request_before_receipt_retry_is_reason_coded",
+              "/checks/receipt_before_attempt_completion_reuses_result",
+              "/checks/concurrent_run_writer_is_rejected",
+              "/checks/receipt_tampering_is_rejected"
+            ],
+            "missing_pointers": []
+          },
+          "runtime_compatibility": {
+            "source_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+            "runtime_files_unchanged": true,
+            "paths": [
+              "scripts/audit_evaluation_recovery.py",
+              "scripts/run_recovery_fault_worker.py",
+              "sle/algorithms/common.py",
+              "sle/algorithms/evolve.py",
+              "sle/evaluation_ledger.py",
+              "sle/protocol.py"
+            ],
+            "changed_paths": [],
+            "missing_at_source_revision": [],
+            "reason": null
+          },
+          "task_card_path": "benchmarks/Biology/RNAInverseDesign/TASK_CARD.yaml",
+          "oracle_deterministic": true,
+          "evidence_scope_matches": true,
+          "claim": "logical exactly-once outcome and oracle-budget accounting for a deterministic local evaluator; not physical exactly-once execution",
+          "reason": null
+        }
+      },
+      "status_counts": {
+        "pass": 10,
+        "fail": 0,
+        "missing": 0
+      },
+      "preflight_passed": true,
+      "long_horizon_run_permitted": true,
+      "not_permitted_reasons": []
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "checks": {
+        "frozen_runtime_contract": {
+          "status": "pass",
+          "passed": true,
+          "expected_sha256": "cdbb31a5dc9d1fada318da0ed92419fa1cbfec66b88303712b98f0b4642b02ff",
+          "actual_sha256": "cdbb31a5dc9d1fada318da0ed92419fa1cbfec66b88303712b98f0b4642b02ff"
+        },
+        "frozen_task_package": {
+          "status": "pass",
+          "passed": true,
+          "expected_sha256": "96c1dac26b2f307a2ab9878f52369878c9897c1f2d636609ed23e25c83b31324",
+          "actual_sha256": "96c1dac26b2f307a2ab9878f52369878c9897c1f2d636609ed23e25c83b31324",
+          "scope": "all task source/data files excluding generated output",
+          "mismatch": null
+        },
+        "fixed_artifact_binding": {
+          "status": "pass",
+          "passed": true,
+          "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json#/artifacts/3",
+          "expected_sha256": "d5af76e6256f27c5dcf2623b852c8d4fdc7907e7807368ea17555289d516af0e",
+          "actual_sha256": "d5af76e6256f27c5dcf2623b852c8d4fdc7907e7807368ea17555289d516af0e",
+          "portable_artifact": {
+            "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json",
+            "expected_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185",
+            "actual_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185",
+            "hash_matches": true,
+            "trusted_evidence": false,
+            "source_revision": null,
+            "reason": null,
+            "artifact_pointer": "/artifacts/3",
+            "task": "Semiconductor/MOSFETDoping",
+            "candidate_sha256": "d5af76e6256f27c5dcf2623b852c8d4fdc7907e7807368ea17555289d516af0e",
+            "candidate_utf8_bytes": 7100,
+            "origin": {
+              "path": "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/best_program.py",
+              "run_manifest_path": "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/run_manifest.json",
+              "run_manifest_sha256": "4ff3ef033e2c9d7350af08aed33836d2b7dd286f0440c315c7deea33a5281832",
+              "task_contract_sha256": "cdbb31a5dc9d1fada318da0ed92419fa1cbfec66b88303712b98f0b4642b02ff",
+              "algorithm": "greedy_rewrite",
+              "feedback_mode": "normal",
+              "seed": 1,
+              "superseded_task_contract_sha256": "cdbb31a5dc9d1fada318da0ed92419fa1cbfec66b88303712b98f0b4642b02ff"
+            }
+          }
+        },
+        "fixed_artifact_noise": {
+          "status": "pass",
+          "passed": true,
+          "repetitions": 3,
+          "scores": [
+            0.45739953664973576,
+            0.45739953664973576,
+            0.45739953664973576
+          ],
+          "valid": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "noise_span": 0.0,
+          "numeric_field_spans": {
+            "combined_score": 0.0,
+            "feasibility_rate": 0.0,
+            "raw_score": 0.0,
+            "valid": 0.0
+          },
+          "maximum_numeric_field_span": 0.0,
+          "canonical_payload_sha256": [
+            "709de0e263aa261ec05e4b2b178f689e3dd5f64fec3dcf5d7ddf4715b909e1dc",
+            "709de0e263aa261ec05e4b2b178f689e3dd5f64fec3dcf5d7ddf4715b909e1dc",
+            "709de0e263aa261ec05e4b2b178f689e3dd5f64fec3dcf5d7ddf4715b909e1dc"
+          ],
+          "exact_payload_match": true,
+          "maximum_allowed_noise_span": 1e-12,
+          "infrastructure_failure_count": 0,
+          "results": [
+            {
+              "combined_score": 0.45739953664973576,
+              "valid": 1.0,
+              "feasibility_rate": 0.59375,
+              "raw_score": 0.45739953664973576
+            },
+            {
+              "combined_score": 0.45739953664973576,
+              "valid": 1.0,
+              "feasibility_rate": 0.59375,
+              "raw_score": 0.45739953664973576
+            },
+            {
+              "combined_score": 0.45739953664973576,
+              "valid": 1.0,
+              "feasibility_rate": 0.59375,
+              "raw_score": 0.45739953664973576
+            }
+          ],
+          "reason": null,
+          "nested_payload_sha256": [
+            {
+              "per_instance": "55535d230c31cc21ef6a2093dd7b1a778dfb7693c231770c700bab5cdc479041"
+            },
+            {
+              "per_instance": "55535d230c31cc21ef6a2093dd7b1a778dfb7693c231770c700bab5cdc479041"
+            },
+            {
+              "per_instance": "55535d230c31cc21ef6a2093dd7b1a778dfb7693c231770c700bab5cdc479041"
+            }
+          ],
+          "complete_numeric_field_spans_sha256": "e84391ce76c3a9dac6121b3797525beb5c5f135ecfb1ece6b383970bad4d3e4f",
+          "published_results_scope": "search-visible results and per-field spans only; the maximum numeric span, full payload hashes, complete span-map hash and decisions use private complete results"
+        },
+        "baseline_reference_separation": {
+          "status": "pass",
+          "passed": true,
+          "baseline_score": 0.0,
+          "reference_score": 1.0,
+          "score_gap": 1.0,
+          "minimum_score_gap": 0.05,
+          "baseline_valid": 1.0,
+          "reference_valid": 1.0,
+          "evidence": {
+            "path": "experiments/mosfet_doping_v2_calibration_2026-07-24.json",
+            "expected_sha256": "c9eef85a4f870aa1066223ad5f09053b7db70d3d15a4c1dda548a050732d30d2",
+            "actual_sha256": "c9eef85a4f870aa1066223ad5f09053b7db70d3d15a4c1dda548a050732d30d2",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "97158a8c5c41d9f9d75b856b841a7ad515a87c7d",
+            "reason": null,
+            "pointers": [
+              "/witness_metrics/baseline/combined_score",
+              "/witness_metrics/baseline/valid",
+              "/witness_metrics/nominal/combined_score",
+              "/witness_metrics/nominal/valid"
+            ],
+            "missing_pointers": []
+          },
+          "contract_compatibility": {
+            "source_revision": "97158a8c5c41d9f9d75b856b841a7ad515a87c7d",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [
+              "benchmarks/Engineering/MOSFETDoping/Task.md"
+            ],
+            "evaluator_changed_but_measured_inert": [
+              "benchmarks/Engineering/MOSFETDoping/verification/evaluator.py"
+            ],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Semiconductor/MOSFETDoping",
+            "current_task_path": "benchmarks/Engineering/MOSFETDoping",
+            "compared_file_count": 12,
+            "reason": null
+          },
+          "reason": null
+        },
+        "evaluator_numerical_resolution": {
+          "status": "pass",
+          "passed": true,
+          "distinct_scores": [
+            0.0,
+            0.16331803410461165,
+            0.1927414831115123,
+            0.45739953664973576
+          ],
+          "minimum_nonzero_score_gap": 0.029423449006900637,
+          "measured_fixed_artifact_noise_span": 0.0,
+          "minimum_noise_multiplier": 10.0,
+          "absolute_resolution_floor": 1e-12,
+          "required_score_gap": 1e-12,
+          "evidence": {
+            "path": "experiments/mosfet_v2_calibration_analysis_2026-07-24.json",
+            "expected_sha256": "733b86d364f0ee497719753123de086bdea081abe9c89451b4858bbbe9630f8f",
+            "actual_sha256": "733b86d364f0ee497719753123de086bdea081abe9c89451b4858bbbe9630f8f",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "2f647d99b975e5e48561eb0e731e22659dd07724",
+            "reason": null,
+            "pointers": [
+              "/records/normal_budget_three/trajectory"
+            ],
+            "missing_pointers": []
+          },
+          "contract_compatibility": {
+            "source_revision": "2f647d99b975e5e48561eb0e731e22659dd07724",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [
+              "benchmarks/Engineering/MOSFETDoping/Task.md"
+            ],
+            "evaluator_changed_but_measured_inert": [
+              "benchmarks/Engineering/MOSFETDoping/verification/evaluator.py"
+            ],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Semiconductor/MOSFETDoping",
+            "current_task_path": "benchmarks/Engineering/MOSFETDoping",
+            "compared_file_count": 12,
+            "reason": null
+          },
+          "reason": null
+        },
+        "scientific_materiality": {
+          "status": "pass",
+          "passed": true,
+          "evidence": {
+            "path": "experiments/scientific_materiality_audit_2026-08-15_v2.json",
+            "expected_sha256": "8484bf4bed778714af31edeb2fcaa8751c96c2cd11e60627bdb087619902625e",
+            "actual_sha256": "8484bf4bed778714af31edeb2fcaa8751c96c2cd11e60627bdb087619902625e",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "f40b1f993c8af9901480dca2ecf26e0f88f53d6c",
+            "reason": null
+          },
+          "task_pointer": "/tasks/3",
+          "task_identity_matches": true,
+          "criterion_count": 3,
+          "criteria_passed_count": 3,
+          "criteria_complete": true,
+          "required_axes": [
+            "development",
+            "heldout",
+            "robustness"
+          ],
+          "covered_axes": [
+            "development",
+            "heldout",
+            "robustness"
+          ],
+          "axes_covered": true,
+          "same_witness_enforced": true,
+          "threshold_basis": "benchmark_preregistered_operational_threshold_not_field_consensus",
+          "scientific_quantity": "drive-current versus log-leakage Pareto hypervolume under nominal and process-shifted compact-device simulations",
+          "units": [
+            "dimensionless_physical_objective_hypervolume"
+          ],
+          "criteria": [
+            {
+              "id": "per_device_nominal_hypervolume",
+              "kind": "paired_records",
+              "axes": [
+                "development",
+                "heldout"
+              ],
+              "passed": true,
+              "direction": "increase",
+              "record_count": 6,
+              "value_count": 6,
+              "required_splits": [
+                "development",
+                "heldout"
+              ],
+              "observed_splits": [
+                "development",
+                "heldout"
+              ],
+              "split_coverage_passed": true,
+              "minimum_signed_absolute_change": 0.10175185288578287,
+              "minimum_signed_relative_change": 0.2605234504944897,
+              "minimum_absolute_change": 0.05,
+              "minimum_relative_change": null,
+              "unit": "dimensionless_physical_objective_hypervolume",
+              "records": [
+                {
+                  "identity": "dev_cold_operation",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.589095907875794,
+                      "witness": 0.7425692064677799,
+                      "signed_absolute_change": 0.15347329859198588,
+                      "signed_relative_change": 0.2605234504944897,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_long_warm",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.33699943475007477,
+                      "witness": 0.4988325514227003,
+                      "signed_absolute_change": 0.1618331166726255,
+                      "signed_relative_change": 0.4802177688892685,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_reference_40nm",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.44049999549170415,
+                      "witness": 0.5985546535657779,
+                      "signed_absolute_change": 0.1580546580740737,
+                      "signed_relative_change": 0.3588073999811206,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_thin_oxide_32nm",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.41680686480383144,
+                      "witness": 0.5392872633077495,
+                      "signed_absolute_change": 0.12248039850391801,
+                      "signed_relative_change": 0.29385408170175636,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "heldout_long_hot",
+                  "split": "heldout",
+                  "comparisons": [
+                    {
+                      "baseline": 0.26894452141215913,
+                      "witness": 0.4240691146546936,
+                      "signed_absolute_change": 0.15512459324253447,
+                      "signed_relative_change": 0.5767903076367378,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "heldout_short_low_v",
+                  "split": "heldout",
+                  "comparisons": [
+                    {
+                      "baseline": 0.3675275779542334,
+                      "witness": 0.4692794308400163,
+                      "signed_absolute_change": 0.10175185288578287,
+                      "signed_relative_change": 0.27685501439691573,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                }
+              ],
+              "reason": null
+            },
+            {
+              "id": "per_device_per_shift_hypervolume",
+              "kind": "paired_records",
+              "axes": [
+                "development",
+                "heldout",
+                "robustness"
+              ],
+              "passed": true,
+              "direction": "increase",
+              "record_count": 6,
+              "value_count": 36,
+              "required_splits": [
+                "development",
+                "heldout"
+              ],
+              "observed_splits": [
+                "development",
+                "heldout"
+              ],
+              "split_coverage_passed": true,
+              "minimum_signed_absolute_change": 0.08909976727414115,
+              "minimum_signed_relative_change": 0.25380296068107794,
+              "minimum_absolute_change": 0.05,
+              "minimum_relative_change": null,
+              "unit": "dimensionless_physical_objective_hypervolume",
+              "records": [
+                {
+                  "identity": "dev_cold_operation",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.417526412299843,
+                      "witness": 0.5749925274616581,
+                      "signed_absolute_change": 0.15746611516181508,
+                      "signed_relative_change": 0.3771404886566365,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.5896708787510319,
+                      "witness": 0.7437346188667766,
+                      "signed_absolute_change": 0.15406374011574475,
+                      "signed_relative_change": 0.261270728583483,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.5487521746617002,
+                      "witness": 0.7083373950407502,
+                      "signed_absolute_change": 0.15958522037904999,
+                      "signed_relative_change": 0.29081473887084375,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.5731646280527705,
+                      "witness": 0.7441193693366265,
+                      "signed_absolute_change": 0.17095474128385602,
+                      "signed_relative_change": 0.2982646397155486,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.589095907875794,
+                      "witness": 0.7386101934197781,
+                      "signed_absolute_change": 0.14951428554398405,
+                      "signed_relative_change": 0.25380296068107794,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.44533093041137156,
+                      "witness": 0.6029794615305671,
+                      "signed_absolute_change": 0.15764853111919558,
+                      "signed_relative_change": 0.3540031027567943,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_long_warm",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.2102834491345274,
+                      "witness": 0.37653671590808674,
+                      "signed_absolute_change": 0.16625326677355934,
+                      "signed_relative_change": 0.7906150838680601,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.33553694905757137,
+                      "witness": 0.5013401903194157,
+                      "signed_absolute_change": 0.16580324126184431,
+                      "signed_relative_change": 0.49414301980017056,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.3312063257324888,
+                      "witness": 0.45554013490706025,
+                      "signed_absolute_change": 0.12433380917457143,
+                      "signed_relative_change": 0.3753968433410728,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.32062001485697433,
+                      "witness": 0.49632127301529716,
+                      "signed_absolute_change": 0.17570125815832283,
+                      "signed_relative_change": 0.5480046472978349,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.33699943475007477,
+                      "witness": 0.5074313043338211,
+                      "signed_absolute_change": 0.17043186958374634,
+                      "signed_relative_change": 0.5057333989599772,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.2432304175870945,
+                      "witness": 0.39037902445837847,
+                      "signed_absolute_change": 0.14714860687128398,
+                      "signed_relative_change": 0.6049761716936324,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_reference_40nm",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.307865752758699,
+                      "witness": 0.4527148791670644,
+                      "signed_absolute_change": 0.1448491264083654,
+                      "signed_relative_change": 0.4704944447715046,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.44017774249952374,
+                      "witness": 0.5992566765066475,
+                      "signed_absolute_change": 0.15907893400712375,
+                      "signed_relative_change": 0.36139704180362064,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.41399981639080025,
+                      "witness": 0.541132744292832,
+                      "signed_absolute_change": 0.12713292790203173,
+                      "signed_relative_change": 0.30708450310524543,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.43041626067221506,
+                      "witness": 0.5957407092731214,
+                      "signed_absolute_change": 0.16532444860090634,
+                      "signed_relative_change": 0.38410363108193474,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.44049999549170415,
+                      "witness": 0.5889375562155663,
+                      "signed_absolute_change": 0.14843756072386216,
+                      "signed_relative_change": 0.33697516967774327,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.33137581602125543,
+                      "witness": 0.4690924001229216,
+                      "signed_absolute_change": 0.13771658410166615,
+                      "signed_relative_change": 0.41559032809090873,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_thin_oxide_32nm",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.29898538915475315,
+                      "witness": 0.4077077896958566,
+                      "signed_absolute_change": 0.10872240054110344,
+                      "signed_relative_change": 0.36363783811800027,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.4168525419260881,
+                      "witness": 0.5391355313281349,
+                      "signed_absolute_change": 0.12228298940204674,
+                      "signed_relative_change": 0.2933483117004206,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.3831423286916819,
+                      "witness": 0.49249382829515653,
+                      "signed_absolute_change": 0.10935149960347462,
+                      "signed_relative_change": 0.28540699216627347,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.4114328432723307,
+                      "witness": 0.535737805401298,
+                      "signed_absolute_change": 0.1243049621289673,
+                      "signed_relative_change": 0.30212697931528243,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.41680686480383144,
+                      "witness": 0.5397055729276992,
+                      "signed_absolute_change": 0.12289870812386772,
+                      "signed_relative_change": 0.29485768710097787,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.3178730132208075,
+                      "witness": 0.427437348279477,
+                      "signed_absolute_change": 0.10956433505866947,
+                      "signed_relative_change": 0.34467957486709205,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "heldout_long_hot",
+                  "split": "heldout",
+                  "comparisons": [
+                    {
+                      "baseline": 0.15479323452557422,
+                      "witness": 0.3188639672194978,
+                      "signed_absolute_change": 0.16407073269392355,
+                      "signed_relative_change": 1.0599347781366797,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.2640234515057002,
+                      "witness": 0.4275862980871787,
+                      "signed_absolute_change": 0.16356284658147846,
+                      "signed_relative_change": 0.6195012058538564,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.27075434513457003,
+                      "witness": 0.3899352697759931,
+                      "signed_absolute_change": 0.11918092464142305,
+                      "signed_relative_change": 0.4401810230679322,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.24872863068247641,
+                      "witness": 0.4203309939870395,
+                      "signed_absolute_change": 0.17160236330456308,
+                      "signed_relative_change": 0.6899180156048393,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.26894452141215913,
+                      "witness": 0.43327447294463983,
+                      "signed_absolute_change": 0.1643299515324807,
+                      "signed_relative_change": 0.6110180295535526,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.1847676812045957,
+                      "witness": 0.33259082571034526,
+                      "signed_absolute_change": 0.14782314450574957,
+                      "signed_relative_change": 0.800048707338937,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "heldout_short_low_v",
+                  "split": "heldout",
+                  "comparisons": [
+                    {
+                      "baseline": 0.2614269736431374,
+                      "witness": 0.35429000052099624,
+                      "signed_absolute_change": 0.09286302687785886,
+                      "signed_relative_change": 0.35521593500379245,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.36729039190929,
+                      "witness": 0.468492883732063,
+                      "signed_absolute_change": 0.10120249182277297,
+                      "signed_relative_change": 0.27553808662592794,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.33658190511318875,
+                      "witness": 0.4256816723873299,
+                      "signed_absolute_change": 0.08909976727414115,
+                      "signed_relative_change": 0.26471942169374163,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.36294886058858966,
+                      "witness": 0.4664571886384361,
+                      "signed_absolute_change": 0.10350832804984644,
+                      "signed_relative_change": 0.2851870863624927,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.3675275779542334,
+                      "witness": 0.46855807039840813,
+                      "signed_absolute_change": 0.10103049244417472,
+                      "signed_relative_change": 0.27489227612942724,
+                      "passed": true
+                    },
+                    {
+                      "baseline": 0.2797179205712751,
+                      "witness": 0.3716402209327662,
+                      "signed_absolute_change": 0.09192230036149113,
+                      "signed_relative_change": 0.32862499540163836,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                }
+              ],
+              "reason": null
+            },
+            {
+              "id": "all_shifted_profiles_feasible",
+              "kind": "values_bound",
+              "axes": [
+                "development",
+                "heldout",
+                "robustness"
+              ],
+              "passed": true,
+              "operator": "eq",
+              "threshold": 1.0,
+              "value_count": 36,
+              "values": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "outcomes": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "reason": null
+            }
+          ],
+          "evidence_scope_matches": true,
+          "contract_compatibility": {
+            "source_revision": "f40b1f993c8af9901480dca2ecf26e0f88f53d6c",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [],
+            "evaluator_changed_but_measured_inert": [],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Engineering/MOSFETDoping",
+            "current_task_path": "benchmarks/Engineering/MOSFETDoping",
+            "compared_file_count": 12,
+            "reason": null
+          },
+          "claim": "calibrated landscape materiality only; not agent improvement, post-2h headroom, external validation, or autonomous discovery",
+          "reason": null
+        },
+        "shortcut_resistance": {
+          "status": "pass",
+          "passed": true,
+          "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json#/artifacts/3",
+          "source_sha256": "d5af76e6256f27c5dcf2623b852c8d4fdc7907e7807368ea17555289d516af0e",
+          "source_utf8_bytes": 7100,
+          "syntax_valid": true,
+          "syntax_error": null,
+          "forbidden_import_hits": [],
+          "forbidden_call_hits": [],
+          "forbidden_literal_hits": [],
+          "runtime_network_and_filesystem_isolation_checked_separately": true,
+          "scope": "narrow retained-source scan plus secure black-box execution; not an exhaustive contamination, memorization, or benchmark-overfitting audit",
+          "reason": null
+        },
+        "content_addressed_atomic_capture": {
+          "status": "pass",
+          "passed": true,
+          "predicates": [
+            {
+              "pointer": "/task_audits/3/checks/sentinel_snapshot_hash_matches",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/task_audits/3/checks/sentinel_snapshot_events_match",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/task_audits/3/checks/exact_t0_and_terminal",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            }
+          ],
+          "evidence": {
+            "path": "experiments/exploratory_2h_sentinel_smoke_audit_2026-07-27_v1.json",
+            "expected_sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb",
+            "actual_sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "ba566537f42ae1827ca784d95c5daa3250469e98",
+            "reason": null,
+            "pointers": [
+              "/task_audits/3/checks/sentinel_snapshot_hash_matches",
+              "/task_audits/3/checks/sentinel_snapshot_events_match",
+              "/task_audits/3/checks/exact_t0_and_terminal"
+            ],
+            "missing_pointers": []
+          },
+          "reason": null
+        },
+        "exactly_once_recovery": {
+          "status": "pass",
+          "passed": true,
+          "predicates": [
+            {
+              "pointer": "/execution_passed",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/all_fault_scenarios_passed",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/four_search_commit_windows_exercised",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/request_before_receipt_retry_is_reason_coded",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/receipt_before_attempt_completion_reuses_result",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/concurrent_run_writer_is_rejected",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/receipt_tampering_is_rejected",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            }
+          ],
+          "evidence": {
+            "path": "experiments/evaluation_recovery_fault_audit_2026-09-12_v13.json",
+            "expected_sha256": "9b3faed839a13832715435db780783f92fa434adf4a39baac14af6b7637831d2",
+            "actual_sha256": "9b3faed839a13832715435db780783f92fa434adf4a39baac14af6b7637831d2",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+            "reason": null,
+            "pointers": [
+              "/execution_passed",
+              "/checks/all_fault_scenarios_passed",
+              "/checks/four_search_commit_windows_exercised",
+              "/checks/request_before_receipt_retry_is_reason_coded",
+              "/checks/receipt_before_attempt_completion_reuses_result",
+              "/checks/concurrent_run_writer_is_rejected",
+              "/checks/receipt_tampering_is_rejected"
+            ],
+            "missing_pointers": []
+          },
+          "runtime_compatibility": {
+            "source_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+            "runtime_files_unchanged": true,
+            "paths": [
+              "scripts/audit_evaluation_recovery.py",
+              "scripts/run_recovery_fault_worker.py",
+              "sle/algorithms/common.py",
+              "sle/algorithms/evolve.py",
+              "sle/evaluation_ledger.py",
+              "sle/protocol.py"
+            ],
+            "changed_paths": [],
+            "missing_at_source_revision": [],
+            "reason": null
+          },
+          "task_card_path": "benchmarks/Engineering/MOSFETDoping/TASK_CARD.yaml",
+          "oracle_deterministic": true,
+          "evidence_scope_matches": true,
+          "claim": "logical exactly-once outcome and oracle-budget accounting for a deterministic local evaluator; not physical exactly-once execution",
+          "reason": null
+        }
+      },
+      "status_counts": {
+        "pass": 10,
+        "fail": 0,
+        "missing": 0
+      },
+      "preflight_passed": true,
+      "long_horizon_run_permitted": true,
+      "not_permitted_reasons": []
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "checks": {
+        "frozen_runtime_contract": {
+          "status": "pass",
+          "passed": true,
+          "expected_sha256": "d65533033f04ee612aac4d5c6c5616d4eb47584976f2edf95311770d5a91c684",
+          "actual_sha256": "d65533033f04ee612aac4d5c6c5616d4eb47584976f2edf95311770d5a91c684"
+        },
+        "frozen_task_package": {
+          "status": "pass",
+          "passed": true,
+          "expected_sha256": "21a72e41ed4f3fd7c63838a3b11fa64fb2bc73eb71bec95c68fe99e408394fb9",
+          "actual_sha256": "21a72e41ed4f3fd7c63838a3b11fa64fb2bc73eb71bec95c68fe99e408394fb9",
+          "scope": "all task source/data files excluding generated output",
+          "mismatch": null
+        },
+        "fixed_artifact_binding": {
+          "status": "pass",
+          "passed": true,
+          "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json#/artifacts/4",
+          "expected_sha256": "61d1073ad2b6d62ce8fd4a70c2c8dace00082b959f2b554ca9b87e6ca66382bf",
+          "actual_sha256": "61d1073ad2b6d62ce8fd4a70c2c8dace00082b959f2b554ca9b87e6ca66382bf",
+          "portable_artifact": {
+            "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json",
+            "expected_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185",
+            "actual_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185",
+            "hash_matches": true,
+            "trusted_evidence": false,
+            "source_revision": null,
+            "reason": null,
+            "artifact_pointer": "/artifacts/4",
+            "task": "StructuralEngineering/TrussWeightMinimization",
+            "candidate_sha256": "61d1073ad2b6d62ce8fd4a70c2c8dace00082b959f2b554ca9b87e6ca66382bf",
+            "candidate_utf8_bytes": 13468,
+            "origin": {
+              "path": "runs/gpt55_truss_v2_b3_20260721/StructuralEngineering__TrussWeightMinimization/greedy_rewrite/normal/seed_1/best_program.py",
+              "run_manifest_path": "runs/gpt55_truss_v2_b3_20260721/StructuralEngineering__TrussWeightMinimization/greedy_rewrite/normal/seed_1/run_manifest.json",
+              "run_manifest_sha256": "1c536f9419ccfc0abe55644ee0520c4270578bb1f435a49dd40503d5ded35c22",
+              "task_contract_sha256": "d65533033f04ee612aac4d5c6c5616d4eb47584976f2edf95311770d5a91c684",
+              "algorithm": "greedy_rewrite",
+              "feedback_mode": "normal",
+              "seed": 1,
+              "superseded_task_contract_sha256": "d65533033f04ee612aac4d5c6c5616d4eb47584976f2edf95311770d5a91c684"
+            }
+          }
+        },
+        "fixed_artifact_noise": {
+          "status": "pass",
+          "passed": true,
+          "repetitions": 3,
+          "scores": [
+            0.6114935558376748,
+            0.6114935558376748,
+            0.6114935558376748
+          ],
+          "valid": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "noise_span": 0.0,
+          "numeric_field_spans": {
+            "combined_score": 0.0,
+            "feasibility_rate": 0.0,
+            "raw_score": 0.0,
+            "valid": 0.0
+          },
+          "maximum_numeric_field_span": 0.0,
+          "canonical_payload_sha256": [
+            "e31749d3f3b1bff52901d2dd4b8deca3ee0f3347003f0be428b955d336eae294",
+            "e31749d3f3b1bff52901d2dd4b8deca3ee0f3347003f0be428b955d336eae294",
+            "e31749d3f3b1bff52901d2dd4b8deca3ee0f3347003f0be428b955d336eae294"
+          ],
+          "exact_payload_match": true,
+          "maximum_allowed_noise_span": 1e-12,
+          "infrastructure_failure_count": 0,
+          "results": [
+            {
+              "combined_score": 0.6114935558376748,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.6114935558376748
+            },
+            {
+              "combined_score": 0.6114935558376748,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.6114935558376748
+            },
+            {
+              "combined_score": 0.6114935558376748,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.6114935558376748
+            }
+          ],
+          "reason": null,
+          "nested_payload_sha256": [
+            {
+              "per_instance": "dc3518b8d28e34fb705478beaa3ac4f29e979ce0706e8d55de521c1ae9db6c20"
+            },
+            {
+              "per_instance": "dc3518b8d28e34fb705478beaa3ac4f29e979ce0706e8d55de521c1ae9db6c20"
+            },
+            {
+              "per_instance": "dc3518b8d28e34fb705478beaa3ac4f29e979ce0706e8d55de521c1ae9db6c20"
+            }
+          ],
+          "complete_numeric_field_spans_sha256": "ae3aa68cb32500cde14a848eaffb72b85a6b7038c2604b88512e2841128cfc1c",
+          "published_results_scope": "search-visible results and per-field spans only; the maximum numeric span, full payload hashes, complete span-map hash and decisions use private complete results"
+        },
+        "baseline_reference_separation": {
+          "status": "pass",
+          "passed": true,
+          "baseline_score": 0.0,
+          "reference_score": 1.0,
+          "score_gap": 1.0,
+          "minimum_score_gap": 0.05,
+          "baseline_valid": 1.0,
+          "reference_valid": 1.0,
+          "evidence": {
+            "path": "experiments/truss_v2_calibration_2026-07-21.json",
+            "expected_sha256": "0950fc98a2a93f0c8a1db051484b2e5db8b5325448dc4b710c1b28170d632d26",
+            "actual_sha256": "0950fc98a2a93f0c8a1db051484b2e5db8b5325448dc4b710c1b28170d632d26",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "4c31f5d1b1cb448b38629f54a053ac1cf01f6385",
+            "reason": null,
+            "pointers": [
+              "/baseline/combined_score",
+              "/baseline/valid",
+              "/nominal_reference_policy/combined_score",
+              "/nominal_reference_policy/valid"
+            ],
+            "missing_pointers": []
+          },
+          "contract_compatibility": {
+            "source_revision": "4c31f5d1b1cb448b38629f54a053ac1cf01f6385",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [],
+            "evaluator_changed_but_measured_inert": [
+              "benchmarks/Engineering/TrussWeightMinimization/verification/evaluator.py"
+            ],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/StructuralEngineering/TrussWeightMinimization",
+            "current_task_path": "benchmarks/Engineering/TrussWeightMinimization",
+            "compared_file_count": 11,
+            "reason": null
+          },
+          "reason": null
+        },
+        "evaluator_numerical_resolution": {
+          "status": "pass",
+          "passed": true,
+          "distinct_scores": [
+            0.0,
+            0.4155791815661502,
+            0.5484970821077498,
+            0.6114935558376748
+          ],
+          "minimum_nonzero_score_gap": 0.062996473729925,
+          "measured_fixed_artifact_noise_span": 0.0,
+          "minimum_noise_multiplier": 10.0,
+          "absolute_resolution_floor": 1e-12,
+          "required_score_gap": 1e-12,
+          "evidence": {
+            "path": "experiments/truss_v2_calibration_analysis_2026-07-21.json",
+            "expected_sha256": "c05aa24d6c4c15e759d39de18cc6e3a151877f8f2183abb1ef84ddc9e9f17223",
+            "actual_sha256": "c05aa24d6c4c15e759d39de18cc6e3a151877f8f2183abb1ef84ddc9e9f17223",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "29c05676eb9d7a84242f93c599f2059045f1bcb3",
+            "reason": null,
+            "pointers": [
+              "/records/normal_budget_three/trajectory"
+            ],
+            "missing_pointers": []
+          },
+          "contract_compatibility": {
+            "source_revision": "29c05676eb9d7a84242f93c599f2059045f1bcb3",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [],
+            "evaluator_changed_but_measured_inert": [
+              "benchmarks/Engineering/TrussWeightMinimization/verification/evaluator.py"
+            ],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/StructuralEngineering/TrussWeightMinimization",
+            "current_task_path": "benchmarks/Engineering/TrussWeightMinimization",
+            "compared_file_count": 11,
+            "reason": null
+          },
+          "reason": null
+        },
+        "scientific_materiality": {
+          "status": "pass",
+          "passed": true,
+          "evidence": {
+            "path": "experiments/scientific_materiality_audit_2026-08-15_v2.json",
+            "expected_sha256": "8484bf4bed778714af31edeb2fcaa8751c96c2cd11e60627bdb087619902625e",
+            "actual_sha256": "8484bf4bed778714af31edeb2fcaa8751c96c2cd11e60627bdb087619902625e",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "f40b1f993c8af9901480dca2ecf26e0f88f53d6c",
+            "reason": null
+          },
+          "task_pointer": "/tasks/4",
+          "task_identity_matches": true,
+          "criterion_count": 3,
+          "criteria_passed_count": 3,
+          "criteria_complete": true,
+          "required_axes": [
+            "development",
+            "heldout",
+            "robustness"
+          ],
+          "covered_axes": [
+            "development",
+            "heldout",
+            "robustness"
+          ],
+          "axes_covered": true,
+          "same_witness_enforced": true,
+          "threshold_basis": "benchmark_preregistered_operational_threshold_not_field_consensus",
+          "scientific_quantity": "structural weight subject to stress, displacement and Euler-buckling feasibility",
+          "units": [
+            "lb",
+            "relative_fraction"
+          ],
+          "criteria": [
+            {
+              "id": "per_instance_weight_reduction",
+              "kind": "paired_records",
+              "axes": [
+                "development",
+                "heldout"
+              ],
+              "passed": true,
+              "direction": "decrease",
+              "record_count": 6,
+              "value_count": 6,
+              "required_splits": [
+                "development",
+                "heldout"
+              ],
+              "observed_splits": [
+                "development",
+                "heldout"
+              ],
+              "split_coverage_passed": true,
+              "minimum_signed_absolute_change": 4190.187604214321,
+              "minimum_signed_relative_change": 0.2681400565913125,
+              "minimum_absolute_change": null,
+              "minimum_relative_change": 0.1,
+              "unit": "lb",
+              "records": [
+                {
+                  "identity": "dev_aluminum_x2",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 14687.636354360398,
+                      "witness": 7009.2129369425575,
+                      "signed_absolute_change": 7678.423417417841,
+                      "signed_relative_change": 0.5227814218819699,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_aluminum_x3",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 16279.712944496603,
+                      "witness": 10303.652021909787,
+                      "signed_absolute_change": 5976.060922586816,
+                      "signed_relative_change": 0.36708638186443193,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_steel_pratt3",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 33729.005830092814,
+                      "witness": 24684.908298043018,
+                      "signed_absolute_change": 9044.097532049796,
+                      "signed_relative_change": 0.2681400565913125,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_titanium_pratt2",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 13210.184966469005,
+                      "witness": 9019.997362254684,
+                      "signed_absolute_change": 4190.187604214321,
+                      "signed_relative_change": 0.3171937118859533,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "heldout_steel_x3",
+                  "split": "heldout",
+                  "comparisons": [
+                    {
+                      "baseline": 38234.288324670444,
+                      "witness": 24862.87488711283,
+                      "signed_absolute_change": 13371.413437557614,
+                      "signed_relative_change": 0.34972308949529446,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "heldout_titanium_x2",
+                  "split": "heldout",
+                  "comparisons": [
+                    {
+                      "baseline": 16995.911146720984,
+                      "witness": 12165.786180567404,
+                      "signed_absolute_change": 4830.12496615358,
+                      "signed_relative_change": 0.28419335241614596,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                }
+              ],
+              "reason": null
+            },
+            {
+              "id": "all_shift_cases_feasible",
+              "kind": "values_bound",
+              "axes": [
+                "development",
+                "heldout",
+                "robustness"
+              ],
+              "passed": true,
+              "operator": "eq",
+              "threshold": 1.0,
+              "value_count": 6,
+              "values": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "outcomes": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "reason": null
+            },
+            {
+              "id": "all_shift_utilizations_bounded",
+              "kind": "values_bound",
+              "axes": [
+                "development",
+                "heldout",
+                "robustness"
+              ],
+              "passed": true,
+              "operator": "lte",
+              "threshold": 1.0000001,
+              "value_count": 6,
+              "values": [
+                0.9995000000005547,
+                0.9995000000000956,
+                0.9995000000462604,
+                0.9995000000011257,
+                0.9994999999997795,
+                0.9994999999996533
+              ],
+              "outcomes": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "reason": null
+            }
+          ],
+          "evidence_scope_matches": true,
+          "contract_compatibility": {
+            "source_revision": "f40b1f993c8af9901480dca2ecf26e0f88f53d6c",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [],
+            "evaluator_changed_but_measured_inert": [
+              "benchmarks/Engineering/TrussWeightMinimization/verification/evaluator.py"
+            ],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Engineering/TrussWeightMinimization",
+            "current_task_path": "benchmarks/Engineering/TrussWeightMinimization",
+            "compared_file_count": 11,
+            "reason": null
+          },
+          "claim": "calibrated landscape materiality only; not agent improvement, post-2h headroom, external validation, or autonomous discovery",
+          "reason": null
+        },
+        "shortcut_resistance": {
+          "status": "pass",
+          "passed": true,
+          "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json#/artifacts/4",
+          "source_sha256": "61d1073ad2b6d62ce8fd4a70c2c8dace00082b959f2b554ca9b87e6ca66382bf",
+          "source_utf8_bytes": 13468,
+          "syntax_valid": true,
+          "syntax_error": null,
+          "forbidden_import_hits": [],
+          "forbidden_call_hits": [],
+          "forbidden_literal_hits": [],
+          "runtime_network_and_filesystem_isolation_checked_separately": true,
+          "scope": "narrow retained-source scan plus secure black-box execution; not an exhaustive contamination, memorization, or benchmark-overfitting audit",
+          "reason": null
+        },
+        "content_addressed_atomic_capture": {
+          "status": "pass",
+          "passed": true,
+          "predicates": [
+            {
+              "pointer": "/task_audits/4/checks/sentinel_snapshot_hash_matches",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/task_audits/4/checks/sentinel_snapshot_events_match",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/task_audits/4/checks/exact_t0_and_terminal",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            }
+          ],
+          "evidence": {
+            "path": "experiments/exploratory_2h_sentinel_smoke_audit_2026-07-27_v1.json",
+            "expected_sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb",
+            "actual_sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "ba566537f42ae1827ca784d95c5daa3250469e98",
+            "reason": null,
+            "pointers": [
+              "/task_audits/4/checks/sentinel_snapshot_hash_matches",
+              "/task_audits/4/checks/sentinel_snapshot_events_match",
+              "/task_audits/4/checks/exact_t0_and_terminal"
+            ],
+            "missing_pointers": []
+          },
+          "reason": null
+        },
+        "exactly_once_recovery": {
+          "status": "pass",
+          "passed": true,
+          "predicates": [
+            {
+              "pointer": "/execution_passed",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/all_fault_scenarios_passed",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/four_search_commit_windows_exercised",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/request_before_receipt_retry_is_reason_coded",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/receipt_before_attempt_completion_reuses_result",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/concurrent_run_writer_is_rejected",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/receipt_tampering_is_rejected",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            }
+          ],
+          "evidence": {
+            "path": "experiments/evaluation_recovery_fault_audit_2026-09-12_v13.json",
+            "expected_sha256": "9b3faed839a13832715435db780783f92fa434adf4a39baac14af6b7637831d2",
+            "actual_sha256": "9b3faed839a13832715435db780783f92fa434adf4a39baac14af6b7637831d2",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+            "reason": null,
+            "pointers": [
+              "/execution_passed",
+              "/checks/all_fault_scenarios_passed",
+              "/checks/four_search_commit_windows_exercised",
+              "/checks/request_before_receipt_retry_is_reason_coded",
+              "/checks/receipt_before_attempt_completion_reuses_result",
+              "/checks/concurrent_run_writer_is_rejected",
+              "/checks/receipt_tampering_is_rejected"
+            ],
+            "missing_pointers": []
+          },
+          "runtime_compatibility": {
+            "source_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+            "runtime_files_unchanged": true,
+            "paths": [
+              "scripts/audit_evaluation_recovery.py",
+              "scripts/run_recovery_fault_worker.py",
+              "sle/algorithms/common.py",
+              "sle/algorithms/evolve.py",
+              "sle/evaluation_ledger.py",
+              "sle/protocol.py"
+            ],
+            "changed_paths": [],
+            "missing_at_source_revision": [],
+            "reason": null
+          },
+          "task_card_path": "benchmarks/Engineering/TrussWeightMinimization/TASK_CARD.yaml",
+          "oracle_deterministic": true,
+          "evidence_scope_matches": true,
+          "claim": "logical exactly-once outcome and oracle-budget accounting for a deterministic local evaluator; not physical exactly-once execution",
+          "reason": null
+        }
+      },
+      "status_counts": {
+        "pass": 10,
+        "fail": 0,
+        "missing": 0
+      },
+      "preflight_passed": true,
+      "long_horizon_run_permitted": true,
+      "not_permitted_reasons": []
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "checks": {
+        "frozen_runtime_contract": {
+          "status": "pass",
+          "passed": true,
+          "expected_sha256": "0b3b6ef12661f5d057ddf0819188f0fdc5a7fe9fba10109cbb876d1fb8fb7af6",
+          "actual_sha256": "0b3b6ef12661f5d057ddf0819188f0fdc5a7fe9fba10109cbb876d1fb8fb7af6"
+        },
+        "frozen_task_package": {
+          "status": "pass",
+          "passed": true,
+          "expected_sha256": "dbebeae3e7ebeea513676d9b78929878bc13a1c92143ffa61cd0249c4ef7d868",
+          "actual_sha256": "dbebeae3e7ebeea513676d9b78929878bc13a1c92143ffa61cd0249c4ef7d868",
+          "scope": "all task source/data files excluding generated output",
+          "mismatch": null
+        },
+        "fixed_artifact_binding": {
+          "status": "pass",
+          "passed": true,
+          "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json#/artifacts/5",
+          "expected_sha256": "5ef7f3122546589af264e52a00abb2cf5538aeac991ddcc051ce6198d562dfd8",
+          "actual_sha256": "5ef7f3122546589af264e52a00abb2cf5538aeac991ddcc051ce6198d562dfd8",
+          "portable_artifact": {
+            "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json",
+            "expected_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185",
+            "actual_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185",
+            "hash_matches": true,
+            "trusted_evidence": false,
+            "source_revision": null,
+            "reason": null,
+            "artifact_pointer": "/artifacts/5",
+            "task": "Thermodynamics/HeatExchangerDesign",
+            "candidate_sha256": "5ef7f3122546589af264e52a00abb2cf5538aeac991ddcc051ce6198d562dfd8",
+            "candidate_utf8_bytes": 17373,
+            "origin": {
+              "path": "runs/gpt55_heat_exchanger_v2_b3_20260722/Thermodynamics__HeatExchangerDesign/greedy_rewrite/normal/seed_1/best_program.py",
+              "run_manifest_path": "runs/gpt55_heat_exchanger_v2_b3_20260722/Thermodynamics__HeatExchangerDesign/greedy_rewrite/normal/seed_1/run_manifest.json",
+              "run_manifest_sha256": "6b9b133cd466e7a1d99de0876ae41c716f40eb640e34843d82bca99c7ea45b76",
+              "task_contract_sha256": "0b3b6ef12661f5d057ddf0819188f0fdc5a7fe9fba10109cbb876d1fb8fb7af6",
+              "algorithm": "greedy_rewrite",
+              "feedback_mode": "normal",
+              "seed": 1,
+              "superseded_task_contract_sha256": "0b3b6ef12661f5d057ddf0819188f0fdc5a7fe9fba10109cbb876d1fb8fb7af6"
+            }
+          }
+        },
+        "fixed_artifact_noise": {
+          "status": "pass",
+          "passed": true,
+          "repetitions": 3,
+          "scores": [
+            0.12605369117948312,
+            0.12605369117948312,
+            0.12605369117948312
+          ],
+          "valid": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "noise_span": 0.0,
+          "numeric_field_spans": {
+            "combined_score": 0.0,
+            "feasibility_rate": 0.0,
+            "raw_score": 0.0,
+            "valid": 0.0
+          },
+          "maximum_numeric_field_span": 0.0,
+          "canonical_payload_sha256": [
+            "2a13b7cc0f9e96ee02bb246eae0d78c074b2c9637efc29eae3ac12723c6da3f3",
+            "2a13b7cc0f9e96ee02bb246eae0d78c074b2c9637efc29eae3ac12723c6da3f3",
+            "2a13b7cc0f9e96ee02bb246eae0d78c074b2c9637efc29eae3ac12723c6da3f3"
+          ],
+          "exact_payload_match": true,
+          "maximum_allowed_noise_span": 1e-12,
+          "infrastructure_failure_count": 0,
+          "results": [
+            {
+              "combined_score": 0.12605369117948312,
+              "valid": 1.0,
+              "feasibility_rate": 0.96875,
+              "raw_score": 0.12605369117948312
+            },
+            {
+              "combined_score": 0.12605369117948312,
+              "valid": 1.0,
+              "feasibility_rate": 0.96875,
+              "raw_score": 0.12605369117948312
+            },
+            {
+              "combined_score": 0.12605369117948312,
+              "valid": 1.0,
+              "feasibility_rate": 0.96875,
+              "raw_score": 0.12605369117948312
+            }
+          ],
+          "reason": null,
+          "nested_payload_sha256": [
+            {
+              "per_instance": "a449b3f1a4f91574ef1ad391d8716cd9926dee9a220a8d011e8dab3dddd44caf"
+            },
+            {
+              "per_instance": "a449b3f1a4f91574ef1ad391d8716cd9926dee9a220a8d011e8dab3dddd44caf"
+            },
+            {
+              "per_instance": "a449b3f1a4f91574ef1ad391d8716cd9926dee9a220a8d011e8dab3dddd44caf"
+            }
+          ],
+          "complete_numeric_field_spans_sha256": "05658b88ae00a7bd28c726d955f716fc6a86535f9e3de46b7ff1d7eea587a3c3",
+          "published_results_scope": "search-visible results and per-field spans only; the maximum numeric span, full payload hashes, complete span-map hash and decisions use private complete results"
+        },
+        "baseline_reference_separation": {
+          "status": "pass",
+          "passed": true,
+          "baseline_score": 0.0,
+          "reference_score": 1.0,
+          "score_gap": 1.0,
+          "minimum_score_gap": 0.05,
+          "baseline_valid": 1.0,
+          "reference_valid": 1.0,
+          "evidence": {
+            "path": "experiments/heat_exchanger_v2_calibration_2026-07-22.json",
+            "expected_sha256": "b60f135066b341515c9ec3e53cc43937d8bfdfa840a7bf427e7a908e47859859",
+            "actual_sha256": "b60f135066b341515c9ec3e53cc43937d8bfdfa840a7bf427e7a908e47859859",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "453f757d95d78c15770d88982314e70909b08a0d",
+            "reason": null,
+            "pointers": [
+              "/baseline/combined_score",
+              "/baseline/valid",
+              "/nominal_reference_policy/combined_score",
+              "/nominal_reference_policy/valid"
+            ],
+            "missing_pointers": []
+          },
+          "contract_compatibility": {
+            "source_revision": "453f757d95d78c15770d88982314e70909b08a0d",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [
+              "benchmarks/Engineering/HeatExchangerDesign/Task.md"
+            ],
+            "evaluator_changed_but_measured_inert": [
+              "benchmarks/Engineering/HeatExchangerDesign/verification/evaluator.py"
+            ],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Thermodynamics/HeatExchangerDesign",
+            "current_task_path": "benchmarks/Engineering/HeatExchangerDesign",
+            "compared_file_count": 11,
+            "reason": null
+          },
+          "reason": null
+        },
+        "evaluator_numerical_resolution": {
+          "status": "pass",
+          "passed": true,
+          "distinct_scores": [
+            0.0,
+            0.008392830073428118,
+            0.12605369117948312
+          ],
+          "minimum_nonzero_score_gap": 0.008392830073428118,
+          "measured_fixed_artifact_noise_span": 0.0,
+          "minimum_noise_multiplier": 10.0,
+          "absolute_resolution_floor": 1e-12,
+          "required_score_gap": 1e-12,
+          "evidence": {
+            "path": "experiments/heat_exchanger_v2_calibration_analysis_2026-07-22.json",
+            "expected_sha256": "4607a9c8f4700ce9c43fb511f6b9166de3e19dfda72c7367d14f30079a0f6fd3",
+            "actual_sha256": "4607a9c8f4700ce9c43fb511f6b9166de3e19dfda72c7367d14f30079a0f6fd3",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "249e2f4912a6abf295f5ff419d91352264043d38",
+            "reason": null,
+            "pointers": [
+              "/records/normal_budget_three/trajectory"
+            ],
+            "missing_pointers": []
+          },
+          "contract_compatibility": {
+            "source_revision": "249e2f4912a6abf295f5ff419d91352264043d38",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [
+              "benchmarks/Engineering/HeatExchangerDesign/Task.md"
+            ],
+            "evaluator_changed_but_measured_inert": [
+              "benchmarks/Engineering/HeatExchangerDesign/verification/evaluator.py"
+            ],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Thermodynamics/HeatExchangerDesign",
+            "current_task_path": "benchmarks/Engineering/HeatExchangerDesign",
+            "compared_file_count": 11,
+            "reason": null
+          },
+          "reason": null
+        },
+        "scientific_materiality": {
+          "status": "pass",
+          "passed": true,
+          "evidence": {
+            "path": "experiments/scientific_materiality_audit_2026-08-15_v2.json",
+            "expected_sha256": "8484bf4bed778714af31edeb2fcaa8751c96c2cd11e60627bdb087619902625e",
+            "actual_sha256": "8484bf4bed778714af31edeb2fcaa8751c96c2cd11e60627bdb087619902625e",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "f40b1f993c8af9901480dca2ecf26e0f88f53d6c",
+            "reason": null
+          },
+          "task_pointer": "/tasks/5",
+          "task_identity_matches": true,
+          "criterion_count": 3,
+          "criteria_passed_count": 3,
+          "criteria_complete": true,
+          "required_axes": [
+            "development",
+            "heldout",
+            "robustness"
+          ],
+          "covered_axes": [
+            "development",
+            "heldout",
+            "robustness"
+          ],
+          "axes_covered": true,
+          "same_witness_enforced": true,
+          "threshold_basis": "benchmark_preregistered_operational_threshold_not_field_consensus",
+          "scientific_quantity": "exact-model heat-duty versus annualized-cost Pareto hypervolume",
+          "units": [
+            "dimensionless_physical_objective_hypervolume"
+          ],
+          "criteria": [
+            {
+              "id": "per_instance_exact_hypervolume",
+              "kind": "paired_records",
+              "axes": [
+                "development",
+                "heldout"
+              ],
+              "passed": true,
+              "direction": "increase",
+              "record_count": 6,
+              "value_count": 6,
+              "required_splits": [
+                "development",
+                "heldout"
+              ],
+              "observed_splits": [
+                "development",
+                "heldout"
+              ],
+              "split_coverage_passed": true,
+              "minimum_signed_absolute_change": 0.14014031452074074,
+              "minimum_signed_relative_change": 0.4930571777028329,
+              "minimum_absolute_change": 0.05,
+              "minimum_relative_change": null,
+              "unit": "dimensionless_physical_objective_hypervolume",
+              "records": [
+                {
+                  "identity": "dev_glycol_recovery",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.4763163767993251,
+                      "witness": 0.7754526465190962,
+                      "signed_absolute_change": 0.2991362697197711,
+                      "signed_relative_change": 0.6280201233681263,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_high_flow_water",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.5454820913651016,
+                      "witness": 0.8144359518210175,
+                      "signed_absolute_change": 0.26895386045591585,
+                      "signed_relative_change": 0.4930571777028329,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_oil_cooler",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.15710452408747197,
+                      "witness": 0.2972448386082127,
+                      "signed_absolute_change": 0.14014031452074074,
+                      "signed_relative_change": 0.8920195986381273,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_water_process",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.5155380893203289,
+                      "witness": 0.8202431793118733,
+                      "signed_absolute_change": 0.30470508999154444,
+                      "signed_relative_change": 0.591042827491678,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "heldout_brine_recovery",
+                  "split": "heldout",
+                  "comparisons": [
+                    {
+                      "baseline": 0.3371605828497717,
+                      "witness": 0.8196422219173016,
+                      "signed_absolute_change": 0.48248163906752994,
+                      "signed_relative_change": 1.431014370035387,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "heldout_viscous_oil",
+                  "split": "heldout",
+                  "comparisons": [
+                    {
+                      "baseline": 0.19244291487448495,
+                      "witness": 0.3568030341592046,
+                      "signed_absolute_change": 0.16436011928471966,
+                      "signed_relative_change": 0.8540720732271103,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                }
+              ],
+              "reason": null
+            },
+            {
+              "id": "per_instance_worst_shift_hypervolume",
+              "kind": "paired_records",
+              "axes": [
+                "development",
+                "heldout",
+                "robustness"
+              ],
+              "passed": true,
+              "direction": "increase",
+              "record_count": 6,
+              "value_count": 6,
+              "required_splits": [
+                "development",
+                "heldout"
+              ],
+              "observed_splits": [
+                "development",
+                "heldout"
+              ],
+              "split_coverage_passed": true,
+              "minimum_signed_absolute_change": 0.10990068516868663,
+              "minimum_signed_relative_change": 0.45614986027831583,
+              "minimum_absolute_change": 0.05,
+              "minimum_relative_change": null,
+              "unit": "dimensionless_physical_objective_hypervolume",
+              "records": [
+                {
+                  "identity": "dev_glycol_recovery",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.4651006585351168,
+                      "witness": 0.7387662894181951,
+                      "signed_absolute_change": 0.2736656308830783,
+                      "signed_relative_change": 0.5884008673413125,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_high_flow_water",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.5399825682965803,
+                      "witness": 0.7862955413777916,
+                      "signed_absolute_change": 0.24631297308121125,
+                      "signed_relative_change": 0.45614986027831583,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_oil_cooler",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.11760906109480519,
+                      "witness": 0.22750974626349182,
+                      "signed_absolute_change": 0.10990068516868663,
+                      "signed_relative_change": 0.9344576357096771,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "dev_water_process",
+                  "split": "development",
+                  "comparisons": [
+                    {
+                      "baseline": 0.462127633354297,
+                      "witness": 0.6906581700325121,
+                      "signed_absolute_change": 0.22853053667821505,
+                      "signed_relative_change": 0.4945182243689996,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "heldout_brine_recovery",
+                  "split": "heldout",
+                  "comparisons": [
+                    {
+                      "baseline": 0.3290613555448279,
+                      "witness": 0.7763333293620885,
+                      "signed_absolute_change": 0.44727197381726064,
+                      "signed_relative_change": 1.359235796852265,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                },
+                {
+                  "identity": "heldout_viscous_oil",
+                  "split": "heldout",
+                  "comparisons": [
+                    {
+                      "baseline": 0.14489199620831408,
+                      "witness": 0.2758176200856486,
+                      "signed_absolute_change": 0.1309256238773345,
+                      "signed_relative_change": 0.9036083931723885,
+                      "passed": true
+                    }
+                  ],
+                  "passed": true
+                }
+              ],
+              "reason": null
+            },
+            {
+              "id": "all_exact_archives_feasible",
+              "kind": "values_bound",
+              "axes": [
+                "development",
+                "heldout",
+                "robustness"
+              ],
+              "passed": true,
+              "operator": "eq",
+              "threshold": 1.0,
+              "value_count": 6,
+              "values": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "outcomes": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "reason": null
+            }
+          ],
+          "evidence_scope_matches": true,
+          "contract_compatibility": {
+            "source_revision": "f40b1f993c8af9901480dca2ecf26e0f88f53d6c",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [],
+            "evaluator_changed_but_measured_inert": [
+              "benchmarks/Engineering/HeatExchangerDesign/verification/evaluator.py"
+            ],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Engineering/HeatExchangerDesign",
+            "current_task_path": "benchmarks/Engineering/HeatExchangerDesign",
+            "compared_file_count": 11,
+            "reason": null
+          },
+          "claim": "calibrated landscape materiality only; not agent improvement, post-2h headroom, external validation, or autonomous discovery",
+          "reason": null
+        },
+        "shortcut_resistance": {
+          "status": "pass",
+          "passed": true,
+          "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json#/artifacts/5",
+          "source_sha256": "5ef7f3122546589af264e52a00abb2cf5538aeac991ddcc051ce6198d562dfd8",
+          "source_utf8_bytes": 17373,
+          "syntax_valid": true,
+          "syntax_error": null,
+          "forbidden_import_hits": [],
+          "forbidden_call_hits": [],
+          "forbidden_literal_hits": [],
+          "runtime_network_and_filesystem_isolation_checked_separately": true,
+          "scope": "narrow retained-source scan plus secure black-box execution; not an exhaustive contamination, memorization, or benchmark-overfitting audit",
+          "reason": null
+        },
+        "content_addressed_atomic_capture": {
+          "status": "pass",
+          "passed": true,
+          "predicates": [
+            {
+              "pointer": "/task_audits/5/checks/sentinel_snapshot_hash_matches",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/task_audits/5/checks/sentinel_snapshot_events_match",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/task_audits/5/checks/exact_t0_and_terminal",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            }
+          ],
+          "evidence": {
+            "path": "experiments/exploratory_2h_sentinel_smoke_audit_2026-07-27_v1.json",
+            "expected_sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb",
+            "actual_sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "ba566537f42ae1827ca784d95c5daa3250469e98",
+            "reason": null,
+            "pointers": [
+              "/task_audits/5/checks/sentinel_snapshot_hash_matches",
+              "/task_audits/5/checks/sentinel_snapshot_events_match",
+              "/task_audits/5/checks/exact_t0_and_terminal"
+            ],
+            "missing_pointers": []
+          },
+          "reason": null
+        },
+        "exactly_once_recovery": {
+          "status": "pass",
+          "passed": true,
+          "predicates": [
+            {
+              "pointer": "/execution_passed",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/all_fault_scenarios_passed",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/four_search_commit_windows_exercised",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/request_before_receipt_retry_is_reason_coded",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/receipt_before_attempt_completion_reuses_result",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/concurrent_run_writer_is_rejected",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/receipt_tampering_is_rejected",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            }
+          ],
+          "evidence": {
+            "path": "experiments/evaluation_recovery_fault_audit_2026-09-12_v13.json",
+            "expected_sha256": "9b3faed839a13832715435db780783f92fa434adf4a39baac14af6b7637831d2",
+            "actual_sha256": "9b3faed839a13832715435db780783f92fa434adf4a39baac14af6b7637831d2",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+            "reason": null,
+            "pointers": [
+              "/execution_passed",
+              "/checks/all_fault_scenarios_passed",
+              "/checks/four_search_commit_windows_exercised",
+              "/checks/request_before_receipt_retry_is_reason_coded",
+              "/checks/receipt_before_attempt_completion_reuses_result",
+              "/checks/concurrent_run_writer_is_rejected",
+              "/checks/receipt_tampering_is_rejected"
+            ],
+            "missing_pointers": []
+          },
+          "runtime_compatibility": {
+            "source_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+            "runtime_files_unchanged": true,
+            "paths": [
+              "scripts/audit_evaluation_recovery.py",
+              "scripts/run_recovery_fault_worker.py",
+              "sle/algorithms/common.py",
+              "sle/algorithms/evolve.py",
+              "sle/evaluation_ledger.py",
+              "sle/protocol.py"
+            ],
+            "changed_paths": [],
+            "missing_at_source_revision": [],
+            "reason": null
+          },
+          "task_card_path": "benchmarks/Engineering/HeatExchangerDesign/TASK_CARD.yaml",
+          "oracle_deterministic": true,
+          "evidence_scope_matches": true,
+          "claim": "logical exactly-once outcome and oracle-budget accounting for a deterministic local evaluator; not physical exactly-once execution",
+          "reason": null
+        }
+      },
+      "status_counts": {
+        "pass": 10,
+        "fail": 0,
+        "missing": 0
+      },
+      "preflight_passed": true,
+      "long_horizon_run_permitted": true,
+      "not_permitted_reasons": []
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "checks": {
+        "frozen_runtime_contract": {
+          "status": "pass",
+          "passed": true,
+          "expected_sha256": "91912e3c3d2dd44b9effaf0587bfab96c090c2da433426b917b56b306fc7bfef",
+          "actual_sha256": "91912e3c3d2dd44b9effaf0587bfab96c090c2da433426b917b56b306fc7bfef"
+        },
+        "frozen_task_package": {
+          "status": "pass",
+          "passed": true,
+          "expected_sha256": "ec85b9fb8483b27b835ce7416780a9b797a074ec556946016df6bb37b5b19866",
+          "actual_sha256": "ec85b9fb8483b27b835ce7416780a9b797a074ec556946016df6bb37b5b19866",
+          "scope": "all task source/data files excluding generated output",
+          "mismatch": null
+        },
+        "fixed_artifact_binding": {
+          "status": "pass",
+          "passed": true,
+          "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json#/artifacts/6",
+          "expected_sha256": "401c81126a27e4d998f3d8519c74eeb8b4b88dfa6fbafd1fcdb44a3b04b9dba6",
+          "actual_sha256": "401c81126a27e4d998f3d8519c74eeb8b4b88dfa6fbafd1fcdb44a3b04b9dba6",
+          "portable_artifact": {
+            "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json",
+            "expected_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185",
+            "actual_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185",
+            "hash_matches": true,
+            "trusted_evidence": false,
+            "source_revision": null,
+            "reason": null,
+            "artifact_pointer": "/artifacts/6",
+            "task": "Turbulence/RANSCalibration",
+            "candidate_sha256": "401c81126a27e4d998f3d8519c74eeb8b4b88dfa6fbafd1fcdb44a3b04b9dba6",
+            "candidate_utf8_bytes": 522,
+            "origin": {
+              "path": "runs/rans_v2_b3/Turbulence__RANSCalibration/greedy_rewrite/normal/seed_1/best_program.py",
+              "run_manifest_path": "runs/rans_v2_b3/Turbulence__RANSCalibration/greedy_rewrite/normal/seed_1/run_manifest.json",
+              "run_manifest_sha256": "7e66b5900026ef0353832b80278c634f2572eea2fbfac234643d8187fbc2b5f1",
+              "task_contract_sha256": "91912e3c3d2dd44b9effaf0587bfab96c090c2da433426b917b56b306fc7bfef",
+              "algorithm": "greedy_rewrite",
+              "feedback_mode": "normal",
+              "seed": 1,
+              "superseded_task_contract_sha256": "91912e3c3d2dd44b9effaf0587bfab96c090c2da433426b917b56b306fc7bfef"
+            }
+          }
+        },
+        "fixed_artifact_noise": {
+          "status": "pass",
+          "passed": true,
+          "repetitions": 3,
+          "scores": [
+            0.35593547918473717,
+            0.35593547918473717,
+            0.35593547918473717
+          ],
+          "valid": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "noise_span": 0.0,
+          "numeric_field_spans": {
+            "combined_score": 0.0,
+            "feasibility_rate": 0.0,
+            "raw_score": 0.0,
+            "valid": 0.0
+          },
+          "maximum_numeric_field_span": 0.0,
+          "canonical_payload_sha256": [
+            "59d25824cc43182aa37ab67052c67fbda60159517620a3eada8e13d3acdf3380",
+            "59d25824cc43182aa37ab67052c67fbda60159517620a3eada8e13d3acdf3380",
+            "59d25824cc43182aa37ab67052c67fbda60159517620a3eada8e13d3acdf3380"
+          ],
+          "exact_payload_match": true,
+          "maximum_allowed_noise_span": 1e-12,
+          "infrastructure_failure_count": 0,
+          "results": [
+            {
+              "combined_score": 0.35593547918473717,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.35593547918473717
+            },
+            {
+              "combined_score": 0.35593547918473717,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.35593547918473717
+            },
+            {
+              "combined_score": 0.35593547918473717,
+              "valid": 1.0,
+              "feasibility_rate": 1.0,
+              "raw_score": 0.35593547918473717
+            }
+          ],
+          "reason": null,
+          "nested_payload_sha256": [
+            {
+              "candidate_parameter_vector": "993699850d1f456b7c6134456ca02a9c5eb80aea1b5ce7652d505b05f21ac0bf",
+              "loss_anchors": "08ce124febdfb03ed5439523a81b823dd38287e232a785c146c5c83d00d42e40",
+              "per_condition": "d3500c5248f3270810405793e97616bc78549d8411f26f358115cea6ac79b96d",
+              "shift_conditions": "1c5766cd6ecd20969315a5ae07bd35b82a6675887f8044caded6d6391f87004a"
+            },
+            {
+              "candidate_parameter_vector": "993699850d1f456b7c6134456ca02a9c5eb80aea1b5ce7652d505b05f21ac0bf",
+              "loss_anchors": "08ce124febdfb03ed5439523a81b823dd38287e232a785c146c5c83d00d42e40",
+              "per_condition": "d3500c5248f3270810405793e97616bc78549d8411f26f358115cea6ac79b96d",
+              "shift_conditions": "1c5766cd6ecd20969315a5ae07bd35b82a6675887f8044caded6d6391f87004a"
+            },
+            {
+              "candidate_parameter_vector": "993699850d1f456b7c6134456ca02a9c5eb80aea1b5ce7652d505b05f21ac0bf",
+              "loss_anchors": "08ce124febdfb03ed5439523a81b823dd38287e232a785c146c5c83d00d42e40",
+              "per_condition": "d3500c5248f3270810405793e97616bc78549d8411f26f358115cea6ac79b96d",
+              "shift_conditions": "1c5766cd6ecd20969315a5ae07bd35b82a6675887f8044caded6d6391f87004a"
+            }
+          ],
+          "complete_numeric_field_spans_sha256": "5214c01b9a63a9b94c9a95ceb2940e11f8afdefd0c18611df85b0e148e6a4483",
+          "published_results_scope": "search-visible results and per-field spans only; the maximum numeric span, full payload hashes, complete span-map hash and decisions use private complete results"
+        },
+        "baseline_reference_separation": {
+          "status": "pass",
+          "passed": true,
+          "baseline_score": 0.0,
+          "reference_score": 1.0,
+          "score_gap": 1.0,
+          "minimum_score_gap": 0.05,
+          "baseline_valid": 1.0,
+          "reference_valid": 1.0,
+          "evidence": {
+            "path": "experiments/rans_v2_calibration_2026-07-24.json",
+            "expected_sha256": "62054f7ec2b8cba27a03d1046ce4e23ea3d317edf2c60d6ea194ff362c4766c3",
+            "actual_sha256": "62054f7ec2b8cba27a03d1046ce4e23ea3d317edf2c60d6ea194ff362c4766c3",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "d775e9a7e5dee35c2aa56a3a57918ebd80d2453c",
+            "reason": null,
+            "pointers": [
+              "/witness_metrics/baseline/combined_score",
+              "/witness_metrics/baseline/valid",
+              "/witness_metrics/nominal/combined_score",
+              "/witness_metrics/nominal/valid"
+            ],
+            "missing_pointers": []
+          },
+          "contract_compatibility": {
+            "source_revision": "d775e9a7e5dee35c2aa56a3a57918ebd80d2453c",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [],
+            "evaluator_changed_but_measured_inert": [
+              "benchmarks/Engineering/RANSCalibration/verification/evaluator.py"
+            ],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Turbulence/RANSCalibration",
+            "current_task_path": "benchmarks/Engineering/RANSCalibration",
+            "compared_file_count": 13,
+            "reason": null
+          },
+          "reason": null
+        },
+        "evaluator_numerical_resolution": {
+          "status": "pass",
+          "passed": true,
+          "distinct_scores": [
+            0.0,
+            0.35593547918473717
+          ],
+          "minimum_nonzero_score_gap": 0.35593547918473717,
+          "measured_fixed_artifact_noise_span": 0.0,
+          "minimum_noise_multiplier": 10.0,
+          "absolute_resolution_floor": 1e-12,
+          "required_score_gap": 1e-12,
+          "evidence": {
+            "path": "experiments/rans_v2_calibration_analysis_2026-07-24.json",
+            "expected_sha256": "bf4357b7e543492f27973249fb96cb94a714296cf3542c2d9f9f395dd165be7e",
+            "actual_sha256": "bf4357b7e543492f27973249fb96cb94a714296cf3542c2d9f9f395dd165be7e",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "d775e9a7e5dee35c2aa56a3a57918ebd80d2453c",
+            "reason": null,
+            "pointers": [
+              "/records/normal_budget_three/trajectory"
+            ],
+            "missing_pointers": []
+          },
+          "contract_compatibility": {
+            "source_revision": "d775e9a7e5dee35c2aa56a3a57918ebd80d2453c",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [],
+            "evaluator_changed_but_measured_inert": [
+              "benchmarks/Engineering/RANSCalibration/verification/evaluator.py"
+            ],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Turbulence/RANSCalibration",
+            "current_task_path": "benchmarks/Engineering/RANSCalibration",
+            "compared_file_count": 13,
+            "reason": null
+          },
+          "reason": null
+        },
+        "scientific_materiality": {
+          "status": "pass",
+          "passed": true,
+          "evidence": {
+            "path": "experiments/scientific_materiality_audit_2026-08-15_v2.json",
+            "expected_sha256": "8484bf4bed778714af31edeb2fcaa8751c96c2cd11e60627bdb087619902625e",
+            "actual_sha256": "8484bf4bed778714af31edeb2fcaa8751c96c2cd11e60627bdb087619902625e",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "f40b1f993c8af9901480dca2ecf26e0f88f53d6c",
+            "reason": null
+          },
+          "task_pointer": "/tasks/6",
+          "task_identity_matches": true,
+          "criterion_count": 9,
+          "criteria_passed_count": 9,
+          "criteria_complete": true,
+          "required_axes": [
+            "development",
+            "heldout",
+            "robustness"
+          ],
+          "covered_axes": [
+            "development",
+            "heldout",
+            "robustness"
+          ],
+          "axes_covered": true,
+          "same_witness_enforced": true,
+          "threshold_basis": "benchmark_preregistered_operational_threshold_not_field_consensus",
+          "scientific_quantity": "real-DNS mean-velocity and Reynolds-shear closure loss across Reynolds number and wall-coordinate shifts",
+          "units": [
+            "dimensionless_composite_loss",
+            "wall_units_rmse"
+          ],
+          "criteria": [
+            {
+              "id": "development_raw_loss",
+              "kind": "paired_scalar",
+              "axes": [
+                "development"
+              ],
+              "passed": true,
+              "baseline": 1.0041455593279376,
+              "witness": 0.41017255177345385,
+              "direction": "decrease",
+              "signed_absolute_change": 0.5939730075544838,
+              "signed_relative_change": 0.5915208228894849,
+              "minimum_absolute_change": null,
+              "minimum_relative_change": 0.2,
+              "unit": "dimensionless_composite_loss",
+              "reason": null
+            },
+            {
+              "id": "heldout_raw_loss",
+              "kind": "paired_scalar",
+              "axes": [
+                "heldout"
+              ],
+              "passed": true,
+              "baseline": 0.9924611424883841,
+              "witness": 0.636953803698681,
+              "direction": "decrease",
+              "signed_absolute_change": 0.3555073387897031,
+              "signed_relative_change": 0.35820781647767536,
+              "minimum_absolute_change": null,
+              "minimum_relative_change": 0.2,
+              "unit": "dimensionless_composite_loss",
+              "reason": null
+            },
+            {
+              "id": "development_worst_shift_loss",
+              "kind": "paired_scalar",
+              "axes": [
+                "development",
+                "robustness"
+              ],
+              "passed": true,
+              "baseline": 1.2038265711931302,
+              "witness": 0.6074326214016682,
+              "direction": "decrease",
+              "signed_absolute_change": 0.596393949791462,
+              "signed_relative_change": 0.4954151736328325,
+              "minimum_absolute_change": null,
+              "minimum_relative_change": 0.2,
+              "unit": "dimensionless_composite_loss",
+              "reason": null
+            },
+            {
+              "id": "heldout_worst_shift_loss",
+              "kind": "paired_scalar",
+              "axes": [
+                "heldout",
+                "robustness"
+              ],
+              "passed": true,
+              "baseline": 1.1703085734791872,
+              "witness": 0.9005447124272602,
+              "direction": "decrease",
+              "signed_absolute_change": 0.26976386105192696,
+              "signed_relative_change": 0.23050660925259336,
+              "minimum_absolute_change": null,
+              "minimum_relative_change": 0.2,
+              "unit": "dimensionless_composite_loss",
+              "reason": null
+            },
+            {
+              "id": "development_velocity_rmse",
+              "kind": "paired_scalar",
+              "axes": [
+                "development"
+              ],
+              "passed": true,
+              "baseline": 0.3713543249510964,
+              "witness": 0.14230217217168903,
+              "direction": "decrease",
+              "signed_absolute_change": 0.22905215277940735,
+              "signed_relative_change": 0.6168021681437834,
+              "minimum_absolute_change": null,
+              "minimum_relative_change": 0.2,
+              "unit": "wall_units_rmse",
+              "reason": null
+            },
+            {
+              "id": "heldout_velocity_rmse",
+              "kind": "paired_scalar",
+              "axes": [
+                "heldout"
+              ],
+              "passed": true,
+              "baseline": 0.36907561526738775,
+              "witness": 0.2308325125322166,
+              "direction": "decrease",
+              "signed_absolute_change": 0.13824310273517115,
+              "signed_relative_change": 0.37456579903014414,
+              "minimum_absolute_change": null,
+              "minimum_relative_change": 0.2,
+              "unit": "wall_units_rmse",
+              "reason": null
+            },
+            {
+              "id": "development_reynolds_shear_rmse",
+              "kind": "paired_scalar",
+              "axes": [
+                "development"
+              ],
+              "passed": true,
+              "baseline": 0.01515194939003935,
+              "witness": 0.010883424268846257,
+              "direction": "decrease",
+              "signed_absolute_change": 0.0042685251211930925,
+              "signed_relative_change": 0.28171458413127703,
+              "minimum_absolute_change": null,
+              "minimum_relative_change": 0.05,
+              "unit": "wall_units_rmse",
+              "reason": null
+            },
+            {
+              "id": "heldout_reynolds_shear_rmse",
+              "kind": "paired_scalar",
+              "axes": [
+                "heldout"
+              ],
+              "passed": true,
+              "baseline": 0.013954420863982945,
+              "witness": 0.011974504473627922,
+              "direction": "decrease",
+              "signed_absolute_change": 0.0019799163903550226,
+              "signed_relative_change": 0.14188452603327203,
+              "minimum_absolute_change": null,
+              "minimum_relative_change": 0.05,
+              "unit": "wall_units_rmse",
+              "reason": null
+            },
+            {
+              "id": "mean_momentum_physics_gate",
+              "kind": "values_bound",
+              "axes": [
+                "development",
+                "heldout",
+                "robustness"
+              ],
+              "passed": true,
+              "operator": "eq",
+              "threshold": true,
+              "value_count": 1,
+              "values": [
+                true
+              ],
+              "outcomes": [
+                true
+              ],
+              "reason": null
+            }
+          ],
+          "evidence_scope_matches": true,
+          "contract_compatibility": {
+            "source_revision": "f40b1f993c8af9901480dca2ecf26e0f88f53d6c",
+            "runtime_files_unchanged": true,
+            "changed_paths": [],
+            "prompt_changed_paths": [],
+            "evaluator_changed_but_measured_inert": [],
+            "missing_at_source_revision": [],
+            "extra_at_source_revision": [],
+            "added_since_source_revision": [],
+            "source_task_path": "benchmarks/Engineering/RANSCalibration",
+            "current_task_path": "benchmarks/Engineering/RANSCalibration",
+            "compared_file_count": 13,
+            "reason": null
+          },
+          "claim": "calibrated landscape materiality only; not agent improvement, post-2h headroom, external validation, or autonomous discovery",
+          "reason": null
+        },
+        "shortcut_resistance": {
+          "status": "pass",
+          "passed": true,
+          "path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json#/artifacts/6",
+          "source_sha256": "401c81126a27e4d998f3d8519c74eeb8b4b88dfa6fbafd1fcdb44a3b04b9dba6",
+          "source_utf8_bytes": 522,
+          "syntax_valid": true,
+          "syntax_error": null,
+          "forbidden_import_hits": [],
+          "forbidden_call_hits": [],
+          "forbidden_literal_hits": [],
+          "runtime_network_and_filesystem_isolation_checked_separately": true,
+          "scope": "narrow retained-source scan plus secure black-box execution; not an exhaustive contamination, memorization, or benchmark-overfitting audit",
+          "reason": null
+        },
+        "content_addressed_atomic_capture": {
+          "status": "pass",
+          "passed": true,
+          "predicates": [
+            {
+              "pointer": "/task_audits/6/checks/sentinel_snapshot_hash_matches",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/task_audits/6/checks/sentinel_snapshot_events_match",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/task_audits/6/checks/exact_t0_and_terminal",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            }
+          ],
+          "evidence": {
+            "path": "experiments/exploratory_2h_sentinel_smoke_audit_2026-07-27_v1.json",
+            "expected_sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb",
+            "actual_sha256": "92009260e300ebd9a1731bd5f862e63654d4065c6000b7d0c42552e891ffb7cb",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "ba566537f42ae1827ca784d95c5daa3250469e98",
+            "reason": null,
+            "pointers": [
+              "/task_audits/6/checks/sentinel_snapshot_hash_matches",
+              "/task_audits/6/checks/sentinel_snapshot_events_match",
+              "/task_audits/6/checks/exact_t0_and_terminal"
+            ],
+            "missing_pointers": []
+          },
+          "reason": null
+        },
+        "exactly_once_recovery": {
+          "status": "pass",
+          "passed": true,
+          "predicates": [
+            {
+              "pointer": "/execution_passed",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/all_fault_scenarios_passed",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/four_search_commit_windows_exercised",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/request_before_receipt_retry_is_reason_coded",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/receipt_before_attempt_completion_reuses_result",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/concurrent_run_writer_is_rejected",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            },
+            {
+              "pointer": "/checks/receipt_tampering_is_rejected",
+              "operator": "eq",
+              "expected": true,
+              "observed": true,
+              "passed": true
+            }
+          ],
+          "evidence": {
+            "path": "experiments/evaluation_recovery_fault_audit_2026-09-12_v13.json",
+            "expected_sha256": "9b3faed839a13832715435db780783f92fa434adf4a39baac14af6b7637831d2",
+            "actual_sha256": "9b3faed839a13832715435db780783f92fa434adf4a39baac14af6b7637831d2",
+            "hash_matches": true,
+            "trusted_evidence": true,
+            "source_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+            "reason": null,
+            "pointers": [
+              "/execution_passed",
+              "/checks/all_fault_scenarios_passed",
+              "/checks/four_search_commit_windows_exercised",
+              "/checks/request_before_receipt_retry_is_reason_coded",
+              "/checks/receipt_before_attempt_completion_reuses_result",
+              "/checks/concurrent_run_writer_is_rejected",
+              "/checks/receipt_tampering_is_rejected"
+            ],
+            "missing_pointers": []
+          },
+          "runtime_compatibility": {
+            "source_revision": "235935e70cc3dccc873513305e834f2bb14023ea",
+            "runtime_files_unchanged": true,
+            "paths": [
+              "scripts/audit_evaluation_recovery.py",
+              "scripts/run_recovery_fault_worker.py",
+              "sle/algorithms/common.py",
+              "sle/algorithms/evolve.py",
+              "sle/evaluation_ledger.py",
+              "sle/protocol.py"
+            ],
+            "changed_paths": [],
+            "missing_at_source_revision": [],
+            "reason": null
+          },
+          "task_card_path": "benchmarks/Engineering/RANSCalibration/TASK_CARD.yaml",
+          "oracle_deterministic": true,
+          "evidence_scope_matches": true,
+          "claim": "logical exactly-once outcome and oracle-budget accounting for a deterministic local evaluator; not physical exactly-once execution",
+          "reason": null
+        }
+      },
+      "status_counts": {
+        "pass": 10,
+        "fail": 0,
+        "missing": 0
+      },
+      "preflight_passed": true,
+      "long_horizon_run_permitted": true,
+      "not_permitted_reasons": []
+    }
+  ],
+  "issues": [],
+  "limitations": [
+    "A deterministic evaluator and resolvable score do not prove that a score change is scientifically meaningful.",
+    "Historical calibration witnesses establish baseline/reference separation only under their bound contracts.",
+    "Source scans are narrow shortcut checks, not evidence against every form of benchmark overfitting or contamination.",
+    "This preflight cannot demonstrate material improvement after two hours; that requires completed sentinel trajectories.",
+    "Recovery evidence establishes logical exactly-once outcomes only for deterministic local evaluators, not physical exactly-once live-lab execution.",
+    "No task passing this audit becomes confirmatory, externally validated, or autonomous-discovery evidence."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true,
+  "private_evidence": {
+    "sha256": "b1e8dee90b3e2c44893e7b2f6ba3b973cbdf6ed72478e2cafdb49cb769013535",
+    "schema_version": 1,
+    "access": "operator_private_original; not published"
+  },
+  "evaluation_source_provenance_sha256": "0896355889270157289f0e4240426d0320895bfeedc2149ca935ca92daf80fe8"
+}

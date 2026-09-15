@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "manifest_id": "frontier_science_exploratory_2h_v1",
+  "frozen_at_utc": "2026-07-27",
+  "analysis_role": "result_selected_exploratory_measurement_screen",
+  "claim_limit": "not_confirmatory_not_long_horizon_ready_not_feedback_causal_not_scaling_law_not_external_validation_not_autonomous_discovery",
+  "selection": {
+    "source": "experiments/measurement_health_audit_2026-07-27_v1.json",
+    "source_sha256": "83fac0d193dd79581cfbf5c5b11ed12e4e200433cd192e80a9810af4b56446a3",
+    "selected_after_inspecting_current_gpt55_outcomes": true,
+    "confirmatory_reuse_permitted": false,
+    "rule": "Freeze the seven tasks assigned exploratory_long_horizon_screen by measurement-health audit v1; do not add, remove, or reweight tasks after observing 2 h outcomes."
+  },
+  "task_weighting": "equal_task_weight_for_descriptive_aggregates_with_all_task_level_results_retained",
+  "failure_policy": "intent_to_evaluate; retain scheduled, started, captured, judged, valid and terminal counts; no silent retry replacement or valid-only cohort relabeling",
+  "endpoint_policies": [
+    "committed",
+    "terminal",
+    "snapshot_oracle_best"
+  ],
+  "tasks": [
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "maturity_contract_sha256": "1dcdf09b3e2102f99f4e86772b4ee98a7d4eb72444671c397a0cdd4f5f7042f5",
+      "runtime_contract_sha256": "b194efc6ed63212c1ec7477e2d235739215fcaf9efdf729633fe940fca3ca570",
+      "task_card_sha256": "aaaa34f20954cce55180ea56b1c7ef9285a377194df3fbb89ff9822fafbdca61",
+      "provenance_class": "public_data_replay",
+      "role": "real-data optimization, Goodhart and repeatability screen",
+      "superseded_runtime_contract_sha256": "b194efc6ed63212c1ec7477e2d235739215fcaf9efdf729633fe940fca3ca570",
+      "superseded_maturity_contract_sha256": "1dcdf09b3e2102f99f4e86772b4ee98a7d4eb72444671c397a0cdd4f5f7042f5"
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "maturity_contract_sha256": "4af8fdfcbedae8c98cb004f3861e9ef35b421749e153dd9407cd679893f6e582",
+      "runtime_contract_sha256": "eff0d8ade431b1bd04479f3bbd984290ee568c0813945979e7975fff964d411c",
+      "task_card_sha256": "22c22a90b2940063a37488fc1cadc31445713c27fe8661e14cd868a384d9b8b4",
+      "provenance_class": "procedural",
+      "role": "high-variance Maxwell design, transfer and robustness screen",
+      "superseded_runtime_contract_sha256": "eff0d8ade431b1bd04479f3bbd984290ee568c0813945979e7975fff964d411c",
+      "superseded_maturity_contract_sha256": "4af8fdfcbedae8c98cb004f3861e9ef35b421749e153dd9407cd679893f6e582"
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "maturity_contract_sha256": "c665c14caf2be1c69d84ad29bcd3930257d657d324705884907acf0c0672d7d0",
+      "runtime_contract_sha256": "c0fefe1c1fa67e0e5adab9a2423561f53e627ebb41a1df400af8a6c802a3c14f",
+      "task_card_sha256": "84dae5b35ca582a19391ea2f04b8a64dbee2682c88ef72635f4bf5bf7346119b",
+      "provenance_class": "procedural",
+      "role": "ensemble inverse-design and proxy-false-promotion screen",
+      "superseded_runtime_contract_sha256": "c0fefe1c1fa67e0e5adab9a2423561f53e627ebb41a1df400af8a6c802a3c14f",
+      "superseded_maturity_contract_sha256": "c665c14caf2be1c69d84ad29bcd3930257d657d324705884907acf0c0672d7d0"
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "maturity_contract_sha256": "7eb6b8c8080ac2ed2f3e5af2c381abe7b54d5b26de59263146d1c5eaca0cee81",
+      "runtime_contract_sha256": "cdbb31a5dc9d1fada318da0ed92419fa1cbfec66b88303712b98f0b4642b02ff",
+      "task_card_sha256": "45a615a06c1b0c6db599d502373fed7007175d84f078d7009d05fd7764c3c36a",
+      "provenance_class": "procedural",
+      "role": "device Pareto, transfer and worst-shift robustness screen",
+      "superseded_runtime_contract_sha256": "cdbb31a5dc9d1fada318da0ed92419fa1cbfec66b88303712b98f0b4642b02ff",
+      "superseded_maturity_contract_sha256": "7eb6b8c8080ac2ed2f3e5af2c381abe7b54d5b26de59263146d1c5eaca0cee81"
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "maturity_contract_sha256": "32da1c959589c3fa49bc569c0eb6f83d0b5c8d02040764147b1a5747b67f20c4",
+      "runtime_contract_sha256": "d65533033f04ee612aac4d5c6c5616d4eb47584976f2edf95311770d5a91c684",
+      "task_card_sha256": "fb34670aeb0b25b361ac40dd12b6588dc8853ffdacdd65660bac1f0831033901",
+      "provenance_class": "procedural",
+      "role": "structural optimization versus sealed physical robustness screen",
+      "superseded_runtime_contract_sha256": "d65533033f04ee612aac4d5c6c5616d4eb47584976f2edf95311770d5a91c684",
+      "superseded_maturity_contract_sha256": "32da1c959589c3fa49bc569c0eb6f83d0b5c8d02040764147b1a5747b67f20c4"
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "maturity_contract_sha256": "90c17538a13b0eca5fa31d03c69427beb10ddb508caa5fedce7af51771ce646d",
+      "runtime_contract_sha256": "0b3b6ef12661f5d057ddf0819188f0fdc5a7fe9fba10109cbb876d1fb8fb7af6",
+      "task_card_sha256": "a21c3338555c0b64c460e6d7bd241b7e0d5bfc6d974477dda4bb047e37cf8cdf",
+      "provenance_class": "procedural",
+      "role": "multifidelity Pareto and fouling/manufacturing robustness screen",
+      "superseded_runtime_contract_sha256": "0b3b6ef12661f5d057ddf0819188f0fdc5a7fe9fba10109cbb876d1fb8fb7af6",
+      "superseded_maturity_contract_sha256": "90c17538a13b0eca5fa31d03c69427beb10ddb508caa5fedce7af51771ce646d"
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "maturity_contract_sha256": "58ec03a374a6d39098f9ff4eeb49d2f3449bc3268d2649a3dc3ea1dcff541063",
+      "runtime_contract_sha256": "91912e3c3d2dd44b9effaf0587bfab96c090c2da433426b917b56b306fc7bfef",
+      "task_card_sha256": "78e3a26b06428658f6a9c74b8c1c870b6afa3a072c43488deccad6d23c044271",
+      "provenance_class": "public_data_replay",
+      "role": "real-DNS closure calibration and higher-Re transfer screen",
+      "superseded_runtime_contract_sha256": "91912e3c3d2dd44b9effaf0587bfab96c090c2da433426b917b56b306fc7bfef",
+      "superseded_maturity_contract_sha256": "58ec03a374a6d39098f9ff4eeb49d2f3449bc3268d2649a3dc3ea1dcff541063"
+    }
+  ],
+  "horizon_policy": {
+    "primary_exploratory_horizon_seconds": 7200,
+    "audit_horizon_seconds": 43200,
+    "two_hour_stopping_is_confirmatory": false,
+    "all_tasks_receive_two_hours": true,
+    "audit_tranche_selection": {
+      "method": "Python random.Random(seed).sample(sorted(task_ids), 3)",
+      "seed": 2026072701,
+      "selected_before_two_hour_runs": true,
+      "tasks": [
+        "Optics/DiffractionGratingDesign",
+        "Electrochemistry/ElectrolyteConductivityDesign",
+        "Thermodynamics/HeatExchangerDesign"
+      ]
+    },
+    "late_bloomer_policy": "The random audit tranche continues to 12 h independent of its 2 h score; apparent 2 h success or failure cannot change membership."
+  },
+  "required_sentinels": [
+    "t0",
+    "first_valid",
+    "every_agent_submission",
+    "every_signed_commit_or_abstention",
+    "fixed_grid_checkpoint",
+    "terminal_cutoff"
+  ],
+  "required_preflight": [
+    "fixed_artifact_noise",
+    "evaluator_resolution_and_materiality",
+    "baseline_reference_separation",
+    "first_valid_measurement",
+    "shortcut_resistance",
+    "content_addressed_atomic_capture",
+    "exactly_once_recovery"
+  ],
+  "prohibited_interpretations": [
+    "The seven tasks are a representative or independently selected science population.",
+    "A 2 h prefix of a 12 h-aware run estimates an independently disclosed 2 h policy.",
+    "Short-run proposal gain demonstrates material post-2h headroom.",
+    "Best hidden snapshot is the autonomous committed result.",
+    "Simulator optimization alone demonstrates autonomous scientific discovery."
+  ],
+  "supersedes": {
+    "path": ".research/exploratory_2h_cohort_manifest_2026-09-11_v12.json",
+    "sha256": "420928dff54890ccbbf25dc4f026c99109ac5010a1132f9e46c5f23355103606"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "scope": "TWO_FIXED_DATA_FREE_CANDIDATE_RPC_IMPORT_PROBES",
+  "source_revision": "40b1c29cd492898a50d963bc0b703c34a80fc5bc",
+  "runtime_source_sha256": "c9dec1ffc5c83d8d6a9b1a6102fba57a4fc90764549d53d57016608cccb68bfd",
+  "driver_sha256": "636ff106bce9566065a11a75b6257c11a7f3a43954b00aee8b211ab7e1d3d0e0",
+  "scientific_evaluate_candidate_calls": 0,
+  "model_draws": 0,
+  "rows": [
+    {
+      "name": "base",
+      "candidate_sha256": "1da64b5a75b0b4296655938f0ca6e8fcb054185c3ed4df422aaf9d507a22d8d5",
+      "candidate_proxy_attempted": true,
+      "preflight": "passed",
+      "trusted_distribution_versions": {
+        "numpy": "1.24.4",
+        "scipy": "1.10.1"
+      },
+      "observed": {
+        "numpy": "1.24.4",
+        "scipy": "1.10.1",
+        "soabi": "cpython-38-x86_64-linux-gnu",
+        "reference_anchor_visible": false
+      },
+      "status": "passed"
+    },
+    {
+      "name": "qutip",
+      "candidate_sha256": "a800dc4e3724aa526df51deca69765ab51dec8e892e0c8395a0124688b2dcefe",
+      "candidate_proxy_attempted": false,
+      "status": "preflight_rejected",
+      "error_class": "RuntimeError",
+      "preflight": "rejected",
+      "preflight_error": "candidate-mounted package 'packaging' has version 24.2, expected 26.2"
+    }
+  ]
+}

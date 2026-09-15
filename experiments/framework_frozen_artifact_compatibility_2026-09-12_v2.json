@@ -1,0 +1,459 @@
+{
+  "schema_version": 2,
+  "evidence_scope": "FIXED_ARTIFACT_CROSS_RUNTIME_CANONICAL_PAYLOAD_COMPARISON_ONLY",
+  "source_provenance": {
+    "git_available": true,
+    "git_revision": "84de68b9f9abab8f48cd225f37b7919fd1faa12d",
+    "source_tree_dirty": false,
+    "source_changes": [],
+    "source_scope": [
+      "sle",
+      "scripts",
+      "tests",
+      "benchmarks",
+      "requirements-upstream.txt"
+    ]
+  },
+  "before": {
+    "path": "experiments/measurement_health_preflight_2026-09-12_v4.json",
+    "sha256": "d5cd2e666fadfe342d950a0de91e8f15ec3a249b87eb92786e8601fe04c159e9",
+    "measurement_revision": "4fd69ebb2d09f99cc2cf25d1c1a3e26bce09d4f1",
+    "runtime_source_sha256": "945d9cf3689d0045860006c6d188725c7c4e334d960080ac6ec339b474f63ca7",
+    "private_original_sha256": "70143e2a91d4b50d373ca8b7133ed6377eeb5f81f72f73574d11d4a8a66d806c"
+  },
+  "after": {
+    "path": "experiments/measurement_health_preflight_2026-09-12_v5.json",
+    "sha256": "4831b18e09b6a503374bd47f9048b0a1607ff681dc50b801e5be710ba5080fb0",
+    "measurement_revision": "84de68b9f9abab8f48cd225f37b7919fd1faa12d",
+    "runtime_source_sha256": "6f8344cdd2d15811803a07dd7d299f6348630deaecd2ee2601b57cfff14fab25",
+    "private_original_sha256": "b1e8dee90b3e2c44893e7b2f6ba3b973cbdf6ed72478e2cafdb49cb769013535"
+  },
+  "environment": {
+    "python": "3.8.10 (default, Nov  7 2024, 13:10:47) \n[GCC 9.4.0]",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29"
+  },
+  "digest_contract": "sha256(json.dumps(full_result,sort_keys=True,separators=(',',':'),allow_nan=False).encode('utf-8'))",
+  "digest_function": "scripts/run_measurement_health_preflight.py::_evaluate_repeated",
+  "before_digest_function_sha256": "619bca9e8592e2b0120fe280723cc6d0aaf12766bd857b8c2da923bc81876618",
+  "after_digest_function_sha256": "619bca9e8592e2b0120fe280723cc6d0aaf12766bd857b8c2da923bc81876618",
+  "operator_script_sha256": "565594fc3f28c7b4e03e059f9e61ed6eae3f110ce988013710f6d1d28dc5e308",
+  "before_actual_evaluations_reused": 21,
+  "after_actual_evaluations_shared_with_preflight": 21,
+  "additional_evaluations_for_this_comparison": 0,
+  "model_calls": 0,
+  "planned_task_count": 7,
+  "rows": [
+    {
+      "task": "Electrochemistry/ElectrolyteConductivityDesign",
+      "candidate_sha256": "2e3e95b75b33e87664b71ff1b9c0c10703317b06de8a653903b129a6f3e947a8",
+      "before_binding": {
+        "task": "Electrochemistry/ElectrolyteConductivityDesign",
+        "candidate_sha256": "2e3e95b75b33e87664b71ff1b9c0c10703317b06de8a653903b129a6f3e947a8",
+        "candidate_utf8_bytes": 12904,
+        "origin": {
+          "path": "runs/electrolyte_conductivity_v1_formal_b3/Electrochemistry__ElectrolyteConductivityDesign/greedy_rewrite/normal/seed_1/best_program.py",
+          "run_manifest_path": "runs/electrolyte_conductivity_v1_formal_b3/Electrochemistry__ElectrolyteConductivityDesign/greedy_rewrite/normal/seed_1/run_manifest.json",
+          "run_manifest_sha256": "12a39ad4330daec75e50c01b1e6dd9c7a916eeabebcb19f2388dc2eca165a6ae",
+          "task_contract_sha256": "b194efc6ed63212c1ec7477e2d235739215fcaf9efdf729633fe940fca3ca570",
+          "algorithm": "greedy_rewrite",
+          "feedback_mode": "normal",
+          "seed": 1,
+          "superseded_task_contract_sha256": "b194efc6ed63212c1ec7477e2d235739215fcaf9efdf729633fe940fca3ca570"
+        },
+        "portable_path": ".research/measurement_health_preflight_artifacts_2026-09-12_v13.json",
+        "portable_sha256": "e2a9dd507a39bd91cccf70071e79f5aa17bffbf19a6e2f49ec9aa2cf26d52d17"
+      },
+      "after_binding": {
+        "task": "Electrochemistry/ElectrolyteConductivityDesign",
+        "candidate_sha256": "2e3e95b75b33e87664b71ff1b9c0c10703317b06de8a653903b129a6f3e947a8",
+        "candidate_utf8_bytes": 12904,
+        "origin": {
+          "path": "runs/electrolyte_conductivity_v1_formal_b3/Electrochemistry__ElectrolyteConductivityDesign/greedy_rewrite/normal/seed_1/best_program.py",
+          "run_manifest_path": "runs/electrolyte_conductivity_v1_formal_b3/Electrochemistry__ElectrolyteConductivityDesign/greedy_rewrite/normal/seed_1/run_manifest.json",
+          "run_manifest_sha256": "12a39ad4330daec75e50c01b1e6dd9c7a916eeabebcb19f2388dc2eca165a6ae",
+          "task_contract_sha256": "b194efc6ed63212c1ec7477e2d235739215fcaf9efdf729633fe940fca3ca570",
+          "algorithm": "greedy_rewrite",
+          "feedback_mode": "normal",
+          "seed": 1,
+          "superseded_task_contract_sha256": "b194efc6ed63212c1ec7477e2d235739215fcaf9efdf729633fe940fca3ca570"
+        },
+        "portable_path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json",
+        "portable_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185"
+      },
+      "task_contract_sha256": "b194efc6ed63212c1ec7477e2d235739215fcaf9efdf729633fe940fca3ca570",
+      "task_package_sha256": "9ca2d91c0165d89e0d5677e35b0fc914c02de492a68c992f5365ab560a49a09d",
+      "before_canonical_payload_sha256": [
+        "e893023ece2e3c440c216e4d6cbba407a8483f86a338ea58b490f786050bcca3",
+        "e893023ece2e3c440c216e4d6cbba407a8483f86a338ea58b490f786050bcca3",
+        "e893023ece2e3c440c216e4d6cbba407a8483f86a338ea58b490f786050bcca3"
+      ],
+      "after_canonical_payload_sha256": [
+        "e893023ece2e3c440c216e4d6cbba407a8483f86a338ea58b490f786050bcca3",
+        "e893023ece2e3c440c216e4d6cbba407a8483f86a338ea58b490f786050bcca3",
+        "e893023ece2e3c440c216e4d6cbba407a8483f86a338ea58b490f786050bcca3"
+      ],
+      "before_actual_repetitions": 3,
+      "after_actual_repetitions": 3,
+      "valid_all": true,
+      "within_source_exact_payload_match": true,
+      "cross_source_exact_payload_match": true,
+      "passed": true,
+      "status": "inert"
+    },
+    {
+      "task": "Optics/DiffractionGratingDesign",
+      "candidate_sha256": "d1aef652e4c0a4a936f138d3db8401276095d1660b41521613036b38781505f9",
+      "before_binding": {
+        "task": "Optics/DiffractionGratingDesign",
+        "candidate_sha256": "d1aef652e4c0a4a936f138d3db8401276095d1660b41521613036b38781505f9",
+        "candidate_utf8_bytes": 11543,
+        "origin": {
+          "path": "runs/track_f_main_v1/Optics__DiffractionGratingDesign/greedy_rewrite/normal/seed_4/best_program.py",
+          "run_manifest_path": "runs/track_f_main_v1/Optics__DiffractionGratingDesign/greedy_rewrite/normal/seed_4/run_manifest.json",
+          "run_manifest_sha256": "da398c4c5cae49ebb60e0a932a7493563ff1d0224fefc5203a4da3ccde57f35b",
+          "task_contract_sha256": "eff0d8ade431b1bd04479f3bbd984290ee568c0813945979e7975fff964d411c",
+          "algorithm": "greedy_rewrite",
+          "feedback_mode": "normal",
+          "seed": 4,
+          "superseded_task_contract_sha256": "eff0d8ade431b1bd04479f3bbd984290ee568c0813945979e7975fff964d411c"
+        },
+        "portable_path": ".research/measurement_health_preflight_artifacts_2026-09-12_v13.json",
+        "portable_sha256": "e2a9dd507a39bd91cccf70071e79f5aa17bffbf19a6e2f49ec9aa2cf26d52d17"
+      },
+      "after_binding": {
+        "task": "Optics/DiffractionGratingDesign",
+        "candidate_sha256": "d1aef652e4c0a4a936f138d3db8401276095d1660b41521613036b38781505f9",
+        "candidate_utf8_bytes": 11543,
+        "origin": {
+          "path": "runs/track_f_main_v1/Optics__DiffractionGratingDesign/greedy_rewrite/normal/seed_4/best_program.py",
+          "run_manifest_path": "runs/track_f_main_v1/Optics__DiffractionGratingDesign/greedy_rewrite/normal/seed_4/run_manifest.json",
+          "run_manifest_sha256": "da398c4c5cae49ebb60e0a932a7493563ff1d0224fefc5203a4da3ccde57f35b",
+          "task_contract_sha256": "eff0d8ade431b1bd04479f3bbd984290ee568c0813945979e7975fff964d411c",
+          "algorithm": "greedy_rewrite",
+          "feedback_mode": "normal",
+          "seed": 4,
+          "superseded_task_contract_sha256": "eff0d8ade431b1bd04479f3bbd984290ee568c0813945979e7975fff964d411c"
+        },
+        "portable_path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json",
+        "portable_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185"
+      },
+      "task_contract_sha256": "eff0d8ade431b1bd04479f3bbd984290ee568c0813945979e7975fff964d411c",
+      "task_package_sha256": "95fc73cbd999e6a7360bbe3f71acba6907dea2462266b620aa53763887187bf5",
+      "before_canonical_payload_sha256": [
+        "ab26727b58880d715b95419c7e97b07c6f86c99986c96f9a7244342a9ac5e1c8",
+        "ab26727b58880d715b95419c7e97b07c6f86c99986c96f9a7244342a9ac5e1c8",
+        "ab26727b58880d715b95419c7e97b07c6f86c99986c96f9a7244342a9ac5e1c8"
+      ],
+      "after_canonical_payload_sha256": [
+        "ab26727b58880d715b95419c7e97b07c6f86c99986c96f9a7244342a9ac5e1c8",
+        "ab26727b58880d715b95419c7e97b07c6f86c99986c96f9a7244342a9ac5e1c8",
+        "ab26727b58880d715b95419c7e97b07c6f86c99986c96f9a7244342a9ac5e1c8"
+      ],
+      "before_actual_repetitions": 3,
+      "after_actual_repetitions": 3,
+      "valid_all": true,
+      "within_source_exact_payload_match": true,
+      "cross_source_exact_payload_match": true,
+      "passed": true,
+      "status": "inert"
+    },
+    {
+      "task": "RNAEngineering/RNAInverseDesign",
+      "candidate_sha256": "7a8d6e3060c3a667b16677fce3651e30babec2bfb8f5d159a5f660eebb05f2d4",
+      "before_binding": {
+        "task": "RNAEngineering/RNAInverseDesign",
+        "candidate_sha256": "7a8d6e3060c3a667b16677fce3651e30babec2bfb8f5d159a5f660eebb05f2d4",
+        "candidate_utf8_bytes": 17283,
+        "origin": {
+          "path": "runs/rna_inverse_v1_b3/RNAEngineering__RNAInverseDesign/greedy_rewrite/normal/seed_1/best_program.py",
+          "run_manifest_path": "runs/rna_inverse_v1_b3/RNAEngineering__RNAInverseDesign/greedy_rewrite/normal/seed_1/run_manifest.json",
+          "run_manifest_sha256": "7c2bf45b79404f30bbfdcec9436be4859f6139f958e81577c443ca45c79da4c7",
+          "task_contract_sha256": "c0fefe1c1fa67e0e5adab9a2423561f53e627ebb41a1df400af8a6c802a3c14f",
+          "algorithm": "greedy_rewrite",
+          "feedback_mode": "normal",
+          "seed": 1,
+          "superseded_task_contract_sha256": "c0fefe1c1fa67e0e5adab9a2423561f53e627ebb41a1df400af8a6c802a3c14f"
+        },
+        "portable_path": ".research/measurement_health_preflight_artifacts_2026-09-12_v13.json",
+        "portable_sha256": "e2a9dd507a39bd91cccf70071e79f5aa17bffbf19a6e2f49ec9aa2cf26d52d17"
+      },
+      "after_binding": {
+        "task": "RNAEngineering/RNAInverseDesign",
+        "candidate_sha256": "7a8d6e3060c3a667b16677fce3651e30babec2bfb8f5d159a5f660eebb05f2d4",
+        "candidate_utf8_bytes": 17283,
+        "origin": {
+          "path": "runs/rna_inverse_v1_b3/RNAEngineering__RNAInverseDesign/greedy_rewrite/normal/seed_1/best_program.py",
+          "run_manifest_path": "runs/rna_inverse_v1_b3/RNAEngineering__RNAInverseDesign/greedy_rewrite/normal/seed_1/run_manifest.json",
+          "run_manifest_sha256": "7c2bf45b79404f30bbfdcec9436be4859f6139f958e81577c443ca45c79da4c7",
+          "task_contract_sha256": "c0fefe1c1fa67e0e5adab9a2423561f53e627ebb41a1df400af8a6c802a3c14f",
+          "algorithm": "greedy_rewrite",
+          "feedback_mode": "normal",
+          "seed": 1,
+          "superseded_task_contract_sha256": "c0fefe1c1fa67e0e5adab9a2423561f53e627ebb41a1df400af8a6c802a3c14f"
+        },
+        "portable_path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json",
+        "portable_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185"
+      },
+      "task_contract_sha256": "c0fefe1c1fa67e0e5adab9a2423561f53e627ebb41a1df400af8a6c802a3c14f",
+      "task_package_sha256": "8af930f364c9ed94b28849f01dff6b6da9838862a0871a9c9ad2e5e297822c7d",
+      "before_canonical_payload_sha256": [
+        "33bdd076d2b423d29144f72cbbed34ab34771f9726428ed6d79c5df91180b70d",
+        "33bdd076d2b423d29144f72cbbed34ab34771f9726428ed6d79c5df91180b70d",
+        "33bdd076d2b423d29144f72cbbed34ab34771f9726428ed6d79c5df91180b70d"
+      ],
+      "after_canonical_payload_sha256": [
+        "33bdd076d2b423d29144f72cbbed34ab34771f9726428ed6d79c5df91180b70d",
+        "33bdd076d2b423d29144f72cbbed34ab34771f9726428ed6d79c5df91180b70d",
+        "33bdd076d2b423d29144f72cbbed34ab34771f9726428ed6d79c5df91180b70d"
+      ],
+      "before_actual_repetitions": 3,
+      "after_actual_repetitions": 3,
+      "valid_all": true,
+      "within_source_exact_payload_match": true,
+      "cross_source_exact_payload_match": true,
+      "passed": true,
+      "status": "inert"
+    },
+    {
+      "task": "Semiconductor/MOSFETDoping",
+      "candidate_sha256": "d5af76e6256f27c5dcf2623b852c8d4fdc7907e7807368ea17555289d516af0e",
+      "before_binding": {
+        "task": "Semiconductor/MOSFETDoping",
+        "candidate_sha256": "d5af76e6256f27c5dcf2623b852c8d4fdc7907e7807368ea17555289d516af0e",
+        "candidate_utf8_bytes": 7100,
+        "origin": {
+          "path": "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/best_program.py",
+          "run_manifest_path": "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/run_manifest.json",
+          "run_manifest_sha256": "4ff3ef033e2c9d7350af08aed33836d2b7dd286f0440c315c7deea33a5281832",
+          "task_contract_sha256": "cdbb31a5dc9d1fada318da0ed92419fa1cbfec66b88303712b98f0b4642b02ff",
+          "algorithm": "greedy_rewrite",
+          "feedback_mode": "normal",
+          "seed": 1,
+          "superseded_task_contract_sha256": "cdbb31a5dc9d1fada318da0ed92419fa1cbfec66b88303712b98f0b4642b02ff"
+        },
+        "portable_path": ".research/measurement_health_preflight_artifacts_2026-09-12_v13.json",
+        "portable_sha256": "e2a9dd507a39bd91cccf70071e79f5aa17bffbf19a6e2f49ec9aa2cf26d52d17"
+      },
+      "after_binding": {
+        "task": "Semiconductor/MOSFETDoping",
+        "candidate_sha256": "d5af76e6256f27c5dcf2623b852c8d4fdc7907e7807368ea17555289d516af0e",
+        "candidate_utf8_bytes": 7100,
+        "origin": {
+          "path": "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/best_program.py",
+          "run_manifest_path": "runs/mosfet_v2_b3/Semiconductor__MOSFETDoping/greedy_rewrite/normal/seed_1/run_manifest.json",
+          "run_manifest_sha256": "4ff3ef033e2c9d7350af08aed33836d2b7dd286f0440c315c7deea33a5281832",
+          "task_contract_sha256": "cdbb31a5dc9d1fada318da0ed92419fa1cbfec66b88303712b98f0b4642b02ff",
+          "algorithm": "greedy_rewrite",
+          "feedback_mode": "normal",
+          "seed": 1,
+          "superseded_task_contract_sha256": "cdbb31a5dc9d1fada318da0ed92419fa1cbfec66b88303712b98f0b4642b02ff"
+        },
+        "portable_path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json",
+        "portable_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185"
+      },
+      "task_contract_sha256": "cdbb31a5dc9d1fada318da0ed92419fa1cbfec66b88303712b98f0b4642b02ff",
+      "task_package_sha256": "96c1dac26b2f307a2ab9878f52369878c9897c1f2d636609ed23e25c83b31324",
+      "before_canonical_payload_sha256": [
+        "709de0e263aa261ec05e4b2b178f689e3dd5f64fec3dcf5d7ddf4715b909e1dc",
+        "709de0e263aa261ec05e4b2b178f689e3dd5f64fec3dcf5d7ddf4715b909e1dc",
+        "709de0e263aa261ec05e4b2b178f689e3dd5f64fec3dcf5d7ddf4715b909e1dc"
+      ],
+      "after_canonical_payload_sha256": [
+        "709de0e263aa261ec05e4b2b178f689e3dd5f64fec3dcf5d7ddf4715b909e1dc",
+        "709de0e263aa261ec05e4b2b178f689e3dd5f64fec3dcf5d7ddf4715b909e1dc",
+        "709de0e263aa261ec05e4b2b178f689e3dd5f64fec3dcf5d7ddf4715b909e1dc"
+      ],
+      "before_actual_repetitions": 3,
+      "after_actual_repetitions": 3,
+      "valid_all": true,
+      "within_source_exact_payload_match": true,
+      "cross_source_exact_payload_match": true,
+      "passed": true,
+      "status": "inert"
+    },
+    {
+      "task": "StructuralEngineering/TrussWeightMinimization",
+      "candidate_sha256": "61d1073ad2b6d62ce8fd4a70c2c8dace00082b959f2b554ca9b87e6ca66382bf",
+      "before_binding": {
+        "task": "StructuralEngineering/TrussWeightMinimization",
+        "candidate_sha256": "61d1073ad2b6d62ce8fd4a70c2c8dace00082b959f2b554ca9b87e6ca66382bf",
+        "candidate_utf8_bytes": 13468,
+        "origin": {
+          "path": "runs/gpt55_truss_v2_b3_20260721/StructuralEngineering__TrussWeightMinimization/greedy_rewrite/normal/seed_1/best_program.py",
+          "run_manifest_path": "runs/gpt55_truss_v2_b3_20260721/StructuralEngineering__TrussWeightMinimization/greedy_rewrite/normal/seed_1/run_manifest.json",
+          "run_manifest_sha256": "1c536f9419ccfc0abe55644ee0520c4270578bb1f435a49dd40503d5ded35c22",
+          "task_contract_sha256": "d65533033f04ee612aac4d5c6c5616d4eb47584976f2edf95311770d5a91c684",
+          "algorithm": "greedy_rewrite",
+          "feedback_mode": "normal",
+          "seed": 1,
+          "superseded_task_contract_sha256": "d65533033f04ee612aac4d5c6c5616d4eb47584976f2edf95311770d5a91c684"
+        },
+        "portable_path": ".research/measurement_health_preflight_artifacts_2026-09-12_v13.json",
+        "portable_sha256": "e2a9dd507a39bd91cccf70071e79f5aa17bffbf19a6e2f49ec9aa2cf26d52d17"
+      },
+      "after_binding": {
+        "task": "StructuralEngineering/TrussWeightMinimization",
+        "candidate_sha256": "61d1073ad2b6d62ce8fd4a70c2c8dace00082b959f2b554ca9b87e6ca66382bf",
+        "candidate_utf8_bytes": 13468,
+        "origin": {
+          "path": "runs/gpt55_truss_v2_b3_20260721/StructuralEngineering__TrussWeightMinimization/greedy_rewrite/normal/seed_1/best_program.py",
+          "run_manifest_path": "runs/gpt55_truss_v2_b3_20260721/StructuralEngineering__TrussWeightMinimization/greedy_rewrite/normal/seed_1/run_manifest.json",
+          "run_manifest_sha256": "1c536f9419ccfc0abe55644ee0520c4270578bb1f435a49dd40503d5ded35c22",
+          "task_contract_sha256": "d65533033f04ee612aac4d5c6c5616d4eb47584976f2edf95311770d5a91c684",
+          "algorithm": "greedy_rewrite",
+          "feedback_mode": "normal",
+          "seed": 1,
+          "superseded_task_contract_sha256": "d65533033f04ee612aac4d5c6c5616d4eb47584976f2edf95311770d5a91c684"
+        },
+        "portable_path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json",
+        "portable_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185"
+      },
+      "task_contract_sha256": "d65533033f04ee612aac4d5c6c5616d4eb47584976f2edf95311770d5a91c684",
+      "task_package_sha256": "21a72e41ed4f3fd7c63838a3b11fa64fb2bc73eb71bec95c68fe99e408394fb9",
+      "before_canonical_payload_sha256": [
+        "e31749d3f3b1bff52901d2dd4b8deca3ee0f3347003f0be428b955d336eae294",
+        "e31749d3f3b1bff52901d2dd4b8deca3ee0f3347003f0be428b955d336eae294",
+        "e31749d3f3b1bff52901d2dd4b8deca3ee0f3347003f0be428b955d336eae294"
+      ],
+      "after_canonical_payload_sha256": [
+        "e31749d3f3b1bff52901d2dd4b8deca3ee0f3347003f0be428b955d336eae294",
+        "e31749d3f3b1bff52901d2dd4b8deca3ee0f3347003f0be428b955d336eae294",
+        "e31749d3f3b1bff52901d2dd4b8deca3ee0f3347003f0be428b955d336eae294"
+      ],
+      "before_actual_repetitions": 3,
+      "after_actual_repetitions": 3,
+      "valid_all": true,
+      "within_source_exact_payload_match": true,
+      "cross_source_exact_payload_match": true,
+      "passed": true,
+      "status": "inert"
+    },
+    {
+      "task": "Thermodynamics/HeatExchangerDesign",
+      "candidate_sha256": "5ef7f3122546589af264e52a00abb2cf5538aeac991ddcc051ce6198d562dfd8",
+      "before_binding": {
+        "task": "Thermodynamics/HeatExchangerDesign",
+        "candidate_sha256": "5ef7f3122546589af264e52a00abb2cf5538aeac991ddcc051ce6198d562dfd8",
+        "candidate_utf8_bytes": 17373,
+        "origin": {
+          "path": "runs/gpt55_heat_exchanger_v2_b3_20260722/Thermodynamics__HeatExchangerDesign/greedy_rewrite/normal/seed_1/best_program.py",
+          "run_manifest_path": "runs/gpt55_heat_exchanger_v2_b3_20260722/Thermodynamics__HeatExchangerDesign/greedy_rewrite/normal/seed_1/run_manifest.json",
+          "run_manifest_sha256": "6b9b133cd466e7a1d99de0876ae41c716f40eb640e34843d82bca99c7ea45b76",
+          "task_contract_sha256": "0b3b6ef12661f5d057ddf0819188f0fdc5a7fe9fba10109cbb876d1fb8fb7af6",
+          "algorithm": "greedy_rewrite",
+          "feedback_mode": "normal",
+          "seed": 1,
+          "superseded_task_contract_sha256": "0b3b6ef12661f5d057ddf0819188f0fdc5a7fe9fba10109cbb876d1fb8fb7af6"
+        },
+        "portable_path": ".research/measurement_health_preflight_artifacts_2026-09-12_v13.json",
+        "portable_sha256": "e2a9dd507a39bd91cccf70071e79f5aa17bffbf19a6e2f49ec9aa2cf26d52d17"
+      },
+      "after_binding": {
+        "task": "Thermodynamics/HeatExchangerDesign",
+        "candidate_sha256": "5ef7f3122546589af264e52a00abb2cf5538aeac991ddcc051ce6198d562dfd8",
+        "candidate_utf8_bytes": 17373,
+        "origin": {
+          "path": "runs/gpt55_heat_exchanger_v2_b3_20260722/Thermodynamics__HeatExchangerDesign/greedy_rewrite/normal/seed_1/best_program.py",
+          "run_manifest_path": "runs/gpt55_heat_exchanger_v2_b3_20260722/Thermodynamics__HeatExchangerDesign/greedy_rewrite/normal/seed_1/run_manifest.json",
+          "run_manifest_sha256": "6b9b133cd466e7a1d99de0876ae41c716f40eb640e34843d82bca99c7ea45b76",
+          "task_contract_sha256": "0b3b6ef12661f5d057ddf0819188f0fdc5a7fe9fba10109cbb876d1fb8fb7af6",
+          "algorithm": "greedy_rewrite",
+          "feedback_mode": "normal",
+          "seed": 1,
+          "superseded_task_contract_sha256": "0b3b6ef12661f5d057ddf0819188f0fdc5a7fe9fba10109cbb876d1fb8fb7af6"
+        },
+        "portable_path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json",
+        "portable_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185"
+      },
+      "task_contract_sha256": "0b3b6ef12661f5d057ddf0819188f0fdc5a7fe9fba10109cbb876d1fb8fb7af6",
+      "task_package_sha256": "dbebeae3e7ebeea513676d9b78929878bc13a1c92143ffa61cd0249c4ef7d868",
+      "before_canonical_payload_sha256": [
+        "2a13b7cc0f9e96ee02bb246eae0d78c074b2c9637efc29eae3ac12723c6da3f3",
+        "2a13b7cc0f9e96ee02bb246eae0d78c074b2c9637efc29eae3ac12723c6da3f3",
+        "2a13b7cc0f9e96ee02bb246eae0d78c074b2c9637efc29eae3ac12723c6da3f3"
+      ],
+      "after_canonical_payload_sha256": [
+        "2a13b7cc0f9e96ee02bb246eae0d78c074b2c9637efc29eae3ac12723c6da3f3",
+        "2a13b7cc0f9e96ee02bb246eae0d78c074b2c9637efc29eae3ac12723c6da3f3",
+        "2a13b7cc0f9e96ee02bb246eae0d78c074b2c9637efc29eae3ac12723c6da3f3"
+      ],
+      "before_actual_repetitions": 3,
+      "after_actual_repetitions": 3,
+      "valid_all": true,
+      "within_source_exact_payload_match": true,
+      "cross_source_exact_payload_match": true,
+      "passed": true,
+      "status": "inert"
+    },
+    {
+      "task": "Turbulence/RANSCalibration",
+      "candidate_sha256": "401c81126a27e4d998f3d8519c74eeb8b4b88dfa6fbafd1fcdb44a3b04b9dba6",
+      "before_binding": {
+        "task": "Turbulence/RANSCalibration",
+        "candidate_sha256": "401c81126a27e4d998f3d8519c74eeb8b4b88dfa6fbafd1fcdb44a3b04b9dba6",
+        "candidate_utf8_bytes": 522,
+        "origin": {
+          "path": "runs/rans_v2_b3/Turbulence__RANSCalibration/greedy_rewrite/normal/seed_1/best_program.py",
+          "run_manifest_path": "runs/rans_v2_b3/Turbulence__RANSCalibration/greedy_rewrite/normal/seed_1/run_manifest.json",
+          "run_manifest_sha256": "7e66b5900026ef0353832b80278c634f2572eea2fbfac234643d8187fbc2b5f1",
+          "task_contract_sha256": "91912e3c3d2dd44b9effaf0587bfab96c090c2da433426b917b56b306fc7bfef",
+          "algorithm": "greedy_rewrite",
+          "feedback_mode": "normal",
+          "seed": 1,
+          "superseded_task_contract_sha256": "91912e3c3d2dd44b9effaf0587bfab96c090c2da433426b917b56b306fc7bfef"
+        },
+        "portable_path": ".research/measurement_health_preflight_artifacts_2026-09-12_v13.json",
+        "portable_sha256": "e2a9dd507a39bd91cccf70071e79f5aa17bffbf19a6e2f49ec9aa2cf26d52d17"
+      },
+      "after_binding": {
+        "task": "Turbulence/RANSCalibration",
+        "candidate_sha256": "401c81126a27e4d998f3d8519c74eeb8b4b88dfa6fbafd1fcdb44a3b04b9dba6",
+        "candidate_utf8_bytes": 522,
+        "origin": {
+          "path": "runs/rans_v2_b3/Turbulence__RANSCalibration/greedy_rewrite/normal/seed_1/best_program.py",
+          "run_manifest_path": "runs/rans_v2_b3/Turbulence__RANSCalibration/greedy_rewrite/normal/seed_1/run_manifest.json",
+          "run_manifest_sha256": "7e66b5900026ef0353832b80278c634f2572eea2fbfac234643d8187fbc2b5f1",
+          "task_contract_sha256": "91912e3c3d2dd44b9effaf0587bfab96c090c2da433426b917b56b306fc7bfef",
+          "algorithm": "greedy_rewrite",
+          "feedback_mode": "normal",
+          "seed": 1,
+          "superseded_task_contract_sha256": "91912e3c3d2dd44b9effaf0587bfab96c090c2da433426b917b56b306fc7bfef"
+        },
+        "portable_path": ".research/measurement_health_preflight_artifacts_2026-09-12_v14.json",
+        "portable_sha256": "56348ba32d5f13496e19467284bc042e7ccf5f2503205ceb710b2bd3f0a3e185"
+      },
+      "task_contract_sha256": "91912e3c3d2dd44b9effaf0587bfab96c090c2da433426b917b56b306fc7bfef",
+      "task_package_sha256": "ec85b9fb8483b27b835ce7416780a9b797a074ec556946016df6bb37b5b19866",
+      "before_canonical_payload_sha256": [
+        "59d25824cc43182aa37ab67052c67fbda60159517620a3eada8e13d3acdf3380",
+        "59d25824cc43182aa37ab67052c67fbda60159517620a3eada8e13d3acdf3380",
+        "59d25824cc43182aa37ab67052c67fbda60159517620a3eada8e13d3acdf3380"
+      ],
+      "after_canonical_payload_sha256": [
+        "59d25824cc43182aa37ab67052c67fbda60159517620a3eada8e13d3acdf3380",
+        "59d25824cc43182aa37ab67052c67fbda60159517620a3eada8e13d3acdf3380",
+        "59d25824cc43182aa37ab67052c67fbda60159517620a3eada8e13d3acdf3380"
+      ],
+      "before_actual_repetitions": 3,
+      "after_actual_repetitions": 3,
+      "valid_all": true,
+      "within_source_exact_payload_match": true,
+      "cross_source_exact_payload_match": true,
+      "passed": true,
+      "status": "inert"
+    }
+  ],
+  "passed_count": 7,
+  "limitations": [
+    "Only these seven fixed artifacts were compared; this does not establish equivalence for other candidates.",
+    "Before calls are immutable prior preflight-v4 measurements; no before calls were rerun or re-signed.",
+    "After calls are exactly the 21 actual preflight-v5 measurements, with no candidate selection or extra calls.",
+    "Compatibility-v1 uses a different undeclared digest convention and is not compared or rewritten.",
+    "Environment equality covers the recorded Python and platform fields only; this is not a proof of every installed dependency or host property.",
+    "This artifact adds no formal model-measurement or long-horizon coverage."
+  ],
+  "execution_passed": true,
+  "trust_decision": "trusted_clean_revision",
+  "trusted_evidence": true,
+  "passed": true
+}

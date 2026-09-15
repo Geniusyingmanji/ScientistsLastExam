@@ -1,0 +1,235 @@
+schema_version: 2
+scientific_question: Identify the replacement policy of one set of a set-associative cache from charged access traces whose hit and miss outcomes arrive through a noisy timing channel, and either write it as a deterministic machine over the ways that is observationally equivalent to the hidden policy or decline because the policy is randomised.
+artifact: A verdict, and for a policy a machine with a next state per way for hits and a victim way and next state for a miss in every state, with a confidence and an optional refusal.
+oracle:
+  model: one set of 4, 6 or 8 ways, reset by a flush and the loads of blocks 0..W-1 into ways 0..W-1; each world's policy is textbook LRU or tree PLRU, an age-table policy of the RRIP kind with its hit table and insertion age drawn, with or without ageing every way to the top on a miss, an age-table policy whose fills age every other way, a permutation policy in the sense of Abel and Reineke with its hit and miss permutations drawn at random, or an LRU that inserts at the evict-next end after four misses in a row; the refusal worlds run a bimodal insertion policy at 1/64 or 1/32, a tree PLRU whose victim is drawn at random once in 32 or 16 misses, or an age-table policy with random tie breaking; deterministic policies are compiled to their minimised reachable machines, 15 to 720 states, and a submission is compared with the truth by a breadth-first search over pairs of states
+  feasibility: charged runs of W + len(trace) accesses against a budget of 200000 per world, traces of at most 4096 integer blocks, each outcome flipped with probability 0.02, each run seeded by the world, the trace and how many times that trace has run, overspend failing closed; a machine has at most 1024 states; calibrated refusal on the randomised worlds
+  deterministic: true
+normalization:
+  baseline: ten random traces of 32 accesses played once each, the closest of LRU, FIFO and tree PLRU submitted as its machine at confidence 0.9, never declining
+  reference: victim queries answered by replaying a prefix, missing once and probing the old blocks in a shuffled order, accumulated to a likelihood lead of 10^4 and remembered; a per-position tail test on six random traces and a pooled minority test on 32 bursts and loops at 48 runs each, either one failing a refusal; a library of 2064 age-table policies fitted by majority vote on 24 mixed traces, survivors settled by the victim query their difference names and checked on 16 traces; otherwise L* for Mealy machines with Rivest-Schapire counterexample processing, its equivalence queries 64 targeted traces at five runs each with every disagreement confirmed by six more, before L*, a permutation-policy fit in the manner of Abel and Reineke from eviction ranks under consecutive misses, checked on 64 traces; no generic L* hypothesis above 32 states claimed (verified family fits may be larger), a false-positive guard under which the 120-state switch policy and the 78- and 134-state fill-ageing policies are declined; it scores 0.778 on the development split and 0.750 held out
+  score: development mechanism recovery normalized above always-abstain; a machine equivalent to the policy scores 1 in a deterministic world and one that differs anywhere scores minus one there and zero in a randomised world, declining scores zero and one; recovery, false discovery, refusal, coverage, calibration, runs used and the held-out split stay separate
+citations:
+- id: doi:10.1109/RTAS.2013.6531080
+  title: Measurement-based modeling of the cache replacement policy
+- id: doi:10.1109/ISPASS.2014.6844475
+  title: Reverse engineering of cache replacement policies in Intel microprocessors and their evaluation
+- id: doi:10.1145/3385412.3386008
+  title: "CacheQuery: learning replacement policies from hardware caches"
+- id: doi:10.1016/0890-5401(87)90052-6
+  title: Learning regular sets from queries and counterexamples
+- id: doi:10.1006/inco.1993.1021
+  title: Inference of Finite Automata Using Homing Sequences
+- id: doi:10.1007/978-3-642-05089-3_14
+  title: Inferring Mealy Machines
+- id: doi:10.1006/inco.1995.1070
+  title: On the Learnability of Infinitary Regular Sets
+- id: doi:10.1007/978-3-319-11164-3_26
+  title: "The TTT Algorithm: A Redundancy-Free Approach to Active Automata Learning"
+- id: doi:10.1145/1815961.1815971
+  title: High performance cache replacement using re-reference interval prediction (RRIP)
+- id: doi:10.1145/1250662.1250709
+  title: Adaptive insertion policies for high performance caching
+- id: doi:10.1147/sj.52.0078
+  title: A study of replacement algorithms for a virtual-storage computer
+invariants:
+- the cache behind run and the machine the score compares against are the same policy; with the noise off the simulator and the minimised truth machine give the same outcome on every trace tested, and the thirteen deterministic worlds are pairwise inequivalent minimal machines of 15, 24 (four of them), 40, 78, 120, 128, 134, 255 and 720 (two) states
+- the switch world agrees with LRU until six misses in a row; the shortest word that tells them apart is six misses, and the reference declines it
+- the pooled determinism test is what keeps rare randomness from being claimed; over 24 re-drawn seeds its z at 32 traces stays at or below 2.55 in every deterministic world and at or above 5.83 in every randomised one, where at 24 traces the random victim once in 32 misses fell to 3.90; without the test the reference claims two randomised worlds on the graded seed and 25 over eight re-drawn seeds, and averages 0.611 and 0.344
+- a false machine costs one world wherever it is made, minus one in a deterministic world and zero where declining scores one; with every check removed the reference scores 0.111 and 0.000 with 49 false discoveries over eight seeds
+- the reference declines the 120-state switch policy, the 134-state fill-ageing policy and the held-out 78-state one under its 32-state claim guard; without the permutation fit, which is the builder's first reference and the omission probe, it scores 0.556 and 0.500 and declines the two 720-state permutation policies and tree PLRU on eight ways as well
+- raising the claim cap claims nothing more on the graded seed; at 1024 states the reference scores 0.778 and 0.750 there, averages 0.708 and 0.688 over eight re-drawn seeds and claims six wrong machines, five of them for the switch policy
+- declining every world scores exactly zero by construction, and the closest textbook policy claimed everywhere scores zero; confidence feeds only the calibration axis
+- runs are charged and overspend fails closed; the candidate receives a closure and not the ledger, so it cannot raise its own budget; the same trace run twice gives a fresh run and outcomes do not depend on the order of calls; malformed submissions and traces score zero and never raise out of the evaluator
+- held-out split, per-world rows and the discovery axes remain evaluator-only
+known_shortcuts: >-
+  a fixed grid of 343 strategies declared before any ran, .research/cache_policy/grid.py: blind
+  textbook claims (7, all zero), the textbook templates fitted to noisy traces at five tolerances
+  with 0 to 64 checks and every choice of determinism tests (80, best 0.222 and 0.000 held out),
+  the age-table library alone (16, best 0.222), the permutation fit alone (16, best 0.333), the
+  templates with the fit or the library (24, best 0.444), L* alone at caps of 8 to 1024 states
+  with 4 to 128 checks (64, best 0.444), L* with the templates (8, best 0.556), L* with the library
+  (64, best 0.556) and L* with the permutation fit (64, best 0.667); the grid tops out at 0.667 on
+  the development split and 0.500 held out, 86 per cent of the reference, at the reference without
+  its age-table library, and no cell reaches 90 per cent; over eight re-drawn seeds the best cells
+  average 0.653 and 0.500 with no false discovery in the builder's construction records.
+  The independent Linux replay completed the entire original grid: 341 fully valid cells,
+  two oversized invalid templates excluded from the difficulty bound, and valid maximum
+  6/9. Separately fixed variants of both invalid templates were each valid twice and
+  scored zero. Original invalid observations are retained and never relabeled.
+review:
+  domain: pending_external_computer_architecture
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic worlds with twelve development policies (nine deterministic, three randomised) and six sealed held-out policies (four deterministic, two randomised), each with its own run seed; the permutation tables were drawn once with a seeded generator and are written out in the evaluator, and the truth machines are rebuilt from the policies on every run.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: Learning replacement policies from hardware is published, from permutation-policy inference by measurement (Abel and Reineke 2013, 2014) to active automata learning over a cache abstraction (Vila et al. 2020), and the learning algorithms are textbook (Angluin 1987; Rivest and Schapire 1993; Shahbaz and Groz 2009). A model that knows them will reach for L* and a template library at once. What is not published is which policies these are, that two of them are random rarely enough to pass a majority vote, that one differs from LRU only after six misses in a row, and how a budget of 200000 accesses has to be split between the determinism tests, the victim queries and the equivalence checks under noise. The ablation shows the score turns on combining the determinism tests, the library, the permutation fit, L* and its checks rather than on any one of them, and the fixed 343-cell shortcut grid tops out at 86 per cent of the reference, at the permutation fit with L* and without the library. The reference declines three policies of 78 to 134 states under a 32-state claim guard that is a false-positive control, not a reserve. A first proposal that fits an age-table family as well as the permutation family can reach the reference, and the score moves in steps of 1/9. The independent fixed three-proposal review at c0b000c9 measured 2/9, 1/9 and 1/9 development, all fully valid and below the complete reference. This is bounded manual admission evidence on the original frozen input and runtime, not universal frontier difficulty, an independent mechanism-family holdout or a modern receipt-verified model campaign.
+lineage:
+  status: complete
+  builder_model_ids:
+  - claude-opus-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids:
+  - gpt-5.6-sol
+  calibration_runs:
+  - experiments/cache_replacement_policy_id_first_proposal_2026-09-12.json
+  calibration_evidence_status: historical_only
+  template_source: >-
+    frontier_eval/run_eval.py is generated by scripts/gen_task.py; the evaluator's per-world
+    scoring, split summary and evaluate skeleton follow StructuralEngineering/ModalDamageAttribution,
+    the repository's exemplar task, and the discovery tasks built on it; the policies, the machines,
+    the equivalence check, the noisy cache, the metrics, the reference and the baseline are this
+    task's own.
+  edits_triggered_by_model: >-
+    Before the independent calibration, eight edits came from the construction checkpoints. L* with
+    Maler-Pnueli counterexample processing, adding every suffix, ran out of budget; it now uses Rivest-Schapire. Victim queries stopped at a likelihood lead of 200, and
+    one wrong victim early in a remembered prefix corrupted every row built on it; the lead is now
+    10^4. Random-trace equivalence checks missed a deep LRU state; the checks now mix in bursts of
+    misses and hit permutations. L* claimed a wrong 88-state machine for the switch policy; no
+    hypothesis above 32 states is claimed. A tree PLRU with a random victim once in 64 misses
+    passed the per-position test; the pooled test on bursts and loops was added and the rarest
+    randomised policies are 1/32 on development and 1/16 held out. With a 60-state five-way policy
+    on the development split the reference with its cap raised tied the reference; that world is
+    now a 720-state one. L* checked with 24 traces claimed a wrong 24-state machine on one
+    prototype seed; it now uses 64. On the package's own evaluator the pooled test at 24 traces let
+    the 1/32 policy through on two of 24 seeds, at z of 3.90 and 3.95; it now uses 32 traces.
+    The frozen public prompt already mentioned permutation-family inference; policy
+    family names were not treated as hidden information. On 2026-09-12,
+    three fixed gpt-5.6-sol first proposals at frozen source c0b000c9 all attempted
+    discovery and scored below the complete reference. No candidate, oracle, reference,
+    world, budget or scientific contract was changed in response to these draws.
+    Later metadata records the result and marks the introductory review as a historical
+    snapshot. The original model input and runtime bindings remain unchanged in the
+    private records; they are not re-signed for the integration source.
+  shortcut_discoverer: builder_self_audit_with_a_low_dimensional_strategy_probe
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-opus-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 8
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: >-
+    The 2026-09-12 Linux CandidateProxy review repeated nine fixed methods twice, all
+    324 world evaluations valid and every pair's full metrics identical. The 343-cell
+    independent grid completed with 341 original candidates fully valid and two oversized
+    original templates invalid; the valid maximum was 6/9. Separately fixed templates
+    were each run twice, fully valid and zero-scoring. Eight fixed observation-seed shifts
+    compared the reference with the 1024-cap variant: 288 valid world evaluations, zero
+    versus six false claims. The real contribution gate passed all 16 checks with 15
+    actual evaluations; the three task/research fixture files passed 25 tests with no
+    skips on Linux. Source and payload hashes are recorded in the independent review.
+    The builder's other in-process robustness records remain distinct. Independent
+    first-proposal calibration subsequently completed at c0b000c9: three logical
+    first proposals were valid in all 18 worlds, scored 2/9, 1/9 and 1/9 development,
+    and each exact program reproduced its original complete metrics in two independent
+    evaluations. This is a bounded manual admission review; it adds zero modern
+    receipt-verified formal model measurements. Final framework and global integration
+    evidence is recorded separately from the original model experiment.
+
+# Original graded-world measurements were independently repeated in the Linux
+# sandbox at a8cbb99d; the source-bound aggregate report is cited below. The
+# builder's broader robustness/grid records remain separate construction evidence.
+evaluation_budget:
+  accesses_per_world: 200000
+  evaluator_timeout_seconds: 360
+metric_contract:
+  mechanism:
+    metric: mechanism_score
+    estimand: clipped_mean_signed_mechanism_above_universal_refusal
+    numerator: mechanism_score_sum_minus_unsupported_world_count_clipped_to_zero
+    denominator: determinable_world_count
+    denominator_metric: determinable_world_count
+    direction: higher
+  fdr:
+    metric: false_discovery_rate
+    estimand: false_policy_claims_per_valid_non_abstaining_policy_claims
+    numerator: false_claim_count
+    denominator: policy_claim_count
+    denominator_metric: policy_claim_count
+    direction: lower
+  refusal:
+    metric: correct_refusal_rate
+    estimand: correct_refusals_among_randomized_worlds
+    numerator: correct_refusal_count
+    denominator: unsupported_world_count
+    denominator_metric: unsupported_world_count
+    direction: higher
+  coverage:
+    metric: discovery_coverage
+    estimand: claimed_policies_among_deterministic_worlds
+    numerator: discovery_attempt_count
+    denominator: determinable_world_count
+    denominator_metric: determinable_world_count
+    direction: higher
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_permutation_augmented.py
+    expected_score: 0.7777777777777778
+  probes:
+    - id: permutation_and_lstar_without_age_table
+      candidate: verification/probe_without_age_table.py
+      expected_score: 0.6666666666666666
+    - id: original_reference_without_permutation_family
+      candidate: verification/reference_lstar_family.py
+      expected_score: 0.5555555555555555
+    - id: textbook_closest_baseline
+      candidate: solution.py
+      expected_score: 0.0
+  relative_margin: 0.1
+  score_tolerance: 0.000001
+post_builder_review:
+  original_pr_head: 7d59e684485db9df3a54303ed956b8bb7025856d
+  status: bounded_manual_scientific_admission_review_passed
+  historical_threshold_rejected: >-
+    The builder reference at 0.556 deliberately omits the published permutation-family
+    inference used by its own 0.778 headroom rung. That lower score is not an admission
+    threshold. The standalone augmented candidate above restores this family. The builder
+    measured it in process at 0.778 and 0.750 (references/known_best.md). The independent
+    2026-09-12 review repeated it in the real Linux sandbox at source a8cbb99d: both runs
+    were valid in all 18 worlds, with exactly equal full metrics, development 7/9 and
+    heldout 0.75, zero false claims and complete randomized-world refusal. Nine fixed
+    methods were each evaluated twice. The machine contract also includes the strongest
+    declared omission probe, without the age-table library, measured at 6/9 development.
+    The independent 343-cell grid and eight-shift claim-guard review now also complete
+    the bounded comparison. The two original invalid grid cells remain invalid; only
+    their separately repaired, fully valid variants supply replacement evidence.
+    Three fixed independent first proposals at c0b000c9 subsequently scored 2/9,
+    1/9 and 1/9 development, all valid and below 7/9; their six independent replays
+    exactly matched the original complete metrics. This passes the bounded D16
+    first-proposal comparison, not a universal model-difficulty or certification claim.
+  repairs: >-
+    Reset candidate sessions between worlds; preserve all charged callbacks within each
+    world; keep malformed-trace violations fatal after the candidate catches the exception;
+    use the shared fail-closed wrapper and numeric split denominators; report claim-conditional
+    FDR with valid non-abstaining policy claims as its denominator, retaining the historical
+    per-world rate separately; bind the executable reference/probe contract to independent
+    Linux measurements and include the strongest declared omission. No old artifact or
+    model draw is re-signed.
+  data_scope: >-
+    Synthetic policy tables and procedural noisy traces, not captured hardware timings.
+    Noise-seed shifts redraw observations of the same 18 policies, not new mechanism families.
+  evidence: .research/cache_policy/review_2026-09-12.md
+  calibration_scope: >-
+    The recorded gpt-5.6-sol Responses/high experiment used selection-blind feedback,
+    one proposal per fixed replicate label 0, 1 and 2, and the unchanged 360-second
+    evaluator timeout. Labels do not control provider randomness. Reported usage is
+    50344 tokens across three successful logical responses; internal HTTP retry counts
+    and failed-attempt usage are unknown. Raw response text survives only for label 2;
+    all three candidates, prompt hashes, successful usage and full evaluation receipts
+    are retained privately. The historical_only lineage status preserves the original
+    runtime binding; compatibility replays do not migrate or re-sign model evidence.

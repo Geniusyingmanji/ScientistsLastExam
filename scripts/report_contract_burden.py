@@ -37,9 +37,44 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from sle.algorithms.common import task_package_sha256  # noqa: E402
 from sle.registry import list_tasks  # noqa: E402
+from sle.run_verification import verify_run  # noqa: E402
+from sle.task_versions import version_class  # noqa: E402
 
 MIN_PROPOSALS = 10
+
+IDENTITY_FIELDS = (
+    "task",
+    "task_version",
+    "runtime_source_sha256",
+    "trusted_evaluator_runtime_sha256",
+    "algorithm",
+    "model",
+    "llm_condition_sha256",
+    "feedback_mode",
+    "proposal_budget",
+    "seed",
+)
+
+_STRING_IDENTITY_FIELDS = tuple(
+    field for field in IDENTITY_FIELDS if field not in {"seed", "proposal_budget"}
+)
+
+
+def _identity_is_complete(identity: dict[str, Any]) -> bool:
+    """Validate identity values without treating the integer zero as missing."""
+    return bool(
+        all(
+            isinstance(identity.get(field), str) and identity[field]
+            for field in _STRING_IDENTITY_FIELDS
+        )
+        and isinstance(identity.get("seed"), int)
+        and not isinstance(identity["seed"], bool)
+        and isinstance(identity.get("proposal_budget"), int)
+        and not isinstance(identity["proposal_budget"], bool)
+        and identity["proposal_budget"] >= 0
+    )
 
 
 def spearman(a: list[float], b: list[float]) -> float | None:
@@ -74,7 +109,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--output", required=True)
     args = ap.parse_args(argv)
 
-    sizes, baselines = {}, {}
+    sizes, baselines, current_packages = {}, {}, {}
     for spec in list_tasks(None):
         evaluator = spec.task_dir / "verification" / "evaluator.py"
         if evaluator.is_file():
@@ -82,15 +117,18 @@ def main(argv: list[str] | None = None) -> int:
         program = spec.initial_program_path
         if program.is_file():
             baselines[spec.task_id] = len(program.read_text(encoding="utf-8").splitlines())
+        current_packages[spec.task_id] = task_package_sha256(spec)
 
-    counts: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    counts: dict[tuple[Any, ...], dict[str, int]] = defaultdict(
+        lambda: defaultdict(int)
+    )
     # What went in, recorded beside what came out. This report's numbers are quoted in the README,
     # and a run root is not a fixed thing: point it at `runs/` today and it averages the runs made
     # before a fix together with the ones made after, producing a number between the two that
     # matches neither and names nothing. A reader who cannot see which runs produced a figure
     # cannot tell that from a real result.
     inputs: list[dict[str, Any]] = []
-    for manifest in sorted(Path(args.runs).glob("*/*/run_manifest.json")):
+    for manifest in sorted(Path(args.runs).rglob("run_manifest.json")):
         try:
             document = json.loads(manifest.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError):
@@ -101,7 +139,7 @@ def main(argv: list[str] | None = None) -> int:
         trajectory = manifest.parent / "trajectory.jsonl"
         if not trajectory.is_file():
             continue
-        inputs.append({
+        identity = {
             "run": manifest.parent.as_posix(),
             "task": task,
             "feedback_mode": document.get("feedback_mode"),
@@ -110,7 +148,41 @@ def main(argv: list[str] | None = None) -> int:
             # under one root, and these hashes are what tells them apart after the fact.
             "task_package_sha256": document.get("task_package_sha256"),
             "task_contract_sha256": document.get("task_contract_sha256"),
-        })
+            "task_version": version_class(
+                task, str(document.get("task_package_sha256") or "unknown")
+            )[:14],
+            "runtime_source_sha256": document.get("runtime_source_sha256"),
+            "trusted_evaluator_runtime_sha256": (
+                document.get("trusted_evaluator_runtime") or {}
+            ).get("fingerprint_sha256"),
+            "algorithm": document.get("algorithm"),
+            "model": (document.get("llm_condition") or {}).get("model"),
+            "llm_condition_sha256": document.get("llm_condition_sha256"),
+            "proposal_budget": None,
+            "current_task_package_sha256": current_packages[task],
+        }
+        try:
+            verified = verify_run(manifest.parent)
+            identity["proposal_budget"] = verified.get("budget")
+            identity["trusted_evidence"] = bool(
+                verified.get("verified") is True
+                and verified.get("trusted_evaluator_runtime_sha256")
+                == identity["trusted_evaluator_runtime_sha256"]
+                and identity["task_package_sha256"] == current_packages[task]
+                and _identity_is_complete(identity)
+            )
+            identity["evidence_status"] = (
+                "trusted_current_task_package"
+                if identity["trusted_evidence"]
+                else "historical_or_incomplete_identity"
+            )
+        except (OSError, ValueError):
+            identity["trusted_evidence"] = False
+            identity["evidence_status"] = "run_verification_failed"
+        inputs.append(identity)
+        if not identity["trusted_evidence"]:
+            continue
+        identity_key = tuple(identity[field] for field in IDENTITY_FIELDS)
         for line in trajectory.read_text(encoding="utf-8").splitlines():
             if not line.strip():
                 continue
@@ -120,7 +192,7 @@ def main(argv: list[str] | None = None) -> int:
                 continue
             if int(row.get("step", 0) or 0) < 1:
                 continue
-            bucket = counts[task]
+            bucket = counts[identity_key]
             bucket["proposals"] += 1
             if row.get("valid"):
                 bucket["valid"] += 1
@@ -130,13 +202,16 @@ def main(argv: list[str] | None = None) -> int:
             bucket["kind:" + kind] += 1
 
     rows = []
-    for task, bucket in counts.items():
+    for identity_key, bucket in counts.items():
         total = bucket["proposals"]
         if total < MIN_PROPOSALS:
             continue
         rejected = total - bucket["valid"]
         kinds = {k[5:]: v for k, v in bucket.items() if k.startswith("kind:")}
+        identity = dict(zip(IDENTITY_FIELDS, identity_key))
+        task = identity["task"]
         rows.append({
+            **identity,
             "task": task,
             "evaluator_lines": sizes[task],
             "baseline_lines": baselines.get(task),
@@ -149,7 +224,26 @@ def main(argv: list[str] | None = None) -> int:
         })
     rows.sort(key=lambda r: -r["evaluator_lines"])
 
-    rho = spearman([r["evaluator_lines"] for r in rows], [r["valid_rate"] for r in rows])
+    stratum_fields = tuple(field for field in IDENTITY_FIELDS if field not in {
+        "task", "task_version",
+    })
+    strata: dict[tuple[str, ...], list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        strata[tuple(str(row[field]) for field in stratum_fields)].append(row)
+    stratum_reports = []
+    for key, members in sorted(strata.items()):
+        stratum_reports.append({
+            **dict(zip(stratum_fields, key)),
+            "task_count": len(members),
+            "rank_correlation_lines_vs_validity": spearman(
+                [row["evaluator_lines"] for row in members],
+                [row["valid_rate"] for row in members],
+            ),
+        })
+    rho = (
+        stratum_reports[0]["rank_correlation_lines_vs_validity"]
+        if len(stratum_reports) == 1 else None
+    )
     print("%-32s %7s %8s %9s %8s" % ("task", "lines", "baseline", "valid", "runtime"))
     print("-" * 70)
     for row in rows:
@@ -183,22 +277,35 @@ def main(argv: list[str] | None = None) -> int:
         print("  Simplifying these buys more measurable science than any new task would.")
 
     Path(args.output).write_text(json.dumps({
-        "schema_version": 1,
+        "schema_version": 2,
         "note": "validity rate and evaluator size are reported separately; a long evaluator is "
                 "not automatically a defect, but a long evaluator that rejects most proposals is",
         "min_proposals": MIN_PROPOSALS,
         "runs_root": str(args.runs),
         "input_run_count": len(inputs),
+        "trusted_input_run_count": sum(
+            bool(row["trusted_evidence"]) for row in inputs
+        ),
+        "unattributable_input_run_count": sum(
+            not row["trusted_evidence"] for row in inputs
+        ),
         "distinct_task_packages_measured": sorted(
-            {row["task_package_sha256"] for row in inputs if row["task_package_sha256"]}),
+            {
+                row["task_package_sha256"] for row in inputs
+                if row["trusted_evidence"] and row["task_package_sha256"]
+            }),
         "inputs": inputs,
         "rank_correlation_lines_vs_validity": rho,
+        "strata": stratum_reports,
         "rows": rows,
     }, indent=2), encoding="utf-8")
-    packages = {row["task_package_sha256"] for row in inputs if row["task_package_sha256"]}
+    packages = {
+        row["task_package_sha256"] for row in inputs
+        if row["trusted_evidence"] and row["task_package_sha256"]
+    }
     by_task = defaultdict(set)
     for row in inputs:
-        if row["task_package_sha256"]:
+        if row["trusted_evidence"] and row["task_package_sha256"]:
             by_task[row["task"]].add(row["task_package_sha256"])
     mixed = sorted(task for task, seen in by_task.items() if len(seen) > 1)
     print()

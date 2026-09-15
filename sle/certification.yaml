@@ -838,3 +838,34 @@ tasks:
     - doi:10.1038/nmeth.2066
     - doi:10.1038/s41467-017-02209-5
     - doi:10.1371/journal.pone.0027992
+  ComputerArchitecture/CacheReplacementPolicyID:
+    status: candidate
+    reason: >-
+      The first computer-architecture task and the first whose hidden mechanism is a finite-state
+      machine, in the discovery-formula cell. One set of a set-associative cache runs an
+      undocumented replacement policy; the candidate plays access traces from a fixed reset under a
+      budget of 200000 accesses, reads hits and misses through a channel that flips each with
+      probability 0.02, and either writes the policy as a deterministic machine over the ways or
+      declines. The oracle compares the machine with the policy's minimised reachable machine by a
+      search over pairs of states, so the score is exact. The policies have 15 to 720 states and
+      most are in no paper; three development policies are randomised, two of them rarely enough to
+      pass a majority vote; one differs from LRU only after six misses in a row. A wrong machine
+      costs one world wherever it is made. The original builder reference at 0.556 development
+      and 0.500 heldout deliberately omits permutation-family inference; its own stronger rung
+      reports 0.778 and 0.750, so the lower line is rejected for admission. A standalone
+      permutation-augmented candidate restores this family. Independent Linux double runs at
+      a8cbb99d reproduced 7/9 development and 0.750 heldout, with all 18 worlds valid and full
+      metric equality; the strongest declared omission without the age-table library reaches
+      6/9. Independent Linux replay completed all 343 original grid cells (341 fully
+      valid; two oversized templates invalid and excluded from the difficulty bound),
+      with valid maximum 6/9; separately fixed templates were each valid twice and scored
+      zero. The eight-shift guard comparison and 16-check sandbox contribution gate pass.
+      At clean c0b000c9, three fixed gpt-5.6-sol selection-blind first proposals were all
+      18-world valid and scored 2/9, 1/9 and 1/9 development, below the complete reference;
+      six independent frozen-program evaluations exactly reproduced their original full
+      metrics. This passes the bounded manual first-proposal admission comparison, with
+      zero modern receipt-verified formal model coverage. Framework compatibility and
+      global integration evidence are separately bound; old model runs are not re-signed.
+      These are synthetic cache policies and noisy traces, not hardware captures.
+      Retain candidate status pending external computer-architecture review.
+    citation_ids: [doi:10.1109/RTAS.2013.6531080, doi:10.1109/ISPASS.2014.6844475, doi:10.1145/3385412.3386008, doi:10.1016/0890-5401(87)90052-6, doi:10.1006/inco.1993.1021, doi:10.1007/978-3-642-05089-3_14, doi:10.1006/inco.1995.1070, doi:10.1007/978-3-319-11164-3_26, doi:10.1145/1815961.1815971, doi:10.1145/1250662.1250709, doi:10.1147/sj.52.0078]

@@ -73,7 +73,12 @@ class TrustedEnvironmentScrubbingTests(unittest.TestCase):
 
         spec = find_task("LennardJonesCluster", include_uncertified=True)
         secrets = {"ANTHROPIC_API_KEY": "sk-must-not-pass", "GH_TOKEN": "ghp-must-not-pass"}
+        runtime = evaluate_module.TrustedRuntime(
+            executable="/usr/bin/python3",
+            descriptor={"fingerprint_sha256": "a" * 64},
+        )
         with patch.dict(os.environ, secrets, clear=False), \
+             patch.object(evaluate_module, "resolve_trusted_runtime", return_value=runtime), \
              patch.object(evaluate_module.subprocess, "Popen", FakePopen):
             with self.assertRaises(RuntimeError):
                 evaluate_module.evaluate_candidate(

@@ -1,0 +1,14 @@
+domain: ComputerArchitecture
+task: CacheReplacementPolicyID
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 120
+eval_timeout_s: 360
+science_metric: exact_observational_equivalence_of_a_submitted_replacement_policy_machine_with_the_hidden_policy_of_one_cache_set_from_charged_noisy_hit_miss_runs_with_calibrated_refusal_of_randomised_policies
+reference_baseline: "ten random traces played once each, the closest of LRU, FIFO and tree PLRU submitted as its machine, never declining"
+reference_sota: "victim queries by replay and probe to a 10^4 likelihood lead, a per-position and a pooled determinism test, a 2064-policy age-table library fitted by majority vote and checked, then L* for Mealy machines with Rivest-Schapire counterexamples and confirmed targeted checks, claiming no hypothesis above 32 states"
+citation: "Abel and Reineke 2013, DOI 10.1109/RTAS.2013.6531080; Abel and Reineke 2014, DOI 10.1109/ISPASS.2014.6844475; Vila et al. 2020, DOI 10.1145/3385412.3386008; Angluin 1987, DOI 10.1016/0890-5401(87)90052-6; Rivest and Schapire 1993, DOI 10.1006/inco.1993.1021; Shahbaz and Groz 2009, DOI 10.1007/978-3-642-05089-3_14; Maler and Pnueli 1995, DOI 10.1006/inco.1995.1070; Isberner, Howar and Steffen 2014, DOI 10.1007/978-3-319-11164-3_26; Jaleel et al. 2010, DOI 10.1145/1815961.1815971; Qureshi et al. 2007, DOI 10.1145/1250662.1250709; Belady 1966, DOI 10.1147/sj.52.0078"

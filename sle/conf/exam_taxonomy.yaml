@@ -91,6 +91,7 @@ tasks:
   SystemsBiology/EnzymeKineticsLaw: {form: discovery, kind: formula, note: on_ramp_do_not_pair}
   Oceanography/AMOCTippingRefusal: {form: discovery, kind: formula, note: fold_refusal_not_ebm_parameter_fit}
   Physics/ComplexBoseLaw: {form: discovery, kind: formula, note: bose_exponents_not_activelaw_ode}
+  ComputerArchitecture/CacheReplacementPolicyID: {form: discovery, kind: formula, note: a_replacement_policy_machine_learned_from_noisy_hit_miss_runs_not_a_symbolic_law}
   # --- discovery / structure --------------------------------------------------
   CausalDiscovery/InterventionalSCM: {form: discovery, kind: structure}
   CausalDiscovery/SurvivorshipConfoundedDesign: {form: discovery, kind: structure, note: selection_not_clone_of_interventional_scm}

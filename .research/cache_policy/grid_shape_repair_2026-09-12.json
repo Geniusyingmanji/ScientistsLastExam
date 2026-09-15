@@ -1,0 +1,98 @@
+{
+  "candidates": [
+    {
+      "id": "cell-005",
+      "name": "blind_srrip_fp",
+      "original_candidate_sha256": "597682d9e4b2eb89b80c02c5eec764b10c176ef03a0f1c884ce5be71272c879d",
+      "repaired_candidate_sha256": "c99bee96cc40ca04e82e6c0b6aa01fcf2cfc5fedce2686fb1c9cce7efdeea6de"
+    },
+    {
+      "id": "cell-006",
+      "name": "blind_srrip_hp",
+      "original_candidate_sha256": "09a1ff93794578621e2e45542ffefb85d738c563951177e9ad0ba1c9204943d3",
+      "repaired_candidate_sha256": "73b30979a214abe95a7565dadbaed4c8161e6b4bb2e4e49e7efdc344adfa8a13"
+    }
+  ],
+  "full_metrics_deterministic": true,
+  "observations": [
+    {
+      "combined_score": 0.0,
+      "development_correct_refusal_rate": 0.0,
+      "development_false_discovery_rate": 1.0,
+      "development_mechanism_score": 0.0,
+      "heldout_correct_refusal_rate": 0.0,
+      "heldout_false_discovery_rate": 1.0,
+      "heldout_mechanism_score": 0.0,
+      "id": "cell-005",
+      "infrastructure_failure": false,
+      "metrics_sha256": "5ff6d68464e866c8bd90bf95146703c7513930b3b9b98bc254365c88c52d9f0f",
+      "name": "blind_srrip_fp",
+      "repeat": 0,
+      "seconds": 9.498932771384716,
+      "valid": 1.0,
+      "valid_worlds": 18,
+      "worlds": 18
+    },
+    {
+      "combined_score": 0.0,
+      "development_correct_refusal_rate": 0.0,
+      "development_false_discovery_rate": 1.0,
+      "development_mechanism_score": 0.0,
+      "heldout_correct_refusal_rate": 0.0,
+      "heldout_false_discovery_rate": 1.0,
+      "heldout_mechanism_score": 0.0,
+      "id": "cell-005",
+      "infrastructure_failure": false,
+      "metrics_sha256": "5ff6d68464e866c8bd90bf95146703c7513930b3b9b98bc254365c88c52d9f0f",
+      "name": "blind_srrip_fp",
+      "repeat": 1,
+      "seconds": 9.217832628637552,
+      "valid": 1.0,
+      "valid_worlds": 18,
+      "worlds": 18
+    },
+    {
+      "combined_score": 0.0,
+      "development_correct_refusal_rate": 0.0,
+      "development_false_discovery_rate": 1.0,
+      "development_mechanism_score": 0.0,
+      "heldout_correct_refusal_rate": 0.0,
+      "heldout_false_discovery_rate": 1.0,
+      "heldout_mechanism_score": 0.0,
+      "id": "cell-006",
+      "infrastructure_failure": false,
+      "metrics_sha256": "4a76020eec3bf3703454913f7e8f5aad9a4ea43a69e89239bbc9027930ce8c24",
+      "name": "blind_srrip_hp",
+      "repeat": 0,
+      "seconds": 10.115053679794073,
+      "valid": 1.0,
+      "valid_worlds": 18,
+      "worlds": 18
+    },
+    {
+      "combined_score": 0.0,
+      "development_correct_refusal_rate": 0.0,
+      "development_false_discovery_rate": 1.0,
+      "development_mechanism_score": 0.0,
+      "heldout_correct_refusal_rate": 0.0,
+      "heldout_false_discovery_rate": 1.0,
+      "heldout_mechanism_score": 0.0,
+      "id": "cell-006",
+      "infrastructure_failure": false,
+      "metrics_sha256": "4a76020eec3bf3703454913f7e8f5aad9a4ea43a69e89239bbc9027930ce8c24",
+      "name": "blind_srrip_hp",
+      "repeat": 1,
+      "seconds": 10.212202552706003,
+      "valid": 1.0,
+      "valid_worlds": 18,
+      "worlds": 18
+    }
+  ],
+  "original_invalid_observations_retained": true,
+  "original_plan_sha256": "b2325b421f50dd6198f3e6e83d30877322683e21397fd89593a3a43753ac4fd1",
+  "plan_sha256": "bb6e3b9f458265142824c5f3d70214811d6c34cdf341ad96fd1c0cea499f2f15",
+  "repair_source_revision": "8d5565ff04f6681625e7b8b49a8d7d2a4fc9f7ec",
+  "schema_version": 1,
+  "scope": "fixed shape repair only: refuse output machines above public 1024-state cap; no policy, noise, budget or grid parameter changes",
+  "source_revision": "e625bce208dab820d025056ba0421f6cedef97ef"
+}
