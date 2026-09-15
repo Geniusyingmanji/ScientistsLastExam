@@ -1,4 +1,4 @@
-"""Truth-blind deterministic 24-start crystal search witness."""
+"""Equal-budget incumbent perturbation control after eight cubic starts."""
 
 import hashlib
 import itertools

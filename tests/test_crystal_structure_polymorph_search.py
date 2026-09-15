@@ -125,3 +125,36 @@ def test_malformed_submission_matrix_and_caught_overrun_fail_closed(monkeypatch)
     assert not row["valid"]
     assert row["failure_kind"] == "budget_exceeded"
     assert row["calls"] == evaluator.CALL_BUDGET
+
+def test_real_sandbox_resets_globals_and_tmp_between_worlds(tmp_path):
+    import shutil
+    import sys
+    import pytest
+    if sys.platform != "linux" or not shutil.which("bwrap"):
+        pytest.skip("requires the canonical Linux bubblewrap runtime")
+    from sle.evaluate import evaluate_candidate
+    from sle.registry import find_task
+
+    code = (TASK / "solution.py").read_text().replace(
+        "def search_crystals(", "def baseline_search(")
+    code += '''\n_seen = 0
+
+def search_crystals(problem, relax_structure):
+    global _seen
+    from pathlib import Path
+    marker = Path("/tmp/csp-world-sentry")
+    _seen += 1
+    if _seen != 1 or marker.exists():
+        return {}
+    marker.write_text("one world")
+    return baseline_search(problem, relax_structure)
+'''
+    candidate = tmp_path / "session_sentry.py"
+    candidate.write_text(code)
+    spec = find_task("MaterialsScience/CrystalStructurePolymorphSearch", include_uncertified=True)
+    metrics = evaluate_candidate(spec, candidate, timeout_s=300)
+    assert not metrics.get("infrastructure_failure"), metrics
+    assert metrics["valid"] == 1.0, metrics
+    assert metrics["combined_score"] == 0.0
+    assert len(metrics["per_world"]) == 5
+    assert all(row["valid"] for row in metrics["per_world"])

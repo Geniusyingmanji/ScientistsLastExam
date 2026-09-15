@@ -1,4 +1,4 @@
-"""Truth-blind deterministic 24-start crystal search witness."""
+"""Same 24 witness seeds, selecting the three lowest enthalpies."""
 
 import hashlib
 import itertools

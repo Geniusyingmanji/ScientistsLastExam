@@ -1,4 +1,4 @@
-"""Truth-blind deterministic 24-start crystal search witness."""
+"""Equal-budget 24-anisotropic-start control with exact archive selection."""
 
 import hashlib
 import itertools
