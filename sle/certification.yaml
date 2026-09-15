@@ -521,6 +521,17 @@ tasks:
       baseline never declines. Candidate, not certified. No frontier searcher draw.
     citation_ids:
       - doi:10.1137/070710111
+  ControlTheory/LyapunovDecayCertificate:
+    status: candidate
+    reason: >-
+      Certificate-bound cell that is not a cart-pole controller and not a Bell
+      SOS identity: an exact rational common quadratic Lyapunov function proves
+      a decay rate for a published 3-by-3 switched linear plant. The identity
+      Gram at a token rate is valid and scores exactly zero. Candidate, not
+      certified. No frontier searcher draw.
+    citation_ids:
+      - doi:10.1137/1.9781611970777
+      - doi:10.1007/978-0-8176-4297-6
   Mathematics/RamseyLowerBound:
     status: candidate
     reason: >-
