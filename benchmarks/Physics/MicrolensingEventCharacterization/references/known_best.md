@@ -19,14 +19,17 @@ Einstein time. For variable sources it remains the period.
 
 ## Model draws
 
-All existing DeepSeek measurements predate the current mixed-family worlds and feature-time/FWHM
-contract and are historical only. On revision `9a208cf45782592aaf12215b9917d63d4159d122`, one
-selection-blind proposal per model was generated with seed 0, temperature 0 and thinking explicitly
-disabled. DeepSeek V4 Flash scored 0.287244 development; Pro produced a valid blanket refusal and
-scored 0.000000. Earlier ten-proposal runs on another scoring revision reached 0.250000 and
-0.260876. None of these values is presented as current calibration.
+On executable revision `d977aa87b2aa8018cc547b355987dfb14a4b3198`, one selection-blind first
+proposal per model was generated with seed 17, temperature 0 and chat thinking explicitly disabled
+in the transmitted payload. DeepSeek V4 Flash produced one valid proposal scoring **0.099196**
+development / **0.430821** held-out raw composite. DeepSeek V4 Pro produced one valid blanket
+refusal scoring **0.000000** / **0.250000**. Neither approached the 0.926256 reference.
 
-Fresh model draws are required after the executable design and shortcut margin are frozen.
+Before the local chat adapter sent the field, the YAML `chat_thinking` key was silently ignored and
+both models exhausted 12,000 output tokens without a code block. Those two protocol-incomplete runs
+are recorded as compatibility failures, not as scientific scores. The adapter, configs, responses
+and generated programs are not committed. Earlier model values on old scoring revisions remain in
+the dated historical experiment files and are not current calibration.
 
 ## Baseline
 
@@ -88,9 +91,11 @@ linear-scale fit.
 
 The evaluator rejects malformed outputs, duplicate observations, overspending, unknown epochs and
 fabricated evidence. It resets a sandboxed candidate session before every world, including the split
-boundary. Any invalid world forces `valid=0` and `combined_score=0`. The reference and registered
-probes are deterministic in local replay; final pinned-Linux sandbox replay and the complete
-task-specific contribution gate must be recorded after committing the frozen executable revision.
+boundary. Any invalid world forces `valid=0` and `combined_score=0`. On clean revision `d977aa87`,
+the ali pinned Linux run passed the full task contribution gate (17/17), 47 task and related tests
+plus five subtests, and the trusted clean-tree task audit. Reference, ablations, probes and degenerate
+controls were each replayed twice through `sle eval` with complete metrics identical. No full-repository
+test suite or maintainer-owned global evidence refresh was run.
 
 Reproduce the current task-local calibration with:
 
