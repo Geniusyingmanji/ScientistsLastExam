@@ -4,20 +4,17 @@ shortcut_probe:
   metric: combined_score
   reference:
     candidate: verification/reference_solver.py
-    expected_score: 0.754681
+    expected_score: 0.594835
   probes:
   - id: legal_baseline
     candidate: solution.py
     expected_score: 0.0
-  - id: fixed_schedule_family_a
-    candidate: verification/shortcut_family_a.py
-    expected_score: 0.574956
-  - id: fixed_schedule_family_b
-    candidate: verification/shortcut_family_b.py
-    expected_score: 0.543759
-  - id: fixed_schedule_family_c
-    candidate: verification/shortcut_family_c.py
-    expected_score: 0.515176
+  - id: strongest_fixed_schedule
+    candidate: verification/reference_no_active_design.py
+    expected_score: 0.432153
+  excluded:
+  - candidate: verification/replay_probes.py
+    reason: trusted Linux replay driver containing candidate source templates, not a standalone submission
   relative_margin: 0.2
   score_tolerance: 0.000001
 scientific_question: Can an agent actively distinguish the declared synthetic periodic, activity-surrogate and quadratic-clock residual families, forecast timing offsets and refuse out-of-family histories under a follow-up observation budget?
@@ -28,8 +25,8 @@ oracle:
   deterministic: true
 normalization:
   baseline: two legal follow-up timings, both cited, followed by a deterministic, overconfident fixed-planet claim; never abstains and scores exactly zero
-  reference: three spread follow-ups plus one model-disagreement query using a 12-model BIC-weighted posterior, continuous-period least-squares/BIC refinement, residual diagnostics, and explicit stationary-extra-component and phase-evolution checks; development-only expected combined 0.754681, with original measurements preserved in known_best
-  score: each split uses all-world reward minus blanket-refusal reward, divided by supported count and bounded below at zero, multiplied by correct-refusal rate and squared discovery precision; for candidates valid on every world combined_score is development_score only, held-out scientific scores remain private, any invalid world rejects the entire submission with public valid=0 and combined_score=0, and wrong mechanisms receive no period or forecast credit
+  reference: five sequential model-disagreement follow-ups using a family-stratified BIC-weighted ensemble, continuous-period least-squares refinement, and explicit stationary-extra-component and phase-evolution comparisons; development-only expected combined 0.594835
+  score: each split uses all-world reward minus blanket-refusal reward, divided by supported count and bounded below at zero, multiplied by correct-refusal rate and cubed discovery precision; correct supported claims also earn normalized query-design credit, combined_score is development_score only, held-out scientific scores remain private, and any invalid world rejects the submission with valid=0 and combined_score=0
 citations:
 - id: doi:10.1111/j.1365-2966.2005.08922.x
   title: On detecting terrestrial planets with timing of giant planet transits
@@ -47,9 +44,11 @@ invariants:
 - every non-abstaining claim cites at least two current query IDs
 - overspending, invented IDs and malformed output fail closed
 - mechanism, forecast, coverage and false-discovery metrics remain separate
+- acquisition-design credit uses distinct cited measurements and a per-world feasible optimum
+- development and held-out each contain three independently seeded panels with varying horizons
 - held-out worlds, unsupported-family labels and exact descriptors remain evaluator-only
 - development and held-out each include both unsupported reasons with non-unit denominators
-known_shortcuts: The search score uses development only; the previous min(development,heldout) headline violated the sealed-feedback boundary and its results remain historical. The same frozen A/B/C schedules are retained byte-for-byte without reselection. Their registered development-score expectations are 0.574956 (A, 1000 policies), 0.543759 (B, 200), and 0.515176 (C, 200), versus reference 0.754681. The strongest is 76.18% of reference, below the unchanged 80% limit. Original grids and limited-scope replay results are preserved in known_best; they are not universal shortcut bounds. Constant-family, counter and fitted no-refusal probes remain separate degenerate controls.
+known_shortcuts: A development-only scan covers 8 normalized five-query schedules, 5 RMS limits, 4 supported-family BIC gaps, 4 residual-correlation limits, and 6 out-of-family BIC gaps, for 3840 truth-blind fixed policies. The strongest policy scores 0.432153 versus reference 0.594835, or 72.65%, below the unchanged 80% guard. Its schedule is normalized to each world's candidate-visible follow-up interval, so variable horizons cannot invalidate it. Baseline and constant-family controls score zero; prior fixed-world A/B/C measurements are retained only as historical evidence in known_best.
 review:
   domain: pending_external_astronomy
   evaluator_security: automated_determinism_budget_lineage_and_bad_candidate_checks_passed
@@ -57,7 +56,7 @@ provenance:
   class: procedural
   target_source: repository-visible deterministic TTV generator with development and shifted held-out worlds
   task_contract_public_before_evaluation: true
-  fresh_confirmation_status: maintainer_canonical_linux_C_2026_09_14_on_4817b21a; current D campaign status is recorded separately in the source-bound admission report
+  fresh_confirmation_status: pending_clean_linux_replay_after_C12_scoring_revision
   license: procedural repository-local code; no external dataset bundled
 novelty_risk:
   level: medium
@@ -75,7 +74,7 @@ lineage:
   - experiments/transit_timing_deepseek_flash_2026-09-05.json
   - experiments/transit_timing_deepseek_calibration_2026-09-06.json
   calibration_evidence_status: historical_only
-  current_admission_report: experiments/transit_timing_admission_2026-09-14.json
+  current_admission_report: null
   edits_triggered_by_model: none
   shortcut_discoverer: maintainer_PR11_review_and_regression_probes
   frozen_before_eval: false
@@ -90,7 +89,7 @@ construction_audit:
   author_domain: computational_astronomy
   reviewer_domain: pending_external_astronomy
   expert_hours: null
-  red_team_rounds: 4
+  red_team_rounds: 5
   oracle_disagreement_status: not_quantified
   independent_recomputation_status: baseline and reference replayed; independent photodynamical recomputation pending
 

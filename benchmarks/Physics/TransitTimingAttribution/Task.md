@@ -38,30 +38,34 @@ world.
 
 ## Scoring and safety
 
-Development worlds contain planet, activity, clock, and two distinct out-of-family
-processes: a stationary extra component and a non-stationary phase evolution. Valid claims receive
-mechanism, period, forecast, coverage, and false-discovery metrics; correctly abstaining on an
-unsupported process is rewarded. A sealed shifted set tests transfer to new noise and phases.
+Development worlds contain three independently seeded panels of planet, activity, clock, and two
+distinct out-of-family processes: a stationary extra component and a non-stationary phase
+evolution. Initial time-series length, noise, signal coefficients, follow-up range, and forecast
+horizon vary across worlds. Valid claims receive mechanism, period, forecast, acquisition-design,
+coverage, and false-discovery metrics; correctly abstaining on an unsupported process is rewarded.
+A separately seeded shifted set tests transfer.
 `development_mechanism_score` and `validation_mechanism_score` report the fraction of supported
 worlds with a correctly claimed mechanism. Each has accompanying `mechanism_correct_count` and
 `mechanism_total_count` keys with the same split prefix. Abstention on a supported world counts as
 incorrect; unsupported worlds are assessed by the refusal and false-discovery metrics.
 Planet and activity periods vary continuously around the reconnaissance grids supplied in the
-observation; those grids are starting points, not a finite answer list. A correct planet/activity
-claim receives 0.45 mechanism credit, 0.30 period-quality credit and 0.25 forecast credit. A correct
-clock claim receives 0.65 mechanism credit and 0.35 forecast credit. Wrong mechanisms and supported
-abstentions score zero. Period quality decays exponentially with relative error; forecast quality
-decays exponentially with absolute error at four times the timing uncertainty. An unsupported-world
-refusal scores one and any unsupported claim scores zero.
+observation; those grids are starting points, not a finite answer list. For a correct periodic-family
+claim, mechanism, period, forecast, and acquisition design contribute 0.35, 0.25, 0.20, and 0.20.
+For a correct clock claim they contribute 0.50, 0, 0.30, and 0.20. Acquisition design is the summed
+local parameter sensitivity at the distinct cited follow-ups, normalized by the best budget-sized
+set available in that world. Repeating a transit does not earn design credit twice. Wrong mechanisms
+and supported abstentions score zero. Period quality decays exponentially with relative error;
+forecast quality decays exponentially with absolute error at four times the timing uncertainty. An
+unsupported-world refusal scores one and any unsupported claim scores zero.
 Each split score is `max(0, (sum(world_scores) - unsupported_count) / supported_count)`
-multiplied by the correct-refusal rate and squared discovery precision `(1-FDR)^2`. The headline
+multiplied by the correct-refusal rate and cubed discovery precision `(1-FDR)^3`. The headline
 `combined_score` equals the development split score for candidates valid on every world.
 The sealed-split scientific score and held-out diagnostics are evaluator-only confirmation
 evidence and do not influence the public objective for those valid candidates.
 Thus blanket refusal scores zero and false claims on unsupported signals reduce the headline.
 Never refusing also scores zero, even with otherwise accurate supported-model fits.
 Rate metrics include counts and denominators. Instance order and split sizes are not a contract;
-each world starts a fresh candidate session, and the follow-up budget is four measurements.
+each world starts a fresh candidate session, and the follow-up budget is five measurements.
 All-world validity remains a public feasibility gate: malformed output, invented evidence,
 candidate exceptions, or budget overspend on any development or sealed world reject the entire
 submission with `valid=0` and `combined_score=0`.
@@ -75,17 +79,14 @@ not global anomaly significance. Shifted timing/noise instances test transfer of
 
 ## Reference checks
 
-The truth-blind reference uses three spread observations and a fourth model-disagreement query,
-continuously refines periodic fits, and compares supported fits with stationary-extra-component
-and phase-evolution alternatives before rescuing a rejected claim. Its development score is
-0.754681. The same frozen development-selected fixed schedules remain 0.574956 (three-diagnostic
-family A, 1,000 policies), 0.543759 (no-BIC family B, 200), and 0.515176 (no-RMS family C, 200).
-No schedule is reselected using the sealed split. The strongest frozen shortcut is 76.18% of the
-reference, below the retained 80% limit. Independent canonical Linux C verification on revision
-`4817b21a` reproduces these values; the source-bound record is
-`experiments/transit_timing_admission_2026-09-14.json`. Removing only the active fourth measurement
-while preserving current fitting and refusal abilities gives 0.273558 on the fixed (20, 38, 55, 59)
-cadence. This is a single declared ablation, not a bound over all fixed schedules.
+The truth-blind reference repeatedly chooses the follow-up with the greatest weighted disagreement
+among retained planet, activity, and clock fits. It continuously refines periodic fits and compares
+every claimed supported fit with stationary-extra-component and phase-evolution alternatives. Its
+development score is 0.594835. A development-only scan of 3,840 normalized fixed schedules and
+evidence-threshold combinations reaches 0.432153, or 72.65% of the reference, below the retained
+80% limit. Removing the last two active measurements gives 0.238873; removing the activity family or
+out-of-family evidence gives 0.252756 and 0.052701; replacing the forecast with zero gives 0.526721. Exact
+protocols and historical contracts are recorded in `references/known_best.md`.
 
 Earlier records used the minimum of development and held-out scores as the public headline.
 That feedback defect has been removed. The original reference, ablation, grid and model records

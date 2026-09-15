@@ -5,217 +5,293 @@ from unittest.mock import patch
 
 from sle.metric_visibility import search_visible_metrics
 
+
 ROOT = Path(__file__).resolve().parents[1]
-PATH = ROOT / "benchmarks/Physics/TransitTimingAttribution/verification/evaluator.py"
-spec = importlib.util.spec_from_file_location("ttv_metrics", PATH)
-evaluator = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(evaluator)
-REF_PATH = ROOT / "benchmarks/Physics/TransitTimingAttribution/verification/reference_solver.py"
-ref_spec = importlib.util.spec_from_file_location("ttv_reference", REF_PATH)
-reference = importlib.util.module_from_spec(ref_spec)
-ref_spec.loader.exec_module(reference)
-CAL_PATH = ROOT / "benchmarks/Physics/TransitTimingAttribution/verification/calibrate.py"
-cal_spec = importlib.util.spec_from_file_location("ttv_calibrate", CAL_PATH)
-calibrate = importlib.util.module_from_spec(cal_spec)
-cal_spec.loader.exec_module(calibrate)
+TASK = ROOT / "benchmarks/Physics/TransitTimingAttribution"
+
+
+def load(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+evaluator = load("ttv_metrics", TASK / "verification/evaluator.py")
+reference = load("ttv_reference", TASK / "verification/reference_solver.py")
+fixed = load("ttv_fixed", TASK / "verification/reference_no_active_design.py")
+calibrate = load("ttv_calibrate", TASK / "verification/calibrate.py")
+baseline = load("ttv_baseline", TASK / "solution.py")
 
 
 def claim(kind="planet", ids=None):
-    return {"mechanism": kind, "period": 5.2, "next_offset_days": 0.0,
-            "confidence": 1.0, "evidence_query_ids": ids or ["a", "b"]}
+    return {
+        "mechanism": kind,
+        "period": 5.2,
+        "next_offset_days": 0.0,
+        "confidence": 1.0,
+        "evidence_query_ids": ids or ["a", "b"],
+    }
 
 
 class TransitMechanismMetricsTests(unittest.TestCase):
-    def test_correct_wrong_and_abstained_claims_use_real_score(self):
-        worlds = [{"kind": k, "query_ids": ["a", "b"], "budget": 4,
-                   "period": 5.2, "amplitude": 0.006, "phase": 0.5, "noise": 0.002}
-                  for k in ("planet", "activity", "clock", "planet", "activity", "unsupported")]
+    def test_correct_wrong_and_abstained_claims_have_explicit_denominators(self):
+        worlds = [
+            {
+                "kind": kind,
+                "query_ids": ["a", "b"],
+                "budget": 5,
+                "period": 5.2,
+                "amplitude": 0.006,
+                "phase": 0.5,
+                "secondary_amplitude": 0.003,
+                "secondary_period": 2.1,
+                "secondary_phase": 0.4,
+                "clock_linear": 0.0002,
+                "clock_quadratic": 0.000006,
+                "forecast_transit": 75,
+                "noise": 0.002,
+            }
+            for kind in (
+                "planet",
+                "activity",
+                "clock",
+                "planet",
+                "activity",
+                "unsupported_resonant",
+            )
+        ]
         claims = ["planet", "clock", None, "planet", None, None]
         iterator = iter(claims * 2)
+
         def candidate(*args):
             kind = next(iterator)
             return {"abstain": True} if kind is None else claim(kind)
-        with patch.object(evaluator, "development_worlds", return_value=worlds), \
-             patch.object(evaluator, "sealed_worlds", return_value=worlds), \
-             patch.object(evaluator, "_observation", return_value={}):
+
+        with patch.object(evaluator, "development_worlds", return_value=worlds), patch.object(
+            evaluator, "sealed_worlds", return_value=worlds
+        ), patch.object(evaluator, "_observation", return_value={}), patch.object(
+            evaluator, "_design_score", return_value=0.0
+        ):
             result = evaluator.evaluate(candidate)
         for split in ("development", "validation"):
             self.assertEqual(result[split + "_mechanism_correct_count"], 2)
             self.assertEqual(result[split + "_mechanism_total_count"], 5)
             self.assertEqual(result[split + "_mechanism_score"], 0.4)
             self.assertEqual(result[split + "_false_discovery_denominator"], 3)
-        self.assertEqual(evaluator._score(worlds[1], evaluator._parse_submission(claim("clock"))), (0.0, True))
         self.assertEqual(result["combined_score"], result["development_score"])
 
-    def test_valid_sealed_only_changes_do_not_change_public_score(self):
-        candidate = calibrate.fitted_policy((13, 26, 43, 59), 1.2, 3.0, 0.8)
-        original = evaluator.evaluate(candidate)
-        # Alter only the evaluator's sealed confirmation panel. The old min(dev, held)
-        # headline changed to zero here even though no development observation changed.
-        with patch.object(evaluator, "sealed_worlds", return_value=[]):
-            changed = evaluator.evaluate(candidate)
-        self.assertEqual(original["valid"], 1)
-        self.assertEqual(changed["valid"], 1)
-        self.assertGreater(original["development_score"], 0)
-        self.assertEqual(original["development_score"], changed["development_score"])
-        self.assertNotEqual(original["robustness_score"], changed["robustness_score"])
-        self.assertEqual(search_visible_metrics(original), search_visible_metrics(changed))
-        self.assertEqual(search_visible_metrics(original)["combined_score"], original["development_score"])
-        self.assertNotIn("robustness_score", search_visible_metrics(original))
-        self.assertFalse(any(key.startswith("heldout_") for key in search_visible_metrics(original)))
+    def test_world_panels_are_deterministic_disjoint_and_variable(self):
+        development = evaluator.development_worlds()
+        heldout = evaluator.sealed_worlds()
+        self.assertEqual(development, evaluator.development_worlds())
+        self.assertEqual(heldout, evaluator.sealed_worlds())
+        self.assertEqual((len(development), len(heldout)), (69, 60))
+        self.assertEqual(len({w["panel_seed"] for w in development}), 3)
+        self.assertEqual(len({w["panel_seed"] for w in heldout}), 3)
+        self.assertTrue(
+            {w["panel_seed"] for w in development}.isdisjoint(
+                {w["panel_seed"] for w in heldout}
+            )
+        )
+        self.assertEqual(
+            {w["kind"] for w in development if w["kind"] not in evaluator.MECHANISMS},
+            {"unsupported_resonant", "unsupported_chirp"},
+        )
+        self.assertGreater(len({len(w["times"]) for w in development}), 1)
+        self.assertGreater(len({w["noise"] for w in development}), 50)
+        self.assertGreater(len({w["maximum_followup"] for w in development}), 10)
+        self.assertGreater(len({w["forecast_transit"] for w in development}), 10)
+        self.assertEqual(len({w["seed"] for w in development + heldout}), 129)
 
-    def test_sealed_invalid_output_exception_and_caught_overspend_fail_closed(self):
-        policy = calibrate.fitted_policy((13, 26, 43, 59), 1.2, 3.0, 0.8)
-        development_count = len(evaluator.development_worlds())
-        for mode in ("malformed", "exception", "caught_overspend"):
-            with self.subTest(mode=mode):
-                calls = []
-                def candidate(observation, measure, budget):
-                    calls.append(None)
-                    if len(calls) <= development_count:
-                        return policy(observation, measure, budget)
-                    if mode == "malformed":
-                        return {}
-                    if mode == "exception":
-                        raise RuntimeError("sealed-world candidate failure")
-                    for _ in range(budget + 1):
-                        try:
-                            measure(20)
-                        except RuntimeError:
-                            pass
-                    return {"abstain": True}
-                result = evaluator.evaluate(candidate)
-                # All development worlds were legal. A failure first occurs on sealed
-                # confirmation, which must still reject the complete submission.
-                self.assertEqual(len(calls), development_count + 1)
-                self.assertEqual(result, evaluator._invalid_metrics())
-                self.assertEqual(search_visible_metrics(result)["valid"], 0)
-                self.assertEqual(search_visible_metrics(result)["combined_score"], 0)
+    def test_every_observation_publishes_dynamic_followup_bounds_and_budget(self):
+        for world in evaluator.development_worlds() + evaluator.sealed_worlds():
+            observation = evaluator._observation(world)
+            self.assertEqual(observation["budget_transits"], 5)
+            self.assertEqual(
+                observation["maximum_followup_transit_number"], world["maximum_followup"]
+            )
+            self.assertEqual(observation["forecast_transit_number"], world["forecast_transit"])
+            self.assertGreater(
+                observation["forecast_transit_number"],
+                observation["maximum_followup_transit_number"],
+            )
 
-    def test_development_scan_reads_sealed_score_only_for_frozen_winner(self):
-        first, second = ((13, 26, 43, 59), (16, 32, 48, 59))
-        calls = []
-        values = {"dev_first": 0.6, "dev_second": 0.5, "held_first": 0.1, "held_second": 0.9}
-        def score(record, limits):
-            calls.append(record)
-            return values[record]
-        with patch.object(calibrate, "SCHEDULES", (first, second)), \
-             patch.object(calibrate, "_cached_score", side_effect=score), \
-             patch.object(calibrate, "fitted_policy", return_value=object()), \
-             patch.object(calibrate.evaluator, "evaluate", return_value={
-                 "development_score": 0.6, "combined_score": 0.6, "robustness_score": 0.1}):
-            selected = calibrate._scan({first: "dev_first", second: "dev_second"},
-                                      {first: "held_first", second: "held_second"},
-                                      (1.2,), (3.0,), (0.8,))
-        self.assertEqual(selected, (0.6, 0.6, 0.1, (first, 1.2, 3.0, 0.8)))
-        self.assertEqual(calls, ["dev_first", "dev_second", "held_first"])
+    def test_design_score_normalizes_feasible_distinct_measurements(self):
+        world = {
+            "kind": "clock",
+            "times": list(map(float, range(10))),
+            "maximum_followup": 14,
+            "budget": 2,
+            "query_ids": ["q10", "q10-repeat", "q14"],
+            "query_numbers": [10, 10, 14],
+        }
+        repeated = {"abstain": False, "ids": ["q10", "q10-repeat"]}
+        single = {"abstain": False, "ids": ["q10"]}
+        spread = {"abstain": False, "ids": ["q10", "q14"]}
+        optimum = {"abstain": False, "ids": ["q13", "q14"]}
+        self.assertEqual(
+            evaluator._design_score(world, repeated), evaluator._design_score(world, single)
+        )
+        self.assertGreater(
+            evaluator._design_score(world, spread), evaluator._design_score(world, repeated)
+        )
+        world["query_ids"].append("q13")
+        world["query_numbers"].append(13)
+        self.assertEqual(evaluator._design_score(world, optimum), 1.0)
 
-    def test_refusal_changes_headline_and_all_abstain_is_zero(self):
-        def row(supported, score, abstain=False):
-            return {"supported": supported, "score": score, "abstain": abstain,
-                    "correct": supported and not abstain, "fd": not supported and not abstain}
+    def test_refusal_and_precision_change_headline(self):
+        def row(supported, score, abstain=False, false=False):
+            return {
+                "supported": supported,
+                "score": score,
+                "abstain": abstain,
+                "correct": supported and not abstain and not false,
+                "fd": false,
+                "design": 0.0,
+            }
+
         supported = [row(True, 0.8)] * 3
-        good = evaluator._aggregate(supported + [row(False, 1, True)])
-        bad = evaluator._aggregate(supported + [row(False, 0)])
+        good = evaluator._aggregate(supported + [row(False, 1.0, abstain=True)])
+        never_refuse = evaluator._aggregate(supported + [row(False, 0.0, false=True)])
+        imprecise = evaluator._aggregate(
+            supported + [row(False, 1.0, abstain=True), row(False, 0.0, false=True)]
+        )
         self.assertAlmostEqual(good["combined_score"], 0.8)
-        self.assertEqual(bad["combined_score"], 0.0)
-        result = evaluator.evaluate(lambda *a: {"abstain": True})
-        self.assertEqual(result["combined_score"], 0)
-        self.assertEqual(result["robustness_score"], 0)
-        self.assertEqual(result["valid"], 1)
+        self.assertEqual(never_refuse["combined_score"], 0.0)
+        raw = (3 * 0.8 + 1.0 - 2.0) / 3.0
+        self.assertAlmostEqual(
+            imprecise["combined_score"], raw * 0.5 * (3.0 / 4.0) ** 3
+        )
+        all_abstain = evaluator.evaluate(lambda *args: {"abstain": True})
+        self.assertEqual(all_abstain["combined_score"], 0.0)
+        self.assertEqual(all_abstain["valid"], 1.0)
 
-    def test_constant_claims_cannot_score(self):
-        for kind in evaluator.MECHANISMS[:3]:
-            def candidate(obs, measure, budget):
-                ids = [measure(n)["query_id"] for n in (20, 30)]
+    def test_constant_claims_and_confident_baseline_score_zero(self):
+        baseline_result = evaluator.evaluate(baseline.attribute_ttv)
+        self.assertEqual(baseline_result["valid"], 1.0)
+        self.assertEqual(baseline_result["combined_score"], 0.0)
+        for kind in evaluator.MECHANISMS:
+            def candidate(observation, measure, budget, kind=kind):
+                start = max(map(int, observation["transit_numbers"])) + 1
+                ids = [measure(start + offset)["query_id"] for offset in (0, 1)]
                 return claim(kind, ids)
+
             result = evaluator.evaluate(candidate)
-            self.assertEqual(result["valid"], 1)
-            self.assertEqual(result["combined_score"], 0)
-            self.assertEqual(result["robustness_score"], 0)
+            self.assertEqual(result["valid"], 1.0)
+            self.assertEqual(result["combined_score"], 0.0)
 
-    def test_worlds_are_deterministic_and_splits_differ(self):
-        dev, val = evaluator.development_worlds(), evaluator.sealed_worlds()
-        self.assertEqual(dev, evaluator.development_worlds())
-        self.assertEqual(val, evaluator.sealed_worlds())
-        self.assertNotEqual(len(dev), len(val))
-        self.assertNotEqual([w["kind"] for w in dev], [w["kind"] for w in val][:len(dev)])
-        self.assertNotEqual([w["kind"] for w in dev], sorted(w["kind"] for w in dev))
-        self.assertEqual({w["kind"] for w in dev if w["kind"] not in evaluator.MECHANISMS},
-                         {"unsupported_resonant", "unsupported_chirp"})
-        self.assertEqual(len({w["seed"] for w in dev + val}), len(dev) + len(val))
-
-    def test_followup_noise_is_world_and_coordinate_seeded(self):
-        first = evaluator.development_worlds()[0]
-        second = evaluator.development_worlds()[1]
-        a = evaluator._experiment(first, 20)["timing_offset_days"] - evaluator._signal(first, 20)
-        b = evaluator._experiment(second, 20)["timing_offset_days"] - evaluator._signal(second, 20)
-        self.assertNotEqual(a, b)
-        ordered = evaluator.development_worlds()[0]
-        reordered = evaluator.development_worlds()[0]
-        expected = evaluator._experiment(ordered, 20)["timing_offset_days"]
-        evaluator._experiment(reordered, 21)
-        actual = evaluator._experiment(reordered, 20)["timing_offset_days"]
-        self.assertEqual(expected, actual)
-
-    def test_sessions_reset_at_every_world_boundary(self):
+    def test_sessions_reset_and_followup_noise_is_coordinate_seeded(self):
         class Counter:
             resets = 0
             calls = 0
+
             def reset_session(self):
                 self.resets += 1
                 self.calls = 0
+
             def __call__(self, *args):
                 self.calls += 1
                 if self.calls != 1:
                     raise RuntimeError("state leaked")
                 return {"abstain": True}
+
         candidate = Counter()
-        self.assertEqual(evaluator.evaluate(candidate)["valid"], 1)
-        self.assertEqual(candidate.resets, len(evaluator.development_worlds()) + len(evaluator.sealed_worlds()))
+        self.assertEqual(evaluator.evaluate(candidate)["valid"], 1.0)
+        self.assertEqual(candidate.resets, 129)
+        first, second = evaluator.development_worlds()[:2]
+        number = max(len(first["times"]), len(second["times"]))
+        first_noise = evaluator._experiment(first, number)["timing_offset_days"] - evaluator._signal(
+            first, number
+        )
+        second_noise = evaluator._experiment(second, number)["timing_offset_days"] - evaluator._signal(
+            second, number
+        )
+        self.assertNotEqual(first_noise, second_noise)
 
     def test_malformed_candidates_and_caught_budget_errors_fail_closed(self):
         def raises(*args):
             raise RuntimeError("broken candidate")
-        def overspend(obs, measure, budget):
+
+        def overspend(observation, measure, budget):
+            start = max(map(int, observation["transit_numbers"])) + 1
             for _ in range(budget + 1):
                 try:
-                    measure(20)
+                    measure(start)
                 except RuntimeError:
                     pass
             return {"abstain": True}
-        bad = [{}, "wrong", None, [], {"abstain": "yes"}, claim("wrong"),
-               claim(ids=["fake", "invented"]), claim(ids=["a", "a"]),
-               {**claim(), "period": float("nan")}, {**claim(), "period": -1},
-               {**claim(), "next_offset_days": float("inf")}, {**claim(), "confidence": 2},
-               {**claim(), "evidence_query_ids": [1, 2]}]
-        good = evaluator.evaluate(lambda *a: {"abstain": True})
-        for candidate in [raises, overspend] + [lambda *a, value=value: value for value in bad]:
-            result = evaluator.evaluate(candidate)
-            self.assertEqual(result["valid"], 0)
-            self.assertEqual(result["combined_score"], 0)
-            self.assertEqual(set(result), set(good))
 
-    def test_reference_budget_and_shortcut_headroom(self):
-        full = evaluator.evaluate(reference.attribute_ttv)
-        half = evaluator.evaluate(lambda observation, measure, budget: reference._attribute_ttv(
-            observation, measure, min(budget, 2), 1.0, 6.0, 0.8))
-        shortcut = evaluator.evaluate(calibrate.fitted_policy(
-            (13, 26, 43, 59), 1.2, 3.0, 0.8))
-        legacy_design = evaluator.evaluate(calibrate.reference_ablation("legacy_active_posterior"))
-        no_misspecification = evaluator.evaluate(
-            calibrate.reference_ablation("no_misspecification_rescue"))
-        self.assertGreater(full["combined_score"] - half["combined_score"], 0.15)
-        self.assertGreater(full["robustness_score"] - half["robustness_score"], 0.15)
-        self.assertLess(shortcut["combined_score"], 0.8 * full["combined_score"])
-        self.assertGreater(full["robustness_score"] - shortcut["robustness_score"], 0.10)
-        self.assertGreater(full["combined_score"] - legacy_design["combined_score"], 0.03)
-        self.assertGreater(full["combined_score"] - no_misspecification["combined_score"], 0.10)
-        self.assertGreater(full["robustness_score"] - legacy_design["robustness_score"], 0.0)
-        self.assertGreater(full["robustness_score"] - no_misspecification["robustness_score"], 0.0)
-        self.assertEqual(full["combined_score"], full["development_score"])
-        self.assertEqual(full["development_correct_refusal_denominator"], 10)
-        self.assertEqual(full["heldout_correct_refusal_denominator"], 10)
+        bad = [
+            {},
+            "wrong",
+            None,
+            [],
+            {"abstain": "yes"},
+            claim("wrong"),
+            claim(ids=["fake", "invented"]),
+            claim(ids=["a", "a"]),
+            {**claim(), "period": float("nan")},
+            {**claim(), "period": -1},
+            {**claim(), "next_offset_days": float("inf")},
+            {**claim(), "confidence": 2},
+            {**claim(), "evidence_query_ids": [1, 2]},
+        ]
+        key_shape = set(evaluator.evaluate(lambda *args: {"abstain": True}))
+        for candidate in [raises, overspend] + [
+            lambda *args, value=value: value for value in bad
+        ]:
+            result = evaluator.evaluate(candidate)
+            self.assertEqual(result["valid"], 0.0)
+            self.assertEqual(result["combined_score"], 0.0)
+            self.assertEqual(set(result), key_shape)
+
+    def test_public_metrics_hide_sealed_diagnostics(self):
+        result = evaluator.evaluate(reference.attribute_ttv)
+        public = search_visible_metrics(result)
+        self.assertEqual(public["combined_score"], result["development_score"])
+        self.assertNotIn("robustness_score", public)
+        self.assertFalse(any(key.startswith(("heldout_", "validation_")) for key in public))
+
+    def test_current_reference_fixed_guard_and_ablations(self):
+        reference_result = evaluator.evaluate(reference.attribute_ttv)
+        repeat = evaluator.evaluate(reference.attribute_ttv)
+        fixed_result = evaluator.evaluate(fixed.attribute_ttv)
+        self.assertEqual(reference_result, repeat)
+        self.assertEqual(reference_result["valid"], 1.0)
+        self.assertEqual(fixed_result["valid"], 1.0)
+        self.assertAlmostEqual(reference_result["combined_score"], 0.5948352385872625)
+        self.assertAlmostEqual(fixed_result["combined_score"], 0.4321528299414905)
+        self.assertLess(
+            fixed_result["combined_score"], 0.8 * reference_result["combined_score"]
+        )
+        self.assertEqual(reference_result["development_mechanism_total_count"], 51)
+        self.assertEqual(reference_result["heldout_mechanism_total_count"], 42)
+        self.assertEqual(reference_result["development_correct_refusal_denominator"], 18)
+        self.assertEqual(reference_result["heldout_correct_refusal_denominator"], 18)
+        expected = {
+            "three_followups": 0.23887283843685286,
+            "no_activity_model": 0.25275618612364864,
+            "constant_forecast": 0.526720866558509,
+            "no_out_of_family_evidence": 0.05270056318895445,
+        }
+        for name, score in expected.items():
+            result = evaluator.evaluate(calibrate.reference_ablation(name))
+            self.assertEqual(result["valid"], 1.0)
+            self.assertAlmostEqual(result["combined_score"], score)
+
+    def test_fixed_scan_declares_full_development_only_grid(self):
+        count = (
+            len(calibrate.FRACTION_SCHEDULES)
+            * len(calibrate.RMS_LIMITS)
+            * len(calibrate.GAP_LIMITS)
+            * len(calibrate.CORRELATION_LIMITS)
+            * len(calibrate.ALTERNATIVE_GAP_LIMITS)
+        )
+        self.assertEqual(count, 3840)
+        self.assertEqual(
+            calibrate.FRACTION_SCHEDULES[1], (0.00, 0.20, 0.45, 0.70, 1.00)
+        )
 
 
 if __name__ == "__main__":

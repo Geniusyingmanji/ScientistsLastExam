@@ -1,209 +1,135 @@
 # TransitTimingAttribution reference record
 
-This candidate is a deterministic reduced-order transit-timing laboratory. The truth-blind
-reference compares quadratic-clock and periodic models with least squares and BIC, refines the
-period continuously, and chooses its fourth follow-up from a BIC-weighted model ensemble. When
-the original residual gates reject a claim, explicit stationary-extra-component and smooth
-phase-evolution fits provide an independent misspecification check before a full-budget rescue.
+This candidate is a deterministic reduced-order transit-timing laboratory. The public objective
+uses development worlds only; held-out diagnostics are sealed confirmation evidence. Every result
+below identifies the contract under which it was measured.
 
 ## Current reference
 
-For candidates valid on every world, public `combined_score` now equals `development_score`;
-the sealed scientific score remains private confirmation evidence. All-world validity is still
-a public feasibility gate: malformed output, candidate exceptions and budget violations on
-either split reject the entire submission with `valid=0` and `combined_score=0`.
-Taking `min(development, heldout)` previously let evaluator-only evidence
-influence proposal selection, contrary to the benchmark's feedback boundary. The world generator,
-query budget and frozen A/B/C candidate bytes remain unchanged. The reference was subsequently
-upgraded without changing the evaluator or reselecting any shortcut on the sealed split.
+The current truth-blind reference fits planet, activity, and quadratic-clock families by known-noise
+least squares and BIC. At each of five paid follow-ups it retains alternatives from all three
+families and chooses the transit with greatest weighted predictive disagreement. Periodic fits are
+then refined continuously, and a claim must also beat stationary-extra-component and phase-evolution
+models. It never reads evaluator state or hidden labels.
 
-The current development-only contract declares reference 0.754681, A 0.574956, B 0.543759 and
-C 0.515176. A/B/C are the same frozen candidates selected before this upgrade. The strongest is
-76.18% of the reference, below the retained 80% limit. A Linux system-Python precheck evaluated
-all four candidates twice: complete result dictionaries were identical within candidate, reference
-was 0.7546806731724828, and A/B/C were 0.5749563462412424, 0.5437588656539143 and
-0.5151760972753121. This precheck used Python 3 with NumPy 1.26.4 and SciPy 1.11.4; clean-source
-canonical Python 3.8.10 / NumPy 1.24.4 / SciPy 1.10.1 sandbox replay remains required.
+On the current three-panel development contract its `combined_score` is
+`0.5948352385872625`; its held-out robustness diagnostic is `0.28205283692823513`.
+Development mechanism accuracy is 36/51, correct refusal is 18/18, FDR is 0, and mean normalized
+design score is `0.415729`. This is a capable witness, not a score ceiling. Remaining headroom is in
+mechanism separation, forecast accuracy, and query design.
 
-Development-only ablations from the same preliminary environment were 0.7118805708796355 with
-the previous 18-model/0.05-BIC active-design posterior and 0.5892975036069101 without the explicit
-misspecification rescue. These are independent public-score losses from the two retained changes;
-they are not sealed confirmation or admission evidence.
-
-The old guard's 10 secure calls and 41 passing local tests remain frozen at code revision
-`e1cd1ee4a02778addc115c7a15d238995f2697be`; their source-bound report is
-`.research/pr11_shortcut_guard_review_2026-09-12.json`. Its numeric pass belongs to the old
-min-headline contract and is not evidence that the development-only contract passes. The current
-framework is integrated from main `dbed927128606051ffe483f4b5f192366dbad313`, separately from that
-historical evaluation runtime. The legacy model records cited below remain `historical_only`; the independent admission report
-records the status of any new source-bound calibration.
-
-## Historical reference record (min-headline contract)
-
-The executable revision and complete metrics are recorded in
-`experiments/transit_timing_review_replay_2026-09-11.json`. Every candidate below is evaluated
-twice through the trusted Linux driver and bubblewrap; the two complete metric dictionaries must
-match before the record is accepted.
-
-| Candidate | Combined | Development | Held-out |
-|---|---:|---:|---:|
-| Truth-blind active reference | 0.430139 | 0.632413 | 0.430139 |
-| Baseline, one measurement then refusal | 0.000000 | 0.000000 | 0.000000 |
-
-`combined_score` is the lower of the development and held-out split scores. The reference recovers 16/23 supported mechanisms on development and 17/24 on held-out. Its false
-discovery counts are 0/16 and 2/19; correct refusals are 10/10 and 9/10; supported coverage is
-16/23 and 18/24. Headroom remains in continuous-period inference, model-discriminating schedules,
-forecasting and rejection of both unmodelled processes. The reference is a capable witness, not a
-ceiling.
+The preceding public contract used fixed horizons and a four-query budget. Its final reference score
+was `0.7546806731724828`; the Linux admission record is
+`experiments/transit_timing_admission_2026-09-14.json`. Those values are historical and are not
+presented as measurements of the current evaluator.
 
 ## Model calibration
 
-The committed DeepSeek Flash and Pro draws predate the current continuous-period worlds, second
-unsupported family and precision-weighted score. They are retained as `historical_only` protocol
-evidence and are not presented as performance on this revision. No new model generation was used
-to select the current evaluator or thresholds.
+The committed DeepSeek Flash and Pro draws predate the current multi-panel worlds, variable
+horizons, acquisition-design term, and cubic precision penalty. They remain protocol history only.
+The three gpt-5.6-sol/high first proposals in the 2026-09-14 admission record likewise bind to an
+older task-package hash and do not establish current difficulty. A fresh D16 first-proposal record is
+required after the current executable revision is committed and replayed on Linux.
+
+No model output was used to select the current development seeds, fixed-policy winner, score weights,
+or reference constants.
 
 ## Baseline
 
-`solution.py` buys two legal follow-ups, cites both real query ids, and then commits to a fixed
-planet claim at the shortest grid period with confidence 0.95. It never abstains. It is valid and
-scores exactly 0.000000 on both splits by construction: it earns nothing on supported worlds and is
-a false discovery on every unsupported world (development false-discovery rate 0.7576, held-out
-0.7647, correct-refusal rate 0.0 on both). This is CONTRIBUTING checkpoint 15, a baseline that is
-confidently wrong rather than one that declines; a one-measurement claim cannot be valid here
-because a claim must cite at least two distinct query ids.
+`solution.py` purchases two legal follow-ups, cites both returned query IDs, and makes a deterministic
+high-confidence planet claim. It never refuses. It is valid and scores exactly `0.0` because false
+claims on unsupported worlds drive correct refusal to zero. This satisfies the confidently-wrong C15
+baseline requirement rather than obtaining zero by blanket abstention.
 
-## Ablation ladder (historical min-headline record)
+## Ablation ladder
 
-| Reference change | Combined | Development | Held-out |
-|---|---:|---:|---:|
-| Full active reference, four follow-ups | 0.430139 | 0.632413 | 0.430139 |
-| Forecast fixed to zero | 0.359365 | 0.540351 | 0.359365 |
-| Activity model removed | 0.268826 | 0.285567 | 0.268826 |
-| Only three follow-ups | 0.232742 | 0.277997 | 0.232742 |
-| Only two follow-ups | 0.241203 | 0.259425 | 0.241203 |
-| Refusal disabled | 0.000000 | 0.000000 | 0.000000 |
+All current ablations reuse the reference fitting and evidence logic and change one declared
+capability. Values below were measured in-process on the current deterministic evaluator and must be
+replayed through the clean Linux sandbox before admission evidence is finalized.
 
-The fourth follow-up adds 0.197398 combined, 0.354416 development and 0.197398 held-out over the three-follow-up
-version. Removing model-disagreement evidence, a supported family, forecast skill or refusal all
-cost score.
+| Candidate | Development | Held-out |
+|---|---:|---:|
+| Full active reference, five follow-ups | 0.594835 | 0.282053 |
+| Limit reference to three follow-ups | 0.238873 | 0.390392 |
+| Remove activity-family fits | 0.252756 | 0.111324 |
+| Replace the forecast with zero | 0.526721 | 0.247541 |
+| Remove out-of-family evidence requirement | 0.052701 | 0.046845 |
 
-## Shortcut probes (historical min-headline record)
+The development objective shows a 0.355962 contribution from the final two active measurements,
+a 0.068114 contribution from fitted forecasting, a 0.342079 contribution from retaining the
+activity family, and a 0.542135 contribution from explicit
+out-of-family comparison. Held-out ablations are reported rather than used for selection; their
+non-monotonic ordering is a limitation, not a tuning signal.
 
-The three grids use fixed four-transit schedules and coarse periodic fits. Selection uses only
-development score; the sealed score and new combined score are read afterward. The schedule grid
-also includes the 48/50-transit neighbours of the review-identified late follow-up.
+## Shortcut probes
 
-| Family | Policies | Combined | Development | Held-out |
-|---|---:|---:|---:|
-| A: RMS, BIC-gap and residual-correlation thresholds | 1,000 | 0.301806 | 0.574956 | 0.301806 |
-| B: RMS and residual correlation, no BIC gate | 200 | 0.159146 | 0.543759 | 0.159146 |
-| C: BIC gap and residual correlation, no RMS gate | 200 | 0.322946 | 0.515176 | 0.322946 |
-| Reference | - | 0.430139 | 0.632413 | 0.430139 |
+The current C12 scan is development-only. It tests 8 schedules expressed as fractions of each
+world's candidate-visible follow-up interval, 5 RMS limits, 4 supported-family BIC gaps, 4 residual
+correlation limits, and 6 out-of-family BIC gaps: 3,840 fixed policies total. The scan uses the same
+truth-blind fitting and evidence code as the reference but has no adaptive query selection.
 
-`verification/calibrate.py` caches the repeated fits, selects each family on development, then
-checks each selected witness with the full in-process evaluator. The strongest family-A witness is
-also replayed twice through the external sandbox by `verification/replay_probes.py`. Constant
-planet/activity/clock claims, the old call-order counter and reference fitting with refusal disabled
-all score exactly zero on both splits. These are measured finite families rather than a universal
-shortcut bound.
+The strongest configuration uses fractions `(0.00, 0.20, 0.45, 0.70, 1.00)`, RMS limit `1.3`,
+supported-family gap `6.0`, correlation limit `0.5`, and out-of-family gap `6.0`. Its development
+score is `0.4321528299414905`, or 72.65% of the `0.5948352385872625` reference, below the retained
+80% guard (`0.47586819086981`). Its held-out diagnostic is `0.4286032064756491`; this larger sealed
+value was not used to choose the configuration. The executable probe is
+`verification/reference_no_active_design.py`.
 
-### Frozen candidate extraction (2026-09-12, before score repair)
-
-The first machine-readable guard repair included all three fixed schedule families, alongside the zero
-baseline. Its reference, 20% relative margin, score tolerance, score and query budget are unchanged.
-Each `verification/shortcut_family_*.py` is a standalone public-input candidate; none imports the
-offline calibration script or private evaluator.
-
-Family A is the byte-identical candidate originally formed by the external replay script from
-the former `reference_solver.py` and its fixed-schedule override; it is now replayed directly from
-`verification/shortcut_family_a.py` so later reference upgrades cannot change its bytes. The committed materials did not preserve
-winner parameter tuples for B/C. Their candidates were newly reconstructed on source
-`00cdb02a02e451259af4abe5ca0da66445773011` from the existing development-only finite grid; this is
-new reconstruction evidence, not recovery of the original B/C programs or measurements.
-
-| Family | Schedule | RMS limit | BIC-gap limit | Correlation limit | Grid size |
-|---|---|---:|---:|---:|---:|
-| A | `(13, 26, 43, 59)` | 1.2 | 3.0 | 0.8 | 1,000 |
-| B | `(16, 32, 48, 59)` | 1.0 | 0.0 | 0.35 | 200 |
-| C | `(16, 32, 48, 59)` | 99.0 | 6.0 | 0.5 | 200 |
-
-All 1,400 policies completed the original parser and query-validity checks on all 33 development
-worlds. Selection maximized only the development score in the original `itertools.product`
-order; a strict improvement replaces the incumbent, so ties retain the first policy. Family C
-had two equal development maxima; the first was retained. The sealed-world accessor was blocked
-and called zero times. All candidate bytes and parameters were frozen before full sandbox replay.
-The original inactive limits `gap=0.0` and `RMS=99.0`, unrefined diagnostics, strict threshold
-comparisons, budget slicing and confidence `0.8` are preserved. This repair does not upgrade the
-historical model records or complete scientific admission.
+The earlier A/B/C fixed-world grids reached 0.574956, 0.543759, and 0.515176 against the previous
+0.754681 reference. They exposed the fixed-anchor overfitting problem but do not run on the current
+variable-horizon contract and are no longer declared as current probes. Constant-family,
+order-counter, never-refuse, malformed, and overspend candidates remain separate degenerate or
+security controls rather than an exhaustive shortcut bound.
 
 ## Construction errors
 
-- The first score ignored unsupported claims in the headline. Refusal and precision now gate the
-  score, so blanket refusal and never refusing both earn zero.
-- A later minimum-of-splits headline fed private sealed performance into the public search score.
-  The public score now uses development only; old results remain historical, and a failed
-  fixed-probe margin is retained rather than hidden behind sealed-split aggregation.
-- Fixed world order exposed the label sequence to a module counter. Split-specific deterministic
-  shuffling, unequal split sizes and a session reset at every world boundary remove that channel.
-- A noise-seeding edit referred to a missing world key and made every measuring candidate invalid.
-  Every world now has a private seed, and follow-up noise is keyed by world, coordinate and repeat.
-- One unsupported mixture and a few discrete period constants let threshold and lookup grids match
-  the reference. Periods are now continuous, two physically different unsupported families are
-  represented, and both refusal accuracy and squared discovery precision gate the headline.
-- Rebase dropped the generated inventory row. `TASKS.md` is regenerated from the current registry
-  after rebasing rather than edited manually.
+- An early headline used `min(development, heldout)`, exposing sealed feedback to proposal selection.
+  The public headline now uses development only while sealed failures remain a validity gate.
+- Unsupported worlds initially had zero headline weight. The score now subtracts blanket-refusal
+  reward and multiplies by correct-refusal rate and discovery precision.
+- Fixed world order allowed a module counter to recover labels. Every world now resets candidate
+  state, and each split has independently shuffled panels and a different composition.
+- The first confidently-wrong baseline cited IDs before purchasing observations and was invalid.
+  It now cites two actual measurements and remains valid at score zero.
+- Fixed horizons let a few absolute anchors overfit the development worlds. The current contract
+  varies initial length, noise, maximum follow-up, forecast horizon, periods, amplitudes, activity
+  nuisance frequency, clock coefficients, and unsupported-family parameters across three panels.
+- The score previously ignored acquisition quality. Correct supported claims now earn a normalized
+  local-sensitivity design term, and repeated transit numbers cannot earn duplicate design credit.
+- A maintainer changed seven reference constants and exceeded the older reference by 13%. The current
+  scan includes the analogous evidence thresholds and normalized fixed schedules, and the strongest
+  such policy is below the declared margin.
 
 ## Robustness
 
-The independent canonical Linux C review on source `4817b21a` is recorded in
-`experiments/transit_timing_admission_2026-09-14.json`. Its measurements retain their original source
-and package identities after the subsequent documentation-only scope/citation repair. The additional
-standalone `verification/reference_no_active_design.py` preserves current fitting and refusal, replacing
-only the fourth active query with transit 59; its two complete payloads agree and development score
-is 0.273558. This single fixed schedule is an ability ablation, not a new grid-search maximum.
+Development and held-out worlds are deterministic but use disjoint three-seed panels. Development
+has 69 worlds (51 supported, 18 unsupported); held-out has 60 (42 supported, 18 unsupported).
+Initial series length, noise, physical coefficients, available follow-up interval, and forecast
+horizon vary by world. Exact instance order, counts, and seeds are not candidate contracts.
 
-The optional development profile labelled 2 has no matching sealed profile in this revision. A local
-fixture found that blanket abstention is valid at level 1 but invalid at level 2. Only the fixed level-1
-release is evaluated here; the unavailable second level is not evidence of increased difficulty.
-No new worlds or difficulty thresholds were introduced.
+The evaluator publishes mechanism, design, FDR, refusal, and coverage numerators or denominators by
+split. Mechanism denominators contain all supported worlds, including abstentions. Unsupported worlds
+are included in refusal and FDR accounting. Search-visible output excludes held-out and robustness
+metrics. Every world starts a fresh candidate session. Exceptions, malformed output, invented or
+duplicate evidence, nonfinite values, invalid queries, and caught budget overspend fail closed with
+the same metric-key shape.
 
-Successful and invalid trusted evaluations retain identical diagnostic metric-key sets, including
-`heldout_*` aliases. The shared entrypoint excludes these private fields from public feedback,
-and the public score no longer depends on their values. Malformed output, exceptions, invented
-or duplicate evidence, nonfinite values and caught budget overspend fail closed.
-Per-world coordinate seeding is invariant to query order, while
-different worlds receive different noise. The baseline, reference and selected probes are replayed
-twice and the task-specific contribution gate is run on the clean Linux revision. Candidate status
-remains unchanged; external astronomy review and independent photodynamical replication remain
-pending.
-
-Scientific grounding: Agol et al. (DOI `10.1111/j.1365-2966.2005.08922.x`) and Holman and Murray
-(DOI `10.1126/science.1107822`).
+The current reference transfers imperfectly: its held-out headline diagnostic is 0.282053, below the
+fixed probe's 0.428603, even though its held-out mechanism and design diagnostics are stronger. This
+is disclosed as residual generalization risk. Sealed values were not used to tune the evaluator,
+reference, fixed-policy grid, or thresholds.
 
 ## Model-family citations and scope
 
-- Agol et al. (2005), DOI `10.1111/j.1365-2966.2005.08922.x`, and Holman and Murray (2005),
-  DOI `10.1126/science.1107822`, provide the physical motivation for TTV observations.
-- Lithwick, Xie and Wu (2012), *Extracting Planet Mass and Eccentricity From TTV Data*,
-  [DOI 10.1088/0004-637X/761/2/122](https://arxiv.org/abs/1207.4192v2), supports analytic sinusoidal
-  TTV approximations near first-order resonance. It does not validate arbitrary orbital or mass
-  recovery from this laboratory's fitted timing-modulation period.
-- Oshagh et al. (2013), *Effect of stellar spots on high-precision transit light-curve*,
-  [DOI 10.1051/0004-6361/201321309](https://www.aanda.org/articles/aa/full_html/2013/08/aa21309-13/aa21309-13.html),
-  supports spot-induced timing bias; the fixed secondary sinusoid here is a phenomenological choice.
-- Allan (1975), *The Measurement of Frequency and Frequency Stability of Precision Oscillators*,
-  [NBS Technical Note 669, Fig. 7](https://tf.nist.gov/general/pdf/74.pdf), describes linear frequency
-  drift producing quadratic time deviation. The coefficients, noise and query budget here are
-  benchmark choices, not measured oscillator or stellar parameters.
+- Agol et al. (2005), DOI `10.1111/j.1365-2966.2005.08922.x`, and Holman and Murray
+  (2005), DOI `10.1126/science.1107822`, motivate transit-timing observations.
+- Lithwick, Xie and Wu (2012), DOI `10.1088/0004-637X/761/2/122`, supports sinusoidal
+  approximations near first-order resonance. It does not validate orbital or mass recovery from the
+  benchmark's fitted modulation period.
+- Oshagh et al. (2013), DOI `10.1051/0004-6361/201321309`, supports spot-induced timing
+  bias. The secondary activity sinusoid is a phenomenological nuisance surrogate.
+- Allan (1975), NBS Technical Note 669, describes linear frequency drift producing quadratic time
+  deviation. Coefficients, noise, and budgets are procedural benchmark choices.
 
-This is a reduced-order model-selection laboratory. `planet`, `activity`, and `clock` name the
-declared synthetic residual families, and a correct label establishes a match within this laboratory.
-It is not a unique causal identification from real stellar observations. The returned periodic
-parameter describes the timing-modulation period in transit-number units; it is not the orbital
-period or mass of an unseen planet. Sinusoidal TTV approximations and the possibility of spot-induced
-timing biases motivate the periodic families. The activity family's extra periodic component is a
-phenomenological nuisance surrogate, not a derivation of a starspot light curve. The clock family uses
-the quadratic time-error form induced by a constant frequency offset plus linear frequency drift.
-Noise, component coefficients, and unsupported alternatives are controlled benchmark design choices.
-The task tests acquisition, family discrimination, forecasting, and refusal under these declared assumptions.
+This benchmark evaluates attribution inside declared synthetic residual families. It is not a
+photodynamical analysis or a real-observatory scheduling prescription.
