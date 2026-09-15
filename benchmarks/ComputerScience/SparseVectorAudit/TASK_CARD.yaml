@@ -229,6 +229,18 @@ shortcut_probe:
   - id: positional_without_confirmation
     candidate: verification/probe_positional_no_confirmation.py
     expected_score: 0.3223138571428571
+  - id: shipped_baseline
+    candidate: solution.py
+    expected_score: 0.0
+  - id: library_scan_reference
+    candidate: verification/reference_library_scan.py
+    expected_score: 0.5702832857142858
+  - id: ablation_without_library_check
+    candidate: verification/ablation_no_library.py
+    expected_score: 0.5714285714285715
+  - id: ablation_without_positional_scan
+    candidate: verification/ablation_no_scan.py
+    expected_score: 0.17679285714285717
   relative_margin: 0.1
   score_tolerance: 1.0e-06
 evaluation_budget:
