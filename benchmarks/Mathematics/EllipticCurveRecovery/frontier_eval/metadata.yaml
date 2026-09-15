@@ -1,0 +1,14 @@
+domain: Mathematics
+task: EllipticCurveRecovery
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 10
+science_metric: uniquely evidence-supported bounded elliptic coefficient recovery with family and isomorphism refusal
+reference_baseline: mid-range coefficient guesses
+reference_sota: standalone truth-blind greedy experimental-design witness; see source-bound review_evidence.json,
+  not a published optimum
+citation: Silverman, The Arithmetic of Elliptic Curves, ISBN 9780387094939

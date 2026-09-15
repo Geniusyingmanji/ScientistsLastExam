@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "validated_revision": "122eaaab17b48b106ce82806ca4d766cc2bec567",
+  "upstream_main": "dbed927",
+  "scope": "Task and framework integration regression, executable contribution guard and static audits; not a final-head full-suite or model-difficulty certification. Added by a subsequent documentation-only commit.",
+  "environment": {
+    "image": "sle-attribution-ci:20260912",
+    "os": "Ubuntu 22.04",
+    "python": "3.10.12",
+    "numpy": "1.24.4",
+    "scipy": "1.10.1",
+    "candidate_bwrap_seccomp": true,
+    "container_network": "none",
+    "SLE_REQUIRE_FROZEN_INVENTORY": "0"
+  },
+  "source_sha256": {
+    "benchmarks/Mathematics/EllipticCurveRecovery/verification/arithmetic.py": "446ccaa0bead079513a1c89932393b3ba710e6fb16886bb5a35d73e017815235",
+    "benchmarks/Mathematics/EllipticCurveRecovery/verification/evaluator.py": "199fdda2582a711e4d9e1611bafbd3a0b316f146823ea20a5c7d2243076b31d0",
+    "benchmarks/Mathematics/EllipticCurveRecovery/verification/reference_solver.py": "6036b3889c2c4dc4cb3ca6c5e9a0e72b23cfe77bec8a72824041b17f157671e4",
+    "benchmarks/Mathematics/EllipticCurveRecovery/verification/review_audit.py": "c565f042f9dfdf2abe3d9a845593993262a418e95fc50b40f2d419c9114d70a9",
+    "benchmarks/Mathematics/EllipticCurveRecovery/verification/shortcut_memo_0.py": "b66320f932bc6e0455fa645831c41e0d6a999efe27cbd2f6a73baf32f519a57b",
+    "benchmarks/Mathematics/EllipticCurveRecovery/verification/shortcut_memo_1.py": "4fea9d98cac5cf9ce91f8516f38980a60d4665de5c27259bef881a3ddee870fa",
+    "benchmarks/Mathematics/EllipticCurveRecovery/verification/shortcut_memo_2.py": "3688293e4df7e0fb79a096b950052f51a27dd3c054b55da8e6ea6529bee9bac2",
+    "benchmarks/Mathematics/EllipticCurveRecovery/frontier_eval/run_eval.py": "aa7a9621db780694c98668e182c04d0a5da38de28a860af32ce7081a4b796f0f",
+    "benchmarks/Mathematics/EllipticCurveRecovery/TASK_CARD.yaml": "8e3ce87cb821854993295c67959393da1b0b19476fad64606929094cdaae3bdd",
+    "tests/test_elliptic_curve_recovery.py": "d5dc84a2591233acba2e90c6d6cbe3a1ed5b53ec9fdecf5234e169451b2d7337"
+  },
+  "checks": [
+    {
+      "check": "targeted",
+      "exit_code": 0,
+      "seconds": 417.6934662084095
+    },
+    {
+      "check": "contribution",
+      "exit_code": 0,
+      "seconds": 212.11132168583572
+    },
+    {
+      "check": "inventory",
+      "exit_code": 0,
+      "seconds": 0.35636713821440935
+    },
+    {
+      "check": "numeric",
+      "exit_code": 0,
+      "seconds": 0.811584506649524
+    },
+    {
+      "check": "cards",
+      "exit_code": 0,
+      "seconds": 2.4038412030786276
+    },
+    {
+      "check": "keys",
+      "exit_code": 0,
+      "seconds": 1.6417169659398496
+    }
+  ],
+  "targeted": {
+    "file": "elliptic-current-targeted.xml",
+    "sha256": "096fe3ce884056a9073984a54b9cf2a9c227dc8b47fd953d36a6fbddb3c4e666",
+    "suites": [
+      {
+        "name": "pytest",
+        "errors": "0",
+        "failures": "0",
+        "skipped": "0",
+        "tests": "398",
+        "time": "417.154",
+        "timestamp": "2026-09-12T08:25:12.617135+00:00",
+        "hostname": "e55ca1d8ac01"
+      }
+    ],
+    "failures": []
+  },
+  "contribution": {
+    "schema_version": 2,
+    "task": "Mathematics/EllipticCurveRecovery",
+    "passed": true,
+    "status": "passed",
+    "phases": {
+      "structural": "passed",
+      "runtime": "passed",
+      "shortcut_guard": "passed",
+      "difficulty": "unassessed"
+    },
+    "scientific_admission": "not_assessed",
+    "note": "Passing declared probes does not establish model difficulty or iterative improvement.",
+    "checks": [
+      {
+        "check": "listed_in_all",
+        "ok": true,
+        "status": "passed",
+        "detail": "Mathematics/EllipticCurveRecovery"
+      },
+      {
+        "check": "registered_in_certification",
+        "ok": true,
+        "status": "passed",
+        "detail": "Mathematics/EllipticCurveRecovery"
+      },
+      {
+        "check": "certification_status",
+        "ok": true,
+        "status": "passed",
+        "detail": "candidate"
+      },
+      {
+        "check": "not_self_certified",
+        "ok": true,
+        "status": "passed",
+        "detail": "candidate"
+      },
+      {
+        "check": "required_files",
+        "ok": true,
+        "status": "passed",
+        "detail": ""
+      },
+      {
+        "check": "task_card",
+        "ok": true,
+        "status": "passed",
+        "detail": "benchmarks/Mathematics/EllipticCurveRecovery/TASK_CARD.yaml"
+      },
+      {
+        "check": "metadata",
+        "ok": true,
+        "status": "passed",
+        "detail": "discovery"
+      },
+      {
+        "check": "frontier_wave",
+        "ok": true,
+        "status": "passed",
+        "detail": "legacy single wave"
+      },
+      {
+        "check": "discovery_contract_lint_documented",
+        "ok": true,
+        "status": "passed",
+        "detail": ""
+      },
+      {
+        "check": "numeric_keys",
+        "ok": true,
+        "status": "passed",
+        "detail": ""
+      },
+      {
+        "check": "documented_keys",
+        "ok": true,
+        "status": "passed",
+        "detail": "7 baseline keys"
+      },
+      {
+        "check": "baseline_eval",
+        "ok": true,
+        "status": "passed",
+        "detail": "combined_score=0.0"
+      },
+      {
+        "check": "deterministic_baseline",
+        "ok": true,
+        "status": "passed",
+        "detail": ""
+      },
+      {
+        "check": "discovery_axes",
+        "ok": true,
+        "status": "passed",
+        "detail": "mechanism/fdr/refusal/coverage rates present"
+      },
+      {
+        "check": "degenerate_candidates_score_zero",
+        "ok": true,
+        "status": "passed",
+        "detail": "blanket abstention earns nothing"
+      },
+      {
+        "check": "bad_candidates_score_zero",
+        "ok": true,
+        "status": "passed",
+        "detail": "raises/empty/wrong_type scored"
+      },
+      {
+        "check": "shortcut_probe",
+        "ok": true,
+        "status": "passed",
+        "detail": "best declared shortcut must be strictly below the reference margin"
+      }
+    ],
+    "shortcut_probe": {
+      "status": "passed",
+      "passed": true,
+      "observations": [
+        {
+          "id": "reference",
+          "candidate": "verification/reference_solver.py",
+          "expected_score": 0.875,
+          "source_sha256": "6036b3889c2c4dc4cb3ca6c5e9a0e72b23cfe77bec8a72824041b17f157671e4",
+          "measured_score": 0.8749999999999998
+        },
+        {
+          "id": "literal_0_queries",
+          "candidate": "verification/shortcut_memo_0.py",
+          "expected_score": 0.0,
+          "source_sha256": "b66320f932bc6e0455fa645831c41e0d6a999efe27cbd2f6a73baf32f519a57b",
+          "measured_score": 0.0
+        },
+        {
+          "id": "literal_1_queries",
+          "candidate": "verification/shortcut_memo_1.py",
+          "expected_score": 0.0,
+          "source_sha256": "4fea9d98cac5cf9ce91f8516f38980a60d4665de5c27259bef881a3ddee870fa",
+          "measured_score": 0.0
+        },
+        {
+          "id": "literal_2_queries",
+          "candidate": "verification/shortcut_memo_2.py",
+          "expected_score": 0.0,
+          "source_sha256": "3688293e4df7e0fb79a096b950052f51a27dd3c054b55da8e6ea6529bee9bac2",
+          "measured_score": 0.0
+        }
+      ],
+      "scope": "declared shortcut guard only; independent model calibration still required",
+      "contract_sha256": "46da60a5cc4a3612ea6ff8bc1cdd685e93e04773acf48988c307052ab2c81026",
+      "reference_score": 0.8749999999999998,
+      "probe_best": 0.0,
+      "threshold": 0.7874999999999999,
+      "detail": "best declared shortcut must be strictly below the reference margin"
+    },
+    "baseline_combined_score": 0.0
+  },
+  "full_suite_before_wrapper_correction": {
+    "passed": 1467,
+    "failed": 2,
+    "skipped": 48,
+    "note": "Both task wrapper contract failures were corrected and pass in final targeted regression. Missing historical private inputs/data remain unverified. Full final-head suite was not repeated."
+  }
+}

@@ -10,6 +10,11 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  Mathematics/EllipticCurveRecovery:
+    status: candidate
+    reason: Reviewed candidate with source-bound shortcut and ablation diagnostics, charged experimental design and per-world validity; fresh server-held worlds, frontier calibration and independent domain review remain pending.
+    citation_ids:
+      - isbn:9780387094939
   Ecology/OccupancyDetectionDesign:
     status: candidate
     reason: Active repeat-survey allocation and latent occupancy inference under imperfect detection, with explicit refusal for nonlinear habitat and spatially structured worlds; retained as a candidate pending server-held surveys, real field-data replication and independent ecology review.

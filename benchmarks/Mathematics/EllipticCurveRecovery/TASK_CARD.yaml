@@ -1,0 +1,136 @@
+schema_version: 2
+scientific_question: Can a budgeted choice of primes recover an elliptic curve's integer coefficients
+  from exact point counts, while refusing worlds whose counts no elliptic pair can reproduce?
+artifact: A bounded integer coefficient pair, optional abstention and a confidence scalar.
+oracle:
+  model: Bounded nonsingular integer cubics, exact Legendre-sum point counts, singular cubics from disjoint
+    signed t families, smooth genus-two quintics and Q-isomorphic coefficient twins.
+  feasibility: Five-unit budget with published prime costs; integer bounded claims, including scientifically
+    wrong singular claims (scored as discoveries, not malformed artifacts).
+  deterministic: true
+  external_tooling: none (pure integer arithmetic)
+difficulty_ladder:
+  default_level: 1
+  levels:
+    1: the shipped coefficient window and prime tiers
+normalization:
+  baseline: one small-prime query and a fixed (0, 1) guess
+  reference: Truth-blind residue enumeration and complete bounded lifting with per-query filtering, greedy
+    entropy-based prime selection and final discriminant/uniqueness checks.
+  score: Exact supported recovery only when independently recomputed purchased counts identify the claimed
+    pair uniquely; no unused-budget reward. Normalize above full abstention; false discoveries and refusals
+    remain separate diagnostics.
+citations:
+- id: url:https://math.mit.edu/~drew/Definitions.html
+  title: Hyperelliptic curves of odd degree — definitions and notation
+- id: isbn:9780387094939
+  title: The Arithmetic of Elliptic Curves
+invariants:
+- exact point counts agree with direct finite-field enumeration
+- a coefficient claim needs a singleton nonsingular bounded compatibility set from actual purchased queries
+- zero-query and one/two-prime literal-answer probes score zero on both splits
+- development and heldout singular curves have disjoint complete point-count signatures
+- singular-only and empty compatibility sets are distinct; quantitative traces in review_evidence.json
+- Q-isomorphic twins remain indistinguishable at every published prime
+- a full abstention scores zero; one invalid world does not erase valid-world recovery
+- fresh sandbox sessions isolate module globals and temporary files between worlds
+known_shortcuts: 'Historical reviewer at 0310ab2: 25-point threshold grid 0.000, four-prime 0.000, six-prime
+  0.4875, adaptive stopping 0.8063, 1-2-prime memorization 0.9438, zero-query literals 1.000. Revised
+  clean Linux: reference 0.875000 / 0.944444; 25-point heuristic grid and current-world literal programs
+  with 0, 1 or 2 queries all 0.000 / 0.000. Four-query ablation 0.166667 / 0.111111; no discriminant filtering
+  0.791667 / 0.833333; fixed prime order 0.875000 / 0.777778. Full source-bound results in references/review_evidence.json;
+  no frontier calibration.'
+licensing:
+  task_package: repository_license_not_declared
+  external_assets: none
+  note: All runtime worlds are generated from original repository code; cited publications are not redistributed.
+contamination:
+  status: repository_visible_procedural
+  rationale: Fixed seeds and generated worlds are repository-visible. Procedural origin does not rule
+    out memorization or benchmark-specific fingerprinting; server-held fresh worlds are required for generalization
+    claims.
+review:
+  domain: pending_external_mathematics
+  evaluator_security: clean_linux_ci_dependency_replay_and_regressions; full_suite_and_sandbox_guard_results_in_PR
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic arithmetic worlds with development and held-out curves
+    and failure regimes.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: SequenceLawRecovery infers integer recurrences; ExactIdentityEvidence certifies identities
+    from digits; BlackBoxGroupIdentification classifies group structure. This package acquires exact finite-field
+    point counts and certifies a unique bounded coefficient pair, rejecting singular-only, empty and Q-isomorphic
+    compatibility sets.
+lineage:
+  status: complete
+  builder_model_ids:
+  - glm-5.3
+  builder_scaffolds:
+  - repository-native-mathematics-task-pattern
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: 2026-09-05 local build caught a cartesian-product CRT enumeration that exploded
+    with five primes (rebuilt incrementally with window pruning), four small primes leaving twin-curve
+    ambiguity on two worlds, and a half-written compatibility shim that never constrained residues; each
+    was fixed and pinned by tests. 2026-09-12 maintainer review drove larger cohorts, per-world validity,
+    source-bound shortcut replays and capability ablations; missing calibration remains disclosed separately
+    from builder lineage.
+  shortcut_discoverer: initial_internal_red_team
+  frozen_before_eval: false
+  freeze_timestamp: null
+construction_audit:
+  status: initial_internal
+  author_domain: AI-assisted benchmark engineering
+  reviewer_domain: pending_external_mathematics
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: counts_reproducible_by_direct_enumeration
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+difficulty_assessment:
+  status: unverified_candidate
+  requirement: standard-method and low-dimensional shortcut sweeps, capability ablations and clean frontier-model
+    calibration before certification
+  remaining_risk: Fixed repository-visible procedural worlds are not generalization evidence. Greedy experimental
+    design leaves unresolved worlds, but expert difficulty and frontier-model calibration remain unverified.
+frontier_eng_overlap_review:
+  date: '2026-09-07'
+  classification: 无
+  nearest: AES-128 CTR; SHA-256; SHA3-256
+  distinction: Query finite-field point counts at chosen primes and recover an integer elliptic-curve
+    coefficient pair or refuse. FE implements symmetric cryptographic throughput, with no arithmetic-geometry
+    inverse problem.
+  evidence: .research/elliptic_curve_recovery_frontier_eng_overlap_2026-09-07.md
+  status: source_count_discrepancy_pending_maintainer_confirmation
+evaluation_budget:
+  units_per_world: 5
+  development_worlds: 36
+  heldout_worlds: 30
+  timeout_seconds: 300
+  hardware: CPU; Linux bubblewrap sandbox
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  relative_margin: 0.1
+  score_tolerance: 1.0e-09
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.875
+  probes:
+  - id: literal_0_queries
+    candidate: verification/shortcut_memo_0.py
+    expected_score: 0.0
+  - id: literal_1_queries
+    candidate: verification/shortcut_memo_1.py
+    expected_score: 0.0
+  - id: literal_2_queries
+    candidate: verification/shortcut_memo_2.py
+    expected_score: 0.0

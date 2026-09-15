@@ -66,6 +66,7 @@ CHINESE_NAMES = {
     "MaterialsScience/PhaseDiagramDiscovery": "相图发现",
     "MaterialsScience/QuinaryConvexHull": "五元凸包稳定相",
     "Mathematics/BlackBoxGroupIdentification": "黑盒群同构辨识",
+    "Mathematics/EllipticCurveRecovery": "椭圆曲线系数恢复",
     "Mathematics/CapSet": "Cap Set 构造",
     "Mathematics/CapSetFrontier": "Cap Set 未证明维度",
     "Mathematics/ErdosMinimumOverlap": "Erdős 最小重叠划分",
@@ -224,6 +225,9 @@ CHINESE_BRIEFS = {
     "Mathematics/BlackBoxGroupIdentification": (
         "只给黑盒乘法与随机标号,在查询预算内从公开构造目录里辨识群的同构类",
         "目录 id 精确门控;非群与目录外两种拒答理由分开计分,阶数分布不足以辨识"),
+    "Mathematics/EllipticCurveRecovery": (
+        "在素数点数预算下恢复 y²=x³+ax+b 的整数系数,奇异或亏格2须拒答",
+        "实际购买点数唯一确定整数系数才给恢复分;奇异、族外及同构孪生拒答,无省预算奖励"),
     "Mathematics/CapSet": (
         "在 Z_3^n 里构造更大的 cap set(无三点共线)",
         "对最好已知规模的平均进度;无上限"),
