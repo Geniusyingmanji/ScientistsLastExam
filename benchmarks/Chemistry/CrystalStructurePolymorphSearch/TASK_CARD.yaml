@@ -35,6 +35,18 @@ shortcut_probe:
   - id: three_cubic_random_starts
     candidate: verification/shortcut_cubic.py
     expected_score: 0.17252846472624697
+  - id: cubic_multistart_24
+    candidate: verification/shortcut_cubic24.py
+    expected_score: null
+  - id: anisotropic_multistart_24
+    candidate: verification/shortcut_anisotropic24.py
+    expected_score: null
+  - id: incumbent_restarts_24
+    candidate: verification/shortcut_restarts24.py
+    expected_score: null
+  - id: development_record_replay
+    candidate: verification/shortcut_record_replay.py
+    expected_score: null
   relative_margin: 0.1
   score_tolerance: 0.000001
 review:
