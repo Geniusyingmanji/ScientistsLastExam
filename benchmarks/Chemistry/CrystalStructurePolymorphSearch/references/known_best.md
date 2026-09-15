@@ -96,7 +96,12 @@ resets the candidate process and private tmpfs at every world, and aligns metada
 difficulty calibration. Tests include a real Linux sandbox sentinel for global/tmp leakage,
 malformed submissions and caught budget overruns. Twenty-one focused Linux tests and five subtests
 pass. Task cards pass for 88/88 packages; numeric-key, documented-key and taxonomy audits pass.
-These engineering results do not negate the failed scientific controls.
+The unmodified full contribution gate also completed on clean `7c66f7e`: structural and
+runtime phases pass, every declared score matches its standard-entrypoint measurement,
+and the shortcut guard fails because its maximum 1.6247986523685534 exceeds threshold 0.9.
+It exits 1 with difficulty unassessed. Candidate source hashes and shortcut-contract hash
+match the final evidence revision. These engineering results do not negate the failed
+scientific controls.
 
 Reproduction from a clean checkout and a repository-supported pinned Python environment:
 

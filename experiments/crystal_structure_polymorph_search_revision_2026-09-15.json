@@ -333,9 +333,172 @@
     ]
   },
   "contribution_gate": {
-    "state": "running",
+    "state": "completed",
     "source": "7c66f7e",
-    "command": "python scripts/check_task_contribution.py --task MaterialsScience/CrystalStructurePolymorphSearch --timeout 300 --output <private>/contribution-gate.json"
+    "command": "python scripts/check_task_contribution.py --task MaterialsScience/CrystalStructurePolymorphSearch --timeout 300 --output <private>/contribution-gate.json",
+    "exit_code": 1,
+    "result": {
+      "schema_version": 2,
+      "task": "MaterialsScience/CrystalStructurePolymorphSearch",
+      "passed": false,
+      "status": "failed",
+      "phases": {
+        "structural": "passed",
+        "runtime": "passed",
+        "shortcut_guard": "failed",
+        "difficulty": "unassessed"
+      },
+      "scientific_admission": "not_assessed",
+      "note": "Passing declared probes does not establish model difficulty or iterative improvement.",
+      "checks": [
+        {
+          "check": "listed_in_all",
+          "ok": true,
+          "status": "passed",
+          "detail": "MaterialsScience/CrystalStructurePolymorphSearch"
+        },
+        {
+          "check": "registered_in_certification",
+          "ok": true,
+          "status": "passed",
+          "detail": "MaterialsScience/CrystalStructurePolymorphSearch"
+        },
+        {
+          "check": "certification_status",
+          "ok": true,
+          "status": "passed",
+          "detail": "candidate"
+        },
+        {
+          "check": "not_self_certified",
+          "ok": true,
+          "status": "passed",
+          "detail": "candidate"
+        },
+        {
+          "check": "required_files",
+          "ok": true,
+          "status": "passed",
+          "detail": ""
+        },
+        {
+          "check": "task_card",
+          "ok": true,
+          "status": "passed",
+          "detail": "benchmarks/Chemistry/CrystalStructurePolymorphSearch/TASK_CARD.yaml"
+        },
+        {
+          "check": "metadata",
+          "ok": true,
+          "status": "passed",
+          "detail": "optimization"
+        },
+        {
+          "check": "frontier_wave",
+          "ok": true,
+          "status": "passed",
+          "detail": "legacy single wave"
+        },
+        {
+          "check": "numeric_keys",
+          "ok": true,
+          "status": "passed",
+          "detail": ""
+        },
+        {
+          "check": "documented_keys",
+          "ok": true,
+          "status": "passed",
+          "detail": "14 baseline keys"
+        },
+        {
+          "check": "uncapped_prompt",
+          "ok": true,
+          "status": "passed",
+          "detail": ""
+        },
+        {
+          "check": "baseline_eval",
+          "ok": true,
+          "status": "passed",
+          "detail": "combined_score=0.0"
+        },
+        {
+          "check": "deterministic_baseline",
+          "ok": true,
+          "status": "passed",
+          "detail": ""
+        },
+        {
+          "check": "bad_candidates_score_zero",
+          "ok": true,
+          "status": "passed",
+          "detail": "raises/empty/wrong_type scored"
+        },
+        {
+          "check": "shortcut_probe",
+          "ok": false,
+          "status": "failed",
+          "detail": "best declared shortcut must be strictly below the reference margin"
+        }
+      ],
+      "shortcut_probe": {
+        "status": "failed",
+        "passed": false,
+        "observations": [
+          {
+            "id": "reference",
+            "candidate": "verification/reference_multistart.py",
+            "expected_score": 1.0,
+            "source_sha256": "8944e9df4afc047d7c65178d50ee5c40709153678029efd6fd6a9755c9020625",
+            "measured_score": 1.0
+          },
+          {
+            "id": "three_cubic_random_starts",
+            "candidate": "verification/shortcut_cubic.py",
+            "expected_score": 0.17081851642267407,
+            "source_sha256": "a682fdb10aba6d80aa66b1c87ac0c920183c5bfe53c1376e9ecfc3041cf56e4e",
+            "measured_score": 0.17081851642267407
+          },
+          {
+            "id": "cubic_multistart_24",
+            "candidate": "verification/shortcut_cubic24.py",
+            "expected_score": 1.0910731033536747,
+            "source_sha256": "621b29c9427a7ac2b472bfc581342f6ed6e9a899faeb42f5d5b6f937754d439d",
+            "measured_score": 1.0910731033536747
+          },
+          {
+            "id": "anisotropic_multistart_24",
+            "candidate": "verification/shortcut_anisotropic24.py",
+            "expected_score": 0.8802728981904205,
+            "source_sha256": "a09d94fc2e8113c5b91df40b07b4465f2053f4585e3cddd1ccd5796e609d625e",
+            "measured_score": 0.8802728981904205
+          },
+          {
+            "id": "incumbent_restarts_24",
+            "candidate": "verification/shortcut_restarts24.py",
+            "expected_score": 1.299970759773847,
+            "source_sha256": "bad36e5650bac0302b8114e130313073d58e7826d16a2a1ead5047dce4e2a4d9",
+            "measured_score": 1.299970759773847
+          },
+          {
+            "id": "development_record_replay",
+            "candidate": "verification/shortcut_record_replay.py",
+            "expected_score": 1.6247986523685534,
+            "source_sha256": "d1e5f8de6923ac59c5aecb375a514921e9b071b21f19ca08a707b09a01715a75",
+            "measured_score": 1.6247986523685534
+          }
+        ],
+        "scope": "declared shortcut guard only; independent model calibration still required",
+        "contract_sha256": "682790c33b95ef2168817375eb584ecc91cafcbfeac44ad24c9f7e0bfc7a3198",
+        "reference_score": 1.0,
+        "probe_best": 1.6247986523685534,
+        "threshold": 0.9,
+        "detail": "best declared shortcut must be strictly below the reference margin"
+      },
+      "baseline_combined_score": 0.0
+    },
+    "artifact_sha256": "18fad1401ad589a5d7b0e71acaeecceeeaf7aabbe68de053864dfc4e1a1ffecf"
   },
   "scientific_source_sha256": {
     "benchmarks/Chemistry/CrystalStructurePolymorphSearch/solution.py": "fda6f82111be9980efc6c16d7dc6d0d01926335ef6622bb22e21fd136c55f314",
@@ -348,7 +511,7 @@
     "benchmarks/Chemistry/CrystalStructurePolymorphSearch/verification/shortcut_record_replay.py": "d1e5f8de6923ac59c5aecb375a514921e9b071b21f19ca08a707b09a01715a75",
     "benchmarks/Chemistry/CrystalStructurePolymorphSearch/verification/shortcut_restarts24.py": "bad36e5650bac0302b8114e130313073d58e7826d16a2a1ead5047dce4e2a4d9"
   },
-  "evidence_applicability": "Scientific source files are byte-identical to measured 1a82e9a. Later changes update declarations, budget documentation, validation-status prose and evidence only; there is no preexisting model calibration to migrate.",
+  "evidence_applicability": "Scientific source files are byte-identical to measured 1a82e9a. Later changes update declarations, budget documentation, validation-status prose and evidence only; there is no preexisting model calibration to migrate. Official gate ran on clean 7c66f7e; all candidate hashes and the shortcut contract hash match the final revision. Later metadata changes only correct the expected cost from 60 to 140 seconds; the actual evaluator timeout remains 300 seconds.",
   "macos_development_replay": {
     "method": "macOS in-process development replay, not sandbox admission",
     "python": "3.11.15 (main, Apr 14 2026, 14:45:51) [Clang 22.1.3 ]",
@@ -360,5 +523,16 @@
     "valid": 1.0,
     "source_revision": "d0b1f7696ca4d14025c782f2a97b22f211f097e3",
     "interpretation": "Reproduces original 0.172528 declaration on macOS. Scientific source matches the Linux comparison, but cross-platform equality is false; reviewer value 0.159507 remains unreproduced. Do not infer stale source from within-host determinism alone."
+  },
+  "additional_system_profile_diagnosis": {
+    "scope": "in-process numerical-profile diagnosis, not canonical sandbox admission",
+    "source_revision": "1a82e9ab53bb6506ffe981d6589de816ea12f212",
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "platform": "Linux-6.8.0-101-generic-x86_64-with-glibc2.39",
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "wall_seconds": 71.6477608513087,
+    "score": 0.17081851642267407,
+    "interpretation": "Existing system NumPy 1.26.4 / SciPy 1.13.1 also gives the canonical-host value; reviewer 0.159507 remains unreproduced. Not a canonical sandbox admission run; no further profile search was performed."
   }
 }
