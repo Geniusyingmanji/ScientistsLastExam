@@ -34,6 +34,7 @@ discovery_kind:
 
 tasks:
   Microbiology/MetagenomeCompositionAssignment: {form: discovery, kind: substance, note: marker_mixture_alias_inadequacy_candidate}
+  Exoplanets/MicrolensingEventCharacterization: {form: discovery, kind: evidence, note: active_photometric_lens_model_selection_not_doppler_periods_transit_timing_or_atmospheric_spectra}
   Ecology/OccupancyDetectionDesign: {form: discovery, kind: evidence, note: latent_occupancy_and_repeat_detection_not_population_history_or_climate_fingerprinting}
   Physics/CriticalPhenomenaLab: {form: discovery, kind: parameter_inversion, note: finite_size_scaling_not_microscopic_law}
   # --- optimization / frontier-eng ------------------------------------------

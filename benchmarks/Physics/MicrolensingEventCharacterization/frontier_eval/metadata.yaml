@@ -1,0 +1,13 @@
+domain: Exoplanets
+task: MicrolensingEventCharacterization
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: statistical_sim
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 12
+science_metric: active_photometric_model_duration_amplitude_feature_time_and_refusal_recovery
+reference_baseline: six fixed r-band observations followed by a fixed point-lens claim
+reference_sota: bounded robust point-lens, joint localized-anomaly and sinusoidal model comparison with calibrated mixed-family refusal; development 0.926256, held-out mechanism 0.933409; no color discriminator
+citation: "Paczynski, ApJ, 1986, DOI 10.1086/164140; Gould, ApJ, 1992, DOI 10.1086/171443; Gaudi, ARA&A, 2012, DOI 10.1146/annurev-astro-081811-125518"

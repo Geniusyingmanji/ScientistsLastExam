@@ -1,0 +1,98 @@
+{
+  "task": "Exoplanets/MicrolensingEventCharacterization",
+  "source_revision": "d977aa87b2aa8018cc547b355987dfb14a4b3198",
+  "environment": {
+    "host": "ali Linux",
+    "python": "3.10.12",
+    "numpy": "1.24.4",
+    "scipy": "1.10.1",
+    "execution": "trusted driver and bubblewrap",
+    "model_adapter": "uncommitted local chat adapter sent thinking.type=disabled",
+    "credentials_endpoint_adapter_and_generated_programs_committed": false
+  },
+  "reference_and_controls": {
+    "complete_metrics_identical_twice": true,
+    "all_candidates_valid": true,
+    "reference": {
+      "development": 0.9262560615350686,
+      "heldout_raw_composite": 0.9334086353167926
+    },
+    "reference_without_refusal": {
+      "development": 0.5929227282017352,
+      "heldout_raw_composite": 0.6834086353167926
+    },
+    "reference_eight_epoch_cadence": {
+      "development": 0.6949892035470993,
+      "heldout_raw_composite": 0.710742360628681
+    },
+    "constant_statistic_sweep_winner": {
+      "strategy_count": 576,
+      "development": 0.5422833491108311,
+      "heldout_raw_composite": 0.5901828703703704
+    },
+    "fixed_source_textbook_fit": {
+      "development": 0.41720305493629145,
+      "heldout_raw_composite": 0.613960254674756
+    },
+    "baseline": {
+      "development": 0.0,
+      "heldout_raw_composite": 0.16935
+    },
+    "blanket_refusal": {
+      "development": 0.0,
+      "heldout_raw_composite": 0.25
+    }
+  },
+  "model_protocol": {
+    "algorithm": "greedy_rewrite",
+    "proposal_budget": 1,
+    "seed": 17,
+    "temperature": 0.0,
+    "max_output_tokens": 12000,
+    "thinking": "disabled and verified in the transmitted chat payload",
+    "feedback_mode": "selection_blind",
+    "selection": "first proposal; no redraw",
+    "visible_output_smoke": {
+      "deepseek-v4-flash": "OK",
+      "deepseek-v4-pro": "OK"
+    }
+  },
+  "model_runs": [
+    {
+      "model": "deepseek-v4-flash",
+      "valid_proposals": 1,
+      "combined_score": 0.09919606537874648,
+      "heldout_raw_composite": 0.430820733069984,
+      "development_model_accuracy": 0.4444444444444444,
+      "development_false_discovery_rate": 0.25,
+      "development_correct_refusal_rate": 0.3333333333333333,
+      "development_mean_budget_used": 19.583333333333332,
+      "output_tokens": 5127
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "valid_proposals": 1,
+      "combined_score": 0.0,
+      "heldout_raw_composite": 0.25,
+      "development_model_accuracy": 0.0,
+      "development_false_discovery_rate": 0.0,
+      "development_correct_refusal_rate": 1.0,
+      "development_mean_budget_used": 18.0,
+      "failure_category": "blanket_refusal",
+      "output_tokens": 3633
+    }
+  ],
+  "excluded_protocol_runs": {
+    "count": 2,
+    "category": "output_budget_exhausted_before_code",
+    "cause": "the unpatched chat client silently ignored chat_thinking; both models consumed the 12000-token cap without a code block",
+    "scientific_interpretation": "not evidence about task difficulty"
+  },
+  "validation": {
+    "task_and_related_pytest": "47 passed, 5 subtests passed",
+    "task_contribution_gate": "17/17 passed",
+    "task_audit": "passed on trusted_clean_revision",
+    "full_repository_tests_run": false,
+    "global_evidence_refreshed": false
+  }
+}
