@@ -34,19 +34,19 @@ shortcut_probe:
   probes:
   - id: three_cubic_random_starts
     candidate: verification/shortcut_cubic.py
-    expected_score: 0.17252846472624697
+    expected_score: 0.17081851642267407
   - id: cubic_multistart_24
     candidate: verification/shortcut_cubic24.py
-    expected_score: null
+    expected_score: 1.0910731033536747
   - id: anisotropic_multistart_24
     candidate: verification/shortcut_anisotropic24.py
-    expected_score: null
+    expected_score: 0.8802728981904205
   - id: incumbent_restarts_24
     candidate: verification/shortcut_restarts24.py
-    expected_score: null
+    expected_score: 1.299970759773847
   - id: development_record_replay
     candidate: verification/shortcut_record_replay.py
-    expected_score: null
+    expected_score: 1.6247986523685534
   relative_margin: 0.1
   score_tolerance: 0.000001
 review:
