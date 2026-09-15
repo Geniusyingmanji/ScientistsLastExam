@@ -72,10 +72,21 @@ def _utility(problem, rows):
 
 
 def search_crystals(problem, relax_structure):
-    budget = int(problem["relaxation_budget_calls"])
-    seeds = [_cubic_seed(problem, index) for index in range(8)]
-    seeds.extend(_seed(problem, index) for index in range(budget - 8))
+    seeds = []
+    for index in range(24):
+        # Same eight-volume schedule as the original probe, with independent seeds.
+        seed = _cubic_seed(problem, index % 8)
+        n = int(problem["atom_count"])
+        lengths = np.asarray(seed["cell_lengths"])
+        rng = np.random.default_rng(811 + 31 * n + index)
+        coords = rng.random((n, 3))
+        for i in range(n):
+            for _ in range(300):
+                if all(np.linalg.norm(((coords[i] - coords[j] + 0.5) % 1.0 - 0.5) * lengths) >= 0.48 for j in range(i)):
+                    break
+                coords[i] = rng.random(3)
+        seed["fractional_coordinates"] = coords.tolist()
+        seeds.append(seed)
     records = [relax_structure(seed) for seed in seeds]
-    selected = max(itertools.combinations(records, 3),
-                   key=lambda group: _utility(problem, group))
+    selected = max(itertools.combinations(records, 3), key=lambda group: _utility(problem, group))
     return {"candidate_ids": [row["candidate_id"] for row in selected]}

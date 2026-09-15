@@ -72,10 +72,6 @@ def _utility(problem, rows):
 
 
 def search_crystals(problem, relax_structure):
-    budget = int(problem["relaxation_budget_calls"])
-    seeds = [_cubic_seed(problem, index) for index in range(8)]
-    seeds.extend(_seed(problem, index) for index in range(budget - 8))
-    records = [relax_structure(seed) for seed in seeds]
-    selected = max(itertools.combinations(records, 3),
-                   key=lambda group: _utility(problem, group))
+    records = [relax_structure(_seed(problem, index)) for index in range(24)]
+    selected = max(itertools.combinations(records, 3), key=lambda group: _utility(problem, group))
     return {"candidate_ids": [row["candidate_id"] for row in selected]}

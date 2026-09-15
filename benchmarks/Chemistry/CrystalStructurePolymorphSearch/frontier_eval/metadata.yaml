@@ -1,8 +1,8 @@
 domain: MaterialsScience
 task: CrystalStructurePolymorphSearch
 scientific_role: optimization
-difficulty: hard
-tier: T2
+difficulty: unmeasured
+tier: candidate
 oracle_type: physical_sim
 score_mode: uncapped
 gpu_required: false

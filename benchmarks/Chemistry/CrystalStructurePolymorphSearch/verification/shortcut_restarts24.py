@@ -72,10 +72,23 @@ def _utility(problem, rows):
 
 
 def search_crystals(problem, relax_structure):
-    budget = int(problem["relaxation_budget_calls"])
-    seeds = [_cubic_seed(problem, index) for index in range(8)]
-    seeds.extend(_seed(problem, index) for index in range(budget - 8))
-    records = [relax_structure(seed) for seed in seeds]
-    selected = max(itertools.combinations(records, 3),
-                   key=lambda group: _utility(problem, group))
+    records = [relax_structure(_cubic_seed(problem, index)) for index in range(8)]
+    rng = np.random.default_rng(9127 + int(problem["atom_count"]))
+    low, high = problem["cell_volume_bounds"]
+    for index in range(16):
+        incumbent = min(records, key=lambda row: row["enthalpy_per_atom"])["relaxed_structure"]
+        lengths = np.asarray(incumbent["cell_lengths"])
+        volume = np.clip(np.prod(lengths) * np.exp(rng.normal(0, 0.05)), low + 1e-7, high - 1e-7)
+        lengths = lengths * (volume / np.prod(lengths)) ** (1.0 / 3.0)
+        if np.min(lengths) < 1.5 or np.max(lengths) > 4.5:
+            lengths = np.ones(3) * volume ** (1.0 / 3.0)
+        base = np.asarray(incumbent["fractional_coordinates"])
+        coords = (base + rng.normal(0, 0.08, base.shape)) % 1.0
+        for i in range(len(coords)):
+            for _ in range(300):
+                if all(np.linalg.norm(((coords[i] - coords[j] + 0.5) % 1.0 - 0.5) * lengths) >= 0.48 for j in range(i)):
+                    break
+                coords[i] = rng.random(3)
+        records.append(relax_structure({"cell_lengths": lengths.tolist(), "fractional_coordinates": coords.tolist()}))
+    selected = max(itertools.combinations(records, 3), key=lambda group: _utility(problem, group))
     return {"candidate_ids": [row["candidate_id"] for row in selected]}

@@ -227,6 +227,8 @@ class _Laboratory:
 
 
 def _evaluate_world(search_crystals, world, index):
+    if hasattr(search_crystals, "reset_session"):
+        search_crystals.reset_session()
     lab = _Laboratory(world)
     try:
         answer = search_crystals(_problem(world), lab.relax_structure)

@@ -72,10 +72,8 @@ def _utility(problem, rows):
 
 
 def search_crystals(problem, relax_structure):
-    budget = int(problem["relaxation_budget_calls"])
     seeds = [_cubic_seed(problem, index) for index in range(8)]
-    seeds.extend(_seed(problem, index) for index in range(budget - 8))
+    seeds.extend(_seed(problem, index) for index in range(16))
     records = [relax_structure(seed) for seed in seeds]
-    selected = max(itertools.combinations(records, 3),
-                   key=lambda group: _utility(problem, group))
+    selected = sorted(records, key=lambda row: row["enthalpy_per_atom"])[:3]
     return {"candidate_ids": [row["candidate_id"] for row in selected]}
