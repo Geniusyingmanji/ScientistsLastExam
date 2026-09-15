@@ -93,4 +93,3 @@ construction_audit:
   red_team_rounds: 5
   oracle_disagreement_status: not_quantified
   independent_recomputation_status: baseline and reference replayed; independent photodynamical recomputation pending
-
