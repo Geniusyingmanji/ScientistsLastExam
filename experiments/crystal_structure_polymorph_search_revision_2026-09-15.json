@@ -348,5 +348,17 @@
     "benchmarks/Chemistry/CrystalStructurePolymorphSearch/verification/shortcut_record_replay.py": "d1e5f8de6923ac59c5aecb375a514921e9b071b21f19ca08a707b09a01715a75",
     "benchmarks/Chemistry/CrystalStructurePolymorphSearch/verification/shortcut_restarts24.py": "bad36e5650bac0302b8114e130313073d58e7826d16a2a1ead5047dce4e2a4d9"
   },
-  "evidence_applicability": "Scientific source files are byte-identical to measured 1a82e9a. Later changes update declarations, budget documentation, validation-status prose and evidence only; there is no preexisting model calibration to migrate."
+  "evidence_applicability": "Scientific source files are byte-identical to measured 1a82e9a. Later changes update declarations, budget documentation, validation-status prose and evidence only; there is no preexisting model calibration to migrate.",
+  "macos_development_replay": {
+    "method": "macOS in-process development replay, not sandbox admission",
+    "python": "3.11.15 (main, Apr 14 2026, 14:45:51) [Clang 22.1.3 ]",
+    "platform": "macOS-15.7.4-arm64-arm-64bit",
+    "numpy": "1.24.4",
+    "scipy": "1.10.1",
+    "wall_seconds": 19.546673792006914,
+    "score": 0.17252846472624697,
+    "valid": 1.0,
+    "source_revision": "d0b1f7696ca4d14025c782f2a97b22f211f097e3",
+    "interpretation": "Reproduces original 0.172528 declaration on macOS. Scientific source matches the Linux comparison, but cross-platform equality is false; reviewer value 0.159507 remains unreproduced. Do not infer stale source from within-host determinism alone."
+  }
 }

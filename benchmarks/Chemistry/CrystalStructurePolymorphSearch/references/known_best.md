@@ -82,7 +82,10 @@ selection. Neither historical repair established admission.
 The original PR declared three-cubic score 0.17252846472624697. A maintainer reported
 0.1595070229. On the clean merged source, two standard-entrypoint Linux replays in the pinned
 Python 3.11 profile instead give 0.17081851642267407. The new declarations bind the actually tested
-profile; neither historical number is silently relabeled as a current measurement. Determinism
+Linux profile. A separate macOS arm64 in-process replay with the same NumPy 1.24.4 /
+SciPy 1.10.1 versions reproduces **0.17252846472624697 exactly** on unchanged scientific
+source. The original declaration therefore has a reproducible platform-specific source;
+its mismatch is not by itself proof that the oracle/worlds were edited. Determinism
 within one runtime does not by itself establish portability between numerical runtimes.
 The supported Python 3.12 / NumPy 1.26.4 / SciPy 1.11.4 profile was also replayed twice: its
 three-cubic full metrics match the Python 3.11 results exactly. The maintainer's different
