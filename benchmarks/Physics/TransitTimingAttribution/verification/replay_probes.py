@@ -43,6 +43,14 @@ REFERENCE_CALL = '''
                           family_temperature=0.25, between_family_weight=4.0)
 '''
 
+NEVER_ABSTAIN = '''
+def attribute_ttv(observation, measure, budget_units):
+    return _attribute_ttv(observation, measure, budget_units, 1e9, -1e9, 1e9,
+                          alternative_gap_limit=-1e9, anchors=(), model_limit=24,
+                          bic_temperature=0.08, family_floor=0.0,
+                          family_temperature=0.25, between_family_weight=4.0)
+'''
+
 
 def _override(limit, alternative_gap="6.0", prefix=""):
     body = REFERENCE_CALL.replace("LIMIT", limit).replace("ALT_GAP", alternative_gap)
@@ -59,7 +67,7 @@ def main():
         "reference": reference,
         "always_abstain": 'def attribute_ttv(*args): return {"abstain": True}\n',
         "order_keyed": ORDER,
-        "never_abstain_reference": reference + _override("budget_units", "-1e9"),
+        "never_abstain_reference": reference + NEVER_ABSTAIN,
         "fixed_schedule_shortcut": (
             TASK / "verification/reference_no_active_design.py"
         ).read_text(encoding="utf-8"),
