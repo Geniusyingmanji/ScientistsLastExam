@@ -65,7 +65,7 @@ class LLMConfig:
     # sniffed so a request body is reproducible from the config alone.
     chat_max_tokens_field: str = "max_tokens"
     temperature: Optional[float] = 0.7
-    reasoning_effort: Optional[str] = None  # for reasoning models on the responses wire
+    reasoning_effort: Optional[str] = None  # for reasoning models on chat/responses wires
     # Anthropic wire only. The API version header is required and pinned rather than defaulted
     # so a recorded run says which contract it spoke.
     anthropic_version: str = "2023-06-01"
@@ -137,6 +137,8 @@ class LLMClient:
         }
         if self.config.temperature is not None:
             payload["temperature"] = float(self.config.temperature)
+        if self.config.reasoning_effort is not None:
+            payload["reasoning_effort"] = self.config.reasoning_effort
         url = self.config.base_url.rstrip("/") + "/chat/completions"
         headers = {"Content-Type": "application/json"}
         if self.config.api_key:
