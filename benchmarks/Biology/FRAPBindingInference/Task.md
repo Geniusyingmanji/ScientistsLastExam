@@ -88,6 +88,7 @@ or radius-independent binding under an active bleach-radius design.
 | `minimum_evidence_measurements` | minimum evidence count for a supported or named unsupported diagnosis |
 | `prediction_contexts` | ordered list of `{"radius_um": number, "time_s": number}` mappings for `predicted_recovery` |
 | `parameter_bounds` | mapping from each reported parameter key to a two-number `[lower, upper]` list |
+| `identifiability_log_se_threshold` | maximum allowed local standard error for both `log(k_on)` and `log(k_off)` before the result is `undetermined` |
 | `model_family` | supported reaction-diffusion family |
 | `unsupported_families` | allowed resolvable model-inadequacy diagnoses |
 | `measurement_model` | callback cost and observation description |
@@ -104,7 +105,7 @@ The possible diagnoses are:
 - `anomalous_transport`: recovery follows a fractional transport time law;
 - `two_mobile_pools`: two freely diffusing pools have different diffusion coefficients;
 - `spatially_varying_binding`: the apparent binding rate changes with bleach radius;
-- `undetermined`: the measured exchange is too fast to identify the binding rates at this budget, or evidence is otherwise insufficient for a scientific claim.
+- `undetermined`: after profiling `D` and `M`, the local Fisher information from the priced two-radius design leaves either `log(k_on)` or `log(k_off)` above `identifiability_log_se_threshold`, or evidence is otherwise insufficient for a scientific claim.
 
 The three named unsupported diagnoses and `undetermined` require `abstain=True`. `supported`
 requires `abstain=False`.
@@ -150,8 +151,9 @@ mobile-fraction and prediction errors are continuous. A named unsupported diagno
 `predicted_recovery` accurately predicts the sealed contexts under that diagnosis. Thus a label-only
 refusal is not a complete scientific result.
 
-Within supported worlds, parameter and prediction quality form a continuous science score with a
-small confidence-calibration factor. The split `combined_score` is the supported-world composite
+Within supported worlds, continuous parameter recovery contributes 85% and sealed prediction
+quality contributes 15% of the science score. Confidence calibration is reported separately and
+does not multiply the headline score. The split `combined_score` is the supported-world composite
 mean multiplied by the unsupported-world science mean. Thus partial or incorrect refusal, or a
 named refusal with poor sealed recovery prediction, reduces the headline score; never-refuse,
 fixed-label refusal, and blanket `undetermined` strategies score exactly zero. The evaluator
@@ -160,10 +162,12 @@ discovery coverage, attempted-discovery rate, their denominators, and all held-o
 
 ## Rules
 
-The 16-unit truth-blind reference uses four times at each endpoint radius and scores `0.906277`
-development / `0.870745` held out. The strongest optimizer-free grid in a 3,798 / 15,240 / 26,586
-point resolution ladder reaches `0.584593 / 0.565089`; the task-local tests require a material
-gap for every ladder rung.
+The 16-unit truth-blind reference uses four times at each endpoint radius and scores `0.778831`
+development / `0.837369` held out. It performs deterministic multi-start bounded least-squares
+fits, requires a BIC improvement of 20 for a named alternative, and applies the public local
+Fisher-information refusal rule. Optimizer-free grids with 3,798 / 15,240 / 26,586 / 103,196
+points reach at most `0.575222` development and `0.532828` held out; task-local tests require more
+than `0.20` absolute headroom on both splits for every rung.
 
 - Only edit `solution.py`; preserve `infer_frap_binding(problem, measure)`.
 - Use deterministic CPU Python, NumPy, SciPy, and the standard library only.

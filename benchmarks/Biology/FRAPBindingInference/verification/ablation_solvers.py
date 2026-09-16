@@ -5,7 +5,12 @@ from reference_solver import solve
 
 
 def one_radius_only(problem, measure):
-    return solve(problem, measure, radii=(problem["bleach_radii_um"][-1],))
+    return solve(
+        problem,
+        measure,
+        radii=(problem["bleach_radii_um"][-1],),
+        time_indices=tuple(range(len(problem["sample_times_s"]))),
+    )
 
 
 def fixed_binding_rates(problem, measure):

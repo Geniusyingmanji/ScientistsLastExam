@@ -13,6 +13,8 @@ TIMES = (0.05, 0.10, 0.20, 0.40, 0.80, 1.60, 3.20, 6.40, 12.80, 25.60)
 BUDGET = 16
 RADIUS_SETUP_COST = 4
 MIN_EVIDENCE = 4
+IDENTIFIABILITY_LOG_SE_THRESHOLD = 0.2
+REFERENCE_TIME_INDICES = (3, 6, 7, 9)
 PREDICTION_CONTEXTS = (
     (0.9, 0.15), (1.0, 1.0), (1.4, 0.55), (1.5, 5.0),
     (2.1, 2.2), (2.2, 16.0), (3.0, 7.5), (3.2, 30.0),
@@ -33,22 +35,28 @@ ALLOWED_DIAGNOSES = {
 
 
 DEVELOPMENT_WORLDS = (
-    {"kind": "supported", "seed": 73101, "d": 0.28, "mobile": 0.84, "kon": 0.22, "koff": 0.08, "noise": 0.008},
-    {"kind": "supported", "seed": 73102, "d": 0.85, "mobile": 0.76, "kon": 0.65, "koff": 0.20, "noise": 0.009},
-    {"kind": "supported", "seed": 73103, "d": 1.55, "mobile": 0.91, "kon": 0.12, "koff": 0.35, "noise": 0.007},
-    {"kind": "anomalous_transport", "seed": 73104, "d": 0.62, "mobile": 0.82, "alpha": 0.58, "noise": 0.008},
-    {"kind": "two_mobile_pools", "seed": 73105, "mobile": 0.88, "d1": 0.12, "d2": 1.65, "weight": 0.46, "noise": 0.008},
-    {"kind": "spatially_varying_binding", "seed": 73106, "d": 0.72, "mobile": 0.80, "kon": 0.38, "koff": 0.14, "slope": 1.15, "noise": 0.008},
-    {"kind": "undetermined", "seed": 73107, "d": 0.78, "mobile": 0.83, "kon": 1.55, "koff": 0.62, "noise": 0.008},
+    {"kind": "supported", "seed": 73101, "d": 0.28, "mobile": 0.84, "kon": 0.22, "koff": 0.08, "noise": 0.002},
+    {"kind": "supported", "seed": 73102, "d": 0.85, "mobile": 0.76, "kon": 0.65, "koff": 0.20, "noise": 0.00225},
+    {"kind": "supported", "seed": 73103, "d": 1.55, "mobile": 0.91, "kon": 0.12, "koff": 0.35, "noise": 0.00175},
+    {"kind": "anomalous_transport", "seed": 73104, "d": 0.62, "mobile": 0.82, "alpha": 0.58, "noise": 0.002},
+    {"kind": "two_mobile_pools", "seed": 73105, "mobile": 0.88, "d1": 0.12, "d2": 1.65, "weight": 0.46, "noise": 0.002},
+    {"kind": "spatially_varying_binding", "seed": 73106, "d": 0.72, "mobile": 0.80, "kon": 0.38, "koff": 0.14, "slope": 1.15, "noise": 0.002},
+    {"kind": "supported", "seed": 73107, "d": 0.78, "mobile": 0.83, "kon": 1.55, "koff": 0.62, "noise": 0.002},
+    {"kind": "supported", "seed": 73108, "d": 1.80, "mobile": 0.92, "kon": 0.32, "koff": 0.04, "noise": 0.002},
+    {"kind": "undetermined", "seed": 73109, "d": 0.20, "mobile": 0.65, "kon": 0.64, "koff": 0.04, "noise": 0.002},
+    {"kind": "undetermined", "seed": 73110, "d": 0.20, "mobile": 0.56, "kon": 1.70, "koff": 0.78, "noise": 0.0025},
 )
 
 HELDOUT_WORLDS = (
-    {"kind": "supported", "seed": 73201, "d": 0.45, "mobile": 0.88, "kon": 0.95, "koff": 0.12, "noise": 0.009},
-    {"kind": "supported", "seed": 73202, "d": 1.15, "mobile": 0.72, "kon": 0.35, "koff": 0.06, "noise": 0.008},
-    {"kind": "anomalous_transport", "seed": 73203, "d": 1.10, "mobile": 0.77, "alpha": 0.68, "noise": 0.009},
-    {"kind": "two_mobile_pools", "seed": 73204, "mobile": 0.83, "d1": 0.20, "d2": 2.05, "weight": 0.62, "noise": 0.008},
-    {"kind": "spatially_varying_binding", "seed": 73205, "d": 0.36, "mobile": 0.90, "kon": 0.72, "koff": 0.09, "slope": -1.05, "noise": 0.008},
-    {"kind": "undetermined", "seed": 73206, "d": 1.05, "mobile": 0.78, "kon": 1.42, "koff": 0.56, "noise": 0.008},
+    {"kind": "supported", "seed": 73201, "d": 0.45, "mobile": 0.88, "kon": 0.95, "koff": 0.12, "noise": 0.00225},
+    {"kind": "supported", "seed": 73202, "d": 1.15, "mobile": 0.72, "kon": 0.35, "koff": 0.06, "noise": 0.002},
+    {"kind": "anomalous_transport", "seed": 73203, "d": 1.10, "mobile": 0.77, "alpha": 0.68, "noise": 0.00225},
+    {"kind": "two_mobile_pools", "seed": 73204, "mobile": 0.83, "d1": 0.20, "d2": 2.05, "weight": 0.62, "noise": 0.002},
+    {"kind": "spatially_varying_binding", "seed": 73205, "d": 0.36, "mobile": 0.90, "kon": 0.72, "koff": 0.09, "slope": -1.05, "noise": 0.002},
+    {"kind": "supported", "seed": 73206, "d": 1.05, "mobile": 0.78, "kon": 1.42, "koff": 0.56, "noise": 0.002},
+    {"kind": "supported", "seed": 73207, "d": 1.60, "mobile": 0.88, "kon": 0.28, "koff": 0.045, "noise": 0.00225},
+    {"kind": "undetermined", "seed": 73208, "d": 0.24, "mobile": 0.68, "kon": 0.58, "koff": 0.045, "noise": 0.00225},
+    {"kind": "undetermined", "seed": 73209, "d": 0.24, "mobile": 0.58, "kon": 1.60, "koff": 0.72, "noise": 0.00225},
 )
 
 
@@ -69,6 +77,26 @@ def supported_recovery(d, mobile, kon, koff, radius, time):
     fast_weight = (lam * free_fraction - slow) / discriminant
     deficit = fast_weight * np.exp(-fast * time) + (1.0 - fast_weight) * np.exp(-slow * time)
     return np.clip(mobile * (1.0 - deficit), 0.0, 1.0)
+
+
+def log_rate_standard_errors(d, mobile, kon, koff, noise):
+    """Local log-rate errors for the public full-budget reference design."""
+    radius = np.repeat((RADII[0], RADII[-1]), len(REFERENCE_TIME_INDICES))
+    time = np.tile([TIMES[index] for index in REFERENCE_TIME_INDICES], 2)
+    theta = np.log(np.asarray([d, mobile, kon, koff], dtype=float))
+
+    def recovery(values):
+        return supported_recovery(*np.exp(values), radius, time)
+
+    step = 1e-4
+    jacobian = np.column_stack([
+        (recovery(theta + np.eye(4)[index] * step)
+         - recovery(theta - np.eye(4)[index] * step)) / (2.0 * step * noise)
+        for index in range(4)
+    ])
+    covariance = np.linalg.pinv(jacobian.T @ jacobian, rcond=1e-12)
+    standard_errors = np.sqrt(np.maximum(np.diag(covariance), 0.0))
+    return float(standard_errors[2]), float(standard_errors[3])
 
 
 def _truth_recovery(spec, radius, time):
@@ -100,10 +128,11 @@ def public_problem():
             for radius, time in PREDICTION_CONTEXTS
         ],
         "parameter_bounds": {key: list(value) for key, value in PARAMETER_BOUNDS.items()},
+        "identifiability_log_se_threshold": IDENTIFIABILITY_LOG_SE_THRESHOLD,
         "model_family": "one freely diffusing pool reversibly exchanges with one immobile bound pool; radial transport rate is 4*D/radius_um**2 and binding rates are radius-independent",
         "unsupported_families": ["anomalous_transport", "two_mobile_pools", "spatially_varying_binding"],
         "measurement_model": "the first measure call at each distinct radius costs five units (four setup plus one measurement); later calls at that radius cost one unit; each returns a noisy normalized recovery fraction with a standard error and immutable measurement_id",
-        "abstain_when": "use the matching unsupported diagnosis and abstain when cross-radius recovery is inconsistent with the supported diffusion-binding family; use undetermined only when evidence is insufficient",
+        "abstain_when": "use the matching unsupported diagnosis when cross-radius recovery is inconsistent with the supported family; use undetermined when the larger local standard error of log(k_on) and log(k_off), after profiling D and M under the public full-budget reference design, exceeds identifiability_log_se_threshold",
     }
 
 
@@ -235,20 +264,20 @@ def _score(spec, claim):
     prediction_score = math.exp(-((rmse / 0.055) ** 2))
     if supported and not claim["abstain"] and claim["diagnosis"] == "supported":
         component_scores = (
-            math.exp(-abs(math.log(claim["diffusion_coefficient_um2_s"] / spec["d"])) / 0.30),
-            math.exp(-abs(claim["mobile_fraction"] - spec["mobile"]) / 0.08),
-            math.exp(-abs(math.log(claim["binding_on_rate_s"] / spec["kon"])) / 0.45),
-            math.exp(-abs(math.log(claim["binding_off_rate_s"] / spec["koff"])) / 0.45),
+            math.exp(-abs(math.log(claim["diffusion_coefficient_um2_s"] / spec["d"])) / 0.09),
+            math.exp(-abs(claim["mobile_fraction"] - spec["mobile"]) / 0.02475),
+            math.exp(-abs(math.log(claim["binding_on_rate_s"] / spec["kon"])) / 0.108),
+            math.exp(-abs(math.log(claim["binding_off_rate_s"] / spec["koff"])) / 0.108),
         )
         parameter_score = float(np.prod(component_scores) ** 0.25)
-        science_score = 0.68 * parameter_score + 0.32 * prediction_score
+        science_score = 0.85 * parameter_score + 0.15 * prediction_score
     elif correct_refusal:
         # A named model-inadequacy claim must still predict the sealed recovery
         # contexts.  This distinguishes a fitted alternate mechanism from a
         # label-only refusal policy.
         science_score = prediction_score
     confidence_score = max(0.0, 1.0 - abs(claim["confidence"] - science_score))
-    combined = science_score * (0.9 + 0.1 * confidence_score)
+    combined = science_score
     return {
         "combined_score": round(combined, 6),
         "science_score": round(science_score, 6),
@@ -265,6 +294,8 @@ def _evaluate_world(spec, split, index, candidate):
     measurement = _Measurement(spec)
     base = {"split": split, "world_index": index, "kind": spec["kind"]}
     try:
+        if hasattr(candidate, "reset_session"):
+            candidate.reset_session()
         claim = _validate(candidate(public_problem(), measurement), measurement)
         if measurement.violated:
             raise ValueError("candidate violated the measurement contract")

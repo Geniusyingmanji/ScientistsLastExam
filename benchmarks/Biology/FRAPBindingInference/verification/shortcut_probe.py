@@ -7,11 +7,13 @@ import numpy as np
 
 
 TIME_INDICES = (3, 6, 7, 9)
+MODEL_SELECTION_BIC_THRESHOLD = 20.0
 GRID_LADDER = {
     # Number of candidate points is the sum of the four family grids.
     "coarse": {"d": 12, "on": 10, "off": 10, "alpha": 10, "weight": 7, "slope": 7},  # 3,798
     "medium": {"d": 16, "on": 14, "off": 14, "alpha": 14, "weight": 9, "slope": 9},  # 15,240
     "fine": {"d": 18, "on": 16, "off": 16, "alpha": 16, "weight": 10, "slope": 10},  # 26,586
+    "dense": {"d": 36, "on": 20, "off": 20, "alpha": 16, "weight": 10, "slope": 10},
 }
 
 
@@ -99,6 +101,24 @@ def _best_spatial(radius, time, recovery, sigma, bounds, grid):
     return best
 
 
+def _log_rate_standard_errors(parameters, radius, time, sigma):
+    theta = np.log(np.asarray(parameters, dtype=float))
+
+    def recovery(values):
+        d, mobile, kon, koff = np.exp(values)
+        return mobile * _supported(d, kon, koff, radius, time)
+
+    step = 1e-4
+    jacobian = np.column_stack([
+        (recovery(theta + np.eye(4)[index] * step)
+         - recovery(theta - np.eye(4)[index] * step)) / (2.0 * step * sigma)
+        for index in range(4)
+    ])
+    covariance = np.linalg.pinv(jacobian.T @ jacobian, rcond=1e-12)
+    standard_errors = np.sqrt(np.maximum(np.diag(covariance), 0.0))
+    return float(standard_errors[2]), float(standard_errors[3])
+
+
 def infer_frap_binding_at_resolution(problem, measure, resolution):
     grid = GRID_LADDER[resolution]
     radii = (problem["bleach_radii_um"][0], problem["bleach_radii_um"][-1])
@@ -122,12 +142,20 @@ def infer_frap_binding_at_resolution(problem, measure, resolution):
         for name, (fit, parameters) in fits.items()
     }
     best_alternative = min((name for name in fits if name != "supported"), key=bic.get)
-    diagnosis = best_alternative if bic["supported"] - bic[best_alternative] >= 12.0 else "supported"
+    diagnosis = (
+        best_alternative
+        if bic["supported"] - bic[best_alternative] >= MODEL_SELECTION_BIC_THRESHOLD
+        else "supported"
+    )
     d, mobile, kon, koff = fits["supported"][0][1]
+    if diagnosis == "supported":
+        rate_errors = _log_rate_standard_errors((d, mobile, kon, koff), radius, time, sigma)
+        if max(rate_errors) > float(problem["identifiability_log_se_threshold"]):
+            diagnosis = "undetermined"
     contexts = problem["prediction_contexts"]
     context_radius = np.asarray([context["radius_um"] for context in contexts])
     context_time = np.asarray([context["time_s"] for context in contexts])
-    if diagnosis == "supported":
+    if diagnosis in {"supported", "undetermined"}:
         predicted = mobile * _supported(d, kon, koff, context_radius, context_time)
     elif diagnosis == "anomalous_transport":
         alt_d, alt_mobile, alpha = fits[diagnosis][0][1]
@@ -148,14 +176,14 @@ def infer_frap_binding_at_resolution(problem, measure, resolution):
         "binding_on_rate_s": kon,
         "binding_off_rate_s": koff,
         "predicted_recovery": [float(value) for value in predicted],
-        "confidence": 0.70,
+        "confidence": 0.90 if diagnosis == "supported" else 0.95,
         "abstain": diagnosis != "supported",
         "evidence_measurement_ids": [row["measurement_id"] for row in rows],
     }
 
 
 def infer_frap_binding(problem, measure):
-    return infer_frap_binding_at_resolution(problem, measure, "coarse")
+    return infer_frap_binding_at_resolution(problem, measure, "fine")
 
 
 def resolution_candidate(resolution):

@@ -4,9 +4,11 @@ from __future__ import annotations
 import math
 
 import numpy as np
+from scipy.optimize import least_squares
 
 
 MEASURE_TIME_INDICES = (3, 6, 7, 9)
+MODEL_SELECTION_BIC_THRESHOLD = 20.0
 
 
 def _supported(parameters, radius, time):
@@ -61,34 +63,25 @@ def _collect(problem, measure, radii=None, time_indices=MEASURE_TIME_INDICES):
 def _fit(model, bounds, starts, radius, time, recovery, sigma):
     lower = np.asarray(bounds[0], dtype=float)
     upper = np.asarray(bounds[1], dtype=float)
-    width = upper - lower
 
-    def objective(values):
-        residual = (model(values, radius, time) - recovery) / sigma
-        return float(np.sum(np.square(residual)))
+    def residual(values):
+        return (model(values, radius, time) - recovery) / sigma
 
     best = None
     for start in starts:
-        values = np.clip(np.asarray(start, dtype=float), lower, upper)
-        score = objective(values)
-        step = 0.22
-        for _ in range(80):
-            improved = False
-            for index in range(len(values)):
-                for direction in (-1.0, 1.0):
-                    trial = values.copy()
-                    trial[index] = np.clip(
-                        trial[index] + direction * step * width[index],
-                        lower[index], upper[index],
-                    )
-                    trial_score = objective(trial)
-                    if trial_score + 1e-12 < score:
-                        values, score = trial, trial_score
-                        improved = True
-            if not improved:
-                step *= 0.62
-                if step < 2e-5:
-                    break
+        result = least_squares(
+            residual,
+            np.clip(np.asarray(start, dtype=float), lower, upper),
+            bounds=(lower, upper),
+            method="trf",
+            x_scale="jac",
+            ftol=1e-12,
+            xtol=1e-12,
+            gtol=1e-12,
+            max_nfev=2000,
+        )
+        values = result.x
+        score = float(np.sum(np.square(result.fun)))
         if best is None or score < best[0]:
             best = (score, values)
     return best
@@ -162,6 +155,23 @@ def _fits(problem, rows, fixed_rates=None):
     return scored
 
 
+def _log_rate_standard_errors(parameters, radius, time, sigma):
+    theta = np.log(np.asarray(parameters, dtype=float))
+
+    def recovery(values):
+        return _supported(np.exp(values), radius, time)
+
+    step = 1e-4
+    jacobian = np.column_stack([
+        (recovery(theta + np.eye(4)[index] * step)
+         - recovery(theta - np.eye(4)[index] * step)) / (2.0 * step * sigma)
+        for index in range(4)
+    ])
+    covariance = np.linalg.pinv(jacobian.T @ jacobian, rcond=1e-12)
+    standard_errors = np.sqrt(np.maximum(np.diag(covariance), 0.0))
+    return float(standard_errors[2]), float(standard_errors[3])
+
+
 def solve(problem, measure, *, radii=None, time_indices=MEASURE_TIME_INDICES,
           fixed_rates=None, force_supported=False):
     if radii is None:
@@ -172,10 +182,19 @@ def solve(problem, measure, *, radii=None, time_indices=MEASURE_TIME_INDICES,
     alternatives = {key: value for key, value in fitted.items() if key != "supported"}
     best_alternative = min(alternatives, key=lambda key: alternatives[key]["bic"])
     improvement = supported_bic - alternatives[best_alternative]["bic"]
-    diagnosis = "supported" if force_supported or improvement < 12.0 else best_alternative
+    diagnosis = (
+        "supported"
+        if force_supported or improvement < MODEL_SELECTION_BIC_THRESHOLD
+        else best_alternative
+    )
     parameters = fitted["supported"]["parameters"]
-    if not force_supported and diagnosis == "supported" and parameters[2] >= 1.2 and parameters[3] >= 0.45:
-        diagnosis = "undetermined"
+    if not force_supported and diagnosis == "supported":
+        radius = np.asarray([row["radius_um"] for row in rows], dtype=float)
+        time = np.asarray([row["time_s"] for row in rows], dtype=float)
+        sigma = np.asarray([row["recovery_standard_error"] for row in rows], dtype=float)
+        rate_errors = _log_rate_standard_errors(parameters, radius, time, sigma)
+        if max(rate_errors) > float(problem["identifiability_log_se_threshold"]):
+            diagnosis = "undetermined"
     prediction_model = {
         "supported": _supported,
         "undetermined": _supported,
@@ -189,7 +208,7 @@ def solve(problem, measure, *, radii=None, time_indices=MEASURE_TIME_INDICES,
         np.asarray([item["radius_um"] for item in problem["prediction_contexts"]]),
         np.asarray([item["time_s"] for item in problem["prediction_contexts"]]),
     )
-    confidence = float(np.clip(0.72 + min(abs(improvement), 24.0) / 120.0, 0.72, 0.92))
+    confidence = 0.90 if diagnosis == "supported" else 0.95
     return {
         "diagnosis": diagnosis,
         "diffusion_coefficient_um2_s": float(parameters[0]),

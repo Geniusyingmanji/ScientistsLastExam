@@ -54,12 +54,12 @@ class FRAPBindingInferenceTests(unittest.TestCase):
         second = evaluator.evaluate(reference.infer_frap_binding)
         self.assertEqual(first, second)
         self.assertEqual(first["valid"], 1.0)
-        self.assertGreater(first["development_combined_score"], 0.90)
-        self.assertGreater(first["heldout_combined_score"], 0.85)
+        self.assertGreater(first["development_combined_score"], 0.75)
+        self.assertGreater(first["heldout_combined_score"], 0.80)
         self.assertEqual(first["development_correct_refusal_rate"], 1.0)
         self.assertEqual(first["heldout_correct_refusal_rate"], 1.0)
-        self.assertEqual(first["development_correct_refusal_count"], 4)
-        self.assertEqual(first["heldout_correct_refusal_count"], 4)
+        self.assertEqual(first["development_correct_refusal_count"], 5)
+        self.assertEqual(first["heldout_correct_refusal_count"], 5)
         self.assertEqual(first["development_false_discovery_rate"], 0.0)
         self.assertEqual(first["heldout_false_discovery_rate"], 0.0)
         self.assertEqual(first["development_discovery_coverage"], 1.0)
@@ -71,6 +71,56 @@ class FRAPBindingInferenceTests(unittest.TestCase):
         self.assertEqual(result["development_combined_score"], 0.0)
         self.assertEqual(result["heldout_combined_score"], 0.0)
         self.assertEqual(result["valid"], 1.0)
+        self.assertEqual(result["development"]["attempted_discovery_rate"], 1.0)
+        self.assertEqual(result["heldout"]["attempted_discovery_rate"], 1.0)
+        self.assertTrue(all(row["confidence"] == 0.95 for row in result["per_instance"]))
+
+    def test_identifiability_worlds_require_joint_fisher_information(self):
+        evaluator = _load("frap_identifiability", TASK / "verification" / "evaluator.py")
+        supported = []
+        undetermined = []
+        for world in evaluator.DEVELOPMENT_WORLDS + evaluator.HELDOUT_WORLDS:
+            if world["kind"] not in {"supported", "undetermined"}:
+                continue
+            errors = evaluator.log_rate_standard_errors(
+                world["d"], world["mobile"], world["kon"], world["koff"], world["noise"]
+            )
+            if world["kind"] == "supported":
+                supported.append((world, max(errors)))
+            else:
+                undetermined.append((world, max(errors)))
+        threshold = evaluator.IDENTIFIABILITY_LOG_SE_THRESHOLD
+        self.assertTrue(all(error < threshold for _, error in supported))
+        self.assertTrue(all(error > threshold for _, error in undetermined))
+        self.assertLess(max(error for _, error in supported), min(error for _, error in undetermined))
+        self.assertTrue(any(world["koff"] <= 0.045 for world, _ in supported))
+        self.assertTrue(any(world["koff"] <= 0.045 for world, _ in undetermined))
+        self.assertTrue(any(world["kon"] >= 1.4 for world, _ in supported))
+        self.assertTrue(any(world["kon"] >= 1.4 for world, _ in undetermined))
+
+    def test_confidence_is_diagnostic_not_a_headline_multiplier(self):
+        evaluator = _load("frap_confidence", TASK / "verification" / "evaluator.py")
+        world = evaluator.DEVELOPMENT_WORLDS[0]
+        contexts = np.asarray(evaluator.PREDICTION_CONTEXTS, dtype=float)
+        predictions = evaluator._truth_recovery(world, contexts[:, 0], contexts[:, 1])
+        claim = {
+            "diagnosis": "supported",
+            "abstain": False,
+            "diffusion_coefficient_um2_s": world["d"],
+            "mobile_fraction": world["mobile"],
+            "binding_on_rate_s": world["kon"],
+            "binding_off_rate_s": world["koff"],
+            "predictions": predictions,
+            "confidence": 0.0,
+        }
+        low_confidence = evaluator._score(world, claim)
+        claim["confidence"] = 1.0
+        high_confidence = evaluator._score(world, claim)
+        self.assertEqual(low_confidence["combined_score"], high_confidence["combined_score"])
+        self.assertNotEqual(
+            low_confidence["confidence_calibration_score"],
+            high_confidence["confidence_calibration_score"],
+        )
 
     def test_supported_recovery_has_physical_bounds_and_radius_scaling(self):
         evaluator = _load("frap_physics", TASK / "verification" / "evaluator.py")
@@ -112,6 +162,39 @@ class FRAPBindingInferenceTests(unittest.TestCase):
         result = evaluator.evaluate(overspend)
         self.assertEqual(result["valid"], 0.0)
         self.assertEqual(result["combined_score"], 0.0)
+
+    def test_candidate_session_is_reset_for_every_world(self):
+        evaluator = _load("frap_session_reset", TASK / "verification" / "evaluator.py")
+
+        class StatefulCandidate:
+            def __init__(self):
+                self.reset_count = 0
+
+            def reset_session(self):
+                self.reset_count += 1
+
+            def __call__(self, problem, measure):
+                rows = [
+                    measure(problem["bleach_radii_um"][0], time)
+                    for time in problem["sample_times_s"][:4]
+                ]
+                return {
+                    "diagnosis": "supported",
+                    "diffusion_coefficient_um2_s": 0.5,
+                    "mobile_fraction": 0.75,
+                    "binding_on_rate_s": 0.2,
+                    "binding_off_rate_s": 0.1,
+                    "predicted_recovery": [0.0 for _ in problem["prediction_contexts"]],
+                    "confidence": 0.95,
+                    "abstain": False,
+                    "evidence_measurement_ids": [row["measurement_id"] for row in rows],
+                }
+
+        candidate = StatefulCandidate()
+        result = evaluator.evaluate(candidate)
+        expected = len(evaluator.DEVELOPMENT_WORLDS) + len(evaluator.HELDOUT_WORLDS)
+        self.assertEqual(candidate.reset_count, expected)
+        self.assertEqual(result["valid"], 1.0)
 
     def test_submission_fault_matrix_fails_closed(self):
         evaluator = _load("frap_fault_matrix", TASK / "verification" / "evaluator.py")
