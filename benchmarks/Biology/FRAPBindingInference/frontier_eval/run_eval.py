@@ -1,40 +1,44 @@
-"""Black-box evaluation wrapper for FRAPBindingInference."""
-from __future__ import annotations
-
+"""Launch the shared trusted evaluator without importing project code."""
 import argparse
-import json
-import os
+import math
 import subprocess
 import sys
 from pathlib import Path
 
-INVALID = -1e18
-TASK_ID = "CellBiophysics/FRAPBindingInference"
 ROOT = Path(__file__).resolve().parents[4]
+TASK_ID = "CellBiophysics/FRAPBindingInference"
+EVAL_TIMEOUT_S = 300
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument("--candidate", required=True)
     parser.add_argument("--metrics-out", required=True)
-    parser.add_argument("--timeout", type=float, default=300.0)
-    args = parser.parse_args()
-    metrics = {"combined_score": INVALID, "valid": 0.0}
+    parser.add_argument("--timeout", type=float, default=EVAL_TIMEOUT_S)
+    parser.add_argument("--full-metrics-dir")
+    args = parser.parse_args(argv)
+    command = [sys.executable, str(ROOT / "sle/frontier_eval_entrypoint.py"),
+               "--task", TASK_ID, "--root", str(ROOT), "--timeout", str(args.timeout),
+               "--candidate", args.candidate, "--metrics-out", args.metrics_out]
+    if args.full_metrics_dir:
+        command.extend(["--full-metrics-dir", args.full_metrics_dir])
     try:
-        completed = subprocess.run(
-            [sys.executable, "-m", "sle", "eval", "--task", TASK_ID, "--allow-uncertified",
-             "--candidate", str(Path(args.candidate).resolve()), "--timeout", str(args.timeout)],
-            cwd=str(ROOT), capture_output=True, text=True, timeout=args.timeout + 120,
-            env={**os.environ, "PYTHONPATH": str(ROOT)})
-        if completed.returncode:
-            raise RuntimeError("sle eval exited %d: %s" % (completed.returncode, completed.stderr[-500:]))
-        metrics.update(json.loads(completed.stdout))
-        metrics.setdefault("raw_score", metrics.get("combined_score"))
-    except Exception as exc:  # noqa: BLE001
-        metrics["error_message"] = "%s: %s" % (type(exc).__name__, exc)
-    Path(args.metrics_out).write_text(json.dumps(metrics, indent=2, default=str), encoding="utf-8")
-    print(json.dumps({key: metrics.get(key) for key in ("combined_score", "valid")}))
-    return 0
+        Path(args.metrics_out).unlink(missing_ok=True)
+        if not math.isfinite(args.timeout) or args.timeout <= 0:
+            print("evaluation timeout must be positive and finite", file=sys.stderr)
+            return 2
+        result = subprocess.run(command, capture_output=True, text=True, timeout=args.timeout + 150)
+        if result.returncode:
+            Path(args.metrics_out).unlink(missing_ok=True)
+            print("evaluation entrypoint unavailable or infrastructure failure (exit %d)" % result.returncode,
+                  file=sys.stderr)
+            return 2
+        print(result.stdout, end="")
+        return 0
+    except (OSError, subprocess.TimeoutExpired):
+        Path(args.metrics_out).unlink(missing_ok=True)
+        print("evaluation entrypoint could not be launched or report cleared", file=sys.stderr)
+        return 2
 
 
 if __name__ == "__main__":
