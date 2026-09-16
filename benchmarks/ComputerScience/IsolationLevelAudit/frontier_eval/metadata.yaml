@@ -1,0 +1,13 @@
+domain: ConcurrencyControl
+task: IsolationLevelAudit
+scientific_role: discovery
+difficulty: hard
+tier: T2
+oracle_type: analytical
+score_mode: clipped
+gpu_required: false
+eval_time_seconds: 120
+science_metric: identification_of_a_black_box_transactional_stores_isolation_level_from_budgeted_concurrent_probing_against_the_level_the_world_was_built_at_with_calibrated_refusal_where_the_budget_does_not_buy_enough_races_to_rule_out_the_level_below
+reference_baseline: "symptom scan: run contention at two sessions and look for a read of an element whose writer went on to abort and for a key whose list came back shorter than before; never build a dependency graph, never decline"
+reference_sota: "opportunity-counted audit: four packed contention patterns, Adya-style cycle detection over the version order recovered from the reads, power counted as the rounds whose operation clocks prove two transactions raced on the weak path, budget focused on the patterns that could still lower the verdict, and a refusal when a level below the verdict has not had enough quiet opportunities"
+citation: "Adya, Liskov and O'Neil 2000, DOI 10.1109/ICDE.2000.839388; Berenson, Bernstein, Gray, Melton, O'Neil and O'Neil 1995, DOI 10.1145/223784.223785; Kingsbury and Alvaro 2021, DOI 10.14778/3430915.3430918; Cerone, Bernardi and Gotsman 2015, DOI 10.4230/LIPIcs.CONCUR.2015.58; Bailis, Davidson, Fekete, Ghodsi, Hellerstein and Stoica 2013, DOI 10.14778/2732232.2732237; Sovran, Power, Aguilera and Li 2011, DOI 10.1145/2043556.2043592"

@@ -453,6 +453,29 @@ tasks:
       is checked separately. Candidate intake only; independent privacy review, iterative difficulty
       and fresh server-held confirmation remain pending.
     citation_ids: [doi:10.14778/3055330.3055331, doi:10.1145/3243734.3243818, doi:10.1145/3243734.3243863, doi:10.1109/SP40001.2021.00081, doi:10.1561/0400000042, doi:10.1145/1536414.1536467, doi:10.1145/2382196.2382264, doi:10.1093/biomet/26.4.404, arxiv:2006.07709, doi:10.1109/SP40001.2021.00069, doi:10.1137/09076828X, doi:10.1109/ALLERTON.2018.8636068]
+  ConcurrencyControl/IsolationLevelAudit:
+    status: candidate
+    reason: >-
+      Budgeted active probing of a black-box transactional store to name its isolation level, or
+      decline. The store takes its weak path with a hidden probability and the global lock drains
+      what is in flight before it is granted, so an anomaly needs two weak transactions at once and
+      its rate is quadratic in a number the candidate cannot change: the budget buys opportunities,
+      not operations, and whether a round was one is visible only in the operation clocks. A
+      soundness sweep over six levels, three weak rates and three seeds, 300 rounds of four patterns
+      each, finds no store exhibiting a class its level forbids, so reading the evidence correctly
+      never names a level below the truth. The reference scores 0.500 development and 0.625 held
+      out with no world named wrongly, and 0.542 / 0.656 with zero wrong calls over 80 world-runs
+      at four re-drawn seeds. Declining every world is exactly 0.000 by construction and every fixed
+      guess is below it; the baseline scores 0.000 with ten of twelve development worlds wrong. The
+      best of a declared twelve-strategy grid reaches 0.167, a third of the reference, and names
+      four wrong levels where the reference names none; over seed shifts it reaches 0.292, 54 per
+      cent, with 16 wrong calls. Which worlds the budget can settle is measured rather than
+      asserted, by a protocol that never consults the reference, and the reference's own refusals
+      match those labels exactly on both splits. Three independent blind first proposals score
+      0.167, 0.083 and 0.000, all below 90 per cent of the reference. Candidate intake only:
+      external domain review, the Linux sandbox contribution gate and a frontier draw are all
+      pending, and shortcut_probe expected_score stays null until the sandbox measurement fills it.
+    citation_ids: [doi:10.1109/ICDE.2000.839388, doi:10.1145/223784.223785, doi:10.14778/3430915.3430918, doi:10.4230/LIPIcs.CONCUR.2015.58, doi:10.14778/2732232.2732237, doi:10.1145/2043556.2043592]
   CausalDiscovery/SurvivorshipConfoundedDesign:
     status: candidate
     reason: >-
