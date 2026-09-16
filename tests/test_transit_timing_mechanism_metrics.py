@@ -104,6 +104,14 @@ class TransitMechanismMetricsTests(unittest.TestCase):
         self.assertGreater(len({w["forecast_transit"] for w in development}), 10)
         self.assertEqual(len({w["seed"] for w in development + heldout}), 129)
 
+    def test_each_declared_difficulty_has_a_valid_zero_baseline(self):
+        for level in sorted(evaluator._PROFILES):
+            with self.subTest(level=level), patch.object(evaluator, "DIFFICULTY", level):
+                result = evaluator.evaluate(baseline.attribute_ttv)
+                self.assertEqual(result["valid"], 1.0)
+                self.assertEqual(result["combined_score"], 0.0)
+                self.assertEqual(result["robustness_score"], 0.0)
+
     def test_every_observation_publishes_dynamic_followup_bounds_and_budget(self):
         for world in evaluator.development_worlds() + evaluator.sealed_worlds():
             observation = evaluator._observation(world)

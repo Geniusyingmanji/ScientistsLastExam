@@ -6,10 +6,6 @@ DIFFICULTY = 1
 _PROFILES = {1: {"n_range": (10, 15), "noise_range": (0.0018, 0.0028),
                  "budget": 5, "seed": 20260951,
                  "seeds": (20260951, 20260952, 20260953),
-                 "counts": (6, 6, 5, 3, 3)},
-             2: {"n_range": (11, 16), "noise_range": (0.0020, 0.0030),
-                 "budget": 5, "seed": 20260961,
-                 "seeds": (20260961, 20260962, 20260963),
                  "counts": (6, 6, 5, 3, 3)}}
 _SEALED = {1: {"n_range": (9, 16), "noise_range": (0.0019, 0.0030),
                "budget": 5, "seed": 20266951,

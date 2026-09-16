@@ -109,6 +109,12 @@ security controls rather than an exhaustive shortcut bound.
 
 ## Robustness
 
+This release implements only the default `DIFFICULTY=1` fixture. An earlier unused
+level-2 development profile had no matching sealed profile and therefore rejected every
+candidate as invalid. That incomplete declaration has been removed; level-1 worlds,
+budgets, scoring, and candidate-visible files are unchanged. No higher-level difficulty
+claim follows from the unsupported level's former zero scores.
+
 Development and held-out worlds are deterministic but use disjoint three-seed panels. Development
 has 69 worlds (51 supported, 18 unsupported); held-out has 60 (42 supported, 18 unsupported).
 Initial series length, noise, physical coefficients, available follow-up interval, and forecast
