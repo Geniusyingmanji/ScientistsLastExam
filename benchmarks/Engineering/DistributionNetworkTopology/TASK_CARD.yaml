@@ -133,6 +133,9 @@ shortcut_probe:
     candidate: verification/reference_solver.py
     expected_score: 0.9270833333333333
   probes:
+  - id: shipped_baseline
+    candidate: solution.py
+    expected_score: 0.0
   - id: route_grid
     candidate: verification/shortcut_grid.py
     expected_score: 0.502037037037037
