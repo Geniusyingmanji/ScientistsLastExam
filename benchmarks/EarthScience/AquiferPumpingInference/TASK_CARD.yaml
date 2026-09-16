@@ -80,3 +80,18 @@ construction_audit:
   red_team_rounds: 3
   oracle_disagreement_status: reduced_order_alternative_formulas_are_public_and_explicitly_not_claimed_as_the_full_cited_solutions
   independent_recomputation_status: the maintainer independently reproduced and attacked revision 99c081c; the revised baseline, truth-blind reference, malformed-candidate checks, Theis invariants, ablations, identifier probe, degenerate policies, and shortcut sweep are executable and builder-replayed on Linux pending independent rerun
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.622081417
+  probes:
+  - id: confined_fit_residual_threshold_sweep_best
+    candidate: verification/shortcut_probe.py
+    expected_score: 0.481859296
+  - id: shipped_baseline
+    candidate: solution.py
+    expected_score: 0.0
+  relative_margin: 0.2
+  score_tolerance: 0.000001

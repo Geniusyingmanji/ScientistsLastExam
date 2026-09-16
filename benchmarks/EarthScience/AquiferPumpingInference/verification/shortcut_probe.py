@@ -1,103 +1,122 @@
-"""Fit the confined family, then sweep only low-dimensional residual thresholds."""
+"""Truth-blind confined fit with fixed residual-threshold attribution."""
 from __future__ import annotations
 
-import importlib.util
-import itertools
-import json
-from pathlib import Path
+import math
 
 import numpy as np
-
-import evaluator
-
-
-_SPEC = importlib.util.spec_from_file_location(
-    "aquifer_reference_for_shortcut", Path(__file__).with_name("reference_solver.py")
-)
-_REFERENCE = importlib.util.module_from_spec(_SPEC)
-assert _SPEC.loader is not None
-_SPEC.loader.exec_module(_REFERENCE)
-_FIT_CACHE = {}
+from scipy.optimize import least_squares
+from scipy.special import exp1
 
 
-def _candidate(chi2_cut, radial_cut, temporal_cut):
-    def solve(problem, measure):
-        rows = []
-        for radius_index in (0, -1):
-            radius = problem["observation_radii_m"][radius_index]
-            for time in problem["observation_times_s"][1:7]:
-                rows.append(measure(radius, time))
-
-        r = np.asarray([row["radius_m"] for row in rows], dtype=float)
-        t = np.asarray([row["time_s"] for row in rows], dtype=float)
-        y = np.asarray([row["drawdown_m"] for row in rows], dtype=float)
-        sigma = np.asarray([row["drawdown_standard_error_m"] for row in rows], dtype=float)
-        cache_key = tuple(np.round(y, 12))
-        if cache_key not in _FIT_CACHE:
-            rss, theta = _REFERENCE._fit(
-                "confined", r, t, y, sigma, float(problem["pumping_rate_m3_s"]),
-                problem["parameter_bounds"],
-            )
-            fitted = _REFERENCE._predict(
-                "confined", theta, r, t, float(problem["pumping_rate_m3_s"])
-            )
-            residual = (y - fitted) / sigma
-            residual_by_radius = residual.reshape(2, 6)
-            radial_contrast = float(np.mean(residual_by_radius[1] - residual_by_radius[0]))
-            temporal_contrast = float(
-                np.mean(residual_by_radius[:, -2:])
-                - np.mean(residual_by_radius[:, :2])
-            )
-            _FIT_CACHE[cache_key] = (rss / len(rows), radial_contrast, temporal_contrast, theta)
-        chi2_per_observation, radial_contrast, temporal_contrast, theta = _FIT_CACHE[cache_key]
-
-        if chi2_per_observation <= chi2_cut:
-            diagnosis = "confined"
-        elif radial_contrast < radial_cut:
-            diagnosis = "leaky_aquifer"
-        elif temporal_contrast < temporal_cut:
-            diagnosis = "recharge_boundary"
-        else:
-            diagnosis = "dual_porosity"
-
-        transmissivity, storativity = np.exp(theta[:2])
-        predictions = [
-            _REFERENCE._theis(
-                transmissivity,
-                storativity,
-                float(context["radius_m"]),
-                float(context["time_s"]),
-                float(problem["pumping_rate_m3_s"]),
-            )
-            for context in problem["prediction_contexts"]
-        ]
-        return {
-            "diagnosis": diagnosis,
-            "transmissivity_m2_s": float(transmissivity),
-            "storativity": float(storativity),
-            "predicted_drawdown_m": [float(value) for value in predictions],
-            "confidence": 0.65,
-            "abstain": diagnosis != "confined",
-            "evidence_measurement_ids": [row["measurement_id"] for row in rows],
-        }
-
-    return solve
+CHI2_CUT = 2.0
+RADIAL_CUT = -3.0
+TEMPORAL_CUT = -4.0
 
 
-def run_sweep():
+def _theis(transmissivity, storativity, radius, time, pumping_rate):
+    u = radius * radius * storativity / (4.0 * transmissivity * time)
+    return pumping_rate * exp1(u) / (4.0 * math.pi * transmissivity)
+
+
+def _fit_confined(radius, time, drawdown, sigma, pumping_rate, bounds):
+    lower = np.log([
+        bounds["transmissivity_m2_s"][0],
+        bounds["storativity"][0],
+    ])
+    upper = np.log([
+        bounds["transmissivity_m2_s"][1],
+        bounds["storativity"][1],
+    ])
+    starts = (
+        np.log([0.0007, 0.00015]),
+        np.log([0.0020, 0.0010]),
+        np.log([0.0060, 0.0060]),
+    )
     best = None
-    count = 0
-    for values in itertools.product(
-        (2.0, 4.0, 8.0, 16.0),
-        (-3.0, -1.5, -0.5, 0.0),
-        (-4.0, -2.0, -1.0, -0.5, -0.2, 0.0, 0.2, 0.5),
-    ):
-        count += 1
-        result = evaluator.evaluate(_candidate(*values))
-        if best is None or result["combined_score"] > best["combined_score"]:
-            best = {"settings": values, **result}
-    return {"strategies": count, "best": best}
+    for start in starts:
+        fit = least_squares(
+            lambda theta: (
+                _theis(
+                    math.exp(theta[0]),
+                    math.exp(theta[1]),
+                    radius,
+                    time,
+                    pumping_rate,
+                )
+                - drawdown
+            )
+            / sigma,
+            start,
+            bounds=(lower, upper),
+            max_nfev=900,
+        )
+        rss = float(np.sum(fit.fun * fit.fun))
+        if best is None or rss < best[0]:
+            best = (rss, fit.x)
+    return best
 
 
-if __name__ == "__main__":
-    print(json.dumps(run_sweep(), indent=2, sort_keys=True))
+def infer_aquifer(problem, measure):
+    rows = []
+    for radius_index in (0, -1):
+        radius = problem["observation_radii_m"][radius_index]
+        for time in problem["observation_times_s"][1:7]:
+            rows.append(measure(radius, time))
+
+    radius = np.asarray([row["radius_m"] for row in rows], dtype=float)
+    time = np.asarray([row["time_s"] for row in rows], dtype=float)
+    drawdown = np.asarray([row["drawdown_m"] for row in rows], dtype=float)
+    sigma = np.asarray(
+        [row["drawdown_standard_error_m"] for row in rows], dtype=float
+    )
+    pumping_rate = float(problem["pumping_rate_m3_s"])
+    rss, theta = _fit_confined(
+        radius,
+        time,
+        drawdown,
+        sigma,
+        pumping_rate,
+        problem["parameter_bounds"],
+    )
+    fitted = _theis(
+        math.exp(theta[0]),
+        math.exp(theta[1]),
+        radius,
+        time,
+        pumping_rate,
+    )
+    residual = ((drawdown - fitted) / sigma).reshape(2, 6)
+    radial_contrast = float(np.mean(residual[1] - residual[0]))
+    temporal_contrast = float(
+        np.mean(residual[:, -2:]) - np.mean(residual[:, :2])
+    )
+
+    if rss / len(rows) <= CHI2_CUT:
+        diagnosis = "confined"
+    elif radial_contrast < RADIAL_CUT:
+        diagnosis = "leaky_aquifer"
+    elif temporal_contrast < TEMPORAL_CUT:
+        diagnosis = "recharge_boundary"
+    else:
+        diagnosis = "dual_porosity"
+
+    transmissivity, storativity = np.exp(theta)
+    predictions = [
+        _theis(
+            transmissivity,
+            storativity,
+            float(context["radius_m"]),
+            float(context["time_s"]),
+            pumping_rate,
+        )
+        for context in problem["prediction_contexts"]
+    ]
+    return {
+        "diagnosis": diagnosis,
+        "transmissivity_m2_s": float(transmissivity),
+        "storativity": float(storativity),
+        "predicted_drawdown_m": [float(value) for value in predictions],
+        "confidence": 0.65,
+        "abstain": diagnosis != "confined",
+        "evidence_measurement_ids": [row["measurement_id"] for row in rows],
+    }
