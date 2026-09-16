@@ -1,0 +1,293 @@
+{
+  "schema_version": 1,
+  "evidence_scope": "DEVELOPMENT_ONLY_SCORE_REPAIR_C_MARGIN_FAILURE_NOT_ADMISSION",
+  "task_id": "Exoplanets/TransitTimingAttribution",
+  "author_source_revision": "00cdb02a02e451259af4abe5ca0da66445773011",
+  "old_evaluated_source_revision": "e1cd1ee4a02778addc115c7a15d238995f2697be",
+  "evaluated_source_revision": "9f02e165b5583275ed413bb569c7abfe99fd68b5",
+  "merged_main_revision": "dbed927128606051ffe483f4b5f192366dbad313",
+  "source_clean_before": true,
+  "source_clean_after": true,
+  "task_package_sha256": "2f3467a0c7378bf17f4c7cf7313d7653c049acc9e4b05c0d9368fc3c78e7f65a",
+  "task_contract_sha256": "fc60054761b82aedbf2ca9c2b7ec695c81b4b9ec62e715e61c2e60e310973d03",
+  "runtime_source_sha256": "6f8344cdd2d15811803a07dd7d299f6348630deaecd2ee2601b57cfff14fab25",
+  "trusted_runtime": {
+    "cache_tag": "cpython-38",
+    "distributions": {
+      "numpy": "1.24.4",
+      "scipy": "1.10.1"
+    },
+    "fingerprint_sha256": "8cad1019b951184e04197f205a7df765c161e06cf83c64b45504c52c6cb38d29",
+    "implementation": "cpython",
+    "python_version": "3.8.10",
+    "schema_version": 1,
+    "soabi": "cpython-38-x86_64-linux-gnu"
+  },
+  "runtime_scope": "Canonical isolated Python3.8.10 / NumPy1.24.4 / SciPy1.10.1 Linux; shared trusted driver and bubblewrap; venv identity preserved.",
+  "score_semantics": "For all-world-valid candidates, combined_score equals development_score. Held-out scientific score remains private. Any malformed output, exception or budget violation on any world still invalidates the complete candidate with public valid=0 and combined_score=0.",
+  "reconstruction_scope": "The existing A extraction and newly reconstructed development-only B/C winners are reused byte-for-byte; no repeated selection. Original full finite grids, tie order and provenance remain in the old source-bound repair report.",
+  "frozen_candidates_record_sha256": "bfccd95fb013c669597bff352d42cbe516f5bc0e087719ae8c5aeaba2df2960e",
+  "model_calls": 0,
+  "secure_guard_evaluation_calls": 10,
+  "timeout_seconds": 300,
+  "other_execution": "The 44 targeted engineering tests include in-process oracle checks; they are not counted as secure guard calls. No fresh scientific D, global freeze or full suite was run.",
+  "guard": {
+    "status": "failed",
+    "passed": false,
+    "observations": [
+      {
+        "id": "reference",
+        "candidate": "verification/reference_solver.py",
+        "expected_score": 0.632413,
+        "source_sha256": "32fa62da18d59b3de320a8320866917ebe7738bed5db511df2899ad271198e4d",
+        "measured_score": 0.6324125972675311,
+        "valid": 1.0,
+        "repetitions": 2,
+        "full_payload_bytes_identical_twice": true,
+        "retained_payload_file_sha256": "516fd457b53d6b2918d28ff3d06e4e25ecc56a505989890366986b9d7f467620"
+      },
+      {
+        "id": "legal_baseline",
+        "candidate": "solution.py",
+        "expected_score": 0.0,
+        "source_sha256": "f0ea28a94995fead3dea7fa75e44c5d1c6e28e2bb079e60c51829bf22dd4ed03",
+        "measured_score": 0.0,
+        "valid": 1.0,
+        "repetitions": 2,
+        "full_payload_bytes_identical_twice": true,
+        "retained_payload_file_sha256": "819451bf3739df9179b76313209f2f686801dc863a6e3754d8d0f15550ff7066"
+      },
+      {
+        "id": "fixed_schedule_family_a",
+        "candidate": "verification/shortcut_family_a.py",
+        "expected_score": 0.574956,
+        "source_sha256": "a4d7f0dbc1efa86e7a709c73b730b0ca4819c70495c064494df4d60123f3ef7c",
+        "measured_score": 0.5749563462412421,
+        "valid": 1.0,
+        "repetitions": 2,
+        "full_payload_bytes_identical_twice": true,
+        "retained_payload_file_sha256": "1bca5f662d3525537f7f6dc1e2d6582f4dd2c8e0eb424495d1ddd8909e9a8918"
+      },
+      {
+        "id": "fixed_schedule_family_b",
+        "candidate": "verification/shortcut_family_b.py",
+        "expected_score": 0.543759,
+        "source_sha256": "19689a4a7984eae9d68723be4a364f329c2d000e51ec8bdc79e71560f600844b",
+        "measured_score": 0.5437588656539148,
+        "valid": 1.0,
+        "repetitions": 2,
+        "full_payload_bytes_identical_twice": true,
+        "retained_payload_file_sha256": "e8e5c8973b4da4f47f31b5f3e0bdd5842e17bc2a7da27da6d89487d02779d5ac"
+      },
+      {
+        "id": "fixed_schedule_family_c",
+        "candidate": "verification/shortcut_family_c.py",
+        "expected_score": 0.515176,
+        "source_sha256": "79bfc8f0e4b79e0c3c1b126f0dee7a2277f24bb713d288a62990c23f8729ea71",
+        "measured_score": 0.5151760972753122,
+        "valid": 1.0,
+        "repetitions": 2,
+        "full_payload_bytes_identical_twice": true,
+        "retained_payload_file_sha256": "3c6fff19b3f5fcf14322bfa15db08e33f71d9420fe880634007b1a0a371c90db"
+      }
+    ],
+    "scope": "declared shortcut guard only; independent model calibration still required",
+    "contract_sha256": "093cc0cd2b071811121c9449ea0e7703ae31a48aed344fb9abcde6d672560826",
+    "reference_score": 0.6324125972675311,
+    "probe_best": 0.5749563462412421,
+    "threshold": 0.5059300778140249,
+    "detail": "best declared shortcut must be strictly below the reference margin",
+    "relative_margin": 0.2,
+    "score_tolerance": 1e-06
+  },
+  "engineering_tests": {
+    "passed": 44,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "files": [
+      "tests/test_transit_timing_shortcut_contract.py",
+      "tests/test_transit_timing_mechanism_metrics.py",
+      "tests/test_shortcut_probe_contract.py",
+      "tests/test_task_cards.py",
+      "tests/test_exam_taxonomy.py",
+      "tests/test_task_inventory_document.py",
+      "tests/test_readme_inventory_counts.py"
+    ],
+    "new_boundary_regression_ids": [
+      "tests.test_transit_timing_mechanism_metrics.TransitMechanismMetricsTests::test_development_scan_reads_sealed_score_only_for_frozen_winner",
+      "tests.test_transit_timing_mechanism_metrics.TransitMechanismMetricsTests::test_sealed_invalid_output_exception_and_caught_overspend_fail_closed",
+      "tests.test_transit_timing_mechanism_metrics.TransitMechanismMetricsTests::test_valid_sealed_only_changes_do_not_change_public_score"
+    ],
+    "sealed_invalid_test_scenarios": [
+      "malformed output",
+      "candidate exception",
+      "caught budget overspend"
+    ],
+    "junit_sha256": "65e18a354ca470d9744cdfa49a678e16bc24607a93992d40fd7cc0d40922b277"
+  },
+  "old_new_payload_comparison": {
+    "records": [
+      {
+        "call": 0,
+        "candidate": "verification/reference_solver.py",
+        "old_payload_file_sha256": "ef788009c95393f8f6a64f8e86a8eeb413f56e4240797eefd874cfba4a353e2d",
+        "new_payload_file_sha256": "516fd457b53d6b2918d28ff3d06e4e25ecc56a505989890366986b9d7f467620",
+        "added_fields": [],
+        "removed_fields": [],
+        "changed_fields": [
+          "combined_score",
+          "raw_score"
+        ],
+        "matches_old_metrics_after_headline_and_raw_score_alias_change": true,
+        "all_other_fields_identical": true
+      },
+      {
+        "call": 1,
+        "candidate": "verification/reference_solver.py",
+        "old_payload_file_sha256": "ef788009c95393f8f6a64f8e86a8eeb413f56e4240797eefd874cfba4a353e2d",
+        "new_payload_file_sha256": "516fd457b53d6b2918d28ff3d06e4e25ecc56a505989890366986b9d7f467620",
+        "added_fields": [],
+        "removed_fields": [],
+        "changed_fields": [
+          "combined_score",
+          "raw_score"
+        ],
+        "matches_old_metrics_after_headline_and_raw_score_alias_change": true,
+        "all_other_fields_identical": true
+      },
+      {
+        "call": 2,
+        "candidate": "solution.py",
+        "old_payload_file_sha256": "819451bf3739df9179b76313209f2f686801dc863a6e3754d8d0f15550ff7066",
+        "new_payload_file_sha256": "819451bf3739df9179b76313209f2f686801dc863a6e3754d8d0f15550ff7066",
+        "added_fields": [],
+        "removed_fields": [],
+        "changed_fields": [],
+        "matches_old_metrics_after_headline_and_raw_score_alias_change": true,
+        "all_other_fields_identical": true
+      },
+      {
+        "call": 3,
+        "candidate": "solution.py",
+        "old_payload_file_sha256": "819451bf3739df9179b76313209f2f686801dc863a6e3754d8d0f15550ff7066",
+        "new_payload_file_sha256": "819451bf3739df9179b76313209f2f686801dc863a6e3754d8d0f15550ff7066",
+        "added_fields": [],
+        "removed_fields": [],
+        "changed_fields": [],
+        "matches_old_metrics_after_headline_and_raw_score_alias_change": true,
+        "all_other_fields_identical": true
+      },
+      {
+        "call": 4,
+        "candidate": "verification/shortcut_family_a.py",
+        "old_payload_file_sha256": "13b9d569668dfab4d463b052235f08a2196be2f002c7e6453235fb3c2cd0e627",
+        "new_payload_file_sha256": "1bca5f662d3525537f7f6dc1e2d6582f4dd2c8e0eb424495d1ddd8909e9a8918",
+        "added_fields": [],
+        "removed_fields": [],
+        "changed_fields": [
+          "combined_score",
+          "raw_score"
+        ],
+        "matches_old_metrics_after_headline_and_raw_score_alias_change": true,
+        "all_other_fields_identical": true
+      },
+      {
+        "call": 5,
+        "candidate": "verification/shortcut_family_a.py",
+        "old_payload_file_sha256": "13b9d569668dfab4d463b052235f08a2196be2f002c7e6453235fb3c2cd0e627",
+        "new_payload_file_sha256": "1bca5f662d3525537f7f6dc1e2d6582f4dd2c8e0eb424495d1ddd8909e9a8918",
+        "added_fields": [],
+        "removed_fields": [],
+        "changed_fields": [
+          "combined_score",
+          "raw_score"
+        ],
+        "matches_old_metrics_after_headline_and_raw_score_alias_change": true,
+        "all_other_fields_identical": true
+      },
+      {
+        "call": 6,
+        "candidate": "verification/shortcut_family_b.py",
+        "old_payload_file_sha256": "c367fb0a1fecdc933ae1572651d72036f260237d654b07a39170e16a3e1956c2",
+        "new_payload_file_sha256": "e8e5c8973b4da4f47f31b5f3e0bdd5842e17bc2a7da27da6d89487d02779d5ac",
+        "added_fields": [],
+        "removed_fields": [],
+        "changed_fields": [
+          "combined_score",
+          "raw_score"
+        ],
+        "matches_old_metrics_after_headline_and_raw_score_alias_change": true,
+        "all_other_fields_identical": true
+      },
+      {
+        "call": 7,
+        "candidate": "verification/shortcut_family_b.py",
+        "old_payload_file_sha256": "c367fb0a1fecdc933ae1572651d72036f260237d654b07a39170e16a3e1956c2",
+        "new_payload_file_sha256": "e8e5c8973b4da4f47f31b5f3e0bdd5842e17bc2a7da27da6d89487d02779d5ac",
+        "added_fields": [],
+        "removed_fields": [],
+        "changed_fields": [
+          "combined_score",
+          "raw_score"
+        ],
+        "matches_old_metrics_after_headline_and_raw_score_alias_change": true,
+        "all_other_fields_identical": true
+      },
+      {
+        "call": 8,
+        "candidate": "verification/shortcut_family_c.py",
+        "old_payload_file_sha256": "279fcafc1472d06aed64f95cddff0e6d7400835a2e305e3236ddd5be7b90f542",
+        "new_payload_file_sha256": "3c6fff19b3f5fcf14322bfa15db08e33f71d9420fe880634007b1a0a371c90db",
+        "added_fields": [],
+        "removed_fields": [],
+        "changed_fields": [
+          "combined_score",
+          "raw_score"
+        ],
+        "matches_old_metrics_after_headline_and_raw_score_alias_change": true,
+        "all_other_fields_identical": true
+      },
+      {
+        "call": 9,
+        "candidate": "verification/shortcut_family_c.py",
+        "old_payload_file_sha256": "279fcafc1472d06aed64f95cddff0e6d7400835a2e305e3236ddd5be7b90f542",
+        "new_payload_file_sha256": "3c6fff19b3f5fcf14322bfa15db08e33f71d9420fe880634007b1a0a371c90db",
+        "added_fields": [],
+        "removed_fields": [],
+        "changed_fields": [
+          "combined_score",
+          "raw_score"
+        ],
+        "matches_old_metrics_after_headline_and_raw_score_alias_change": true,
+        "all_other_fields_identical": true
+      }
+    ],
+    "all_10_other_fields_identical": true,
+    "raw_score_change_reason": "sle.secure_eval.validate_metrics fills absent raw_score with combined_score (current source line 847). The evaluator does not supply raw_score, so this public alias changes with the repaired headline.",
+    "no_added_or_removed_fields": true,
+    "old_report_retained_unchanged": ".research/pr11_shortcut_guard_review_2026-09-12.json"
+  },
+  "preserved_sources": {
+    "all_existing_main_task_packages_byte_identical": true,
+    "existing_main_task_count": 87,
+    "all_sle_runtime_python_files_byte_identical_to_main": true,
+    "proof_sha256": "f731a77c00ab307e420c1df9200c05bec67be2ea3cad2c67cf8c0735ff7b0482",
+    "evaluator_ast_proof_sha256": "6bbb073b94a617d1a8962b693af437f8b1ec563e46e78e47f9a136d54c54fd58",
+    "evaluator_change": "Only the final headline assignment changes; world generation, split aggregates, scientific scoring, callback budget, parsing and all-world invalid paths preserve their ASTs.",
+    "reference_and_frozen_candidate_bytes": {
+      "reference_solver.py": "32fa62da18d59b3de320a8320866917ebe7738bed5db511df2899ad271198e4d",
+      "shortcut_family_a.py": "a4d7f0dbc1efa86e7a709c73b730b0ca4819c70495c064494df4d60123f3ef7c",
+      "shortcut_family_b.py": "19689a4a7984eae9d68723be4a364f329c2d000e51ec8bdc79e71560f600844b",
+      "shortcut_family_c.py": "79bfc8f0e4b79e0c3c1b126f0dee7a2277f24bb713d288a62990c23f8729ea71"
+    }
+  },
+  "reference_review": "Independent read-only code review found no concrete implementation defect that justifies changing the frozen reference. This is not an external astronomy capability certification.",
+  "admission_status": "blocked_on_C_margin",
+  "remaining_limits": [
+    "The unchanged 20% shortcut separation guard fails; the old min-headline pass must not be used for current admission.",
+    "No reference tuning, weaker margin, altered world, increased budget, held-out reselection or new model draw was used to erase the failure.",
+    "Current model calibration remains historical_only; fresh D cannot begin until the scientific C gap is resolved.",
+    "External astronomy review, independent photodynamical replication and any final integration/global evidence remain separate gates."
+  ]
+}
