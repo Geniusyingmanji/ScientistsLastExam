@@ -1,0 +1,85 @@
+schema_version: 2
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.778831
+  probes:
+  - id: profiled_model_grid
+    candidate: verification/shortcut_probe.py
+    expected_score: 0.575222
+  - id: shipped_baseline
+    candidate: solution.py
+    expected_score: 0.0
+  relative_margin: 0.2
+  score_tolerance: 0.000001
+scientific_question: Can an agent separate intracellular diffusion from reversible binding by choosing FRAP bleach radii and recovery times, recover four shared kinetic parameters, and refuse anomalous transport, two mobile pools, or spatially varying binding?
+artifact: Four reaction-diffusion parameters, conditional recovery predictions, a supported or model-inadequacy diagnosis, confidence, and immutable measurement evidence.
+oracle:
+  model: deterministic seeded single-radial-mode FRAP recovery with freely diffusing and immobile bound pools, three structured unsupported transport or binding families, and a local Fisher-information identifiability limit
+  feasibility: listed radii and times, a 16-unit budget with a four-unit first-use setup charge per radius plus one unit per measurement, exact bounded finite outputs, matching diagnosis and abstention, and current-world evidence identifiers
+  deterministic: true
+normalization:
+  baseline: four early measurements followed by a high-confidence supported claim with fixed in-bounds parameters; it is legal, confidently wrong, and scores zero
+  reference: cross-radius deterministic multi-start bounded least-squares fits of the supported reaction-diffusion family and three structured alternatives with BIC attribution, plus a fitted local Fisher-information identifiability check
+  score: mean supported-world parameter and prediction composite multiplied by mean continuous science score across unsupported and unidentifiable worlds; confidence calibration is diagnostic only, a correct abstention must also predict sealed recovery contexts, and mechanism accuracy requires science_score at least 0.5 on supported worlds
+citations:
+- id: doi:10.1529/biophysj.103.026765
+  title: Analysis of Binding Reactions by Fluorescence Recovery after Photobleaching
+- id: doi:10.1016/S0006-3495(96)79846-6
+  title: 'Constrained diffusion or immobile fraction on cell surfaces: a new interpretation'
+- id: doi:10.1016/S0006-3495(76)85755-4
+  title: Mobility measurement by analysis of fluorescence photobleaching recovery kinetics
+invariants:
+- supported recovery uses a transport rate proportional to diffusion coefficient divided by bleach-radius squared while binding rates remain shared across radii
+- every supported recovery begins at zero, stays bounded by the mobile fraction, and approaches that fraction at late time
+- anomalous transport, two freely mobile pools, and radius-dependent binding violate different parts of the supported family; local Fisher sensitivity, rather than either rate alone, separates identifiable and non-identifiable binding regimes
+- every measurement has listed finite coordinates, bounded recovery, stated standard error, and an immutable current-world identifier
+- the first measurement at each distinct radius incurs four setup units in addition to its one-unit measurement cost
+- blanket undetermined abstention is valid and scores exactly zero
+- malformed, non-finite, extra-key, fabricated-evidence, and over-budget submissions fail closed
+- development and held-out worlds use different parameters and seeds
+- the truth-blind reference consumes only public problems and measurement callbacks
+known_shortcuts: Optimizer-free model grids profile mobile fraction under the same 16-unit priced-radius design and apply the public Fisher refusal rule. The 3,798, 15,240, 26,586, and 103,196 point ladder reaches at most 0.575222 development and 0.532828 held out, versus 0.778831/0.837369 for the truth-blind continuous reference; every rung is regression-tested for more than 0.20 absolute split-wise headroom. The reduced-order laboratory omits full bleach geometry, finite exposure, three-dimensional transport, photoswitching, cell motion, drift, and image-level inference.
+review:
+  domain: pending_external_cell_biophysics_review
+  evaluator_security: automated_budget_contract_determinism_session_reset_recovery_invariant_bad_candidate_and_fault_attribution_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic multi-radius FRAP generator with development and held-out supported and misspecified worlds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: linux_pinned_dependency_replay_completed_2026_09_17
+novelty_risk:
+  level: medium
+  rationale: No repository or Frontier-Eng task uses fluorescence photobleaching recovery or bleach-radius perturbations. PopulationGenetics/DemographicSFS returns demographic parameters from allele-frequency summaries, Ecology/OccupancyDetectionDesign returns occupancy/detection estimates from surveys, Biology/CatalystDeactivationLab diagnoses reactor kinetic failure, and Spectroscopy/ActiveNoiseSpectroscopy returns noise spectra from quantum-probe measurements. Their misspecified families, refusal axes, and instance generators differ; none recovers shared intracellular transport-binding parameters and sealed FRAP predictions while attributing anomalous scaling, two mobile pools, or radius-dependent binding.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:gpt-5
+  builder_scaffolds:
+  - science-benchmark-construction
+  - deterministic_multi_radius_frap_discovery
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  - deepseek-v4-pro
+  calibration_runs:
+  - experiments/deepseek_frap_binding_inference_calibration_2026-09-07.json
+  calibration_evidence_status: historical_only
+  edits_triggered_by_model: The first draw exposed that Task.md named parameter_bounds and prediction_contexts without stating their container shapes; both models made incompatible assumptions and failed before scientific evaluation. The contract was clarified at c6bc78a before replay. DeepSeek Pro then produced a valid first proposal at 0.478/0.343 development/held out, while Flash's complete 7149-token proposal retained a candidate-side array/scalar runtime error. Later maintainer shortcut review showed that scalar rate thresholds and loose parameter tolerances let refined grids nearly match the reference; the task now uses paired Fisher-identifiability controls, lower-noise observations, continuous least-squares reference fitting, confidence-independent headline scoring, and a four-rung grid regression. Earlier model scores remain historical-only.
+  shortcut_discoverer: builder_and_maintainer_audit_with_optimizer_free_3798_to_103196_point_model_grid
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: cell_biophysics
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: baseline, truth-blind reference, malformed-candidate checks, recovery invariants, Fisher-identifiability controls, budget ablations, and four-rung model-grid shortcuts are executable from the task package

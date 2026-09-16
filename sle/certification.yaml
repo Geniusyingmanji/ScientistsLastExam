@@ -10,6 +10,10 @@ policy:
   statuses: [certified, candidate, quarantined]
 
 tasks:
+  CellBiophysics/FRAPBindingInference:
+    status: candidate
+    reason: active multi-radius fluorescence-recovery inference separates intracellular diffusion from reversible binding, predicts sealed recovery contexts, attributes anomalous transport, two mobile pools, or spatially varying binding, and uses paired local-Fisher controls to distinguish identifiable from non-identifiable binding regimes; under a 16-unit budget with explicit radius-setup pricing the truth-blind continuous reference reaches 0.779/0.837 development/held out while 3,798/15,240/26,586/103,196-point optimizer-free grids reach at most 0.575 development and 0.533 held out, so retain pending current frontier-model replay, server-held image-derived curves, full reaction-diffusion replication, and independent cell-biophysics review
+    citation_ids: [doi:10.1529/biophysj.103.026765, doi:10.1016/S0006-3495(96)79846-6, doi:10.1016/S0006-3495(76)85755-4]
   Ecology/OccupancyDetectionDesign:
     status: candidate
     reason: Active repeat-survey allocation and latent occupancy inference under imperfect detection, with explicit refusal for nonlinear habitat and spatially structured worlds; retained as a candidate pending server-held surveys, real field-data replication and independent ecology review.
