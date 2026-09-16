@@ -1,0 +1,66 @@
+schema_version: 2
+scientific_question: Can an agent design a multi-radius pumping test, recover confined-aquifer transmissivity and storativity, and refuse leakage, recharge-boundary, or delayed dual-porosity mechanisms?
+artifact: Two confined-aquifer parameters, sealed drawdown predictions, a conceptual-model diagnosis, confidence, and immutable measurement evidence.
+oracle:
+  model: deterministic seeded Theis radial-flow laboratory with leaky-aquifer attenuation, constant-head image-well boundaries, and delayed dual-porosity alternatives
+  feasibility: listed radius/time queries, a 24-unit budget, exact finite bounded outputs, consistent diagnosis and abstention, and current-world evidence identifiers
+  deterministic: true
+normalization:
+  baseline: one early observation followed by a valid undetermined abstention
+  reference: truth-blind cross-radius nonlinear fits of the confined and three alternative families with information-criterion attribution
+  score: clipped development mean of parameter recovery, sealed prediction, diagnosis and confidence; family accuracy, false discovery, refusal, coverage, attempts and held-out transfer remain separate with counts
+citations:
+- id: doi:10.1029/TR016i002p00519
+  title: The relation between the lowering of the piezometric surface and the rate and duration of discharge of a well using ground-water storage
+- id: doi:10.1029/TR036i001p00095
+  title: Non-steady radial flow in an infinite leaky aquifer
+- id: doi:10.3133/wsp1536E
+  title: Theory of aquifer tests
+invariants:
+- confined drawdown follows the Theis exponential-integral solution and increases with elapsed time at fixed radius
+- confined drawdown decreases with radius and is invariant under equal values of radius squared divided by time
+- leakage, a recharge image well, and delayed dual-porosity storage alter different cross-radius or temporal features
+- every observation has a listed radius and time, finite nonnegative drawdown, stated uncertainty, and an immutable current-world ID
+- blanket undetermined abstention is valid and scores exactly zero
+- malformed, non-finite, extra-key, fabricated-evidence, unlisted-coordinate, and over-budget candidates fail closed
+- development and held-out worlds use different parameters and deterministic noise seeds
+- the reference consumes only public problems and charged measurement callbacks
+known_shortcuts: Pending executable 192-strategy summary-statistic sweep before branch publication; the probe uses only early cross-radius attenuation, late-time growth, and curve curvature, without nonlinear Theis or alternative-family fits.
+review:
+  domain: pending_external_hydrogeology_review
+  evaluator_security: automated_budget_contract_determinism_theis_invariant_bad_candidate_ablation_and_mechanism_accounting_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic multi-radius pumping-test generator with development and held-out supported and misspecified worlds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: pending_clean_linux_secure_eval
+novelty_risk:
+  level: medium
+  rationale: No repository or Frontier-Eng task performs pumping-test interpretation. GravityInversion reconstructs static density bodies; EnergyBalanceModel fits global climate response; DistributionNetworkTopology reconstructs pipe graphs. None uses radial groundwater diffusion, pumping interventions, or aquifer conceptual-model attribution.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:gpt-5
+  builder_scaffolds:
+  - science-benchmark-construction
+  - active_multi_radius_pumping_test_discovery
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  edits_triggered_by_model: Pending first-proposal calibration after the executable task and shortcut/ablation evidence are frozen.
+  shortcut_discoverer: builder_self_audit_with_192_strategy_summary_statistic_sweep
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: hydrogeology
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 2
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: baseline, truth-blind reference, malformed-candidate checks, Theis invariants, ablations, and shortcut sweep are executable from the task package

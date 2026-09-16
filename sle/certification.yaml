@@ -874,3 +874,10 @@ tasks:
       These are synthetic cache policies and noisy traces, not hardware captures.
       Retain candidate status pending external computer-architecture review.
     citation_ids: [doi:10.1109/RTAS.2013.6531080, doi:10.1109/ISPASS.2014.6844475, doi:10.1145/3385412.3386008, doi:10.1016/0890-5401(87)90052-6, doi:10.1006/inco.1993.1021, doi:10.1007/978-3-642-05089-3_14, doi:10.1006/inco.1995.1070, doi:10.1007/978-3-319-11164-3_26, doi:10.1145/1815961.1815971, doi:10.1145/1250662.1250709, doi:10.1147/sj.52.0078]
+  Hydrology/AquiferPumpingInference:
+    status: candidate
+    reason: active multi-radius pumping-test inference recovers transmissivity and storativity under a finite observation budget and attributes leakage, recharge boundaries, or dual-porosity storage; retain pending server-held field curves, higher-fidelity radial-flow replication, repeated frontier calibration, and independent hydrogeology review
+    citation_ids:
+      - doi:10.1029/TR016i002p00519
+      - doi:10.1029/TR036i001p00095
+      - doi:10.3133/wsp1536E
