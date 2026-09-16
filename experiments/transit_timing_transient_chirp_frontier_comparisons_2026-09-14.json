@@ -1,0 +1,1911 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-09-14",
+  "scope": "Independent manual catalog-level objective/artifact/oracle comparison. Read all paper Appendix A objectives/scoring and repository descriptions, plus all seven EngDesign bundled prompts. Not a line-by-line audit of every external evaluator. Prior PR82 row verdicts were not copied. No model or evaluator calls were performed.",
+  "task_sources": {
+    "pr11": "4817b21a3c19cad5e3ab2f49b63734d5a62574b7",
+    "pr48": "e356f64f869763d9a2ea31495fd1e89270ab806f"
+  },
+  "sources": {
+    "paper": {
+      "url": "https://arxiv.org/html/2604.12290v1#A1",
+      "sha256": "c80f766b2289eaca9722024b52fc75692473abe1fc8c5b9b75d5eb739c7dad1c",
+      "count": 47,
+      "retention": "Reused byte-verified source retrieved 2026-09-12; parsed independently."
+    },
+    "repository": {
+      "commit": "e3fa29c193356af2ce1ec8b3d23ab1a2e2410071",
+      "latest_head_verified_via_gh_api": "e3fa29c193356af2ce1ec8b3d23ab1a2e2410071",
+      "last_TASK_DETAILS_change": "56821fc24151bceb1c0189c86c0eeb97abbb63e1",
+      "url": "https://github.com/Einsia/Frontier-Engineering/blob/e3fa29c193356af2ce1ec8b3d23ab1a2e2410071/TASK_DETAILS.md",
+      "sha256": "11be782992273d8131b077c6d7f30e78c0389e8db1d2af6494388621b043bbf5",
+      "row_count": 78,
+      "expanded_count": 84,
+      "retrieval": "Fresh source bytes on 2026-09-14 exactly match September 12 snapshot; live GitHub API read on g450 also confirmed HEAD and latest path commit. Local unauthenticated API failed rate limit and is recorded separately."
+    }
+  },
+  "paper_rows": [
+    {
+      "anchor": "A1.SS1.SSS0.Px1",
+      "task": "FlashAttention",
+      "external_artifact": "GPU causal-attention kernel",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is GPU causal-attention kernel; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is GPU causal-attention kernel; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS1.SSS0.Px2",
+      "task": "MLA (Multi-Head Latent Attention)",
+      "external_artifact": "GPU attention kernel",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is GPU attention kernel; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is GPU attention kernel; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS1.SSS0.Px3",
+      "task": "TriMul (Triangular Multiplicative Update)",
+      "external_artifact": "GPU triangular-update kernel",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is GPU triangular-update kernel; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is GPU triangular-update kernel; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS1.SSS0.Px4",
+      "task": "MallocLab",
+      "external_artifact": "memory allocator implementation",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is memory allocator implementation; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is memory allocator implementation; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS1.SSS0.Px5",
+      "task": "AES-128",
+      "external_artifact": "AES implementation throughput",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is AES implementation throughput; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is AES implementation throughput; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS1.SSS0.Px6",
+      "task": "SHA-256",
+      "external_artifact": "SHA256 implementation throughput",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is SHA256 implementation throughput; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is SHA256 implementation throughput; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS1.SSS0.Px7",
+      "task": "SHA3-256",
+      "external_artifact": "SHA3 implementation throughput",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is SHA3 implementation throughput; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is SHA3 implementation throughput; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS1.SSS0.Px8",
+      "task": "Routing QFTEntangled",
+      "external_artifact": "routed quantum circuit",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is routed quantum circuit; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is routed quantum circuit; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS1.SSS0.Px9",
+      "task": "Clifford+T Synthesis",
+      "external_artifact": "gate-set synthesis",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is gate-set synthesis; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is gate-set synthesis; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS1.SSS0.Px10",
+      "task": "Cross-Target QAOA",
+      "external_artifact": "hardware-robust QAOA circuit",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is hardware-robust QAOA circuit; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is hardware-robust QAOA circuit; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS2.SSS0.Px1",
+      "task": "tree_gsm_safety_stock",
+      "external_artifact": "supply-network safety-stock allocation",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is supply-network safety-stock allocation; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is supply-network safety-stock allocation; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS2.SSS0.Px2",
+      "task": "general_meio",
+      "external_artifact": "network base-stock settings",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is network base-stock settings; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is network base-stock settings; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS2.SSS0.Px3",
+      "task": "joint_replenishment",
+      "external_artifact": "coordinated replenishment periods",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is coordinated replenishment periods; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is coordinated replenishment periods; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS2.SSS0.Px4",
+      "task": "finite_horizon_dp",
+      "external_artifact": "finite-period inventory policy",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is finite-period inventory policy; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is finite-period inventory policy; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS2.SSS0.Px5",
+      "task": "disruption_eoqd",
+      "external_artifact": "disruption-aware inventory order quantity",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is disruption-aware inventory order quantity; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is disruption-aware inventory order quantity; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS2.SSS0.Px6",
+      "task": "abz",
+      "external_artifact": "ABZ machine schedule",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is ABZ machine schedule; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is ABZ machine schedule; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS2.SSS0.Px7",
+      "task": "swv",
+      "external_artifact": "SWV machine schedule",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is SWV machine schedule; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is SWV machine schedule; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS2.SSS0.Px8",
+      "task": "ta",
+      "external_artifact": "Taillard machine schedule",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is Taillard machine schedule; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is Taillard machine schedule; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS2.SSS0.Px9",
+      "task": "robust_mvo_rebalance",
+      "external_artifact": "mean-variance asset allocation",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is mean-variance asset allocation; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is mean-variance asset allocation; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS3.SSS0.Px1",
+      "task": "DynamicObstacleAvoidanceNavigation",
+      "external_artifact": "mobile-robot velocity plan",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is mobile-robot velocity plan; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is mobile-robot velocity plan; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS3.SSS0.Px2",
+      "task": "PIDTuning",
+      "external_artifact": "quadrotor controller gains",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is quadrotor controller gains; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is quadrotor controller gains; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS3.SSS0.Px3",
+      "task": "QuadrupedGaitOptimization",
+      "external_artifact": "quadruped gait settings",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is quadruped gait settings; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is quadruped gait settings; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS3.SSS0.Px4",
+      "task": "RobotArmCycleTimeOptimization",
+      "external_artifact": "robot-arm timed trajectory",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is robot-arm timed trajectory; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is robot-arm timed trajectory; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS3.SSS0.Px5",
+      "task": "UAVInspectionCoverageWithWind",
+      "external_artifact": "inspection flight controls",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is inspection flight controls; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is inspection flight controls; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS3.SSS0.Px6",
+      "task": "BatteryFastChargingProfile",
+      "external_artifact": "battery current schedule",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is battery current schedule; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is battery current schedule; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS3.SSS0.Px7",
+      "task": "BatteryFastChargingSPMe",
+      "external_artifact": "electrochemical battery charge schedule",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is electrochemical battery charge schedule; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is electrochemical battery charge schedule; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS3.SSS0.Px8",
+      "task": "hand_written_control",
+      "external_artifact": "datacenter dispatch control",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is datacenter dispatch control; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is datacenter dispatch control; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS4.SSS0.Px1",
+      "task": "adaptive_fault_tolerant_fusion",
+      "external_artifact": "wavefront sensor fusion for mirror control",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "Both involve noisy multiple-sensor observations; the external product is an adaptive-optics control command scored by wavefront correction, not an astronomical-family decision."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "Both involve noisy multiple-sensor observations; the external product is an adaptive-optics control command scored by wavefront correction, not an astronomical-family decision."
+      }
+    },
+    {
+      "anchor": "A1.SS4.SSS0.Px2",
+      "task": "adaptive_temporal_smooth_control",
+      "external_artifact": "smooth mirror-control sequence",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is smooth mirror-control sequence; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is smooth mirror-control sequence; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS4.SSS0.Px3",
+      "task": "phase_dammann_uniform_orders",
+      "external_artifact": "Dammann grating phase transitions",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is Dammann grating phase transitions; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is Dammann grating phase transitions; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS4.SSS0.Px4",
+      "task": "phase_fourier_pattern_holography",
+      "external_artifact": "Fourier hologram phase pattern",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is Fourier hologram phase pattern; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is Fourier hologram phase pattern; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS4.SSS0.Px5",
+      "task": "fiber_wdm_channel_power_allocation",
+      "external_artifact": "optical channel and power allocation",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is optical channel and power allocation; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is optical channel and power allocation; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS4.SSS0.Px6",
+      "task": "fiber_mcs_power_scheduling",
+      "external_artifact": "modulation and transmit-power allocation",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is modulation and transmit-power allocation; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is modulation and transmit-power allocation; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS4.SSS0.Px7",
+      "task": "fiber_guardband_spectrum_packing",
+      "external_artifact": "optical spectrum slot packing",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is optical spectrum slot packing; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is optical spectrum slot packing; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS4.SSS0.Px8",
+      "task": "holographic_multifocus_power_ratio",
+      "external_artifact": "focal-spot power-ratio phase layers",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is focal-spot power-ratio phase layers; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is focal-spot power-ratio phase layers; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS4.SSS0.Px9",
+      "task": "holographic_multiplane_focusing",
+      "external_artifact": "multiple-plane holographic phase layers",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is multiple-plane holographic phase layers; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is multiple-plane holographic phase layers; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS4.SSS0.Px10",
+      "task": "HighReliableSimulation",
+      "external_artifact": "Hamming-code error-rate estimator",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is Hamming-code error-rate estimator; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is Hamming-code error-rate estimator; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS5.SSS0.Px1",
+      "task": "ISCSO2015",
+      "external_artifact": "planar truss dimensions",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is planar truss dimensions; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is planar truss dimensions; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS5.SSS0.Px2",
+      "task": "ISCSO2023",
+      "external_artifact": "tower cross-section selection",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is tower cross-section selection; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is tower cross-section selection; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS5.SSS0.Px3",
+      "task": "TopologyOptimization",
+      "external_artifact": "beam material-density field",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is beam material-density field; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is beam material-density field; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS5.SSS0.Px4",
+      "task": "snar_multiobjective",
+      "external_artifact": "reaction yield/waste design",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is reaction yield/waste design; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is reaction yield/waste design; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS5.SSS0.Px5",
+      "task": "mit_case1_mixed",
+      "external_artifact": "catalyst and reaction settings",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is catalyst and reaction settings; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is catalyst and reaction settings; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS5.SSS0.Px6",
+      "task": "reizman_suzuki_pareto",
+      "external_artifact": "reaction yield/turnover design",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is reaction yield/turnover design; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is reaction yield/turnover design; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS5.SSS0.Px7",
+      "task": "MannedLunarLanding",
+      "external_artifact": "lunar payload trajectory",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The shared astronomy context does not make the problem identical: the external candidate supplies an Earth-Moon trajectory and is scored for payload/dynamics feasibility, not observational attribution."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The shared astronomy context does not make the problem identical: the external candidate supplies an Earth-Moon trajectory and is scored for payload/dynamics feasibility, not observational attribution."
+      }
+    },
+    {
+      "anchor": "A1.SS5.SSS0.Px8",
+      "task": "CarAerodynamicsSensing",
+      "external_artifact": "car pressure-sensor positions",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "Both choose measurements, but the external oracle reconstructs a car-surface pressure field using a frozen CFD predictor; there is no timing/waveform-family claim or ambiguity-refusal objective."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "Both choose measurements, but the external oracle reconstructs a car-surface pressure field using a frozen CFD predictor; there is no timing/waveform-family claim or ambiguity-refusal objective."
+      }
+    },
+    {
+      "anchor": "A1.SS5.SSS0.Px9",
+      "task": "predict_modality",
+      "external_artifact": "predicted protein modality",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is predicted protein modality; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is predicted protein modality; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "anchor": "A1.SS5.SSS0.Px10",
+      "task": "EngDesign",
+      "external_artifact": "seven driver/image/CPU/robot/material design artifacts",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "All seven bundled prompts were read: virtio reads, image restoration, SLC-3 control, one/two-robot paths, cantilever stiffness layout, and crack-tip material design. None asks for transit/strain-family inference."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "All seven bundled prompts were read: virtio reads, image restoration, SLC-3 control, one/two-robot paths, cantilever stiffness layout, and crack-tip material design. None asks for transit/strain-family inference."
+      }
+    }
+  ],
+  "repository_rows": [
+    {
+      "catalog_row": 1,
+      "domain": "Astrodynamics",
+      "source_description_sha256": "e0a66ef3c5194aac7a1ac939ef411143aa77fa14d3dabb00d12075f43057be61",
+      "task": "MannedLunarLanding",
+      "external_artifact": "lunar payload trajectory",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The shared astronomy context does not make the problem identical: the external candidate supplies an Earth-Moon trajectory and is scored for payload/dynamics feasibility, not observational attribution."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The shared astronomy context does not make the problem identical: the external candidate supplies an Earth-Moon trajectory and is scored for payload/dynamics feasibility, not observational attribution."
+      }
+    },
+    {
+      "catalog_row": 2,
+      "domain": "ParticlePhysics",
+      "source_description_sha256": "7f5fb4f58ecea26e68973a94c5f3def8ae03436e26f03c6a62286ed4e0ce0a23",
+      "task": "MuonTomography",
+      "external_artifact": "muon-detector positions",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is muon-detector positions; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is muon-detector positions; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 3,
+      "domain": "ParticlePhysics",
+      "source_description_sha256": "d2e700e53158f8aab1bab14dadd815fa55d030a05f11b533839c636387b42c5d",
+      "task": "ProtonTherapyPlanning",
+      "external_artifact": "proton-beam treatment weights",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is proton-beam treatment weights; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is proton-beam treatment weights; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 4,
+      "domain": "KernelEngineering",
+      "source_description_sha256": "8f7c6b42a313e56a153802d0fcdf8e59b5fedccca6fd37b149569e8ce0b4ecc6",
+      "task": "MLA",
+      "external_artifact": "GPU attention kernel",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is GPU attention kernel; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is GPU attention kernel; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 5,
+      "domain": "KernelEngineering",
+      "source_description_sha256": "b7a324939a6d2c80c5dff5509423b2b41256a2fcdb6d6d4b2545cd7a34449b6e",
+      "task": "TriMul",
+      "external_artifact": "GPU triangular-update kernel",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is GPU triangular-update kernel; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is GPU triangular-update kernel; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 6,
+      "domain": "KernelEngineering",
+      "source_description_sha256": "a5bbe06229673e685d75e9b7bfc9b7ad4a9f2939aa147987331c4fd71ca9fbeb",
+      "task": "FlashAttention",
+      "external_artifact": "GPU causal-attention kernel",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is GPU causal-attention kernel; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is GPU causal-attention kernel; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 7,
+      "domain": "SingleCellAnalysis",
+      "source_description_sha256": "eb8fa08de626cb026fa18176796f305962970834c2b59abccdf29bc9f5fb42fd",
+      "task": "denoising",
+      "external_artifact": "restored RNA expression matrix",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is restored RNA expression matrix; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is restored RNA expression matrix; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 8,
+      "domain": "SingleCellAnalysis",
+      "source_description_sha256": "4cceba08b668aec4a72ff4de8197d3d46b0d3f9d1a069757be8bbc532e5d40ab",
+      "task": "perturbation_prediction",
+      "external_artifact": "predicted cell perturbation response",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is predicted cell perturbation response; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is predicted cell perturbation response; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 9,
+      "domain": "SingleCellAnalysis",
+      "source_description_sha256": "11789f25bfa6a51087ad4465bca05b146707dd74a3aa8fa349ff7e9de5620bcf",
+      "task": "predict_modality",
+      "external_artifact": "predicted protein modality",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is predicted protein modality; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is predicted protein modality; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 10,
+      "domain": "QuantumComputing",
+      "source_description_sha256": "d7a4803946fdc85b8ed5991d6fa30b4e44b6f7f6b2cfad1fe06c98fccec89378",
+      "task": "routing_qftentangled",
+      "external_artifact": "routed quantum circuit",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is routed quantum circuit; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is routed quantum circuit; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 11,
+      "domain": "QuantumComputing",
+      "source_description_sha256": "e2fc7ee5eda52d5ed39cadbe0ff87603944c21aee4bb72b9120ff42cd3b9a0de",
+      "task": "clifford_t_synthesis",
+      "external_artifact": "gate-set synthesis",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is gate-set synthesis; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is gate-set synthesis; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 12,
+      "domain": "QuantumComputing",
+      "source_description_sha256": "d2b66b09e2b678bde08cc675178fbbc02b5d4c47a48fd8e3ff2493bf6ff0878b",
+      "task": "cross_target_qaoa",
+      "external_artifact": "hardware-robust QAOA circuit",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is hardware-robust QAOA circuit; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is hardware-robust QAOA circuit; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 13,
+      "domain": "Cryptographic",
+      "source_description_sha256": "a64123e8b34246414c85a3a28f529c20b4d75ec463ff2531d23f3144ba9448b6",
+      "task": "AES-128 CTR",
+      "external_artifact": "AES implementation throughput",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is AES implementation throughput; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is AES implementation throughput; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 14,
+      "domain": "Cryptographic",
+      "source_description_sha256": "e9c5842bf770c8d5a6f636088393fd428b29b8ca2ebe2ba8f1c737bfc93702b5",
+      "task": "SHA-256",
+      "external_artifact": "SHA256 implementation throughput",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is SHA256 implementation throughput; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is SHA256 implementation throughput; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 15,
+      "domain": "Cryptographic",
+      "source_description_sha256": "9d80fa28c050919c5f8acab7a66fa838d1f7f1e88b2087ff7f26582cd43f209b",
+      "task": "SHA3-256",
+      "external_artifact": "SHA3 implementation throughput",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is SHA3 implementation throughput; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is SHA3 implementation throughput; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 16,
+      "domain": "CommunicationEngineering",
+      "source_description_sha256": "145c27420f11828b7a2844b7f5b6a8a9cd5619f2f336cb06b357a9a4be4abeb5",
+      "task": "LDPCErrorFloor",
+      "external_artifact": "rare decoding-error probability estimator",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is rare decoding-error probability estimator; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is rare decoding-error probability estimator; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 17,
+      "domain": "CommunicationEngineering",
+      "source_description_sha256": "945dbcbb345966d4531a7b7e286f48dfada2b6228e61abc6bfd174d34ee0e48c",
+      "task": "PMDSimulation",
+      "external_artifact": "optical-dispersion outage estimator",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is optical-dispersion outage estimator; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is optical-dispersion outage estimator; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 18,
+      "domain": "CommunicationEngineering",
+      "source_description_sha256": "01243d2a4a63c243cb11adb6e0a5282aef990112bc837edbe828a689999c2da2",
+      "task": "RayleighFadingBER",
+      "external_artifact": "fading-channel error probability estimator",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is fading-channel error probability estimator; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is fading-channel error probability estimator; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 19,
+      "domain": "EnergyStorage",
+      "source_description_sha256": "b39b83062d33eb02cd555e7850a14c12bd1d21a20fb97bd58eb1ac7651f19b0f",
+      "task": "BatteryFastChargingProfile",
+      "external_artifact": "battery current schedule",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is battery current schedule; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is battery current schedule; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 20,
+      "domain": "EnergyStorage",
+      "source_description_sha256": "bbba66c17be84ff7f284a19e2482f9cff5b18fe3ac464a377212a37b299ff32f",
+      "task": "BatteryFastChargingSPMe",
+      "external_artifact": "electrochemical battery charge schedule",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is electrochemical battery charge schedule; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is electrochemical battery charge schedule; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 21,
+      "domain": "SustainableDataCenterControl",
+      "source_description_sha256": "c9a02b20d58c527d231e83f95626602d536d253a432dc3d27a22f5614900abf8",
+      "task": "hand_written_control",
+      "external_artifact": "datacenter dispatch control",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is datacenter dispatch control; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is datacenter dispatch control; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 22,
+      "domain": "ReactionOptimisation",
+      "source_description_sha256": "ea3a980bdc12cefbaff1760cb1e1a61f95502e215add6ea346e338f6e53c5620",
+      "task": "snar_multiobjective",
+      "external_artifact": "reaction yield/waste design",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is reaction yield/waste design; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is reaction yield/waste design; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 23,
+      "domain": "ReactionOptimisation",
+      "source_description_sha256": "73c4b91cc96e9a0f9865504380ea62c023bee006c20bc5c84c8c4094c968172c",
+      "task": "mit_case1_mixed",
+      "external_artifact": "catalyst and reaction settings",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is catalyst and reaction settings; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is catalyst and reaction settings; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 24,
+      "domain": "ReactionOptimisation",
+      "source_description_sha256": "d5f2762229c06410847b5facef10b7edec1826c347f296ba307874600157dad9",
+      "task": "reizman_suzuki_pareto",
+      "external_artifact": "reaction yield/turnover design",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is reaction yield/turnover design; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is reaction yield/turnover design; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 25,
+      "domain": "ReactionOptimisation",
+      "source_description_sha256": "c92d3dd5aea84480ff558975302de3cb3bfbff075446cb1cd112b6f1c2751ece",
+      "task": "dtlz2_pareto",
+      "external_artifact": "synthetic Pareto design",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is synthetic Pareto design; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is synthetic Pareto design; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 26,
+      "domain": "MolecularMechanics",
+      "source_description_sha256": "60c425c20e5c5ec1182e38c3075608c73b3a8c7c1209dab004afa23450cf58f4",
+      "task": "weighted_parameter_coverage",
+      "external_artifact": "molecular force-field coverage subset",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is molecular force-field coverage subset; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is molecular force-field coverage subset; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 27,
+      "domain": "MolecularMechanics",
+      "source_description_sha256": "ed7361b442b15eb112d158fa139096dfb753e4c36f9f5aa4670b597a7e31ec51",
+      "task": "diverse_conformer_portfolio",
+      "external_artifact": "molecular conformation portfolio",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is molecular conformation portfolio; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is molecular conformation portfolio; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 28,
+      "domain": "MolecularMechanics",
+      "source_description_sha256": "bf83d1663eb1f78c970fcbf9c9d964b7e18990c6f9d678b08c711c92b79e2301",
+      "task": "torsion_profile_fitting",
+      "external_artifact": "torsion-energy scale parameters",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "Both can use parameter fitting; the external targets are molecular energy curves with torsion-scale outputs, which cannot be substituted for transit residual attribution or strain-family inference."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "Both can use parameter fitting; the external targets are molecular energy curves with torsion-scale outputs, which cannot be substituted for transit residual attribution or strain-family inference."
+      }
+    },
+    {
+      "catalog_row": 29,
+      "domain": "Optics",
+      "source_description_sha256": "ec5731526d22de83ff757fdaaa5745390431bec220cd94990889727d123d0ff8",
+      "task": "adaptive_constrained_dm_control",
+      "external_artifact": "deformable-mirror command",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is deformable-mirror command; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is deformable-mirror command; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 30,
+      "domain": "Optics",
+      "source_description_sha256": "bc65301b367b3bf2b98838191fb8e4b5cef57435340ee3a7c8b95d5196e7df8b",
+      "task": "adaptive_temporal_smooth_control",
+      "external_artifact": "smooth mirror-control sequence",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is smooth mirror-control sequence; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is smooth mirror-control sequence; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 31,
+      "domain": "Optics",
+      "source_description_sha256": "d53e556ff4526098a0a6e7ff24a1cd9d95e59788f0f93bd7277d16d03a8169c0",
+      "task": "adaptive_energy_aware_control",
+      "external_artifact": "energy-limited mirror-control sequence",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is energy-limited mirror-control sequence; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is energy-limited mirror-control sequence; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 32,
+      "domain": "Optics",
+      "source_description_sha256": "cd5d1448a2ea4bea1be34e3c32612d99c460126dad94ef1d549dee9868cfe415",
+      "task": "adaptive_fault_tolerant_fusion",
+      "external_artifact": "wavefront sensor fusion for mirror control",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "Both involve noisy multiple-sensor observations; the external product is an adaptive-optics control command scored by wavefront correction, not an astronomical-family decision."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "Both involve noisy multiple-sensor observations; the external product is an adaptive-optics control command scored by wavefront correction, not an astronomical-family decision."
+      }
+    },
+    {
+      "catalog_row": 33,
+      "domain": "Optics",
+      "source_description_sha256": "f4c7aaa955cb0ce8286891e0183d945fca420971d8759b6ee039bb12e8a5e008",
+      "task": "phase_weighted_multispot_single_plane",
+      "external_artifact": "single-plane diffractive phase mask",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is single-plane diffractive phase mask; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is single-plane diffractive phase mask; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 34,
+      "domain": "Optics",
+      "source_description_sha256": "cc51034c7fb757e7916aea8748f2bf71644098f923da0f331a72f4ae336bd62b",
+      "task": "phase_fourier_pattern_holography",
+      "external_artifact": "Fourier hologram phase pattern",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is Fourier hologram phase pattern; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is Fourier hologram phase pattern; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 35,
+      "domain": "Optics",
+      "source_description_sha256": "58e6e3deeeef4e09174fba3033f2a895e289c5fd92fc121b2834d2a8ce9f02d7",
+      "task": "phase_dammann_uniform_orders",
+      "external_artifact": "Dammann grating phase transitions",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is Dammann grating phase transitions; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is Dammann grating phase transitions; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 36,
+      "domain": "Optics",
+      "source_description_sha256": "1b2e2c7b446d0268002caac4f84f189416416f0bb1504b245e9b58ee19640d69",
+      "task": "phase_large_scale_weighted_spot_array",
+      "external_artifact": "large optical spot-array phase pattern",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is large optical spot-array phase pattern; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is large optical spot-array phase pattern; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 37,
+      "domain": "Optics",
+      "source_description_sha256": "a73d6f8c3186b569e7bb2372d65fa5f9437f1730dea4d4333966a20f94f5cf52",
+      "task": "fiber_wdm_channel_power_allocation",
+      "external_artifact": "optical channel and power allocation",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is optical channel and power allocation; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is optical channel and power allocation; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 38,
+      "domain": "Optics",
+      "source_description_sha256": "c4d6f0bdffc553b04cac74374d51617e29bb3f481259429031966c9c5692f3de",
+      "task": "fiber_mcs_power_scheduling",
+      "external_artifact": "modulation and transmit-power allocation",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is modulation and transmit-power allocation; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is modulation and transmit-power allocation; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 39,
+      "domain": "Optics",
+      "source_description_sha256": "65a02434c43e8ec8e3bf9d81c4e3da144260ac8c20867e8722e9c9b02a7bf29a",
+      "task": "fiber_dsp_mode_scheduling",
+      "external_artifact": "receiver DSP schedule",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is receiver DSP schedule; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is receiver DSP schedule; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 40,
+      "domain": "Optics",
+      "source_description_sha256": "8e245ea2983081404f9272c34df9fda4b4a7f1e08d9ff9d140c42ae759c519d4",
+      "task": "fiber_guardband_spectrum_packing",
+      "external_artifact": "optical spectrum slot packing",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is optical spectrum slot packing; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is optical spectrum slot packing; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 41,
+      "domain": "Optics",
+      "source_description_sha256": "d1aed310f557a47224a76c6e67596e71647a10c66b969741977c56b2de571e61",
+      "task": "holographic_multifocus_power_ratio",
+      "external_artifact": "focal-spot power-ratio phase layers",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is focal-spot power-ratio phase layers; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is focal-spot power-ratio phase layers; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 42,
+      "domain": "Optics",
+      "source_description_sha256": "9638946d94ff98dfc6d6a5695b9fc5a768955b70710e919cf28d61752fc42408",
+      "task": "holographic_multiplane_focusing",
+      "external_artifact": "multiple-plane holographic phase layers",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is multiple-plane holographic phase layers; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is multiple-plane holographic phase layers; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 43,
+      "domain": "Optics",
+      "source_description_sha256": "8bdbbf3664934bee3dfa39b21732e20acea3b8f0ee15d88192f351b3376a3aef",
+      "task": "holographic_multispectral_focusing",
+      "external_artifact": "multiple-wavelength focusing design",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is multiple-wavelength focusing design; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is multiple-wavelength focusing design; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 44,
+      "domain": "Optics",
+      "source_description_sha256": "9a86fff6995e907cc7e0307edaf8e9cba3e1de784dbdaee9f4e9555b668c5682",
+      "task": "holographic_polarization_multiplexing",
+      "external_artifact": "polarization-dependent holographic design",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is polarization-dependent holographic design; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is polarization-dependent holographic design; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 45,
+      "domain": "ComputerSystems",
+      "source_description_sha256": "fb9de5ef766357ec634ef0f03c5e3df8f2c9f96db9aec19eab8cd596501a48fa",
+      "task": "MallocLab",
+      "external_artifact": "memory allocator implementation",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is memory allocator implementation; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is memory allocator implementation; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 46,
+      "domain": "ComputerSystems",
+      "source_description_sha256": "9faa3f4a8ca8635461b67e4ea1a134b49d8a82a2d2c74df0f401b91d2917d3e4",
+      "task": "DuckDBWorkloadOptimization",
+      "external_artifact": "database index/view/query configuration",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is database index/view/query configuration; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is database index/view/query configuration; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 47,
+      "domain": "EngDesign",
+      "source_description_sha256": "946ce7e92f6cd8c6fb038034443ac5f8ac371f44dc9d6d3423c37e15f5d7b99c",
+      "task": "CY_03",
+      "external_artifact": "virtio block-driver read implementation",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is virtio block-driver read implementation; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is virtio block-driver read implementation; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 47,
+      "domain": "EngDesign",
+      "source_description_sha256": "946ce7e92f6cd8c6fb038034443ac5f8ac371f44dc9d6d3423c37e15f5d7b99c",
+      "task": "WJ_01",
+      "external_artifact": "image restoration filter pipeline",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "Both process noisy observations, but this bundled task restores an image and selects filters; it does not infer a physical time-series family, continuous transient parameters, or refusal from two strain channels."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "Both process noisy observations, but this bundled task restores an image and selects filters; it does not infer a physical time-series family, continuous transient parameters, or refusal from two strain channels."
+      }
+    },
+    {
+      "catalog_row": 47,
+      "domain": "EngDesign",
+      "source_description_sha256": "946ce7e92f6cd8c6fb038034443ac5f8ac371f44dc9d6d3423c37e15f5d7b99c",
+      "task": "XY_05",
+      "external_artifact": "SLC-3 CPU control logic",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is SLC-3 CPU control logic; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is SLC-3 CPU control logic; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 47,
+      "domain": "EngDesign",
+      "source_description_sha256": "946ce7e92f6cd8c6fb038034443ac5f8ac371f44dc9d6d3423c37e15f5d7b99c",
+      "task": "AM_02",
+      "external_artifact": "two-robot pedestrian-avoidance paths",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is two-robot pedestrian-avoidance paths; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is two-robot pedestrian-avoidance paths; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 47,
+      "domain": "EngDesign",
+      "source_description_sha256": "946ce7e92f6cd8c6fb038034443ac5f8ac371f44dc9d6d3423c37e15f5d7b99c",
+      "task": "AM_03",
+      "external_artifact": "single-robot pedestrian-avoidance path",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is single-robot pedestrian-avoidance path; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is single-robot pedestrian-avoidance path; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 47,
+      "domain": "EngDesign",
+      "source_description_sha256": "946ce7e92f6cd8c6fb038034443ac5f8ac371f44dc9d6d3423c37e15f5d7b99c",
+      "task": "YJ_02",
+      "external_artifact": "cantilever stiffness material layout",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is cantilever stiffness material layout; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is cantilever stiffness material layout; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 47,
+      "domain": "EngDesign",
+      "source_description_sha256": "946ce7e92f6cd8c6fb038034443ac5f8ac371f44dc9d6d3423c37e15f5d7b99c",
+      "task": "YJ_03",
+      "external_artifact": "crack stress-intensity material layout",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is crack stress-intensity material layout; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is crack stress-intensity material layout; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 48,
+      "domain": "InventoryOptimization",
+      "source_description_sha256": "cc9604670a8126707c878736421b56194c9a816dbbf5d4bc42c188b4027b03f6",
+      "task": "tree_gsm_safety_stock",
+      "external_artifact": "supply-network safety-stock allocation",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is supply-network safety-stock allocation; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is supply-network safety-stock allocation; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 49,
+      "domain": "InventoryOptimization",
+      "source_description_sha256": "40e4d10cc7b2942888da8431d8f9f072981ce970b18f50e3d382df55bdefe3c6",
+      "task": "general_meio",
+      "external_artifact": "network base-stock settings",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is network base-stock settings; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is network base-stock settings; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 50,
+      "domain": "InventoryOptimization",
+      "source_description_sha256": "df830c1955e99825512bca1034d63047669ecb295a43c0e68773f3757ed7d072",
+      "task": "joint_replenishment",
+      "external_artifact": "coordinated replenishment periods",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is coordinated replenishment periods; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is coordinated replenishment periods; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 51,
+      "domain": "InventoryOptimization",
+      "source_description_sha256": "cb42a321eb86bb56fddd24d546800124bad49c1a0f68025bf74f015aeeab2bd0",
+      "task": "finite_horizon_dp",
+      "external_artifact": "finite-period inventory policy",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is finite-period inventory policy; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is finite-period inventory policy; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 52,
+      "domain": "InventoryOptimization",
+      "source_description_sha256": "382abafcbc173f40e95828a322b7911ff6df4c3efe981d336cd905f73dac046a",
+      "task": "disruption_eoqd",
+      "external_artifact": "disruption-aware inventory order quantity",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is disruption-aware inventory order quantity; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is disruption-aware inventory order quantity; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 53,
+      "domain": "PyPortfolioOpt",
+      "source_description_sha256": "5c14e3f76e2114c50848b08eab47cd7ef5734e7a079ccd3088020cc7e8d377e1",
+      "task": "robust_mvo_rebalance",
+      "external_artifact": "mean-variance asset allocation",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is mean-variance asset allocation; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is mean-variance asset allocation; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 54,
+      "domain": "PyPortfolioOpt",
+      "source_description_sha256": "8ae2e0b14058b5e171e9a9814b9f8457a5c052b38a3c8fdb5fac6f8dc435b74a",
+      "task": "cvar_stress_control",
+      "external_artifact": "tail-risk-controlled asset allocation",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is tail-risk-controlled asset allocation; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is tail-risk-controlled asset allocation; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 55,
+      "domain": "PyPortfolioOpt",
+      "source_description_sha256": "f71a59932536eefd029832bfe707921cc79f3ab1c1e6b6befcd1f3a33a309169",
+      "task": "discrete_rebalance_mip",
+      "external_artifact": "discrete-lot asset allocation",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is discrete-lot asset allocation; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is discrete-lot asset allocation; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 56,
+      "domain": "MarketMaking",
+      "source_description_sha256": "7ea351f5cdb41e962e38428fd63d54e78311700fa3494f069e63b91b1bdb99b1",
+      "task": "InventoryAwareQuoting",
+      "external_artifact": "market-maker quotes",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is market-maker quotes; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is market-maker quotes; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 57,
+      "domain": "JobShop",
+      "source_description_sha256": "106e1b577547d4bc3ab99a67404f956e72102b36328cffacc5f8e79cd7b8a3fd",
+      "task": "abz",
+      "external_artifact": "ABZ machine schedule",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is ABZ machine schedule; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is ABZ machine schedule; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 58,
+      "domain": "JobShop",
+      "source_description_sha256": "0553be0347c1ef722a7809b050672106eed4be280c920ecfb51c6de8d4059a30",
+      "task": "ft",
+      "external_artifact": "FT machine schedule",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is FT machine schedule; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is FT machine schedule; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 59,
+      "domain": "JobShop",
+      "source_description_sha256": "593b67f8713c35b5ef3f9d41eebf5bc77e148cb6c347a8595f7499eb62dec82f",
+      "task": "la",
+      "external_artifact": "LA machine schedule",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is LA machine schedule; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is LA machine schedule; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 60,
+      "domain": "JobShop",
+      "source_description_sha256": "8ad340f66dfb1356c6003352106775132ce6ff9e8d0263e3fd14e29bc95876fb",
+      "task": "orb",
+      "external_artifact": "ORB machine schedule",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is ORB machine schedule; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is ORB machine schedule; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 61,
+      "domain": "JobShop",
+      "source_description_sha256": "917a67f1d675f5dac1200ffde1d5460de86de568662ddb16fa9ba4821594db33",
+      "task": "swv",
+      "external_artifact": "SWV machine schedule",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is SWV machine schedule; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is SWV machine schedule; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 62,
+      "domain": "JobShop",
+      "source_description_sha256": "7df373e7edfffec729df5bf6181dd4a4cdc76649bc5fd047ad947b0490b6068d",
+      "task": "ta",
+      "external_artifact": "Taillard machine schedule",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is Taillard machine schedule; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is Taillard machine schedule; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 63,
+      "domain": "JobShop",
+      "source_description_sha256": "80eb998ba28593584c97299cb157160779c4aa8036664aeadd24c896d0f74eb9",
+      "task": "yn",
+      "external_artifact": "YN machine schedule",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is YN machine schedule; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is YN machine schedule; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 64,
+      "domain": "StructuralOptimization",
+      "source_description_sha256": "f1d74d8d19bb8437482f1a3a0601b4849e7e4d4fd3082a8f04af87508f776dce",
+      "task": "ISCSO2015",
+      "external_artifact": "planar truss dimensions",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is planar truss dimensions; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is planar truss dimensions; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 65,
+      "domain": "StructuralOptimization",
+      "source_description_sha256": "377a63f414134c5f21bf096e79cf199ed472e4898d4280805ff6d33f1c5c6232",
+      "task": "ISCSO2023",
+      "external_artifact": "tower cross-section selection",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is tower cross-section selection; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is tower cross-section selection; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 66,
+      "domain": "StructuralOptimization",
+      "source_description_sha256": "748722c0cb5aa657c7fcd4d795b4491e7cbc251ffcccc9a01c538710aec36c81",
+      "task": "TopologyOptimization",
+      "external_artifact": "beam material-density field",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is beam material-density field; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is beam material-density field; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 67,
+      "domain": "StructuralOptimization",
+      "source_description_sha256": "85c5b004cdef44097aeef9748f1a4de37613dd817f071212c5b2a6783aa3cbd6",
+      "task": "PyMOTOSIMPCompliance",
+      "external_artifact": "pyMOTO beam material-density field",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is pyMOTO beam material-density field; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is pyMOTO beam material-density field; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 68,
+      "domain": "Robotics",
+      "source_description_sha256": "a70c7acb71bfc88cbd92250b240fbd6ac1858e201919cbf31865e3498c5c6d73",
+      "task": "DynamicObstacleAvoidanceNavigation",
+      "external_artifact": "mobile-robot velocity plan",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is mobile-robot velocity plan; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is mobile-robot velocity plan; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 69,
+      "domain": "Robotics",
+      "source_description_sha256": "c37ef8ade170183bb47cc1d72ddf44af6cf48627d28dbf4544df693169895c45",
+      "task": "QuadrupedGaitOptimization",
+      "external_artifact": "quadruped gait settings",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is quadruped gait settings; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is quadruped gait settings; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 70,
+      "domain": "Robotics",
+      "source_description_sha256": "a1a81084edcc7ea68a9b71b1c7c8dc449910e8172d727efd7f88bd13641ccde3",
+      "task": "RobotArmCycleTimeOptimization",
+      "external_artifact": "robot-arm timed trajectory",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is robot-arm timed trajectory; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is robot-arm timed trajectory; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 71,
+      "domain": "Robotics",
+      "source_description_sha256": "af168638ff7cf11325e3c38f180ec2653349d1dd421b1b285b7abe526deaadb9",
+      "task": "PIDTuning",
+      "external_artifact": "quadrotor controller gains",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is quadrotor controller gains; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is quadrotor controller gains; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 72,
+      "domain": "Robotics",
+      "source_description_sha256": "b2b54fc26c3473c789953dd3dc6b7d821bc56b81f5b2650e4d99935ef45ebede",
+      "task": "UAVInspectionCoverageWithWind",
+      "external_artifact": "inspection flight controls",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is inspection flight controls; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is inspection flight controls; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 73,
+      "domain": "Robotics",
+      "source_description_sha256": "6f138c3b541963b59b7132466eadbd87684163b43ce5ad13723743c020cb1236",
+      "task": "CoFlyersVasarhelyiTuning",
+      "external_artifact": "robot swarm controller settings",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is robot swarm controller settings; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is robot swarm controller settings; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 74,
+      "domain": "Aerodynamics",
+      "source_description_sha256": "2945abf17a01f4fbbae1ab05c74663cf169fb5104e83ae83d3c1624daa4a5a03",
+      "task": "CarAerodynamicsSensing",
+      "external_artifact": "car pressure-sensor positions",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "Both choose measurements, but the external oracle reconstructs a car-surface pressure field using a frozen CFD predictor; there is no timing/waveform-family claim or ambiguity-refusal objective."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "Both choose measurements, but the external oracle reconstructs a car-surface pressure field using a frozen CFD predictor; there is no timing/waveform-family claim or ambiguity-refusal objective."
+      }
+    },
+    {
+      "catalog_row": 75,
+      "domain": "Aerodynamics",
+      "source_description_sha256": "31ca9d238918fe97a072f8c853f2e401e4928d72938684a66327fc7a91d6aecb",
+      "task": "DawnAircraftDesignOptimization",
+      "external_artifact": "aircraft geometry and propulsion design",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is aircraft geometry and propulsion design; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is aircraft geometry and propulsion design; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 76,
+      "domain": "WirelessChannelSimulation",
+      "source_description_sha256": "623812824c4a969aecff3820b943d11641637e804d0946d65a1dae4d40e55b8d",
+      "task": "HighReliableSimulation",
+      "external_artifact": "Hamming-code error-rate estimator",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is Hamming-code error-rate estimator; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is Hamming-code error-rate estimator; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 77,
+      "domain": "PowerSystems",
+      "source_description_sha256": "80089a64fafe1ff360902c0c6539129336966f044e0ab84e9c204fa17c19cd93",
+      "task": "EV2GymSmartCharging",
+      "external_artifact": "vehicle-fleet charge dispatch",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is vehicle-fleet charge dispatch; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is vehicle-fleet charge dispatch; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    },
+    {
+      "catalog_row": 78,
+      "domain": "AdditiveManufacturing",
+      "source_description_sha256": "ebd950a7170874da53bfd81ca167041eb6de7c5e262ba4cbda968c3cfb0c263a",
+      "task": "DiffSimThermalControl",
+      "external_artifact": "additive-manufacturing process settings",
+      "pr11": {
+        "same_problem_class": false,
+        "basis": "The external output is additive-manufacturing process settings; the proposed output is a timing-family label, modulation period and future residual from paid transit measurements. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      },
+      "pr48": {
+        "same_problem_class": false,
+        "basis": "The external output is additive-manufacturing process settings; the proposed output is a two-channel waveform-family label and transient parameters from paid strain samples. Their target objects and validating oracles are different; sharing optimization or numerical fitting does not identify the problem class."
+      }
+    }
+  ],
+  "decision": {
+    "pr11": "A3 no same problem class found among 47 paper entries and 78 repository rows / 84 expanded entries",
+    "pr48": "A3 no same problem class found among 47 paper entries and 78 repository rows / 84 expanded entries"
+  },
+  "limitations": [
+    "No claim of historical 95-entry coverage.",
+    "No paper-versus-repository totals are added: catalogs overlap.",
+    "Novelty at catalog-level does not establish scientific difficulty or physical validity."
+  ]
+}
