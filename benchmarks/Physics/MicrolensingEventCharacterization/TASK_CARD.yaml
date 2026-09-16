@@ -15,6 +15,9 @@ shortcut_probe:
   - id: fixed_source_textbook_fit
     candidate: verification/shortcut_textbook.py
     expected_score: 0.417203
+  excluded:
+  - candidate: verification/replay_review.py
+    reason: Trusted replay driver containing candidate source templates; it exposes no standalone submission entrypoint at module scope.
   relative_margin: 0.2
   score_tolerance: 0.000001
 scientific_question: Can an agent actively distinguish point-lens, binary-lens and variable-source microlensing events under a finite photometric follow-up budget, recover observable duration, amplitude and feature time, and refuse mixed out-of-family events?
