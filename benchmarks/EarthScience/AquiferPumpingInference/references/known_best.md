@@ -59,8 +59,11 @@ confined nonlinear fit and prediction. It then sweeps only three residual thresh
 per observation, cross-radius residual contrast, and early-to-late residual contrast. The best
 development-selected settings `(2.0, -3.0, -4.0)` score `0.481859/0.525816`, with mechanism
 accuracy `0.875/0.875`, false-discovery rate `0.125/0.125`, and correct refusal `0.667/0.667`.
-This measures the strongest tested low-dimensional diagnostic shortcut rather than handicapping it
-with fixed parameters or zero predictions.
+This is the best member of the declared 128-strategy residual-threshold family, not a bound on
+other low-dimensional methods. A maintainer reported a separate cheap candidate scoring
+`0.884294` on an earlier head. Its complete source and fixed settings are not in the public
+review record, so it cannot yet be replayed against this revision. The declared-probe guard
+passing does not close the C12 shortcut review or establish scientific admission.
 
 ## Model calibration
 
