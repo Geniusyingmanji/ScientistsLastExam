@@ -8,7 +8,7 @@ oracle:
 normalization:
   baseline: regular square grid
   reference: dated Packomania best-known side lengths for N=7,10,13
-  score: clipped fraction of side-length gap closed
+  score: nonnegative fraction of side-length gap closed, with no upper cap
 citations:
 - id: url:http://hydra.nat.uni-magdeburg.de/packing/csq/csq.html
   title: Packomania circle packings in a square

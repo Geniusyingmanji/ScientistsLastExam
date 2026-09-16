@@ -25,10 +25,11 @@ against the best-known packing from the Packomania database.
 ## Scoring
 
 ```
-score = clip( (side_baseline − side_found) / (side_baseline − side_best_known), 0, 1 )
+score = max(0, (side_baseline − side_found) / (side_baseline − side_best_known))
 ```
 
 where `side_baseline` is the regular-grid baseline. `combined_score` is the mean over sizes.
+Scores have no upper cap; matching a listed best-known side scores 1.0.
 Test sizes: N ∈ {7, 10, 13}. Smaller side = better.
 
 ## Rules
