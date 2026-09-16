@@ -6,6 +6,8 @@ missing Task.md.
 """
 from __future__ import annotations
 
+import json
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -14,6 +16,7 @@ from unittest import mock
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+import scripts.check_task_contribution as gate  # noqa: E402
 from scripts.check_task_contribution import check_task  # noqa: E402
 
 
@@ -146,6 +149,91 @@ def test_missing_initial_solution_produces_failed_structural_report(tmp_path):
     assert "solution.py" in checks["required_files"]["detail"]
     assert report["phases"]["structural"] == "failed"
     assert report["passed"] is False
+
+
+class DiscoveryAxisDenominatorTests(unittest.TestCase):
+    """A published rate without its count cannot be read, so the gate now asks for both.
+
+    `correct_refusal_rate = 1.0` is one world out of one or thirty out of thirty, and the
+    difference is the whole resolution of the axis: a three-world denominator lets a candidate
+    that guesses hit a perfect axis once in twenty-seven tries. Thirty-seven of the forty-six
+    discovery tasks publish rates with no counts; they are listed as pending rather than failed,
+    the same way the shortcut contract was migrated.
+    """
+
+    @staticmethod
+    def _split():
+        import yaml as _yaml
+        from sle.registry import list_tasks
+        tax = _yaml.safe_load((ROOT / "sle" / "conf" / "exam_taxonomy.yaml").read_text(
+            encoding="utf-8"))["tasks"]
+        fdr = re.compile(r"false_discovery_(denominator|count)")
+        refusal = re.compile(r"correct_refusal_(denominator|count)")
+        compliant, missing = [], []
+        for spec in list_tasks(None):
+            if tax[spec.task_id]["form"] != "discovery":
+                continue
+            source = "".join(path.read_text(encoding="utf-8", errors="replace")
+                             for path in sorted((spec.task_dir / "verification").glob("*.py")))
+            (compliant if fdr.search(source) and refusal.search(source)
+             else missing).append(spec.task_id)
+        return compliant, missing
+
+    def test_the_pending_inventory_is_exactly_the_non_compliant_discovery_tasks(self):
+        pending = json.loads(gate.DISCOVERY_AXIS_MIGRATION.read_text(encoding="utf-8"))["tasks"]
+        compliant, missing = self._split()
+        self.assertEqual(sorted(pending), sorted(missing))
+        self.assertTrue(compliant, "at least one discovery task must already comply")
+        for task_id, entry in pending.items():
+            with self.subTest(task=task_id):
+                self.assertEqual(entry.get("status"), "pending")
+                self.assertTrue(str(entry.get("reason") or "").strip())
+
+    def test_the_policy_says_listing_is_not_a_pass(self):
+        document = json.loads(gate.DISCOVERY_AXIS_MIGRATION.read_text(encoding="utf-8"))
+        self.assertEqual(document["schema_version"], 1)
+        self.assertIn("never a pass", document["policy"])
+        self.assertTrue(document["inventory_revision"])
+
+    def test_counts_are_recognised_by_suffix_under_any_prefix(self):
+        for key in ("development_correct_refusal_denominator", "heldout_correct_refusal_count",
+                    "correct_refusal_denominator"):
+            with self.subTest(key=key):
+                self.assertTrue(gate._has_count({key: 3}, gate.DISCOVERY_REFUSAL_COUNTS))
+        self.assertFalse(gate._has_count({"development_correct_refusal_rate": 1.0},
+                                         gate.DISCOVERY_REFUSAL_COUNTS))
+
+
+class ReportRowTests(unittest.TestCase):
+    """A row that only states an observation must not decide a phase."""
+
+    def test_a_report_row_leaves_the_verdict_alone(self):
+        task_id = "DataPrivacy/SparseVectorAudit"
+        axes = {"development_false_discovery_rate": 0.0,
+                "development_correct_refusal_rate": 1.0,
+                "development_discovery_coverage": 1.0,
+                "development_mechanism_score": 0.8}
+        probe = {"status": "passed", "passed": True, "detail": "declared guard held",
+                 "observations": [], "reference_axes": axes, "reference_axes_saturated": True}
+        with mock.patch.object(gate, "inspect_probe", return_value=probe):
+            report = check_task(task_id, skip_eval=True)
+        note = [row for row in report["checks"] if row["check"] == "discovery_axes_at_reference"]
+        self.assertEqual(len(note), 1, report["checks"])
+        self.assertTrue(note[0]["report"])
+        self.assertIsNone(note[0]["ok"])
+        self.assertEqual(note[0]["status"], "saturated")
+        self.assertEqual(report["phases"]["structural"], "passed")
+        self.assertNotIn("failed", report["phases"].values())
+
+    def test_a_report_row_is_excluded_from_the_phase_verdict(self):
+        note = {"check": "note", "ok": None, "report": True, "detail": ""}
+        passing = {"check": "a", "ok": True, "detail": ""}
+        self.assertEqual(gate._phase([passing]), "passed")
+        self.assertEqual(gate._phase([passing, note]), "passed",
+                         "a report row must not downgrade a passing phase")
+        self.assertEqual(gate._phase([note]), "incomplete",
+                         "a phase made only of report rows has established nothing")
+        self.assertEqual(gate._phase([{"check": "b", "ok": False, "detail": ""}, note]), "failed")
 
 
 if __name__ == "__main__":

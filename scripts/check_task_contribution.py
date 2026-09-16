@@ -68,6 +68,39 @@ DISCOVERY_COVERAGE = (
     "discovery_coverage",
 )
 BASELINE_ZERO_TOLERANCE = 0.05
+DISCOVERY_AXIS_COUNTS = (
+    "false_discovery_denominator", "false_discovery_count",
+)
+DISCOVERY_REFUSAL_COUNTS = (
+    "correct_refusal_denominator", "correct_refusal_count",
+)
+DISCOVERY_AXIS_MIGRATION = ROOT / "schemas" / "discovery_axis_migration.json"
+
+
+def _phase(checks):
+    """The verdict for one phase.
+
+    A row marked `report` states an observation for the reviewer and deliberately carries no
+    verdict, so it is excluded: a note about the reference's discovery axes must not turn a
+    passing phase into an incomplete one.
+    """
+    checks = [row for row in checks if not row.get("report")]
+    if any(row["ok"] is False for row in checks):
+        return "failed"
+    if not checks or any(row["ok"] is not True for row in checks):
+        return "incomplete"
+    return "passed"
+
+
+def _has_count(metrics, suffixes):
+    """A rate is unreadable without the count it is a rate of.
+
+    `correct_refusal_rate = 1.0` is one world out of one or thirty out of thirty, and the
+    difference decides whether the axis has any resolution at all: a three-world refusal
+    denominator means a candidate that guesses has a one-in-twenty-seven chance of a perfect
+    axis. Prefixes vary across tasks, so this matches on the suffix.
+    """
+    return any(any(key.endswith(suffix) for suffix in suffixes) for key in metrics)
 
 
 def _fail(rows: list[dict], check: str, detail: str) -> None:
@@ -199,6 +232,7 @@ def check_task(task_id: str, timeout_s: float = 180.0, *, skip_eval: bool = Fals
         _skip(rows, "deterministic_baseline")
         if role == "discovery":
             _skip(rows, "discovery_axes")
+            _skip(rows, "discovery_axis_denominators")
             _skip(rows, "degenerate_candidates_score_zero")
         _skip(rows, "bad_candidates_score_zero")
         if wave is not None:
@@ -244,6 +278,27 @@ def check_task(task_id: str, timeout_s: float = 180.0, *, skip_eval: bool = Fals
                 _fail(rows, "discovery_axes",
                       "mechanism=%s fdr=%s refusal=%s coverage=%s"
                       % (has_mechanism, has_fdr, has_refusal, has_coverage))
+
+            missing = [name for name, suffixes in
+                       (("false_discovery", DISCOVERY_AXIS_COUNTS),
+                        ("correct_refusal", DISCOVERY_REFUSAL_COUNTS))
+                       if not _has_count(baseline, suffixes)]
+            if not missing:
+                _ok(rows, "discovery_axis_denominators",
+                    "each published rate carries its count")
+            else:
+                try:
+                    pending = json.loads(DISCOVERY_AXIS_MIGRATION.read_text(
+                        encoding="utf-8")).get("tasks", {}).get(spec.task_id)
+                except (OSError, ValueError):
+                    pending = None
+                detail = "%s published as a rate with no denominator or count" % ", ".join(missing)
+                if pending:
+                    rows.append({"check": "discovery_axis_denominators", "ok": None,
+                                 "status": "migration_pending",
+                                 "detail": str(pending.get("reason") or detail)})
+                else:
+                    _fail(rows, "discovery_axis_denominators", detail)
 
         # A degenerate candidate is not a broken one. The bad-candidate sweep below asks whether
         # a malformed submission is rejected; this asks whether a *well-formed* submission that
@@ -321,15 +376,19 @@ def check_task(task_id: str, timeout_s: float = 180.0, *, skip_eval: bool = Fals
             _ok(rows, "bad_candidates_score_zero", "raises/empty/wrong_type scored")
 
     probe = inspect_probe(spec, evaluate_candidate, timeout_s=timeout_s, skip_eval=skip_eval)
+    if role == "discovery" and "reference_axes_saturated" in probe:
+        # Reported, not scored: a saturated triple is a design observation for the reviewer,
+        # not a failed check, and the threshold for "too saturated" is a review decision.
+        rows.append({"check": "discovery_axes_at_reference", "ok": None, "report": True,
+                     "status": "saturated" if probe["reference_axes_saturated"] else "informative",
+                     "detail": ("the declared reference already maxes false discovery, refusal and "
+                                "coverage; the headline is the mechanism number alone"
+                                if probe["reference_axes_saturated"] else
+                                "the declared reference still pays on at least one of the three axes")})
     rows.append({"check": "shortcut_probe", "ok": True if probe["passed"] else
                  False if probe["status"] == "failed" else None,
                  "status": probe["status"], "detail": probe.get("detail", "")})
-    def phase(checks):
-        if any(row["ok"] is False for row in checks):
-            return "failed"
-        if not checks or any(row["ok"] is not True for row in checks):
-            return "incomplete"
-        return "passed"
+    phase = _phase
     phases = {"structural": phase(rows[:structural_count]),
               "runtime": phase(rows[structural_count:-1]),
               "shortcut_guard": phase(rows[-1:]),
@@ -361,7 +420,8 @@ def main() -> int:
     args = ap.parse_args()
     report = check_task(args.task, timeout_s=args.timeout, skip_eval=args.skip_eval)
     for row in report["checks"]:
-        mark = "ok  " if row["ok"] is True else "FAIL" if row["ok"] is False else "SKIP"
+        mark = ("note" if row.get("report") else
+                "ok  " if row["ok"] is True else "FAIL" if row["ok"] is False else "SKIP")
         # A check that reports a structured detail should not take the whole gate down with a
         # TypeError before the verdict is printed; the JSON report keeps the structure either way.
         text = row["detail"] if isinstance(row["detail"], str) else json.dumps(
