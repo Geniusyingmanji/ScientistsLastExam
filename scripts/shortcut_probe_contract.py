@@ -189,6 +189,23 @@ def inspect_probe(spec, evaluate, *, timeout_s=180.0, skip_eval=False):
             if metrics.get("valid") != 1 or not _number(score):
                 raise ValueError("shortcut/reference must be a valid finite-scoring candidate")
             observation["measured_score"] = score
+            if index == 0:
+                # The reference's own discovery axes, recorded so a reader can see whether the
+                # triple still costs the witness anything at the top of the scale. Measured
+                # across the tree, nineteen of thirty-one references sit at false discovery 0,
+                # correct refusal 1 and coverage 1 - there the three axes carry no information
+                # and the headline is the mechanism number alone. This is reported, never scored.
+                axes = {key: metrics[key] for key in metrics
+                        if isinstance(metrics.get(key), (int, float))
+                        and any(key.endswith(suffix) for suffix in (
+                            "false_discovery_rate", "correct_refusal_rate",
+                            "discovery_coverage", "mechanism_score"))}
+                if axes:
+                    result["reference_axes"] = axes
+                    result["reference_axes_saturated"] = all(
+                        (value == 0.0 if key.endswith("false_discovery_rate") else value == 1.0)
+                        for key, value in axes.items()
+                        if not key.endswith("mechanism_score"))
             scores.append(score)
             expected = entry["expected_score"]
             if expected is not None and abs(score - expected) > contract["score_tolerance"]:
