@@ -4,12 +4,12 @@
 
 | | |
 |---|---:|
-| 任务包 | 87 |
+| 任务包 | 88 |
 | optimization | 42 |
-| discovery | 45 |
+| discovery | 46 |
 | certified | 5 |
-| candidate | 82 |
-| 学科 | 7(Biology 9,Chemistry 13,ComputerScience 9,EarthScience 7,Engineering 13,Mathematics 19,Physics 17) |
+| candidate | 83 |
+| 学科 | 7(Biology 9,Chemistry 13,ComputerScience 9,EarthScience 7,Engineering 14,Mathematics 19,Physics 17) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
@@ -77,7 +77,7 @@
 | [`BellBoundCertificate`](benchmarks/Physics/BellBoundCertificate/)<br>贝尔不等式上界证书 | Physics | QuantumFoundations | uncapped | analytical | candidate | prove an upper bound, do not just compute one | 为贝尔泛函的量子最大值给出一份可精确验证的上界证明:提交一组基词与若干加权平方,使它们的和恰好等于 beta*I - B。CHSH 的答案是无理数 2√2,只能逼近;I3322 的量子值至今未知,NPA 层级 1 给 0.375、层级 2 给 0.25102173、已知最好值 0.25087538 要到层级 4 以上。 | 四个实例(CHSH 与三种基词预算下的 I3322)取均值,不设上限。分数是所证界到已知量子值距离的对数进步:免费的层级 1 界记 0,已发表的层级 2 界记 1,超过则大于 1。有理数精确验证,提交浮点数直接判零——数值 SDP 解不是证明。 |
 | [`FourSettingMomentCertificate`](benchmarks/Physics/FourSettingMomentCertificate/)<br>四设置矩子集证书 | Physics | QuantumFoundations | uncapped | analytical | candidate | exact SOS on I_4422^{13} with a frozen moment pool | I_4422^13 的精确 SOS,额外矩必须是冻结 NPA2 池的 Hamming-k 子集,不是 I3322 自由选词。 | 从精确层级 1 最优 5/8 到全池有理证书约 0.455331 的对数进度;参考约 0.58,无上限。 |
 
-## Discovery(45)
+## Discovery(46)
 
 ### 公式(formula) — 7
 
@@ -91,7 +91,7 @@
 | [`SequenceLawRecovery`](benchmarks/Mathematics/SequenceLawRecovery/)<br>整数序列递推恢复 | Mathematics | Mathematics | clipped | community_symbolic_sympy | candidate | Given the first terms of an integer sequence, state the linear recurrence that produced it. | 给出整数序列前若干项,说出产生它的线性递推;项数不足以定唯一最小规则时拒答 | 延续准确率;误发现率与不定性拒答分开报告 |
 | [`ComplexBoseLaw`](benchmarks/Physics/ComplexBoseLaw/)<br>复玻色占据律 | Physics | Physics | clipped | physical_sim | candidate | a mixed cavity occupancy is not textbook Planck | 在模式混合下恢复玻色占据律的移位指数;费米型世界须拒答 | 指数恢复 + 费米拒答;不是教科书普朗克曲线的直接拟合 |
 
-### 结构(structure) — 6
+### 结构(structure) — 7
 
 | 任务 | 学科 | 领域 | 打分 | oracle | 认证 | 说明 | 中文题意 | 中文评估方法 |
 |---|---|---|---|---|---|---|---|---|
@@ -99,6 +99,7 @@
 | [`GraphFromDistances`](benchmarks/ComputerScience/GraphFromDistances/)<br>距离查询重建图 | ComputerScience | Algorithm | clipped | community_graph_algorithms_networkx | candidate | A weighted network exists but you cannot see it. | 在有限次距离查询下重建加权网络的边:短距离不等于相邻,可能是两条短边的两跳路径 | 边恢复 F1;误发现率与不可辨识拒答分开报告 |
 | [`InterventionalSCM`](benchmarks/ComputerScience/InterventionalSCM/)<br>干预式结构因果模型 | ComputerScience | CausalDiscovery | clipped | physical_sim | candidate | recover hidden causal mechanisms by experimentation | 用干预实验打破马尔可夫等价,恢复隐藏线性无环结构因果模型的有向图与系数 | 有向图与结构系数恢复;观测关联不足以定向 |
 | [`SurvivorshipConfoundedDesign`](benchmarks/ComputerScience/SurvivorshipConfoundedDesign/)<br>幸存者偏差下的效应估计 | ComputerScience | CausalDiscovery | clipped | physical_sim | candidate | association among survivors is not a treatment effect | 每一行数据都已被结果相关的筛选选中,在幸存者表里估计真实处理效应 | 处理效应恢复;混杂开启的伪关联须识别,无 T→Y 边时不得宣称效应 |
+| [`DistributionNetworkTopology`](benchmarks/Engineering/DistributionNetworkTopology/)<br>供水管网布尔断层扫描 | Engineering | WaterDistribution | clipped | analytical | candidate | noisy Boolean route tomography | 在路径探针预算下定位管网破损管段,孪生服务廊道不可辨识须拒答 | 破损集 Jaccard 平方;收费廊道检测、结构别名及遥测失配拒答,全面弃权为零 |
 | [`BlackBoxGroupIdentification`](benchmarks/Mathematics/BlackBoxGroupIdentification/)<br>黑盒群同构辨识 | Mathematics | Mathematics | clipped | analytical | candidate | A finite set of `order` labelled elements and a black-box product: `mul(a, b)` returns the label | 只给黑盒乘法与随机标号,在查询预算内从公开构造目录里辨识群的同构类 | 目录 id 精确门控;非群与目录外两种拒答理由分开计分,阶数分布不足以辨识 |
 | [`HiddenCouplingNetwork`](benchmarks/Physics/HiddenCouplingNetwork/)<br>隐藏耦合网络重建 | Physics | Physics | clipped | physical_sim | candidate | A network of `units` observed units relaxes to a steady state under constant drive. | 实验次数少于单元数,从多单元驱动的稳态里恢复带符号的直接耦合图;存在未观测单元时拒答 | 带符号边 F1;间接路径、tanh 非线性与隐藏单元造成的稠密低秩耦合分别记误发现 |
 

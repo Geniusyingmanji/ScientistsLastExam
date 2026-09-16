@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "validated_revision": "22a382ce2d3780a1381fbe74d54f61c3ca8d588c",
+  "upstream_main": "dbed927",
+  "scope": "Task and framework integration regression, executable contribution guard and static audits; not a final-head full-suite or model-difficulty certification. Added by a subsequent documentation-only commit.",
+  "environment": {
+    "image": "sle-attribution-ci:20260912",
+    "os": "Ubuntu 22.04",
+    "python": "3.10.12",
+    "numpy": "1.24.4",
+    "scipy": "1.10.1",
+    "candidate_bwrap_seccomp": true,
+    "container_network": "none",
+    "SLE_REQUIRE_FROZEN_INVENTORY": "0"
+  },
+  "source_sha256": {
+    "benchmarks/Engineering/DistributionNetworkTopology/verification/evaluator.py": "521773666c64d8b99ca869769c38bb13065e1ebabe7163367fc16ef42ac91bb3",
+    "benchmarks/Engineering/DistributionNetworkTopology/verification/reference_solver.py": "888ea60e57bc352e8d4e21ed946ef458f41eb10ea73d9596fded1ba41b5c31b0",
+    "benchmarks/Engineering/DistributionNetworkTopology/verification/review_audit.py": "1f4c43f086bfad5d95d4cbd540bebfeb8829d00536de689a28ef116b45be49aa",
+    "benchmarks/Engineering/DistributionNetworkTopology/verification/shortcut_grid.py": "a5dad6f90ee56314806a16ecb3ff43ac56bb29a946f4da590a3139ef0b37d739",
+    "benchmarks/Engineering/DistributionNetworkTopology/frontier_eval/run_eval.py": "67ab08e01746868ce00b68bd29758edfb8f43545ce0577fc2fadba6e06ed5712",
+    "benchmarks/Engineering/DistributionNetworkTopology/TASK_CARD.yaml": "d8ee3c83b531817d39fc852ec785064a515489bbbc3526818faa2e17dcaff5a1",
+    "tests/test_distribution_network_topology.py": "c2c5e62d3f71110c10cd33235a87c34af8824131900cd3246aac7ef70962c8ff"
+  },
+  "checks": [
+    {
+      "check": "targeted",
+      "exit_code": 1,
+      "seconds": 320.2753282887861
+    },
+    {
+      "check": "contribution",
+      "exit_code": 0,
+      "seconds": 128.37504161475226
+    },
+    {
+      "check": "inventory",
+      "exit_code": 0,
+      "seconds": 0.37668638909235597
+    },
+    {
+      "check": "numeric",
+      "exit_code": 0,
+      "seconds": 0.8407393009401858
+    },
+    {
+      "check": "cards",
+      "exit_code": 0,
+      "seconds": 2.4494596901349723
+    },
+    {
+      "check": "keys",
+      "exit_code": 0,
+      "seconds": 1.9246264090761542
+    }
+  ],
+  "targeted": {
+    "file": "network-current-targeted.xml",
+    "sha256": "fcc89178e6b1ee223ce3c2b28f444bd8fdaba672df9fe09669ee5e0109bae0f9",
+    "suites": [
+      {
+        "name": "pytest",
+        "errors": "0",
+        "failures": "1",
+        "skipped": "0",
+        "tests": "395",
+        "time": "319.768",
+        "timestamp": "2026-09-12T08:25:12.573101+00:00",
+        "hostname": "687cdb33baba"
+      }
+    ],
+    "failures": [
+      {
+        "test": "tests.test_secure_eval.SecureEvaluationTests::test_timeout_during_worker_initialization_is_a_candidate_timeout",
+        "message": "AssertionError: 'infrastructure_failure' unexpectedly found in {'combined_score': -1e+18, 'valid': 0.0, 'timeout': 1.0, 'error_message': 'trusted evaluator supervision timed out', 'infrastructure_failure': 1.0}",
+        "detail": "self = <test_secure_eval.SecureEvaluationTests testMethod=test_timeout_during_worker_initialization_is_a_candidate_timeout>\n\n    def test_timeout_during_worker_initialization_is_a_candidate_timeout(self):\n        result = self.evaluate_source(\"while True: pass\", timeout=0.5)\n        self.assert_rejected(result)\n        self.assertEqual(result.get(\"timeout\"), 1.0)\n>       self.assertNotIn(\"infrastructure_failure\", result)\nE       AssertionError: 'infrastructure_failure' unexpectedly found in {'combined_score': -1e+18, 'valid': 0.0, 'timeout': 1.0, 'error_message': 'trusted evaluator supervision timed out', 'infrastructure_failure': 1.0}\n\ntests/test_secure_eval.py:283: AssertionError"
+      }
+    ]
+  },
+  "contribution": {
+    "schema_version": 2,
+    "task": "WaterDistribution/DistributionNetworkTopology",
+    "passed": true,
+    "status": "passed",
+    "phases": {
+      "structural": "passed",
+      "runtime": "passed",
+      "shortcut_guard": "passed",
+      "difficulty": "unassessed"
+    },
+    "scientific_admission": "not_assessed",
+    "note": "Passing declared probes does not establish model difficulty or iterative improvement.",
+    "checks": [
+      {
+        "check": "listed_in_all",
+        "ok": true,
+        "status": "passed",
+        "detail": "WaterDistribution/DistributionNetworkTopology"
+      },
+      {
+        "check": "registered_in_certification",
+        "ok": true,
+        "status": "passed",
+        "detail": "WaterDistribution/DistributionNetworkTopology"
+      },
+      {
+        "check": "certification_status",
+        "ok": true,
+        "status": "passed",
+        "detail": "candidate"
+      },
+      {
+        "check": "not_self_certified",
+        "ok": true,
+        "status": "passed",
+        "detail": "candidate"
+      },
+      {
+        "check": "required_files",
+        "ok": true,
+        "status": "passed",
+        "detail": ""
+      },
+      {
+        "check": "task_card",
+        "ok": true,
+        "status": "passed",
+        "detail": "benchmarks/Engineering/DistributionNetworkTopology/TASK_CARD.yaml"
+      },
+      {
+        "check": "metadata",
+        "ok": true,
+        "status": "passed",
+        "detail": "discovery"
+      },
+      {
+        "check": "frontier_wave",
+        "ok": true,
+        "status": "passed",
+        "detail": "legacy single wave"
+      },
+      {
+        "check": "discovery_contract_lint_documented",
+        "ok": true,
+        "status": "passed",
+        "detail": ""
+      },
+      {
+        "check": "numeric_keys",
+        "ok": true,
+        "status": "passed",
+        "detail": ""
+      },
+      {
+        "check": "documented_keys",
+        "ok": true,
+        "status": "passed",
+        "detail": "10 baseline keys"
+      },
+      {
+        "check": "baseline_eval",
+        "ok": true,
+        "status": "passed",
+        "detail": "combined_score=0.0"
+      },
+      {
+        "check": "deterministic_baseline",
+        "ok": true,
+        "status": "passed",
+        "detail": ""
+      },
+      {
+        "check": "discovery_axes",
+        "ok": true,
+        "status": "passed",
+        "detail": "mechanism/fdr/refusal/coverage rates present"
+      },
+      {
+        "check": "degenerate_candidates_score_zero",
+        "ok": true,
+        "status": "passed",
+        "detail": "blanket abstention earns nothing"
+      },
+      {
+        "check": "bad_candidates_score_zero",
+        "ok": true,
+        "status": "passed",
+        "detail": "raises/empty/wrong_type scored"
+      },
+      {
+        "check": "shortcut_probe",
+        "ok": true,
+        "status": "passed",
+        "detail": "best declared shortcut must be strictly below the reference margin"
+      }
+    ],
+    "shortcut_probe": {
+      "status": "passed",
+      "passed": true,
+      "observations": [
+        {
+          "id": "reference",
+          "candidate": "verification/reference_solver.py",
+          "expected_score": 0.9270833333333333,
+          "source_sha256": "888ea60e57bc352e8d4e21ed946ef458f41eb10ea73d9596fded1ba41b5c31b0",
+          "measured_score": 0.9270833333333333
+        },
+        {
+          "id": "route_grid",
+          "candidate": "verification/shortcut_grid.py",
+          "expected_score": 0.502037037037037,
+          "source_sha256": "a5dad6f90ee56314806a16ecb3ff43ac56bb29a946f4da590a3139ef0b37d739",
+          "measured_score": 0.502037037037037
+        }
+      ],
+      "scope": "declared shortcut guard only; independent model calibration still required",
+      "contract_sha256": "03cffa39c236d6b61c89064e68e68a1e5900f6c60aea6fb6621f54412d380b95",
+      "reference_score": 0.9270833333333333,
+      "probe_best": 0.502037037037037,
+      "threshold": 0.834375,
+      "detail": "best declared shortcut must be strictly below the reference margin"
+    },
+    "baseline_combined_score": 0.0
+  },
+  "full_suite_before_wrapper_correction": {
+    "passed": 1460,
+    "failed": 2,
+    "skipped": 48,
+    "note": "Both task wrapper contract failures were corrected and pass in final targeted regression. Missing historical private inputs/data remain unverified. Full final-head suite was not repeated."
+  },
+  "secure_evaluator_recheck": {
+    "file": "network-current-secure-recheck.xml",
+    "sha256": "c11651e518b26576194baac9fc34ccafadc1377a2a4665a5f92842edfc88d91c",
+    "suites": [
+      {
+        "name": "pytest",
+        "errors": "0",
+        "failures": "0",
+        "skipped": "0",
+        "tests": "56",
+        "time": "43.543",
+        "timestamp": "2026-09-12T08:31:05.485842+00:00",
+        "hostname": "c82506008fcf"
+      }
+    ],
+    "failures": []
+  },
+  "transient_failure_note": "The upstream 0.5-second worker-initialization case once classified the timeout as trusted-evaluator supervision timeout. Complete unchanged-source secure-evaluator rerun passed 39 tests and 17 subtests; original failure retained. Concurrent host load is plausible but not proven. No timeouts, assertions or runtime security settings were weakened."
+}
