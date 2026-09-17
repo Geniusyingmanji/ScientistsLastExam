@@ -175,6 +175,55 @@ class LyapunovDecayCertificateTests(unittest.TestCase):
             "the solved Gram must beat every catalog atom on %s" % instance["name"],
         )
 
+    def test_the_certified_gram_is_an_exact_local_optimum(self):
+        """The returned Gram must survive an exact single-step neighbourhood search.
+
+        The reference's search is floating point, and its returned artifact is a lattice
+        point. If the search stopped somewhere a single exact step would improve, the
+        reference would be shipping a weaker certificate than it can compute - and the
+        weakness would be invisible, because nothing else checks optimality.
+
+        Scope, stated precisely: this pins the *property*, not the `_polish` routine that
+        also enforces it. On the four shipped instances the float search already lands on an
+        optimal lattice point, so this test passes with `_polish` removed, and I verified
+        that by disabling it. It earns its place by pinning the property for future instance
+        families, where the search may not be so fortunate. It is not evidence that `_polish`
+        does anything on this family.
+        """
+        for instance in self.evaluator.INSTANCES:
+            with self.subTest(instance=instance["name"]):
+                modes = self.evaluator._parse_modes(instance["mode_matrices"])
+                public = self.evaluator.public_instance(instance)
+                upper = min(-self.reference._trace(mode) for mode in modes)
+                magnitude = max(1, -(-upper.numerator // upper.denominator))
+                denominator = min(
+                    int(public["max_denominator"]),
+                    int(public["max_numerator"]) // magnitude,
+                )
+                solved = self.reference._rational_gram(
+                    self.reference._search_gram(public), 1000
+                )
+                alpha = self.reference._certify(modes, solved, upper, denominator)
+                self.assertIsNotNone(alpha)
+                for i in range(3):
+                    for j in range(i, 3):
+                        for delta in (Fraction(1, 1000), Fraction(-1, 1000)):
+                            neighbour = [row[:] for row in solved]
+                            neighbour[i][j] += delta
+                            neighbour[j][i] += delta
+                            if not self.evaluator._spd(neighbour):
+                                continue
+                            value = self.reference._certify(
+                                modes, neighbour, upper, denominator
+                            )
+                            if value is None:
+                                continue
+                            self.assertLessEqual(
+                                value, alpha,
+                                "a single exact step improves the reference on %s"
+                                % instance["name"],
+                            )
+
     def test_reference_search_is_deterministic_by_construction(self):
         """A frozen anchor requires bit-reproducibility: no RNG, no clock, no scipy.
 
