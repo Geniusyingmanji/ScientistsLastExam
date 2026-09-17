@@ -61,13 +61,16 @@ def _fit(kind, r, t, y, sigma, q, bounds):
     return best
 
 
-def _infer(problem, measure, radius_indices=(0, 3), repeats=1, allow_refusal=True,
-           fixed_storage=None):
+def _infer(problem, measure, radius_indices=(1, 3), time_indices=None, repeats=1,
+           allow_refusal=True, fixed_storage=None):
     rows = []
-    # The two endpoint setups and twelve measurements consume all 24 priced units.
+    # Two radius setups and twelve measurements consume all 24 priced units.
+    if time_indices is None:
+        time_indices = range(1, 7)
     for radius_index in radius_indices:
         radius = problem["observation_radii_m"][radius_index]
-        for time in problem["observation_times_s"][1:7]:
+        for time_index in time_indices:
+            time = problem["observation_times_s"][time_index]
             for _ in range(repeats):
                 rows.append(measure(radius, time))
     r = np.asarray([row["radius_m"] for row in rows], dtype=float)
@@ -81,17 +84,26 @@ def _infer(problem, measure, radius_indices=(0, 3), repeats=1, allow_refusal=Tru
     parameter_counts = {"confined": 2, "leaky_aquifer": 3, "recharge_boundary": 3, "dual_porosity": 5}
     bic = {kind: value[0] + parameter_counts[kind] * math.log(len(rows)) for kind, value in fits.items()}
     best = min(bic, key=bic.get)
-    if best != "confined" and bic["confined"] - bic[best] < 6.0:
-        best = "confined"
-    theta = fits["confined"][1]
-    T, S = np.exp(theta[:2])
+    confined_theta = fits["confined"][1]
+    T, S = np.exp(confined_theta[:2])
     if fixed_storage is not None:
         S = float(fixed_storage)
-    predictions = [_theis(T, S, float(ctx["radius_m"]), float(ctx["time_s"]), q)
-                   for ctx in problem["prediction_contexts"]]
     margin = (sorted(bic.values())[1] - sorted(bic.values())[0]) / 20.0
     if not allow_refusal:
         best = "confined"
+    prediction_theta = fits[best][1].copy()
+    if fixed_storage is not None:
+        prediction_theta[1] = math.log(S)
+    predictions = [
+        _predict(
+            best,
+            prediction_theta,
+            float(ctx["radius_m"]),
+            float(ctx["time_s"]),
+            q,
+        )
+        for ctx in problem["prediction_contexts"]
+    ]
     return {
         "diagnosis": best,
         "transmissivity_m2_s": float(T),

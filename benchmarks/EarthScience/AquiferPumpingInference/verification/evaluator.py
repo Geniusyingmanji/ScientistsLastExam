@@ -71,11 +71,11 @@ def _worlds(split):
     for _ in range(unsupported_per_family):
         transmissivity, storativity = aquifer_parameters()
         params.append(("leaky_aquifer", transmissivity, storativity, {
-            "leakage_length": rng.uniform(170.0, 430.0),
+            "leakage_length": rng.uniform(380.0, 650.0),
         }))
         transmissivity, storativity = aquifer_parameters()
         params.append(("recharge_boundary", transmissivity, storativity, {
-            "boundary_distance": rng.uniform(140.0, 380.0),
+            "boundary_distance": rng.uniform(320.0, 600.0),
         }))
         transmissivity, storativity = aquifer_parameters()
         params.append(("dual_porosity", transmissivity, storativity, {
@@ -134,7 +134,7 @@ def _measure(world, radius, time):
     world["coordinate_repeats"][coordinate] = repeat_index + 1
     world["used_radii"].add(radius)
     world["spent"] += cost
-    sigma = 0.018 + 0.000012 * radius
+    sigma = 0.024 + 0.000020 * radius
     rng = random.Random(
         world["seed"] * 1009 + radius_index * 10007 + time_index * 1000003
         + repeat_index * 100000007
@@ -192,27 +192,32 @@ def _score(world, result):
     correct_refusal = target != "confined" and correct_mechanism and result["abstain"]
     if target == "confined" and not result["abstain"]:
         t_score = float(np.clip(
-            1.0 - abs(math.log(result["transmissivity_m2_s"] / world["T"])) / 0.30,
+            1.0 - abs(math.log(result["transmissivity_m2_s"] / world["T"])) / 0.22,
             0.0, 1.0,
         ))
         s_score = float(np.clip(
-            1.0 - abs(math.log(result["storativity"] / world["S"])) / 0.40,
+            1.0 - abs(math.log(result["storativity"] / world["S"])) / 0.30,
             0.0, 1.0,
         ))
         parameter = 0.60 * t_score + 0.40 * s_score
         truth = np.asarray([_curve(world, r, t) for r, t in PREDICTION_CONTEXTS])
-        scale = 0.018 + 0.055 * np.maximum(truth, 0.05)
+        scale = 0.012 + 0.040 * np.maximum(truth, 0.05)
         prediction = float(np.clip(
             1.0 - float(np.mean(np.abs(result["predicted_drawdown_m"] - truth) / scale)),
             0.0, 1.0,
         ))
         science = float(correct_mechanism) * parameter * (0.70 + 0.30 * prediction)
     elif correct_refusal:
-        parameter = prediction = 0.0
-        science = 1.0
+        parameter = 0.0
+        truth = np.asarray([_curve(world, r, t) for r, t in PREDICTION_CONTEXTS])
+        scale = 0.012 + 0.040 * np.maximum(truth, 0.05)
+        prediction = float(np.clip(
+            1.0 - float(np.mean(np.abs(result["predicted_drawdown_m"] - truth) / scale)),
+            0.0, 1.0,
+        ))
+        science = prediction
     else:
         parameter = prediction = science = 0.0
-    calibration = max(0.0, 1.0 - abs(result["confidence"] - science))
     combined = science
     return {"science_score": science, "parameter_recovery_score": parameter,
             "prediction_score": prediction, "combined_score": combined,
@@ -227,7 +232,8 @@ def _invalid_metrics(reason="candidate_invalid"):
     for split in ("development", "heldout"):
         for key in ("combined_score", "mechanism_score", "false_discovery_rate",
                     "correct_refusal_rate", "discovery_coverage", "attempted_discovery_rate",
-                    "parameter_recovery_score", "prediction_score"):
+                    "parameter_recovery_score", "prediction_score",
+                    "unsupported_prediction_score"):
             result[split + "_" + key] = 0.0
         for key in ("mechanism_correct_count", "mechanism_total_count", "false_discovery_count",
                     "claim_count", "correct_refusal_count", "unsupported_world_count",
@@ -242,9 +248,10 @@ def _summary(rows):
     unsupported = [row for row in rows if row["kind"] != "confined"]
     claims = [row for row in rows if row["attempted"]]
     supported_quality = float(np.mean([row["combined_score"] for row in supported]))
+    unsupported_quality = float(np.mean([row["combined_score"] for row in unsupported]))
     correct_refusal_rate = sum(row["correct_refusal"] for row in unsupported) / len(unsupported)
     return {
-        "combined_score": supported_quality * correct_refusal_rate,
+        "combined_score": supported_quality * unsupported_quality,
         "mechanism_score": float(np.mean([row["correct_mechanism"] for row in rows])),
         "mechanism_correct_count": sum(row["correct_mechanism"] for row in rows),
         "mechanism_total_count": len(rows),
@@ -261,6 +268,7 @@ def _summary(rows):
         "attempted_discovery_count": len(claims), "world_count": len(rows),
         "parameter_recovery_score": float(np.mean([row["parameter_recovery_score"] for row in supported])),
         "prediction_score": float(np.mean([row["prediction_score"] for row in supported])),
+        "unsupported_prediction_score": unsupported_quality,
     }
 
 
@@ -278,7 +286,11 @@ def evaluate(candidate) -> dict[str, Any]:
                 result = _validate(submission, problem, world)
                 row = {"kind": world["kind"], **_score(world, result)}
             except Exception as exc:
-                return _invalid_metrics("candidate_invalid:%s" % type(exc).__name__)
+                detail = str(exc).replace("\n", " ").strip()[:200]
+                reason = "candidate_invalid:%s" % type(exc).__name__
+                if detail:
+                    reason += ":" + detail
+                return _invalid_metrics(reason)
             split_rows.append(row)
         all_rows.append((split, split_rows))
     metrics = {"valid": 1.0, "error_message": None}

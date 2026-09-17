@@ -91,21 +91,25 @@ requires at least one. Do not assume hidden seeds, fixed parameters, world order
 ## Scoring
 
 For supported worlds, continuous quality combines parameter recovery, sealed prediction, and a
-correct confined-family diagnosis. The split `combined_score` is the mean supported-world quality
-multiplied by the exact named-refusal rate over unsupported worlds. Therefore blanket abstention,
-never refusing, and a fixed unsupported label all score exactly zero. Confidence calibration
-changes supported-world quality only slightly.
+correct confined-family diagnosis. On unsupported worlds, a correct named refusal earns continuous
+quality only when its sealed predictions match that family's withheld curve; a wrong family or
+`undetermined` earns zero. The split `combined_score` is the mean supported-world quality
+multiplied by the mean unsupported-world prediction quality. Therefore blanket abstention, never
+refusing, and a fixed unsupported label all score exactly zero, while merely guessing a family
+without modelling its response cannot fill the unsupported axis. Confidence is validated but is
+not part of the headline score.
 
 Mechanism accuracy, false-discovery rate, correct-refusal rate, supported discovery coverage,
 attempted discovery, parameter recovery, prediction, validity, and held-out transfer are reported
-separately. Each rate publishes its numerator and denominator. Mechanism accuracy uses all worlds;
-an invalid submission, wrong family, or undetermined answer is incorrect.
+separately, including unsupported-family prediction quality. Each rate publishes its numerator and
+denominator. Mechanism accuracy uses all worlds; an invalid submission, wrong family, or
+undetermined answer is incorrect.
 
 The truth-blind reference, ablations, and a 128-strategy shortcut probe are quantified in
 `references/known_best.md` and pin the capability ladder without exposing evaluator worlds.
-It scores `0.622081/0.793352` development/held out. A one-radius half-budget version scores
-`0.000000/0.192774`; fixed storativity scores `0.351835/0.431246`; never refusing scores zero;
-and a confined fit followed by three residual thresholds reaches `0.481859/0.525816`.
+It scores `0.636182/0.691286` development/held out. The strongest tested one-radius half-budget
+design scores `0.314589/0.402415`; fixed storativity scores `0.031206/0.009477`; never refusing
+scores zero; and the strongest tested confined-fit residual probe reaches `0.139929/0.156887`.
 
 ## Relationship to nearby tasks
 
@@ -115,11 +119,10 @@ parameters, or aquifer-boundary diagnosis. `ClimateScience/EnergyBalanceModel` i
 two-layer climate response from chosen forcing experiments, not radial groundwater flow.
 `AtmosphericScience/RadiativeTransferFit` also performs active parameter inversion with refusal,
 but selects thermal channels to retrieve atmospheric profiles rather than pumping-test radii and
-porous-medium transport parameters. `EarthScience/GroundwaterRemediationDesign` (open proposal)
-optimizes a remediation design rather than inferring an aquifer model from transient observations.
-`WaterDistribution/DistributionNetworkTopology` (if merged) reconstructs a pressurized pipe graph;
-it does not estimate porous-medium storage or reject aquifer conceptual models. No Frontier-Eng
-task uses pumping-test interpretation or Theis-model inadequacy.
+porous-medium transport parameters. `Geophysics/UPbConcordiaInference` also attributes a process
+from noisy curves, but resolves coupled radioactive-decay event histories rather than selecting
+hydraulic measurements or recovering porous-medium transport parameters. No Frontier-Eng task
+uses pumping-test interpretation or Theis-model inadequacy.
 
 ## Rules and references
 

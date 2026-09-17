@@ -6,14 +6,14 @@ oracle:
   feasibility: listed radius/time queries, six setup units for each distinct radius plus one unit per observation within a 24-unit budget, exact finite bounded outputs, consistent diagnosis and abstention, and current-world evidence identifiers
   deterministic: true
 normalization:
-  baseline: one early observation followed by a valid undetermined abstention
+  baseline: six legal observations followed by a valid overconfident confined claim with boundary-valued parameters and zero predictions
   reference: truth-blind cross-radius nonlinear fits of the confined and three alternative families with information-criterion attribution
-  score: mean supported-world continuous quality multiplied by the exact named-refusal rate on unsupported worlds; family accuracy, false discovery, refusal, coverage, attempts and held-out transfer remain separate with counts
+  score: mean supported-world parameter and prediction quality multiplied by mean unsupported-world sealed-prediction quality, where a wrong or undetermined family contributes zero; family accuracy, false discovery, refusal, coverage, attempts and held-out transfer remain separate with counts
 evaluation_budget:
   total_units_per_world: 24
   distinct_radius_setup_units: 6
   measurement_units: 1
-  reference_design: two endpoint radii with six times at each radius, consuming all 24 units
+  reference_design: 25 m and 110 m radii with six times at each radius, consuming all 24 units
   expected_wall_time_seconds: 10
 citations:
 - id: doi:10.1029/TR016i002p00519
@@ -34,10 +34,10 @@ invariants:
 - blanket undetermined abstention is valid and scores exactly zero
 - never refusing and any fixed unsupported label score exactly zero
 - malformed, non-finite, extra-key, fabricated-evidence, unlisted-coordinate, and over-budget candidates fail closed
-- valid and invalid evaluation paths return the same 40 top-level metric keys
+- valid and invalid evaluation paths return the same 43 top-level metric keys
 - development and held-out worlds use different parameters and deterministic noise seeds
 - the reference consumes only public problems and charged measurement callbacks
-known_shortcuts: A reproducible 128-strategy confined-fit and residual-threshold family has a development-selected member scoring 0.481859/0.525816 development/held out, below the multi-family reference at 0.622081/0.793352. This declared probe is not an upper bound on other cheap families. A maintainer reported a separate 0.884294 candidate on an earlier head, but its exact program and fixed settings have not been made available for current-head replay; C12 remains unresolved. A one-radius half-budget ablation scores 0.000000/0.192774, fixed storativity scores 0.351835/0.431246, and never refusing scores zero. The reduced-order laboratory omits partial penetration, well storage/skin, heterogeneity, anisotropy, unconfined flow, irregular boundaries and correlated drift.
+known_shortcuts: The strongest reproducible confined-fit residual probe uses no alternative-family equation, independently selects its best radius pair from all ten pairs, and scores 0.139929/0.156887 development/held out versus the multi-family reference at 0.636182/0.691286. An earlier three-threshold probe scores 0.023665/0.028897. The historical 0.884294 maintainer candidate targeted an obsolete score that awarded full unsupported credit for a correct label without testing whether the candidate could model that family; under the current continuous unsupported-prediction axis, the conservative stronger analog cannot exploit that route. The development-best one-radius half-budget design from 210 tested schedules scores 0.314589/0.402415, fixed storativity scores 0.031206/0.009477, and never refusing scores zero. The reduced-order laboratory omits partial penetration, well storage/skin, heterogeneity, anisotropy, unconfined flow, irregular boundaries and correlated drift.
 review:
   domain: pending_external_hydrogeology_review
   evaluator_security: automated_budget_contract_determinism_theis_invariant_bad_candidate_ablation_metric_shape_identifier_leakage_degenerate_policy_and_mechanism_accounting_tests
@@ -48,7 +48,7 @@ provenance:
   fresh_confirmation_status: current_budget_and_scoring_revision_builder_replayed_on_linux_pending_independent_recomputation
 novelty_risk:
   level: medium
-  rationale: No repository or Frontier-Eng task performs pumping-test interpretation. GravityInversion reconstructs static density bodies; EnergyBalanceModel fits global climate response; RadiativeTransferFit shares active inversion with refusal but retrieves atmospheric profiles; the open GroundwaterRemediationDesign proposal optimizes intervention rather than inferring a transient aquifer model; DistributionNetworkTopology reconstructs pipe graphs. None uses radial groundwater diffusion, pumping-test radius setup costs, or aquifer conceptual-model attribution.
+  rationale: No repository or Frontier-Eng task performs pumping-test interpretation. GravityInversion reconstructs static density bodies; EnergyBalanceModel fits global climate response; RadiativeTransferFit shares active inversion with refusal but retrieves atmospheric profiles; UPbConcordiaInference attributes coupled radioactive-decay histories. None uses radial groundwater diffusion, pumping-test radius setup costs, or aquifer conceptual-model attribution.
 lineage:
   status: complete
   builder_model_ids:
@@ -62,8 +62,8 @@ lineage:
   calibration_runs:
   - experiments/aquifer_pumping_deepseek_calibration_2026-09-08.json
   - experiments/aquifer_pumping_deepseek_calibration_2026-09-09.json
-  calibration_evidence_status: current_or_migration_replayed
-  edits_triggered_by_model: The September 8 DeepSeek Flash and Pro draws predate the revised pricing, noise, identifier, world order, and headline score and remain historical protocol evidence only. The independent maintainer red team, not model performance, triggered the security and calibration revision. On the final revision, thinking-disabled Flash and Pro each produced one valid blanket-undetermined first proposal scoring zero on both splits; no further evaluator or hidden-world change followed those results.
+  calibration_evidence_status: historical_only
+  edits_triggered_by_model: The September 8 and 9 DeepSeek Flash and Pro draws predate the current world panel, baseline, noise, tolerances, unsupported-prediction axis, and probe set, so they are historical protocol evidence only. Independent maintainer red teams, not those model scores, triggered the scoring and calibration revisions. Current-contract calibration is recorded separately after the executable structure was frozen.
   shortcut_discoverer: independent_maintainer_red_team_then_builder_reproduced_128_strategy_confined_fit_and_residual_threshold_sweep
   frozen_before_eval: false
   freeze_timestamp: null
@@ -77,21 +77,24 @@ construction_audit:
   author_domain: hydrogeology
   reviewer_domain: independent_maintainer_engineering_review_completed_external_hydrogeology_review_pending
   expert_hours: null
-  red_team_rounds: 3
+  red_team_rounds: 4
   oracle_disagreement_status: reduced_order_alternative_formulas_are_public_and_explicitly_not_claimed_as_the_full_cited_solutions
-  independent_recomputation_status: the maintainer independently reproduced and attacked revision 99c081c; the revised baseline, truth-blind reference, malformed-candidate checks, Theis invariants, ablations, identifier probe, degenerate policies, and shortcut sweep are executable and builder-replayed on Linux pending independent rerun
+  independent_recomputation_status: the maintainer independently reproduced and attacked earlier revisions; the continuous unsupported-prediction score, confident baseline, truth-blind reference, best-of-ten radius design, best-of-210 half-budget ablation, self-contained residual probes, malformed-candidate checks, identifier probe, and degenerate policies are builder-replayed on Linux pending independent rerun
 shortcut_probe:
   schema_version: 1
   metric: combined_score
   reference:
     candidate: verification/reference_solver.py
-    expected_score: 0.622081417
+    expected_score: 0.636182214
   probes:
-  - id: confined_fit_residual_threshold_sweep_best
+  - id: confined_fit_three_threshold_probe
     candidate: verification/shortcut_probe.py
-    expected_score: 0.481859296
-  - id: shipped_baseline
-    candidate: solution.py
-    expected_score: 0.0
-  relative_margin: 0.2
+    expected_score: 0.023664768
+  - id: strongest_confined_fit_residual_probe
+    candidate: verification/shortcut_probe_strong.py
+    expected_score: 0.139928612
+  excluded:
+  - candidate: solution.py
+    reason: required zero baseline, tested separately rather than used as scientific shortcut evidence
+  relative_margin: 0.5
   score_tolerance: 0.000001

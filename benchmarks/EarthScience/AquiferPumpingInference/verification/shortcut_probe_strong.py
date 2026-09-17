@@ -1,4 +1,4 @@
-"""Truth-blind confined fit with fixed residual-threshold attribution."""
+"""Strong low-dimensional residual probe without alternative-model fitting."""
 from __future__ import annotations
 
 import math
@@ -6,11 +6,6 @@ import math
 import numpy as np
 from scipy.optimize import least_squares
 from scipy.special import exp1
-
-
-CHI2_CUT = 2.0
-RADIAL_CUT = -3.0
-TEMPORAL_CUT = -4.0
 
 
 def _theis(transmissivity, storativity, radius, time, pumping_rate):
@@ -56,9 +51,9 @@ def _fit_confined(radius, time, drawdown, sigma, pumping_rate, bounds):
     return best
 
 
-def infer_aquifer(problem, measure):
+def _infer(problem, measure, radius_indices=(1, 4)):
     rows = []
-    for radius_index in (0, 3):
+    for radius_index in radius_indices:
         radius = problem["observation_radii_m"][radius_index]
         for time in problem["observation_times_s"][1:7]:
             rows.append(measure(radius, time))
@@ -66,39 +61,30 @@ def infer_aquifer(problem, measure):
     radius = np.asarray([row["radius_m"] for row in rows], dtype=float)
     time = np.asarray([row["time_s"] for row in rows], dtype=float)
     drawdown = np.asarray([row["drawdown_m"] for row in rows], dtype=float)
-    sigma = np.asarray(
-        [row["drawdown_standard_error_m"] for row in rows], dtype=float
-    )
+    sigma = np.asarray([row["drawdown_standard_error_m"] for row in rows], dtype=float)
     pumping_rate = float(problem["pumping_rate_m3_s"])
     rss, theta = _fit_confined(
-        radius,
-        time,
-        drawdown,
-        sigma,
-        pumping_rate,
-        problem["parameter_bounds"],
+        radius, time, drawdown, sigma, pumping_rate, problem["parameter_bounds"]
     )
     fitted = _theis(
-        math.exp(theta[0]),
-        math.exp(theta[1]),
-        radius,
-        time,
-        pumping_rate,
+        np.exp(theta[0]), np.exp(theta[1]), radius, time, pumping_rate
     )
     residual = ((drawdown - fitted) / sigma).reshape(2, 6)
-    radial_contrast = float(np.mean(residual[1] - residual[0]))
-    temporal_contrast = float(
-        np.mean(residual[:, -2:]) - np.mean(residual[:, :2])
+    radial = float(np.mean(residual[1] - residual[0]))
+    curvature = float(
+        np.mean(residual[:, 2:4])
+        - 0.5 * np.mean(residual[:, :2])
+        - 0.5 * np.mean(residual[:, -2:])
     )
 
-    if rss / len(rows) <= CHI2_CUT:
+    if rss / len(rows) <= 2.0 and radial <= 0.8 and curvature <= 1.0:
         diagnosis = "confined"
-    elif radial_contrast < RADIAL_CUT:
-        diagnosis = "leaky_aquifer"
-    elif temporal_contrast < TEMPORAL_CUT:
+    elif radial > 0.8 or (curvature > 1.0 and radial > 0.0):
+        diagnosis = "dual_porosity"
+    elif curvature > 0.60 * abs(radial):
         diagnosis = "recharge_boundary"
     else:
-        diagnosis = "dual_porosity"
+        diagnosis = "leaky_aquifer"
 
     transmissivity, storativity = np.exp(theta)
     predictions = [
@@ -116,7 +102,11 @@ def infer_aquifer(problem, measure):
         "transmissivity_m2_s": float(transmissivity),
         "storativity": float(storativity),
         "predicted_drawdown_m": [float(value) for value in predictions],
-        "confidence": 0.65,
+        "confidence": 0.75,
         "abstain": diagnosis != "confined",
         "evidence_measurement_ids": [row["measurement_id"] for row in rows],
     }
+
+
+def infer_aquifer(problem, measure):
+    return _infer(problem, measure)

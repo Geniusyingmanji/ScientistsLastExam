@@ -37,6 +37,25 @@ class AquiferPumpingInferenceTests(unittest.TestCase):
         self.assertEqual(result["robustness_score"], 0.0)
         self.assertEqual(result["valid"], 1.0)
 
+        counter = iter(range(6))
+
+        def measure(radius, time):
+            index = next(counter)
+            return {
+                "measurement_id": "baseline-%d" % index,
+                "radius_m": radius,
+                "time_s": time,
+                "drawdown_m": 0.0,
+                "drawdown_standard_error_m": 0.03,
+                "cost_units": 7 if index == 0 else 1,
+                "spent_units": 7 + index,
+            }
+
+        claim = baseline.infer_aquifer(oracle.public_problem(), measure)
+        self.assertEqual(claim["diagnosis"], "confined")
+        self.assertIs(claim["abstain"], False)
+        self.assertGreaterEqual(claim["confidence"], 0.9)
+
     def test_theis_physics_invariants(self):
         oracle = _load("aquifer_physics", TASK / "verification" / "evaluator.py")
         times = np.asarray([100.0, 1000.0, 10000.0])
@@ -63,6 +82,9 @@ class AquiferPumpingInferenceTests(unittest.TestCase):
             lambda s: s.update(predicted_drawdown_m=[-1.0] * 8),
             lambda s: s.update(confidence=2.0),
             lambda s: s.update(evidence_measurement_ids=["fabricated"] * 12),
+            lambda s: s.update(evidence_measurement_ids=[
+                "fabricated-%d" % index for index in range(25)
+            ]),
             lambda s: s.update(evidence_measurement_ids=[]),
         ]
         for change in changes:
@@ -74,6 +96,7 @@ class AquiferPumpingInferenceTests(unittest.TestCase):
                 result = oracle.evaluate(candidate)
                 self.assertEqual(result["valid"], 0.0)
                 self.assertEqual(result["combined_score"], 0.0)
+                self.assertTrue(result["error_message"])
 
         def overspend(problem, measure):
             for _ in range(problem["measurement_budget_units"] + 1):
@@ -90,7 +113,8 @@ class AquiferPumpingInferenceTests(unittest.TestCase):
         good = oracle.evaluate(baseline.infer_aquifer)
         invalid = oracle.evaluate(lambda problem, measure: {})
         self.assertEqual(set(good), set(invalid))
-        self.assertEqual(len(good), 40)
+        self.assertEqual(len(good), 43)
+        self.assertTrue(invalid["error_message"])
 
         class BrokenReset:
             def reset_session(self):
@@ -140,6 +164,14 @@ class AquiferPumpingInferenceTests(unittest.TestCase):
             [world["kind"] for world in oracle._worlds("development")],
             ["confined"] * 5 + ["leaky_aquifer", "recharge_boundary", "dual_porosity"],
         )
+        for split, supported_count, unsupported_per_family in (
+            ("development", 12, 4),
+            ("heldout", 9, 3),
+        ):
+            kinds = [world["kind"] for world in oracle._worlds(split)]
+            self.assertEqual(kinds.count("confined"), supported_count)
+            for kind in ("leaky_aquifer", "recharge_boundary", "dual_porosity"):
+                self.assertEqual(kinds.count(kind), unsupported_per_family)
 
     def test_measurement_id_only_and_other_degenerate_policies_score_zero(self):
         oracle = _load("aquifer_degenerate", TASK / "verification" / "evaluator.py")
@@ -203,6 +235,8 @@ class AquiferPumpingInferenceTests(unittest.TestCase):
         self.assertEqual(result["mechanism_correct_count"], 2)
         self.assertEqual(result["mechanism_total_count"], 3)
         self.assertEqual(result["mechanism_score"], 2 / 3)
+        self.assertEqual(result["unsupported_prediction_score"], 0.2)
+        self.assertAlmostEqual(result["combined_score"], 0.04)
         self.assertNotEqual(result["mechanism_score"], result["combined_score"])
 
     def test_ablation_ladder(self):
@@ -211,15 +245,21 @@ class AquiferPumpingInferenceTests(unittest.TestCase):
         try:
             reference = _load("aquifer_ablation_ref", TASK / "verification" / "reference_solver.py")
             ablations = _load("aquifer_ablations", TASK / "verification" / "ablation_solvers.py")
+            shortcut = _load(
+                "aquifer_strong_shortcut",
+                TASK / "verification" / "shortcut_probe_strong.py",
+            )
         finally:
             sys.path.pop(0)
         full = oracle.evaluate(reference.infer_aquifer)
         one_radius = oracle.evaluate(ablations.one_radius_half_budget)
         fixed = oracle.evaluate(ablations.fixed_storage)
         never = oracle.evaluate(ablations.never_refuse)
+        strong_shortcut = oracle.evaluate(shortcut.infer_aquifer)
         for key in ("combined_score", "robustness_score"):
             self.assertGreater(full[key] - one_radius[key], 0.10)
             self.assertGreater(full[key], fixed[key])
+            self.assertLess(strong_shortcut[key], 0.50 * full[key])
             self.assertEqual(never[key], 0.0)
 
 

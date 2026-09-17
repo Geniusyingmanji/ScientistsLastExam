@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "evidence_scope": "MODEL_CALIBRATION_NOT_POPULATION_PERFORMANCE",
-  "evidence_status": "current_clean_candidate_replay",
+  "evidence_status": "historical_superseded_task_contract",
   "task": "Hydrology/AquiferPumpingInference",
   "task_source_revision": "2293a80fd1490ea139a4417543aa7e17616ade48",
   "generation_source_revision": "2293a80fd1490ea139a4417543aa7e17616ade48",
@@ -85,6 +85,6 @@
   "excluded_protocol_runs": {
     "deepseek-v4-flash-stale-16k-config": "provider returned HTTP 401 before generation; infrastructure evidence only"
   },
-  "admission_result": "pass: both current-revision first proposals are valid and remain below the truth-blind reference on both splits; both are blanket-undetermined outcomes rather than performance gains",
-  "notes": "Both generated candidates were replayed through the secure evaluator after restoring a clean worktree. No prompt, generated source, endpoint, credential, API key, request log, or run directory is committed."
+  "admission_result": "historical only: both first proposals were valid and below the reference on their recorded revision; this does not establish difficulty for the later continuous unsupported-prediction contract",
+  "notes": "Both generated candidates were replayed through the secure evaluator after restoring a clean worktree. The task later changed its world panel, baseline, noise and recovery tolerances, headline score, radius design, and shortcut probes, so these values are not current performance. No prompt, generated source, endpoint, credential, API key, request log, or run directory is committed."
 }
