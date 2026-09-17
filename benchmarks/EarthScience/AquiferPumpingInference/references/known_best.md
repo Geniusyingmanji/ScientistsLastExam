@@ -74,12 +74,18 @@ confined-fit/residual-summary capability and remains below the reference on both
 
 ## Model calibration
 
-The September 8 and 9 DeepSeek Flash/Pro records predate the current world panel, self-confident
-baseline, noise and recovery tolerances, continuous unsupported-prediction axis, radius selection,
-and declared strong probe. They are retained as historical protocol evidence only and are not
-quoted as current scientific performance. Current-contract calibration is recorded in a separate
-compact experiment file after executable structure freeze; prompts, generated programs, endpoints,
-credentials, request logs, and run directories are excluded.
+The September 8 and 9 DeepSeek Flash/Pro records predate the current contract and remain historical
+only. After executable structure froze at clean revision `7c7a0139`, both exact model IDs passed a
+visible-output smoke test with `thinking.type=disabled`. Two selection-blind first proposals per
+model were scheduled at seeds 17 and 29 with proposal budget 1. Flash produced one valid candidate
+at `0.192625/0.172372` and one measurement-contract violation; Pro produced one valid candidate at
+`0.012719/0.000000` and one runtime-invalid candidate. Both valid candidates were securely replayed
+twice with identical complete JSON and remained below the `0.636182` reference. Invalid cells are
+retained as protocol failures, not counted as evidence of difficulty. This DeepSeek evidence is
+supplementary and does not replace maintainer-native frontier-model D16 calibration.
+
+The compact current record is `experiments/aquifer_pumping_admission_2026-09-17.json`. Prompts,
+generated programs, endpoints, credentials, request logs, and run directories are excluded.
 
 ## Construction findings
 
