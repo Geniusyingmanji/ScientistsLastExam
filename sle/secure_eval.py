@@ -337,6 +337,15 @@ def sanitized_candidate_failure(error: BaseException | str) -> dict[str, Any]:
         kind = "candidate_response_too_large"
     elif "candidate worker exited" in message:
         kind = "candidate_worker_exit"
+    elif "budget" in message and (
+        "exceed" in message or "exhaust" in message
+    ):
+        # Oracles charge per measurement and enforce their own budget with a RuntimeError. That
+        # text reaches the worker as "<Type>: <message>" and lands here; before this branch it
+        # fell through to candidate_runtime_error, so a candidate that spent its budget - or
+        # swallowed the error and submitted anyway - was indistinguishable from one that
+        # crashed. Only the class is used; the message itself is never forwarded.
+        kind = "callback_budget_exhausted"
     else:
         kind = "candidate_runtime_error"
     result: dict[str, Any] = {
@@ -656,6 +665,24 @@ class CandidateProxy:
         self.packages = tuple(packages)
         self.proc = None
         self._stdout_buffer = b""
+        # Every charged callback the host served across all sessions of this evaluation.
+        # Counter only: the proxy never refuses a call on this basis.
+        #
+        # Most discovery tasks charge per measurement and most of those enforce the budget
+        # inside the oracle, so a candidate that exhausts it normally fails on the oracle's
+        # own RuntimeError and is classified. The exception is the candidate that catches that
+        # error and submits anyway - it scored exactly like an honest one. The harness cannot
+        # enforce a limit it was never told: no task declares a maximum callback count in its
+        # frontier_eval contract, and inventing one here would false-fail correct candidates
+        # whose oracle charges a different unit (query-call limit and budget units are two
+        # separate counters in ForceFieldCalibration alone). So the count is published
+        # unconditionally and the per-task limit stays where it belongs.
+        #
+        # Making it a hard limit needs a task-declared maximum - a new field in the
+        # frontier_eval contract (metadata.yaml or a sibling file), a spec accessor to read it,
+        # and a review of all ~85 migration-pending tasks so the declared value matches what
+        # their oracle actually charges. Until then, observability is the honest fix.
+        self.charged_callback_calls = 0
         self._start_worker()
 
     def _start_worker(self) -> None:
@@ -812,6 +839,10 @@ class CandidateProxy:
                     cb_kwargs = decode(response.get("kwargs", {}))
                     if not isinstance(cb_args, list) or not isinstance(cb_kwargs, dict):
                         raise CandidateError("invalid callback arguments")
+                    # Counted after validation and before the call, so a served request is one
+                    # charged callback in both outcomes - the oracle charges for a rejected
+                    # request too, and the counter must match the oracle's own accounting.
+                    self.charged_callback_calls += 1
                     callback_response.update({"ok": True, "result": encode(callback(*cb_args, **cb_kwargs))})
                 except Exception as exc:
                     callback_response.update({"ok": False, "error": "%s: %s" % (type(exc).__name__, exc)})
@@ -959,4 +990,14 @@ def trusted_evaluate(task_dir: Path, candidate: Path, entrypoint: str, score_mod
         if recorder is not None:
             result["discovery_evidence"] = recorder.finish(
                 result, evaluation_complete=evaluation_complete)
+        # Published on both the success and the candidate-failure path. On the failure path the
+        # count is the whole point: a candidate that exhausted its budget and then died, and one
+        # that exhausted it and submitted anyway, are the only two ways to arrive here, and the
+        # counter tells them apart from a candidate that simply crashed on its first call.
+        # `getattr` because this function accepts a substituted proxy - the repo's own tests patch
+        # CandidateProxy with a minimal stand-in - and a proxy that does not count should omit the
+        # field rather than publish a zero it cannot vouch for.
+        charged_calls = getattr(proxy, "charged_callback_calls", None)
+        if isinstance(charged_calls, int) and not isinstance(charged_calls, bool):
+            result["charged_callback_calls"] = charged_calls
     return validate_metrics(result, score_mode)
