@@ -26,6 +26,12 @@ REQUIRED_FILES = (
     "Task.md", "solution.py", "verification/evaluator.py", "frontier_eval/metadata.yaml",
     "frontier_eval/initial_program.txt", "frontier_eval/candidate_destination.txt",
     "frontier_eval/entrypoint.txt", "frontier_eval/constraints.txt",
+    # The wrapper is the only file that binds the enforced timeout, and an adversarial review
+    # found the hole of not requiring it: _timeout_issues returned [] for a missing run_eval.py
+    # (the None / not-is_file guard), so a task could ship without its wrapper AND with a
+    # wildly wrong eval_time_seconds and audit green. All 88 packages carry the file today, so
+    # this closes the hole without changing any verdict.
+    "frontier_eval/run_eval.py",
 )
 REQUIRED_METADATA = (
     "domain", "task", "difficulty", "oracle_type", "score_mode", "gpu_required",
