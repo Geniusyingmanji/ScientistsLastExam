@@ -11,6 +11,7 @@ from scripts.audit_tasks import LINEAGE_STATUSES, _normalized_oracle, _task_card
 # Tasks built inside this repository, whose builder model, scaffold and red-team history are
 # recorded on the card rather than reconstructed after the fact. Everything else is inherited.
 RECORDED_LINEAGE = {
+    "Exoplanets/MicrolensingEventCharacterization",
     "Ecology/OccupancyDetectionDesign",
     "DataPrivacy/SparseVectorAudit",
     "Physics/CriticalPhenomenaLab",

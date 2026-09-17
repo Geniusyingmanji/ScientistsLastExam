@@ -1,0 +1,93 @@
+schema_version: 2
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.926256
+  probes:
+  - id: legal_baseline
+    candidate: solution.py
+    expected_score: 0.0
+  - id: constant_statistic_sweep_winner
+    candidate: verification/shortcut_constant.py
+    expected_score: 0.542283
+  - id: fixed_source_textbook_fit
+    candidate: verification/shortcut_textbook.py
+    expected_score: 0.417203
+  excluded:
+  - candidate: verification/replay_review.py
+    reason: Trusted replay driver containing candidate source templates; it exposes no standalone submission entrypoint at module scope.
+  relative_margin: 0.2
+  score_tolerance: 0.000001
+scientific_question: Can an agent actively distinguish point-lens, binary-lens and variable-source microlensing events under a finite photometric follow-up budget, recover observable duration, amplitude and feature time, and refuse mixed out-of-family events?
+artifact: A model label, characteristic-duration estimate, anomaly or variability amplitude, feature time, confidence and immutable photometric evidence, or a calibrated refusal.
+oracle:
+  model: deterministic Paczynski point-lens curves with localized binary anomalies, sinusoidal source variability and evaluator-only mixed lens-plus-variability worlds
+  feasibility: 24 unit-cost observations over fixed epochs and g/r filters, at most one query per epoch/filter pair, bounded finite claims and evidence restricted to current-world observations
+  deterministic: true
+normalization:
+  baseline: six fixed r-band observations followed by a point-lens claim with fixed parameters
+  reference: full r-band cadence, bounded physical point-lens fit, joint localized-anomaly fit, sinusoidal comparison and calibrated mixed-family refusal; continuous duration, amplitude and feature time use 1.8-day, 0.075-amplitude and 1.5-day tolerances
+  score: development mechanism recovery normalized above blanket abstention; model accuracy, false discovery, refusal, budget, feasibility and held-out transfer remain separate
+citations:
+- id: doi:10.1086/164140
+  title: Gravitational lens effect on the light from a distant star
+- id: doi:10.1086/171443
+  title: Extending the MACHO search to about 10^6 solar masses
+- id: doi:10.1146/annurev-astro-081811-125518
+  title: Microlensing and exoplanets
+invariants:
+- point-lens worlds follow the Paczynski magnification family and binary worlds add a localized anomaly
+- variable-source worlds have smooth periodic source variability without a lensing peak
+- all four families have overlapping r-band flux-range intervals, so range alone cannot identify the mechanism
+- mixed lens-plus-variability worlds require refusal; blanket abstention is exactly zero after normalization
+- duplicate queries, overspending, unknown epochs or malformed candidates fail closed
+- every answer cites at least six distinct current-world observations
+- model accuracy, false discovery, refusal, feasibility and held-out transfer are separate axes
+known_shortcuts: A 576-policy no-fit statistic sweep reaches 0.542283, and a fixed-source-fraction textbook Paczynski/residual/sinusoid candidate reaches 0.417203, versus the bounded truth-blind reference at 0.926256. Both are registered executable probes under the 20% relative-margin guard. Flux ranges overlap across all four families, the instrument reports a common uncertainty floor, and confidence is calibrated against continuous correctness. Color discrimination, parallax, finite-source limb darkening, binary orbital motion and real cadence/weather systematics are not modeled; certification requires server-held events and independent astrophysical review.
+review:
+  domain: pending_external_astronomy
+  evaluator_security: current_executable_passes_clean_pinned_linux_budget_determinism_refusal_malformed_candidate_and_shortcut_checks
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and shifted held-out point, binary, variable-source and ambiguous event families.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+  license: Procedural repository-local code and generated observations; no external dataset bundled
+  pollution_note: Hidden event parameters, world family and split membership remain evaluator-only.
+novelty_risk:
+  level: medium
+  rationale: Unlike Exoplanets/RadialVelocityPlanets, this is photometric lens-model selection rather than Doppler period search; unlike Exoplanets/TransmissionSpectrumSpecies, it is time-and-filter follow-up rather than atmospheric spectral composition; unlike Exoplanets/TransitTimingAttribution, it attributes magnification morphology rather than transit timing perturbations.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:gpt-5
+  builder_scaffolds:
+  - science-benchmark-construction
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  - deepseek-v4-pro
+  calibration_runs:
+  - experiments/microlensing_deepseek_calibration_2026-09-07.json
+  - experiments/microlensing_current_admission_2026-09-14.json
+  - experiments/microlensing_c12_rebuild_2026-09-15.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: Earlier DeepSeek draws did not trigger executable changes. Maintainer C12 red-team candidates triggered overlapping flux ranges, broader blending/impact/anomaly parameters, a mixed-family refusal world, observable-duration and feature-time recovery, a bounded robust reference fit, two executable shortcut probes, and fail-closed invalid scoring.
+  reference_selection_note: The physical grids follow the public parameter bounds and model definitions; the single-family residual refusal threshold was checked on development worlds, while held-out metrics were reporting-only. The current revision changes world values and output semantics, so earlier replay and model-draw scores are historical only.
+  shortcut_discoverer: builder_self_audit_with_task_local_ablation_sweep_and_deepseek_flash_pro_calibration
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: computational_astronomy
+  reviewer_domain: pending_external_astronomy
+  expert_hours: null
+  red_team_rounds: 4
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: current reference, ablations, shortcut sweep, contribution gate and task audit replayed on clean pinned Linux revision d977aa87

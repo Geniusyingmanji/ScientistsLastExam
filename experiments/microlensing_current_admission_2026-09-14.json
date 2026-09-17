@@ -1,0 +1,59 @@
+{
+  "task": "Exoplanets/MicrolensingEventCharacterization",
+  "source_revision": "9a208cf45782592aaf12215b9917d63d4159d122",
+  "environment": {
+    "host": "ali Linux",
+    "execution": "trusted driver and bubblewrap for policy replay",
+    "model_adapter": "uncommitted local chat adapter injected thinking.type=disabled",
+    "credentials_and_endpoint_committed": false
+  },
+  "reference_and_controls": {
+    "complete_metrics_identical_twice": true,
+    "all_candidates_valid": true,
+    "reference": {"development": 0.6520355444234319, "heldout_raw_composite": 0.7488293130110213},
+    "reference_without_refusal": {"development": 0.3187022110900986, "heldout_raw_composite": 0.4988293130110213},
+    "reference_eight_epoch_cadence": {"development": 0.413061343978832, "heldout_raw_composite": 0.6846012218984354},
+    "strongest_declared_4116_policy_shortcut": {"development": 0.22759259259259257, "heldout_raw_composite": 0.41668402777777774},
+    "baseline": {"development": 0.0, "heldout_raw_composite": 0.18375},
+    "blanket_refusal": {"development": 0.0, "heldout_raw_composite": 0.25}
+  },
+  "model_protocol": {
+    "algorithm": "greedy_rewrite",
+    "proposal_budget": 1,
+    "seed": 0,
+    "temperature": 0,
+    "max_output_tokens": 12000,
+    "thinking": "disabled",
+    "selection": "first proposal; no redraw",
+    "visible_output_smoke": {"deepseek-v4-flash": "OK", "deepseek-v4-pro": "OK"}
+  },
+  "model_runs": [
+    {
+      "model": "deepseek-v4-flash",
+      "candidate_sha256": "452db8163748e19db4d959735fdf418ae4e4fdc827be4c8ac59a410ae0e382d8",
+      "valid_proposals": 1,
+      "combined_score": 0.2872439230053616,
+      "heldout_raw_composite": 0.3363964315679496,
+      "development_model_accuracy": 0.6666666666666666,
+      "development_correct_refusal_rate": 0.5,
+      "output_tokens": 4096
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "candidate_sha256": "13e6849cbf1083b72dc19473649cf867cc8b64d538ef3fe1e7d408c9c91b27a7",
+      "valid_proposals": 1,
+      "combined_score": 0.0,
+      "heldout_raw_composite": 0.25,
+      "development_model_accuracy": 0.0,
+      "development_correct_refusal_rate": 1.0,
+      "failure_category": "blanket_refusal",
+      "output_tokens": 3028
+    }
+  ],
+  "validation": {
+    "task_pytest": "11 passed",
+    "task_contribution_gate": "16/16 passed",
+    "full_repository_tests_run": false,
+    "global_evidence_refreshed": false
+  }
+}
