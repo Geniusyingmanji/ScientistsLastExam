@@ -38,6 +38,9 @@ shortcut_probe:
   - id: development_selected_moment_empty_history_sweep
     candidate: verification/shortcut_probe.py
     expected_score: 0.320482
+  excluded:
+  - candidate: solution.py
+    reason: shipped blanket-abstention baseline, evaluated separately at exactly zero
   relative_margin: 0.1
   score_tolerance: 1.0e-06
 review:
