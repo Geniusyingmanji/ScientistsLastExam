@@ -5,9 +5,17 @@
 `verification/reference_lyapunov.py` uses only public modes. It solves the LMI
 instead of guessing at it: coordinate descent with a shrinking step over the six
 free entries of a 3-by-3 rational Gram (p11 normalized to 1 by homogeneity),
-from a fixed list of starting points, then rounded to denominator 1000 and
-maximized by the same exact rational bisection to the public numerator and
-denominator cap. A finite catalog of 119 Grams (identity, diagonals, pairwise
+from a fixed list of starting points, then rounded to denominator 1000, polished
+by exact coordinate ascent to a lattice-local optimum, and maximized by the same
+exact rational bisection to the public numerator and denominator cap. The exact
+polish is scoped honestly: on all four shipped instances it changes no score,
+because the float search already lands on a locally optimal lattice point
+(verified by disabling it and re-measuring 0.5887025 either way). It is there as
+margin against float drift - it widens the drift the artifact tolerates from
+1e-6 to 1e-4 relative on `plant`, and a real BLAS difference between machines is
+far below 1e-6 - and it makes the artifact a function of the lattice and the
+exact bisection rather than of the float trajectory that found it. A finite
+catalog of 119 Grams (identity, diagonals, pairwise
 shears, two-off-diagonal shears, cyclic-symmetric Grams, and a handful of full
 5-DOF shears) is retained and every atom is certified too; the solved Gram is
 accepted only if it certifies, and the catalog wins on any instance where

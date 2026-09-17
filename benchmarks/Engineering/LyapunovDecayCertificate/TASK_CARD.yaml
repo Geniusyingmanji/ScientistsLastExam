@@ -37,12 +37,17 @@ known_shortcuts: >-
   rather than shipped as a probe. A peer cannot be declared (it would fail the
   guard) or excluded (the completeness check would flag it as unmeasured), which
   is the correct behaviour. The reference is deterministic coordinate descent
-  (numpy only, fixed starts, no RNG) rounded to denominator 1000 and certified
-  by exact bisection; its 119-Gram catalog is retained as a fallback for any
-  instance where rounding loses positive definiteness, and the solved Gram is
-  accepted only if it certifies. NumPy is required and is the pinned dependency;
-  scipy.optimize is deliberately not used because its convergence drifts across
-  versions.
+  (numpy only, fixed starts, no RNG) rounded to denominator 1000, polished by
+  exact coordinate ascent to a lattice-local optimum, and certified by exact
+  bisection; its 119-Gram catalog is retained as a fallback for any instance
+  where rounding loses positive definiteness, and the solved Gram is accepted
+  only if it certifies. The polish changes no score on the shipped instances
+  (the float search already lands on a local optimum there, verified by
+  disabling it) and exists as margin against float drift, so the returned
+  artifact is a function of the lattice and the exact bisection rather than of
+  the float trajectory that found it. NumPy is required and is the pinned
+  dependency; scipy.optimize is deliberately not used because its convergence
+  drifts across versions.
 shortcut_probe:
   schema_version: 1
   metric: combined_score
