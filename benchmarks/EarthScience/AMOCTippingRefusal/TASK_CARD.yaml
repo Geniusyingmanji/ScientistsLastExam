@@ -39,8 +39,12 @@ citations:
   title: "Warning of a forthcoming collapse of the Atlantic meridional overturning circulation"
 - id: doi:10.1126/sciadv.adl4841
   title: "Uncertainties too large to predict tipping times of major Earth system components from historical data"
-- id: doi:10.3402/tellusa.v13i2.9494
+- id: doi:10.3402/tellusa.v13i2.9491
   title: "Thermohaline convection with two stable regimes of flow"
+  note: >-
+    Stommel 1961, Tellus A 13(2). The previously cited 10.3402/tellusa.v13i2.9494 does not
+    resolve at doi.org and is not registered in CrossRef; 9491 is the registered identifier
+    for this paper.
 invariants:
 - a fold world remains on the upper well through year_now; the hidden crossing is in the future
 - red-noise worlds have no second attractor; a historical dip below zero is not a fold

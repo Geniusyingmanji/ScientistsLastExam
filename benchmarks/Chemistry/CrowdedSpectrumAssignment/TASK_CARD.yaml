@@ -10,8 +10,12 @@ normalization:
   reference: unique default matches, zooms only on peaks consistent with more than one library species, two-hit assignment, refusal on unexplained peaks
   score: development mechanism recovery normalized above always-abstain; species-set rate, fraction accuracy, false-species rate, false discovery, refusal, coverage and the held-out split stay separate
 citations:
-- id: doi:10.1021/ac302337u
+- id: doi:10.1021/ac301205z
   title: "Mass Spectral Reference Libraries: An Ever-Expanding Resource for Chemical Identification"
+  note: >-
+    Stein, Anal. Chem. 84(17), 7274-7282 (2012). The previously cited 10.1021/ac302337u does
+    not resolve at doi.org and is not registered in CrossRef; ac301205z is the registered
+    identifier for this title.
 - id: doi:10.1021/ac00096a002
   title: Optimization and testing of mass spectral library search algorithms for compound identification
 - id: doi:10.1002/jms.1198
