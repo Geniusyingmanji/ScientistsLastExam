@@ -143,39 +143,66 @@ class SaturationTests(unittest.TestCase):
         self.assertEqual(MODULE.saturated_axes({"valid_flag_coverage": True, "note": "x"}), [])
 
 
-class VacuousAxisTests(unittest.TestCase):
-    def _runs(self, reference, abstain, claim, rewrites=4):
+class OutcomeTests(unittest.TestCase):
+    def test_a_policy_that_moved_no_flag_is_not_applicable(self):
+        # CacheReplacementPolicyID and SparseVectorAudit absorb the resulting candidate error
+        # into invalid worlds, so the run reports a clean 0.0 that reads like a defended task.
+        run = {"abstain_flags_rewritten": 0,
+               "metrics": {"combined_score": 0.0, "valid": 0.0}}
+        self.assertEqual(MODULE._outcome(run), "not_applicable")
+
+    def test_a_refused_submission_is_rejected_not_a_low_score(self):
+        run = {"abstain_flags_rewritten": 11,
+               "metrics": {"combined_score": 0.0, "valid": 0.0}}
+        self.assertEqual(MODULE._outcome(run), "rejected")
+
+    def test_an_accepted_submission_is_scored(self):
+        run = {"abstain_flags_rewritten": 11,
+               "metrics": {"combined_score": 0.0, "valid": 1.0}}
+        self.assertEqual(MODULE._outcome(run), "scored")
+
+    def test_the_control_has_no_rewrite_counter_and_is_still_scored(self):
+        self.assertEqual(MODULE._outcome({"metrics": {"combined_score": 0.7, "valid": 1.0}}),
+                         "scored")
+
+
+class CalibrationBlindAxisTests(unittest.TestCase):
+    def _runs(self, reference, abstain, claim, outcome="scored"):
         return {
-            "reference": {"metrics": reference},
-            "abstain_all": {"metrics": abstain, "abstain_flags_rewritten": rewrites},
-            "claim_all": {"metrics": claim, "abstain_flags_rewritten": rewrites},
+            "reference": {"metrics": reference, "outcome": "scored"},
+            "abstain_all": {"metrics": abstain, "outcome": outcome},
+            "claim_all": {"metrics": claim, "outcome": outcome},
         }
 
     def test_an_axis_identical_under_opposite_policies_is_reported(self):
         runs = self._runs({"false_discovery_rate": 0.0, "mechanism_score": 0.9},
                           {"false_discovery_rate": 0.0, "mechanism_score": 0.0},
                           {"false_discovery_rate": 0.0, "mechanism_score": 0.4})
-        self.assertEqual(MODULE.vacuous_axes(runs), ["false_discovery_rate"])
+        self.assertEqual(MODULE.calibration_blind_axes(runs), ["false_discovery_rate"])
 
     def test_structural_and_probe_bound_metrics_are_excluded(self):
         constant = {"development_world_count": 16.0, "correct_refusal_denominator": 8.0,
                     "mean_experiment_calls": 3.0, "raw_quality": 0.5}
-        self.assertEqual(MODULE.vacuous_axes(self._runs(constant, constant, constant)),
+        self.assertEqual(MODULE.calibration_blind_axes(self._runs(constant, constant, constant)),
                          ["raw_quality"])
 
     def test_nothing_is_claimed_when_the_probe_moved_no_flag(self):
         # Silence about an axis the probe never reached is the honest answer; saying the axis
         # is insensitive would be a claim about the probe.
         constant = {"false_discovery_rate": 0.0}
-        self.assertEqual(MODULE.vacuous_axes(self._runs(constant, constant, constant, rewrites=0)),
-                         [])
+        self.assertEqual(
+            MODULE.calibration_blind_axes(self._runs(constant, constant, constant, "not_applicable")), [])
+
+    def test_nothing_is_claimed_when_a_submission_was_refused(self):
+        constant = {"false_discovery_rate": 0.0}
+        self.assertEqual(
+            MODULE.calibration_blind_axes(self._runs(constant, constant, constant, "rejected")), [])
 
     def test_nothing_is_claimed_when_a_policy_did_not_run(self):
-        runs = {"reference": {"metrics": {"false_discovery_rate": 0.0}},
-                "claim_all": {"metrics": {"false_discovery_rate": 0.0},
-                              "abstain_flags_rewritten": 2},
+        runs = {"reference": {"metrics": {"false_discovery_rate": 0.0}, "outcome": "scored"},
+                "claim_all": {"metrics": {"false_discovery_rate": 0.0}, "outcome": "scored"},
                 "abstain_all": {"status": "error"}}
-        self.assertEqual(MODULE.vacuous_axes(runs), [])
+        self.assertEqual(MODULE.calibration_blind_axes(runs), [])
 
 
 class ReferenceProgramTests(unittest.TestCase):

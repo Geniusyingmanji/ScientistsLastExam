@@ -296,7 +296,30 @@ def run_policy(spec, candidate: Path, policy_name: str, timeout_s: float,
     if hasattr(policy, "rewrites"):
         row["abstain_flags_rewritten"] = policy.rewrites
         row["abstain_flags_rewritten_in_callbacks"] = policy.callback_rewrites
+    row["outcome"] = _outcome(row)
     return row
+
+
+def _outcome(run: dict) -> str:
+    """Why this policy's number is what it is. A zero has three very different causes.
+
+    `scored`          the oracle accepted the submission and gave it this number. Only these
+                      rows say anything about how well the task is defended.
+    `not_applicable`  the probe found no abstain flag to move, so the policy was never really
+                      built. Some oracles absorb the resulting candidate error into an invalid
+                      world instead of propagating it, and the run then reports a clean 0.0
+                      that reads exactly like a defended task. CacheReplacementPolicyID and
+                      SparseVectorAudit both did this.
+    `rejected`        the flip produced a submission the oracle refused as malformed. That is
+                      the task declining to score the strategy, not the strategy scoring low,
+                      and it must not be counted as either.
+    """
+    if run.get("abstain_flags_rewritten") == 0:
+        return "not_applicable"
+    metrics = run.get("metrics") or {}
+    if float(metrics.get("valid", 0.0)) != 1.0:
+        return "rejected"
+    return "scored"
 
 
 def saturated_axes(metrics: dict) -> list[str]:
@@ -323,33 +346,35 @@ STRUCTURAL_SUFFIXES = ("_world_count", "_denominator", "_anchor", "_numerator")
 PROBE_BOUND_MARKERS = ("mean_", "_used", "_calls", "budget", "feasibility", "valid")
 
 
-def vacuous_axes(runs: dict) -> list[str]:
-    """Axes that report the same number for opposite answers, and so report nothing.
+def calibration_blind_axes(runs: dict) -> list[str]:
+    """Axes that report the same number whether the candidate claims everywhere or refuses.
 
-    `abstain_all` and `claim_all` are the two ends of the calibration decision: one never
-    claims, the other always does. An axis meant to price that decision -- a false-discovery
-    rate, a correct-refusal rate, a count of false claims -- has to move between them. One
-    that does not is either measuring something else, or dividing by a denominator with no
-    worlds under it and reporting 0/0 as a pass.
+    `abstain_all` and `claim_all` are the two ends of the calibration decision. An axis whose
+    stated job is to price that decision -- a false-discovery rate, a count of false claims --
+    should move between them. Measured, most do not.
 
-    On ProspectiveMetaAnalysis both `unsupported_refusal_rate` axes read 1.0 and both
-    `false_discovery_rate` axes read 0.0 for the reference, for never-refusing and for
-    always-refusing alike. Three answers that could not differ more collect the same
-    calibration numbers.
+    On ComplexBoseLaw the refusal and coverage axes respond exactly as intended
+    (`correct_refusal_rate` 1.0 -> 0.0, `discovery_coverage` 0.0 -> 1.0), while
+    `false_discovery_rate` stays 0.0 for a candidate that asserts on every world including the
+    ones where nothing is recoverable. Its false-discovery test fires on one specific wrong
+    claim -- calling a non-Bose world Bose -- and forcing the flag off submits the reference's
+    own, correct, family label. So a maximally over-claiming candidate publishes a perfect
+    false-discovery rate.
 
-    Structural and probe-bound metrics are excluded: see the two lists above. Only axes
-    present in all three runs are considered, so a task where a policy failed is not credited
-    with an agreement that was never measured.
+    That is the finding, and it is narrower than "the axis is broken": over-claiming is priced
+    once, through refusal, and the false-discovery number cannot be read on its own as "this
+    candidate made no unsupported claims". Where the denominator is genuinely empty the result
+    is worse -- ProspectiveMetaAnalysis returns `1.0` for `unsupported_refusal_rate` when no
+    unsupported world exists, which is a test that never ran reported as a pass.
+
+    Structural and probe-bound metrics are excluded: see the two lists above. All three runs
+    must have been scored; an axis from a submission the oracle refused, or from a policy that
+    moved no flag, says something about the probe rather than about the task.
     """
     needed = ("reference", "abstain_all", "claim_all")
     compared = [runs[name]["metrics"] for name in needed
-                if name in runs and "metrics" in runs[name]]
+                if name in runs and runs[name].get("outcome") == "scored"]
     if len(compared) < 3:
-        return []
-    # An axis is only shown to be insensitive if the two policies actually moved the input it
-    # reads. A policy that rewrote no flag proves nothing about the axes downstream of one.
-    if any(runs[name].get("abstain_flags_rewritten", 0) == 0
-           for name in ("abstain_all", "claim_all")):
         return []
     shared = set.intersection(*(set(m) for m in compared))
     out = []
@@ -408,7 +433,7 @@ def audit_task(spec, margin: float, timeout_s: float | None,
     row["threshold"] = threshold
     findings = []
     for name, run in row["runs"].items():
-        if name == "reference" or "metrics" not in run:
+        if name == "reference" or run.get("outcome") != "scored":
             continue
         score = float(run["metrics"]["combined_score"])
         run["ratio_to_reference"] = (score / reference_score) if reference_score else None
@@ -416,8 +441,15 @@ def audit_task(spec, margin: float, timeout_s: float | None,
         if run["reaches_threshold"]:
             findings.append(name)
     row["findings"] = findings
-    row["vacuous_axes"] = vacuous_axes(row["runs"])
-    row["discriminative"] = not findings and bool(reference_score > 0)
+    row["calibration_blind_axes"] = calibration_blind_axes(row["runs"])
+    # Only a task where every policy was actually scored, and none of them came near, has been
+    # shown to separate discovery from its absence. One where a policy could not be built is
+    # untested against that policy, which is not the same as passing.
+    row["policy_outcomes"] = {name: run.get("outcome", run.get("status", "error"))
+                              for name, run in row["runs"].items() if name != "reference"}
+    row["discriminative"] = bool(
+        reference_score > 0 and not findings
+        and all(outcome == "scored" for outcome in row["policy_outcomes"].values()))
     return row
 
 
@@ -493,7 +525,13 @@ def _reanalyze(args) -> int:
         row["threshold"] = reference_score * (1.0 - margin)
         findings = []
         for name, run in row["runs"].items():
-            if name == "reference" or "metrics" not in run:
+            if "metrics" not in run:
+                continue
+            run["outcome"] = _outcome(run)
+            if name == "reference":
+                continue
+            if run["outcome"] != "scored":
+                run.pop("reaches_threshold", None)
                 continue
             score = float(run["metrics"]["combined_score"])
             run["ratio_to_reference"] = (score / reference_score) if reference_score else None
@@ -501,8 +539,12 @@ def _reanalyze(args) -> int:
             if run["reaches_threshold"]:
                 findings.append(name)
         row["findings"] = findings
-        row["vacuous_axes"] = vacuous_axes(row["runs"])
-        row["discriminative"] = not findings and bool(reference_score > 0)
+        row["calibration_blind_axes"] = calibration_blind_axes(row["runs"])
+        row["policy_outcomes"] = {name: run.get("outcome", run.get("status", "error"))
+                                  for name, run in row["runs"].items() if name != "reference"}
+        row["discriminative"] = bool(
+            reference_score > 0 and not findings
+            and all(o == "scored" for o in row["policy_outcomes"].values()))
         if not args.quiet:
             _print_row(row)
     report["margin"] = margin
@@ -562,8 +604,14 @@ def _summarize(rows: list[dict]) -> dict:
         "reached_by_a_policy": {k: sorted(v) for k, v in sorted(by_policy.items())},
         "reference_saturated": sorted(
             r["task"] for r in measured if r.get("reference_saturated_axes")),
-        "vacuous_axes": {r["task"]: r["vacuous_axes"] for r in measured
-                         if r.get("vacuous_axes")},
+        "calibration_blind_axes": {r["task"]: r["calibration_blind_axes"] for r in measured
+                                  if r.get("calibration_blind_axes")},
+        "policy_outcomes": {
+            outcome: sorted("%s:%s" % (r["task"], name) for r in measured
+                            for name, value in (r.get("policy_outcomes") or {}).items()
+                            if value == outcome)
+            for outcome in ("not_applicable", "rejected", "error")
+        },
     }
 
 
