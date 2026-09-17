@@ -99,7 +99,7 @@ construction_audit:
   independent_recomputation_status: bounded author replay on clean source 0bc037e277fee8857b035ef9d61359a9c22985a3 with the current framework; 26 fixed evaluations, 13 identical full-metric pairs, 780 valid world evaluations, 28 passing Linux task tests plus 4 subtests, and the full task contribution gate passed; no current frontier-model D, external domain review or modern trusted formal evidence
 post_builder_shortcut_review:
   status: paired_world_redesign_shortcut_margin_passed_pending_external_difficulty_review
-  measured_source_revision: null
+  measured_source_revision: 4aafd93ee854f981ce9946f62a6489d205d9c315
   evidence: experiments/transient_chirp_paired_world_redesign_2026-09-17.json
   prior_range_evidence: experiments/transient_chirp_reference_bounds_2026-09-12.json
   original_guard_evidence: experiments/transient_chirp_shortcut_guard_2026-09-12.json

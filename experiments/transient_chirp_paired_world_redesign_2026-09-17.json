@@ -1,6 +1,7 @@
 {
   "task": "Gravitation/TransientChirpInference",
   "date": "2026-09-17",
+  "executable_source_revision": "4aafd93ee854f981ce9946f62a6489d205d9c315",
   "trigger": "Maintainer C12 review found a single-channel zero-crossing fit and H1-only reference variants at or above the prior reference.",
   "design_change": "Every supported coherent world is paired with a detector-localized world having identical H1 waveform parameters, seed, noise, and observations; only L1 separates the pair.",
   "environment": {
