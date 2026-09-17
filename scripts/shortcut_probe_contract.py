@@ -2,12 +2,21 @@
 
 This checks a measured upper guard; it does not certify difficulty or discover new
 shortcuts. Declarations live in TASK_CARD.yaml, never in a candidate's output.
+
+The guard is only as wide as what the card declares, so the contract also has to be
+complete: every program in the task package that exposes the task's entrypoint is a
+candidate someone already wrote, and each one must appear as the reference, as a probe,
+or in `excluded` with a reason. Reviewed submissions repeatedly shipped an in-tree
+candidate stronger than the declared probes and left it out of `probes`, which the
+measured guard cannot see.
 """
 from __future__ import annotations
 
 import hashlib
 import json
 import math
+import pathlib
+import re
 from pathlib import Path
 
 import yaml
@@ -66,7 +75,55 @@ def validate_contract(contract, task_dir):
         paths.add(path)
         if entry["expected_score"] is not None and not _number(entry["expected_score"]):
             raise ValueError("expected_score must be finite or null")
+    excluded = contract.get("excluded", [])
+    if not isinstance(excluded, list):
+        raise ValueError("excluded must be a list of {candidate, reason}")
+    for entry in excluded:
+        if not isinstance(entry, dict):
+            raise ValueError("excluded must be a list of {candidate, reason}")
+        reason = entry.get("reason")
+        if not isinstance(reason, str) or not reason.strip():
+            raise ValueError("every excluded candidate needs a nonempty reason")
+        path = _candidate(task_dir, entry.get("candidate"))
+        if path in paths:
+            raise ValueError("a candidate cannot be both declared and excluded")
+        paths.add(path)
     return entries
+
+
+def _entrypoint_programs(task_dir, entrypoint):
+    """Every program in the package that a submission could be: it defines the entrypoint.
+
+    `frontier_eval/` is the harness rather than a candidate, and `runs/` is generated
+    output, so neither is enumerated.
+    """
+    found = set()
+    for path in sorted(task_dir.rglob("*.py")):
+        relative = path.relative_to(task_dir)
+        if relative.parts[0] in ("frontier_eval", "runs") or "__pycache__" in relative.parts:
+            continue
+        try:
+            source = path.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        if re.search(r"^\s*def\s+%s\s*\(" % re.escape(entrypoint), source, re.M):
+            found.add(path.resolve())
+    return found
+
+
+def undeclared_candidates(contract, spec):
+    """Programs that expose the entrypoint but are neither declared nor excluded."""
+    entrypoint = getattr(spec, "entrypoint", None)
+    if not isinstance(entrypoint, str) or not entrypoint:
+        return None
+    task_dir = pathlib.Path(spec.task_dir)
+    accounted = set()
+    for entry in [contract.get("reference"), *contract.get("probes", []),
+                  *contract.get("excluded", [])]:
+        if isinstance(entry, dict) and isinstance(entry.get("candidate"), str):
+            accounted.add((task_dir / entry["candidate"]).resolve())
+    return sorted(str(p.relative_to(task_dir.resolve()))
+                  for p in _entrypoint_programs(task_dir, entrypoint) - accounted)
 
 
 def inspect_probe(spec, evaluate, *, timeout_s=180.0, skip_eval=False):
@@ -82,13 +139,32 @@ def inspect_probe(spec, evaluate, *, timeout_s=180.0, skip_eval=False):
     contract = card.get("shortcut_probe")
     if contract is None:
         migration = json.loads(MIGRATION.read_text()).get("tasks", {}).get(spec.task_id)
-        result.update(status="migration_pending" if migration else "failed",
-                      detail=migration or "new task is missing TASK_CARD.yaml shortcut_probe")
+        if migration:
+            # `detail` is the human-readable line the gate's CLI prints, so it stays a string
+            # even when the structured record is the more useful thing to keep. The record
+            # itself moves to `migration`, where a reader that wants the reason and the
+            # recorded probe paths can still find it. Putting the mapping in `detail` made
+            # `check_task_contribution.py` raise TypeError for all 85 pending tasks - every
+            # task in the tree except the two that already declare a contract - including the
+            # example command in docs/task_admission_workflows.md.
+            result.update(status="migration_pending", detail=str(
+                migration.get("reason") or "listed in the shortcut-probe migration inventory"))
+            result["migration"] = migration
+        else:
+            result.update(status="failed",
+                          detail="new task is missing TASK_CARD.yaml shortcut_probe")
         return result
     try:
         entries = validate_contract(contract, spec.task_dir)
     except (ValueError, OSError) as exc:
         result.update(status="failed", detail=str(exc))
+        return result
+    missing = undeclared_candidates(contract, spec)
+    if missing:
+        result["undeclared_candidates"] = missing
+        result.update(status="failed", detail=(
+            "these programs expose the entrypoint but are neither declared nor excluded: "
+            + ", ".join(missing)))
         return result
     result["contract_sha256"] = hashlib.sha256(
         json.dumps(contract, sort_keys=True, allow_nan=False).encode()).hexdigest()
@@ -113,6 +189,23 @@ def inspect_probe(spec, evaluate, *, timeout_s=180.0, skip_eval=False):
             if metrics.get("valid") != 1 or not _number(score):
                 raise ValueError("shortcut/reference must be a valid finite-scoring candidate")
             observation["measured_score"] = score
+            if index == 0:
+                # The reference's own discovery axes, recorded so a reader can see whether the
+                # triple still costs the witness anything at the top of the scale. Measured
+                # across the tree, nineteen of thirty-one references sit at false discovery 0,
+                # correct refusal 1 and coverage 1 - there the three axes carry no information
+                # and the headline is the mechanism number alone. This is reported, never scored.
+                axes = {key: metrics[key] for key in metrics
+                        if isinstance(metrics.get(key), (int, float))
+                        and any(key.endswith(suffix) for suffix in (
+                            "false_discovery_rate", "correct_refusal_rate",
+                            "discovery_coverage", "mechanism_score"))}
+                if axes:
+                    result["reference_axes"] = axes
+                    result["reference_axes_saturated"] = all(
+                        (value == 0.0 if key.endswith("false_discovery_rate") else value == 1.0)
+                        for key, value in axes.items()
+                        if not key.endswith("mechanism_score"))
             scores.append(score)
             expected = entry["expected_score"]
             if expected is not None and abs(score - expected) > contract["score_tolerance"]:

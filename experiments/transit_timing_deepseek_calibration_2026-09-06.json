@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "task": "Exoplanets/TransitTimingAttribution",
+  "created_at": "2026-09-06",
+  "algorithm": "greedy_rewrite",
+  "proposal_budget": 3,
+  "temperature": 0.0,
+  "chat_thinking": "disabled",
+  "baseline": {
+    "combined_score": 0.0,
+    "valid": 1.0
+  },
+  "reference": {
+    "combined_score": 0.9034202051518276,
+    "robustness_score": 0.8991956831621983
+  },
+  "runs": [
+    {
+      "model": "deepseek-v4-flash",
+      "seed": 17,
+      "proposal_count": 3,
+      "valid_proposal_count": 0,
+      "best_score": 0.0,
+      "protocol_incomplete": "no_valid_proposal",
+      "first_failure_kind": "candidate_runtime_error"
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "seed": 17,
+      "proposal_count": 3,
+      "valid_proposal_count": 0,
+      "best_score": 0.0,
+      "protocol_incomplete": "no_valid_proposal",
+      "first_failure_kind": "candidate_runtime_error"
+    }
+  ],
+  "performance_evidence": false,
+  "notes": "This current-code calibration records generation and evaluator compatibility, not successful performance. Earlier valid Flash runs remain recorded separately. Summary contains no prompt, generated source, endpoint, credential, or API key."
+}

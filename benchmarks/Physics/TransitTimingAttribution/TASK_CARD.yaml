@@ -1,0 +1,95 @@
+schema_version: 2
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.594835
+  probes:
+  - id: legal_baseline
+    candidate: solution.py
+    expected_score: 0.0
+  - id: strongest_fixed_schedule
+    candidate: verification/reference_no_active_design.py
+    expected_score: 0.432153
+  excluded:
+  - candidate: verification/replay_probes.py
+    reason: trusted Linux replay driver containing candidate source templates, not a standalone submission
+  relative_margin: 0.2
+  score_tolerance: 0.000001
+scientific_question: Can an agent actively distinguish the declared synthetic periodic, activity-surrogate and quadratic-clock residual families, forecast timing offsets and refuse out-of-family histories under a follow-up observation budget?
+artifact: A claim within the declared synthetic TTV residual families, timing-modulation period in transit-number units, next-offset forecast, confidence and immutable evidence lineage, or calibrated refusal; no unique astrophysical cause or unseen-planet orbital parameters are inferred.
+oracle:
+  model: deterministic reduced-order transit-timing residual laboratory with continuous-period planet and activity signals, clock drift, and two distinct unsupported families
+  feasibility: bounded integer transit queries, finite mechanism parameters, evidence IDs from current measurements and calibrated refusal
+  deterministic: true
+normalization:
+  baseline: two legal follow-up timings, both cited, followed by a deterministic, overconfident fixed-planet claim; never abstains and scores exactly zero
+  reference: five sequential model-disagreement follow-ups using a family-stratified BIC-weighted ensemble, continuous-period least-squares refinement, and explicit stationary-extra-component and phase-evolution comparisons; development-only expected combined 0.594835
+  score: each split uses all-world reward minus blanket-refusal reward, divided by supported count and bounded below at zero, multiplied by correct-refusal rate and cubed discovery precision; correct supported claims also earn normalized query-design credit, combined_score is development_score only, held-out scientific scores remain private, and any invalid world rejects the submission with valid=0 and combined_score=0
+citations:
+- id: doi:10.1111/j.1365-2966.2005.08922.x
+  title: On detecting terrestrial planets with timing of giant planet transits
+- id: doi:10.1126/science.1107822
+  title: The Use of Transit Timing to Detect Terrestrial-Mass Extrasolar Planets
+- id: doi:10.1088/0004-637X/761/2/122
+  title: Extracting Planet Mass and Eccentricity From TTV Data
+- id: doi:10.1051/0004-6361/201321309
+  title: Effect of stellar spots on high-precision transit light-curve
+- id: https://tf.nist.gov/general/pdf/74.pdf
+  title: The Measurement of Frequency and Frequency Stability of Precision Oscillators (Allan, 1975, NBS Technical Note 669)
+invariants:
+- repeated evaluation is deterministic
+- unsupported-world refusals and false discoveries are reported separately from supported-world quality
+- every non-abstaining claim cites at least two current query IDs
+- overspending, invented IDs and malformed output fail closed
+- mechanism, forecast, coverage and false-discovery metrics remain separate
+- acquisition-design credit uses distinct cited measurements and a per-world feasible optimum
+- development and held-out each contain three independently seeded panels with varying horizons
+- held-out worlds, unsupported-family labels and exact descriptors remain evaluator-only
+- development and held-out each include both unsupported reasons with non-unit denominators
+known_shortcuts: A development-only scan covers 8 normalized five-query schedules, 5 RMS limits, 4 supported-family BIC gaps, 4 residual-correlation limits, and 6 out-of-family BIC gaps, for 3840 truth-blind fixed policies. The strongest policy scores 0.432153 versus reference 0.594835, or 72.65%, below the unchanged 80% guard. Its schedule is normalized to each world's candidate-visible follow-up interval, so variable horizons cannot invalidate it. Baseline and constant-family controls score zero; prior fixed-world A/B/C measurements are retained only as historical evidence in known_best.
+review:
+  domain: pending_external_astronomy
+  evaluator_security: automated_determinism_budget_lineage_and_bad_candidate_checks_passed
+provenance:
+  class: procedural
+  target_source: repository-visible deterministic TTV generator with development and shifted held-out worlds
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: clean_linux_task_gate_probe_replay_and_D16_completed_2026_09_16_on_270e7df2
+  license: procedural repository-local code; no external dataset bundled
+novelty_risk:
+  level: medium
+  rationale: Unlike Exoplanets/RadialVelocityPlanets, this task attributes transit-timing residuals under an active follow-up schedule rather than detecting planets in a fixed radial-velocity series; unlike ParticlePhysics/LookElsewhereAnomaly, refusal is triggered by histories outside the declared stationary periodic/quadratic families rather than insufficient global statistical significance. Physics/CriticalPhenomenaLab also couples active experiments to mechanism attribution, but estimates scaling-law classes rather than timing families and forecasts; Exoplanets/TransmissionSpectrumSpecies resolves fixed spectral mixtures, whereas this task chooses future time coordinates and scores extrapolation and acquisition design.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:gpt-5
+  builder_scaffolds:
+  - science-benchmark-construction
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  - deepseek-v4-pro
+  calibration_runs:
+  - experiments/transit_timing_deepseek_flash_2026-09-05.json
+  - experiments/transit_timing_deepseek_calibration_2026-09-06.json
+  - experiments/transit_timing_admission_2026-09-16.json
+  calibration_evidence_status: current_or_migration_replayed
+  current_admission_report: experiments/transit_timing_admission_2026-09-16.json
+  edits_triggered_by_model: none
+  shortcut_discoverer: maintainer_PR11_review_and_regression_probes
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: candidate_pending_review
+  author_domain: computational_astronomy
+  reviewer_domain: pending_external_astronomy
+  expert_hours: null
+  red_team_rounds: 5
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: baseline and reference replayed; independent photodynamical recomputation pending

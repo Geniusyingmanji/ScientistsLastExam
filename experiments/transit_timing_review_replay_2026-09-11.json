@@ -1,0 +1,304 @@
+{
+  "schema_version": 1,
+  "task": "Exoplanets/TransitTimingAttribution",
+  "source_revision": "d9826174788a12abecb84be3bf61f03f1e2a1eec",
+  "source_tree_clean": true,
+  "execution": "Linux trusted driver and bubblewrap",
+  "model_generation": false,
+  "probes": {
+    "baseline": {
+      "complete_metrics_identical_twice": true,
+      "complete_metrics_sha256": "29afcadd8c7d4e48adc4501f31a49036e190cad53392588972176537d01c3e3b",
+      "metrics": {
+        "combined_score": 0.0,
+        "robustness_score": 0.0,
+        "valid": 1.0,
+        "development_mechanism_correct_count": 0,
+        "development_mechanism_total_count": 23,
+        "development_false_discovery_count": 0,
+        "development_false_discovery_denominator": 0,
+        "development_correct_refusal_count": 10,
+        "development_correct_refusal_denominator": 10,
+        "heldout_mechanism_correct_count": 0,
+        "heldout_mechanism_total_count": 24,
+        "heldout_false_discovery_count": 0,
+        "heldout_false_discovery_denominator": 0,
+        "heldout_correct_refusal_count": 10,
+        "heldout_correct_refusal_denominator": 10
+      }
+    },
+    "reference": {
+      "complete_metrics_identical_twice": true,
+      "complete_metrics_sha256": "748af7437af9cd68bb7bd2b3d1100ede70f0917abf0ec67b3a228e928dbc7567",
+      "metrics": {
+        "combined_score": 0.43013948529988977,
+        "robustness_score": 0.43013948529988977,
+        "valid": 1.0,
+        "development_mechanism_correct_count": 16,
+        "development_mechanism_total_count": 23,
+        "development_false_discovery_count": 0,
+        "development_false_discovery_denominator": 16,
+        "development_correct_refusal_count": 10,
+        "development_correct_refusal_denominator": 10,
+        "heldout_mechanism_correct_count": 17,
+        "heldout_mechanism_total_count": 24,
+        "heldout_false_discovery_count": 2,
+        "heldout_false_discovery_denominator": 19,
+        "heldout_correct_refusal_count": 9,
+        "heldout_correct_refusal_denominator": 10
+      }
+    },
+    "always_abstain": {
+      "complete_metrics_identical_twice": true,
+      "complete_metrics_sha256": "29afcadd8c7d4e48adc4501f31a49036e190cad53392588972176537d01c3e3b",
+      "metrics": {
+        "combined_score": 0.0,
+        "robustness_score": 0.0,
+        "valid": 1.0,
+        "development_mechanism_correct_count": 0,
+        "development_mechanism_total_count": 23,
+        "development_false_discovery_count": 0,
+        "development_false_discovery_denominator": 0,
+        "development_correct_refusal_count": 10,
+        "development_correct_refusal_denominator": 10,
+        "heldout_mechanism_correct_count": 0,
+        "heldout_mechanism_total_count": 24,
+        "heldout_false_discovery_count": 0,
+        "heldout_false_discovery_denominator": 0,
+        "heldout_correct_refusal_count": 10,
+        "heldout_correct_refusal_denominator": 10
+      }
+    },
+    "order_keyed": {
+      "complete_metrics_identical_twice": true,
+      "complete_metrics_sha256": "ba22f3ad6d987f28553debfafbdcd7b1322df1dfdca4126c5fb5be900a1d2aaa",
+      "metrics": {
+        "combined_score": 0.0,
+        "robustness_score": 0.0,
+        "valid": 1.0,
+        "development_mechanism_correct_count": 8,
+        "development_mechanism_total_count": 23,
+        "development_false_discovery_count": 25,
+        "development_false_discovery_denominator": 33,
+        "development_correct_refusal_count": 0,
+        "development_correct_refusal_denominator": 10,
+        "heldout_mechanism_correct_count": 8,
+        "heldout_mechanism_total_count": 24,
+        "heldout_false_discovery_count": 26,
+        "heldout_false_discovery_denominator": 34,
+        "heldout_correct_refusal_count": 0,
+        "heldout_correct_refusal_denominator": 10
+      }
+    },
+    "never_abstain_reference": {
+      "complete_metrics_identical_twice": true,
+      "complete_metrics_sha256": "41b21f7c94be72ebc432c89e0e21b78eed3cbc5f2fba71185d33082cc4eb956e",
+      "metrics": {
+        "combined_score": 0.0,
+        "robustness_score": 0.0,
+        "valid": 1.0,
+        "development_mechanism_correct_count": 23,
+        "development_mechanism_total_count": 23,
+        "development_false_discovery_count": 10,
+        "development_false_discovery_denominator": 33,
+        "development_correct_refusal_count": 0,
+        "development_correct_refusal_denominator": 10,
+        "heldout_mechanism_correct_count": 21,
+        "heldout_mechanism_total_count": 24,
+        "heldout_false_discovery_count": 13,
+        "heldout_false_discovery_denominator": 34,
+        "heldout_correct_refusal_count": 0,
+        "heldout_correct_refusal_denominator": 10
+      }
+    },
+    "fixed_schedule_shortcut": {
+      "complete_metrics_identical_twice": true,
+      "complete_metrics_sha256": "9cf4b38f0bbbd9f9f5a6baba7e707f8d27aa64c8da8bfddd580b536904517190",
+      "metrics": {
+        "combined_score": 0.30180648337735544,
+        "robustness_score": 0.30180648337735544,
+        "valid": 1.0,
+        "development_mechanism_correct_count": 19,
+        "development_mechanism_total_count": 23,
+        "development_false_discovery_count": 1,
+        "development_false_discovery_denominator": 20,
+        "development_correct_refusal_count": 9,
+        "development_correct_refusal_denominator": 10,
+        "heldout_mechanism_correct_count": 20,
+        "heldout_mechanism_total_count": 24,
+        "heldout_false_discovery_count": 4,
+        "heldout_false_discovery_denominator": 24,
+        "heldout_correct_refusal_count": 7,
+        "heldout_correct_refusal_denominator": 10
+      }
+    },
+    "constant_planet": {
+      "complete_metrics_identical_twice": true,
+      "complete_metrics_sha256": "ba22f3ad6d987f28553debfafbdcd7b1322df1dfdca4126c5fb5be900a1d2aaa",
+      "metrics": {
+        "combined_score": 0.0,
+        "robustness_score": 0.0,
+        "valid": 1.0,
+        "development_mechanism_correct_count": 8,
+        "development_mechanism_total_count": 23,
+        "development_false_discovery_count": 25,
+        "development_false_discovery_denominator": 33,
+        "development_correct_refusal_count": 0,
+        "development_correct_refusal_denominator": 10,
+        "heldout_mechanism_correct_count": 8,
+        "heldout_mechanism_total_count": 24,
+        "heldout_false_discovery_count": 26,
+        "heldout_false_discovery_denominator": 34,
+        "heldout_correct_refusal_count": 0,
+        "heldout_correct_refusal_denominator": 10
+      }
+    },
+    "constant_activity": {
+      "complete_metrics_identical_twice": true,
+      "complete_metrics_sha256": "ba22f3ad6d987f28553debfafbdcd7b1322df1dfdca4126c5fb5be900a1d2aaa",
+      "metrics": {
+        "combined_score": 0.0,
+        "robustness_score": 0.0,
+        "valid": 1.0,
+        "development_mechanism_correct_count": 8,
+        "development_mechanism_total_count": 23,
+        "development_false_discovery_count": 25,
+        "development_false_discovery_denominator": 33,
+        "development_correct_refusal_count": 0,
+        "development_correct_refusal_denominator": 10,
+        "heldout_mechanism_correct_count": 8,
+        "heldout_mechanism_total_count": 24,
+        "heldout_false_discovery_count": 26,
+        "heldout_false_discovery_denominator": 34,
+        "heldout_correct_refusal_count": 0,
+        "heldout_correct_refusal_denominator": 10
+      }
+    },
+    "constant_clock": {
+      "complete_metrics_identical_twice": true,
+      "complete_metrics_sha256": "e07cca457f8672308611b1df25009b4258dfa450b4ab448d5514946ec475fffc",
+      "metrics": {
+        "combined_score": 0.0,
+        "robustness_score": 0.0,
+        "valid": 1.0,
+        "development_mechanism_correct_count": 7,
+        "development_mechanism_total_count": 23,
+        "development_false_discovery_count": 26,
+        "development_false_discovery_denominator": 33,
+        "development_correct_refusal_count": 0,
+        "development_correct_refusal_denominator": 10,
+        "heldout_mechanism_correct_count": 8,
+        "heldout_mechanism_total_count": 24,
+        "heldout_false_discovery_count": 26,
+        "heldout_false_discovery_denominator": 34,
+        "heldout_correct_refusal_count": 0,
+        "heldout_correct_refusal_denominator": 10
+      }
+    },
+    "followups_2": {
+      "complete_metrics_identical_twice": true,
+      "complete_metrics_sha256": "23234903fc27bf76e70022726d89289d5b299be5b4956763e9f8538fecaae14c",
+      "metrics": {
+        "combined_score": 0.24120346786042546,
+        "robustness_score": 0.24120346786042546,
+        "valid": 1.0,
+        "development_mechanism_correct_count": 14,
+        "development_mechanism_total_count": 23,
+        "development_false_discovery_count": 2,
+        "development_false_discovery_denominator": 16,
+        "development_correct_refusal_count": 8,
+        "development_correct_refusal_denominator": 10,
+        "heldout_mechanism_correct_count": 12,
+        "heldout_mechanism_total_count": 24,
+        "heldout_false_discovery_count": 2,
+        "heldout_false_discovery_denominator": 14,
+        "heldout_correct_refusal_count": 9,
+        "heldout_correct_refusal_denominator": 10
+      }
+    },
+    "followups_3": {
+      "complete_metrics_identical_twice": true,
+      "complete_metrics_sha256": "cce3a7935c0b6d5e6830ab0505c35363c7acf5df40527c2a6de9bf09af3c1960",
+      "metrics": {
+        "combined_score": 0.23274165323818932,
+        "robustness_score": 0.23274165323818932,
+        "valid": 1.0,
+        "development_mechanism_correct_count": 14,
+        "development_mechanism_total_count": 23,
+        "development_false_discovery_count": 2,
+        "development_false_discovery_denominator": 16,
+        "development_correct_refusal_count": 8,
+        "development_correct_refusal_denominator": 10,
+        "heldout_mechanism_correct_count": 15,
+        "heldout_mechanism_total_count": 24,
+        "heldout_false_discovery_count": 4,
+        "heldout_false_discovery_denominator": 19,
+        "heldout_correct_refusal_count": 8,
+        "heldout_correct_refusal_denominator": 10
+      }
+    },
+    "followups_4": {
+      "complete_metrics_identical_twice": true,
+      "complete_metrics_sha256": "748af7437af9cd68bb7bd2b3d1100ede70f0917abf0ec67b3a228e928dbc7567",
+      "metrics": {
+        "combined_score": 0.43013948529988977,
+        "robustness_score": 0.43013948529988977,
+        "valid": 1.0,
+        "development_mechanism_correct_count": 16,
+        "development_mechanism_total_count": 23,
+        "development_false_discovery_count": 0,
+        "development_false_discovery_denominator": 16,
+        "development_correct_refusal_count": 10,
+        "development_correct_refusal_denominator": 10,
+        "heldout_mechanism_correct_count": 17,
+        "heldout_mechanism_total_count": 24,
+        "heldout_false_discovery_count": 2,
+        "heldout_false_discovery_denominator": 19,
+        "heldout_correct_refusal_count": 9,
+        "heldout_correct_refusal_denominator": 10
+      }
+    },
+    "no_activity_model": {
+      "complete_metrics_identical_twice": true,
+      "complete_metrics_sha256": "a5a9106b2d735d21922e1504cdbec73e7afc20ba83b41eaa1a4720bd500953e0",
+      "metrics": {
+        "combined_score": 0.2688257281672813,
+        "robustness_score": 0.2688257281672813,
+        "valid": 1.0,
+        "development_mechanism_correct_count": 12,
+        "development_mechanism_total_count": 23,
+        "development_false_discovery_count": 2,
+        "development_false_discovery_denominator": 14,
+        "development_correct_refusal_count": 9,
+        "development_correct_refusal_denominator": 10,
+        "heldout_mechanism_correct_count": 14,
+        "heldout_mechanism_total_count": 24,
+        "heldout_false_discovery_count": 4,
+        "heldout_false_discovery_denominator": 18,
+        "heldout_correct_refusal_count": 9,
+        "heldout_correct_refusal_denominator": 10
+      }
+    },
+    "constant_forecast": {
+      "complete_metrics_identical_twice": true,
+      "complete_metrics_sha256": "1f508d28ecfead71649a21b9d9e6b01a80cc358626d6e5ad32ff38657ac0609f",
+      "metrics": {
+        "combined_score": 0.3593645397809283,
+        "robustness_score": 0.3593645397809283,
+        "valid": 1.0,
+        "development_mechanism_correct_count": 16,
+        "development_mechanism_total_count": 23,
+        "development_false_discovery_count": 0,
+        "development_false_discovery_denominator": 16,
+        "development_correct_refusal_count": 10,
+        "development_correct_refusal_denominator": 10,
+        "heldout_mechanism_correct_count": 17,
+        "heldout_mechanism_total_count": 24,
+        "heldout_false_discovery_count": 2,
+        "heldout_false_discovery_denominator": 19,
+        "heldout_correct_refusal_count": 9,
+        "heldout_correct_refusal_denominator": 10
+      }
+    }
+  }
+}
