@@ -55,6 +55,7 @@ RECORDED_LINEAGE = {
     "Geophysics/UPbConcordiaInference",
     "Sensors/IMUBiasCalibration",
     "Microbiology/MetagenomeCompositionAssignment",
+    "Neuroscience/SpikeHistoryInference",
 }
 
 

@@ -1,0 +1,90 @@
+schema_version: 2
+scientific_question: Can an agent recover stimulus drive and a refractory spike-history kernel from repeated neural spike trains while refusing burst history, latent trial-gain mixtures, and stimulus-dependent refractoriness?
+artifact: Four point-process parameters, sealed conditional firing probabilities, a calibrated model-family diagnosis, and immutable trial evidence.
+oracle:
+  model: deterministic seeded conditional Bernoulli point-process generator with an exponential refractory kernel and three unsupported history or latent-gain mechanisms
+  feasibility: exact output keys, bounded finite parameters and probabilities, allowed diagnosis, boolean refusal, and at least four unique supplied trial IDs
+  deterministic: true
+normalization:
+  baseline: valid undetermined blanket abstention with fixed in-bounds parameters
+  reference: truth-blind regularized logistic fits, exponential time-constant search, light shrinkage toward public-bound midpoints, and likelihood or BIC comparisons against three structured alternatives
+  score: bounded-by-construction mean supported-world quality (70% parameter recovery, 20% prediction, 10% confidence, gated by a supported diagnosis) multiplied by exact unsupported-family refusal; both blanket abstention and never refusing are exactly zero, while false discovery, coverage, attempts, and held-out transfer remain separate
+citations:
+- id: doi:10.1152/jn.00697.2004
+  title: A point process framework for relating neural spiking activity to spiking history, neural ensemble, and extrinsic covariate effects
+- id: doi:10.1088/0954-898X/15/4/009
+  title: Maximum likelihood estimation of cascade point-process neural encoding models
+- id: doi:10.1038/nature07140
+  title: Spatio-temporal correlations and visual signalling in a complete neuronal population
+invariants:
+- supported worlds generate conditional Bernoulli spikes from the published stimulus plus negative exponential spike-history equation
+- a recent spike strictly lowers supported conditional firing probability at fixed stimulus and parameters
+- burst history, trial-level latent gain mixtures, and stimulus-history interactions violate different parts of the supported conditional model
+- every trial has aligned finite stimulus and binary spike sequences with an immutable trial ID
+- blanket abstention is valid and scores zero after normalization
+- never refusing scores zero because the headline requires correct unsupported-family refusal
+- malformed, non-finite, incomplete, extra-key, and fabricated-evidence submissions fail closed
+- development and held-out worlds use different seeds and parameters
+- every candidate session is reset at each world boundary, preventing cross-world or development-to-held-out state transfer
+- reference outputs are computed from public trials without reading hidden world labels or parameters
+known_shortcuts: A 51,840-strategy development-selected sweep combines low-order moment thresholds, logit-scale conditional-history contrasts, constant amplitude/tau profiles, two-point drive estimates, and the reviewer's empty-history weighted-logit drive estimator without fitting the refractory point-process likelihood. It reaches 0.320482/0.434600 development/held-out, below the truth-blind reference's 0.664460/0.713537. Replacing fitted parameters with public-bound midpoints while retaining reference diagnosis reaches 0.365684/0.376300; fixing tau at 20 ms reaches 0.613280/0.660324; never refusing and rate-only inference score zero. Twelve development supported worlds span the public parameter space, preventing a small per-world lookup table from serving as a general estimator. The reduced-order laboratory omits continuous-time spike jitter, coupled neurons, sorting errors, nonstationary stimulus filters and long adaptation.
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.664460
+  probes:
+  - id: development_selected_moment_empty_history_sweep
+    candidate: verification/shortcut_probe.py
+    expected_score: 0.320482
+  excluded:
+  - candidate: solution.py
+    reason: shipped blanket-abstention baseline, evaluated separately at exactly zero
+  relative_margin: 0.35
+  score_tolerance: 1.0e-06
+review:
+  domain: pending_external_computational_neuroscience_review
+  evaluator_security: automated_bad_candidate_determinism_contract_probability_and_fault_refusal_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic repeated-trial point-process generator with development and held-out supported and misspecified worlds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: No repository or Frontier-Eng task performs neural point-process inference. GeneNetworkIntervention uses active multi-gene ODE perturbations and HamiltonianLearning uses coherent spin dynamics; neither estimates spike-history likelihoods or attributes refractory-model failure. The parallel SingleMoleculeKinetics candidate infers latent molecular-state transitions rather than a stimulus-conditioned neural history kernel and trial-level neural heterogeneity.
+lineage:
+  status: incomplete_legacy
+  builder_model_ids:
+  - openai-codex:gpt-5
+  builder_scaffolds:
+  - science-benchmark-construction
+  - deterministic_spike_train_discovery
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  - deepseek-v4-pro
+  calibration_runs:
+  - experiments/spike_history_inference_deepseek_calibration_2026-09-07.json
+  calibration_evidence_status: historical_only
+  edits_triggered_by_model: The original thinking-disabled draws exposed complementary supported-discovery and false-discovery failures but did not trigger oracle tuning. Later independent maintainer review changed world coverage, scoring, session isolation, and the reference, so those draws are retained only as historical protocol evidence for revision 156927e2.
+  shortcut_discoverer: builder_and_independent_maintainer_red_team_with_51840_strategy_moment_logit_empty_history_and_constant_parameter_sweep
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+evaluation_budget:
+  EVAL_TIMEOUT_S: 60
+  scope: Total candidate wall-clock deadline across all 32 independently reset worlds. The reference takes about 16 seconds in the maintained Linux sandbox; 60 seconds leaves headroom for legal non-vectorized estimators and slower CI hosts.
+  override: Task wrapper --timeout or sle eval --timeout.
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: computational_neuroscience
+  reviewer_domain: pending_external_computational_neuroscience_review
+  expert_hours: null
+  red_team_rounds: 4
+  oracle_disagreement_status: independent review found degenerate non-refusal credit, stronger low-dimensional and empty-history shortcuts, fixed-world fingerprint memorization, missing world-boundary resets, a mechanism-axis mismatch, and incomplete reference calibration; the hardened revision expands supported coverage, duplicates unsupported families, retunes the truth-blind reference, and declares the stronger probe family
+  independent_recomputation_status: baseline, shrinkage reference, midpoint and fixed-tau ablations, 51840-strategy shortcut, malformed-candidate checks, session isolation, and scientific invariants are executable from the task package
