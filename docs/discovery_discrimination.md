@@ -136,10 +136,14 @@ SurvivorshipConfoundedDesign 则是另一种:模型打到 1.000,与八条轴全�
 - `shortcut_probe`(`scripts/shortcut_probe_contract.py`)管**作者声明的**候选,PR #99 已经把
   margin 上限、`excluded` 的度量和 AST 枚举补上。本审计管**通用的**那一族,两者不重叠。
 - PR #104 的四列轴契约实现 D-b。
-- PR #105 用"参考解是否贴着归一化天花板"实现 D-c 的标量版本;本审计补的是**逐轴**饱和,
-  以及一条它明确排除的路径——它假设通用退化探针是畸形候选、必然得零,因此不可作为通用读数。
-  本测量的策略提交的是参考解自己的合法答案,`claim_all` 在 QuinaryConvexHull 上得 0.500、在
-  ProspectiveMetaAnalysis 上得 0.833,不是 0。两件工作是互补的,那条前提需要按这些数修订。
+- PR #105 用"参考解是否贴着归一化天花板"实现 D-c 的标量版本;本审计补的是**逐轴**饱和。
+  它还排除了一条路径,理由是"通用退化探针是畸形候选,`check_task_contribution` 本来就要求它们
+  得零",并举了两例实测(QuinaryConvexHull 上的"全部复制"策略、LookElsewhereAnomaly 上的
+  local-z 阈值,都是 0.0)。**那两个例子是对的**:本审计的 `constant_answer` 就是"全部复制"的
+  一般形式,它在被计分的二十五道题上全部为 0。但"通用 ⇒ 畸形 ⇒ 零"作为一般命题过宽:校准翻转
+  这一族同样通用,提交的却是参考解自己的合法答案(`valid = 1`),`claim_all` 在 QuinaryConvexHull
+  上得 0.500、在 ProspectiveMetaAnalysis 上得 0.833。两件工作互补,需要修订的是那条前提的范围,
+  不是它举的例子。
 
 ## 这次测量到不了的地方
 
