@@ -41,14 +41,20 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 MIGRATION = ROOT / "schemas" / "shortcut_probe_migration.json"
 
-# The widest reference margin a task card may declare. 0.1 is the template and the value both
-# ComputerScience cards use, 0.2 is what the maintainer's own review record applied to
-# TransitTimingAttribution (.research/pr11_shortcut_guard_review_2026-09-12.json, verdict
-# passed), and 0.3 is what the DarkMatterRecoilAttribution card declared at PR 72. A tier
-# table would contradict two of the three live cards and force a review-record rewrite that
-# measures nothing, so the ceiling is deliberately the loosest of the observed values: it
-# exists to catch the margin that is not a margin at all, not to re-litigate 0.2 vs 0.1.
-# Tightening it per tier is a superseding review decision, not a code change.
+# The widest reference margin a task card may declare. The three observed values it is drawn
+# from, all verifiable:
+#   0.1 - the template (docs/task_admission_workflows.md) and both cards on main
+#         (ComputerScience/SparseVectorAudit, ComputerScience/CacheReplacementPolicyID).
+#   0.2 - the maintainer's own guard review of the transit-timing integration; recorded in
+#         .research/pr11_shortcut_guard_review_2026-09-12.json as guard.relative_margin, verdict
+#         passed.
+#   0.3 - ParticlePhysics/DarkMatterRecoilAttribution's card on pull request 72, not yet merged,
+#         so it is not on main and cannot be grepped there. Read it with
+#         `git show origin/pr72:benchmarks/Physics/DarkMatterRecoilAttribution/TASK_CARD.yaml`.
+# A tier table would contradict two of the three and force a review-record rewrite that measures
+# nothing, so the ceiling is deliberately the loosest of the observed values: it exists to catch
+# the margin that is not a margin at all, not to re-litigate 0.2 vs 0.1. Tightening it per tier
+# is a superseding review decision, not a code change.
 MARGIN_CEILING = 0.3
 
 
