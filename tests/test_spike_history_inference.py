@@ -31,6 +31,8 @@ class SpikeHistoryInferenceTests(unittest.TestCase):
         ]
         summary = dict(combined_score=0.2, valid=1.0, science_score=0.3,
                        false_discovery_rate=0.0, correct_refusal_rate=1.0,
+                       false_discovery_count=0, correct_refusal_count=1,
+                       unsupported_world_count=1,
                        supported_discovery_coverage=0.5)
         with patch.object(oracle, "DEVELOPMENT_WORLDS", [None] * 3), \
              patch.object(oracle, "HELDOUT_WORLDS", [None] * 3), \
@@ -89,6 +91,19 @@ class SpikeHistoryInferenceTests(unittest.TestCase):
             recent_spike = probabilities[3 + stimulus_index]
             self.assertLess(recent_spike, no_history)
         self.assertTrue(np.all(np.diff(probabilities[:3]) > 0.0))
+
+    def test_development_supported_worlds_resist_small_fingerprint_tables(self):
+        oracle = _load("spike_world_coverage", TASK / "verification" / "evaluator.py")
+        supported = [world for world in oracle.DEVELOPMENT_WORLDS if world["kind"] == "supported"]
+        self.assertGreaterEqual(len(supported), 12)
+        for field, tolerance in (
+            ("intercept", oracle.PARAMETER_TOLERANCES["intercept"]),
+            ("gain", oracle.PARAMETER_TOLERANCES["stimulus_gain"]),
+            ("amplitude", oracle.PARAMETER_TOLERANCES["refractory_amplitude"]),
+            ("tau_ms", oracle.PARAMETER_TOLERANCES["refractory_tau_ms"]),
+        ):
+            values = [world[field] for world in supported]
+            self.assertGreater(max(values) - min(values), 4.0 * tolerance)
 
     def test_malformed_submission_is_invalid(self):
         oracle = _load("spike_bad", TASK / "verification" / "evaluator.py")

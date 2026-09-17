@@ -41,7 +41,7 @@ shortcut_probe:
   excluded:
   - candidate: solution.py
     reason: shipped blanket-abstention baseline, evaluated separately at exactly zero
-  relative_margin: 0.1
+  relative_margin: 0.35
   score_tolerance: 1.0e-06
 review:
   domain: pending_external_computational_neuroscience_review
@@ -76,6 +76,10 @@ long_horizon:
   measurement_health_passed: false
   material_headroom_after_2h: false
   evidence: []
+evaluation_budget:
+  EVAL_TIMEOUT_S: 60
+  scope: Total candidate wall-clock deadline across all 32 independently reset worlds. The reference takes about 16 seconds in the maintained Linux sandbox; 60 seconds leaves headroom for legal non-vectorized estimators and slower CI hosts.
+  override: Task wrapper --timeout or sle eval --timeout.
 construction_audit:
   status: builder_audited_pending_external
   author_domain: computational_neuroscience
