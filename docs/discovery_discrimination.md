@@ -30,25 +30,28 @@ discovery 题里有三道声明了探针。
 无效世界,于是跑出一个干净的 0.0,读起来和"防住了"一模一样)。
 
 参考解取卡片 `shortcut_probe.reference` 指名的那个:三个包在真正的见证旁边放了叫 `reference_*`
-的消融版。卡片同时写了期望分的两道题,本次实测与声明逐位一致
-(CacheReplacementPolicyID 0.777778、SparseVectorAudit 0.819398)。
+的消融版,按名字挑会拿消融版去和它自己的退化策略比。这三道题的卡片都写了期望分,本次实测与
+声明逐位一致——CacheReplacementPolicyID `0.777778`、SparseVectorAudit `0.819398`、
+TransitTimingAttribution `0.594835`。这是整套测量唯一的外部校验点。
 
 ## 测到了什么
 
-四十六道 discovery 题:九道以模拟真值锚定、不带参考程序,无从对照;本机另有五道缺 oracle
-依赖(networkx、astropy、sympy、qutip、nmrsim)。其余在本机测到。
+四十六道 discovery 题,本机测到三十二道:九道以模拟真值锚定、不带参考程序,无从对照;另外五道
+缺 oracle 依赖(networkx、astropy、sympy、qutip、nmrsim)。计时类失败都用更长的时钟重跑过,
+没有剩下因超时而未测的题。
 
 ### 1. 世界是真的不同,沉默也不是免费的
 
-`constant_answer` 在被计分的二十五道题上**全部**是 0.000。把第一个世界的答案重放到所有世界,
+`constant_answer` 在被计分的二十七道题上**全部**是 0.000。把第一个世界的答案重放到所有世界,
 一分不得——世界之间的差异是实的,这一层没有可乘之机。
 
-`abstain_all` 被计分的二十四道里有二十三道是 0(唯一的例外是 ProspectiveMetaAnalysis 的 46%)。这是设计使然而非侥幸:多数题的 baseline 就写着"一次便宜实验之后
-在每个世界上拒答",于是刻度的零点已经把"全部拒答"吸收掉了。
+`abstain_all` 被计分的二十八道里有二十七道是 0,唯一的例外是 ProspectiveMetaAnalysis 的 46%。
+这是设计使然而非侥幸:多数题的 baseline 本身就写着"一次便宜实验之后在每个世界上拒答",于是
+刻度的零点已经把"全部拒答"吸收掉了。
 
 ### 2. 校准的代价只被收了一次,而且收的是沉默那一侧
 
-`claim_all` 是唯一有牙的策略。被计分的二十三道题里,十二道给了它非零分,其中八道达到参考解的
+`claim_all` 是唯一有牙的策略。被计分的二十五道题里,十二道给了它非零分,其中八道达到参考解的
 一半或以上(QuinaryConvexHull 恰好是 0.500 / 1.000):
 
 | 相对参考解 | 任务 |
@@ -92,31 +95,44 @@ Bose"这一种错,而翻转标志提交的是参考解原本正确的族标签�
 
 ### 3. 天花板
 
-被计分的二十九道题里,二十八道的参考解至少有一条轴停在极值(FDR 0.0、拒答率 1.0、覆盖率 1.0
-或机制分 1.0);十八道至少有一条轴对校准决定不敏感。五道题的参考解 `combined_score` 恰好是 1.000:SurvivorshipConfoundedDesign、
+被计分的三十二道题里,三十一道的参考解至少有一条轴停在极值(FDR 0.0、拒答率 1.0、覆盖率 1.0
+或机制分 1.0);二十道至少有一条轴对校准决定不敏感,其中十七道不敏感的正是 false-discovery
+那一类。五道题的参考解 `combined_score` 恰好是 1.000:SurvivorshipConfoundedDesign、
 PTAHellingsDowns、QuinaryConvexHull、AMOCTippingRefusal、LookElsewhereAnomaly。
 
 在这些题上,任何达到参考解的候选与任何超过它的候选无法区分——量程已经用完。
 
-### 4. 前沿模型落在哪里
+### 4. 前沿模型落在哪里,以及一次抽样说明不了什么
 
-搜索者条件 `gpt-5.6-terra` / responses / medium(condition `3cf1c810`,已登记在
-`sle/llm_conditions.yaml`),`greedy_rewrite`,每题预算 12:
+准入检查点 D16 的线是"**首提案**不得够到参考解"。搜索者条件 `gpt-5.6-terra` / responses /
+medium(condition `3cf1c810`,已登记在 `sle/llm_conditions.yaml`),`greedy_rewrite`:
 
-| 任务 | 参考解 | 模型最好 | 提案数 |
-|---|---|---|---|
-| AtmosphericChemistry/MethaneSourceAttribution | 0.754 | **0.879** | 3 |
-| Mathematics/BlackBoxGroupIdentification | 0.286 | **0.429** | 13 |
-| CausalDiscovery/SurvivorshipConfoundedDesign | 1.000 | **1.000** | 13 |
-| ComputerArchitecture/CacheReplacementPolicyID | 0.778 | 0.222 | 4 |
-| EvidenceSynthesis/ProspectiveMetaAnalysis | 0.909 | 0.000 | 6 |
+| 任务 | 参考解 | 首提案 | 预算内最好 | 提案数 |
+|---|---|---|---|---|
+| CausalDiscovery/SurvivorshipConfoundedDesign | 1.000 | **1.000** | 1.000 | 12 |
+| AtmosphericChemistry/MethaneSourceAttribution | 0.754 | **0.875** | 0.879 | 3 |
+| AtmosphericChemistry/MethaneSourceAttribution | 0.754 | 0.250 | 0.391 | 12 |
+| ComputerArchitecture/CacheReplacementPolicyID | 0.778 | 0.000 | 0.222 | 3 |
+| Mathematics/BlackBoxGroupIdentification | 0.286 | 0.143 | 0.429 | 12 |
+| AtmosphericScience/RadiativeTransferFit | 0.791 | 0.000 | 0.000 | 12 |
+| EvidenceSynthesis/ProspectiveMetaAnalysis | 0.909 | 无效 | 0.000 | 5 |
 
-MethaneSourceAttribution 那次不是 hack:逐轴看,模型的机制恢复是 16 个世界里对 15 个,参考解
-对 13 个;FDR 0.0625 对 0.0714。它是把参考见证做得更好了,用了三次提案。
-SurvivorshipConfoundedDesign 则是另一种:模型打到 1.000,与八条轴全部饱和的参考解并列,这道题
-已经无法再分出高下。同一个下午,同一个模型,在 ProspectiveMetaAnalysis 上六次提案全是 0。
+两处越线:
 
-**区分度是逐题的,现在没有任何东西在测它。**
+- **SurvivorshipConfoundedDesign 的首提案就是 1.000**,与八条轴全部饱和的参考解完全并列。这道题
+  已经无法分出高下:任何达到参考解的候选和任何超过它的候选给出同一个数,而前沿模型第一次尝试
+  就到了。
+- **MethaneSourceAttribution 在一次抽样里首提案 0.875 > 参考解 0.754**,逐轴看不是捷径:机制恢复
+  是十六个世界里对十五个,参考解对十三个;FDR 0.0625 对 0.0714;拒答率两者都在 1.0 天花板。
+  它把参考见证做得更好了。
+
+**但同一条件在同一道题上的另一次抽样,首提案只有 0.250、预算内最好 0.391。** 两次独立运行的
+首提案相差 3.5 倍。这本身是个结论:**单次 draw 不足以给一个模型在一道题上定位**,D16 按首提案
+判定时尤其如此——同一道题可以因为抽到哪一次而通过或不通过。这里只跑了六道题、单一条件、
+每题一到两次,是探针不是普查;要当准入依据,需要的是多次抽样的分布,不是一个数。
+
+同一个模型在 ProspectiveMetaAnalysis 上五次提案没有一个有效提交,在 RadiativeTransferFit 上
+十二次全是 0。**区分度是逐题的,而且现在没有任何东西在测它。**
 
 ## 建议的四条判据
 
@@ -128,8 +144,11 @@ SurvivorshipConfoundedDesign 则是另一种:模型打到 1.000,与八条轴全�
 - **D-b 分母。** 每条比率轴公布分子与分母;分母为空时该轴是 `not_measured`,不是 1.0。
 - **D-c 余量。** 至少一条计分轴的参考解严格落在量程内部。参考解处处顶格的题只能排出比它差的
   东西,排不出比它好的。
-- **D-d 前沿落点。** 卡片记录某个具名搜索者条件在给定预算下落在哪里。落在参考解之上,说明
-  这道题的见证该抬高或该退出区分集合;落在 0,说明先要分清是科学难度还是接口问题。
+- **D-d 前沿落点,按分布而不是按一个数。** 卡片记录某个具名搜索者条件在给定预算下落在哪里。
+  落在参考解之上,说明这道题的见证该抬高或该退出区分集合;落在 0,说明先要分清是科学难度
+  还是接口问题。**D16 现在按单次 draw 的首提案判定,这一条需要改**:实测同一条件在
+  MethaneSourceAttribution 上两次抽样的首提案是 0.875 和 0.250,一次越线一次不越,
+  所以"首提案不得够到参考解"应当写成 k 次 draw 里越线次数的上限,并把 k 和每次的数都记进卡片。
 
 ## 与既有检查的分工
 
@@ -140,7 +159,7 @@ SurvivorshipConfoundedDesign 则是另一种:模型打到 1.000,与八条轴全�
   它还排除了一条路径,理由是"通用退化探针是畸形候选,`check_task_contribution` 本来就要求它们
   得零",并举了两例实测(QuinaryConvexHull 上的"全部复制"策略、LookElsewhereAnomaly 上的
   local-z 阈值,都是 0.0)。**那两个例子是对的**:本审计的 `constant_answer` 就是"全部复制"的
-  一般形式,它在被计分的二十五道题上全部为 0。但"通用 ⇒ 畸形 ⇒ 零"作为一般命题过宽:校准翻转
+  一般形式,它在被计分的二十七道题上全部为 0。但"通用 ⇒ 畸形 ⇒ 零"作为一般命题过宽:校准翻转
   这一族同样通用,提交的却是参考解自己的合法答案(`valid = 1`),`claim_all` 在 QuinaryConvexHull
   上得 0.500、在 ProspectiveMetaAnalysis 上得 0.833。两件工作互补,需要修订的是那条前提的范围,
   不是它举的例子。
@@ -151,5 +170,7 @@ SurvivorshipConfoundedDesign 则是另一种:模型打到 1.000,与八条轴全�
   重跑过,`eval_time_seconds: 30` 的题在本机需要更多时间才能跑完参考解(PR #103 在处理这条)。
 - `abstain_all` / `claim_all` 只翻 `abstain` 标志(含通过回调提交的那一份),不构造"换一个错误
   机制"这类声明,所以它给出的是**下界**:一个真正的攻击者不会比它更弱。
-- 前沿落点只测了六道题、单一条件、预算 12,是探针不是普查。
+- 前沿落点只测了六道题、单一条件、每题一到两次 draw,是探针不是普查。已经看到的 draw 间方差
+  (同题首提案 0.875 对 0.250)大到足以说明:这张表本身不能用来给任何一道题下准入结论,只能
+  用来说明为什么需要分布。
 - 本审计只报告,不当门。要当门,先要在基准机上重跑一遍,并接受 D-a 会让若干现存任务变红。
