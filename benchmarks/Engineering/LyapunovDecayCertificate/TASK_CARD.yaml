@@ -21,30 +21,34 @@ invariants:
 - floats are rejected rather than rounded
 - malformed submissions score zero and never raise out of the evaluator
 known_shortcuts: >-
-  The September 12 redesign closed the one-parameter cyclic line but NOT the
-  general five-degree-of-freedom search, and checkpoint 12 remains open. Closed:
+  The five-degree-of-freedom search was folded into the reference rather than
+  left as headroom, so the shortcut ladder is now measured against a reference
+  that actually solves the LMI. Reference 0.588703 (was 0.437715 with the
+  catalog alone). Probes, all below the 0.8x guard margin of 0.470962:
   identity Gram with exact bisection of alpha 0.265909. Group-average then 1-D
-  cyclic line P=I+c(J−I), 14 Grams, den=1000 bisection: 0.265200 in 0.07s (0.61×
+  cyclic line P=I+c(J−I), 14 Grams, den=1000 bisection: 0.265200 in 0.07s (0.45×
   reference). Two-parameter block-diagonal grid P=[[1,b,0],[b,d,0],[0,0,1]] with
-  725 Grams and rational bisection: 0.299867 in 1.5s (0.69×). The September 9
+  725 Grams and rational bisection: 0.299867 in 1.5s (0.51×). The September 9
   constant certificate p11=1, p12=-3/5, p22=1, alpha=59/100, padded with
-  p13=p23=0, p33=1, is infeasible on every instance and scores 0. Open:
-  12-restart Nelder-Mead over the full 5-DOF Gram cone, rationalized to the
-  public cap and bisected exactly, scores 0.588975 in 11.1s = 1.346× the
-  reference 0.437715 (reproduced independently; the maintainer measured
-  0.588754). The reference file with three catalog constants changed reaches
-  0.536776 (1.226×) and a 5-DOF coarse rational grid 0.540867 (1.236×). The
-  numerator/denominator cap is what makes the problem hard, and a cap-aware
-  bisection around a float LMI optimum is the standard way to pay it, so no
-  reference on [0,1] can push that family below 0.8× of itself. These three rows
-  are deliberately not declared in shortcut_probe; the disposition is a ruler
-  and instance-dimension decision, not a probe declaration.
+  p13=p23=0, p33=1, is infeasible on every instance and scores 0. The family that
+  used to win, 12-restart Nelder-Mead over the same cone, was measured at
+  0.589111 = 1.001× the new reference, i.e. 0.07% above it: it is now a peer of
+  the reference rather than a shortcut, and it is recorded as a measurement
+  rather than shipped as a probe. A peer cannot be declared (it would fail the
+  guard) or excluded (the completeness check would flag it as unmeasured), which
+  is the correct behaviour. The reference is deterministic coordinate descent
+  (numpy only, fixed starts, no RNG) rounded to denominator 1000 and certified
+  by exact bisection; its 119-Gram catalog is retained as a fallback for any
+  instance where rounding loses positive definiteness, and the solved Gram is
+  accepted only if it certifies. NumPy is required and is the pinned dependency;
+  scipy.optimize is deliberately not used because its convergence drifts across
+  versions.
 shortcut_probe:
   schema_version: 1
   metric: combined_score
   reference:
     candidate: verification/reference_lyapunov.py
-    expected_score: 0.437715
+    expected_score: 0.5887025
   probes:
   - id: cyclic_group_average_line
     candidate: references/cyclic_probe.py

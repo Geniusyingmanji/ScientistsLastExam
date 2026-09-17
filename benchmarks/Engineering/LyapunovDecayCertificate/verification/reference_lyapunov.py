@@ -195,6 +195,105 @@ def _pack(gram, alpha):
     }
 
 
+def _certify(modes, gram, upper, denominator):
+    """The largest alpha this gram proves, by exact bisection to the public cap."""
+    if not _holds(modes, gram, Fraction(0)):
+        return None
+    low, high = 0, int(upper * denominator) + 1
+    while high - low > 1:
+        middle = (low + high) // 2
+        if _holds(modes, gram, Fraction(middle, denominator)):
+            low = middle
+        else:
+            high = middle
+    alpha = Fraction(low, denominator)
+    return alpha if alpha > 0 else None
+
+
+def _search_gram(instance):
+    """Solve the LMI instead of guessing at it, in deterministic floating point.
+
+    The catalog below is a fixed set of candidate Grams, and the true optimum lies
+    *between* its atoms on this family: it reached 0.437715 where a direct search of the
+    same cone reaches 0.588703. That gap is not headroom for a candidate, it is a gap in
+    the reference, and a candidate that closes it by running a textbook optimizer has
+    beaten the witness rather than the problem.
+
+    So the reference now does what Boyd section 5.2 says to do: maximize the certified
+    rate over the cone of positive definite Grams, then certify the result in exact
+    rationals. The search is coordinate descent with a shrinking step over the six free
+    entries (p11 normalized to 1 by homogeneity), from a fixed list of starting points -
+    no RNG, no clock, and no scipy, because `scipy.optimize` convergence drifts across
+    versions and a reference that is not bit-reproducible cannot be a frozen anchor.
+
+    Float is only the search. The returned certificate is exact: the optimum is rounded
+    to a modest denominator and then bisected exactly, so float noise cannot move the
+    score by even one unit in the last place.
+    """
+    import numpy as np
+
+    raw = instance["mode_matrices"]
+    modes_np = [
+        np.array([[float(_fraction(entry)) for entry in row] for row in mode])
+        for mode in raw
+    ]
+    def matrix(x):
+        return np.array([[x[0], x[1], x[2]],
+                         [x[1], x[3], x[4]],
+                         [x[2], x[4], x[5]]], dtype=float)
+
+    def rate(x):
+        gram = matrix(x)
+        eigenvalues, vectors = np.linalg.eigh(gram)
+        if eigenvalues[0] <= 1e-12:
+            return -1e18
+        half = vectors @ np.diag(np.sqrt(eigenvalues)) @ vectors.T
+        inverse = np.linalg.inv(half)
+        worst = None
+        for mode in modes_np:
+            shifted = mode.T @ gram + gram @ mode
+            value = np.linalg.eigvalsh(inverse @ shifted @ inverse).max()
+            worst = value if worst is None else max(worst, value)
+        return -float(worst)
+
+    # Fixed starts. The identity and the sheared starts below are the catalog's own best
+    # structures, so the search cannot do worse than the catalog it is replacing.
+    starts = [np.array([1.0, 0.0, 0.0, 1.0, 0.0, 1.0])]
+    for offset in (-0.5, 0.0, 0.5):
+        for bump in (0.3, 0.6):
+            starts.append(np.array([1.0, offset, offset, 1.0, offset, 1.0 + bump]))
+    starts.append(np.array([1.0, 0.6, -0.8, 2.0, 0.55, 2.9]))
+    starts.append(np.array([1.0, -0.3, 0.4, 1.3, -0.2, 1.1]))
+
+    best_x, best_rate = None, -1e18
+    for start in starts:
+        x = start.copy()
+        value = rate(x)
+        step = 0.25
+        for _ in range(60):
+            improved = False
+            for index in range(6):
+                for delta in (step, -step):
+                    trial = x.copy()
+                    trial[index] += delta
+                    candidate = rate(trial)
+                    if candidate > value + 1e-14:
+                        x, value, improved = trial, candidate, True
+                        break
+            if not improved:
+                step /= np.sqrt(2.0)
+                if step < 1e-12:
+                    break
+        if value > best_rate:
+            best_x, best_rate = x, value
+    return matrix(best_x)
+
+
+def _rational_gram(matrix, denominator):
+    return [[Fraction(float(matrix[i][j])).limit_denominator(denominator) for j in range(3)]
+            for i in range(3)]
+
+
 def build_lyapunov(instance):
     _ = instance["state_dimension"]
     _ = instance["name"]
@@ -208,18 +307,17 @@ def build_lyapunov(instance):
         int(instance["max_numerator"]) // magnitude,
     )
     for gram in CATALOG:
-        if not _holds(modes, gram, Fraction(0)):
-            continue
-        low, high = 0, int(upper * denominator) + 1
-        while high - low > 1:
-            middle = (low + high) // 2
-            if _holds(modes, gram, Fraction(middle, denominator)):
-                low = middle
-            else:
-                high = middle
-        alpha = Fraction(low, denominator)
-        if alpha > 0 and (best is None or alpha > best[1]):
+        alpha = _certify(modes, gram, upper, denominator)
+        if alpha is not None and (best is None or alpha > best[1]):
             best = (gram, alpha)
+    # The solved Gram is a better starting point than any catalog atom, but it is only
+    # accepted if it certifies: a rounding that loses positive definiteness falls back
+    # to the catalog result rather than to a failure.
+    solved = _rational_gram(_search_gram(instance), 1000)
+    if _spd(solved):
+        alpha = _certify(modes, solved, upper, denominator)
+        if alpha is not None and (best is None or alpha > best[1]):
+            best = (solved, alpha)
     if best is None:
         gram = _eye()
         alpha = Fraction(1, 10000)

@@ -12,9 +12,15 @@ Submit exact rational `P` and `alpha`. Floats are rejected, not rounded: a
 numerical LMI dump is not a proof. Each published instance is a list of
 independent Hurwitz matrices that are not permutation-conjugate, so averaging
 over the cyclic group does not collapse `P` to a one-parameter line. After
-homogeneity the common Gram is a genuinely five-parameter search: a
-cyclic-symmetric ansatz is legal and cheap, and it is not competitive with a
-catalog that shears different planes independently.
+homogeneity `p11 = 1` the common Gram is a genuinely five-parameter search, and
+the **denominator cap is part of the problem**: a rate that is optimal in
+floating point is not automatically certifiable, because rounding `P` to the
+public caps can destroy feasibility.
+
+The reference solution solves the LMI rather than searching a fixed list, so
+"run an off-the-shelf optimizer and round the result" does not beat it. What
+distinguishes a better submission is a higher certified rate: a tighter search of
+the same cone, or a certificate the reference's local search does not find.
 
 ## What you implement
 

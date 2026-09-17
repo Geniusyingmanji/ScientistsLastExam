@@ -140,6 +140,69 @@ class LyapunovDecayCertificateTests(unittest.TestCase):
             self.evaluator.certificate_holds(modes, gram, rate + Fraction(1, 10000))[0]
         )
 
+    def test_reference_solves_the_lmi_instead_of_only_searching_the_catalog(self):
+        """The reference must do better than its own catalog on every instance.
+
+        This is the property a previous revision got wrong. It searched a fixed list of 119
+        Grams and stopped at 0.437715 where the cone actually yields 0.588703, so a candidate
+        running a textbook optimizer beat the reference by 1.35x while the guard stayed green.
+        Pinning "the solved Gram certifies and beats the catalog" means an edit that quietly
+        reverts to a catalog-only search fails here rather than in review.
+        """
+        # One instance, not four: _search_gram is the reference's real cost and running it
+        # per instance would add minutes to the suite for the same property.
+        instance = self.evaluator.INSTANCES[0]
+        modes = self.evaluator._parse_modes(instance["mode_matrices"])
+        public = self.evaluator.public_instance(instance)
+        upper = min(-self.reference._trace(mode) for mode in modes)
+        magnitude = max(1, -(-upper.numerator // upper.denominator))
+        denominator = min(
+            int(public["max_denominator"]),
+            int(public["max_numerator"]) // magnitude,
+        )
+        catalog_best = None
+        for gram in self.reference.CATALOG:
+            alpha = self.reference._certify(modes, gram, upper, denominator)
+            if alpha is not None and (catalog_best is None or alpha > catalog_best):
+                catalog_best = alpha
+        self.assertIsNotNone(catalog_best)
+        solved = self.reference._rational_gram(self.reference._search_gram(public), 1000)
+        self.assertTrue(self.evaluator._spd(solved))
+        solved_alpha = self.reference._certify(modes, solved, upper, denominator)
+        self.assertIsNotNone(solved_alpha)
+        self.assertGreater(
+            solved_alpha, catalog_best,
+            "the solved Gram must beat every catalog atom on %s" % instance["name"],
+        )
+
+    def test_reference_search_is_deterministic_by_construction(self):
+        """A frozen anchor requires bit-reproducibility: no RNG, no clock, no scipy.
+
+        Checked structurally rather than by running the search twice, because the search is
+        the reference's whole cost and the property is about what the module is allowed to
+        reach for. Two identical runs were also confirmed by hand (combined 0.5887025 both
+        times) when this test was written.
+        """
+        # Parse the imports rather than grepping the text: the module docstring names scipy
+        # on purpose, to explain why the search does not use it.
+        import ast
+
+        tree = ast.parse((TASK / "verification/reference_lyapunov.py").read_text(encoding="utf-8"))
+        imported = set()
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                imported.update(alias.name.split(".")[0] for alias in node.names)
+            elif isinstance(node, ast.ImportFrom) and node.module:
+                imported.add(node.module.split(".")[0])
+        # Deterministic stdlib plus numpy, and nothing else. numpy is the task's pinned
+        # dependency; scipy is excluded because its convergence drifts across versions.
+        allowed = {"__future__", "fractions", "itertools", "numpy"}
+        self.assertEqual(imported - allowed, set(),
+                         "unexpected import in the reference: %s" % sorted(imported - allowed))
+        self.assertNotIn("random", imported)
+        self.assertNotIn("time", imported)
+        self.assertNotIn("scipy", imported)
+
     def test_catalog_contains_cyclic_symmetric_grams(self):
         cyclic = [gram for gram in self.reference.CATALOG if _is_cyclic(gram)]
         self.assertGreater(len(cyclic), 0)
