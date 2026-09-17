@@ -82,6 +82,26 @@ class SaturationAuditTests(unittest.TestCase):
                 self.assertEqual(
                     self.inventory[task_id]["measured_combined_score"], row["combined_score"])
 
+    def test_a_denial_or_an_unknown_is_not_a_declaration(self):
+        """The classifier must read an affirmation, not a substring.
+
+        The first version of this test did not exist and the classifier matched "saturat" as a
+        substring: adversarial review measured that "not_saturated", "unsaturated",
+        "not_saturated_pending_review", "desaturated" and "saturation_unknown" all counted as
+        declarations, which would move a task out of the defect inventory (at_ceiling_undeclared)
+        into at_ceiling_declared and silently empty it. A card that DENIES saturation, or says it
+        is unknown, is the exact opposite of declaring it.
+        """
+        from scripts.saturation_audit import _declares  # noqa: PLC0415
+        for status in ("not_saturated", "unsaturated", "not_saturated_pending_review",
+                       "desaturated", "saturation_unknown", "not_tested", "", "pending"):
+            with self.subTest(status=status):
+                self.assertFalse(_declares(status), status)
+        for status in ("saturated", "saturated_for_current_frontier",
+                       "Saturated_For_Current_Frontier"):
+            with self.subTest(status=status):
+                self.assertTrue(_declares(status), status)
+
     def test_the_inventory_is_exactly_the_flagged_set_with_no_stale_entries(self):
         """Listing is not a pass - the policy says so in as many words.
 

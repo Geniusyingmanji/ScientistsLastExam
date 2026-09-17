@@ -157,12 +157,28 @@ def declares_saturation(spec) -> str | None:
     if not isinstance(card, dict):
         return None
     status = str((card.get("long_horizon") or {}).get("status") or "")
-    if "saturat" in status.lower():
+    if _declares(status):
         return "long_horizon.status=%s" % status
     health = card.get("measurement_health")
-    if isinstance(health, dict) and "saturat" in str(health.get("status") or "").lower():
+    if isinstance(health, dict) and _declares(str(health.get("status") or "")):
         return "measurement_health.status=%s" % health["status"]
     return None
+
+
+# A declaration is an AFFIRMATION, and the previous word test was one substring away from reading
+# a denial as one: adversarial review measured that "not_saturated", "unsaturated",
+# "not_saturated_pending_review", "desaturated" and "saturation_unknown" all matched "saturat",
+# which would move a task from at_ceiling_undeclared (the defect class) to at_ceiling_declared
+# (not a defect) and drop it off the inventory. Only an affirmative status declares. An unseen
+# wording resolves to not-declared - the safe direction, since a false "declared" hides a defect.
+_SATURATION_DECLARED = (
+    "saturated", "saturated_for_current_frontier", "saturated_for_the_current_frontier",
+)
+
+
+def _declares(status: str) -> bool:
+    lowered = status.strip().lower()
+    return lowered in _SATURATION_DECLARED
 
 
 def audit_task(spec, tolerance: float = DEFAULT_TOLERANCE) -> dict:
