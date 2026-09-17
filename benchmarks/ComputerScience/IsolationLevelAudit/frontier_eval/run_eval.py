@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
-TASK_ID = 'Algorithm/IsolationLevelAudit'
+TASK_ID = 'ConcurrencyControl/IsolationLevelAudit'
 EVAL_TIMEOUT_S = 360
 
 

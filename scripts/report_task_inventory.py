@@ -51,6 +51,7 @@ CHINESE_NAMES = {
     "ClimateScience/EnergyBalanceModel": "能量平衡模型辨识",
     "ClimateScience/ForcedSignalAttribution": "强迫信号检测归因",
     "ComputerArchitecture/CacheReplacementPolicyID": "缓存替换策略辨识",
+    "ConcurrencyControl/IsolationLevelAudit": "事务隔离级别审计",
     "ControlTheory/InvertedPendulumSwingUp": "倒立摆摆起控制",
     "DynamicalSystems/ActiveLawDiscovery": "主动定律发现",
     "Ecology/OccupancyDetectionDesign": "生态占域与探测设计",
@@ -179,6 +180,9 @@ CHINESE_BRIEFS = {
     "ComputerArchitecture/CacheReplacementPolicyID": (
         "在带噪声的命中/缺失计时通道上对一个缓存组做受预算约束的访问实验,把隐藏的替换策略写成以路为输入的确定性状态机,或判定策略含随机性而拒答",
         "提交的状态机与真实策略做精确的可观测等价判定;错误状态机记误发现并扣一个世界,随机策略世界须拒答,分数标尺锚在全拒答为零"),
+    "ConcurrencyControl/IsolationLevelAudit": (
+        "在操作预算内对一个黑盒事务存储做主动并发探测,读回历史并指出它实现的隔离级别,或在预算买不到足够竞争时拒答;弱路径概率隐藏,异常需要两个弱事务同时在飞,发生率对它是二次的,建得对的探测多数轮次仍然什么都测不到",
+        "指对级别加一分,指错扣一分,拒答零分;可结算世界与饥饿世界由一个不询问参考解的协议事先测定,发现覆盖率、正确拒答率与假发现率按各自的分母分列,分数标尺锚在全拒答为零"),
     "ControlTheory/InvertedPendulumSwingUp": (
         "设计小车倒立摆的摆起与稳定控制律,兼顾轨道限位与作动器约束",
         "摆起效用;偏移工况稳健性分列"),
