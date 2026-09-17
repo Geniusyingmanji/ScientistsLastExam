@@ -47,13 +47,102 @@ METADATA_DIFFICULTIES = {
 }
 METADATA_TIERS = {"candidate", "T2", "T3"}
 SCORE_MODES = {"clipped", "uncapped"}
+# `run_eval.py` hands `EVAL_TIMEOUT_S` to `sle eval`; nothing on the evaluation path reads
+# `eval_time_seconds`, so the two can disagree forever. They are reconciled here instead:
+# the enforced timeout must cover the declared cost by at least the generator's own threefold
+# margin, and must not exceed it by more than an order of magnitude beyond the widest legitimate
+# margin in the inventory (75x, OccupancyDetectionDesign at 4 s under a 300 s wrapper). The
+# ceiling is deliberately loose - it catches a declaration wrong by orders of magnitude without
+# failing a merely conservative one. Tasks whose two values are already inconsistent when this
+# check lands are named in `schemas/eval_timeout_migration.json` rather than silently waived.
+EVAL_TIMEOUT_MIN = 3.0
+EVAL_TIMEOUT_MAX = 100.0
+# `review.domain` is the external-sign-off slot, and any nonempty string satisfied it: `'x'`
+# passed. It is now an enumerated status. The 88 inherited cards wrote free-text variants of
+# one of those values (`pending_external`, `pending_external_photovoltaics`), so a value that
+# *starts* with a pending prefix is read as pending - never as sign-off. That keeps the inventory
+# green without rewriting 88 task packages, and an unrecognised string now fails rather than
+# counting as reviewed.
+DOMAIN_REVIEW_PENDING_PREFIX = "pending"
+DOMAIN_REVIEW_COMPLETE = "complete"
+# Recorded, not waived: see the `policy` key in the file.
+EVAL_TIMEOUT_MIGRATION = ROOT / "schemas" / "eval_timeout_migration.json"
 
 
 def _nonempty_string(value: object) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
 
-def _metadata_issues(metadata: dict) -> list[str]:
+def _module_literal(path: Path, name: str):
+    """The value a module binds to ``name`` at top level, without importing it.
+
+    The timeout that actually stops an evaluation is a hand-committed constant in each task's
+    wrapper, so the audit has to read it out of the source. `ast` rather than a regex because
+    the wrappers carry comments about timeouts, and a substring scan matches those.
+    """
+    try:
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+    except (OSError, SyntaxError):
+        return None
+    for node in tree.body:
+        if not isinstance(node, ast.Assign):
+            continue
+        if not any(isinstance(target, ast.Name) and target.id == name
+                   for target in node.targets):
+            continue
+        try:
+            return ast.literal_eval(node.value)
+        except (ValueError, SyntaxError):
+            return None
+    return None
+
+
+def _migration_inventory() -> dict:
+    """The recorded tasks whose declared cost and enforced timeout already disagree."""
+    try:
+        document = json.loads(EVAL_TIMEOUT_MIGRATION.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    tasks = document.get("tasks")
+    return tasks if isinstance(tasks, dict) else {}
+
+
+def _timeout_issues(metadata: dict, run_eval: Path | None, task_id: str) -> list[str]:
+    issues = []
+    if "eval_time_seconds" not in metadata:
+        # An absent key is `REQUIRED_METADATA`'s issue, not a second one for the same cause.
+        return issues
+    declared = metadata["eval_time_seconds"]
+    if isinstance(declared, bool) or not isinstance(declared, (int, float)) or declared <= 0:
+        return ["metadata eval_time_seconds is not a positive number"]
+    if run_eval is None or not run_eval.is_file():
+        return issues
+    enforced = _module_literal(run_eval, "EVAL_TIMEOUT_S")
+    if isinstance(enforced, bool) or not isinstance(enforced, (int, float)):
+        return ["run_eval.py does not bind a literal EVAL_TIMEOUT_S"]
+    entry = _migration_inventory().get(task_id)
+    if entry is not None:
+        # Pending means the disagreement is recorded, not that it was accepted. The entry pins
+        # the pair it was written against: if either number moves, the entry is stale and the
+        # ratio is checked again, so the inventory cannot outlive the numbers it excuses.
+        if (entry.get("declared_eval_time_seconds") == declared
+                and entry.get("enforced_timeout_s") == enforced):
+            return issues
+        issues.append("eval timeout migration entry is stale")
+    ratio = enforced / declared
+    if ratio < EVAL_TIMEOUT_MIN:
+        issues.append(
+            "run_eval.py timeout %g does not cover the declared %g s evaluation by %gx"
+            % (enforced, declared, EVAL_TIMEOUT_MIN))
+    elif ratio > EVAL_TIMEOUT_MAX:
+        issues.append(
+            "run_eval.py timeout %g exceeds the declared %g s evaluation by %gx"
+            % (enforced, declared, EVAL_TIMEOUT_MAX))
+    return issues
+
+
+def _metadata_issues(metadata: dict, run_eval: Path | None = None,
+                     task_id: str = "") -> list[str]:
     issues = []
     if metadata.get("difficulty") not in METADATA_DIFFICULTIES:
         issues.append("metadata difficulty is invalid")
@@ -62,7 +151,46 @@ def _metadata_issues(metadata: dict) -> list[str]:
         issues.append("metadata tier is invalid")
     if metadata.get("score_mode") not in SCORE_MODES:
         issues.append("metadata score_mode is invalid")
+    issues.extend(_timeout_issues(metadata, run_eval, task_id))
     return issues
+
+
+def domain_review_state(review: dict) -> str:
+    """Classify ``review.domain`` as ``pending``, ``complete`` or ``unknown``.
+
+    Shared by the inventory audit (which fails closed on an unrecognised value) and the maturity
+    audit (which counts sign-offs), so the two cannot disagree about whether a card is reviewed.
+    ``complete`` additionally requires a reviewer and a date: a bare status is the uncheckable
+    assertion the free-text field used to be, just spelled differently.
+    """
+    value = review.get("domain")
+    status = value.strip() if isinstance(value, str) else ""
+    if not status:
+        return "unknown"
+    if status.split("_", 1)[0] == DOMAIN_REVIEW_PENDING_PREFIX:
+        return "pending"
+    if status == DOMAIN_REVIEW_COMPLETE and all(
+        _nonempty_string(review.get(key)) for key in ("reviewed_by", "reviewed_at")
+    ):
+        return "complete"
+    return "unknown"
+
+
+def _domain_review_issues(review: dict) -> list[str]:
+    """`pending` must be distinguishable from `done by someone`, and `done` must be evidenced."""
+    value = review.get("domain")
+    if not isinstance(value, str) or not value.strip():
+        return []
+    if value.strip() == DOMAIN_REVIEW_COMPLETE:
+        # `reviewed_by`/`reviewed_at` are new keys, so the 88 inherited cards - all pending -
+        # keep validating.
+        return ["task card review domain is complete without %s" % key
+                for key in ("reviewed_by", "reviewed_at")
+                if not _nonempty_string(review.get(key))]
+    if domain_review_state(review) == "pending":
+        return []
+    return ["task card review domain is not a %s status or %s"
+            % (DOMAIN_REVIEW_PENDING_PREFIX, DOMAIN_REVIEW_COMPLETE)]
 
 
 def _task_card_issues(path: Path) -> list[str]:
@@ -132,6 +260,7 @@ def _task_card_issues(path: Path) -> list[str]:
         for key in ("domain", "evaluator_security"):
             if not _nonempty_string(review.get(key)):
                 issues.append("task card review lacks %s" % key)
+        issues.extend(_domain_review_issues(review))
     elif review is not None:
         issues.append("task card review is not a mapping")
 
@@ -269,7 +398,8 @@ def audit() -> dict:
         missing_files = [p for p in REQUIRED_FILES if not (spec.task_dir / p).is_file()]
         missing_metadata = [k for k in REQUIRED_METADATA if k not in spec.metadata]
         citation_ids = rec.get("citation_ids", [])
-        issues = _metadata_issues(spec.metadata)
+        issues = _metadata_issues(
+            spec.metadata, spec.task_dir / "frontier_eval" / "run_eval.py", spec.task_id)
         try:
             wave = load_frozen_wave(spec)
         except ValueError as exc:

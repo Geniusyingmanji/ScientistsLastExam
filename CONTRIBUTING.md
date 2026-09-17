@@ -238,7 +238,7 @@ credit 不含假发现/弃权惩罚,不能作为综合提交质量分。具体 m
 22. `tests/test_<task>.py` 钉住关键性质。
 
 **F 集成**
-23. 黑盒 `frontier_eval/run_eval.py` 只用标准库启动 `sle.frontier_eval_entrypoint` CLI，保留显式 `TASK_ID` 与 `EVAL_TIMEOUT_S`；后者与卡片 `evaluation_budget` 一致；metadata 的 `eval_time_seconds` 是预计评测成本，生成器缺省预算为 `max(300, 3 * eval_time_seconds)`，可用 `eval_timeout_s` 显式覆盖。禁止同进程 import 候选。验证非 300 秒预算能传到 `sle eval`，导入/基础设施故障返回非零且不生成分数；搜索可见指标走白名单，全量 sidecar 必须放在提案智能体不可读的目录。
+23. 黑盒 `frontier_eval/run_eval.py` 只用标准库启动 `sle.frontier_eval_entrypoint` CLI，保留显式 `TASK_ID` 与 `EVAL_TIMEOUT_S`；`EVAL_TIMEOUT_S` 是评测路径上**唯一**被强制的超时——metadata 的 `eval_time_seconds` 是预计评测成本，没有任何运行时代码读取它。两者必须自洽：生成器缺省预算为 `max(300, 3 * eval_time_seconds)`，可用 `eval_timeout_s` 显式覆盖，`scripts/audit_tasks.py` 按 `[3x, 100x]` 检查实装常量与声明成本的比值（理由见该脚本 `EVAL_TIMEOUT_MIN`/`EVAL_TIMEOUT_MAX` 注释；历史上 dev 分支曾出现声明 1 s、实装 720 s 与声明 600 s、实装 600 s 两种已记录的迁移项）。禁止同进程 import 候选。验证非 300 秒预算能传到 `sle eval`，导入/基础设施故障返回非零且不生成分数；搜索可见指标走白名单，全量 sidecar 必须放在提案智能体不可读的目录。
 24. Linux 主机沙箱内实跑,分数与本地一致;`python scripts/check_task_contribution.py --task <id>` 通过。
 25. 全量测试绿;若改了任务包内文件,还要刷新全局证据。
 
