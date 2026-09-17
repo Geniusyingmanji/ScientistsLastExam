@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.metadata
+import io
 import os
 import subprocess
 import sys
@@ -8,6 +9,7 @@ import sysconfig
 import tempfile
 import textwrap
 import unittest
+from contextlib import redirect_stderr
 from pathlib import Path
 from unittest.mock import patch
 
@@ -15,7 +17,11 @@ from _sandbox_tools import skip_unless_sandbox
 
 from sle.evaluate import INVALID_SCORE, evaluate_candidate
 from sle.oracle_package_pins import candidate_distribution_pins, setup_requirements
-from sle.secure_eval import read_candidate_packages
+from sle.secure_eval import (
+    _candidate_package_mounts,
+    _warn_base_candidate_pin,
+    read_candidate_packages,
+)
 from sle.spec import load_task_spec
 
 
@@ -119,18 +125,40 @@ class RadialVelocityPackageContractTests(unittest.TestCase):
             ):
                 read_candidate_packages(TASK_DIR)
 
-    def test_base_candidate_package_version_mismatch_fails_closed(self):
+    def test_base_candidate_package_version_mismatch_warns_and_still_runs(self):
+        """A drifting base NumPy/SciPy must not fail the run before a candidate is reached.
+
+        On the Python 3.10.12 host this was found on, SciPy 1.12.0 raised for every task in the
+        repository - 87 of 87 - and the message named only the distribution and two versions, so
+        nothing said the certified pair was a host prerequisite rather than a defect. A task
+        names its own toolkits in `frontier_eval/candidate_packages.txt`; the base pair it did
+        not name is the half that warns.
+        """
         versions = self.pinned_versions()
-        versions["numpy"] = "0.0"
-        with patch(
+        versions.update({"numpy": "0.0", "scipy": "1.12.0"})
+        expected = candidate_distribution_pins(sys.version_info[:2])
+        # The warning is emitted once per drifted pair, so a real host with SciPy 1.12.0 would
+        # otherwise suppress this test's copy depending on collection order.
+        _warn_base_candidate_pin.cache_clear()
+        stderr = io.StringIO()
+        with tempfile.TemporaryDirectory() as temporary, patch(
             "sle.secure_eval.importlib.metadata.version",
             side_effect=lambda distribution: versions[distribution],
-        ):
-            with self.assertRaisesRegex(
-                RuntimeError,
-                "trusted candidate package 'numpy' has version 0.0, expected",
-            ):
-                read_candidate_packages(TASK_DIR)
+        ), patch(
+            "sle.secure_eval._mounted_candidate_distribution_version",
+            side_effect=lambda distribution, mounts: versions[distribution],
+        ), redirect_stderr(stderr):
+            read_candidate_packages(Path(temporary))
+        for distribution in ("numpy", "scipy"):
+            with self.subTest(distribution=distribution):
+                self.assertIn(
+                    "trusted candidate package %r has version %s, expected %s"
+                    % (distribution, versions[distribution], expected[distribution]),
+                    stderr.getvalue(),
+                )
+        # The warning names requirements-host.txt as the remedy, so it has to be there.
+        self.assertIn("requirements-host.txt", stderr.getvalue())
+        self.assertTrue((ROOT / "requirements-host.txt").is_file())
 
     def test_astropy_numeric_dependency_version_mismatch_fails_closed(self):
         for distribution, expected in (("pyerfa", "2.0.0.3"), ("PyYAML", "6.0.2")):

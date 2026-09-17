@@ -315,7 +315,7 @@ CI 其余部分对 PR 一视同仁:审计、卡片校验、沙箱测试全部要
 | 环境 | 能做什么 | 不能做什么 |
 |---|---|---|
 | 笔记本(macOS / Windows) | 改代码;`python -m pytest tests/ -q`(需要沙箱的测试自动 skip);写任务文档 | 跑 `sle eval / run`、标定、Δ 阶梯、任何要进仓库的证据 |
-| Linux 主机(bubblewrap + util-linux flock) | 以上全部;`refresh_global_evidence.py`;恢复审计;`rebind_measurement_health_spec.py` | 在脏树上生成证据 |
+| Linux 主机(bubblewrap + util-linux flock + 认证的 NumPy/SciPy) | 以上全部;`refresh_global_evidence.py`;恢复审计;`rebind_measurement_health_spec.py` | 在脏树上生成证据 |
 | CI(GitHub Actions,ubuntu-22.04 / ubuntu-24.04) | 全量测试 + 审计,合并前唯一算数的绿灯 | 生成证据(runner 不是可信来源) |
 
 原因写在沙箱里:候选代码在 bubblewrap 中由启动测试的同一 CPython ABI 执行。沙箱只读挂载该
@@ -323,9 +323,25 @@ CI 其余部分对 PR 一视同仁:审计、卡片校验、沙箱测试全部要
 因此依赖必须安装到启动测试的解释器可见的位置;CI 使用 `/usr/bin/python3`,维护者的完整 oracle
 环境则必须显式设置 `ORACLE_PYTHON=/path/to/python3.8`。其他 Python 版本可运行其已固定的基础
 candidate 包组合,但完整 oracle 安装目前只认证 Python 3.8 并会对其他版本提前 fail closed。
+
+**认证的 NumPy/SciPy 是主机前置条件,不是每次运行的检查。** 装法是
+`python -m pip install -r requirements-host.txt`(或 `pip install -e ".[host]"`);版本取自
+`sle/oracle_package_pins.py` 的 `BASE_CANDIDATE_PINS`,同一份 map 也驱动 setup 脚本与
+`pyproject.toml` 的 `oracle` extra。版本不符时 `sle eval` 在 stderr 给出警告并继续:早先它是
+fail closed,结果整台机器上 88 个任务有 87 个在候选执行前就抛错,而报错只说了包名和两个版本号,
+没有任何地方说明这组版本是前置条件 —— CI 一直绿只是因为 workflow 手工装了这一对。警告意味着
+可以跑,但**不意味着分数与记录可比**:oracle 若比较 NumPy/SciPy 数值,未认证主机上的分数可能
+不同,要复现记录的锚点就必须装这一组。任务自己声明的 toolkit 不受此宽容,仍然精确匹配并 fail
+closed(`sle/secure_eval.py:read_candidate_packages`),因为那些锚点正是对着那个版本录的。
+
 安装脚本需要 Bash 4+。Ubuntu 24.04 的 CI 显式关闭 AppArmor 对非特权 user namespace 的限制;
 这验证的是完成该主机配置后的沙箱,不是出厂配置的兼容性。基准主机也须配置该限制或使用经过审计的 setuid bwrap。
 macOS 没有 bubblewrap,沙箱路径一律不可用。
+
+Python 版本下界是 3.8,记录在 `pyproject.toml` 的 `requires-python`。3.8 是完整 oracle 安装
+唯一认证的版本,也是这个下界的依据;上界不存在 —— `BASE_CANDIDATE_PINS` 有 `(3, 12)` 条目,
+CI 同时跑 3.10 与 3.12。下载依赖与测试命令本身不变:`pytest tests/ -q` 从仓库根运行,
+`pyproject.toml` 的 `pythonpath` 保证脚本入口与 `python -m pytest` 解析到同一个根。
 
 证据文档(`experiments/*.json`、`.research/*_spec_*.json`)都带 `source_provenance`:git 修订、
 树是否干净、运行时源码哈希。脏树、笔记本产出、或运行时文件已变的文档会被标为不可信,测试直接拒收。

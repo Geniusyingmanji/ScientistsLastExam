@@ -1,0 +1,26 @@
+# The host prerequisite for trustworthy scores: the certified NumPy/SciPy pair.
+#
+# These are the versions the recorded oracle anchors were produced with, and every candidate
+# imports them. They are *not* a hard requirement of secure evaluation - sle/secure_eval.py warns
+# and continues without them - which is why the benchmark will run on an un-certified host but a
+# task whose oracle compares NumPy/SciPy numerics can score differently there. Install this file
+# to get the certified set:
+#
+#     python -m pip install -r requirements-host.txt
+#
+# The markers are the reason this file exists next to the `host` extra in pyproject.toml: the
+# (3, 8) entry of BASE_CANDIDATE_PINS in sle/oracle_package_pins.py carries a Python 3.12 pair
+# that a static extra cannot select. `python scripts/audit_tasks.py` and the CI workflow install
+# this set by hand; requirements-upstream.txt is separate and covers only optional search
+# backends.
+#
+# The full oracle environment - the domain toolkits and their audited transitive closure - is
+# installed by scripts/setup_oracle_env.sh, which is certified only for Python 3.8:
+#
+#     ORACLE_PYTHON=/path/to/python3.8 bash scripts/setup_oracle_env.sh
+
+numpy==1.24.4; python_version < "3.12"
+scipy==1.10.1; python_version < "3.12"
+
+numpy==1.26.4; python_version >= "3.12"
+scipy==1.11.4; python_version >= "3.12"
