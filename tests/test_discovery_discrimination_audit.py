@@ -239,3 +239,36 @@ class ReferenceProgramTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class RowRenderingTests(unittest.TestCase):
+    """The table must survive every outcome; a KeyError here once discarded finished work."""
+
+    def _row(self, runs):
+        return {"task": "A/B", "status": "measured", "reference_score": 0.8,
+                "reference_saturated_axes": [], "runs": runs}
+
+    def test_a_rejected_policy_prints_its_outcome_not_a_zero(self):
+        row = self._row({"reference": {"metrics": {"combined_score": 0.8}},
+                         "claim_all": {"outcome": "rejected",
+                                       "metrics": {"combined_score": 0.0, "valid": 0.0}}})
+        import io
+        import contextlib
+        buffer = io.StringIO()
+        with contextlib.redirect_stdout(buffer):
+            MODULE._print_row(row)
+        printed = buffer.getvalue()
+        self.assertIn("claim_all=rejected", printed)
+        self.assertNotIn("0.0000", printed)
+
+    def test_a_scored_policy_still_prints_its_ratio(self):
+        row = self._row({"reference": {"metrics": {"combined_score": 0.8}},
+                         "claim_all": {"outcome": "scored", "ratio_to_reference": 0.5,
+                                       "reaches_threshold": False,
+                                       "metrics": {"combined_score": 0.4, "valid": 1.0}}})
+        import io
+        import contextlib
+        buffer = io.StringIO()
+        with contextlib.redirect_stdout(buffer):
+            MODULE._print_row(row)
+        self.assertIn("claim_all=0.4000(50%)", buffer.getvalue())

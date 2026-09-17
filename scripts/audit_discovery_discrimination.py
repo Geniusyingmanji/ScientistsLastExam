@@ -496,13 +496,14 @@ def main() -> int:
         row = audit_task(spec, args.margin, args.timeout, wanted)
         row["kind"] = discovery[task_id].get("kind")
         rows.append(row)
+        if args.output:
+            # A full sweep is hours of real oracle time; write before rendering and after every
+            # task, so neither an interrupt nor a bug in the table costs a measurement. A
+            # KeyError in _print_row once discarded two completed re-runs.
+            _write(args, wanted, rows)
         if not args.quiet:
             _print_row(row)
             sys.stdout.flush()
-        if args.output:
-            # A full sweep is hours of real oracle time; write after every task so an
-            # interrupted run still leaves the tasks it finished.
-            _write(args, wanted, rows)
 
     if args.output:
         _write(args, wanted, rows)
@@ -575,13 +576,15 @@ def _print_row(row: dict) -> None:
     for name, run in row["runs"].items():
         if name == "reference":
             continue
-        if "metrics" not in run:
-            parts.append("%s=%s" % (name, run.get("status")))
+        if run.get("outcome") != "scored":
+            # `rejected` and `not_applicable` have no ratio to report, and printing their 0.0
+            # beside the scored rows is exactly the reading this distinction exists to prevent.
+            parts.append("%s=%s" % (name, run.get("outcome") or run.get("status") or "error"))
             continue
         parts.append("%s=%.4f(%.0f%%)%s" % (
             name, run["metrics"]["combined_score"],
             100 * (run.get("ratio_to_reference") or 0),
-            "!" if run["reaches_threshold"] else ""))
+            "!" if run.get("reaches_threshold") else ""))
     print("%-52s ref=%.4f  %s%s" % (
         row["task"], row["reference_score"], "  ".join(parts),
         "   saturated:" + ",".join(row["reference_saturated_axes"])
