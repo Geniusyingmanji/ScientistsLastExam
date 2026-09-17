@@ -522,16 +522,26 @@ def read_candidate_packages(task_dir: Path) -> tuple[str, ...]:
                 "candidate-mounted package %r has version %s, expected %s"
                 % (distribution, mounted_version, expected_version)
             )
-        # A base pair the trusted interpreter reports but the mounted site-packages does not
-        # never reaches the candidate, which then cannot import NumPy at all. The candidate
-        # fails on the import, which is the honest symptom; a silent skip here would look
-        # like it ran with a pinned array library it never had.
-        print(
-            "warning: candidate mount for base package %r is unavailable (version %s, "
-            "expected %s); the candidate will fail on import if it needs it"
-            % (distribution, mounted_version, expected_version),
-            file=sys.stderr,
-        )
+        # The mount exists but carries a different version than the certified one. The
+        # candidate gets an array library, just not the pinned one, so this is a weaker
+        # guarantee than the recorded anchors were produced under and not an import failure.
+        # Say which of the two it is, because they need different responses from an operator:
+        # a missing mount means the candidate cannot import NumPy at all, whereas a version
+        # drift means it imports something that may compute differently.
+        if mounted_version:
+            print(
+                "warning: candidate mount for base package %r has version %s, expected %s; "
+                "the candidate will import it, and an oracle comparing its numerics may "
+                "differ from the certified run" % (distribution, mounted_version, expected_version),
+                file=sys.stderr,
+            )
+        else:
+            print(
+                "warning: candidate mount for base package %r is absent (expected %s); the "
+                "candidate will fail on import if it needs it"
+                % (distribution, expected_version),
+                file=sys.stderr,
+            )
     return tuple(resolved)
 
 
