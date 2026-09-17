@@ -52,11 +52,19 @@ search (0.108307) loses to the reference by a factor of five.
 
 **What this does and does not establish.** The reference is now at the level a
 competent optimizer reaches on this family, so the C12 ladder is honest for the
-families declared below. It does not establish that no cheap family beats it:
-the reconstruction gap was measured at other dimensions and at other denominator
-caps, and the cap is the lever that governs it. See `n5_feasibility.md`
-(scratch record, not shipped) for the measurement that ruled out raising the
-state dimension as a way to create headroom.
+families declared below. It does not establish that no cheap family beats it —
+the reference is a local method and the residual measured above is 0.07 %.
+
+Raising the state dimension to n >= 5 was measured as the alternative route to
+headroom and **rejected**: at n = 5 with six modes the exact reconstruction gap
+is 0.0002 % at the public caps, and exact certificates beat the float "optimum"
+on 3 of 5 systems because the float optimizer is not converged. The compute side
+is not the obstacle — a full n=5 evaluation is 0.056 s against an
+`eval_time_seconds` of 15 — so the dimension buys depth and not headroom. The
+lever that does govern the gap is the denominator cap, not the dimension, and
+moving it changes the submission contract and every recorded anchor. The full
+measurement is recorded in
+`.research/lyapunov_n5_feasibility_2026-09-17.md`.
 
 ## Baseline
 
