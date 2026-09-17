@@ -180,7 +180,7 @@ class SpikeHistoryInferenceTests(unittest.TestCase):
         rate_only = oracle.evaluate(ablations.rate_only)
         for split in ("development", "heldout"):
             key = "combined_score"
-            self.assertGreater(reference_score[split][key] - fixed_tau[split][key], 0.02)
+            self.assertGreater(reference_score[split][key] - fixed_tau[split][key], 0.04)
             self.assertGreater(reference_score[split][key] - midpoint_parameters[split][key], 0.10)
             self.assertEqual(never_refuse[split][key], 0.0)
             self.assertEqual(rate_only[split][key], 0.0)
@@ -195,11 +195,11 @@ class SpikeHistoryInferenceTests(unittest.TestCase):
             sys.path.pop(0)
         reference_metrics = oracle.evaluate(reference.infer_spike_history)
         shortcut_metrics = oracle.evaluate(shortcut.infer_spike_history)
-        self.assertEqual(shortcut_metrics["development_combined_score"], 0.626217)
-        self.assertEqual(shortcut_metrics["heldout_combined_score"], 0.463498)
+        self.assertEqual(shortcut_metrics["development_combined_score"], 0.320482)
+        self.assertEqual(shortcut_metrics["heldout_combined_score"], 0.4346)
         self.assertLess(
             shortcut_metrics["combined_score"],
-            0.9 * reference_metrics["combined_score"],
+            0.6 * reference_metrics["combined_score"],
         )
 
 

@@ -13,7 +13,7 @@ def _sigmoid(values):
     return 1.0 / (1.0 + np.exp(-np.clip(values, -30.0, 30.0)))
 
 
-def _irls(X, y, ridge=1e-3, iterations=35):
+def _irls(X, y, ridge=1e-2, iterations=50):
     beta = np.zeros(X.shape[1], dtype=float)
     penalty = np.eye(X.shape[1]) * ridge
     penalty[0, 0] = 0.0
@@ -57,7 +57,7 @@ def _fit_supported(problem, stimuli, outcomes, lag_rows):
     bin_ms = float(problem["bin_width_ms"])
     lags = np.arange(1, lag_rows.shape[1] + 1, dtype=float) * bin_ms
     best = None
-    for tau_ms in np.linspace(6.0, 60.0, 28):
+    for tau_ms in np.linspace(5.0, 80.0, 31):
         trace = lag_rows @ np.exp(-lags / tau_ms)
         X = np.column_stack([np.ones(len(outcomes)), stimuli, -trace])
         beta, probability, nll = _irls(X, outcomes)
@@ -102,12 +102,12 @@ def infer_spike_history(problem):
 
     diagnosis = "supported"
     abstain = False
-    confidence = 0.88
-    if positive_bump > 0.28 and burst_lr > 18.0:
+    confidence = 0.60
+    if positive_bump > 0.28 and burst_lr > 11.0 and trial_overdispersion < 2.0 and interaction_strength < 1.0:
         diagnosis, abstain, confidence = "burst_history", True, 0.92
-    elif trial_overdispersion > 2.45 and mixture_bic_gain > -175.0:
+    elif trial_overdispersion > 2.40 and mixture_bic_gain > -150.0:
         diagnosis, abstain, confidence = "trial_gain_mixture", True, 0.92
-    elif interaction_strength > 1.00 and interaction_lr > 4.0:
+    elif interaction_strength > 1.00 and interaction_lr > 2.0:
         diagnosis, abstain, confidence = "stimulus_history_interaction", True, 0.92
 
     bounds = problem["parameter_bounds"]

@@ -10,8 +10,8 @@ import numpy as np
 
 BIN_WIDTH_MS = 5.0
 HISTORY_HORIZON_BINS = 20
-N_TRIALS = 30
-N_BINS = 200
+N_TRIALS = 24
+N_BINS = 240
 VALID_DIAGNOSES = {
     "supported",
     "burst_history",
@@ -56,20 +56,41 @@ PUBLIC_TEMPLATE = {
 }
 
 DEVELOPMENT_WORLDS = (
-    {"kind": "supported", "seed": 4101, "intercept": -3.00, "gain": 0.78, "amplitude": 2.20, "tau_ms": 14.0},
-    {"kind": "supported", "seed": 4102, "intercept": -2.72, "gain": 0.58, "amplitude": 1.80, "tau_ms": 42.0},
-    {"kind": "supported", "seed": 4103, "intercept": -3.28, "gain": 0.96, "amplitude": 2.75, "tau_ms": 10.0},
-    {"kind": "burst_history", "seed": 4104, "intercept": -3.05, "gain": 0.72, "amplitude": 2.10, "tau_ms": 13.0, "burst": 1.35},
-    {"kind": "trial_gain_mixture", "seed": 4105, "intercept": -3.00, "gain": 0.80, "amplitude": 2.00, "tau_ms": 18.0, "mixture": 0.72},
-    {"kind": "stimulus_history_interaction", "seed": 4106, "intercept": -2.88, "gain": 0.68, "amplitude": 1.85, "tau_ms": 20.0, "interaction": 1.35},
+    {"kind": "supported", "seed": 4101, "intercept": -3.80, "gain": 0.35, "amplitude": 0.70, "tau_ms": 7.0},
+    {"kind": "supported", "seed": 4102, "intercept": -3.55, "gain": 1.25, "amplitude": 3.80, "tau_ms": 18.0},
+    {"kind": "supported", "seed": 4103, "intercept": -3.25, "gain": 0.75, "amplitude": 2.10, "tau_ms": 68.0},
+    {"kind": "supported", "seed": 4104, "intercept": -3.05, "gain": 1.60, "amplitude": 1.15, "tau_ms": 34.0},
+    {"kind": "supported", "seed": 4105, "intercept": -2.85, "gain": 0.50, "amplitude": 4.25, "tau_ms": 52.0},
+    {"kind": "supported", "seed": 4106, "intercept": -2.60, "gain": 1.05, "amplitude": 2.85, "tau_ms": 10.0},
+    {"kind": "supported", "seed": 4107, "intercept": -2.35, "gain": 0.65, "amplitude": 1.55, "tau_ms": 44.0},
+    {"kind": "supported", "seed": 4108, "intercept": -2.10, "gain": 1.45, "amplitude": 3.35, "tau_ms": 25.0},
+    {"kind": "supported", "seed": 4109, "intercept": -3.65, "gain": 0.95, "amplitude": 2.55, "tau_ms": 58.0},
+    {"kind": "supported", "seed": 4110, "intercept": -3.35, "gain": 1.70, "amplitude": 4.45, "tau_ms": 13.0},
+    {"kind": "supported", "seed": 4111, "intercept": -2.75, "gain": 0.25, "amplitude": 1.00, "tau_ms": 72.0},
+    {"kind": "supported", "seed": 4112, "intercept": -2.20, "gain": 1.15, "amplitude": 3.95, "tau_ms": 38.0},
+    {"kind": "burst_history", "seed": 4113, "intercept": -3.45, "gain": 0.55, "amplitude": 1.20, "tau_ms": 62.0, "burst": 1.20},
+    {"kind": "burst_history", "seed": 4114, "intercept": -2.35, "gain": 1.35, "amplitude": 3.70, "tau_ms": 12.0, "burst": 1.10},
+    {"kind": "trial_gain_mixture", "seed": 4115, "intercept": -3.40, "gain": 1.40, "amplitude": 3.20, "tau_ms": 46.0, "mixture": 0.65},
+    {"kind": "trial_gain_mixture", "seed": 4116, "intercept": -2.30, "gain": 0.45, "amplitude": 1.35, "tau_ms": 16.0, "mixture": 0.70},
+    {"kind": "stimulus_history_interaction", "seed": 4117, "intercept": -3.50, "gain": 0.60, "amplitude": 3.65, "tau_ms": 22.0, "interaction": 1.10},
+    {"kind": "stimulus_history_interaction", "seed": 4118, "intercept": -2.40, "gain": 1.30, "amplitude": 1.40, "tau_ms": 55.0, "interaction": 1.00},
 )
 
 HELDOUT_WORLDS = (
-    {"kind": "supported", "seed": 5101, "intercept": -3.30, "gain": 0.55, "amplitude": 1.60, "tau_ms": 20.0},
-    {"kind": "supported", "seed": 5102, "intercept": -2.65, "gain": 1.15, "amplitude": 3.10, "tau_ms": 38.0},
-    {"kind": "burst_history", "seed": 5103, "intercept": -2.96, "gain": 0.64, "amplitude": 1.90, "tau_ms": 16.0, "burst": 1.20},
-    {"kind": "trial_gain_mixture", "seed": 5104, "intercept": -3.10, "gain": 0.74, "amplitude": 2.25, "tau_ms": 15.0, "mixture": 0.64},
-    {"kind": "stimulus_history_interaction", "seed": 5105, "intercept": -3.02, "gain": 0.84, "amplitude": 2.05, "tau_ms": 17.0, "interaction": 1.20},
+    {"kind": "supported", "seed": 5101, "intercept": -3.70, "gain": 1.55, "amplitude": 2.45, "tau_ms": 8.0},
+    {"kind": "supported", "seed": 5102, "intercept": -3.45, "gain": 0.40, "amplitude": 4.10, "tau_ms": 31.0},
+    {"kind": "supported", "seed": 5103, "intercept": -3.15, "gain": 1.10, "amplitude": 0.85, "tau_ms": 61.0},
+    {"kind": "supported", "seed": 5104, "intercept": -2.90, "gain": 0.70, "amplitude": 3.50, "tau_ms": 15.0},
+    {"kind": "supported", "seed": 5105, "intercept": -2.65, "gain": 1.65, "amplitude": 1.75, "tau_ms": 48.0},
+    {"kind": "supported", "seed": 5106, "intercept": -2.45, "gain": 0.30, "amplitude": 4.35, "tau_ms": 70.0},
+    {"kind": "supported", "seed": 5107, "intercept": -2.25, "gain": 0.90, "amplitude": 2.70, "tau_ms": 20.0},
+    {"kind": "supported", "seed": 5108, "intercept": -2.00, "gain": 1.40, "amplitude": 1.10, "tau_ms": 40.0},
+    {"kind": "burst_history", "seed": 5109, "intercept": -3.25, "gain": 1.20, "amplitude": 1.55, "tau_ms": 50.0, "burst": 1.15},
+    {"kind": "burst_history", "seed": 5110, "intercept": -2.25, "gain": 0.50, "amplitude": 3.85, "tau_ms": 14.0, "burst": 1.25},
+    {"kind": "trial_gain_mixture", "seed": 5111, "intercept": -3.30, "gain": 0.65, "amplitude": 3.60, "tau_ms": 24.0, "mixture": 0.68},
+    {"kind": "trial_gain_mixture", "seed": 5112, "intercept": -2.20, "gain": 1.35, "amplitude": 1.30, "tau_ms": 64.0, "mixture": 0.62},
+    {"kind": "stimulus_history_interaction", "seed": 5113, "intercept": -3.35, "gain": 1.45, "amplitude": 1.45, "tau_ms": 18.0, "interaction": 1.05},
+    {"kind": "stimulus_history_interaction", "seed": 5114, "intercept": -2.30, "gain": 0.55, "amplitude": 3.75, "tau_ms": 58.0, "interaction": 1.15},
 )
 
 

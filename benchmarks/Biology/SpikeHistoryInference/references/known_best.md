@@ -31,10 +31,10 @@ interaction. To reduce finite-spike MLE variance it shrinks each reported parame
 the corresponding public-bound midpoint before producing sealed predictions. This fixed public
 prior does not inspect hidden world parameters or labels.
 
-The reference scores `0.697016` development and `0.829388` held out. It covers every supported
-world, gives the correct family for all eleven worlds, correctly refuses all six unsupported
+The reference scores `0.664460` development and `0.713537` held out. It covers every supported
+world, gives the correct family for all thirty-two worlds, correctly refuses all twelve unsupported
 worlds, has zero false discovery, and replays exactly. Its supported parameter-recovery scores are
-`0.601879/0.769280`. The reference is a capable task-local witness, not a claim of optimal neural
+`0.549503/0.610338`. The reference is a capable task-local witness, not a claim of optimal neural
 system identification; remaining headroom is finite-sample refractory-parameter estimation and
 better regularized likelihood modeling.
 
@@ -42,20 +42,21 @@ better regularized likelihood modeling.
 
 | strategy | development | held out | dev refusal | held refusal |
 |---|---:|---:|---:|---:|
-| shrinkage point-process reference | **0.697016** | **0.829388** | 1.000 | 1.000 |
-| fixed refractory tau = 20 ms | 0.617365 | 0.751527 | 1.000 | 1.000 |
-| public-bound midpoint parameters, reference diagnosis | 0.496777 | 0.328371 | 1.000 | 1.000 |
-| 3,456-strategy moment/logit/constant-parameter sweep | 0.626217 | 0.463498 | 1.000 | 1.000 |
+| shrinkage point-process reference | **0.664460** | **0.713537** | 1.000 | 1.000 |
+| fixed refractory tau = 20 ms | 0.613280 | 0.660324 | 1.000 | 1.000 |
+| public-bound midpoint parameters, reference diagnosis | 0.365684 | 0.376300 | 1.000 | 1.000 |
+| 51,840-strategy moment/logit/empty-history sweep | 0.320482 | 0.434600 | 0.667 | 0.833 |
 | reference fit, never refuse | 0.000000 | 0.000000 | 0.000 | 0.000 |
 | mean-rate-only, never refuse | 0.000000 | 0.000000 | 0.000 | 0.000 |
 | blanket undetermined abstention | 0.000000 | 0.000000 | 0.000 | 0.000 |
 
-The reproducible shortcut in `verification/shortcut_probe.py` selects on development from 3,456
-strategies combining low-order moments, logit-scale conditional-history contrasts, constant
-gain/amplitude/tau profiles, and a two-point logit-drive variant. It does not fit a point-process
-likelihood. Its best development strategy has no false discoveries but remains materially below the
-reference, with gaps of `0.093863` development and `0.442683` held out. This is a disclosed lower-cost
-competitor, not an asserted exhaustive upper bound on moment methods.
+The reproducible shortcut in `verification/shortcut_probe.py` selects on development from 51,840
+strategies combining low-order moments, logit-scale conditional-history contrasts, dense constant
+amplitude/tau profiles, two-point drive estimates, and the reviewer's empty-history weighted-logit
+drive estimator. It does not fit the refractory point-process likelihood. Its best development
+strategy remains materially below the reference, with gaps of `0.343978` development and `0.278937`
+held out. This is a disclosed lower-cost competitor, not an asserted exhaustive upper bound on
+moment methods.
 
 ## Model calibration
 
@@ -79,11 +80,16 @@ five material defects: loose parameter tolerances rewarded constants, a 1,728-st
 shortcut was stronger than disclosed, candidate state crossed world boundaries, supported
 mechanism credit ignored the submitted diagnosis, and the reference omitted standard shrinkage.
 
-Hardening narrowed parameter tolerances relative to the supported-world span, expanded held-out
-supported parameters within the unchanged public bounds, made headline credit depend jointly on
+Hardening narrowed parameter tolerances relative to the supported-world span, expanded supported
+coverage from three development/two held-out worlds to twelve/eight worlds spanning the public
+parameter space, supplied two worlds per unsupported family, made headline credit depend jointly on
 supported inference and exact unsupported refusal, reset candidate sessions at every world, and
-added fixed public-prior shrinkage to the reference. A public-bound midpoint ablation now loses
-`0.200239/0.501017`, and fixed tau loses `0.079651/0.077861`.
+added fixed public-prior shrinkage to the reference. The fourth red-team round found that three fixed
+development worlds admitted public-data fingerprints and that an empty-history drive estimate beat
+the under-calibrated witness. Expanded coverage removes the small lookup table, the reference now
+calibrates confidence to its supported accuracy, and the declared probe includes that estimator.
+A public-bound midpoint ablation now loses `0.298776/0.337237`, and fixed tau loses
+`0.051180/0.053213`.
 
 ## Robustness
 
@@ -92,7 +98,7 @@ exceptions, non-mappings, missing or extra keys, non-finite and out-of-bound val
 empty prediction arrays, bad confidence/refusal types, and fabricated or insufficient evidence.
 Candidate-visible inputs are deep-copied, so in-process mutation cannot alter trusted validation or
 produce a valid NaN score. A stateful regression candidate verifies one `reset_session` call for
-each of the eleven worlds. Wrong supported-family claims, fixed-label abstention, never refusing,
+each of the thirty-two worlds. Wrong supported-family claims, fixed-label abstention, never refusing,
 and blanket abstention all receive zero headline credit.
 
 ## Limitations and provenance

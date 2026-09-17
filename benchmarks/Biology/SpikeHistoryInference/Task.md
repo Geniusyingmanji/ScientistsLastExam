@@ -73,14 +73,14 @@ unsupported worlds. Consequently both blanket abstention and never refusing scor
 Parameter recovery, prediction, correct refusal, false discovery, supported discovery coverage,
 attempted discovery, validity, and held-out transfer retain separate fields with denominators.
 
-The truth-blind reference scores `0.697 / 0.829` development / held out. Fixing the refractory
-time constant at 20 ms scores `0.617 / 0.752`; replacing all fitted parameters with public-bound
-midpoints while retaining the reference diagnosis scores `0.497 / 0.328`. Never refusing and
-mean-rate-only inference both score `0.000 / 0.000`. A 3,456-strategy sweep over low-order moments,
-logit-scale conditional-history contrasts, and constant parameter profiles reaches `0.603 / 0.387`.
-It uses no point-process likelihood, but provides a substantial lower-cost comparison rather than a
-claimed upper bound on all non-likelihood methods.
-measured capability.
+The truth-blind reference scores `0.664 / 0.714` development / held out. Fixing the refractory
+time constant at 20 ms scores `0.613 / 0.660`; replacing all fitted parameters with public-bound
+midpoints while retaining the reference diagnosis scores `0.366 / 0.376`. Never refusing and
+mean-rate-only inference both score `0.000 / 0.000`. A 51,840-strategy sweep over low-order moments,
+logit-scale conditional-history contrasts, dense constant amplitude/time-constant profiles,
+two-point drive estimates, and an empty-history weighted-logit drive estimator reaches
+`0.320 / 0.435`. It uses no refractory point-process likelihood and is a substantial lower-cost
+comparison rather than a claimed upper bound on all non-likelihood methods.
 
 ## Relationship to nearby tasks
 

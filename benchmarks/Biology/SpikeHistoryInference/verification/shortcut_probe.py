@@ -65,8 +65,38 @@ def _two_point_parameters(problem):
     return intercept, gain
 
 
-def _candidate(problem, thresholds, parameters, features=None, two_point=False):
-    features = features or _features(problem) + _two_point_parameters(problem)
+def _empty_history_parameters(problem):
+    """Fit only the drive line on bins whose public 100 ms history is empty."""
+    horizon = int(round(problem["history_horizon_ms"] / problem["bin_width_ms"]))
+    stimuli, outcomes = [], []
+    for trial in problem["trials"]:
+        stimulus = np.asarray(trial["stimulus"], dtype=float)
+        spikes = np.asarray(trial["spikes"], dtype=float)
+        for t in range(horizon, len(spikes)):
+            if not np.any(spikes[t - horizon:t]):
+                stimuli.append(stimulus[t])
+                outcomes.append(spikes[t])
+    stimuli = np.asarray(stimuli, dtype=float)
+    outcomes = np.asarray(outcomes, dtype=float)
+    edges = np.quantile(stimuli, np.linspace(0.0, 1.0, 7))
+    rows = []
+    for lo, hi in zip(edges[:-1], edges[1:]):
+        mask = (stimuli >= lo) & (stimuli <= hi if hi == edges[-1] else stimuli < hi)
+        count = int(np.sum(mask))
+        successes = float(np.sum(outcomes[mask]))
+        rate = (successes + 0.5) / (count + 1.0)
+        rows.append((float(np.mean(stimuli[mask])), math.log(rate / (1.0 - rate)), count))
+    X = np.asarray([[1.0, row[0]] for row in rows])
+    y = np.asarray([row[1] for row in rows])
+    weights = np.asarray([row[2] for row in rows], dtype=float)
+    beta = np.linalg.solve(X.T @ (weights[:, None] * X), X.T @ (weights * y))
+    return float(beta[0]), float(beta[1])
+
+
+def _candidate(problem, thresholds, parameters, features=None, estimator="constant", confidence=0.6):
+    features = features or (
+        _features(problem) + _two_point_parameters(problem) + _empty_history_parameters(problem)
+    )
     mean_rate, overdispersion, delayed_lift, interaction = features[:4]
     burst_threshold, mixture_threshold, interaction_threshold = thresholds
     diagnosis, abstain = "supported", False
@@ -78,14 +108,16 @@ def _candidate(problem, thresholds, parameters, features=None, two_point=False):
         diagnosis, abstain = "stimulus_history_interaction", True
 
     estimated_gain = None
-    if two_point:
+    if estimator == "two_point":
         intercept, estimated_gain = features[4:6]
+    elif estimator == "empty_history":
+        intercept, estimated_gain = features[6:8]
     else:
         intercept = math.log(max(mean_rate, 1e-4) / max(1.0 - mean_rate, 1e-4))
         gain = parameters[0]
     intercept = float(np.clip(intercept, *problem["parameter_bounds"]["intercept"]))
     gain, amplitude, tau_ms = parameters
-    if two_point:
+    if estimator != "constant":
         gain = float(np.clip(estimated_gain, *problem["parameter_bounds"]["stimulus_gain"]))
     probabilities = []
     for context in problem["prediction_contexts"]:
@@ -99,7 +131,7 @@ def _candidate(problem, thresholds, parameters, features=None, two_point=False):
         "refractory_tau_ms": tau_ms,
         "prediction_probabilities": probabilities,
         "diagnosis": diagnosis,
-        "confidence": 0.6,
+        "confidence": confidence,
         "abstain": abstain,
         "evidence_trial_ids": [trial["trial_id"] for trial in problem["trials"]],
     }
@@ -109,9 +141,10 @@ def infer_spike_history(problem):
     """Fixed development-selected member used by the machine-readable guard."""
     return _candidate(
         problem,
-        thresholds=(0.008, 1.4, 0.4),
-        parameters=(0.4, 2.4, 12.0),
-        two_point=True,
+        thresholds=(0.008, 1.4, 1.0),
+        parameters=(0.4, 4.0, 20.0),
+        estimator="empty_history",
+        confidence=0.5,
     )
 
 
@@ -120,19 +153,19 @@ def _cached_worlds():
 
     return {
         "development": [
-            (spec, problem, _features(problem) + _two_point_parameters(problem))
+            (spec, problem, _features(problem) + _two_point_parameters(problem) + _empty_history_parameters(problem))
             for spec in evaluator.DEVELOPMENT_WORLDS
             for problem in [evaluator.public_problem(spec)]
         ],
         "heldout": [
-            (spec, problem, _features(problem) + _two_point_parameters(problem))
+            (spec, problem, _features(problem) + _two_point_parameters(problem) + _empty_history_parameters(problem))
             for spec in evaluator.HELDOUT_WORLDS
             for problem in [evaluator.public_problem(spec)]
         ],
     }
 
 
-def _evaluate_cached(worlds, thresholds, parameters, two_point=False):
+def _evaluate_cached(worlds, thresholds, parameters, estimator="constant", confidence=0.6):
     import evaluator
 
     summaries = {}
@@ -140,7 +173,7 @@ def _evaluate_cached(worlds, thresholds, parameters, two_point=False):
         rows = []
         for spec, problem, features in entries:
             result = evaluator._validate(
-                _candidate(problem, thresholds, parameters, features, two_point), problem
+                _candidate(problem, thresholds, parameters, features, estimator, confidence), problem
             )
             score = evaluator._score(spec, result, problem)
             rows.append({
@@ -162,19 +195,20 @@ def run_sweep():
     )
     parameter_grid = itertools.product(
         (0.4, 0.8, 1.2),
-        (1.2, 2.4, 3.6),
-        (12.0, 36.0),
+        (0.8, 1.6, 2.4, 3.2, 4.0),
+        (8.0, 20.0, 40.0, 65.0),
     )
     best = None
     count = 0
-    for thresholds, parameters, two_point in itertools.product(
-        tuple(threshold_grid), tuple(parameter_grid), (False, True),
+    for thresholds, parameters, estimator, confidence in itertools.product(
+        tuple(threshold_grid), tuple(parameter_grid),
+        ("constant", "two_point", "empty_history"), (0.5, 0.65, 0.8),
     ):
         count += 1
-        summary = _evaluate_cached(worlds, thresholds, parameters, two_point)
+        summary = _evaluate_cached(worlds, thresholds, parameters, estimator, confidence)
         key = summary["development"]["combined_score"]
         if best is None or key > best[0]:
-            best = (key, thresholds, parameters, two_point, summary)
+            best = (key, thresholds, parameters, estimator, confidence, summary)
     return {
         "strategy_count": count,
         "best_thresholds": {
@@ -187,9 +221,10 @@ def run_sweep():
             "refractory_amplitude": best[2][1],
             "refractory_tau_ms": best[2][2],
         },
-        "uses_two_point_logit_drive": best[3],
-        "development": best[4]["development"],
-        "heldout": best[4]["heldout"],
+        "drive_estimator": best[3],
+        "confidence": best[4],
+        "development": best[5]["development"],
+        "heldout": best[5]["heldout"],
     }
 
 

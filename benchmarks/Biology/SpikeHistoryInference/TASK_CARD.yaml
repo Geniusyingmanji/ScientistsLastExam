@@ -27,17 +27,17 @@ invariants:
 - development and held-out worlds use different seeds and parameters
 - every candidate session is reset at each world boundary, preventing cross-world or development-to-held-out state transfer
 - reference outputs are computed from public trials without reading hidden world labels or parameters
-known_shortcuts: A 3,456-strategy development-selected sweep combines low-order moment thresholds, logit-scale conditional-history contrasts, constant gain/amplitude/tau profiles, and a two-point logit-drive variant without point-process likelihood fitting. It reaches 0.626217/0.463498 development/held-out with no false discoveries, below the truth-blind shrinkage reference's 0.697016/0.829388. Replacing every fitted parameter with public-bound midpoints while retaining reference diagnosis reaches 0.496777/0.328371; fixing tau at 20 ms reaches 0.617365/0.751527; never refusing and rate-only inference score zero. The reduced-order laboratory omits continuous-time spike jitter, coupled neurons, sorting errors, nonstationary stimulus filters and long adaptation.
+known_shortcuts: A 51,840-strategy development-selected sweep combines low-order moment thresholds, logit-scale conditional-history contrasts, constant amplitude/tau profiles, two-point drive estimates, and the reviewer's empty-history weighted-logit drive estimator without fitting the refractory point-process likelihood. It reaches 0.320482/0.434600 development/held-out, below the truth-blind reference's 0.664460/0.713537. Replacing fitted parameters with public-bound midpoints while retaining reference diagnosis reaches 0.365684/0.376300; fixing tau at 20 ms reaches 0.613280/0.660324; never refusing and rate-only inference score zero. Twelve development supported worlds span the public parameter space, preventing a small per-world lookup table from serving as a general estimator. The reduced-order laboratory omits continuous-time spike jitter, coupled neurons, sorting errors, nonstationary stimulus filters and long adaptation.
 shortcut_probe:
   schema_version: 1
   metric: combined_score
   reference:
     candidate: verification/reference_solver.py
-    expected_score: 0.697016
+    expected_score: 0.664460
   probes:
-  - id: development_selected_moment_logit_sweep
+  - id: development_selected_moment_empty_history_sweep
     candidate: verification/shortcut_probe.py
-    expected_score: 0.626217
+    expected_score: 0.320482
   relative_margin: 0.1
   score_tolerance: 1.0e-06
 review:
@@ -65,7 +65,7 @@ lineage:
   - experiments/spike_history_inference_deepseek_calibration_2026-09-07.json
   calibration_evidence_status: historical_only
   edits_triggered_by_model: The original thinking-disabled draws exposed complementary supported-discovery and false-discovery failures but did not trigger oracle tuning. Later independent maintainer review changed world coverage, scoring, session isolation, and the reference, so those draws are retained only as historical protocol evidence for revision 156927e2.
-  shortcut_discoverer: builder_and_independent_maintainer_red_team_with_3456_strategy_moment_logit_and_constant_parameter_sweep
+  shortcut_discoverer: builder_and_independent_maintainer_red_team_with_51840_strategy_moment_logit_empty_history_and_constant_parameter_sweep
   frozen_before_eval: false
   freeze_timestamp: null
 long_horizon:
@@ -78,6 +78,6 @@ construction_audit:
   author_domain: computational_neuroscience
   reviewer_domain: pending_external_computational_neuroscience_review
   expert_hours: null
-  red_team_rounds: 3
-  oracle_disagreement_status: independent review found degenerate non-refusal credit, a stronger low-dimensional shortcut, missing world-boundary resets, a mechanism-axis mismatch, and incomplete reference shrinkage; all were resolved in the hardened revision
-  independent_recomputation_status: baseline, shrinkage reference, midpoint and fixed-tau ablations, 3456-strategy shortcut, malformed-candidate checks, session isolation, and scientific invariants are executable from the task package
+  red_team_rounds: 4
+  oracle_disagreement_status: independent review found degenerate non-refusal credit, stronger low-dimensional and empty-history shortcuts, fixed-world fingerprint memorization, missing world-boundary resets, a mechanism-axis mismatch, and incomplete reference calibration; the hardened revision expands supported coverage, duplicates unsupported families, retunes the truth-blind reference, and declares the stronger probe family
+  independent_recomputation_status: baseline, shrinkage reference, midpoint and fixed-tau ablations, 51840-strategy shortcut, malformed-candidate checks, session isolation, and scientific invariants are executable from the task package
