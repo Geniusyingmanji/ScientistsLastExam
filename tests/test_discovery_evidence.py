@@ -13,7 +13,9 @@ import pytest
 
 from _sandbox_tools import skip_unless_sandbox
 from sle.discovery_profiles import PILOTS, profile_for
-from sle.discovery_trace import DiscoveryRecorder, digest, evidence_report, validate_evidence
+from sle.discovery_trace import (
+    DiscoveryRecorder, checked_science_metrics, digest, evidence_report, validate_evidence,
+)
 from sle.evaluate import evaluate_candidate
 from sle.metric_visibility import search_visible_metrics
 from sle.registry import find_task, list_tasks
@@ -117,6 +119,19 @@ def test_outcomes_cannot_be_joined_to_different_result_rows():
     metrics["per_world"][0]["mechanism_score"] = 1.0
     with pytest.raises(ValueError, match="differs from oracle"):
         evidence_report(metrics)
+
+
+def test_exact_science_comparison_keeps_all_original_fields_and_checks_trace():
+    metrics = metrics_for(sample_evidence())
+    metrics.update(combined_score=0.25, valid=1.0, raw_score=0.25)
+    science = checked_science_metrics(metrics, expected_candidate_sha256="a" * 64)
+    assert science == {k: v for k, v in metrics.items() if k != "discovery_evidence"}
+    with pytest.raises(ValueError, match="complete discovery evidence"):
+        checked_science_metrics(science)
+    with pytest.raises(ValueError, match="complete discovery evidence"):
+        checked_science_metrics(metrics_for(sample_evidence(max_bytes=10)))
+    with pytest.raises(ValueError, match="another candidate"):
+        checked_science_metrics(metrics, expected_candidate_sha256="c" * 64)
 
 
 def test_missing_outcome_rows_and_duplicate_worlds_are_rejected():

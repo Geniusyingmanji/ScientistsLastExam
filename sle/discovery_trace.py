@@ -296,3 +296,17 @@ def evidence_report(metrics, *, expected_candidate_sha256=None):
             "world_type": evidence["world_type"],
             "evaluation_complete": evidence["evaluation_complete"],
             "capture_complete": evidence["capture_complete"], "rows": rows}
+
+
+def checked_science_metrics(metrics, *, expected_candidate_sha256=None):
+    """Separate verified telemetry for exact direct-vs-sandbox science comparison.
+
+    Only the newly added telemetry field is excluded. Missing/incomplete traces,
+    broken bindings and changed scientific fields cannot silently pass calibration.
+    This structural check still relies on the caller's trusted evaluator provenance.
+    """
+    report = evidence_report(metrics, expected_candidate_sha256=expected_candidate_sha256)
+    if (report["status"] != "structurally_consistent"
+            or not report["evaluation_complete"] or not report["capture_complete"]):
+        raise ValueError("calibration requires complete discovery evidence")
+    return {key: value for key, value in metrics.items() if key != "discovery_evidence"}
