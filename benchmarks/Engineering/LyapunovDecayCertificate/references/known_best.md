@@ -19,6 +19,30 @@ The catalog is a competent Boyd-style witness and is deliberately not a 5-DOF
 exhaustive search. Adding the cyclic line does not close that leftover: those
 seven Grams do not raise the shipped score on this family.
 
+**The 5-DOF search was measured after the September 12 merge, and it does beat
+the reference.** The redesign that replaced the permutation-orbit plants with
+independent non-conjugate Hurwitz modes closed the one-parameter cyclic line
+(1.34x before, 0.61x after) but not the general five-degree-of-freedom search:
+
+| candidate | wall | combined | vs reference |
+|---|---:|---:|---:|
+| 12-restart Nelder-Mead on the 5-DOF Gram cone, rationalized, cap-aware exact bisection | 11.1 s | **0.588975** | **1.346x** |
+| 1-restart Nelder-Mead, same pipeline | 3.1 s | 0.108307 | 0.247x |
+
+The condition number is the whole difficulty: a single start from a perturbed
+identity lands on a Gram that is positive definite in floating point but not
+after rationalization, and the fallback scores near zero; twelve restarts find a
+Gram that survives the round trip. Per-instance, the 12-restart candidate proves
+plant 213991/333333, cascade 104386/333333, mixed 14109/31250, sparse 5636/15625
+against the reference's 56471/111111, 32237/111111, 74541/250000, 13563/62500.
+
+This is the same family the maintainer measured at 0.588754 (1.345x) and it is
+**not declared in `shortcut_probe`**, so the machine guard cannot see it. It is
+leftover catalog headroom of exactly the kind this section used to describe as
+absent, and it is the reason checkpoint 12 remains open on this task: no
+reference on `[0,1]` can put a competent five-degree-of-freedom search below
+0.8x of itself when the search *is* the standard method.
+
 ## Baseline
 
 The identity Gram at alpha=1/10000 is legal on every instance and scores exactly zero.
@@ -55,16 +79,35 @@ line `P = I + c(J−I)`, `c = k/10` for `k = -4,…,9`.
 | **group-average then 1-D cyclic line, 14 Grams** | **14×4, 0.07 s** | **0.265200** | **0.61×** |
 | **2-param grid `b,d` step 1/10, 725 Grams, rational bisection** | **725×4, 1.5 s** | **0.299867** | **0.69×** |
 | **reference** (119 Grams including 7 cyclic, public-cap bisection) | **1.03 s** | **0.437715** | 1.00× |
+| **12-restart Nelder-Mead on the 5-DOF Gram cone, rationalized, cap bisection** | **11.1 s** | **0.588975** | **1.346×** |
+| reference file with three catalog constants changed (`!= 2 -> == 0`, `p22,p33 ∈ {1/2,1,2}`) | 11 s | 0.536776 | 1.226× |
+| 5-DOF coarse rational grid over the public cap | 94 s | 0.540867 | 1.236× |
+| single Nelder-Mead from identity, same pipeline | 3.1 s | 0.108307 | 0.247× |
 
-Checkpoint 12 is a pass on this family: the cheap group-average / cyclic line
-scores 0.61× the reference, below 0.8×, and does not beat identity bisection.
-Beating the old 2-parameter block-diagonal probe is not the bar; the cyclic
-line is the probe that used to score 1.34× on the permutation-orbit family.
+**Checkpoint 12 does not pass on this family, and the rows above are why.** The
+group-average cyclic line at 0.61× is genuinely closed — that was the whole
+point of the September 12 redesign and it worked. But it is not the strongest
+undeclared family: a textbook five-degree-of-freedom search of the same Gram
+cone the reference catalogs reaches **1.346×**, and the reference file with
+three constants changed reaches 1.226× without any search at all.
+
+Neither is a hidden trick. The cap on the numerator and denominator is what
+makes the problem hard, and a cap-aware bisection around a float optimum is the
+standard way to pay it. Declaring the cyclic line and calling checkpoint 12 a
+pass measured the probe that had been closed rather than the field.
+
+The whole family is **deliberately not declared in `shortcut_probe`**, which is
+the mechanical reason the gate stays green while the roster above is red. Under
+the current `clipped` scale the guard is unsatisfiable here: a reference that
+implements the standard method cannot put the standard method below 0.8× of
+itself. The disposition is a ruler decision, not a probe declaration.
 
 `references/constant_probe.py`, `references/grid_probe.py` and
 `references/cyclic_probe.py` reproduce the constant, 2-param and cyclic rows.
-`tests/test_lyapunov_decay_certificate.py` pins that all three stay below the
-reference and that the cyclic line is below 0.8× reference.
+`solution.py` is the shipped baseline. `tests/test_lyapunov_decay_certificate.py`
+pins that the declared probes stay below the reference and that the cyclic line
+is below 0.8× reference — it does **not** pin the 5-DOF row, because that row is
+above the reference by construction.
 
 ## Frontier draw
 
