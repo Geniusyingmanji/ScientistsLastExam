@@ -35,14 +35,17 @@ def main() -> int:
     parser.add_argument("--expected-runtime-sha256", required=True)
     args = parser.parse_args()
     trusted_context_sha256 = None
+    # Harness diagnostics out-of-band: trusted_evaluate writes into this dict, and the envelope -
+    # not the metrics - is where they are published. Assigned BEFORE the try: the except-Exception
+    # path below runs with diagnostics unbound otherwise, and the runtime-binding-mismatch guard
+    # at the top of the try raises before any assignment - an UnboundLocalError in the driver
+    # process turned that infrastructure failure into a different, wronger one.
+    diagnostics = {}
     runtime = current_runtime_descriptor(task_runtime_distributions(args.task_dir))
     try:
         if runtime["fingerprint_sha256"] != args.expected_runtime_sha256:
             raise RuntimeError("trusted evaluator runtime binding mismatch")
         trusted_context = None
-        # Harness diagnostics out-of-band: trusted_evaluate writes into this dict, and the
-        # envelope - not the metrics - is where they are published.
-        diagnostics = {}
         if args.trusted_context is not None:
             trusted_context = json.loads(
                 args.trusted_context.read_text(encoding="utf-8")

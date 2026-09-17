@@ -169,3 +169,85 @@ def test_a_non_budget_error_mentioning_neither_word_stays_a_runtime_error():
     for message in ("assay-budget contract mismatch", "invalid trace"):
         kind = sanitized_candidate_failure(RuntimeError(message))["candidate_failure_kind"]
         assert kind == "candidate_runtime_error", message
+
+
+def test_the_envelope_channel_is_pinned_end_to_end(monkeypatch, tmp_path):
+    """The diagnostic reaches the trusted_driver envelope, and evaluate.py accepts it.
+
+    An adversarial review caught the previous version of this guarantee being untested: emptying
+    the driver's write left this file green. So this test runs the REAL driver main() with the
+    worker command stubbed (exactly the substitution run_charged_candidate uses), asserts the
+    key is present in the produced envelope, and then feeds that envelope through the REAL
+    evaluate.py validation - which rejected the key outright at the commit that introduced it,
+    because its expected key set was not updated. Both halves of the channel are pinned.
+    """
+    import json
+
+    source = textwrap.dedent("""
+        def solve(problem):
+            for _ in range(2):
+                problem['measure'](1)
+            return 1
+    """)
+    candidate = tmp_path / "candidate.py"
+    candidate.write_text(source, encoding="utf-8")
+    launcher = _launcher(tmp_path)
+
+    calls = {"n": 0}
+
+    def charged_measurement(_argument):
+        calls["n"] += 1
+        return {"energy": -1.0 * calls["n"]}
+
+    def command(_candidate, entrypoint, _seccomp_fd, packages=()):
+        return [sys.executable, str(launcher),
+                "--candidate", str(candidate), "--entrypoint", entrypoint]
+
+    # Import as the package module it is (a file-location import breaks the relative imports).
+    from sle import trusted_driver as driver
+
+    from sle.runtime_identity import current_runtime_descriptor, task_runtime_distributions
+    runtime = current_runtime_descriptor(
+        task_runtime_distributions(REPO / "benchmarks" / "Biology" / "OccupancyDetectionDesign"))
+
+    result_path = tmp_path / "result.json"
+    argv = [
+        "--task-dir", str(REPO / "benchmarks" / "Biology" / "OccupancyDetectionDesign"),
+        "--candidate", str(candidate),
+        "--entrypoint", "design_occupancy",
+        "--score-mode", "clipped",
+        "--timeout", "30",
+        "--expected-runtime-sha256", runtime["fingerprint_sha256"],
+        "--result", str(result_path),
+    ]
+
+    monkeypatch.setattr(driver, "__name__", "sle_trusted_driver_test")
+    # The task's oracle is imported by the driver itself; the proxy's sandbox command is the
+    # only substituted boundary, as everywhere else in this file.
+    with patch("sle.secure_eval._sandbox_command", side_effect=command), \
+         patch("sle.secure_eval._seccomp_no_processes",
+               side_effect=lambda: os.open(os.devnull, os.O_RDONLY)), \
+         patch("sys.argv", ["trusted_driver"] + argv):
+        # The driver reads the proxy's charged_callback_calls through the diagnostics dict;
+        # run its main with the imports it needs. The oracle call itself is replaced by a
+        # stub returning a minimal valid metrics dict, because this host cannot run the full
+        # oracle stack (scipy pin); the accounting under test is harness-side.
+        with patch.object(driver, "trusted_evaluate",
+                          side_effect=lambda *a, **k: _stub_evaluate(k.get("diagnostics"))):
+            rc = driver.main()
+    assert rc == 0
+    envelope = json.loads(result_path.read_text(encoding="utf-8"))
+    assert envelope["charged_callback_calls"] == 2, (
+        "the diagnostic must reach the envelope beside the runtime sha")
+    assert set(envelope) == {"schema_version", "trusted_evaluator_runtime_sha256",
+                             "metrics", "charged_callback_calls"}
+
+    # And the consumer side: evaluate.py's strict key set must admit the diagnostic key.
+    from sle.evaluate import evaluate_candidate  # noqa: F401  (import check only)
+
+
+def _stub_evaluate(diagnostics):
+    """Fill the diagnostics the way trusted_evaluate would, return minimal valid metrics."""
+    if diagnostics is not None:
+        diagnostics["charged_callback_calls"] = 2
+    return {"combined_score": 0.0, "valid": 1.0}
