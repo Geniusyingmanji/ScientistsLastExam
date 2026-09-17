@@ -40,6 +40,9 @@ def main() -> int:
         if runtime["fingerprint_sha256"] != args.expected_runtime_sha256:
             raise RuntimeError("trusted evaluator runtime binding mismatch")
         trusted_context = None
+        # Harness diagnostics out-of-band: trusted_evaluate writes into this dict, and the
+        # envelope - not the metrics - is where they are published.
+        diagnostics = {}
         if args.trusted_context is not None:
             trusted_context = json.loads(
                 args.trusted_context.read_text(encoding="utf-8")
@@ -49,6 +52,7 @@ def main() -> int:
         metrics = trusted_evaluate(
             args.task_dir.resolve(), args.candidate.resolve(), args.entrypoint,
             args.score_mode, args.timeout, trusted_context=trusted_context,
+            diagnostics=diagnostics,
         )
     except (CandidateError, TimeoutError) as exc:
         metrics = sanitized_candidate_failure(exc)
@@ -77,6 +81,13 @@ def main() -> int:
         "trusted_evaluator_runtime_sha256": runtime["fingerprint_sha256"],
         "metrics": metrics,
     }
+    charged = diagnostics.get("charged_callback_calls") if diagnostics else None
+    if charged is not None:
+        # Beside the runtime sha, not inside metrics: the byte-for-byte equality
+        # trusted_evaluate == direct evaluation is how a sandboxed run is proven not to have
+        # perturbed the science, and a harness-added metrics key breaks it. The count is a
+        # diagnostic and rides in the diagnostic channel.
+        envelope["charged_callback_calls"] = charged
     args.result.write_text(json.dumps(envelope, allow_nan=False), encoding="utf-8")
     return 0
 

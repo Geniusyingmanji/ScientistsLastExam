@@ -949,7 +949,16 @@ def validate_metrics(value: Any, score_mode: str) -> dict[str, Any]:
 
 def trusted_evaluate(task_dir: Path, candidate: Path, entrypoint: str, score_mode: str,
                      timeout_s: float,
-                     trusted_context: dict[str, Any] | None = None) -> dict[str, Any]:
+                     trusted_context: dict[str, Any] | None = None,
+                     diagnostics: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Evaluate a candidate in the sandbox; the returned dict is the science metrics.
+
+    ``diagnostics``, when given, receives harness observations - currently the charged-callback
+    count - that must NOT appear in the returned metrics: five repository tests assert this
+    return equals a direct in-process evaluation byte-for-byte, and that equality is how a
+    sandboxed run is proven not to have perturbed the science. Diagnostics are the caller's
+    channel (the trusted_driver envelope), never the oracle's.
+    """
     oracle = load_oracle(
         task_dir, with_trusted_context=trusted_context is not None
     )
@@ -990,14 +999,21 @@ def trusted_evaluate(task_dir: Path, candidate: Path, entrypoint: str, score_mod
         if recorder is not None:
             result["discovery_evidence"] = recorder.finish(
                 result, evaluation_complete=evaluation_complete)
-        # Published on both the success and the candidate-failure path. On the failure path the
-        # count is the whole point: a candidate that exhausted its budget and then died, and one
-        # that exhausted it and submitted anyway, are the only two ways to arrive here, and the
-        # counter tells them apart from a candidate that simply crashed on its first call.
-        # `getattr` because this function accepts a substituted proxy - the repo's own tests patch
-        # CandidateProxy with a minimal stand-in - and a proxy that does not count should omit the
-        # field rather than publish a zero it cannot vouch for.
-        charged_calls = getattr(proxy, "charged_callback_calls", None)
-        if isinstance(charged_calls, int) and not isinstance(charged_calls, bool):
-            result["charged_callback_calls"] = charged_calls
+        # The charged-callback count is published on BOTH the success and the candidate-failure
+        # path - on the failure path it is the whole point: a candidate that exhausted its budget
+        # and then died, one that exhausted it and submitted anyway, and one that simply crashed
+        # on its first call are three different diagnoses, and before this counter they all
+        # arrived as the same "candidate_runtime_error".
+        #
+        # It goes into the caller's diagnostics dict, never into `result`. The byte-for-byte
+        # equality between this return value and a direct in-process evaluation is a repository
+        # invariant that five tests pin, and it is how a sandboxed run is proven not to have
+        # perturbed the science; a harness-added metrics key on the trusted side only breaks it.
+        # `getattr` because the repo's own tests substitute a minimal stand-in proxy: one that
+        # does not count leaves the diagnostic absent rather than publishing a zero nobody can
+        # vouch for.
+        if diagnostics is not None:
+            charged_calls = getattr(proxy, "charged_callback_calls", None)
+            if isinstance(charged_calls, int) and not isinstance(charged_calls, bool):
+                diagnostics["charged_callback_calls"] = charged_calls
     return validate_metrics(result, score_mode)
