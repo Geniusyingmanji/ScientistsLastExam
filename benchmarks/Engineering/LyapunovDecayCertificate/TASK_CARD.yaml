@@ -45,6 +45,16 @@ shortcut_probe:
   - id: block_diagonal_grid
     candidate: references/grid_probe.py
     expected_score: 0.2998665
+  - id: shipped_baseline
+    candidate: solution.py
+    expected_score: 0.0
+  excluded:
+  - candidate: references/constant_probe.py
+    reason: >-
+      The September 9 constant certificate is infeasible on every instance, so it scores
+      valid=0. A scored probe must be a valid finite-scoring candidate, which this one is
+      not by construction; keeping it in the package is the point, so it is excluded from
+      measurement rather than declared as a probe.
   relative_margin: 0.2
   score_tolerance: 0.000001
 
