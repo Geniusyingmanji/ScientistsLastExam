@@ -15,7 +15,7 @@ _infer = _REFERENCE._infer
 
 
 def one_radius_half_budget(problem, measure):
-    return _infer(problem, measure, radius_indices=(-1,), repeats=1)
+    return _infer(problem, measure, radius_indices=(1,), repeats=1)
 
 
 def fixed_storage(problem, measure):

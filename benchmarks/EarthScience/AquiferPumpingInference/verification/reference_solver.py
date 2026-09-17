@@ -33,19 +33,24 @@ def _fit(kind, r, t, y, sigma, q, bounds):
     lower = [math.log(bounds["transmissivity_m2_s"][0]), math.log(bounds["storativity"][0])]
     upper = [math.log(bounds["transmissivity_m2_s"][1]), math.log(bounds["storativity"][1])]
     starts = [
-        [math.log(0.0007), math.log(0.00015)],
-        [math.log(0.0020), math.log(0.0010)],
-        [math.log(0.0060), math.log(0.0060)],
+        [math.log(0.0005), math.log(0.00008)],
+        [math.log(0.0008), math.log(0.0015)],
+        [math.log(0.0020), math.log(0.0003)],
+        [math.log(0.0040), math.log(0.0040)],
+        [math.log(0.0080), math.log(0.0010)],
     ]
     if kind in ("leaky_aquifer", "recharge_boundary"):
         lower += [math.log(35.0)]
         upper += [math.log(500.0)]
-        starts = [s + [math.log(v)] for s, v in zip(starts, (80.0, 150.0, 300.0))]
+        starts = [s + [math.log(v)] for s, v in zip(
+            starts, (70.0, 140.0, 230.0, 350.0, 470.0)
+        )]
     elif kind == "dual_porosity":
         lower += [math.log(3.0), math.log(2.0), -2.0]
         upper += [math.log(40.0), math.log(12.0), 2.0]
         starts = [s + [math.log(ra), math.log(de), w] for s, ra, de, w in zip(
-            starts, (8.0, 16.0, 30.0), (3.0, 6.0, 10.0), (-0.7, 0.4, 1.2))]
+            starts, (3.5, 5.0, 7.0, 10.0, 20.0),
+            (2.2, 3.0, 4.0, 5.5, 8.0), (-1.0, -0.4, 0.2, 0.8, 1.4))]
     best = None
     for start in starts:
         fit = least_squares(lambda p: (_predict(kind, p, r, t, q) - y) / sigma,
@@ -56,7 +61,7 @@ def _fit(kind, r, t, y, sigma, q, bounds):
     return best
 
 
-def _infer(problem, measure, radius_indices=(0, -1), repeats=1, allow_refusal=True,
+def _infer(problem, measure, radius_indices=(0, 3), repeats=1, allow_refusal=True,
            fixed_storage=None):
     rows = []
     # The two endpoint setups and twelve measurements consume all 24 priced units.
@@ -76,9 +81,8 @@ def _infer(problem, measure, radius_indices=(0, -1), repeats=1, allow_refusal=Tr
     parameter_counts = {"confined": 2, "leaky_aquifer": 3, "recharge_boundary": 3, "dual_porosity": 5}
     bic = {kind: value[0] + parameter_counts[kind] * math.log(len(rows)) for kind, value in fits.items()}
     best = min(bic, key=bic.get)
-    ordered = sorted(bic.values())
-    if best != "confined" and bic["confined"] - bic[best] < 10.0:
-        best = "undetermined"
+    if best != "confined" and bic["confined"] - bic[best] < 6.0:
+        best = "confined"
     theta = fits["confined"][1]
     T, S = np.exp(theta[:2])
     if fixed_storage is not None:
