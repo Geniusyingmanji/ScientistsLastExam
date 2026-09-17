@@ -1,5 +1,48 @@
 # TransientChirpInference reference results
 
+## Current paired-world redesign, 2026-09-17
+
+Maintainer review on 2026-09-15 demonstrated that the prior contract was saturated: a 45-line
+single-channel zero-crossing estimator reached 0.898025 development, a copied H1-only reference
+variant reached 0.957927, and removing all twelve L1 observations left the old reference score
+unchanged. That blocked C12, C13, C14 and D16 even though the older declared shortcut guard passed.
+
+The current redesign makes detector coherence information-theoretically necessary. Every supported
+coherent world is paired with a detector-localized world that uses the same seed and exactly the
+same H1 waveform parameters. The H1 observation stream is byte-for-byte identical inside each
+pair; only the L1 response differs. Signals are Gaussian-windowed chirplets/zero-slope lines, so
+localized-event timing remains a real recovery target rather than an isolated positive pulse.
+
+The truth-blind reference uses fourteen H1 plus ten L1 observations, an H1 phase grid, an L1/H1
+excess-power ratio, continuous event-time estimation and low-SNR refusal. Current deterministic
+in-process results are:
+
+| Policy | Development | Held-out |
+|---|---:|---:|
+| Reference | 0.654248 | 0.601739 |
+| Fair H1-only reference variant | 0.000000 | 0.000000 |
+| Review-supplied zero-crossing fit | 0.186648 | 0.159037 |
+| No chirp grid | 0.240935 | 0.151832 |
+| Never refuse / baseline / all abstain | 0.000000 | 0.000000 |
+
+A fresh development-only shortcut sweep reports:
+
+| Probe family | Policies | Development | Held-out |
+|---|---:|---:|---:|
+| Peak/RMS/roughness threshold grid | 2,916 | 0.391411 | 0.438745 |
+| Noise/RMS/sign-count/fixed-slope | 1,620 | 0.305562 | 0.419805 |
+| H1 morphology | 216 | 0.331990 | 0.356481 |
+| H1 morphology with five-slope lookup | 324 | 0.275475 | 0.222719 |
+
+The strongest development probe is 59.83% of the reference and is below the unchanged 20% guard
+line (0.523399). `verification/probe_threshold_grid.py` freezes that selected witness. On ali Linux,
+the reference and selected witness were each replayed twice with identical complete metrics; targeted
+tests passed (19 tests plus four subtests), all three malformed CLI candidates scored invalid, and
+`check_task_contribution.py` passed structural/runtime/shortcut phases. These are finite-grid maxima,
+not universal upper bounds. The prior failed reference, shortcut and frontier records below remain
+source-bound historical evidence and are not rewritten as current results. New post-freeze model D
+is still required before admission.
+
 ## Maintainer review and scientific scope, 2026-09-14
 
 The clean-source C review at `e356f64f869763d9a2ea31495fd1e89270ab806f` independently

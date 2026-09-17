@@ -29,8 +29,8 @@ class TransientChirpInferenceTests(unittest.TestCase):
         a = self.ev.evaluate(self.ref.infer_transient)
         b = self.ev.evaluate(self.ref.infer_transient)
         self.assertEqual(a, b)
-        self.assertGreater(a["combined_score"], 0.75)
-        self.assertEqual(a["development_false_discovery_rate"], 0.0)
+        self.assertGreater(a["combined_score"], 0.60)
+        self.assertLessEqual(a["development_false_discovery_rate"], 0.1)
         self.assertEqual(a["development_correct_refusal_rate"], 1.0)
 
     def test_reference_covers_the_public_slope_range_without_changing_old_grid(self):
@@ -48,7 +48,8 @@ class TransientChirpInferenceTests(unittest.TestCase):
         problem = {"candidate_times": list(range(19))}
         self.assertEqual(
             self.ref._reference_times(problem),
-            [0.0, 2.0, 3.0, 5.0, 7.0, 8.0, 10.0, 11.0, 13.0, 15.0, 16.0, 18.0],
+            ([0.0, 1.0, 3.0, 4.0, 6.0, 7.0, 8.0, 10.0, 11.0, 12.0, 14.0, 15.0, 17.0, 18.0],
+             [0.0, 2.0, 4.0, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0, 18.0]),
         )
 
     def test_blanket_abstention_is_zero(self):
@@ -66,20 +67,38 @@ class TransientChirpInferenceTests(unittest.TestCase):
         kinds = {w["kind"] for w in self.ev.DEVELOPMENT_WORLDS}
         self.assertEqual(kinds, {"chirp", "line", "glitch", "ambiguous"})
 
+    def test_review_zero_crossing_and_fair_h1_only_attacks_are_separated(self):
+        calibration = load(TASK / "verification/calibrate.py", "chirp_review_attacks")
+        reference = self.ev.evaluate(self.ref.infer_transient)
+        h1_only = self.ev.evaluate(calibration.h1_only)
+        zero_crossing = self.ev.evaluate(calibration.zero_crossing_policy)
+        self.assertEqual(h1_only["combined_score"], 0.0)
+        self.assertGreater(reference["combined_score"] - zero_crossing["combined_score"], 0.4)
+
     def test_noise_cannot_identify_any_family(self):
         for worlds in (self.ev.DEVELOPMENT_WORLDS, self.ev.HELDOUT_WORLDS):
             self.assertEqual({w["noise"] for w in worlds}, {self.ev.NOISE_SIGMA})
 
-    def test_chirp_and_line_sign_counts_overlap(self):
+    def test_supported_h1_streams_have_coherent_localized_twins(self):
         for worlds in (self.ev.DEVELOPMENT_WORLDS, self.ev.HELDOUT_WORLDS):
-            features = {kind: set() for kind in ("chirp", "line")}
+            by_seed = {}
             for world in worlds:
-                if world["kind"] not in features:
+                if world["kind"] == "ambiguous":
                     continue
-                values = np.array([self.ev._strain(world, t, "H1") for t in range(12)])
-                counts = tuple(int(np.sum(np.diff(np.signbit(part)))) for part in (values[:6], values[6:]))
-                features[world["kind"]].add(counts)
-            self.assertTrue(features["chirp"] & features["line"])
+                by_seed.setdefault(world["seed"], []).append(world)
+            self.assertTrue(by_seed)
+            for pair in by_seed.values():
+                self.assertEqual({world["kind"] for world in pair} & {"glitch"}, {"glitch"})
+                coherent = next(world for world in pair if world["kind"] != "glitch")
+                localized = next(world for world in pair if world["kind"] == "glitch")
+                self.assertEqual(
+                    [self.ev._strain(coherent, t, "H1") for t in self.ev.TIMES],
+                    [self.ev._strain(localized, t, "H1") for t in self.ev.TIMES],
+                )
+                self.assertNotEqual(
+                    [self.ev._strain(coherent, t, "L1") for t in self.ev.TIMES],
+                    [self.ev._strain(localized, t, "L1") for t in self.ev.TIMES],
+                )
 
     def test_line_slope_is_scored_and_wrong_labels_get_no_parameter_credit(self):
         world = {"kind": "line", "f0": 0.12, "slope": 0.0, "amplitude": 0.6}
@@ -88,7 +107,7 @@ class TransientChirpInferenceTests(unittest.TestCase):
         right = self.ev._score(world, good)
         wrong_slope = self.ev._score(world, {**good, "slope": 0.02})
         wrong_label = self.ev._score(world, {**good, "model": "chirp"})
-        self.assertAlmostEqual(right["science_score"] - wrong_slope["science_score"], 0.25)
+        self.assertAlmostEqual(right["science_score"] - wrong_slope["science_score"], 0.175)
         self.assertEqual(wrong_label["science_score"], 0.0)
         self.assertEqual(wrong_label["parameter_score"], 0.0)
         self.assertAlmostEqual(wrong_label["confidence_score"], 0.2)
@@ -162,8 +181,8 @@ class TransientChirpInferenceTests(unittest.TestCase):
         probe = self.ev.evaluate(calibration.lookup_morphology_policy(
             16, 0.08, 0.08, 7, (0.0, 0.006, 0.018, 0.028, 0.028), 1))
         reference = self.ev.evaluate(self.ref.infer_transient)
-        self.assertAlmostEqual(probe["combined_score"], 0.6611830494930327)
-        self.assertAlmostEqual(probe["robustness_score"], 0.5563081267357214)
+        self.assertLess(probe["combined_score"], 0.30)
+        self.assertLess(probe["robustness_score"], 0.25)
         for key in ("combined_score", "robustness_score"):
             self.assertGreater(reference[key] - probe[key], 0.12)
 
@@ -171,10 +190,9 @@ class TransientChirpInferenceTests(unittest.TestCase):
         from scripts.shortcut_probe_contract import inspect_probe
         from sle.registry import find_task
 
-        calibration = load(TASK / "verification/calibrate.py", "chirp_declared_lookup_source")
-        standalone = load(TASK / "verification/probe_fixed_five_slope.py", "chirp_declared_lookup")
-        original = self.ev.evaluate(calibration.lookup_morphology_policy(
-            16, 0.08, 0.08, 7, (0.0, 0.006, 0.018, 0.028, 0.028), 1))
+        calibration = load(TASK / "verification/calibrate.py", "chirp_declared_threshold_source")
+        standalone = load(TASK / "verification/probe_threshold_grid.py", "chirp_declared_threshold")
+        original = self.ev.evaluate(calibration.threshold_policy(12, 0.25, 0.08, 0.02))
         self.assertEqual(self.ev.evaluate(standalone.infer_transient), original)
 
         def evaluate_local(spec, path, *, timeout_s):

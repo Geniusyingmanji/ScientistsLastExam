@@ -1,0 +1,49 @@
+{
+  "task": "Gravitation/TransientChirpInference",
+  "date": "2026-09-17",
+  "trigger": "Maintainer C12 review found a single-channel zero-crossing fit and H1-only reference variants at or above the prior reference.",
+  "design_change": "Every supported coherent world is paired with a detector-localized world having identical H1 waveform parameters, seed, noise, and observations; only L1 separates the pair.",
+  "environment": {
+    "host": "ali Linux",
+    "python": "/tmp/pr46-py310-pinned/bin/python",
+    "sandbox": "task contribution gate including bubblewrap"
+  },
+  "measurements": {
+    "reference": {
+      "development": 0.6542482005782615,
+      "heldout": 0.6017385436169644,
+      "repeat_full_metrics_identical": true
+    },
+    "selected_threshold_probe": {
+      "policies": 2916,
+      "parameters": [12, 0.25, 0.08, 0.02],
+      "development": 0.3914107398809888,
+      "heldout": 0.43874492479261296,
+      "repeat_full_metrics_identical": true
+    },
+    "h1_only": {"development": 0.0, "heldout": 0.0},
+    "zero_crossing": {"development": 0.18664778732297177, "heldout": 0.15903724583955112},
+    "morphology_216": {"development": 0.331990106, "heldout": 0.356481157},
+    "sign_count_1620": {"development": 0.30556245683605787, "heldout": 0.4198049666028236},
+    "five_slope_324": {"development": 0.27547522907238475, "heldout": 0.22271907168785998},
+    "baseline": {"development": 0.0, "valid": 1.0}
+  },
+  "guard": {
+    "relative_margin": 0.2,
+    "threshold": 0.5233985604626092,
+    "probe_fraction_of_reference": 0.5982603231236064,
+    "passed": true
+  },
+  "validation": {
+    "targeted_tests": "19 passed, 4 subtests passed",
+    "bad_candidates": "raises, empty, and wrong_type all scored invalid",
+    "task_contribution_gate": {
+      "structural": "passed",
+      "runtime": "passed",
+      "shortcut_guard": "passed",
+      "difficulty": "unassessed"
+    },
+    "full_repository_tests_run": false
+  },
+  "remaining": "Fresh post-freeze frontier-model D and external domain review remain pending; task stays candidate."
+}

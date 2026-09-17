@@ -1,16 +1,17 @@
 """Deterministic reduced-order transient-waveform oracle."""
 from __future__ import annotations
 import copy
-import hashlib, math, random
+import hashlib, math
 import numpy as np
 
 TIMES = tuple(float(i) for i in range(19))
 DETECTORS = ("H1", "L1")
 BUDGET = 24
 MIN_EVIDENCE = 6
-NOISE_SIGMA = 0.04
-SLOPE_TOLERANCE = 0.003
-FREQUENCY_TOLERANCE = 0.008
+NOISE_SIGMA = 0.065
+SLOPE_TOLERANCE = 0.004
+FREQUENCY_TOLERANCE = 0.010
+EVENT_TIME_TOLERANCE = 1.2
 
 def _noise(seed, t, d, sigma):
     h = hashlib.sha256(f"{seed}|{t:.3f}|{d}".encode()).digest()
@@ -20,15 +21,12 @@ def _noise(seed, t, d, sigma):
 def _strain(w, t, d):
     t = float(t)
     sigma = w["noise"]
-    if w["kind"] in {"chirp", "line"}:
+    if w["kind"] in {"chirp", "line", "glitch"}:
         phase = 2 * math.pi * (w["f0"] * t + 0.5 * w["slope"] * t * t) + w["phase"]
-        value = w["amplitude"] * math.sin(phase)
+        envelope = math.exp(-0.5 * ((t - w["event_time"]) / w["width"]) ** 2)
+        value = w["amplitude"] * envelope * math.sin(phase)
         if d == "L1":
-            value *= w["coherence"]
-    elif w["kind"] == "glitch":
-        value = w["amplitude"] * math.exp(-0.5 * ((t - w["event_time"]) / w["width"]) ** 2)
-        if d == "L1":
-            value *= 0.08
+            value *= w["coherence"] if w["kind"] != "glitch" else w["leakage"]
     else:
         value = w["amplitude"] * math.sin(2 * math.pi * w["f0"] * t + w["phase"])
         if d == "L1":
@@ -58,8 +56,8 @@ PUBLIC_PROBLEM = {
     "minimum_evidence_queries": MIN_EVIDENCE, "model_labels": ["chirp", "line", "glitch"],
     "initial_frequency_bounds": [0.04, 0.18], "frequency_slope_bounds": [0.0, 0.05], "event_time_bounds": [0.0, 18.0],
     "amplitude_bounds": [0.0, 1.0],
-    "signal_model": "coherent sinusoid with phase 2*pi*(f0*t + 0.5*slope*t^2) + phase0; f0 in [0.04, 0.18] cycles/day; line slope is zero",
-    "glitch_model": "localized Gaussian transient confined primarily to one detector",
+    "signal_model": "Gaussian-windowed coherent sinusoid with phase 2*pi*(f0*t + 0.5*slope*t^2) + phase0; f0 in [0.04, 0.18] cycles/day; line slope is zero",
+    "glitch_model": "the same Gaussian-windowed chirplet morphology in H1 but localized primarily to one detector; paired coherent/localized worlds require L1 evidence",
     "abstain_when": "signal-to-noise is too low to distinguish the supported families",
     "evidence_requirement": "cite at least six distinct query_id values from current-world observations",
 }
@@ -104,44 +102,62 @@ def _score(w, c):
         frequency_quality = max(0.0, 1 - abs(c["frequency"] - w["f0"]) / FREQUENCY_TOLERANCE)
         parameter = 0.5 * (slope_quality + frequency_quality)
     else:
-        parameter = max(0.0, 1 - abs(c["event_time"] - et) / 1.0)
-    pa = max(0.0, 1 - abs(c["amplitude"] - amp) / .25)
+        parameter = max(0.0, 1 - abs(c["event_time"] - et) / EVENT_TIME_TOLERANCE)
+    pa = max(0.0, 1 - abs(c["amplitude"] - amp) / .30)
     row["parameter_score"] = parameter
     row["amplitude_score"] = pa
     row["confidence_score"] = c["confidence"]
-    row["science_score"] = .30 + .50 * parameter + .20 * pa
+    row["science_score"] = .45 + .35 * parameter + .20 * pa
     return row
 
-DEVELOPMENT_WORLDS = ({"kind":"chirp","seed":5101,"f0":.0567,"slope":.01731,"phase":.2,"amplitude":.72,"coherence":.92,"noise":.035}, {"kind":"chirp","seed":5102,"f0":.0734,"slope":.02743,"phase":1.1,"amplitude":.64,"coherence":.88,"noise":.038}, {"kind":"line","seed":5103,"f0":.1217,"slope":0.0,"phase":.4,"amplitude":.68,"coherence":.94,"noise":.035}, {"kind":"line","seed":5104,"f0":.1583,"slope":0.0,"phase":2.0,"amplitude":.58,"coherence":.90,"noise":.04}, {"kind":"glitch","seed":5105,"event_time":8.35,"width":.85,"amplitude":.78,"noise":.035}, {"kind":"glitch","seed":5106,"event_time":11.65,"width":1.0,"amplitude":.66,"noise":.04}, {"kind":"ambiguous","seed":5107,"f0":.0913,"phase":.7,"amplitude":.13,"noise":.12}, {"kind":"ambiguous","seed":5108,"f0":.1376,"phase":1.8,"amplitude":.11,"noise":.13})
-HELDOUT_WORLDS = ({"kind":"chirp","seed":5201,"f0":.0619,"slope":.01367,"phase":.8,"amplitude":.69,"coherence":.90,"noise":.04}, {"kind":"chirp","seed":5202,"f0":.0862,"slope":.03121,"phase":1.5,"amplitude":.61,"coherence":.86,"noise":.042}, {"kind":"line","seed":5203,"f0":.1064,"slope":0.0,"phase":.1,"amplitude":.62,"coherence":.92,"noise":.04}, {"kind":"line","seed":5204,"f0":.1468,"slope":0.0,"phase":2.4,"amplitude":.55,"coherence":.88,"noise":.042}, {"kind":"glitch","seed":5205,"event_time":7.4,"width":.9,"amplitude":.73,"noise":.04}, {"kind":"glitch","seed":5206,"event_time":13.55,"width":1.05,"amplitude":.60,"noise":.042}, {"kind":"ambiguous","seed":5207,"f0":.1011,"phase":.3,"amplitude":.12,"noise":.13}, {"kind":"ambiguous","seed":5208,"f0":.1287,"phase":2.1,"amplitude":.10,"noise":.135})
-
-def _harden_worlds(worlds, seed, extra_chirps):
-    result = [dict(w, noise=NOISE_SIGMA) for w in worlds]
-    for w in result:
-        if w["kind"] == "ambiguous":
-            w["amplitude"] = 0.04
-    # Paired lines match a slow chirp's midpoint frequency and phase.
-    for index, (frequency, slope, phase) in enumerate(extra_chirps):
-        midpoint = 5.5
-        common = {"amplitude": 0.64, "coherence": 0.90, "noise": NOISE_SIGMA}
-        result.append(dict(common, kind="chirp", seed=seed + 10 * index,
-                           f0=frequency, slope=slope, phase=phase))
-        result.append(dict(common, kind="line", seed=seed + 10 * index + 1,
-                           f0=frequency + slope * midpoint, slope=0.0,
-                           phase=phase - math.pi * slope * midpoint * midpoint))
-    for index, frequency in enumerate((0.065, 0.165)):
-        result.append({"kind": "ambiguous", "seed": seed + 100 + index,
-                       "f0": frequency, "phase": 0.9 + index, "amplitude": 0.04,
-                       "noise": NOISE_SIGMA})
-    random.Random(seed + 104729).shuffle(result)
-    return tuple(result)
+def _coherent(kind, seed, f0, slope, phase, amplitude, event_time, width, coherence):
+    return {"kind": kind, "seed": seed, "f0": f0, "slope": slope, "phase": phase,
+            "amplitude": amplitude, "event_time": event_time, "width": width,
+            "coherence": coherence, "noise": NOISE_SIGMA}
 
 
-DEVELOPMENT_WORLDS = _harden_worlds(DEVELOPMENT_WORLDS, 53100,
-                                  ((0.0917, 0.00341, 0.4), (0.1136, 0.00637, 1.2)))
-HELDOUT_WORLDS = _harden_worlds(HELDOUT_WORLDS, 54100,
-                              ((0.0843, 0.00357, 0.7), (0.1061, 0.00523, 1.6), (0.0818, 0.00719, 0.2)))
+def _glitch(seed, event_time, width, f0, slope, phase, amplitude):
+    return {"kind": "glitch", "seed": seed, "event_time": event_time, "width": width,
+            "f0": f0, "slope": slope, "phase": phase, "amplitude": amplitude,
+            "leakage": 0.05, "noise": NOISE_SIGMA}
 
+
+def _ambiguous(seed, f0, phase):
+    return {"kind": "ambiguous", "seed": seed, "f0": f0, "phase": phase,
+            "amplitude": 0.055, "noise": NOISE_SIGMA}
+
+
+DEVELOPMENT_WORLDS = (
+    _coherent("chirp", 7101, .0567, .01731, .2, .45, 5.4, 3.8, .92),
+    _glitch(7101, 5.4, 3.8, .0567, .01731, .2, .45),
+    _coherent("chirp", 7102, .0917, .00471, 1.1, .42, 9.4, 4.2, .88),
+    _glitch(7102, 9.4, 4.2, .0917, .00471, 1.1, .42),
+    _coherent("line", 7103, .1217, 0.0, .4, .44, 12.6, 3.6, .94),
+    _glitch(7103, 12.6, 3.6, .1217, 0.0, .4, .44),
+    _coherent("line", 7104, .1583, 0.0, 2.0, .40, 7.2, 4.4, .90),
+    _glitch(7104, 7.2, 4.4, .1583, 0.0, 2.0, .40),
+    _coherent("chirp", 7105, .0734, .02743, 1.7, .43, 13.8, 4.0, .86),
+    _glitch(7105, 13.8, 4.0, .0734, .02743, 1.7, .43),
+    _ambiguous(6131, .065, .9), _ambiguous(6132, .101, 1.7),
+    _ambiguous(6133, .137, 2.4), _ambiguous(6134, .165, .2),
+)
+
+HELDOUT_WORLDS = (
+    _coherent("chirp", 7201, .0619, .01367, .8, .44, 4.8, 4.1, .90),
+    _glitch(7201, 4.8, 4.1, .0619, .01367, .8, .44),
+    _coherent("chirp", 7202, .0862, .03121, 1.5, .41, 8.6, 3.7, .86),
+    _glitch(7202, 8.6, 3.7, .0862, .03121, 1.5, .41),
+    _coherent("chirp", 7203, .1043, .00657, .7, .46, 13.2, 4.3, .93),
+    _glitch(7203, 13.2, 4.3, .1043, .00657, .7, .46),
+    _coherent("line", 7204, .1468, 0.0, 2.4, .42, 6.4, 3.9, .88),
+    _glitch(7204, 6.4, 3.9, .1468, 0.0, 2.4, .42),
+    _coherent("line", 7205, .0759, 0.0, 1.7, .43, 10.8, 4.5, .90),
+    _glitch(7205, 10.8, 4.5, .0759, 0.0, 1.7, .43),
+    _coherent("line", 7206, .1691, 0.0, .6, .39, 14.1, 3.5, .86),
+    _glitch(7206, 14.1, 3.5, .1691, 0.0, .6, .39),
+    _ambiguous(6231, .058, .4), _ambiguous(6232, .098, 1.2),
+    _ambiguous(6233, .132, 2.0), _ambiguous(6234, .171, 2.7),
+)
 
 def _evaluate_one(candidate, w):
     o = _Observer(w)

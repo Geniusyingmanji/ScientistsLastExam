@@ -65,7 +65,7 @@ def no_chirp_grid(problem, observe):
 
 
 def h1_only(problem, observe):
-    times = [float(value) for value in problem["candidate_times"][:12]]
+    times = [float(value) for value in problem["candidate_times"]]
     rows = [observe(time, "H1") for time in times]
     values = np.asarray([row["strain"] for row in rows], dtype=float)
     fit = REFERENCE._fit_grid(np.asarray(times), values)
@@ -104,7 +104,41 @@ def never_refuse(problem, observe):
 def front_loaded_cadence(problem, observe):
     """Reference ablation restricted to the first twelve public epochs."""
     times = [float(value) for value in problem["candidate_times"][:12]]
-    return REFERENCE._infer_at_times(problem, observe, times)
+    rows = [observe(time, detector) for detector in ("H1", "L1") for time in times]
+    return {"abstain": True, "confidence": .7,
+            "evidence_query_ids": [row["query_id"] for row in rows]}
+
+
+def zero_crossing_policy(problem, observe):
+    """Review-supplied single-channel quadratic zero-crossing attack."""
+    times = [float(value) for value in problem["candidate_times"]]
+    rows = [observe(time, "H1") for time in times]
+    h = np.asarray([row["strain"] for row in rows], dtype=float)
+    evidence = [row["query_id"] for row in rows]
+    if float(np.std(h)) < .10:
+        return {"abstain": True, "confidence": .8, "evidence_query_ids": evidence}
+    crossings = []
+    for index in range(len(h) - 1):
+        if h[index] == 0 or h[index] * h[index + 1] < 0:
+            denominator = abs(h[index]) + abs(h[index + 1])
+            crossings.append(times[index] + abs(h[index]) / max(denominator, 1e-12))
+    if len(crossings) < 4:
+        model, frequency, slope = "glitch", .11, 0.0
+        event_time = times[int(np.argmax(np.abs(h)))]
+    else:
+        crossing_times = np.asarray(crossings, dtype=float)
+        phases = np.arange(len(crossing_times), dtype=float) * .5
+        design = np.column_stack([np.ones(len(crossing_times)), crossing_times,
+                                  .5 * crossing_times * crossing_times])
+        coefficients, _, _, _ = np.linalg.lstsq(design, phases, rcond=None)
+        frequency, slope = float(abs(coefficients[1])), float(abs(coefficients[2]))
+        model = "chirp" if slope >= .0015 else "line"
+        event_time = 9.0
+    return {"abstain": False, "model": model,
+            "initial_frequency": float(np.clip(frequency, .04, .18)),
+            "frequency_slope": float(np.clip(slope if model == "chirp" else 0.0, 0, .05)),
+            "event_time": event_time, "amplitude": float(np.clip(np.sqrt(2) * np.std(h), 0, 1)),
+            "confidence": .8, "evidence_query_ids": evidence}
 
 
 def threshold_policy(sample_count, glitch_threshold, refusal_threshold, chirp_threshold):
@@ -235,6 +269,7 @@ def main():
         "reference": REFERENCE.infer_transient,
         "front_loaded_cadence": front_loaded_cadence,
         "h1_only": h1_only,
+        "zero_crossing": zero_crossing_policy,
         "no_chirp_grid": no_chirp_grid,
         "never_refuse": never_refuse,
         "maintainer_sign_count": sign_count_policy(),

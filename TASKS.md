@@ -4,12 +4,12 @@
 
 | | |
 |---|---:|
-| 任务包 | 88 |
+| 任务包 | 89 |
 | optimization | 42 |
-| discovery | 46 |
+| discovery | 47 |
 | certified | 5 |
-| candidate | 83 |
-| 学科 | 7(Biology 9,Chemistry 13,ComputerScience 9,EarthScience 7,Engineering 13,Mathematics 19,Physics 18) |
+| candidate | 84 |
+| 学科 | 7(Biology 9,Chemistry 13,ComputerScience 9,EarthScience 7,Engineering 13,Mathematics 19,Physics 19) |
 
 认证描述的是证据质量,不是难度。标 on-ramp 的任务首个前沿模型提案已够到参考解,不用于配对 Δ 测量。
 
@@ -77,7 +77,7 @@
 | [`BellBoundCertificate`](benchmarks/Physics/BellBoundCertificate/)<br>贝尔不等式上界证书 | Physics | QuantumFoundations | uncapped | analytical | candidate | prove an upper bound, do not just compute one | 为贝尔泛函的量子最大值给出一份可精确验证的上界证明:提交一组基词与若干加权平方,使它们的和恰好等于 beta*I - B。CHSH 的答案是无理数 2√2,只能逼近;I3322 的量子值至今未知,NPA 层级 1 给 0.375、层级 2 给 0.25102173、已知最好值 0.25087538 要到层级 4 以上。 | 四个实例(CHSH 与三种基词预算下的 I3322)取均值,不设上限。分数是所证界到已知量子值距离的对数进步:免费的层级 1 界记 0,已发表的层级 2 界记 1,超过则大于 1。有理数精确验证,提交浮点数直接判零——数值 SDP 解不是证明。 |
 | [`FourSettingMomentCertificate`](benchmarks/Physics/FourSettingMomentCertificate/)<br>四设置矩子集证书 | Physics | QuantumFoundations | uncapped | analytical | candidate | exact SOS on I_4422^{13} with a frozen moment pool | I_4422^13 的精确 SOS,额外矩必须是冻结 NPA2 池的 Hamming-k 子集,不是 I3322 自由选词。 | 从精确层级 1 最优 5/8 到全池有理证书约 0.455331 的对数进度;参考约 0.58,无上限。 |
 
-## Discovery(46)
+## Discovery(47)
 
 ### 公式(formula) — 7
 
