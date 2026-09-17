@@ -112,6 +112,25 @@ selection_blind   种子配对、预算相同,但每个提案只看得到冻结�
 受信父进程。只读挂载、私有临时文件系统、资源限制、seccomp 阻断进程创建,以及标签盲的失败分类,
 把候选可控的异常文本从搜索反馈中剔除。
 
+### 主机前置条件
+
+分数要在本机可信,需要 bubblewrap 与 util-linux `flock`(见上),外加**认证过的 NumPy/SciPy**:
+
+```bash
+python -m pip install -r requirements-host.txt   # 或:pip install -e ".[host]"
+```
+
+这两个版本是录制 oracle 锚点时用的,每个候选都要 import 它们。它们不是硬性要求:版本不符时
+`sle eval` 只在 stderr 给出警告并继续跑,因为比它更早失败会让整台机器上一个任务都跑不了 ——
+在一个 SciPy 1.12.0 的主机上,88 个任务里 87 个在候选执行前就抛错,而错误信息只说了包名和两个
+版本号。**但警告是提示,不是等价性声明**:oracle 若比较 NumPy/SciPy 的数值,未认证的主机上分数
+可能与记录不同。要复现记录的分数,就必须装这一组。
+
+任务自己声明的 toolkit(写在 `frontier_eval/candidate_packages.txt`)不受此宽容:它仍然必须精确
+匹配,否则 fail closed,因为那些锚点正是对着那个版本录的。完整 oracle 环境(域 toolkit 及其审计
+过的传递闭包)由 `scripts/setup_oracle_env.sh` 安装,目前只认证 Python 3.8。Python 版本下界是
+3.8,见 `pyproject.toml` 的 `requires-python`。
+
 ```bash
 python -m sle list                                    # 只列 certified,--all 含 candidate
 python -m sle eval --task Chemistry/LennardJonesCluster

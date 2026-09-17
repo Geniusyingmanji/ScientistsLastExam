@@ -23,7 +23,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-from .oracle_package_pins import candidate_distribution_pins
+from .oracle_package_pins import BASE_CANDIDATE_PINS, candidate_distribution_pins
 from .rpc_codec import decode, encode
 
 INVALID_SCORE = -1e18
@@ -427,6 +427,29 @@ def _seccomp_no_processes() -> int:
     return fd
 
 
+@functools.lru_cache(maxsize=None)
+def _warn_base_candidate_pin(distribution: str, expected: str, actual: str) -> None:
+    """Report a drifting base NumPy/SciPy install once, and name the file that fixes it.
+
+    This used to be a hard failure, and on any host whose SciPy was not the certified one it
+    killed every task before a single candidate ran: 87 of 87 tasks on a Python 3.10.12 host
+    with SciPy 1.12.0, each reporting only ``trusted candidate package 'scipy' has version
+    1.12.0, expected 1.10.1`` - no task, no file, no remedy. CI stayed green only because
+    ``.github/workflows/tests.yml`` installs the pin by hand, so nothing said the certified
+    versions were a host prerequisite at all.
+    """
+    print(
+        "warning: trusted candidate package %r has version %s, expected %s.\n"
+        "  The recorded oracle anchors were produced with the certified set in\n"
+        "  requirements-host.txt, so a task whose oracle depends on NumPy or SciPy numerics\n"
+        "  can score differently here. The candidate still runs. This is a warning for the\n"
+        "  base pair only: a toolkit the task itself declared is still exact and still fails\n"
+        "  closed below, because that pin is what its anchors were recorded against."
+        % (distribution, actual, expected),
+        file=sys.stderr,
+    )
+
+
 def read_candidate_packages(task_dir: Path) -> tuple[str, ...]:
     """Resolve the extra site-packages directories a task exposes to its candidate.
 
@@ -434,6 +457,11 @@ def read_candidate_packages(task_dir: Path) -> tuple[str, ...]:
     allowed) and expands each name through ``ALLOWED_CANDIDATE_PACKAGES``. An unknown name is a
     task-packaging error and fails closed rather than silently running without the toolkit,
     which would otherwise show up as an unexplained candidate ImportError.
+
+    Versions are checked against ``candidate_distribution_pins``. A distribution the task named
+    is an exact requirement. The base NumPy/SciPy pair behind every task is only warned about:
+    the candidate has to be able to import it, and the pinned anchors only need it exact on a
+    host that reproduces those anchors, which is what ``requirements-host.txt`` certifies.
     """
     listing = Path(task_dir) / "frontier_eval" / "candidate_packages.txt"
     toolkits: list[str] = []
@@ -449,14 +477,32 @@ def read_candidate_packages(task_dir: Path) -> tuple[str, ...]:
         if name not in toolkits:
             toolkits.append(name)
     pins = candidate_distribution_pins(sys.version_info[:2], toolkits)
+    # Split the pins by what they are for, because the two halves do not deserve the same
+    # severity. A task-declared toolkit or one of its dependencies carries the task's recorded
+    # anchors: ``stim``'s seeded sampling stream shifts a decoder anchor by 1-2% across
+    # versions, so an approximation there is wrong numbers, not a warning. The base NumPy/SciPy
+    # pair is what every candidate imports; a host missing or exceeding it can still run the
+    # candidate, and ``requirements-host.txt`` is where the certified versions live. Failing
+    # closed on the base pair is what made every task unrunnable off CI.
+    #
+    # Read from BASE_CANDIDATE_PINS rather than by re-deriving the base pins through
+    # candidate_distribution_pins: that function is what the version tests patch, and asking it
+    # a second time made the severity of a distribution depend on the patch.
+    strict = set(pins) - set(BASE_CANDIDATE_PINS[tuple(sys.version_info[:2])])
     for distribution, expected_version in pins.items():
         try:
             installed_version = importlib.metadata.version(distribution)
         except importlib.metadata.PackageNotFoundError as exc:
+            if distribution not in strict:
+                _warn_base_candidate_pin(distribution, expected_version, "absent")
+                continue
             raise RuntimeError(
                 "trusted candidate package %r is not installed" % distribution
             ) from exc
         if installed_version != expected_version:
+            if distribution not in strict:
+                _warn_base_candidate_pin(distribution, expected_version, installed_version)
+                continue
             raise RuntimeError(
                 "trusted candidate package %r has version %s, expected %s"
                 % (distribution, installed_version, expected_version)
@@ -469,10 +515,32 @@ def read_candidate_packages(task_dir: Path) -> tuple[str, ...]:
     mounts = _candidate_package_mounts(tuple(resolved))
     for distribution, expected_version in pins.items():
         mounted_version = _mounted_candidate_distribution_version(distribution, mounts)
-        if mounted_version != expected_version:
+        if mounted_version == expected_version:
+            continue
+        if distribution in strict:
             raise RuntimeError(
                 "candidate-mounted package %r has version %s, expected %s"
                 % (distribution, mounted_version, expected_version)
+            )
+        # The mount exists but carries a different version than the certified one. The
+        # candidate gets an array library, just not the pinned one, so this is a weaker
+        # guarantee than the recorded anchors were produced under and not an import failure.
+        # Say which of the two it is, because they need different responses from an operator:
+        # a missing mount means the candidate cannot import NumPy at all, whereas a version
+        # drift means it imports something that may compute differently.
+        if mounted_version:
+            print(
+                "warning: candidate mount for base package %r has version %s, expected %s; "
+                "the candidate will import it, and an oracle comparing its numerics may "
+                "differ from the certified run" % (distribution, mounted_version, expected_version),
+                file=sys.stderr,
+            )
+        else:
+            print(
+                "warning: candidate mount for base package %r is absent (expected %s); the "
+                "candidate will fail on import if it needs it"
+                % (distribution, expected_version),
+                file=sys.stderr,
             )
     return tuple(resolved)
 
