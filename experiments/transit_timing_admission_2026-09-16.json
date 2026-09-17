@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "task": "Exoplanets/TransitTimingAttribution",
+  "source_provenance": {
+    "git_revision": "270e7df29db75256df965b5ca3066f9d7b004778",
+    "source_tree_dirty": false,
+    "task_package_sha256": "8c19a47b48b87b2123ec0c52ebeab32db24c1fd488730e02d2d9295d33a8c126",
+    "task_card_sha256": "e10e08c093ccd75ec2de246504e1eff92ca1bcaa4d42527454fb5569bcb5c57e",
+    "runtime_source_sha256": "6f8344cdd2d15811803a07dd7d299f6348630deaecd2ee2601b57cfff14fab25"
+  },
+  "environment": {
+    "platform": "Linux x86_64 with bubblewrap",
+    "python": "3.10.12",
+    "numpy": "1.24.4",
+    "scipy": "1.10.1"
+  },
+  "task_validation": {
+    "contribution_gate": "passed with structural, runtime, shortcut guard, discovery axes, baseline determinism, degenerate candidates and bad candidates",
+    "targeted_test_count": 66,
+    "targeted_tests_passed": true,
+    "cli_bad_candidate_count": 3,
+    "cli_bad_candidates_all_scored_invalid": true,
+    "replayed_candidate_count": 13,
+    "complete_metrics_identical_twice": true,
+    "private_replay_report_sha256": "daa93bb065ffa00943d8d1bb57778f48ef77e43ef193d65cfa5a8f49fc68f62d",
+    "baseline": {
+      "valid": 1.0,
+      "development_score": 0.0,
+      "heldout_score": 0.0
+    },
+    "reference": {
+      "valid": 1.0,
+      "development_score": 0.5948352385872624,
+      "heldout_score": 0.28205283692823524
+    },
+    "strongest_fixed_schedule": {
+      "valid": 1.0,
+      "development_score": 0.4321528299414906,
+      "heldout_score": 0.42860320647564926,
+      "fraction_of_reference": 0.7265084546232607
+    }
+  },
+  "model_calibration": {
+    "run_role": "calibration",
+    "algorithm": "greedy_rewrite",
+    "feedback_mode": "selection_blind",
+    "proposal_budget": 1,
+    "replicate_identifiers": [17, 29],
+    "server_side_seed_control": false,
+    "decoding": {
+      "temperature": 0.7,
+      "max_output_tokens": 8000,
+      "thinking_condition": "disabled",
+      "thinking_transport": "repository-external localhost adapter injected thinking.type=disabled into chat requests",
+      "smoke_visible_output_verified": true
+    },
+    "selection": "two independent first proposals per model; no proposal received evaluated feedback and no redraw was used",
+    "models": [
+      {
+        "model_id": "deepseek-v4-flash",
+        "private_raw_report_sha256": "a2cbf15a621c3633344f594d80c6bd495296b3a6d3a983f2acbf1baab6a7059b",
+        "proposal_count": 2,
+        "valid_proposal_count": 2,
+        "runs": [
+          {
+            "replicate_identifier": 17,
+            "development_score": 0.0,
+            "heldout_score": 0.0,
+            "development_mechanism_score": 0.17647058823529413,
+            "heldout_mechanism_score": 0.14285714285714285,
+            "development_correct_refusal_rate": 0.4444444444444444,
+            "heldout_correct_refusal_rate": 0.3888888888888889,
+            "input_tokens": 2407,
+            "output_tokens": 4630
+          },
+          {
+            "replicate_identifier": 29,
+            "development_score": 0.0008624011286428015,
+            "heldout_score": 0.0008216357223759129,
+            "development_mechanism_score": 0.5490196078431373,
+            "heldout_mechanism_score": 0.6190476190476191,
+            "development_correct_refusal_rate": 0.05555555555555555,
+            "heldout_correct_refusal_rate": 0.05555555555555555,
+            "input_tokens": 2407,
+            "output_tokens": 3448
+          }
+        ]
+      },
+      {
+        "model_id": "deepseek-v4-pro",
+        "private_raw_report_sha256": "58b3761dccf7cdf1ff7cf6d0018fdb5756afd0a9d50d7d84300cee60631849ef",
+        "proposal_count": 2,
+        "valid_proposal_count": 2,
+        "runs": [
+          {
+            "replicate_identifier": 17,
+            "development_score": 0.01845170036113218,
+            "heldout_score": 0.0,
+            "development_mechanism_score": 0.0784313725490196,
+            "heldout_mechanism_score": 0.023809523809523808,
+            "development_correct_refusal_rate": 1.0,
+            "heldout_correct_refusal_rate": 0.8333333333333334,
+            "input_tokens": 2406,
+            "output_tokens": 3142
+          },
+          {
+            "replicate_identifier": 29,
+            "development_score": 0.0,
+            "heldout_score": 0.0,
+            "development_mechanism_score": 0.803921568627451,
+            "heldout_mechanism_score": 0.8571428571428571,
+            "development_correct_refusal_rate": 0.0,
+            "heldout_correct_refusal_rate": 0.0,
+            "input_tokens": 2406,
+            "output_tokens": 3428
+          }
+        ]
+      }
+    ],
+    "maximum_first_proposal_development_score": 0.01845170036113218,
+    "reference_development_score": 0.5948352385872624,
+    "first_proposals_reach_reference": false
+  },
+  "scope": "Current-contract task-level admission evidence; no full-repository suite or maintainer-owned global evidence refresh was run."
+}

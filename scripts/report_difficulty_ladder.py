@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
 """Does a task's difficulty ladder actually change the difficulty?
 
-Eight tasks ship a three-level ladder and every one of them sits at level 1. Levels 2 and 3 exist
-in the source and have never been scored, so `difficulty_parameterized` currently asserts that a
-ladder is *present*, not that it does anything. A ladder whose levels are not ordered by difficulty
-is decoration, and worse than none: it makes a saturated task look like it has somewhere to go.
-
-The question matters most for the tasks that are saturated. A saturated task with a working ladder
-should be promoted, not retired; a saturated task with a decorative one has nothing left. Deciding
-that by reading the level parameters is guesswork - the parameters interact - so this measures it.
+Tasks may declare a difficulty ladder without evidence that its levels change performance.
+This report compares one fixed candidate across requested levels. A comparison requires a valid,
+finite score at every level: candidate failures and unavailable evaluations are not evidence of
+scientific difficulty. Equal scores establish flat performance for this candidate only.
 
 Each level is scored by copying the task, rewriting its `DIFFICULTY` constant in the copy, and
 running the candidate through the copy's own evaluator. The shipped task is never modified, and the
@@ -23,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import re
 import shutil
 import sys
@@ -126,8 +123,50 @@ def measure(task_id: str, candidate: Path, levels, timeout: float) -> dict:
             "combined_score": metrics.get("combined_score"),
             "valid": metrics.get("valid"),
             "infrastructure_failure": bool(metrics.get("infrastructure_failure")),
+            "timeout": bool(metrics.get("timeout")),
         }
     return {"task": task_id, "candidate": str(candidate), "levels": scores}
+
+
+def assess_ladder(scores: dict, levels: list[int]) -> dict:
+    """Compare the complete requested ladder, retaining unavailable levels in its scope."""
+    unavailable = {}
+    for level in levels:
+        value = scores.get(level, {})
+        score = value.get("combined_score")
+        try:
+            finite = math.isfinite(float(score))
+        except (TypeError, ValueError, OverflowError):
+            finite = False
+        if value.get("status") != "scored":
+            reason = "evaluation unavailable"
+        elif value.get("infrastructure_failure"):
+            reason = "infrastructure failure"
+        elif value.get("timeout"):
+            reason = "candidate timeout"
+        elif value.get("valid") != 1:
+            reason = "candidate invalid or validity unavailable"
+        elif isinstance(score, bool) or not isinstance(score, (int, float)) or not finite:
+            reason = "finite numeric score unavailable"
+        else:
+            continue
+        unavailable[level] = reason
+    comparable = len(set(levels)) >= 2 and not unavailable
+    if not comparable:
+        return {
+            "comparison_status": "unavailable",
+            "comparison_reason": "all requested levels must be valid; at least two levels required",
+            "unavailable_levels": unavailable,
+            "monotone_harder": None,
+            "flat": None,
+        }
+    ordered = [scores[level]["combined_score"] for level in sorted(set(levels))]
+    return {
+        "comparison_status": "complete",
+        "unavailable_levels": {},
+        "monotone_harder": all(b <= a + 1e-9 for a, b in zip(ordered, ordered[1:])),
+        "flat": max(ordered) - min(ordered) <= 1e-9,
+    }
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -142,6 +181,8 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
 
     levels = [int(value) for value in args.levels.split(",") if value.strip()]
+    if not levels or any(level < 1 for level in levels) or len(set(levels)) != len(levels):
+        ap.error("--levels must contain distinct positive integers")
     tasks = laddered_tasks() if args.all_laddered else ([args.task] if args.task else [])
     if not tasks:
         raise SystemExit("give --task or --all-laddered")
@@ -154,39 +195,37 @@ def main(argv: list[str] | None = None) -> int:
             print("%-46s no recorded candidate" % task_id[:46])
             continue
         row = measure(task_id, candidate, levels, args.timeout)
-        scored = {level: value["combined_score"] for level, value in row["levels"].items()
-                  if value.get("status") == "scored"}
-        # A ladder does something when a higher level is harder for the same program. Equal scores
-        # mean the level parameter is not reaching the difficulty; a *higher* score means it is
-        # reaching it backwards.
-        ordered = [scored[level] for level in sorted(scored)
-                   if isinstance(scored[level], (int, float))]
-        row["monotone_harder"] = bool(
-            len(ordered) >= 2 and all(b <= a + 1e-9 for a, b in zip(ordered, ordered[1:])))
-        row["flat"] = bool(len(ordered) >= 2
-                           and max(ordered) - min(ordered) <= 1e-9)
+        row.update(assess_ladder(row["levels"], levels))
         rows.append(row)
         print("%-46s %s   %s" % (
             task_id[:46],
-            "  ".join("L%d=%s" % (level, "%.4f" % scored[level]
-                                  if isinstance(scored[level], (int, float)) else scored[level])
-                      for level in sorted(scored)),
-            "FLAT - the ladder changes nothing" if row["flat"]
-            else ("harder with level" if row["monotone_harder"] else "not ordered by level")))
+            "  ".join("L%d=%s" % (
+                level, row["unavailable_levels"][level] if level in row["unavailable_levels"]
+                else "%.4f" % row["levels"][level]["combined_score"])
+                for level in sorted(levels)),
+            "comparison unavailable" if row["comparison_status"] != "complete"
+            else ("equal scores for this candidate" if row["flat"]
+                  else ("lower scores at higher levels for this candidate" if row["monotone_harder"]
+                        else "not ordered by level for this candidate"))))
 
     flat = [row["task"] for row in rows if row.get("flat")]
     print()
-    print("laddered tasks measured: %d; ladders that change nothing: %d"
-          % (sum(1 for row in rows if "levels" in row), len(flat)))
+    complete = sum(row.get("comparison_status") == "complete" for row in rows)
+    print("complete candidate comparisons: %d; unavailable: %d; flat candidate comparisons: %d"
+          % (complete, len(rows) - complete, len(flat)))
     for task in flat:
         print("   ", task)
 
     if args.output:
         args.output.write_text(json.dumps({
-            "schema_version": 2,
+            "schema_version": 3,
             "note": "each level is scored by copying the task and rewriting DIFFICULTY in the "
-                    "copy; the shipped task is never modified",
+                    "copy; the shipped task is never modified. Comparisons require valid finite "
+                    "scores at all requested levels and describe this candidate only; "
+                    "ladders_that_change_nothing is the legacy name for flat candidate comparisons.",
             "levels": levels,
+            "complete_comparisons": complete,
+            "unavailable_comparisons": len(rows) - complete,
             "ladders_that_change_nothing": flat,
             "rows": rows,
         }, indent=2) + "\n", encoding="utf-8")

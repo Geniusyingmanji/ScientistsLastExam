@@ -27,6 +27,15 @@ tasks:
     status: candidate
     reason: budgeted pose-temperature experiments for twelve-parameter accelerometer calibration and non-affine fault-axis attribution; retained pending independent inertial-sensing review and server-held regimes
     citation_ids: [doi:10.48456/tr-696, doi:10.4153/CJM-1960-030-4, doi:10.1214/aoms/1177732360]
+  Exoplanets/TransitTimingAttribution:
+    status: candidate
+    reason: Active identification, adaptive follow-up design and forecasting across three independently seeded panels of declared synthetic transit-timing residual families; a truth-blind reference scores 0.594835 development versus 0.432153 for the best of 3,840 normalized fixed policies, while four selection-blind DeepSeek Flash/Pro first proposals are valid and reach at most 0.018452; retained as a candidate pending external astronomy review, photodynamical replication and physical-system validation.
+    citation_ids:
+      - doi:10.1111/j.1365-2966.2005.08922.x
+      - doi:10.1126/science.1107822
+      - doi:10.1088/0004-637X/761/2/122
+      - doi:10.1051/0004-6361/201321309
+      - https://tf.nist.gov/general/pdf/74.pdf
   Mathematics/NarrowAdmissibleTuple:
     status: candidate
     reason: exact admissibility/diameter oracle scored uncapped against Polymath8b's own published narrow-admissible-tuple diameters (246 at k=50, direct primary-source quote; 270 at k=54, secondary-source only, disclosed); no frontier searcher draw yet, pending external number-theory review
