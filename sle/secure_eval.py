@@ -854,14 +854,41 @@ def trusted_evaluate(task_dir: Path, candidate: Path, entrypoint: str, score_mod
     oracle = load_oracle(
         task_dir, with_trusted_context=trusted_context is not None
     )
+    from .discovery_profiles import PILOTS
+    recording_task = next((task for task in PILOTS
+                           if task.split("/")[-1] == task_dir.name), None)
+    recorder = None
     with CandidateProxy(
         candidate, entrypoint, timeout_s, packages=read_candidate_packages(task_dir)
     ) as proxy:
-        result = (
-            oracle(proxy, trusted_context)
-            if trusted_context is not None
-            else oracle(proxy)
-        )
-        if proxy.failure is not None:
-            raise proxy.failure
+        policy = proxy
+        if recording_task is not None:
+            import hashlib
+            from .discovery_trace import DiscoveryRecorder
+            from .spec import load_task_spec
+            if load_task_spec(task_dir).task_id != recording_task:
+                raise ValueError("discovery adapter task identity mismatch")
+            recorder = DiscoveryRecorder(
+                proxy, recording_task,
+                candidate_sha256=hashlib.sha256(candidate.read_bytes()).hexdigest(),
+                oracle_sha256=hashlib.sha256(
+                    (task_dir / "verification/evaluator.py").read_bytes()).hexdigest(),
+            )
+            policy = recorder
+        evaluation_complete = True
+        try:
+            result = (oracle(policy, trusted_context)
+                      if trusted_context is not None else oracle(policy))
+            if proxy.failure is not None:
+                raise proxy.failure
+        except (CandidateError, TimeoutError) as exc:
+            if recorder is None:
+                raise
+            # Keep partial evaluator-owned observations on candidate failure while
+            # preserving the same finite, label-blind public failure classification.
+            result = sanitized_candidate_failure(exc)
+            evaluation_complete = False
+        if recorder is not None:
+            result["discovery_evidence"] = recorder.finish(
+                result, evaluation_complete=evaluation_complete)
     return validate_metrics(result, score_mode)

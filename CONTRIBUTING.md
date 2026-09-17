@@ -374,3 +374,13 @@ python -m sle run --task Chemistry/LennardJonesCluster --algorithm greedy_rewrit
 ---
 
 > 有问题?先开一个 Issue 讨论你的任务想法,再动手写代码。
+## Discovery 的主张与证据
+
+发现类任务应明确：模型已经知道什么、真正未知什么、输出哪类科学主张、可识别范围、
+竞争解释和结果验证路径。主张类型、开放度、验证方式与新颖性分别说明；只在模拟器中成立
+的结果不能称为真实实验确认。细则与四题试点见
+[`docs/discovery_evaluation.md`](docs/discovery_evaluation.md)。
+
+当前过程记录器覆盖四个试点，其余 discovery 任务在全量档案中标记待审查。
+接入新题须提供 callback/逐世界结果适配和回归验证；不能仅凭填好档案或日志齐全提升认证状态。
+过程证据和隐藏结果必须保持 evaluator-only，禁止反馈到搜索者。

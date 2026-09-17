@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SLE sealed evaluator-owned discovery evidence",
+  "$comment": "Ordering, callback pairing, identity and digest consistency additionally require sle.discovery_trace.validate_evidence. Hashes are not authentication.",
+  "type": "object",
+  "required": ["schema_version", "producer", "identity", "world_type", "evaluation_complete", "capture_complete", "instances", "sha256"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": 1},
+    "producer": {"const": "trusted_evaluator_callback_boundary"},
+    "world_type": {"const": "simulation"},
+    "evaluation_complete": {"type": "boolean"},
+    "capture_complete": {"type": "boolean"},
+    "sha256": {"$ref": "#/$defs/hash"},
+    "identity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["task_id", "candidate_sha256", "oracle_sha256", "contract_sha256"],
+      "properties": {
+        "task_id": {"type": "string"},
+        "candidate_sha256": {"$ref": "#/$defs/hash"},
+        "oracle_sha256": {"$ref": "#/$defs/hash"},
+        "contract_sha256": {"$ref": "#/$defs/hash"}
+      }
+    },
+    "instances": {"type": "array", "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["instance_id", "capture_complete", "dropped_event_count", "events", "outcome"],
+      "properties": {
+        "instance_id": {"type": "string"},
+        "capture_complete": {"type": "boolean"},
+        "dropped_event_count": {"type": "integer", "minimum": 0},
+        "outcome": {"type": "object", "required": ["status"], "properties": {"status": {"enum": ["oracle_evaluated", "unavailable"]}}},
+        "events": {"type": "array", "items": {
+          "type": "object", "additionalProperties": false,
+          "required": ["seq", "kind", "payload", "previous_sha256", "sha256"],
+          "properties": {
+            "seq": {"type": "integer", "minimum": 0},
+            "kind": {"enum": ["input", "callback_request", "callback_result", "callback_error", "submission", "candidate_error"]},
+            "tool": {"enum": ["observe", "intervene", "query", "experiment", "confirm"]},
+            "request_seq": {"type": ["integer", "null"], "minimum": 0},
+            "previous_sha256": {"anyOf": [{"$ref": "#/$defs/hash"}, {"type": "null"}]},
+            "sha256": {"$ref": "#/$defs/hash"},
+            "payload": {"oneOf": [
+              {"type": "object", "additionalProperties": false, "required": ["status", "value"], "properties": {"status": {"const": "recorded"}, "value": {}}},
+              {"type": "object", "additionalProperties": false, "required": ["status", "reason"], "properties": {"status": {"const": "unavailable"}, "reason": {"enum": ["trace_size_limit", "unsupported_payload"]}}}
+            ]}
+          }
+        }}
+      }
+    }}
+  },
+  "$defs": {"hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}
