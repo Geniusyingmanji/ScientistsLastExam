@@ -1,0 +1,76 @@
+{
+  "task": "Gravitation/TransientChirpInference",
+  "date": "2026-09-17",
+  "evidence_scope": "supplementary DeepSeek calibration; not native frontier-model D16 evidence",
+  "source": {
+    "git_revision": "6f7b6a68f2905000c0b6c62fa8dce6de77631f09",
+    "source_tree_dirty": false,
+    "task_package_sha256": "2616ab648949a1c0371e1f68057ff12558d143c8cf8c0cd0ccb1dfb730480354",
+    "task_card_sha256": "267932a416e791d4229148cbb63e067947ffb610b065df716db32b5b2b0dfebb",
+    "runtime_source_sha256": "a9b6e3dda3c5df53476e240c3fad530c8ddda55210c01fe1bf42ff5e60be4d2b"
+  },
+  "protocol": {
+    "run_role": "calibration",
+    "algorithm": "greedy_rewrite",
+    "feedback_mode": "selection_blind",
+    "proposal_budget": 1,
+    "replicate_identifiers": [0, 1],
+    "temperature": 0.0,
+    "max_output_tokens": 12000,
+    "server_side_seed_control": false,
+    "note": "Replicate identifiers control local ordering only; the endpoint exposes no server-side generation seed."
+  },
+  "request_adapter": {
+    "location": "uncommitted file outside the repository",
+    "behavior": "inject thinking.type=disabled into every DeepSeek chat request",
+    "yaml_chat_thinking_field": "ignored by the repository LLMConfig class",
+    "visible_output_smoke": {
+      "deepseek-v4-flash": "OK",
+      "deepseek-v4-pro": "OK"
+    }
+  },
+  "reference_development_score": 0.6542482005782615,
+  "runs": [
+    {
+      "model": "deepseek-v4-flash",
+      "replicate_identifier": 0,
+      "proposal_score": 0.35885372662799,
+      "valid_proposal_count": 1,
+      "input_tokens": 2413,
+      "output_tokens": 3724
+    },
+    {
+      "model": "deepseek-v4-flash",
+      "replicate_identifier": 1,
+      "proposal_score": 0.04017720818114148,
+      "valid_proposal_count": 1,
+      "input_tokens": 2413,
+      "output_tokens": 3375
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "replicate_identifier": 0,
+      "proposal_score": 0.0,
+      "valid_proposal_count": 1,
+      "input_tokens": 2412,
+      "output_tokens": 3235
+    },
+    {
+      "model": "deepseek-v4-pro",
+      "replicate_identifier": 1,
+      "proposal_score": 0.2266381309189101,
+      "valid_proposal_count": 1,
+      "input_tokens": 2412,
+      "output_tokens": 1512
+    }
+  ],
+  "result": {
+    "highest_first_proposal_score": 0.35885372662799,
+    "reached_reference": false,
+    "all_four_proposals_evaluated_validly": true,
+    "flash_report_trust_decision": "trusted_clean_revision",
+    "pro_report_trust_decision": "trusted_clean_revision"
+  },
+  "edits_triggered_by_model": "none",
+  "remaining": "The maintainer-requested native frontier-model D16 calibration and external domain review remain pending."
+}
