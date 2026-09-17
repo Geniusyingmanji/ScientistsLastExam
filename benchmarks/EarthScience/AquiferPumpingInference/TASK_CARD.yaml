@@ -64,10 +64,10 @@ lineage:
   - experiments/aquifer_pumping_deepseek_calibration_2026-09-09.json
   - experiments/aquifer_pumping_admission_2026-09-17.json
   calibration_evidence_status: current_or_migration_replayed
-  edits_triggered_by_model: The September 8 and 9 DeepSeek Flash and Pro draws predate the current world panel, baseline, noise, tolerances, unsupported-prediction axis, and probe set, so they are historical protocol evidence only. Independent maintainer red teams, not those model scores, triggered the scoring and calibration revisions. After executable structure froze at 7c7a0139, current-contract Flash and Pro each produced one valid first proposal below reference and one retained invalid proposal; no evaluator or hidden-world change followed.
+  edits_triggered_by_model: The September 8 and 9 DeepSeek Flash and Pro draws predate the current world panel, baseline, noise, tolerances, unsupported-prediction axis, and probe set, so they are historical protocol evidence only. Independent maintainer red teams, not those model scores, triggered the scoring and calibration revisions. After executable structure was held fixed at 7c7a0139, current-contract Flash and Pro each produced one valid first proposal below reference and one retained invalid proposal; no evaluator or hidden-world change followed.
   shortcut_discoverer: independent_maintainer_red_team_then_builder_reproduced_128_strategy_confined_fit_and_residual_threshold_sweep
-  frozen_before_eval: true
-  freeze_timestamp: '2026-09-17T15:55:30+08:00'
+  frozen_before_eval: false
+  freeze_timestamp: null
 long_horizon:
   status: not_tested
   measurement_health_passed: false

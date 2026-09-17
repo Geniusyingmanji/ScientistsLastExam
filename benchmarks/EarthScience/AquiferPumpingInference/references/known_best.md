@@ -75,7 +75,7 @@ confined-fit/residual-summary capability and remains below the reference on both
 ## Model calibration
 
 The September 8 and 9 DeepSeek Flash/Pro records predate the current contract and remain historical
-only. After executable structure froze at clean revision `7c7a0139`, both exact model IDs passed a
+only. After executable structure was held fixed at clean revision `7c7a0139`, both exact model IDs passed a
 visible-output smoke test with `thinking.type=disabled`. Two selection-blind first proposals per
 model were scheduled at seeds 17 and 29 with proposal budget 1. Flash produced one valid candidate
 at `0.192625/0.172372` and one measurement-contract violation; Pro produced one valid candidate at
