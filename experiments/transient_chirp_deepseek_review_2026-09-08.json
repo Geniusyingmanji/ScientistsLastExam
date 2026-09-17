@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "task": "Gravitation/TransientChirpInference",
+  "source_revision": "94cda555f5cd1cd5488566b900e592609d178b89",
+  "source_tree_clean": true,
+  "execution": "ali Linux, trusted-driver/bubblewrap evaluation",
+  "protocol": {"algorithm": "greedy_rewrite", "run_role": "calibration", "feedback_mode": "normal", "seed": 29, "proposal_budget": 1, "temperature": 0.0, "max_output_tokens": 16000, "thinking": "disabled", "server_side_seed_control": false},
+  "compatibility": "Existing YAML declares chat_thinking disabled; local in-memory chat payload adapter enforces thinking.type=disabled because this client version ignores the YAML field. No repository runtime files changed.",
+  "reference": {"combined_score": 0.7871224443046001, "robustness_score": 0.7234283086743911},
+  "runs": [
+    {"model": "deepseek-v4-flash", "smoke_visible_output_ok": true, "valid_proposal_count": 1, "accepted_count": 0, "combined_score": 0.0, "robustness_score": 0.0, "development_mechanism_score": 0.7, "heldout_mechanism_score": 0.6666666666666666, "development_correct_refusal_rate": 0.0, "heldout_correct_refusal_rate": 0.0, "failure_category": "valid_claims_but_no_refusal_credit"},
+    {"model": "deepseek-v4-pro", "smoke_visible_output_ok": true, "valid_proposal_count": 1, "accepted_count": 1, "combined_score": 0.24507501353201533, "robustness_score": 0.2980816805831251, "development_mechanism_score": 0.7, "heldout_mechanism_score": 0.75, "development_correct_refusal_rate": 0.75, "heldout_correct_refusal_rate": 0.75, "failure_category": null}
+  ],
+  "notes": ["One generated proposal per model, plus baseline evaluation and separate tiny smoke check.", "Both proposals were valid; Flash zero does not indicate an API or parsing failure.", "No oracle/reference tuning followed these draws.", "This is small-sample DeepSeek calibration, not a frontier-model admission proof.", "No prompts, generated source, endpoints, credentials or full request logs are included."]
+}

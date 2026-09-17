@@ -1,0 +1,115 @@
+schema_version: 2
+current_admission_report: experiments/transient_chirp_paired_world_redesign_2026-09-17.json
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.6542482005782615
+  probes:
+  - id: legal_baseline
+    candidate: solution.py
+    expected_score: 0.0
+  - id: development_selected_threshold_grid
+    candidate: verification/probe_threshold_grid.py
+    expected_score: 0.3914107398809888
+  excluded:
+  - candidate: verification/probe_fixed_five_slope.py
+    reason: Historical executable witness retained for the superseded pre-paired-world contract; the fresh 2026-09-17 sweep selects probe_threshold_grid.py as the current strongest declared family.
+  - candidate: verification/ablation_without_coherence.py
+    reason: Historical pre-paired-world ablation retained with its source-bound record; it is incompatible with the current paired-world reference contract.
+  - candidate: verification/ablation_without_chirp_grid.py
+    reason: Historical pre-paired-world ablation retained with its source-bound record; the current no-grid result is reproduced by verification/calibrate.py.
+  - candidate: verification/replay_review.py
+    reason: Historical replay generator containing candidate source strings rather than a standalone current-contract policy.
+  relative_margin: 0.2
+  score_tolerance: 0.000001
+scientific_question: Within declared synthetic waveform families, can an agent distinguish coherent chirps, narrow-band lines and detector-localized glitches under a finite two-detector strain-observation budget, recover key transient parameters, and refuse low-SNR ambiguity?
+artifact: A transient model label, initial frequency, frequency slope, event time, amplitude, confidence and immutable observation evidence, or a calibrated refusal.
+oracle:
+  model: reduced-order Gaussian-windowed linear-frequency chirps and zero-slope lines, with paired coherent/localized channel responses, rescaled day-valued coordinates, independent Gaussian noise and low-SNR refusal worlds; not physical LIGO detector or source-parameter inference
+  feasibility: 24 unit-cost observations over fixed epochs and H1/L1 detectors, at most one query per epoch/detector pair, bounded finite claims and current-world evidence only
+  deterministic: true
+normalization:
+  baseline: six fixed H1 observations followed by a fixed coherent-line claim
+  reference: 14 H1 plus 10 L1 observations, locally refined phase fit, cross-channel localization test and low-SNR refusal; clean Linux replay 0.654248 development and 0.601739 held-out
+  score: correct-label science quality with 0.45 model, 0.35 joint initial-frequency/slope or event-time parameter, and 0.20 amplitude weights; confidence is a separate calibration diagnostic; normalized above blanket refusal and multiplied by correct-refusal rate
+citations:
+- id: doi:10.1103/PhysRevD.93.122004
+  title: Observing gravitational-wave transient GW150914 with minimal assumptions
+- id: doi:10.1103/PhysRevD.85.122006
+  title: FINDCHIRP an algorithm for detection of gravitational waves from inspiraling compact binaries
+- id: doi:10.1088/1742-6596/363/1/012031
+  title: Performance of a Chirplet-based analysis for gravitational waves from binary black hole mergers
+- id: doi:10.1103/PhysRevD.96.102008
+  title: Spline Based Search Method For Unmodeled Transient Gravitational Wave Chirps
+invariants:
+- coherent chirp worlds have positive frequency slope in both detectors while line worlds have zero slope
+- every supported H1 waveform is paired between a coherent world and a localized world with identical H1 observations; only L1 separates the pair
+- glitch worlds are localized primarily to H1 and have a finite event time
+- ambiguous low-SNR worlds require refusal; blanket abstention is exactly zero after normalization
+- duplicate queries, overspending, unknown epochs/detectors and malformed candidates fail closed
+- every answer cites at least six distinct current-world observations
+- model accuracy, false discovery, refusal, feasibility and held-out transfer are separate axes
+known_shortcuts: On the paired-world contract, the review-supplied single-channel zero-crossing estimator scores 0.186648/0.159037 and a fair H1-only reference variant scores 0/0 because every supported H1 trace has a coherent/localized twin. Development-selected grids reach 0.331990/0.356481 (216-policy morphology), 0.305562/0.419805 (1,620-policy sign-count), 0.391411/0.438745 (2,916-policy threshold), and 0.275475/0.222719 (324-policy five-slope lookup), versus reference 0.654248/0.601739. The strongest development probe is 59.83% of reference, below the unchanged 20% margin. The frozen reference and strongest witness were each replayed twice with identical full metrics on clean Linux, and the task contribution gate passed. These are finite-grid maxima, not universal bounds. Full inspiral waveforms, colored noise, detector calibration and sky delays remain out of scope.
+review:
+  domain: pending_external_gravitational_wave
+  evaluator_security: automated_budget_determinism_refusal_and_malformed_candidate_checks_passed_clean_linux_replay
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic generator with development and shifted held-out chirp, line, glitch and ambiguous families.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+  license: Procedural repository-local code and generated observations; no external dataset bundled
+  pollution_note: Hidden waveform parameters, world family and split membership remain evaluator-only.
+novelty_risk:
+  level: medium
+  evidence: experiments/transit_timing_transient_chirp_frontier_comparisons_2026-09-14.json
+  rationale: Unlike Gravitation/PTAHellingsDowns, this is single-event time-domain waveform and detector-coherence inference rather than angular correlation evidence across pulsars; unlike Exoplanets/RadialVelocityPlanets, it acquires paired-channel observations and estimates transient frequency/slope/event time/amplitude rather than returning periods from a fixed Doppler series.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:gpt-5
+  builder_scaffolds:
+  - science-benchmark-construction
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  - deepseek-v4-pro
+  calibration_runs:
+  - experiments/transient_chirp_deepseek_calibration_2026-09-07.json
+  - experiments/transient_chirp_deepseek_review_2026-09-08.json
+  - experiments/transient_chirp_deepseek_cadence_2026-09-12.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: none
+  shortcut_discoverer: maintainer_PR48_sign_count_probe_and_expanded_development_only_grid
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: computational_gravitational_wave
+  reviewer_domain: pending_external_gravitational_wave
+  expert_hours: null
+  red_team_rounds: 4
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: bounded author replay on clean source 0bc037e277fee8857b035ef9d61359a9c22985a3 with the current framework; 26 fixed evaluations, 13 identical full-metric pairs, 780 valid world evaluations, 28 passing Linux task tests plus 4 subtests, and the full task contribution gate passed; no current frontier-model D, external domain review or modern trusted formal evidence
+post_builder_shortcut_review:
+  status: paired_world_redesign_shortcut_margin_passed_pending_external_difficulty_review
+  measured_source_revision: 4aafd93ee854f981ce9946f62a6489d205d9c315
+  evidence: experiments/transient_chirp_paired_world_redesign_2026-09-17.json
+  prior_range_evidence: experiments/transient_chirp_reference_bounds_2026-09-12.json
+  original_guard_evidence: experiments/transient_chirp_shortcut_guard_2026-09-12.json
+  finding: >-
+    Maintainer review showed that a zero-crossing fit and a copied H1-only reference could match or
+    exceed the prior reference. The redesign pairs each supported coherent world with a localized
+    world whose H1 waveform and deterministic H1 noise are identical, so H1-only methods cannot
+    solve both members. L1 coherence is now necessary rather than decorative. A 14-H1/10-L1
+    reference scores 0.654248 development in the current in-process replay; a fresh 2,916-policy
+    development sweep selects a 0.391411 threshold witness, below the unchanged 20 percent line
+    0.523399. The supplied zero-crossing attack falls to 0.186648. Clean Linux double replay
+    reproduced the reference and selected witness exactly, and the task contribution gate passed.
+    All prior reports remain as source-bound historical evidence; fresh model D is still pending.

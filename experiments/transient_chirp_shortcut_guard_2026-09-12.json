@@ -1,0 +1,198 @@
+{
+  "actual_evaluation_count": 13,
+  "author_revision": "f345d8f53b5df92d32d48180c614d269210f2847",
+  "check_counts": {
+    "failed": 1,
+    "passed": 15,
+    "skipped": 0
+  },
+  "decision": "hold_declared_shortcut_margin_failed",
+  "environment": {
+    "numpy": "1.24.4",
+    "platform": "Linux-5.15.0-1075-azure-x86_64-with-glibc2.29",
+    "python": "3.8.10",
+    "scipy": "1.10.1"
+  },
+  "evaluator_timeout_seconds": 300,
+  "evidence_scope": "bounded_manual_admission_review",
+  "factory_copied_without_changes": true,
+  "failed_checks": [
+    "shortcut_probe"
+  ],
+  "fixture_repair_note": "The first Python 3.8 run retained 1 failed / 25 passed. Dict union raised before one score assertion and caused the malformed-output matrix to fail for the wrong reason. Dict unpacking restores the intended checks; the clean fixture-only follow-up passed all 26. Old passes are not reinterpreted as completed shape validation.",
+  "full_contribution_report_sha256": "d18a3b3d5198e4783959e2cefe7eeffaae957e9a204604e1765dae2b3b046253",
+  "git_clean": true,
+  "limitations": [
+    "A real C failure is retained; expected scores, reference, margin and budgets were not adjusted to pass.",
+    "No new frontier-model D campaign, global evidence refresh or certification is claimed.",
+    "The fixture-only follow-up and later documentation do not re-sign the original scientific source bindings."
+  ],
+  "linux_fixtures": [
+    {
+      "failed": 1,
+      "junit_sha256": "d61c7df47963d3c36f191b66620f8e44605c15a5804f5d2c56f837727d8d3087",
+      "log_sha256": "3047bfcaa9d0a91a1c47634265f98e1eee9ff531a996f0fbda6c4c009303ec0e",
+      "passed": 25,
+      "skipped": 0,
+      "source_revision": "8134f597b5f5cf194ae5f4eb1d0046e5087d0b79",
+      "test_files": [
+        "tests/test_transient_chirp_inference.py",
+        "tests/test_shortcut_probe_contract.py"
+      ],
+      "tests": 26
+    },
+    {
+      "failed": 0,
+      "junit_sha256": "e985a52cac40bf355beac013a16692da2bf1a3ae2fda6bc81554f8d7e87dc882",
+      "log_sha256": "baed093a3aa7b191f2ac76142fc07254e6d7e128a0063d4677fd03767c88b95c",
+      "passed": 26,
+      "skipped": 0,
+      "source_revision": "f21009cfc46e90010d94f93f09aa655f84e460d3",
+      "test_files": [
+        "tests/test_transient_chirp_inference.py",
+        "tests/test_shortcut_probe_contract.py"
+      ],
+      "tests": 26
+    }
+  ],
+  "modern_trusted_formal_coverage": 0,
+  "observation_budget_units": 24,
+  "operator_driver_sha256": "02dce947421cc83605b681047d9ce7e05d11db65257f35f2fd693a4cb6b48c3b",
+  "phases": {
+    "difficulty": "unassessed",
+    "runtime": "passed",
+    "shortcut_guard": "failed",
+    "structural": "passed"
+  },
+  "plan_sha256": "1999dbe8cec10f815f32806daadffce05a5d353bdf7713be05f35de38aa6a50d",
+  "private_metrics": "Full metrics and evaluated programs remain in private directories outside Git; only aggregates and hashes are public.",
+  "probe_best": 0.6611830494930327,
+  "probe_excess_over_threshold": 0.0036237820146934885,
+  "published_author_report_sha256": "a1bda098eaced0cbbaacbfdcdc7ba703aba1459120ffc75f29dd058f69277b93",
+  "reference_and_oracle_unchanged": true,
+  "reference_score": 0.821949084347924,
+  "relative_margin": 0.2,
+  "runtime_source_sha256": "e29d3b1d7b0e0f9f5b1b09a8c0a45ace098ad8790547d0333c1940e0a421bea9",
+  "schema_version": 1,
+  "scientific_candidates": {
+    "solution.py": {
+      "all_30_worlds_valid_twice": true,
+      "complete_metrics_identical_twice": true,
+      "observations": [
+        {
+          "candidate": "solution.py",
+          "candidate_sha256": "6bb3cf96de160ec234c38dd3d273eb9fb6ac8cd4770f103f0aa5ab8155893e8e",
+          "full_valid": true,
+          "heldout_score": 0.0,
+          "id": "evaluation-009",
+          "infrastructure_failure": false,
+          "metrics_sha256": "9ee3d4138f31e7fe7c91c7b985ce5bc058bd979e3bc90b57d40378b5d605c33b",
+          "score": 0.0,
+          "seconds": 14.496722351759672,
+          "valid_worlds": 30,
+          "worlds": 30
+        },
+        {
+          "candidate": "solution.py",
+          "candidate_sha256": "6bb3cf96de160ec234c38dd3d273eb9fb6ac8cd4770f103f0aa5ab8155893e8e",
+          "full_valid": true,
+          "heldout_score": 0.0,
+          "id": "evaluation-010",
+          "infrastructure_failure": false,
+          "metrics_sha256": "9ee3d4138f31e7fe7c91c7b985ce5bc058bd979e3bc90b57d40378b5d605c33b",
+          "score": 0.0,
+          "seconds": 13.660821489989758,
+          "valid_worlds": 30,
+          "worlds": 30
+        }
+      ]
+    },
+    "verification/probe_fixed_five_slope.py": {
+      "all_30_worlds_valid_twice": true,
+      "complete_metrics_identical_twice": true,
+      "observations": [
+        {
+          "candidate": "verification/probe_fixed_five_slope.py",
+          "candidate_sha256": "9c1a7499eddcb4b2891ed1867c5f6b834c2d46dab005e1ba2073b6fc72f287bc",
+          "full_valid": true,
+          "heldout_score": 0.5563081267357214,
+          "id": "evaluation-011",
+          "infrastructure_failure": false,
+          "metrics_sha256": "fcfafd194b26424418827fbdfbd781772fe303ab13e48783ff9c5248b3db2c8e",
+          "score": 0.6611830494930327,
+          "seconds": 15.872796304523945,
+          "valid_worlds": 30,
+          "worlds": 30
+        },
+        {
+          "candidate": "verification/probe_fixed_five_slope.py",
+          "candidate_sha256": "9c1a7499eddcb4b2891ed1867c5f6b834c2d46dab005e1ba2073b6fc72f287bc",
+          "full_valid": true,
+          "heldout_score": 0.5563081267357214,
+          "id": "evaluation-012",
+          "infrastructure_failure": false,
+          "metrics_sha256": "fcfafd194b26424418827fbdfbd781772fe303ab13e48783ff9c5248b3db2c8e",
+          "score": 0.6611830494930327,
+          "seconds": 14.321923274546862,
+          "valid_worlds": 30,
+          "worlds": 30
+        }
+      ]
+    },
+    "verification/reference_solver.py": {
+      "all_30_worlds_valid_twice": true,
+      "complete_metrics_identical_twice": true,
+      "observations": [
+        {
+          "candidate": "verification/reference_solver.py",
+          "candidate_sha256": "ead22f6bfde598b500114c9180488f6105aadd80958986320b5ceabc135febad",
+          "full_valid": true,
+          "heldout_score": 0.6853203741653763,
+          "id": "evaluation-007",
+          "infrastructure_failure": false,
+          "metrics_sha256": "b52adc6e31cb280e05ff792fd52b8c75909de36c626a2b81f327ee3378af049c",
+          "score": 0.821949084347924,
+          "seconds": 16.894829977303743,
+          "valid_worlds": 30,
+          "worlds": 30
+        },
+        {
+          "candidate": "verification/reference_solver.py",
+          "candidate_sha256": "ead22f6bfde598b500114c9180488f6105aadd80958986320b5ceabc135febad",
+          "full_valid": true,
+          "heldout_score": 0.6853203741653763,
+          "id": "evaluation-008",
+          "infrastructure_failure": false,
+          "metrics_sha256": "b52adc6e31cb280e05ff792fd52b8c75909de36c626a2b81f327ee3378af049c",
+          "score": 0.821949084347924,
+          "seconds": 14.43070892803371,
+          "valid_worlds": 30,
+          "worlds": 30
+        }
+      ]
+    }
+  },
+  "scope": "Independent real Linux trusted-sandbox contribution check with complete private metric retention. No model calls or new strategy selection.",
+  "selected_parameters": [
+    16,
+    0.08,
+    0.08,
+    7,
+    [
+      0.0,
+      0.006,
+      0.018,
+      0.028,
+      0.028
+    ],
+    1
+  ],
+  "selection_rule": "Reuse the original published development-only selected witness; no grid rerun, heldout selection, new model, parameter tuning or margin change.",
+  "source_revision": "8134f597b5f5cf194ae5f4eb1d0046e5087d0b79",
+  "source_tree": "8de998b7b065abb8bf03ec812a71522eead84003",
+  "task_contract_sha256": "ec3b2c99dca3eec37a1730ff5ddb5d139b50cac1edf0417c99d781133c81b44a",
+  "task_id": "Gravitation/TransientChirpInference",
+  "task_package_sha256": "0b3fb0ab4451afc0c19066a1fb377fd9b135afde4784020c064576c78d153b82",
+  "threshold": 0.6575592674783393,
+  "trusted_evidence": false
+}
