@@ -120,5 +120,13 @@ shortcut_probe:
   - id: beam64_two_pass
     candidate: references/beam_probe.py
     expected_score: 0.5733645002865624
+  - id: shipped_baseline
+    candidate: solution.py
+    expected_score: 0.0
   relative_margin: 0.2
   score_tolerance: 1.0e-06
+evaluation_budget:
+  timeout_seconds: 300
+  scope: each candidate evaluation runs the full five-instance oracle under the frontier
+    wrapper's explicit 300 s timeout; the declared probe and the reference both complete
+    well inside it
