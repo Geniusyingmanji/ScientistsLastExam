@@ -208,6 +208,16 @@ class EvalTimeoutReconciliationTests(unittest.TestCase):
                 with self.subTest(seconds=seconds):
                     self.assertEqual(_timeout_issues({"eval_time_seconds": seconds}, path, "T/t"), [])
 
+    def test_the_check_surfaces_a_disagreement_whichever_side_is_wrong(self):
+        """Two-sided on purpose: 600 s declared against a 600 s wrapper and 3600 s against the
+        same wrapper both fail. It reports that the two disagree, not which one is wrong - the
+        migration entry records both numbers so a human can tell."""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = self._wrapper(Path(tmp), "600")
+            for declared in (600, 3600):
+                with self.subTest(declared=declared):
+                    self.assertTrue(_timeout_issues({"eval_time_seconds": declared}, path, "T/t"))
+
     def test_the_bounds_are_ordered_and_documented(self):
         self.assertLess(EVAL_TIMEOUT_MIN, EVAL_TIMEOUT_MAX)
         self.assertEqual(EVAL_TIMEOUT_MIN, 3.0)

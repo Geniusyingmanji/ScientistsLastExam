@@ -55,6 +55,12 @@ SCORE_MODES = {"clipped", "uncapped"}
 # ceiling is deliberately loose - it catches a declaration wrong by orders of magnitude without
 # failing a merely conservative one. Tasks whose two values are already inconsistent when this
 # check lands are named in `schemas/eval_timeout_migration.json` rather than silently waived.
+#
+# The min is two-sided in its effect and either side may be the wrong one: it flags a wrapper
+# smaller than 3x a very conservative declaration, where the declaration is the suspect half.
+# Intended - the check surfaces a disagreement, it does not adjudicate it. The migration entry
+# records both numbers so a reviewer can see which side moved; do not read `EVAL_TIMEOUT_MIN` as
+# "the generator default" alone.
 EVAL_TIMEOUT_MIN = 3.0
 EVAL_TIMEOUT_MAX = 100.0
 # `review.domain` is the external-sign-off slot, and any nonempty string satisfied it: `'x'`
