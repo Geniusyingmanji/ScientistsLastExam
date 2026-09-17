@@ -16,9 +16,17 @@ measures by hand, and it is the most direct statement of the defect. It is not u
 verdict because it is not generalisable: a "trivial candidate" is specific to a task's entrypoint
 and problem schema - the trivial strategy for `Gravitation/PTAHellingsDowns` is a four-kernel
 least-squares argmin, and for `Oceanography/AMOCTippingRefusal` it is a constant collapse year, and
-neither is expressible for the other task or for the other 86. A generic probe (return zero,
-return empty, raise) is a *malformed* candidate, and `check_task_contribution.py` already requires
-those to score zero; they do not tie a ceiling reference without being a task-specific strategy.
+neither is expressible for the other task or for the other 86.
+
+The claim sometimes attached to this - "a generic probe is malformed, so it must score zero" -
+does NOT hold as a general proposition, and the two zero-scoring examples below are examples of
+those two strategies, not evidence for the general rule. The maintainer's `claim_all` /
+`abstain_all` probes (#107) are equally generic - they flip the `abstain` boolean that every
+discovery evaluator validates, so one implementation runs the whole tree - yet they submit the
+reference's own shape of legal answer (`valid=1`) and are covered by no existing check:
+`claim_all` scores 0.500 on QuinaryConvexHull and 0.833 on ProspectiveMetaAnalysis. The zero
+below is a property of world-varying answers and malformed submissions, not of genericity.
+
 Measured here: a generic replicate-everything policy on `MaterialsScience/QuinaryConvexHull`
 scores 0.0 against a reference of 1.0, and a generic local-z threshold on
 `ParticlePhysics/LookElsewhereAnomaly` scores 0.0 against 1.0. The two instances that *do*
