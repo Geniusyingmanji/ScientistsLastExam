@@ -91,6 +91,12 @@ python scripts/report_discovery_evidence.py \
 - 当前结果绑定依赖 oracle 逐世界调用顺序与显式 split/world_index。接口或顺序变化需要同时更新适配器，并运行四题关联测试。
 - 本轮给两个 oracle 补充逐世界身份字段，同时改变了共享 runtime；相应 package/runtime hashes 会变化，不自动签发历史版本等价关系。
 
+## 分数本身是否守得住
+
+上面记录的是过程,不是打分的有效性。一道题的分数能不能在不做科学的情况下拿到,以及它能不能
+分出比参考解更强的候选,是两个独立的问题,`scripts/audit_discovery_discrimination.py` 分别测量
+它们,结果和建议的判据见 [discovery_discrimination.md](discovery_discrimination.md)。
+
 ## 后续准入与对照
 
 下一步依次完成：四题主张语义与可辨识性审核；任务特定过程检查；独立 oracle 复核；主动/固定实验与有/无诊断重跑对照；再扩展到其余题。不能凭日志齐全就认证一个发现。
