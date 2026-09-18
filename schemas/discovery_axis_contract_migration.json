@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "inventory_revision": "ff0d888ef74421ff3f7cdcd478b9a95cbc897109",
+  "policy": "Explicit legacy pending inventory for the four-column discovery-axis contract. A task listed here predates CONTRIBUTING.md's requirement that a discovery report publish mechanism recovery, false-discovery rate, calibrated refusal and an attempted-discovery column separately, each rate beside the count it is a rate of. Listing is never a pass and never an exemption from the requirement: a listed task reports migration_pending, which a caller must treat as incomplete, not as compliant. Remove a task once its evaluator publishes all four columns and every rate's denominator.",
+  "tasks": {
+    "PopulationGenetics/DemographicSFS": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 12 split-prefixed rates carry no count at their own prefix."
+    },
+    "SystemsBiology/EnzymeKineticsLaw": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "SystemsBiology/GeneNetworkIntervention": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 11 split-prefixed rates carry no count at their own prefix."
+    },
+    "Microbiology/MetagenomeCompositionAssignment": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; publishes no attempted-discovery or coverage column; publishes no attempted-discovery/mechanism/false/refusal axis."
+    },
+    "Ecology/OccupancyDetectionDesign": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 7 split-prefixed rates carry no count at their own prefix."
+    },
+    "EvidenceSynthesis/ProspectiveMetaAnalysis": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 12 split-prefixed rates carry no count at their own prefix."
+    },
+    "Catalysis/CatalystDeactivationLab": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 11 split-prefixed rates carry no count at their own prefix."
+    },
+    "Spectroscopy/CrowdedSpectrumAssignment": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "MolecularDynamics/ForceFieldCalibration": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 14 split-prefixed rates carry no count at their own prefix."
+    },
+    "Spectroscopy/NMRSpectrumFitting": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; binds mechanism_score, heldout_mechanism_score to the raw mechanism (combined_score uses the normalized value); 11 split-prefixed rates carry no count at their own prefix."
+    },
+    "MaterialsScience/PhaseDiagramDiscovery": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "MaterialsScience/QuinaryConvexHull": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "ChemicalKinetics/ReactionMechanismFitting": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; binds mechanism_score, heldout_mechanism_score to the raw mechanism (combined_score uses the normalized value); 11 split-prefixed rates carry no count at their own prefix."
+    },
+    "Spectroscopy/SpinSystemInference": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "ComputerArchitecture/CacheReplacementPolicyID": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "Algorithm/GraphFromDistances": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; publishes no attempted-discovery or coverage column; publishes no attempted-discovery axis; 6 split-prefixed rates carry no count at their own prefix."
+    },
+    "CausalDiscovery/InterventionalSCM": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; binds mechanism_score to the raw mechanism (combined_score uses the normalized value); 4 split-prefixed rates carry no count at their own prefix."
+    },
+    "DataPrivacy/SparseVectorAudit": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "CausalDiscovery/SurvivorshipConfoundedDesign": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "Oceanography/AMOCTippingRefusal": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "ClimateScience/EnergyBalanceModel": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 11 split-prefixed rates carry no count at their own prefix."
+    },
+    "ClimateScience/ForcedSignalAttribution": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; collapses two axes onto one expression; 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "Geophysics/GravityInversion": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; binds mechanism_score, heldout_mechanism_score to the raw mechanism (combined_score uses the normalized value); collapses two axes onto one expression; 14 split-prefixed rates carry no count at their own prefix."
+    },
+    "AtmosphericChemistry/MethaneSourceAttribution": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 2 split-prefixed rates carry no count at their own prefix."
+    },
+    "AtmosphericScience/RadiativeTransferFit": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; binds mechanism_score, heldout_mechanism_score to the raw mechanism (combined_score uses the normalized value); 13 split-prefixed rates carry no count at their own prefix."
+    },
+    "Geophysics/UPbConcordiaInference": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 6 split-prefixed rates carry no count at their own prefix."
+    },
+    "HeatTransfer/ConvectionDiffusionOpt": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 11 split-prefixed rates carry no count at their own prefix."
+    },
+    "StructuralEngineering/ModalDamageAttribution": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; collapses two axes onto one expression; 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "Sensors/QuartzCrystalMicrobalanceLab": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 11 split-prefixed rates carry no count at their own prefix."
+    },
+    "Turbulence/WallClosureDiscovery": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 2 split-prefixed rates carry no count at their own prefix."
+    },
+    "DynamicalSystems/ActiveLawDiscovery": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; binds mechanism_score to the raw mechanism (combined_score uses the normalized value); 6 split-prefixed rates carry no count at their own prefix."
+    },
+    "Mathematics/BlackBoxGroupIdentification": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 10 split-prefixed rates carry no count at their own prefix."
+    },
+    "Mathematics/HeavyTailEvidence": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "Mathematics/SequenceLawRecovery": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; publishes no attempted-discovery or coverage column; publishes no attempted-discovery axis; 6 split-prefixed rates carry no count at their own prefix."
+    },
+    "QuantumControl/ActiveNoiseSpectroscopy": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 3 split-prefixed rates carry no count at their own prefix."
+    },
+    "Physics/ComplexBoseLaw": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "Physics/CriticalPhenomenaLab": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; binds mechanism_score to the raw mechanism (combined_score uses the normalized value); 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "ParticlePhysics/DiscrepantMeasurements": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "QuantumDynamics/HamiltonianLearning": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; publishes no attempted-discovery or coverage column; publishes no attempted-discovery axis; 6 split-prefixed rates carry no count at their own prefix."
+    },
+    "Physics/HiddenCouplingNetwork": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; collapses two axes onto one expression; 10 split-prefixed rates carry no count at their own prefix."
+    },
+    "ParticlePhysics/LookElsewhereAnomaly": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "Gravitation/PTAHellingsDowns": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 8 split-prefixed rates carry no count at their own prefix."
+    },
+    "Exoplanets/RadialVelocityPlanets": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; publishes no attempted-discovery or coverage column; publishes no attempted-discovery axis; 6 split-prefixed rates carry no count at their own prefix."
+    },
+    "Exoplanets/TransitTimingAttribution": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 2 split-prefixed rates carry no count at their own prefix."
+    },
+    "Exoplanets/TransmissionSpectrumSpecies": {
+      "status": "pending",
+      "reason": "Legacy inventory predates the four-column discovery contract; 2 split-prefixed rates carry no count at their own prefix."
+    }
+  }
+}

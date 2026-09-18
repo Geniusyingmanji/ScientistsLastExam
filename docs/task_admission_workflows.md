@@ -27,6 +27,16 @@ added. The FourSetting task's existing pairing probe is identified there, and an
 regression executes its valid unpadded form; its reference measurement and complete contract
 migration remain pending.
 
+Discovery tasks carry a second requirement that is a property of the evaluator's source
+rather than of any candidate's returned metrics: the four columns - mechanism recovery,
+false-discovery rate, calibrated refusal, and whether the candidate attempted discovery -
+must each be published, with the count beside every rate. The `discovery_axis_contract`
+check reports it, and it is the only discovery check that also runs under `--skip-eval`,
+because it reads the source rather than a candidate. The 45 discovery tasks admitted before
+the requirement are listed in `schemas/discovery_axis_contract_migration.json` as
+**pending**, which is exit 2, never exit 0. A task that is neither compliant nor listed
+fails.
+
 A task card declares candidates and expected measurements:
 
 ```yaml

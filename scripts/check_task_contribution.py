@@ -35,9 +35,11 @@ from scripts.audit_tasks import (  # noqa: E402
 from scripts.check_evaluator_survives_bad_candidates import BAD_CANDIDATES  # noqa: E402
 from scripts.check_numeric_keys_hold_numbers import offending_keys  # noqa: E402
 from sle.certification import certification_status, load_certification  # noqa: E402
+from sle.discovery_contract import MECHANISM_ALIASES  # noqa: E402
 from sle.evaluate import INVALID_SCORE, evaluate_candidate  # noqa: E402
 from sle.frontier import load_frozen_wave  # noqa: E402
 from sle.registry import find_task, list_tasks  # noqa: E402
+from scripts.discovery_axis_contract import inspect_axes  # noqa: E402
 from scripts.shortcut_probe_contract import inspect_probe  # noqa: E402
 
 DISCOVERY_AXES = (
@@ -50,16 +52,10 @@ DISCOVERY_REFUSAL = (
     "correct_refusal_rate",
     "heldout_correct_refusal_rate",
 )
-DISCOVERY_MECHANISM = (
-    "heldout_mechanism_score",
-    "mechanism_score",
-    "development_mechanism_score",
-    "development_body_support_f1",
-    "heldout_supported_correct_model_rate",
-    "development_supported_correct_model_rate",
-    "heldout_hypothesis_score",
-    "development_hypothesis_score",
-)
+# The mechanism axis has several historical spellings. It is defined once, in
+# sle/discovery_contract.py, because the gate and the shared accounting must not drift into
+# disagreeing about which published key is the axis.
+DISCOVERY_MECHANISM = MECHANISM_ALIASES
 DISCOVERY_COVERAGE = (
     "heldout_discovery_coverage",
     "development_discovery_coverage",
@@ -374,6 +370,25 @@ def check_task(task_id: str, timeout_s: float = 180.0, *, skip_eval: bool = Fals
             _fail(rows, "bad_candidates_score_zero", "; ".join(crashes))
         else:
             _ok(rows, "bad_candidates_score_zero", "raises/empty/wrong_type scored")
+
+    if role == "discovery":
+        # The two checks in the eval block above read a candidate's returned metrics, so they
+        # cannot see a column that is published for nobody, and they cannot see that a
+        # `mechanism_score` was built from the raw mechanism while the headline used the
+        # normalized one - the payload is finite and well-formed either way. Those two are
+        # properties of the evaluator's own source, so they are checked here, in the same
+        # phase as the denominator inventory and for the same reason: a task admitted before
+        # the requirement existed is listed as pending rather than failing the branch, and
+        # pending never reads as passed. Unlike the eval block this also runs under
+        # --skip-eval, which is the only form that works where the candidate sandbox cannot.
+        verdict = inspect_axes(spec)
+        if verdict["status"] == "passed":
+            _ok(rows, "discovery_axis_contract", verdict["detail"])
+        elif verdict["status"] == "migration_pending":
+            rows.append({"check": "discovery_axis_contract", "ok": None,
+                         "status": "migration_pending", "detail": verdict["detail"]})
+        else:
+            _fail(rows, "discovery_axis_contract", verdict["detail"])
 
     probe = inspect_probe(spec, evaluate_candidate, timeout_s=timeout_s, skip_eval=skip_eval)
     if role == "discovery" and "reference_axes_saturated" in probe:
