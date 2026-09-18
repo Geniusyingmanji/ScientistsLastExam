@@ -92,6 +92,10 @@ class ExamTaxonomyTests(unittest.TestCase):
             tax["tasks"]["Mathematics/HeavyTailEvidence"].get("note"),
             "clauset_tails_not_lookelsewhere",
         )
+        self.assertEqual(
+            tax["tasks"]["ControlTheory/LyapunovDecayCertificate"].get("note"),
+            "exact_rational_switched_lyapunov_clipped_not_sos_packing_moment_or_capacity",
+        )
 
 
 if __name__ == "__main__":
