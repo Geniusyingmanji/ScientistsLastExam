@@ -12,6 +12,7 @@ import stat
 import subprocess
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -213,6 +214,18 @@ def _infrastructure_failure(metrics: dict[str, Any]) -> bool:
     )
 
 
+def _evaluate_spec(spec, repeats: int, timeout: float) -> dict[str, Any]:
+    """Keep repeats sequential; each evaluation still uses its own trusted subprocess."""
+    source = spec.initial_program_path.read_bytes()
+    runs = []
+    for repeat in range(repeats):
+        started = time.monotonic()
+        metrics = evaluate_candidate(spec, spec.initial_program_path, timeout_s=timeout)
+        runs.append({"repeat": repeat, "wall_seconds": time.monotonic() - started,
+                     "metrics": metrics})
+    return _entry(spec.task_id, hashlib.sha256(source).hexdigest(), runs)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, required=True)
@@ -223,6 +236,8 @@ def main() -> int:
                       help="export an unchanged private original without executing any evaluations")
     parser.add_argument("--repeats", type=int, default=2)
     parser.add_argument("--timeout", type=float, default=180.0)
+    parser.add_argument("--workers", type=int, default=1,
+                        help="concurrent tasks; repeats for each task remain sequential")
     args = parser.parse_args()
     if args.export_private:
         report = export_private(args.export_private, args.output)
@@ -230,6 +245,8 @@ def main() -> int:
         return 0 if report["execution_passed"] else 1
     if args.repeats < 2:
         raise SystemExit("--repeats must be >= 2 for determinism evidence")
+    if args.workers < 1:
+        raise SystemExit("--workers must be >= 1")
     _validate_new_outputs(args.output, args.private_output)
     if source_provenance(ROOT).get("source_tree_dirty") is not False:
         raise SystemExit("baseline evaluation requires a clean source revision")
@@ -242,25 +259,20 @@ def main() -> int:
         "source_provenance": source_provenance(ROOT),
         "created_at": datetime.now(timezone.utc).isoformat(),
         "environment": {"python": sys.version, "platform": platform.platform()},
-        "config": {"repeats": args.repeats, "timeout_s": args.timeout},
+        "config": {"repeats": args.repeats, "timeout_s": args.timeout,
+                   "workers": args.workers},
         "tasks": [],
     }
     specs = list_tasks(None)
-    for index, spec in enumerate(specs, 1):
-        source = spec.initial_program_path.read_bytes()
-        runs = []
-        for repeat in range(args.repeats):
-            started = time.monotonic()
-            metrics = evaluate_candidate(spec, spec.initial_program_path, timeout_s=args.timeout)
-            runs.append({
-                "repeat": repeat,
-                "wall_seconds": time.monotonic() - started,
-                "metrics": metrics,
-            })
-        entry = _entry(spec.task_id, hashlib.sha256(source).hexdigest(), runs)
-        report["tasks"].append(entry)
-        print("[%d/%d] %s deterministic=%s valid=%s" %
-              (index, len(specs), spec.task_id, entry["deterministic"], entry["valid_all"]), flush=True)
+    # map yields in registry order regardless of completion order. Threads only
+    # supervise independent subprocesses; no oracle runs in this shared process.
+    with ThreadPoolExecutor(max_workers=args.workers) as pool:
+        entries = pool.map(lambda spec: _evaluate_spec(spec, args.repeats, args.timeout), specs)
+        for index, entry in enumerate(entries, 1):
+            report["tasks"].append(entry)
+            print("[%d/%d] %s deterministic=%s valid=%s" %
+                  (index, len(specs), entry["task"], entry["deterministic"], entry["valid_all"]),
+                  flush=True)
 
     report["summary"] = _summary(report["tasks"])
     execution_passed = (

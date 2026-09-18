@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SLE discovery profile (not a certification)",
+  "type": "object",
+  "required": ["schema_version", "task_id", "assessment_status", "openness", "claim_types", "verification", "novelty_scope", "source_sha256"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "task_id": {"type": "string", "pattern": "^[^/]+/[^/]+$"},
+    "assessment_status": {"enum": ["not_assessed", "source_inspected", "source_changed"]},
+    "openness": {"enum": [null, "L1", "L2", "L3", "L4"]},
+    "claim_types": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "verification": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "novelty_scope": {"enum": ["not_assessed", "benchmark_rediscovery"]},
+    "field_novelty": {"const": "not_established"},
+    "independent_scientific_review": {"const": "pending"},
+    "source_sha256": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+  },
+  "allOf": [{"if": {"properties": {"assessment_status": {"enum": ["not_assessed", "source_changed"]}}},
+             "then": {"properties": {"openness": {"type": "null"}, "claim_types": {"maxItems": 0}}}}]
+}

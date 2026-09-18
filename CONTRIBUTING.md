@@ -126,6 +126,13 @@ oracle 须定义 `evaluate(candidate_callable)`,返回的字典**至少**包含:
 
 可选字段:`feasibility_rate`、`constraint_violations`、`raw_score`、`per_instance` 等。
 
+**失败原因也是反馈。** 只告诉候选"被拒了"无法区分"写错键名"与"科学做错了",两者要的修法相反。
+oracle 自报失败类别时写 `"error_message": "candidate invalid: " + kind`；kind 必须属于
+`sle/metric_visibility.py` 中经审查的有限白名单，多个类别可用逗号分隔。
+任何未知类别都会使整条消息折叠为通用句；仅满足字符与长度限制不能保证内容安全。
+完整原因始终留在可信诊断里。
+不要把 oracle 内部(世界编号、划分、真值、参考值)或候选自己抛出的异常文本放进类别。
+
 多世界或多实例 oracle 必须在每个独立世界开始时调用候选代理的 `reset_session()`
 （直接传入普通测试函数时用 `hasattr` 判断）。重置要覆盖 development → heldout 边界，
 使模块全局变量、已导入库的属性和私有 `/tmp` 都重新初始化。同一世界的测量回调、控制器步进
@@ -238,7 +245,7 @@ credit 不含假发现/弃权惩罚,不能作为综合提交质量分。具体 m
 22. `tests/test_<task>.py` 钉住关键性质。
 
 **F 集成**
-23. 黑盒 `frontier_eval/run_eval.py` 只用标准库启动 `sle.frontier_eval_entrypoint` CLI，保留显式 `TASK_ID` 与 `EVAL_TIMEOUT_S`；后者与卡片 `evaluation_budget` 一致；metadata 的 `eval_time_seconds` 是预计评测成本，生成器缺省预算为 `max(300, 3 * eval_time_seconds)`，可用 `eval_timeout_s` 显式覆盖。禁止同进程 import 候选。验证非 300 秒预算能传到 `sle eval`，导入/基础设施故障返回非零且不生成分数；搜索可见指标走白名单，全量 sidecar 必须放在提案智能体不可读的目录。
+23. 黑盒 `frontier_eval/run_eval.py` 只用标准库启动 `sle.frontier_eval_entrypoint` CLI，保留显式 `TASK_ID` 与 `EVAL_TIMEOUT_S`；`EVAL_TIMEOUT_S` 是评测路径上**唯一**被强制的超时——metadata 的 `eval_time_seconds` 是预计评测成本，没有任何运行时代码读取它。两者必须自洽：生成器缺省预算为 `max(300, 3 * eval_time_seconds)`，可用 `eval_timeout_s` 显式覆盖，`scripts/audit_tasks.py` 按 `[3x, 100x]` 检查实装常量与声明成本的比值（理由见该脚本 `EVAL_TIMEOUT_MIN`/`EVAL_TIMEOUT_MAX` 注释；历史上 dev 分支曾出现声明 1 s、实装 720 s 与声明 600 s、实装 600 s 两种已记录的迁移项）。禁止同进程 import 候选。验证非 300 秒预算能传到 `sle eval`，导入/基础设施故障返回非零且不生成分数；搜索可见指标走白名单，全量 sidecar 必须放在提案智能体不可读的目录。
 24. Linux 主机沙箱内实跑,分数与本地一致;`python scripts/check_task_contribution.py --task <id>` 通过。
 25. 全量测试绿;若改了任务包内文件,还要刷新全局证据。
 
@@ -315,7 +322,7 @@ CI 其余部分对 PR 一视同仁:审计、卡片校验、沙箱测试全部要
 | 环境 | 能做什么 | 不能做什么 |
 |---|---|---|
 | 笔记本(macOS / Windows) | 改代码;`python -m pytest tests/ -q`(需要沙箱的测试自动 skip);写任务文档 | 跑 `sle eval / run`、标定、Δ 阶梯、任何要进仓库的证据 |
-| Linux 主机(bubblewrap + util-linux flock) | 以上全部;`refresh_global_evidence.py`;恢复审计;`rebind_measurement_health_spec.py` | 在脏树上生成证据 |
+| Linux 主机(bubblewrap + util-linux flock + 认证的 NumPy/SciPy) | 以上全部;`refresh_global_evidence.py`;恢复审计;`rebind_measurement_health_spec.py` | 在脏树上生成证据 |
 | CI(GitHub Actions,ubuntu-22.04 / ubuntu-24.04) | 全量测试 + 审计,合并前唯一算数的绿灯 | 生成证据(runner 不是可信来源) |
 
 原因写在沙箱里:候选代码在 bubblewrap 中由启动测试的同一 CPython ABI 执行。沙箱只读挂载该
@@ -323,9 +330,25 @@ CI 其余部分对 PR 一视同仁:审计、卡片校验、沙箱测试全部要
 因此依赖必须安装到启动测试的解释器可见的位置;CI 使用 `/usr/bin/python3`,维护者的完整 oracle
 环境则必须显式设置 `ORACLE_PYTHON=/path/to/python3.8`。其他 Python 版本可运行其已固定的基础
 candidate 包组合,但完整 oracle 安装目前只认证 Python 3.8 并会对其他版本提前 fail closed。
+
+**认证的 NumPy/SciPy 是主机前置条件,不是每次运行的检查。** 装法是
+`python -m pip install -r requirements-host.txt`(或 `pip install -e ".[host]"`);版本取自
+`sle/oracle_package_pins.py` 的 `BASE_CANDIDATE_PINS`,同一份 map 也驱动 setup 脚本与
+`pyproject.toml` 的 `oracle` extra。版本不符时 `sle eval` 在 stderr 给出警告并继续:早先它是
+fail closed,结果整台机器上 88 个任务有 87 个在候选执行前就抛错,而报错只说了包名和两个版本号,
+没有任何地方说明这组版本是前置条件 —— CI 一直绿只是因为 workflow 手工装了这一对。警告意味着
+可以跑,但**不意味着分数与记录可比**:oracle 若比较 NumPy/SciPy 数值,未认证主机上的分数可能
+不同,要复现记录的锚点就必须装这一组。任务自己声明的 toolkit 不受此宽容,仍然精确匹配并 fail
+closed(`sle/secure_eval.py:read_candidate_packages`),因为那些锚点正是对着那个版本录的。
+
 安装脚本需要 Bash 4+。Ubuntu 24.04 的 CI 显式关闭 AppArmor 对非特权 user namespace 的限制;
 这验证的是完成该主机配置后的沙箱,不是出厂配置的兼容性。基准主机也须配置该限制或使用经过审计的 setuid bwrap。
 macOS 没有 bubblewrap,沙箱路径一律不可用。
+
+Python 版本下界是 3.8,记录在 `pyproject.toml` 的 `requires-python`。3.8 是完整 oracle 安装
+唯一认证的版本,也是这个下界的依据;上界不存在 —— `BASE_CANDIDATE_PINS` 有 `(3, 12)` 条目,
+CI 同时跑 3.10 与 3.12。下载依赖与测试命令本身不变:`pytest tests/ -q` 从仓库根运行,
+`pyproject.toml` 的 `pythonpath` 保证脚本入口与 `python -m pytest` 解析到同一个根。
 
 证据文档(`experiments/*.json`、`.research/*_spec_*.json`)都带 `source_provenance`:git 修订、
 树是否干净、运行时源码哈希。脏树、笔记本产出、或运行时文件已变的文档会被标为不可信,测试直接拒收。
@@ -374,3 +397,19 @@ python -m sle run --task Chemistry/LennardJonesCluster --algorithm greedy_rewrit
 ---
 
 > 有问题?先开一个 Issue 讨论你的任务想法,再动手写代码。
+## Discovery 的主张与证据
+
+发现类任务应明确：模型已经知道什么、真正未知什么、输出哪类科学主张、可识别范围、
+竞争解释和结果验证路径。主张类型、开放度、验证方式与新颖性分别说明；只在模拟器中成立
+的结果不能称为真实实验确认。细则与四题试点见
+[`docs/discovery_evaluation.md`](docs/discovery_evaluation.md)。
+
+当前过程记录器覆盖四个试点，其余 discovery 任务在全量档案中标记待审查。
+接入新题须提供 callback/逐世界结果适配和回归验证；不能仅凭填好档案或日志齐全提升认证状态。
+过程证据和隐藏结果必须保持 evaluator-only，禁止反馈到搜索者。
+
+Harness diagnostics distinguish `callback_invocations` (all invoked callbacks, including free
+and rejected calls) from oracle-defined budget usage. Trusted callers can pass `diagnostics={}`
+to `evaluate_candidate` to receive this count outside the scientific metric dictionary.
+Public failure feedback uses only the reviewed finite label vocabulary in
+`sle/metric_visibility.py`; identifier syntax alone never makes a label safe to publish.

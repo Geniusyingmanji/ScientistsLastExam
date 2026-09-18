@@ -22,6 +22,7 @@ TASK = ROOT / "benchmarks/Biology/ProspectiveMetaAnalysis"
 sys.path.insert(0, str(ROOT))
 
 from sle.evaluate import evaluate_candidate  # noqa: E402
+from sle.discovery_trace import checked_science_metrics  # noqa: E402
 from sle.metric_visibility import search_visible_metrics  # noqa: E402
 from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
 from sle.registry import find_task  # noqa: E402
@@ -237,6 +238,10 @@ def calibrate():
     invalid = _invalid_checks(oracle)
     visible = search_visible_metrics(secure_baseline)
     direct_json = json.loads(json.dumps(direct_baseline, allow_nan=False))
+    secure_science = checked_science_metrics(
+        secure_baseline,
+        expected_candidate_sha256=hashlib.sha256(spec.initial_program_path.read_bytes()).hexdigest(),
+    )
     execution_passed = bool(
         len(oracle.DEVELOPMENT_SPECS) == 6
         and len(oracle.HELDOUT_SPECS) == 4
@@ -245,7 +250,7 @@ def calibrate():
         and world_checks["maximum_supported_lack_of_fit_z"] < 2.0
         and world_checks["minimum_naive_highlighted_article_intercept_bias"] > 0.01
         and invalid["passed"]
-        and secure_baseline == direct_json
+        and secure_science == direct_json
         and secure_baseline["valid"] == 1.0
         and secure_baseline["combined_score"] == 0.0
         and secure_baseline["robustness_score"] == 0.0
@@ -307,7 +312,9 @@ def calibrate():
         },
         "direct_weak_baseline": direct_baseline,
         "secure_weak_baseline": secure_baseline,
-        "secure_baseline_exactly_matches_direct": secure_baseline == direct_json,
+        "secure_baseline_exactly_matches_direct": secure_science == direct_json,
+        "baseline_comparison_excluded_fields": ["discovery_evidence"],
+        "discovery_evidence_validation": "complete_structurally_checked_candidate_bound",
         "search_visible_baseline_metrics": visible,
         "truth_blind_reference": truth_blind,
         "oracle_reference": oracle_reference,

@@ -63,10 +63,23 @@ max(probe scores) < measured_reference * (1 - relative_margin)
 ```
 
 The margin is an explicit task-review decision; the template's 0.1 is a starting point, not a
-universal scientific threshold. Probe families should cover the omissions claimed by the
-reference and reviewer-discovered cheap alternatives. Existing prose in `known_shortcuts`
-is historical context; the gate checks numeric declarations in `shortcut_probe`, not numbers
-extracted from prose. Reviewers must reconcile both when migrating a card.
+universal scientific threshold. It is bounded above by a policy ceiling of 0.3, the widest
+margin a card may declare without a separate review decision: without a ceiling,
+`relative_margin: 0.999` leaves a threshold of `0.001 * reference`, and any probe that scores
+at all clears the guard. A wider margin means raising the ceiling with a review record, not
+sliding the bar inside an ordinary card change. Probe families should cover the omissions
+claimed by the reference and reviewer-discovered cheap alternatives. Existing prose in
+`known_shortcuts` is historical context; the gate checks numeric declarations in
+`shortcut_probe`, not numbers extracted from prose. Reviewers must reconcile both when
+migrating a card.
+
+`excluded` is not an exemption from measurement. The gate evaluates excluded candidates
+against the same reference and threshold as the declared probes, because the case that
+motivated the key - a strong in-tree candidate argued away instead of evaluated - is exactly
+the one a reason alone cannot catch. An excluded candidate that *scores* at or above the
+threshold fails the contract. An excluded candidate that comes back invalid is accepted: that
+is infeasibility by construction, which is what makes such a program unusable as a probe,
+since a probe must be a valid finite-scoring candidate.
 
 ## Independent first-draw calibration
 

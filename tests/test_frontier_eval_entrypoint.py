@@ -93,7 +93,10 @@ def test_candidate_failure_has_safe_useful_category(project):
     root, outside = project
     assert result.returncode == 0
     public = json.loads(result.stdout)
-    assert public['error_message'] == 'candidate invalid: blocked_or_missing_import'
+    # The class rides alongside the kind: the kind alone does not tell a searcher whether to fix
+    # an import or a submission key, and those need opposite corrections.
+    assert public['error_message'] == (
+        'candidate invalid: blocked_or_missing_import (environment)')
     full = json.loads(next((root / "private").glob('*.json')).read_text())
     assert full['error_message'].startswith('/hidden')
 

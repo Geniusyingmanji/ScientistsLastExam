@@ -106,6 +106,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--repeats", type=int, default=2, help="secure-baseline repeats")
     parser.add_argument("--timeout", type=float, default=180.0, help="per-task baseline timeout")
+    parser.add_argument("--workers", type=int, default=1, help="concurrent baseline tasks")
     parser.add_argument("--private-output", type=Path,
                         help="new private baseline original outside Git, in a 0700 directory")
     parser.add_argument("--commit", action="store_true",
@@ -134,7 +135,8 @@ def main() -> int:
         baseline = _target(SERIES["secure_baseline"], today)
         _run([sys.executable, "scripts/run_secure_baseline.py", "--output", str(baseline),
               "--private-output", str(args.private_output),
-              "--repeats", str(args.repeats), "--timeout", str(args.timeout)])
+              "--repeats", str(args.repeats), "--timeout", str(args.timeout),
+              "--workers", str(args.workers)])
         print("  secure baseline:", _summary(baseline, ("passed", "trust_decision")))
         summary = json.loads(baseline.read_text(encoding="utf-8")).get("summary", {})
         print("  ", json.dumps(summary))

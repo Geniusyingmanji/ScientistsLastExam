@@ -18,10 +18,8 @@ class LLMConfigTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             config = Path(tmpdir) / "llm.yaml"
             config.write_text(f"api_key: ${{{variable}}}\n", encoding="utf-8")
-            with (
-                patch.dict(os.environ, {}, clear=False),
-                patch("urllib.request.urlopen") as urlopen,
-            ):
+            with patch.dict(os.environ, {}, clear=False), \
+                    patch("urllib.request.urlopen") as urlopen:
                 os.environ.pop(variable, None)
                 with self.assertRaises(ValueError) as caught:
                     load_llm_client(str(config))
@@ -34,10 +32,8 @@ class LLMConfigTests(unittest.TestCase):
 
     def test_empty_environment_reference_is_rejected_without_config_values(self):
         variable = "SLE_TEST_EMPTY_BASE_URL"
-        with (
-            patch.dict(os.environ, {variable: ""}),
-            self.assertRaises(ValueError) as caught,
-        ):
+        with patch.dict(os.environ, {variable: ""}), \
+                self.assertRaises(ValueError) as caught:
             LLMConfig.from_dict(
                 {"base_url": f"${{{variable}}}", "api_key": "literal-private-value"}
             )

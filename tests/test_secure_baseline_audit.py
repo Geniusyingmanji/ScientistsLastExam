@@ -16,6 +16,38 @@ from sle.metric_visibility import search_visible_metrics
 from sle.provenance import finalize_report_trust
 
 
+def test_parallel_baselines_preserve_task_identity_repeats_and_hidden_drift(tmp_path, monkeypatch):
+    from concurrent.futures import ThreadPoolExecutor
+    from threading import Barrier
+
+    specs = []
+    for name in ("A", "B"):
+        path = tmp_path / (name + ".py")
+        path.write_text(name)
+        specs.append(SimpleNamespace(task_id=name, initial_program_path=path))
+    barrier = Barrier(2)
+    calls = {"A": 0, "B": 0}
+
+    def run(spec, path, timeout_s):
+        assert path == spec.initial_program_path
+        calls[spec.task_id] += 1
+        barrier.wait(timeout=10)
+        return {"combined_score": 0.5, "valid": 1.0,
+                "private": {"task": spec.task_id, "draw": calls[spec.task_id]}}
+
+    monkeypatch.setattr(baseline, "evaluate_candidate", run)
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        rows = list(pool.map(lambda spec: baseline._evaluate_spec(spec, 2, 5), specs))
+    assert [row["task"] for row in rows] == ["A", "B"]
+    for spec, row in zip(specs, rows):
+        assert row["candidate_sha256"] == hashlib.sha256(spec.initial_program_path.read_bytes()).hexdigest()
+        assert [run["repeat"] for run in row["runs"]] == [0, 1]
+        assert [run["metrics"]["private"] for run in row["runs"]] == [
+            {"task": spec.task_id, "draw": 1}, {"task": spec.task_id, "draw": 2}]
+        assert row["deterministic"] is False
+    assert calls == {"A": 2, "B": 2}
+
+
 def raw_report(metrics):
     row = baseline._entry("Fixture/Task", "a" * 64, [
         {"repeat": index, "wall_seconds": 1.0, "metrics": item}

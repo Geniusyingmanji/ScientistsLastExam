@@ -38,3 +38,13 @@ conditions:
     reasoning_effort: null
     max_output_tokens: 8000
     note: Anthropic Messages API, extended thinking off
+  3cf1c810c1659b400a84143ed516c66157d0cc31921817fb689891e8e227be16:
+    model: gpt-5.6-terra
+    wire: responses
+    reasoning_effort: medium
+    max_output_tokens: 16000
+    note: >-
+      the discovery discrimination measurements of 2026-09-17. Medium effort, not the low
+      the ladders used, because the question there was where a searcher lands relative to a
+      task's reference rather than how two models compare; scores from it are not on the
+      same condition as the census.

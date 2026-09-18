@@ -958,7 +958,7 @@ def _aggregate(rows, specs):
     }
 
 
-def _evaluate_split(candidate, specs):
+def _evaluate_split(candidate, specs, split):
     rows = []
     for index, spec in enumerate(specs):
         if index and hasattr(candidate, "reset_session"):
@@ -991,18 +991,19 @@ def _evaluate_split(candidate, specs):
                 "world_kind": world["kind"],
             }
         row["world_index"] = index
+        row["split"] = split
         rows.append(row)
     return rows
 
 
 def evaluate(synthesize_evidence):
-    development_rows = _evaluate_split(synthesize_evidence, DEVELOPMENT_SPECS)
+    development_rows = _evaluate_split(synthesize_evidence, DEVELOPMENT_SPECS, "development")
     # The next split is a new scientific corpus too.  _evaluate_split resets
     # within a split, so explicitly replace the final development worker before
     # the first held-out corpus.
     if hasattr(synthesize_evidence, "reset_session"):
         synthesize_evidence.reset_session()
-    heldout_rows = _evaluate_split(synthesize_evidence, HELDOUT_SPECS)
+    heldout_rows = _evaluate_split(synthesize_evidence, HELDOUT_SPECS, "heldout")
     development = _aggregate(development_rows, DEVELOPMENT_SPECS)
     heldout = _aggregate(heldout_rows, HELDOUT_SPECS)
     development_valid = development["valid_rate"] == 1.0
