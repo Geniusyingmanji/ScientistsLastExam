@@ -159,6 +159,40 @@ Full episode records remain outside Git. The task's separate public construction
 report uses different worlds and binds its listed task source files; neither
 panel contains frontier-model draws.
 
+The recovery successor completed a separate 24-world, ten-policy panel (240
+completed cells). All seven experimental policies spent exactly 48 units;
+no-query and abstention controls spent zero. Scientific axes remain separate:
+
+| Policy | Correct / certifiable components | Mean confirmation RMSE | Worlds with a predictor |
+|---|---:|---:|---:|
+| Reference | 42/45 | 0.00370 | 24/24 |
+| Fixed mixed-readout design | 43/46 | 0.00322 | 23/24 |
+| Fixed optical design | 43/45 | 0.00248 | 23/24 |
+| Fixed orthogonal design | 36/45 | 0.00563 | 24/24 |
+| Passive single-condition design | 28/45 | 0.08749 | 24/24 |
+| Always fit and claim maximum order | 24/45 | 0.00647 | 24/24 |
+| No-query fixed prior | 24/45 | 0.12301 | 24/24 |
+
+Prediction error alone would hide the maximum-order strategy's 21/45 false
+component assertions. Conversely, fixed optical fitting remains very strong:
+43/45 correct certifiable components does **not** establish frontier difficulty.
+The oracle initially certifies order in 21/24 worlds; the mixed fixed predictor
+provides an additional valid lower-order witness in one world, hence its 46th
+certifiable component. Unresolved order is excluded from the recovery denominator
+and reported as unresolved, rather than used to depress a combined score. No
+combined score is emitted by this successor. Missing predictions are excluded
+from RMSE and explicitly counted above.
+This small panel initially contains 13 certified zero-order worlds, eight
+certified one-order worlds and three oracle-unresolved worlds, with no certified
+two-order world. Analytic and adversarial unit tests exercise two-order
+certification, but broader stratified world coverage is still required for
+difficulty calibration; this panel cannot establish success on that stratum.
+
+Private recovery panel content binding:
+`cd3a008c41c1f1689ee40032240f74714068d7a55e7f0d4fb000439b8e4358c7`.
+Both successor panels are construction diagnostics. The old tasks remain held;
+neither successor is admitted on the strength of these results.
+
 The program and interactive-model modes share a scientific environment but are
 different solver conditions. Record and compare them separately. Model steps,
 experimental cost units, analysis calls and elapsed time are separate resources.
