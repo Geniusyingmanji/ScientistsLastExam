@@ -479,6 +479,16 @@ def evaluate(audit):
         "development_false_discovery_rate": dev["false_discovery_rate"],
         "development_correct_refusal_rate": dev["correct_refusal_rate"],
         "development_discovery_coverage": dev["discovery_coverage"],
+        # Each rate travels with the count it is a rate of. A refusal rate of 1.0 is one world out
+        # of one or six out of six, and the difference is the whole resolution of the axis: the
+        # denominators here are the worlds the candidate named, the six starved worlds and the six
+        # settleable ones, not twelve in each case.
+        "development_false_discovery_count": dev["false_discovery_count"],
+        "development_false_discovery_denominator": dev["false_discovery_denominator"],
+        "development_correct_refusal_count": dev["correct_refusal_count"],
+        "development_correct_refusal_denominator": dev["correct_refusal_denominator"],
+        "development_discovery_count": dev["discovery_count"],
+        "development_discovery_denominator": dev["discovery_denominator"],
         "development_confidence_calibration": dev["confidence_calibration"],
         "development_mean_probes_used": dev["mean_ops_used"],
         # Evaluator-only: the sealed split is removed from the search-visible metric view by the
@@ -490,5 +500,11 @@ def evaluate(audit):
         "heldout_false_discovery_rate": held["false_discovery_rate"],
         "heldout_correct_refusal_rate": held["correct_refusal_rate"],
         "heldout_discovery_coverage": held["discovery_coverage"],
+        "heldout_false_discovery_count": held["false_discovery_count"],
+        "heldout_false_discovery_denominator": held["false_discovery_denominator"],
+        "heldout_correct_refusal_count": held["correct_refusal_count"],
+        "heldout_correct_refusal_denominator": held["correct_refusal_denominator"],
+        "heldout_discovery_count": held["discovery_count"],
+        "heldout_discovery_denominator": held["discovery_denominator"],
         "per_instance": development + heldout,
     }

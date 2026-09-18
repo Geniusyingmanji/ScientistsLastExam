@@ -196,6 +196,29 @@ class IsolationLevelAuditTests(unittest.TestCase):
         self.assertEqual(guess["development_discovery_coverage"], 1.0)
         self.assertGreater(guess["development_false_discovery_rate"], 0.5)
 
+    def test_every_published_axis_travels_with_the_count_it_is_a_rate_of(self):
+        """A rate alone cannot be read: 1.0 is one world out of one or six out of six."""
+        metrics = self.ev.evaluate(lambda _p, _r: {"abstain": True})
+        for split, worlds in (("development", self.ev.DEVELOPMENT_WORLDS),
+                              ("heldout", self.ev.HELDOUT_WORLDS)):
+            starved = sum(not w["settleable"] for w in worlds)
+            settled = sum(bool(w["settleable"]) for w in worlds)
+            # Declining everything names nothing, so the false-discovery denominator is zero
+            # claims; the other two are the worlds that could and could not be settled.
+            self.assertEqual(metrics[split + "_false_discovery_denominator"], 0, split)
+            self.assertEqual(metrics[split + "_correct_refusal_denominator"], starved, split)
+            self.assertEqual(metrics[split + "_correct_refusal_count"], starved, split)
+            self.assertEqual(metrics[split + "_discovery_denominator"], settled, split)
+            self.assertEqual(metrics[split + "_discovery_count"], 0, split)
+        named = self.ev.evaluate(lambda _p, _r: {"level": "strict_serializable"})
+        for split, worlds in (("development", self.ev.DEVELOPMENT_WORLDS),
+                              ("heldout", self.ev.HELDOUT_WORLDS)):
+            # Naming every world makes every world a claim, and the wrong ones are the count.
+            self.assertEqual(named[split + "_false_discovery_denominator"], len(worlds), split)
+            self.assertEqual(
+                named[split + "_false_discovery_count"],
+                sum(w["level"] != "strict_serializable" for w in worlds), split)
+
 
 if __name__ == "__main__":
     unittest.main()

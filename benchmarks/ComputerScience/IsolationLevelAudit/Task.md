@@ -157,6 +157,11 @@ all of them, so declining costs you nothing there. The other two are read agains
 could have supported: a refusal counts as correct only where the budget could not have settled the
 world, and coverage is how much of what was settleable you went on to settle.
 
+Each of those three travels with the count it is a rate of, under
+`development_false_discovery_count` and `development_false_discovery_denominator` and the matching
+pair for the other two. A rate on its own cannot be read, because a refusal rate of 1.0 is one
+world out of one or six out of six.
+
 A sealed held-out set of eight further worlds is scored too, under the same keys with the
 `heldout_` prefix, and is not visible to a searcher. `per_instance` carries one row per world.
 

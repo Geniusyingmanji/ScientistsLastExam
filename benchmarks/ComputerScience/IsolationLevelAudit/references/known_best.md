@@ -40,6 +40,11 @@ actually named. The other two are read against what each world could have suppor
 correct only where the budget could not have settled the world, and coverage is how much of what was
 settleable the candidate went on to settle.
 
+Every one of the three is published beside its count, since a rate on its own has no resolution.
+The refusal denominator is six on the development split and three held out, the coverage
+denominator six and five, and the false-discovery denominator is whatever the candidate named,
+which is zero for one that declines everything and all twelve for one that names every world.
+
 | strategy | dev fdr | dev correct refusal | dev coverage | held fdr | held refusal | held coverage |
 |---|---|---|---|---|---|---|
 | **reference** | **0.000** | **1.000** | **1.000** | **0.000** | **1.000** | **1.000** |

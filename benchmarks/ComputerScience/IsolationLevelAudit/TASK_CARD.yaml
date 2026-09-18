@@ -39,7 +39,11 @@ normalization:
     development mechanism, the mean of +1 for the right level, -1 for a wrong one and 0 for a
     refusal, clipped below at zero so that declining every world is exactly 0.0; identification,
     misidentification, false discovery, correct refusal, coverage, calibration, operations used and
-    the held-out split stay separate
+    the held-out split stay separate. Each of the three discovery axes is published beside the
+    count it is a rate of, because a rate alone carries no resolution: the false-discovery
+    denominator is the worlds the candidate named, the correct-refusal denominator is the six
+    starved development worlds and three starved held-out ones, and the coverage denominator is
+    the six and five settleable ones
 citations:
 - id: doi:10.1109/ICDE.2000.839388
   title: Generalized isolation level definitions
