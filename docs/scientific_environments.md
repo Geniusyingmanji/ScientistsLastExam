@@ -193,6 +193,13 @@ Private recovery panel content binding:
 Both successor panels are construction diagnostics. The old tasks remain held;
 neither successor is admitted on the strength of these results.
 
+Validation of implementation revision `1c07d94c`: the focused local suite passed
+170 tests (13 Linux-only checks skipped on macOS); the Linux Python 3.8 run passed
+all 226 selected tests with real CandidateProxy/bubblewrap execution, including
+both successor tasks, panel aggregation, episode/deadline regressions, task
+inventory/eligibility checks and the existing secure-evaluation/wrapper suites.
+Scientific difficulty and external domain validity remain separate release gates.
+
 The program and interactive-model modes share a scientific environment but are
 different solver conditions. Record and compare them separately. Model steps,
 experimental cost units, analysis calls and elapsed time are separate resources.
