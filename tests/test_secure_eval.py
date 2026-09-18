@@ -741,6 +741,34 @@ class CodecTests(unittest.TestCase):
         with self.assertRaises(CodecError):
             encode(float("nan"))
 
+    def test_numpy_boolean_crosses_as_a_python_bool(self):
+        """Oracles type-check booleans, and np.bool_ is not a subclass of bool.
+
+        Measured before the fix: `encode({"abstain": np.bool_(True)})` raised
+        "unsupported value type: bool_" while np.int64 was already normalised, so a candidate
+        that computed its decision mask in numpy failed over a representation detail rather
+        than over its science. Mathematics/HeavyTailEvidence reads the submission with
+        `isinstance(abstain, bool)` at evaluator.py:72, so the value must arrive as a bool.
+        """
+        for value in (np.bool_(True), np.bool_(False)):
+            with self.subTest(value=value):
+                got = decode(json.loads(json.dumps(encode({"abstain": value}))))
+                self.assertIsInstance(got["abstain"], bool)
+                self.assertEqual(got["abstain"], bool(value))
+        # Nested in a list, which is how a per-world verdict usually travels.
+        got = decode(json.loads(json.dumps(encode([np.True_, np.False_]))))
+        self.assertEqual(got, [True, False])
+        self.assertTrue(all(isinstance(entry, bool) for entry in got))
+
+    def test_numpy_timedelta_is_rejected_as_a_codec_error(self):
+        """np.timedelta64 subclasses np.integer but cannot be int()ed.
+
+        Before this guard it escaped the codec as a bare TypeError, breaking this module's
+        promise to raise CodecError for anything it will not carry.
+        """
+        with self.assertRaises(CodecError):
+            encode(np.timedelta64(1, "D"))
+
     def test_metric_validation_preserves_scientific_raw_score(self):
         got = validate_metrics(
             {"combined_score": 0.25, "raw_score": -17.5, "valid": 1.0}, "clipped"
