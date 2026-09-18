@@ -54,6 +54,12 @@ discovery(46 个):从受预算约束的证据中建立可检验主张,或在证�
 `discovery_evidence`。日志齐全不等于推理正确,结果命中也不等于形成过程已验证。
 没有记录的旧运行标记为未观测;没有审核的任务档案保持 `not_assessed`。
 
+当前六个饱和或存在捷径的旧 discovery 任务已退出前沿使用,其余任务仍须独立难度标定。
+版本绑定的排除规则见 [`docs/discovery_eligibility.md`](docs/discovery_eligibility.md)。
+新增 `sle episode` 支持有预算的交互实验、冻结主张、独立确认和隔离 Python 分析;
+运行方法见 [`docs/scientific_environments.md`](docs/scientific_environments.md)。
+两个环境原型尚未进入正式任务集合,其中酶动力学仅作为协议测试,不能计作合格难题。
+
 ```bash
 python scripts/report_discovery_evidence.py --output /tmp/discovery_profiles.json
 python scripts/report_discovery_evidence.py --metrics /private/operator/full_metrics.json \
