@@ -35,7 +35,7 @@ from sle.provenance import (  # noqa: E402
     source_provenance,
 )
 from sle.registry import list_tasks  # noqa: E402
-from scripts.audit_tasks import _task_card_issues  # noqa: E402
+from scripts.audit_tasks import _task_card_issues, domain_review_state  # noqa: E402
 
 
 SCHEMA_VERSION = 1
@@ -46,13 +46,9 @@ BINDING_STATES = {
     "unbound",
 }
 ADMISSIBLE_STATUSES = {"certified", "candidate"}
-REVIEW_COMPLETE_VALUES = {
-    "complete",
-    "completed",
-    "passed",
-    "approved",
-    "externally_reviewed",
-}
+# `REVIEW_COMPLETE_VALUES` lived here and matched `review.domain` case-insensitively against a
+# bare "passed"/"approved", so a card could claim a sign-off with no reviewer and no date.
+# `domain_review_state` in scripts/audit_tasks.py replaces it and requires both.
 EXTERNAL_VALIDATION_VALUES = {
     "complete",
     "completed",
@@ -406,7 +402,10 @@ def _card_state(task_dir: Path) -> tuple[dict[str, Any], dict[str, Any]]:
         card_sha256 = None
     review = card.get("review") if isinstance(card.get("review"), dict) else {}
     domain_status = str(review.get("domain") or "not_declared")
-    domain_review_complete = domain_status.lower() in REVIEW_COMPLETE_VALUES
+    # Delegated rather than re-matched here: this used to accept a bare "passed"/"approved" with
+    # no reviewer and no date, which reported a sign-off that nothing recorded. `domain_status`
+    # is kept for the report because the exact declared string is what a reader diffs.
+    domain_review_complete = domain_review_state(review) == "complete"
     external_status = str(review.get("external_validation") or "not_declared")
     external_validation_complete = external_status.lower() in EXTERNAL_VALIDATION_VALUES
 

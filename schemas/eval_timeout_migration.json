@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "policy": "Explicit legacy inventory for tasks whose declared eval_time_seconds and enforced run_eval.py EVAL_TIMEOUT_S already disagree by more than the reconciliation bounds. Pending is a recorded defect, never a pass: the entry pins the pair it was written against, so moving either number makes the entry stale and re-checks the ratio. Remove a task after its metadata and wrapper agree.",
+  "bounds": {
+    "min_factor": 3.0,
+    "max_factor": 100.0,
+    "rationale": "min is the generator's own default (max(300, 3 * eval_time_seconds)); max is an order of magnitude past the widest legitimate margin in the inventory, so a declaration wrong by orders of magnitude is caught while a merely conservative one is not."
+  },
+  "tasks": {
+    "Microbiology/MetagenomeCompositionAssignment": {
+      "status": "pending",
+      "declared_eval_time_seconds": 600,
+      "enforced_timeout_s": 600.0,
+      "reason": "The wrapper timeout equals the declared single-evaluation cost instead of covering it threefold. The declared 600 s is the last of the 3 mismatches against the generator rule at HEAD; the ratio is 1.0x rather than the required 3.0x."
+    },
+    "InformationTheory/ShannonCapacityCertificate": {
+      "status": "pending",
+      "declared_eval_time_seconds": 1,
+      "enforced_timeout_s": 720.0,
+      "reason": "Declared cost is 1 s while the enforced timeout is 720 s - a 720x margin against a ceiling of 100x. Only the declaration can be wrong by that much; the wrapper is the side that stopped an evaluation."
+    }
+  }
+}
