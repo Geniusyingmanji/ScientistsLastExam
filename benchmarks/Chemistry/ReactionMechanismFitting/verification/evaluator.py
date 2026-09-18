@@ -578,7 +578,12 @@ def evaluate(discover_mechanism):
         "combined_score": dev["normalized_mechanism"] if dev_all_valid else 0.0,
         "valid": 1.0 if dev_all_valid else 0.0,
         "feasibility_rate": dev["valid_count"] / len(development),
-        "mechanism_score": dev["raw_mechanism"],
+        # The reported mechanism axis is the normalized one: raw_mechanism includes the
+        # always-abstain anchor, so publishing it here lets a blanket abstainer report
+        # 0.29-0.40 on the headline axis while combined_score correctly reads zero. The
+        # raw value stays published under its own key for diagnostics.
+        "mechanism_score": dev["normalized_mechanism"],
+        "raw_mechanism": dev["raw_mechanism"],
         "development_support_f1": dev["support_f1"],
         "development_rate_curve_score": dev["rate_curve"],
         "development_prediction_score": dev["interpolation_prediction"],

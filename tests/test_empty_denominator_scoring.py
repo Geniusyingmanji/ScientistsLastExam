@@ -126,5 +126,28 @@ class SpinSystemEmptyDenominatorTests(unittest.TestCase):
         self.assertAlmostEqual(row["mechanism"], 1.0)
 
 
+class ReportedMechanismAxisTests(unittest.TestCase):
+    """The published mechanism_score is the normalized value, not the raw one.
+
+    Seven evaluators bound their returned `mechanism_score` to the raw mechanism, which
+    includes the always-abstain anchor: a blanket abstainer scores zero on combined_score
+    (correctly, by the discovery contract) while reporting 0.29-0.40 on the headline
+    mechanism axis - the two numbers contradict, and a reader of the axis alone cannot
+    tell an abstainer from a partial solver. The combined_score was never wrong; only the
+    reported key was. The raw value stays published under `raw_mechanism` for diagnostics.
+    """
+
+    def test_interventional_scm_reports_the_normalized_mechanism(self):
+        ev = _load(
+            "benchmarks/ComputerScience/InterventionalSCM/verification/evaluator.py",
+            "iscm_axis_test")
+        result = ev.evaluate(lambda problem: {
+            "graph": [], "coefficients": {}, "abstain": True})
+        self.assertEqual(result["combined_score"], 0.0)
+        self.assertEqual(result["mechanism_score"], result["combined_score"])
+        # The raw diagnostic key still exists and is a number.
+        self.assertIsInstance(result["raw_mechanism"], float)
+
+
 if __name__ == "__main__":
     unittest.main()
