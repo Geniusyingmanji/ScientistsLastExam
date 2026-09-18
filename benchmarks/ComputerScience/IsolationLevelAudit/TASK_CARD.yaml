@@ -1,0 +1,255 @@
+schema_version: 2
+scientific_question: Decide which of six isolation levels a black-box transactional store implements, from batches of concurrent transactions the auditor designs under an operation budget, when the store takes its weak path only rarely so that the anomaly separating two levels is a race whose rate is quadratic in a hidden probability, and decline when the budget did not buy enough races to rule out the level below the one the evidence reaches.
+artifact: The named isolation level, with a confidence, or a refusal.
+oracle:
+  model: >-
+    a store over list-append registers that implements exactly one of read uncommitted, read
+    committed, parallel snapshot, snapshot isolation, serializable and strict serializable. Most
+    transactions take a global lock, read the authoritative state and run with no other operation
+    falling inside theirs; the lock is not granted while any transaction is in flight, so a
+    transaction on the weak path is never interrupted by one on the lock path and an anomaly needs
+    two weak transactions at once. With a hidden probability drawn per transaction, from 0.04 to
+    0.30 across the worlds, a transaction takes the level's own concurrency control instead: read
+    uncommitted installs its appends before it commits and may roll them back, read committed reads
+    the latest committed state with no certification, parallel snapshot reads a per-session replica
+    whose delivery is causally ordered but otherwise reordered, snapshot isolation reads a snapshot
+    taken at its start and certifies its writes against it, serializable answers a read-only
+    transaction from a replica four ticks behind and certifies a read-write transaction both ways,
+    and strict serializable certifies both ways from a fresh view. Every transaction on either path
+    aborts on its own with probability 0.04, so an abort does not say which path it took. The level
+    is fixed before the candidate runs and does not depend on what it does
+  feasibility: at most 9000 operations per world, at most four sessions and eight operations per transaction and 400 per batch; running past the budget fails closed; the schedule is the engine's and not the caller's; calibrated refusal where the opportunities are too few
+  deterministic: true
+normalization:
+  baseline: >-
+    symptom scan, contention at two sessions and a scan for a read of an element whose writer went
+    on to abort and for a key whose list came back shorter than before; it never builds a dependency
+    graph and never declines, and it scores 0.000 with ten of the twelve development worlds named
+    wrongly
+  reference: >-
+    opportunity-counted audit, four packed contention patterns (two writers over the same key pair
+    in opposite orders, two writers with disjoint write sets and crossed reads, two causally
+    independent writers watched from their own sessions, one writer appending twice while others
+    watch), Adya-style cycle detection over the version order recovered from the reads, power
+    counted as the rounds whose operation clocks prove two transactions raced on the weak path, the
+    budget focused on the patterns that could still lower the verdict, and a refusal when a level
+    below the verdict has fewer than its threshold of quiet opportunities; it scores 0.500 on the
+    development split and 0.625 held out with no world named wrongly
+  score: >-
+    development mechanism, the mean of +1 for the right level, -1 for a wrong one and 0 for a
+    refusal, clipped below at zero so that declining every world is exactly 0.0; identification,
+    misidentification, false discovery, correct refusal, coverage, calibration, operations used and
+    the held-out split stay separate. Each of the three discovery axes is published beside the
+    count it is a rate of, because a rate alone carries no resolution: the false-discovery
+    denominator is the worlds the candidate named, the correct-refusal denominator is the six
+    starved development worlds and three starved held-out ones, and the coverage denominator is
+    the six and five settleable ones
+citations:
+- id: doi:10.1109/ICDE.2000.839388
+  title: Generalized isolation level definitions
+- id: doi:10.1145/223784.223785
+  title: A critique of ANSI SQL isolation levels
+- id: doi:10.14778/3430915.3430918
+  title: 'Elle: Inferring Isolation Anomalies from Experimental Observations'
+- id: doi:10.4230/LIPIcs.CONCUR.2015.58
+  title: A Framework for Transactional Consistency Models with Atomic Visibility
+- id: doi:10.14778/2732232.2732237
+  title: 'Highly Available Transactions: Virtues and Limitations'
+- id: doi:10.1145/2043556.2043592
+  title: Transactional storage for geo-replicated systems
+invariants:
+- >-
+  the level is a property of the world, fixed before the candidate runs, and the score is +1 for
+  naming it, -1 for naming another and 0 for declining; declining every world scores exactly 0.0 and
+  every fixed guess scores below that, so points come only from evidence
+- >-
+  no store ever exhibits an anomaly class its level forbids; the sweep in
+  .research/isolation_level_audit/summary.py checks all six levels at three weak rates and three
+  seeds, 300 rounds of all four patterns each, and finds no violation, so an auditor that reads the
+  evidence correctly never names a level below the truth
+- >-
+  an anomaly needs two transactions on the weak path at once, because the global lock is not granted
+  while anything is in flight; its rate is therefore quadratic in the hidden weak rate, which the
+  candidate cannot change, and the operation budget buys opportunities rather than operations
+- >-
+  whether a round was a real opportunity is visible only in the operation clocks, since a
+  transaction on the lock path is never interrupted and interleaved operations therefore prove both
+  transactions took the weak path. Measured exposure given one opportunity is 0.57 at read
+  uncommitted, 0.91 at read committed, 0.25 at parallel snapshot, 0.90 at snapshot isolation and
+  0.95 at serializable, and the reference's per-level thresholds are the smallest counts that put a
+  miss under 0.10
+- >-
+  which worlds the budget can settle is measured, not assumed. A draw counts as settled when a
+  full-budget round-robin over the four patterns witnesses the class that pins the world's own level
+  and would also have caught a store at every level below it at the same weak rate and seed; the
+  flag is the share of 50 re-drawn seeds that come out settled. Six of the twelve development worlds
+  and three of the eight held-out worlds are unsettleable, every settleable world measures at or
+  above 0.94 and every unsettleable one at or below 0.18, and no world sits between 0.35 and 0.80,
+  so no flag turns on where the line was drawn
+- >-
+  no unsettleable world is strict serializable or read uncommitted. The first is what the verdict
+  defaults to when nothing is witnessed, so a starved world there would pay a candidate that never
+  declines exactly what it pays one that reasoned; the second cannot be built, because a dirty write
+  is the cheapest class to catch and even at min_weak_rate the budget settles such a store about
+  half the time
+- >-
+  an abort carries no information about which path a transaction took, since every transaction on
+  either path aborts at the same fixed rate; the abort-rate-only strategy scores 0.000
+- >-
+  operations are charged and running past the budget fails closed; the candidate receives one run
+  closure and not the ledger, so it cannot raise its own budget; malformed submissions and malformed
+  batches score the world -1 and never raise out of the evaluator
+- held-out split, per-world rows, settleability flags and the discovery axes remain evaluator-only
+known_shortcuts: >-
+  A declared grid of twelve strategies was scored on the same worlds through the packaged
+  evaluator, in five families. Blind answers: decline everything (0.000 by construction) and the
+  three fixed guesses read committed, snapshot isolation and strict serializable (0.000 each, each
+  wrong in nine to eleven of the twelve development worlds). Cheap readings of the history:
+  anomalies per key only, which cannot see any class that spans two keys (0.000), and abort rates
+  only, which reads which contention makes transactions abort (0.000). Undesigned traffic: the whole
+  budget on random operations, then the full anomaly analysis (0.000, wrong or invalid in every
+  world). The reference under-resourced: the same pipeline on a tenth of the budget (0.083, 17 per
+  cent, and it declines eleven of the twelve). And the full design with the full anomaly analysis
+  but a cheaper refusal: never declining (0.333, 67 per cent), declining only when nothing fired at
+  all (0.167, 33 per cent), and measuring power in rounds of contention rather than in the rounds
+  the clocks show were races (0.083, 17 per cent). The never-declining probe is the reference with
+  its last step deleted and nothing else changed, the same two-phase allocation included, because a
+  version that swept the four shapes evenly instead scored 0.167 and would have understated the
+  family by half. The best of them reaches 0.333, 67 per cent of the reference on the development
+  split and 80 per cent held out, and it is not clean: it names the wrong level in four of the
+  twelve development worlds where the reference names none. Over four seed shifts the order flips
+  and the best is 0.292, 54 per cent, still with 16 wrong calls in 80 world-runs against the
+  reference's zero, while never declining falls to 0.250 with 27. Every
+  strategy that never names a wrong level scores 0.000 by declining everything. Separately, because
+  the headroom the reference leaves is budget concentration, the reference's own rule was rescored
+  with its four contention shapes narrowed to one or two, which is what concentration would look
+  like without the diagnosis that earns it: fork alone 0.000, disjoint alone 0.000, repeat alone
+  0.083, conflict alone 0.167, fork with conflict 0.250, the best of seven and 50 per cent. Blind
+  narrowing drops the shapes that rule out the other boundaries, so it declines worlds the full
+  sweep names.
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  relative_margin: 0.1
+  score_tolerance: 0.02
+  # Measured in process on macOS, where the repository's Bubblewrap sandbox does not run. The
+  # numbers are recorded in Task.md, references/known_best.md and .research/isolation_level_audit;
+  # expected_score stays null until the Linux sandbox measurement fills it.
+  reference:
+    candidate: verification/reference_opportunity_audit.py
+    expected_score: null
+  probes:
+  - id: symptom_scan
+    candidate: solution.py
+    expected_score: null
+  - id: no_refusal
+    candidate: verification/probe_no_refusal.py
+    expected_score: null
+  - id: naive_refusal
+    candidate: verification/probe_naive_refusal.py
+    expected_score: null
+  - id: round_count_power
+    candidate: verification/probe_round_count_power.py
+    expected_score: null
+review:
+  domain: pending_external_computer_science
+  evaluator_security: automated_bad_candidate_crash_sweep_determinism_and_abstention_normalization_checks
+provenance:
+  class: procedural
+  target_source: >-
+    Repository-visible deterministic worlds, twelve for development and eight sealed held out, each
+    a (level, weak rate, seed) triple the evaluator instantiates on every run, carrying a measured
+    flag for whether the budget can settle it. The level is the ground truth and is fixed before the
+    candidate runs; the schedule, the races and the aborts are drawn from the world's own seed.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: not_completed
+novelty_risk:
+  level: medium
+  rationale: >-
+    The isolation-level ladder and the anomaly classes that separate its rungs are published
+    (Berenson et al. 1995; Adya, Liskov and O'Neil 2000; Cerone, Bernardi and Gotsman 2015), and
+    inferring them from an observed history of list-append registers by cycle detection is exactly
+    what Elle does (Kingsbury and Alvaro 2021). A model that knows Elle will reach for a dependency
+    graph, and it should: that part of the task is meant to be solvable. What the task adds is the
+    part Jepsen leaves to the operator, deciding when a quiet run is evidence. Because the store's
+    weak path is rare and the lock drains before it is granted, an anomaly needs two weak
+    transactions at once, so a probe that is built correctly still usually returns nothing, and the
+    only signal that a round was an experiment at all is in the operation clocks. Every strategy in
+    the declared grid that skips that step, including the full Elle-style pipeline with no refusal,
+    stays at or below 67 per cent of the reference on the development split and 54 per cent over
+    four seed shifts. Task.md names the classes and the levels but not which worlds are starved,
+    not the weak rates, and not the exposure rates the thresholds are read off. Three independent
+    first proposals, each written from Task.md, solution.py and constraints.txt alone with no sight
+    of the evaluator, the reference or any measurement, score 0.167, 0.083 and 0.000 against the
+    reference's 0.500, so none reaches 90 per cent of it. No frontier draw through the repository's
+    own harness has been run yet, so the difficulty at the frontier is not measured.
+lineage:
+  status: complete
+  builder_model_ids:
+  - claude-opus-5
+  builder_scaffolds:
+  - claude-code
+  calibrator_model_ids: []
+  calibration_runs: []
+  calibration_evidence_status: missing
+  template_source: >-
+    frontier_eval/ is generated by scripts/gen_task.py; the evaluator's per-world scoring, split
+    summary and evaluate skeleton follow Algorithm/JuntaVariableDiscovery and the discovery tasks
+    it was built on; the store, the anomaly detection, the contention patterns, the power measure,
+    the metrics, the reference and the baseline are this task's own.
+  edits_triggered_by_model: >-
+    No model has seen the task. The store was first passive, a fixed history handed to the auditor
+    to classify, where the reference scored 1.000 because the question was decidable; it is now an
+    active budgeted probe. The lock was first taken at the start of a transaction, so a weak
+    transaction already in flight was interrupted and a single weak transaction sufficed to produce
+    an anomaly; every level was then caught at every rate the budget could reach and the no-refusal
+    strategy scored 1.000, 150 per cent of the reference. The lock now drains what is in flight
+    before it is granted, an anomaly needs two weak transactions at once, and no-refusal falls to
+    67 per cent. Parallel snapshot first delivered writes per element rather than per transaction,
+    and then without respecting the committing transaction's causal past, which made it exhibit
+    intermediate reads and read skew that its level forbids; delivery is now atomic per session and
+    ordered after everything the transaction read. Begin and commit did not consume clock ticks, so
+    a writer's commit and the following reader's begin shared an instant and no stale read could be
+    witnessed; every event now has its own instant. The world set was last rebuilt when the
+    settleability measurement was added: two rules fell out of it that the earlier set broke. An
+    unsettleable strict serializable world pays a candidate that never declines the same +1 as one
+    that reasoned, because the verdict defaults to the top of the ladder when nothing is witnessed;
+    and unsettleable worlds high on the ladder witness nothing at all, so the cheap rule of
+    declining only when nothing fired reached 83 per cent of the reference on a set built that way.
+    The unsettleable worlds are now read committed, parallel snapshot and snapshot isolation, where
+    classes above the truth do still fire and an uncalibrated answer is wrong rather than absent.
+  shortcut_discoverer: builder_self_audit_with_a_twelve_strategy_declared_grid
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  author_domain: claude-opus-5
+  reviewer_domain: pending_external
+  expert_hours: null
+  red_team_rounds: 5
+  oracle_disagreement_status: not_quantified
+  independent_recomputation_status: >-
+    The reference, the baseline and every probe are runnable from this directory, and
+    .research/isolation_level_audit/summary.py recomputes every quoted number in six sections:
+    the twelve-strategy score grid, the three discovery axes for the same grid, the grid again
+    under four re-drawn world seeds, the soundness sweep that no store exhibits a class its level
+    forbids, the opportunity and exposure rates the reference's thresholds are read off, and the
+    detection curve of a strategy that never declines by level and weak rate.
+    .research/isolation_level_audit/settleable.py recomputes every settleability flag and fails if
+    one disagrees with the evaluator or if any world lands in the band between them.
+    .research/isolation_level_audit/blind.py scores the independent first proposals against the
+    reference and prints the 90 per cent bar. .research/isolation_level_audit/budget.py checks the
+    headroom this card and references/known_best.md claim, in three sections: how much concentrating
+    the whole budget on the fork shape raises the long-fork hit rate on the starved parallel-snapshot
+    worlds, what the reference's own rule scores with its shapes narrowed that way without the
+    diagnosis, and whether raising the cycle-length bound changes the score at all, which it does
+    not because no round produces more than five transactions. The
+    bad-candidate shapes are in tests/test_isolation_level_audit.py. The sandbox evaluation of
+    scripts/check_task_contribution.py has not been run because the task was built on a machine
+    without Bubblewrap; a frontier-model draw has not been run because the machine has no model
+    endpoint.

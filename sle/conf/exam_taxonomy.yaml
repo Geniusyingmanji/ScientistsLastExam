@@ -104,6 +104,7 @@ tasks:
   Mathematics/HeavyTailEvidence: {form: discovery, kind: evidence, note: clauset_tails_not_lookelsewhere}
   EvidenceSynthesis/ProspectiveMetaAnalysis: {form: discovery, kind: evidence}
   DataPrivacy/SparseVectorAudit: {form: discovery, kind: evidence, note: audit_a_claimed_epsilon_delta_from_charged_runs_of_a_deployed_mechanism_not_a_trials_factor_or_a_measurement_conflict}
+  ConcurrencyControl/IsolationLevelAudit: {form: discovery, kind: evidence, note: what_a_quiet_history_is_evidence_of_when_the_anomaly_is_a_race_the_prober_cannot_schedule_not_a_charged_sample_audit_or_a_policy_fingerprint}
   # --- discovery / substance --------------------------------------------------
   MaterialsScience/PhaseDiagramDiscovery: {form: discovery, kind: substance}
   Physics/HiddenCouplingNetwork: {form: discovery, kind: structure}

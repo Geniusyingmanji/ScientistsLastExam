@@ -1,0 +1,4 @@
+1) Only edit solution.py. Keep audit(problem, run).
+2) Return {"level": one of problem["levels"]} to name the isolation level, or {"abstain": true} to decline. Naming the wrong level scores -1, declining scores 0 and naming the right one scores +1. "confidence" in [0,1] is optional.
+3) run(batch) takes a list of at most problem["max_sessions"] sessions, each a list of transactions, each a list of operations ["r", key] or ["a", key] with key a non-negative integer; at most problem["max_ops_per_txn"] operations per transaction and problem["max_ops_per_batch"] per batch. Do not run more than problem["budget"] operations in all.
+4) NumPy/SciPy/stdlib only. Deterministic CPU code. No network or process creation. Do not read verification/ or frontier_eval/.

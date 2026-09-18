@@ -38,6 +38,7 @@ RECORDED_LINEAGE = {
     "SystemsBiology/EnzymeKineticsLaw",
     "ParticlePhysics/DiscrepantMeasurements",
     "ComputerArchitecture/CacheReplacementPolicyID",
+    "ConcurrencyControl/IsolationLevelAudit",
     "MaterialsScience/PhaseDiagramDiscovery",
     "Physics/HiddenCouplingNetwork",
     "ClimateScience/ForcedSignalAttribution",
