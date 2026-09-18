@@ -87,7 +87,7 @@ workspace. NumPy/SciPy availability follows the existing CandidateProxy runtime.
 ```sh
 python -m sle episode --task MeasurementAudit --data-bundle /private/operator/study \
   --llm-config /private/config/model.yaml --analysis sandbox \
-  --seed 9281 --max-steps 32 --wall-seconds 600 \
+  --seed 9281 --max-steps 32 --wall-seconds 600 --experiment-budget 20000 \
   --output-dir /var/tmp/sle-interactive-example
 ```
 
