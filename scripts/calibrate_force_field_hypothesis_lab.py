@@ -24,6 +24,7 @@ TASK = ROOT / "benchmarks/Chemistry/ForceFieldCalibration"
 sys.path.insert(0, str(ROOT))
 
 from sle.evaluate import evaluate_candidate  # noqa: E402
+from sle.discovery_trace import checked_science_metrics  # noqa: E402
 from sle.metric_visibility import search_visible_metrics  # noqa: E402
 from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
 from sle.registry import find_task  # noqa: E402
@@ -491,6 +492,10 @@ def calibrate():
     reference = oracle.evaluate(oracle._reference_agent)
     direct_json = json.loads(json.dumps(direct_baseline, allow_nan=False))
     direct_json["raw_score"] = direct_json["combined_score"]
+    secure_science = checked_science_metrics(
+        secure_baseline,
+        expected_candidate_sha256=hashlib.sha256(spec.initial_program_path.read_bytes()).hexdigest(),
+    )
     visible = search_visible_metrics(secure_baseline)
     pair_checks = _independent_pair_checks(oracle)
     virial_checks = _virial_checks(oracle)
@@ -511,7 +516,7 @@ def calibrate():
         and screening_checks["hypothesis_retention_passed"]
         and acquisition_checks["passed"]
         and isolation_checks["passed"]
-        and secure_baseline == direct_json
+        and secure_science == direct_json
         and secure_baseline["valid"] == 1.0
         and secure_baseline["combined_score"] == 0.0
         and secure_baseline["robustness_score"] == 0.0
@@ -582,7 +587,9 @@ def calibrate():
         "secure_isolation_and_failure_checks": isolation_checks,
         "direct_weak_baseline": direct_baseline,
         "secure_weak_baseline": secure_baseline,
-        "secure_baseline_exactly_matches_direct": secure_baseline == direct_json,
+        "secure_baseline_exactly_matches_direct": secure_science == direct_json,
+        "baseline_comparison_excluded_fields": ["discovery_evidence"],
+        "discovery_evidence_validation": "complete_structurally_checked_candidate_bound",
         "truth_blind_reference": reference,
         "search_visible_metric_keys": sorted(visible),
         "limitations": [

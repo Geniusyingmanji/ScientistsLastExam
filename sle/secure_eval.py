@@ -23,7 +23,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-from .oracle_package_pins import candidate_distribution_pins
+from .oracle_package_pins import BASE_CANDIDATE_PINS, candidate_distribution_pins
 from .rpc_codec import decode, encode
 
 INVALID_SCORE = -1e18
@@ -337,6 +337,15 @@ def sanitized_candidate_failure(error: BaseException | str) -> dict[str, Any]:
         kind = "candidate_response_too_large"
     elif "candidate worker exited" in message:
         kind = "candidate_worker_exit"
+    elif "budget" in message and (
+        "exceed" in message or "exhaust" in message
+    ):
+        # Oracles charge per measurement and enforce their own budget with a RuntimeError. That
+        # text reaches the worker as "<Type>: <message>" and lands here; before this branch it
+        # fell through to candidate_runtime_error, so a candidate that spent its budget - or
+        # swallowed the error and submitted anyway - was indistinguishable from one that
+        # crashed. Only the class is used; the message itself is never forwarded.
+        kind = "callback_budget_exhausted"
     else:
         kind = "candidate_runtime_error"
     result: dict[str, Any] = {
@@ -427,6 +436,29 @@ def _seccomp_no_processes() -> int:
     return fd
 
 
+@functools.lru_cache(maxsize=None)
+def _warn_base_candidate_pin(distribution: str, expected: str, actual: str) -> None:
+    """Report a drifting base NumPy/SciPy install once, and name the file that fixes it.
+
+    This used to be a hard failure, and on any host whose SciPy was not the certified one it
+    killed every task before a single candidate ran: 87 of 87 tasks on a Python 3.10.12 host
+    with SciPy 1.12.0, each reporting only ``trusted candidate package 'scipy' has version
+    1.12.0, expected 1.10.1`` - no task, no file, no remedy. CI stayed green only because
+    ``.github/workflows/tests.yml`` installs the pin by hand, so nothing said the certified
+    versions were a host prerequisite at all.
+    """
+    print(
+        "warning: trusted candidate package %r has version %s, expected %s.\n"
+        "  The recorded oracle anchors were produced with the certified set in\n"
+        "  requirements-host.txt, so a task whose oracle depends on NumPy or SciPy numerics\n"
+        "  can score differently here. The candidate still runs. This is a warning for the\n"
+        "  base pair only: a toolkit the task itself declared is still exact and still fails\n"
+        "  closed below, because that pin is what its anchors were recorded against."
+        % (distribution, actual, expected),
+        file=sys.stderr,
+    )
+
+
 def read_candidate_packages(task_dir: Path) -> tuple[str, ...]:
     """Resolve the extra site-packages directories a task exposes to its candidate.
 
@@ -434,6 +466,11 @@ def read_candidate_packages(task_dir: Path) -> tuple[str, ...]:
     allowed) and expands each name through ``ALLOWED_CANDIDATE_PACKAGES``. An unknown name is a
     task-packaging error and fails closed rather than silently running without the toolkit,
     which would otherwise show up as an unexplained candidate ImportError.
+
+    Versions are checked against ``candidate_distribution_pins``. A distribution the task named
+    is an exact requirement. The base NumPy/SciPy pair behind every task is only warned about:
+    the candidate has to be able to import it, and the pinned anchors only need it exact on a
+    host that reproduces those anchors, which is what ``requirements-host.txt`` certifies.
     """
     listing = Path(task_dir) / "frontier_eval" / "candidate_packages.txt"
     toolkits: list[str] = []
@@ -449,14 +486,32 @@ def read_candidate_packages(task_dir: Path) -> tuple[str, ...]:
         if name not in toolkits:
             toolkits.append(name)
     pins = candidate_distribution_pins(sys.version_info[:2], toolkits)
+    # Split the pins by what they are for, because the two halves do not deserve the same
+    # severity. A task-declared toolkit or one of its dependencies carries the task's recorded
+    # anchors: ``stim``'s seeded sampling stream shifts a decoder anchor by 1-2% across
+    # versions, so an approximation there is wrong numbers, not a warning. The base NumPy/SciPy
+    # pair is what every candidate imports; a host missing or exceeding it can still run the
+    # candidate, and ``requirements-host.txt`` is where the certified versions live. Failing
+    # closed on the base pair is what made every task unrunnable off CI.
+    #
+    # Read from BASE_CANDIDATE_PINS rather than by re-deriving the base pins through
+    # candidate_distribution_pins: that function is what the version tests patch, and asking it
+    # a second time made the severity of a distribution depend on the patch.
+    strict = set(pins) - set(BASE_CANDIDATE_PINS[tuple(sys.version_info[:2])])
     for distribution, expected_version in pins.items():
         try:
             installed_version = importlib.metadata.version(distribution)
         except importlib.metadata.PackageNotFoundError as exc:
+            if distribution not in strict:
+                _warn_base_candidate_pin(distribution, expected_version, "absent")
+                continue
             raise RuntimeError(
                 "trusted candidate package %r is not installed" % distribution
             ) from exc
         if installed_version != expected_version:
+            if distribution not in strict:
+                _warn_base_candidate_pin(distribution, expected_version, installed_version)
+                continue
             raise RuntimeError(
                 "trusted candidate package %r has version %s, expected %s"
                 % (distribution, installed_version, expected_version)
@@ -469,10 +524,32 @@ def read_candidate_packages(task_dir: Path) -> tuple[str, ...]:
     mounts = _candidate_package_mounts(tuple(resolved))
     for distribution, expected_version in pins.items():
         mounted_version = _mounted_candidate_distribution_version(distribution, mounts)
-        if mounted_version != expected_version:
+        if mounted_version == expected_version:
+            continue
+        if distribution in strict:
             raise RuntimeError(
                 "candidate-mounted package %r has version %s, expected %s"
                 % (distribution, mounted_version, expected_version)
+            )
+        # The mount exists but carries a different version than the certified one. The
+        # candidate gets an array library, just not the pinned one, so this is a weaker
+        # guarantee than the recorded anchors were produced under and not an import failure.
+        # Say which of the two it is, because they need different responses from an operator:
+        # a missing mount means the candidate cannot import NumPy at all, whereas a version
+        # drift means it imports something that may compute differently.
+        if mounted_version:
+            print(
+                "warning: candidate mount for base package %r has version %s, expected %s; "
+                "the candidate will import it, and an oracle comparing its numerics may "
+                "differ from the certified run" % (distribution, mounted_version, expected_version),
+                file=sys.stderr,
+            )
+        else:
+            print(
+                "warning: candidate mount for base package %r is absent (expected %s); the "
+                "candidate will fail on import if it needs it"
+                % (distribution, expected_version),
+                file=sys.stderr,
             )
     return tuple(resolved)
 
@@ -588,6 +665,9 @@ class CandidateProxy:
         self.packages = tuple(packages)
         self.proc = None
         self._stdout_buffer = b""
+        # All callback invocations across this evaluation, including free calls and
+        # rejected calls. This is not a budget-unit counter or a budget limit.
+        self.callback_invocations = 0
         self._start_worker()
 
     def _start_worker(self) -> None:
@@ -744,6 +824,9 @@ class CandidateProxy:
                     cb_kwargs = decode(response.get("kwargs", {}))
                     if not isinstance(cb_args, list) or not isinstance(cb_kwargs, dict):
                         raise CandidateError("invalid callback arguments")
+                    # Count every invoked callback, including free calls and errors.
+                    # Only the oracle knows whether a call consumed budget units.
+                    self.callback_invocations += 1
                     callback_response.update({"ok": True, "result": encode(callback(*cb_args, **cb_kwargs))})
                 except Exception as exc:
                     callback_response.update({"ok": False, "error": "%s: %s" % (type(exc).__name__, exc)})
@@ -850,18 +933,61 @@ def validate_metrics(value: Any, score_mode: str) -> dict[str, Any]:
 
 def trusted_evaluate(task_dir: Path, candidate: Path, entrypoint: str, score_mode: str,
                      timeout_s: float,
-                     trusted_context: dict[str, Any] | None = None) -> dict[str, Any]:
+                     trusted_context: dict[str, Any] | None = None,
+                     diagnostics: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Evaluate a candidate in the sandbox; the returned dict is the science metrics.
+
+    ``diagnostics``, when given, receives harness observations - currently the callback-invocation
+    count - that must NOT appear in the returned metrics: five repository tests assert this
+    return equals a direct in-process evaluation byte-for-byte, and that equality is how a
+    sandboxed run is proven not to have perturbed the science. Diagnostics are the caller's
+    channel (the trusted_driver envelope), never the oracle's.
+    """
     oracle = load_oracle(
         task_dir, with_trusted_context=trusted_context is not None
     )
+    from .discovery_profiles import PILOTS
+    recording_task = next((task for task in PILOTS
+                           if task.split("/")[-1] == task_dir.name), None)
+    recorder = None
     with CandidateProxy(
         candidate, entrypoint, timeout_s, packages=read_candidate_packages(task_dir)
     ) as proxy:
-        result = (
-            oracle(proxy, trusted_context)
-            if trusted_context is not None
-            else oracle(proxy)
-        )
-        if proxy.failure is not None:
-            raise proxy.failure
+        policy = proxy
+        if recording_task is not None:
+            import hashlib
+            from .discovery_trace import DiscoveryRecorder
+            from .spec import load_task_spec
+            if load_task_spec(task_dir).task_id != recording_task:
+                raise ValueError("discovery adapter task identity mismatch")
+            recorder = DiscoveryRecorder(
+                proxy, recording_task,
+                candidate_sha256=hashlib.sha256(candidate.read_bytes()).hexdigest(),
+                oracle_sha256=hashlib.sha256(
+                    (task_dir / "verification/evaluator.py").read_bytes()).hexdigest(),
+            )
+            policy = recorder
+        evaluation_complete = True
+        try:
+            result = (oracle(policy, trusted_context)
+                      if trusted_context is not None else oracle(policy))
+            if proxy.failure is not None:
+                raise proxy.failure
+        except (CandidateError, TimeoutError) as exc:
+            if recorder is None:
+                raise
+            # Keep partial evaluator-owned observations on candidate failure while
+            # preserving the same finite, label-blind public failure classification.
+            result = sanitized_candidate_failure(exc)
+            evaluation_complete = False
+        finally:
+            # Preserve counts when a non-recorded task raises as well as on success.
+            # Keep harness observations outside the oracle's science metrics.
+            calls = getattr(proxy, "callback_invocations", None)
+            if (diagnostics is not None and isinstance(calls, int)
+                    and not isinstance(calls, bool) and calls >= 0):
+                diagnostics["callback_invocations"] = calls
+        if recorder is not None:
+            result["discovery_evidence"] = recorder.finish(
+                result, evaluation_complete=evaluation_complete)
     return validate_metrics(result, score_mode)

@@ -251,6 +251,9 @@ def evaluate(discover_mechanism):
                 "null_world": world_index == NULL_WORLD,
             })
 
+    for index, row in enumerate(world_results):
+        row["split"] = "unsplit"
+        row["world_index"] = index
     raw_mechanism = float(np.mean(mechanism_scores))
     # Always predicting the null graph solves only the explicitly included null world.
     no_claim_baseline = 1.0 / len(WORLD_SEEDS)
@@ -282,4 +285,3 @@ def evaluate(discover_mechanism):
         ])),
         "per_world": world_results,
     }
-

@@ -106,6 +106,7 @@ def evaluate_candidate(
     *,
     trusted_context: dict[str, Any] | None = None,
     trusted_runtime: TrustedRuntime | None = None,
+    diagnostics: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     candidate_path = Path(candidate_path).resolve()
     if not candidate_path.is_file():
@@ -202,10 +203,25 @@ def evaluate_candidate(
                     "error_message": "trusted evaluator runtime binding mismatch",
                     "infrastructure_failure": 1.0,
                 }
-            if set(raw) != {
-                "schema_version", "trusted_evaluator_runtime_sha256", "metrics"
-            } or raw.get("schema_version") != 1 or not isinstance(raw.get("metrics"), dict):
+            # Diagnostics are harness-owned counts, kept outside science metrics.
+            # Validate before copying anything to the operator's output dictionary.
+            expected_keys = {
+                "schema_version", "trusted_evaluator_runtime_sha256", "metrics",
+                "callback_invocations",
+            }
+            diagnostics_keys = expected_keys - {
+                "schema_version", "trusted_evaluator_runtime_sha256", "metrics",
+            }
+            if (not set(raw) <= expected_keys
+                    or {"schema_version", "trusted_evaluator_runtime_sha256", "metrics"} - set(raw)
+                    or raw.get("schema_version") != 1
+                    or not isinstance(raw.get("metrics"), dict)):
                 raise ValueError("trusted evaluator result envelope is invalid")
+            for key in diagnostics_keys & set(raw):
+                value = raw[key]
+                if (not isinstance(value, int) or isinstance(value, bool) or value < 0):
+                    raise ValueError(
+                        "trusted evaluator envelope diagnostic %r is invalid" % key)
             # The driver keeps its outward message fixed so nothing a candidate could read holds
             # evaluator internals, and it writes the cause to its stderr instead. Surface that to
             # the operator's log without putting it in `metrics`: an earlier attempt merged it
@@ -225,6 +241,8 @@ def evaluate_candidate(
                         "error_message": "trusted context binding mismatch",
                         "infrastructure_failure": 1.0,
                     }
+            if diagnostics is not None:
+                diagnostics.update({key: raw[key] for key in diagnostics_keys & set(raw)})
             return metrics
         except Exception as exc:
             print("invalid trusted metrics: %s" % exc, file=sys.stderr)

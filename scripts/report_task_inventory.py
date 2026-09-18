@@ -592,13 +592,16 @@ def render_readme_counts(rows: list[dict]) -> str:
         "分数是论证证明出的界有多强)。",
         "分数由做出来的东西有多好决定;公开纪录是 score = 1 的见证,不是封顶。",
         "",
-        "discovery(%d 个):从受预算约束的观测里恢复一个机制,或判断根本没有机制可恢复。"
+        # The refusal sentence was rewritten by hand in fde9b7ab because the old one collapsed
+        # four distinct reasons to decline into "there is no mechanism". This template is the
+        # one the fixed-point test compares against, so it has to carry the same words.
+        "discovery(%d 个):从受预算约束的证据中建立可检验主张,或在证据不足、模型失配时正确保留结论。"
         % forms["discovery"],
-        "分五类:公式 %d、结构 %d、证据 %d、物质 %d、参数反演 %d。每题包含三种世界:"
+        "分五类:公式 %d、结构 %d、证据 %d、物质 %d、参数反演 %d。各题分别规定可识别机制、"
         % (disc_cells["formula"], disc_cells["structure"], disc_cells["evidence"],
            disc_cells["substance"], disc_cells["parameter_inversion"]),
-        "机制在候选可表达的模型族内(该找出来)、机制在族外、根本没有机制(后两种该拒答)。",
-        "候选看不到自己面对的是哪一类。",
+        "模型族外、null、信息不足等适用情形;不能把所有拒答都解释成“根本没有机制”。",
+        "候选看不到隐藏世界的类型标签。",
         "", README_END,
     ]
     return "\n".join(lines)

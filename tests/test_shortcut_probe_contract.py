@@ -10,7 +10,7 @@ import unittest
 import yaml
 
 from scripts.shortcut_probe_contract import (
-    inspect_probe, undeclared_candidates, validate_contract, MIGRATION)
+    inspect_probe, undeclared_candidates, validate_contract, MARGIN_CEILING, MIGRATION)
 from sle.registry import list_tasks
 
 
@@ -132,6 +132,120 @@ class ShortcutContractTests(unittest.TestCase):
     def test_a_helper_that_does_not_expose_the_entrypoint_is_not_a_candidate(self):
         (self.root / "helpers.py").write_text("def _fit(x):\n    return x\n")
         self.assertNotEqual(self.check()["status"], "failed")
+
+    def test_the_author_cannot_choose_their_own_bar(self):
+        """`0.999` left a threshold of `0.001 * reference` and any scoring probe cleared it.
+
+        The audit's synthetic card - reference 0.90, probe 0.05 - passes only because a
+        token probe clears a bar the author set. The ceiling is the fix; the failing
+        measurement below is the one that has to keep failing.
+        """
+        for margin in (0.999, 0.9, MARGIN_CEILING + 0.001):
+            with self.subTest(margin=margin):
+                self.contract["relative_margin"] = margin
+                with self.assertRaises(ValueError) as caught:
+                    validate_contract(self.contract, self.root)
+                self.assertIn("policy ceiling", str(caught.exception))
+        self.contract["relative_margin"] = MARGIN_CEILING
+        validate_contract(self.contract, self.root)
+        result = self.check(lambda spec, path, **kw: {
+            "combined_score": 0.9 if path.name == "reference.py" else 0.05, "valid": 1})
+        self.assertEqual(result["status"], "failed")
+
+    def test_an_excluded_program_that_scores_is_measured_and_bounded(self):
+        """A listed reason must not exempt a candidate from the bar the probes face.
+
+        The escape hatch: a strong in-tree program parked in `excluded` with a plausible
+        reason disappears from `undeclared_candidates` and, before this, was never scored.
+        Excluding it is still right - it is not the declared cheap shortcut - but the
+        measurement is what says whether the exclusion was honest.
+        """
+        (self.root / "strong.py").write_text("def solve(*args):\n    return 1\n")
+        self.contract["excluded"] = [{"candidate": "strong.py", "reason": "not a probe"}]
+        def evaluate(spec, path, **kw):
+            return {"combined_score": 0.8 if path.name in ("strong.py", "reference.py") else 0.2,
+                    "valid": 1}
+        result = self.check(evaluate)
+        self.assertEqual(result["status"], "failed")
+        self.assertFalse(result["passed"])
+        self.assertIn("excluded candidate scores", result["detail"])
+        self.assertEqual(result["excluded_scores"], [0.8])
+        excluded = [row for row in result["observations"] if row.get("excluded")]
+        self.assertEqual(len(excluded), 1)
+        self.assertEqual(excluded[0]["measured_score"], 0.8)
+
+        # Below the threshold, exclusion stays accepted.
+        def weak(spec, path, **kw):
+            return {"combined_score": 0.8 if path.name == "reference.py" else 0.2, "valid": 1}
+        result = self.check(weak)
+        self.assertTrue(result["passed"])
+        self.assertEqual(result["excluded_scores"], [0.2])
+
+    def test_an_infeasible_excluded_program_is_still_accepted(self):
+        """The case that motivated `excluded`: valid=0 by construction cannot be a probe.
+
+        LyapunovDecayCertificate's `references/constant_probe.py` is infeasible on every
+        instance, so `inspect_probe` can never score it as a shortcut - a probe must be a
+        valid finite-scoring candidate. Measuring it must not turn that into a failure.
+        """
+        (self.root / "infeasible.py").write_text("def solve(*args):\n    return {}\n")
+        self.contract["excluded"] = [{"candidate": "infeasible.py", "reason": "infeasible"}]
+        def evaluate(spec, path, **kw):
+            if path.name == "infeasible.py":
+                return {"combined_score": -1e18, "valid": 0, "error_message": "candidate invalid"}
+            return {"combined_score": 0.8 if path.name == "reference.py" else 0.2, "valid": 1}
+        result = self.check(evaluate)
+        self.assertTrue(result["passed"])
+        self.assertEqual(result["status"], "passed")
+        self.assertEqual(result["excluded_scores"], [])
+        excluded = [row for row in result["observations"] if row.get("excluded")]
+        self.assertEqual(len(excluded), 1)
+        self.assertIn("infeasible", excluded[0])
+        self.assertNotIn("error", excluded[0])
+
+    def test_an_aliased_entrypoint_is_a_candidate(self):
+        """`audit = _impl` binds the entrypoint; the sandbox only ever does getattr()."""
+        (self.root / "alias.py").write_text(
+            "def _impl(*args):\n    return 0\n\n\nsolve = _impl\n")
+        result = self.check()
+        self.assertEqual(result["status"], "failed")
+        self.assertEqual(result["undeclared_candidates"], ["alias.py"])
+        self.contract["excluded"] = [{"candidate": "alias.py", "reason": "alias of a helper"}]
+        self.assertNotEqual(self.check()["status"], "failed")
+
+    def test_a_module_that_imports_the_entrypoint_is_a_candidate(self):
+        """`from reference_solver import solve` binds the name as surely as `solve = ...`."""
+        (self.root / "rebind.py").write_text("from reference import solve  # noqa: F401\n")
+        result = self.check()
+        self.assertEqual(result["status"], "failed")
+        self.assertIn("rebind.py", result["undeclared_candidates"])
+        (self.root / "rebind.py").write_text("import reference_solver as helper\n")
+        self.assertNotEqual(self.check()["status"], "failed")
+
+    def test_a_string_literal_is_not_an_entrypoint_binding(self):
+        """The text search matched `def solve(` inside a string and called it a candidate.
+
+        TransitTimingAttribution's `verification/replay_probes.py` carries candidate
+        templates as string constants; the regex read them as a definition of the task
+        entrypoint, so the file had to be declared for the wrong reason.
+        """
+        (self.root / "templates.py").write_text(
+            'CONSTANT = """\ndef solve(*args):\n    return 0\n"""\n')
+        self.assertNotEqual(self.check()["status"], "failed")
+
+    def test_a_program_under_gitignored_runs_binding_the_entrypoint_is_reported(self):
+        """`runs/` is generated *and* gitignored, so the guard is the only thing that sees it."""
+        (self.root / "runs").mkdir()
+        (self.root / "runs" / "strong.py").write_text("def solve(*args):\n    return 1\n")
+        result = self.check()
+        self.assertEqual(result["status"], "failed")
+        self.assertEqual(result["undeclared_candidates"], ["runs/strong.py"])
+        (self.root / "runs" / "helper.py").write_text("def _helper(x):\n    return x\n")
+        self.assertEqual(self.check()["undeclared_candidates"], ["runs/strong.py"])
+        (self.root / "runs" / "__pycache__").mkdir()
+        (self.root / "runs" / "__pycache__" / "strong.py").write_text(
+            "def solve(*args):\n    return 1\n")
+        self.assertEqual(self.check()["undeclared_candidates"], ["runs/strong.py"])
 
     def test_every_contracted_task_in_the_tree_declares_all_of_its_candidates(self):
         """The property over the real inventory, not a fixture."""

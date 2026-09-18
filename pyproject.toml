@@ -1,0 +1,86 @@
+# Packaging for Scientists' Last Exam.
+#
+# This is a benchmark, not a library: there is nothing to `pip install` in order to use it, so
+# `dependencies` is deliberately empty and the certified versions are exposed as extras. The file
+# exists because three separate things had no manifest to live in, and that absence was itself the
+# defect. The certified NumPy/SciPy pair lived only in sle/oracle_package_pins.py, where a version
+# mismatch was a hard failure with no way for a reader to learn it was a host prerequisite; pytest
+# had no repository root to put on sys.path; and the Python 3.8 oracle requirement was prose in
+# CONTRIBUTING.md. `tests/test_packaging_manifest.py` pins all three.
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scientists-last-exam"
+version = "0.1.0"
+description = "Multi-discipline open-ended scientific optimization benchmark with frozen, deterministic oracles"
+readme = "README.md"
+# The floor is 3.8, with no ceiling. 3.8 is the only interpreter the full oracle setup certifies -
+# setup_requirements() in sle/oracle_package_pins.py fails closed on anything else, and
+# scripts/setup_oracle_env.sh inherits that rule - so it is the honest floor for "can do
+# everything". Nothing here forbids later versions: BASE_CANDIDATE_PINS carries a (3, 12) entry
+# whose repository-supported NumPy/SciPy pair the tests exercise, and CI runs both 3.10 and 3.12.
+# Recording the floor alone keeps those two facts from being read as one compatibility claim.
+requires-python = ">=3.8"
+dependencies = []
+
+[project.optional-dependencies]
+# The certified host prerequisite, and the version-sensitive half of it. Only a host that installs
+# this reproduces the versions the recorded oracle anchors were produced with. The same pins with
+# the environment markers that select the 3.8-3.11 line or the 3.12 line are in
+# requirements-host.txt; a static extra cannot express those markers, so keep the two in step.
+host = ["numpy==1.24.4", "scipy==1.10.1"]
+
+# The complete certified oracle environment on the Python 3.8 line. `scripts/setup_oracle_env.sh`
+# remains the supported way to install it - it drives setup_requirements() against an interpreter
+# whose own pip is broken - so this extra is a copy, and a copy drifts.
+# tests/test_packaging_manifest.py compares it against setup_requirements((3, 8)) so it cannot.
+oracle = [
+    "stim==1.13.0",
+    "pymatching==2.4.0",
+    "rdkit==2024.3.5",
+    "ViennaRNA==2.7.2",
+    "nmrsim==0.6.0",
+    "networkx==3.1",
+    "sympy==1.13.3",
+    "qutip==4.7.6",
+    "astropy==5.2.2",
+    "numpy==1.24.4",
+    "scipy==1.10.1",
+    "matplotlib==3.7.5",
+    "Pillow==10.4.0",
+    "mpmath==1.3.0",
+    "sparse==0.15.5",
+    "numba==0.58.1",
+    "llvmlite==0.41.1",
+    "numpy-groupies==0.9.22",
+    "importlib-metadata==8.5.0",
+    "typing-extensions==4.12.2",
+    "zipp==3.20.2",
+    "packaging==26.2",
+    "pyerfa==2.0.0.3",
+    "PyYAML==6.0.2",
+    "contourpy==1.1.1",
+    "cycler==0.12.1",
+    "fonttools==4.57.0",
+    "importlib-resources==6.4.5",
+    "kiwisolver==1.4.7",
+    "pyparsing==3.1.4",
+    "python-dateutil==2.9.0.post0",
+    "six==1.17.0",
+]
+
+[tool.setuptools]
+# Flat layout. Restricted to `sle` because automatic discovery finds more than one top-level
+# directory here - benchmarks/, scripts/, tests/ are all importable-looking - and refuses to build:
+# "Multiple top-level packages discovered in a flat-layout". Only `sle` is an importable
+# distribution; everything else is repository content that is read from the working tree.
+packages = ["sle"]
+
+[tool.pytest.ini_options]
+# Repository modules are imported as `sle.*` and `scripts.*` from the repository root. This is not
+# what fixes the `scripts` shadowing - a namespace portion loses to a regular package regardless of
+# path order, which is why scripts/__init__.py exists - but it makes the bare `pytest` entry point
+# and `python -m pytest` resolve the same root from any invocation directory.
+pythonpath = ["."]

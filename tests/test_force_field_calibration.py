@@ -549,7 +549,8 @@ class ForceFieldCalibrationTests(unittest.TestCase):
         secure = evaluate_candidate(spec, spec.initial_program_path, timeout_s=90)
         direct = ORACLE.evaluate(BASELINE.calibrate_forcefield)
         direct["raw_score"] = direct["combined_score"]
-        self.assertEqual(secure, direct)
+        from sle.discovery_trace import checked_science_metrics
+        self.assertEqual(checked_science_metrics(secure), direct)
 
     @skip_unless_sandbox("bwrap")  # exercises the candidate sandbox; skipped only where none can exist
     def test_overspend_fails_closed_even_when_candidate_catches_error(self):
