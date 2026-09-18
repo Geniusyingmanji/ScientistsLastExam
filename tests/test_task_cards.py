@@ -50,6 +50,7 @@ RECORDED_LINEAGE = {
     "Physics/ComplexBoseLaw",
     "MaterialsScience/QuinaryConvexHull",
     "Mathematics/HeavyTailEvidence",
+    "Exoplanets/TransitTimingAttribution",
     "Mathematics/NarrowAdmissibleTuple",
     "Superconductivity/SuperconductorTcRecord",
     "Geophysics/UPbConcordiaInference",

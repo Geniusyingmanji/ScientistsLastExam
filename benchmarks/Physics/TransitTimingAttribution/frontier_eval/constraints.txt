@@ -1,0 +1,1 @@
+Implement attribute_ttv(observation, measure, budget_units) in solution.py. Use only documented inputs and the public measure callback; do not import verification modules or inspect hidden evaluator state.

@@ -144,6 +144,35 @@ class ShortcutContractTests(unittest.TestCase):
             with self.subTest(task=spec.task_id):
                 self.assertEqual(undeclared_candidates(contract, spec), [], spec.task_id)
 
+    def test_the_reference_axes_are_recorded_and_saturation_is_flagged(self):
+        """Whether the triple still costs the witness anything is the reviewer's signal.
+
+        Measured across the tree, nineteen of the thirty-one runnable discovery references sit at
+        false discovery 0, correct refusal 1 and coverage 1 - there the three axes carry no
+        information at the top of the scale and the headline is the mechanism number alone. The
+        contract records it; it is never scored, because the threshold for "too saturated" is a
+        review decision.
+        """
+        saturated = {"combined_score": 0.8, "valid": 1,
+                     "development_false_discovery_rate": 0.0,
+                     "development_correct_refusal_rate": 1.0,
+                     "development_discovery_coverage": 1.0,
+                     "development_mechanism_score": 0.8}
+        result = self.check(lambda spec, path, **kw: saturated if path.name == "reference.py"
+                            else {"combined_score": 0.2, "valid": 1})
+        self.assertTrue(result["reference_axes_saturated"])
+        self.assertEqual(result["reference_axes"]["development_correct_refusal_rate"], 1.0)
+        self.assertNotIn("combined_score", result["reference_axes"])
+
+        informative = dict(saturated, development_discovery_coverage=0.6)
+        result = self.check(lambda spec, path, **kw: informative if path.name == "reference.py"
+                            else {"combined_score": 0.2, "valid": 1})
+        self.assertFalse(result["reference_axes_saturated"])
+
+    def test_a_reference_without_discovery_axes_records_nothing(self):
+        result = self.check()
+        self.assertNotIn("reference_axes_saturated", result)
+
     def test_a_pending_task_reports_a_printable_reason_and_keeps_the_record(self):
         """The gate's CLI prints `detail`, so a structured value took the whole gate down.
 

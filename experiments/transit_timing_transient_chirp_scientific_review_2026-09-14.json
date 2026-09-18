@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-09-14",
+  "reviewer_scope": "Read-only bounded A review; no model calls, evaluator calls, private result reads, commits or comments. Documentation changes are suggestions pending root application before new D source freeze.",
+  "reviews": {
+    "pr11": {
+      "task_id": "Exoplanets/TransitTimingAttribution",
+      "source_commit": "4817b21a3c19cad5e3ab2f49b63734d5a62574b7",
+      "A1": {
+        "status": "pass",
+        "scope": "Exoplanets × discovery/evidence is newly occupied; existing Exoplanets/RadialVelocityPlanets is parameter_inversion and TransmissionSpectrumSpecies is substance. This is domain/form coverage, not proof of difficulty."
+      },
+      "A2": {
+        "status": "pass_with_scope_clarification",
+        "nearby": [
+          {
+            "task": "Exoplanets/RadialVelocityPlanets",
+            "difference": "Fixed Doppler samples produce a list of planet periods; this task acquires extra transit timings and returns one declared timing-family label plus forecast. RV aliases and false planet claims differ from unsupported timing-family rejection."
+          },
+          {
+            "task": "ParticlePhysics/LookElsewhereAnomaly",
+            "difference": "Poisson mass-window global significance and flat-background checks; this task uses timed residual fits with an acquisition budget."
+          },
+          {
+            "task": "Gravitation/PTAHellingsDowns",
+            "difference": "Pulsar-pair angular kernels distinguish a background from spatial alternatives; this task uses one sequence of transit numbers and predicts an offset."
+          }
+        ],
+        "repair": "Existing Task.md names the first two. Describe physical family labels as laboratory assumptions rather than uniquely identified causes."
+      },
+      "A4": {
+        "status": "needs_documentation_repair_before_D",
+        "definite_error": null,
+        "scope_gap": "Two current citations support gravitationally perturbed transit times but do not document the activity nuisance surrogate or clock time-error model. Current novelty risk says physically unsupported/non-identifiable, which overstates a frozen synthetic-family exclusion.",
+        "adequate_bounded_claim_after_repair": "Attribution within the declared synthetic timing families; model-family discrimination and forecasting, not real-star causal identification or planet mass/orbit measurement.",
+        "model_sources": [
+          {
+            "family": "planet",
+            "source": "Lithwick et al. (2012), DOI 10.1088/0004-637X/761/2/122",
+            "url": "https://arxiv.org/html/1207.4192v2#S2",
+            "retained_source": "lithwick-full.html",
+            "supports": "Analytic sinusoidal TTV family near resonance; Section 2",
+            "does_not_establish": "General physical uniqueness of a sinusoid or fitted period as orbital period.",
+            "source_sha256": "ff30d0ba37637804814f3873b4dc1a882fcc638f310f6efd417dd3458d811b4a"
+          },
+          {
+            "family": "activity",
+            "source": "Oshagh et al. (2013), DOI 10.1051/0004-6361/201321309",
+            "url": "https://arxiv.org/abs/1306.0739",
+            "retained_source": "activity-abs.html",
+            "supports": "Spot occultations can bias inferred transit timings.",
+            "does_not_establish": "Fixed secondary-period/amplitude/phase law. It must remain an explicitly phenomenological nuisance surrogate.",
+            "source_sha256": "15c99a3454976e9451c56179d7dafb0ed4863c7410eadc866e71129142d859b1"
+          },
+          {
+            "family": "clock",
+            "source": "Allan (1975), NBS Technical Note 669, Fig. 7",
+            "url": "https://tf.nist.gov/general/pdf/74.pdf",
+            "retained_source": "nist-clock.pdf",
+            "supports": "Constant frequency offset and linear frequency drift integrate into linear/quadratic timing deviation.",
+            "does_not_establish": "Specific synthetic coefficients, noise values or clock provenance.",
+            "source_sha256": "c8dd25a9d6a92f54ee53916cd12513e12d1a6ca6e14c64678c5580dcefd193c1"
+          }
+        ]
+      },
+      "B": "Not independently executed in this bounded read-only A review. No B pass is claimed.",
+      "A3": {
+        "status": "pass",
+        "comparison_file": "frontier-row-comparisons.json",
+        "comparison_sha256": "0f479153668348582b9a28e1464c161485b20ede4ec94eb0b4d24c6d7598e771",
+        "paper_entries": 47,
+        "catalog_rows": 78,
+        "expanded_catalog_entries": 84,
+        "same_problem_class_matches": 0
+      },
+      "read_source_hashes": {
+        "CONTRIBUTING.md": "ea00cdfecb059b306c391d38506a108843d25ef7b31319e148443276c498d7a6",
+        "sle/conf/exam_taxonomy.yaml": "3163501b28cd8b982d177d4d0722e57be0372c2953de5d82862b4ac0ed652809",
+        "benchmarks/Physics/TransitTimingAttribution/Task.md": "ea74c91d1ad3c034852619e441dd66e6c107218832a796a7d11d865003f89887",
+        "benchmarks/Physics/TransitTimingAttribution/TASK_CARD.yaml": "6ce8401d1267440007e523b5ced6b0fe42653485a70bc1aa445e1ef1d0cf1c7d",
+        "benchmarks/Physics/TransitTimingAttribution/verification/evaluator.py": "13e9b3d01d505a8cf45f0878e6c847f41061dcd55b2743081e53ba60007a5a94"
+      }
+    },
+    "pr48": {
+      "task_id": "Gravitation/TransientChirpInference",
+      "source_commit": "e356f64f869763d9a2ea31495fd1e89270ab806f",
+      "A1": {
+        "status": "pass",
+        "scope": "Gravitation × discovery/parameter_inversion is newly occupied; PTAHellingsDowns occupies discovery/evidence."
+      },
+      "A2": {
+        "status": "pass_with_documentation_tidyup",
+        "nearby": [
+          {
+            "task": "Gravitation/PTAHellingsDowns",
+            "difference": "Measures angular correlations of many pulsars and claims a spatial kernel; this task fits a single waveform in two synthetic detectors and returns continuous parameters."
+          },
+          {
+            "task": "Exoplanets/RadialVelocityPlanets",
+            "difference": "A fixed Doppler series contains planet/activity/alias periods; this task buys paired-detector samples and distinguishes coherent phase evolution from detector-localized signal."
+          },
+          {
+            "task": "Exoplanets/TransitTimingAttribution (PR11, separately proposed)",
+            "difference": "Transit residuals with four future queries and a forecast; this task estimates two-channel transient frequency/slope/event time/amplitude with 24 measurements. Shared paid model selection is not the same physical observation family."
+          }
+        ],
+        "repair": "Task.md names PTA but only refers generically to microlensing. Name an actual repository neighbor, e.g. RadialVelocityPlanets, instead of implying an unnamed admitted microlensing task."
+      },
+      "A4": {
+        "status": "needs_documentation_repair_before_D",
+        "definite_error": {
+          "current_doi": "10.1103/PhysRevX.6.041015",
+          "actual_title": "Binary Black Hole Mergers in the First Advanced LIGO Observing Run",
+          "declared_title": "Observing gravitational-wave transient GW150914 with minimal assumptions",
+          "correct_doi_for_declared_title": "10.1103/PhysRevD.93.122004",
+          "verified_url": "https://journals.aps.org/prx/abstract/10.1103/PhysRevX.6.041015"
+        },
+        "scope_gap": "Task already declares reduced-order analogue; its current references are broader than the actual linear chirp dictionary. Add direct same-form precedent and make procedural time/noise/channel assumptions explicit.",
+        "adequate_bounded_claim_after_repair": "Synthetic waveform-family inference with a reduced linear-chirp/line/Gaussian-nuisance dictionary; not a full inspiral or physical LIGO source inference.",
+        "model_sources": [
+          {
+            "family": "chirp/line",
+            "source": "Mohanty (2017), DOI 10.1103/PhysRevD.96.102008",
+            "url": "https://arxiv.org/html/1709.08870v3#S4.I1.i4",
+            "retained_source": "chirp-spline.html",
+            "supports": "Section IV.1 LC test waveform is a constant-amplitude quadratic-phase chirp. Zero chirp rate is a sinusoid. Section II.1 describes Gaussian stationary noise.",
+            "does_not_establish": "Specific day-valued scale, detector responses, cadence, Gaussian glitch phenomenology or ambiguity cutoff.",
+            "source_sha256": "9a3034bdc32b6cd9a2d8ddd1996a8fb741d9d690903431bf47d2e8f331da5245"
+          },
+          {
+            "family": "chirp approximation",
+            "source": "Mohapatra et al. (2012), DOI 10.1088/1742-6596/363/1/012031",
+            "url": "https://arxiv.org/abs/1111.3621v1",
+            "retained_source": "chirplet.html",
+            "supports": "Linear frequency variation as a reduced GW analysis dictionary.",
+            "source_sha256": "8254a6b97d6f943872ae827180939167499d710cf8b1a6f3237d8809e23a3d79"
+          },
+          {
+            "family": "detector coherence context",
+            "source": "Abbott et al. (2016), DOI 10.1103/PhysRevD.93.122004",
+            "url": "https://arxiv.org/abs/1602.03843",
+            "retained_source": "correct-gw-citation.html",
+            "supports": "Time-correlated transients across detectors with minimal morphology assumptions.",
+            "does_not_establish": "Fixed response scaling/no delay or a literal Gaussian detector glitch.",
+            "source_sha256": "d641dee2dacc440c2bf5c7f18c28538a06b636cbfd2ede467cfe30ffaeeddfb5"
+          }
+        ]
+      },
+      "B": "Not independently executed in this bounded read-only A review. No B pass is claimed.",
+      "A3": {
+        "status": "pass",
+        "comparison_file": "frontier-row-comparisons.json",
+        "comparison_sha256": "0f479153668348582b9a28e1464c161485b20ede4ec94eb0b4d24c6d7598e771",
+        "paper_entries": 47,
+        "catalog_rows": 78,
+        "expanded_catalog_entries": 84,
+        "same_problem_class_matches": 0
+      },
+      "read_source_hashes": {
+        "CONTRIBUTING.md": "ea00cdfecb059b306c391d38506a108843d25ef7b31319e148443276c498d7a6",
+        "sle/conf/exam_taxonomy.yaml": "106de93a1c19469dba873b8d4af9737734584daf1033399a13b7acf3c2648a4a",
+        "benchmarks/Physics/TransientChirpInference/Task.md": "410bd249c751c567b45918bf851a46d6565595700f279a38d83db77f910ae539",
+        "benchmarks/Physics/TransientChirpInference/TASK_CARD.yaml": "c248f44a712729921243193af1b28ea598f869383b5c08ea812b2922cb44011d",
+        "benchmarks/Physics/TransientChirpInference/verification/evaluator.py": "1d7f9abc5951c78b8d5aa74376da3c84b94bb564122111e4c3d2314d5437c684"
+      }
+    }
+  }
+}
