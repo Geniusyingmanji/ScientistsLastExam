@@ -39,7 +39,46 @@ CANDIDATE_FAILURES = frozenset((
     "blocked_or_missing_file", "non_finite_candidate_value",
     "candidate_callback_schema_error", "candidate_response_too_large",
     "candidate_worker_exit", "candidate_runtime_error",
+    "callback_budget_exhausted",
 ))
+
+# The class of failure, which is what a candidate needs in order to correct itself. A searcher
+# that learns only that something was rejected cannot tell a typo from bad science: it cannot
+# fix a submission key, or stop retrying an identity it has already spent the budget on.
+#
+# This is a partitioning of the taxonomy above, not a replacement for it. Every kind maps to
+# exactly one class, so the class is a pure function of the kind and the channel stays
+# deterministic. The allowlist still holds: a class names which contract boundary failed, and
+# never a world index, split, hidden category, truth, reference value or candidate text.
+CANDIDATE_FAILURE_CLASSES = {
+    "blocked_or_missing_import": "environment",
+    "blocked_operation": "environment",
+    "blocked_or_missing_file": "environment",
+    "candidate_response_too_large": "protocol",
+    "candidate_worker_exit": "protocol",
+    "candidate_runtime_error": "runtime",
+    "candidate_callback_schema_error": "schema",
+    "non_finite_candidate_value": "schema",
+    "candidate_timeout": "timeout",
+    "callback_budget_exhausted": "budget",
+}
+
+# Task oracles already classify their own failures and publish the class in `error_message`
+# using this repo-wide prefix. Ten evaluators write it and the inventory declares eight distinct
+# failure classes; not one of those labels is in the harness taxonomy above, so the prefix test
+# below was discarding every one of them in favour of the generic sentence - the task side was
+# writing the answer and the trusted side threw it away. Those outputs measured
+# indistinguishable: a typo'd submission key, a non-mapping submission, an out-of-range value
+# and a swallowed query-budget violation all produced the same string, so a candidate could not
+# learn which boundary it had hit or what to change.
+CANDIDATE_FAILURE_PREFIX = "candidate invalid: "
+
+# Labels a task may publish are its own finite vocabulary. Forward one only when it cannot be
+# carrying anything: lowercase, digits and underscores, within a bounded length. That keeps the
+# property the old allowlist was protecting - wording is a name, never a sentence, a repr, a
+# path or an observed value - while letting a task's own taxonomy through.
+MAX_PUBLIC_FAILURE_LABEL = 48
+_LABEL_CHARACTERS = frozenset("abcdefghijklmnopqrstuvwxyz0123456789_")
 
 
 class EvaluationInfrastructureError(RuntimeError):
@@ -51,8 +90,27 @@ def require_scientific_result(metrics: Mapping[str, Any]) -> None:
         raise EvaluationInfrastructureError("trusted evaluation infrastructure failure")
 
 
+def _public_failure_label(label: str) -> str | None:
+    """Return `label` when it is a name rather than a message, else None.
+
+    The bound and the character set are the whole security argument. `invalid_return_artifact`
+    passes; `world 3 of heldout split, truth=morse` does not, and neither does a candidate that
+    formats an observed energy into its own exception message before the worker prefixes it.
+    Rejecting here fails closed to the generic sentence rather than widening the channel.
+    """
+    if not label or len(label) > MAX_PUBLIC_FAILURE_LABEL:
+        return None
+    return label if all(character in _LABEL_CHARACTERS for character in label) else None
+
+
 def public_error_message(metrics: Mapping[str, Any]) -> str:
-    """Expose finite failure categories, never arbitrary oracle exception text."""
+    """Expose finite failure categories, never arbitrary oracle exception text.
+
+    Task-declared labels are forwarded verbatim; harness-classified failures are forwarded
+    through the class, because the class is the boundary that has to change to fix them.
+    Anything whose shape cannot be vouched for still collapses to the generic sentence, and
+    the full reason stays in the trusted diagnostics either way.
+    """
     message = metrics.get("error_message")
     if message in (
         "candidate is not a regular file", "task has no declared entrypoint.txt",
@@ -61,10 +119,21 @@ def public_error_message(metrics: Mapping[str, Any]) -> str:
         return str(message)
     kind = metrics.get("candidate_failure_kind")
     if isinstance(kind, str) and kind in CANDIDATE_FAILURES:
-        return "candidate invalid: " + kind
-    if isinstance(message, str) and message.startswith("candidate invalid: "):
-        if message[len("candidate invalid: "):] in CANDIDATE_FAILURES:
-            return message
+        failure_class = CANDIDATE_FAILURE_CLASSES[kind]
+        return "candidate invalid: %s (%s)" % (kind, failure_class)
+    if isinstance(message, str) and message.startswith(CANDIDATE_FAILURE_PREFIX):
+        labels: list[str] = []
+        for raw in message[len(CANDIDATE_FAILURE_PREFIX):].split(","):
+            label = _public_failure_label(raw.strip())
+            if label is None:
+                break
+            if label not in labels:
+                labels.append(label)
+        if labels:
+            # Sorted and joined deterministically: the same oracle output must always render
+            # the same string, and a task that reports classes in world order must not make
+            # the searcher's feedback depend on that order.
+            return CANDIDATE_FAILURE_PREFIX + ",".join(sorted(labels))
     if metrics.get("timeout"):
         return "candidate evaluation timed out"
     return "evaluation rejected; details retained in trusted diagnostics"

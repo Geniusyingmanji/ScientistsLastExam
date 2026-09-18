@@ -126,6 +126,12 @@ oracle 须定义 `evaluate(candidate_callable)`,返回的字典**至少**包含:
 
 可选字段:`feasibility_rate`、`constraint_violations`、`raw_score`、`per_instance` 等。
 
+**失败原因也是反馈。** 只告诉候选"被拒了"无法区分"写错键名"与"科学做错了",两者要的修法相反。
+oracle 自报失败类别时写 `"error_message": "candidate invalid: " + kind`,kind 用小写字母、
+数字与下划线组成的**名字**(≤48 字符),不要写成句子、repr、路径或带观测值;多个类别用逗号分隔。
+该前缀会被原样转给搜索侧;形状无法担保的文本仍折叠为通用句,完整原因始终留在可信诊断里。
+不要把 oracle 内部(世界编号、划分、真值、参考值)或候选自己抛出的异常文本放进类别。
+
 多世界或多实例 oracle 必须在每个独立世界开始时调用候选代理的 `reset_session()`
 （直接传入普通测试函数时用 `hasattr` 判断）。重置要覆盖 development → heldout 边界，
 使模块全局变量、已导入库的属性和私有 `/tmp` 都重新初始化。同一世界的测量回调、控制器步进

@@ -202,10 +202,31 @@ def evaluate_candidate(
                     "error_message": "trusted evaluator runtime binding mismatch",
                     "infrastructure_failure": 1.0,
                 }
-            if set(raw) != {
-                "schema_version", "trusted_evaluator_runtime_sha256", "metrics"
-            } or raw.get("schema_version") != 1 or not isinstance(raw.get("metrics"), dict):
+            # The envelope carries optional harness diagnostics beside the science. The strict
+            # key set is deliberate - an envelope the validator did not agree to is invalid - so
+            # a new diagnostic key must be added HERE, in the same change that writes it. The
+            # first such key, charged_callback_calls, was written by the driver and rejected
+            # here, converting every sandboxed evaluation into an infrastructure failure; the
+            # bug was invisible on a host without bwrap because the driver subprocess never
+            # ran. Diagnostics must be non-negative ints when present: they are counts the
+            # harness produced, not values the candidate or oracle could influence.
+            expected_keys = {
+                "schema_version", "trusted_evaluator_runtime_sha256", "metrics",
+                "charged_callback_calls",
+            }
+            diagnostics_keys = expected_keys - {
+                "schema_version", "trusted_evaluator_runtime_sha256", "metrics",
+            }
+            if (not set(raw) <= expected_keys
+                    or {"schema_version", "trusted_evaluator_runtime_sha256", "metrics"} - set(raw)
+                    or raw.get("schema_version") != 1
+                    or not isinstance(raw.get("metrics"), dict)):
                 raise ValueError("trusted evaluator result envelope is invalid")
+            for key in diagnostics_keys & set(raw):
+                value = raw[key]
+                if (not isinstance(value, int) or isinstance(value, bool) or value < 0):
+                    raise ValueError(
+                        "trusted evaluator envelope diagnostic %r is invalid" % key)
             # The driver keeps its outward message fixed so nothing a candidate could read holds
             # evaluator internals, and it writes the cause to its stderr instead. Surface that to
             # the operator's log without putting it in `metrics`: an earlier attempt merged it
