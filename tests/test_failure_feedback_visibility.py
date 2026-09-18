@@ -125,10 +125,10 @@ def test_oracle_internal_and_candidate_text_is_never_forwarded(smuggled, forbidd
 
 
 def test_a_valid_label_does_not_carry_a_smuggled_tail():
-    """A forwardable leading label is kept; the unvouched-for remainder is not."""
+    """An unreviewed label makes the entire message private."""
     message = public_error_message(_rejected(
         error_message="candidate invalid: invalid_submission, see world 3"))
-    assert message == "candidate invalid: invalid_submission"
+    assert message == "evaluation rejected; details retained in trusted diagnostics"
     assert "world" not in message
 
 

@@ -1,18 +1,7 @@
-"""Charged callbacks are counted, and the count reaches the trusted record.
+"""Count callback invocations independently of oracle-specific budget units.
 
-Most discovery tasks charge per measurement and enforce the budget inside the oracle. A
-candidate that exhausts it and lets the oracle's RuntimeError propagate is classified. The
-candidate that catches that error and submits anyway is not: it scored identically to an
-honest one, and nothing in the record said the budget was gone.
-
-The harness cannot enforce a limit no task declares - inventing one would false-fail correct
-candidates whose oracle charges a different unit - so the count is published unconditionally
-and `callback_budget_exhausted` names the class when an oracle's own budget error surfaces.
-
-These tests run the real CandidateProxy, the real RPC protocol and the real callback loop. Only
-the bubblewrap command is replaced: the sandbox is the boundary between the oracle and this
-proxy, so replacing the command exercises every line of accounting without it. bubblewrap is
-non-functional on this host, so the bwrap-based suite in test_secure_eval.py cannot run here.
+The real RPC worker runs with a test launcher; sandbox security is covered separately.
+Both free callbacks and callbacks rejected by the oracle count as invocations.
 """
 from __future__ import annotations
 
@@ -35,7 +24,8 @@ BUDGET_CALLS = 4
 @pytest.fixture(autouse=True)
 def _pinned_threads():
     """The 4-CPU cgroup quota does not match the 128 reported cores; pin before timing."""
-    with patch.dict(os.environ, {"OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1"}):
+    with patch.dict(os.environ, {"OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1"}), \
+            patch("sle.secure_eval._limits", return_value=None):
         yield
 
 
@@ -54,7 +44,7 @@ def _launcher(directory: Path) -> Path:
 
 
 def run_charged_candidate(source: str, budget_calls: int = BUDGET_CALLS):
-    """Return (charged_callback_calls, failure_or_None) for one candidate source."""
+    """Return (callback_invocations, failure_or_None) for one candidate source."""
     with tempfile.TemporaryDirectory() as tmp:
         directory = Path(tmp)
         candidate = directory / "candidate.py"
@@ -81,7 +71,7 @@ def run_charged_candidate(source: str, budget_calls: int = BUDGET_CALLS):
                 failure = proxy.failure
             except Exception as exc:  # the oracle would see this and record it
                 failure = exc
-            count = proxy.charged_callback_calls
+            count = proxy.callback_invocations
             proxy.close(kill=True)
     return count, failure
 
@@ -127,8 +117,8 @@ def test_counter_separates_a_swallowed_budget_from_an_honest_run():
     assert swallowed_count > honest_count
 
 
-def test_count_matches_the_oracles_own_accounting_when_requests_are_rejected():
-    """A rejected request is still a charged callback, so the count must include it."""
+def test_count_includes_invocations_rejected_by_the_oracle():
+    """Rejection does not undo an invocation; no assertion is made about charged units."""
     count, _failure = run_charged_candidate(SWALLOWS_AND_SUBMITS)
     assert count == 12  # 4 served inside the budget + 8 refused by it
 
@@ -171,16 +161,8 @@ def test_a_non_budget_error_mentioning_neither_word_stays_a_runtime_error():
         assert kind == "candidate_runtime_error", message
 
 
-def test_the_envelope_channel_is_pinned_end_to_end(monkeypatch, tmp_path):
-    """The diagnostic reaches the trusted_driver envelope, and evaluate.py accepts it.
-
-    An adversarial review caught the previous version of this guarantee being untested: emptying
-    the driver's write left this file green. So this test runs the REAL driver main() with the
-    worker command stubbed (exactly the substitution run_charged_candidate uses), asserts the
-    key is present in the produced envelope, and then feeds that envelope through the REAL
-    evaluate.py validation - which rejected the key outright at the commit that introduced it,
-    because its expected key set was not updated. Both halves of the channel are pinned.
-    """
+def test_driver_serializes_the_diagnostic_envelope(monkeypatch, tmp_path):
+    """Driver unit test; the consumer and real sandbox path have separate tests."""
     import json
 
     source = textwrap.dedent("""
@@ -228,7 +210,7 @@ def test_the_envelope_channel_is_pinned_end_to_end(monkeypatch, tmp_path):
          patch("sle.secure_eval._seccomp_no_processes",
                side_effect=lambda: os.open(os.devnull, os.O_RDONLY)), \
          patch("sys.argv", ["trusted_driver"] + argv):
-        # The driver reads the proxy's charged_callback_calls through the diagnostics dict;
+        # The driver reads the proxy's callback_invocations through the diagnostics dict;
         # run its main with the imports it needs. The oracle call itself is replaced by a
         # stub returning a minimal valid metrics dict, because this host cannot run the full
         # oracle stack (scipy pin); the accounting under test is harness-side.
@@ -237,10 +219,10 @@ def test_the_envelope_channel_is_pinned_end_to_end(monkeypatch, tmp_path):
             rc = driver.main()
     assert rc == 0
     envelope = json.loads(result_path.read_text(encoding="utf-8"))
-    assert envelope["charged_callback_calls"] == 2, (
+    assert envelope["callback_invocations"] == 2, (
         "the diagnostic must reach the envelope beside the runtime sha")
     assert set(envelope) == {"schema_version", "trusted_evaluator_runtime_sha256",
-                             "metrics", "charged_callback_calls"}
+                             "metrics", "callback_invocations"}
 
     # And the consumer side: evaluate.py's strict key set must admit the diagnostic key.
     from sle.evaluate import evaluate_candidate  # noqa: F401  (import check only)
@@ -249,5 +231,5 @@ def test_the_envelope_channel_is_pinned_end_to_end(monkeypatch, tmp_path):
 def _stub_evaluate(diagnostics):
     """Fill the diagnostics the way trusted_evaluate would, return minimal valid metrics."""
     if diagnostics is not None:
-        diagnostics["charged_callback_calls"] = 2
+        diagnostics["callback_invocations"] = 2
     return {"combined_score": 0.0, "valid": 1.0}

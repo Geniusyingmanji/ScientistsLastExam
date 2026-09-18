@@ -101,6 +101,33 @@ class SecureEvaluationTests(unittest.TestCase):
         direct = {"combined_score": 1.0, "valid": 1.0, "raw_score": 1.0}
         self.assertEqual(secure, direct)
 
+    def test_callback_diagnostics_cross_the_real_driver_on_success_and_failure(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            task = _fixture_task(root)
+            (task / "verification" / "evaluator.py").write_text(
+                "def evaluate(design_cavity):\n"
+                "    value = design_cavity(lambda: 0.25)\n"
+                "    return {'combined_score': value, 'valid': 1.0}\n",
+                encoding="utf-8",
+            )
+            spec = load_task_spec(task)
+            for fails in (False, True):
+                with self.subTest(fails=fails):
+                    candidate = root / "candidate.py"
+                    candidate.write_text(
+                        "def design_cavity(observe):\n"
+                        "    observe()\n    observe()\n"
+                        + ("    raise ValueError('boom')\n" if fails else "    return 0.5\n"),
+                        encoding="utf-8",
+                    )
+                    diagnostics = {}
+                    result = evaluate_candidate(spec, candidate, timeout_s=10,
+                                                diagnostics=diagnostics)
+                    self.assertEqual(diagnostics, {"callback_invocations": 2})
+                    self.assertNotIn("callback_invocations", result)
+                    self.assertEqual(result["valid"], 0.0 if fails else 1.0)
+
     def test_private_proc_probe_has_well_formed_bind_arguments(self):
         completed = type("Completed", (), {"returncode": 0})()
         library_args = (

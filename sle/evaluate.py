@@ -106,6 +106,7 @@ def evaluate_candidate(
     *,
     trusted_context: dict[str, Any] | None = None,
     trusted_runtime: TrustedRuntime | None = None,
+    diagnostics: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     candidate_path = Path(candidate_path).resolve()
     if not candidate_path.is_file():
@@ -202,17 +203,11 @@ def evaluate_candidate(
                     "error_message": "trusted evaluator runtime binding mismatch",
                     "infrastructure_failure": 1.0,
                 }
-            # The envelope carries optional harness diagnostics beside the science. The strict
-            # key set is deliberate - an envelope the validator did not agree to is invalid - so
-            # a new diagnostic key must be added HERE, in the same change that writes it. The
-            # first such key, charged_callback_calls, was written by the driver and rejected
-            # here, converting every sandboxed evaluation into an infrastructure failure; the
-            # bug was invisible on a host without bwrap because the driver subprocess never
-            # ran. Diagnostics must be non-negative ints when present: they are counts the
-            # harness produced, not values the candidate or oracle could influence.
+            # Diagnostics are harness-owned counts, kept outside science metrics.
+            # Validate before copying anything to the operator's output dictionary.
             expected_keys = {
                 "schema_version", "trusted_evaluator_runtime_sha256", "metrics",
-                "charged_callback_calls",
+                "callback_invocations",
             }
             diagnostics_keys = expected_keys - {
                 "schema_version", "trusted_evaluator_runtime_sha256", "metrics",
@@ -246,6 +241,8 @@ def evaluate_candidate(
                         "error_message": "trusted context binding mismatch",
                         "infrastructure_failure": 1.0,
                     }
+            if diagnostics is not None:
+                diagnostics.update({key: raw[key] for key in diagnostics_keys & set(raw)})
             return metrics
         except Exception as exc:
             print("invalid trusted metrics: %s" % exc, file=sys.stderr)

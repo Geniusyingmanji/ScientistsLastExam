@@ -73,12 +73,15 @@ CANDIDATE_FAILURE_CLASSES = {
 # learn which boundary it had hit or what to change.
 CANDIDATE_FAILURE_PREFIX = "candidate invalid: "
 
-# Labels a task may publish are its own finite vocabulary. Forward one only when it cannot be
-# carrying anything: lowercase, digits and underscores, within a bounded length. That keeps the
-# property the old allowlist was protecting - wording is a name, never a sentence, a repr, a
-# path or an observed value - while letting a task's own taxonomy through.
+# Reviewed, finite categories only. A character/length filter still permits hidden
+# values encoded as identifiers such as truth_morse or heldout_3.
+TASK_FAILURE_LABELS = frozenset((
+    "invalid_return_artifact", "invalid_experiment_request", "invalid_submission",
+    "candidate_runtime_or_callback_processing_error", "candidate_execution_failure",
+    "trusted_scoring_failure", "invalid_sequence", "trusted_evaluator_internal_error",
+))
+PUBLIC_FAILURE_LABELS = CANDIDATE_FAILURES | TASK_FAILURE_LABELS
 MAX_PUBLIC_FAILURE_LABEL = 48
-_LABEL_CHARACTERS = frozenset("abcdefghijklmnopqrstuvwxyz0123456789_")
 
 
 class EvaluationInfrastructureError(RuntimeError):
@@ -91,16 +94,8 @@ def require_scientific_result(metrics: Mapping[str, Any]) -> None:
 
 
 def _public_failure_label(label: str) -> str | None:
-    """Return `label` when it is a name rather than a message, else None.
-
-    The bound and the character set are the whole security argument. `invalid_return_artifact`
-    passes; `world 3 of heldout split, truth=morse` does not, and neither does a candidate that
-    formats an observed energy into its own exception message before the worker prefixes it.
-    Rejecting here fails closed to the generic sentence rather than widening the channel.
-    """
-    if not label or len(label) > MAX_PUBLIC_FAILURE_LABEL:
-        return None
-    return label if all(character in _LABEL_CHARACTERS for character in label) else None
+    """Return a reviewed category; never infer trust from identifier syntax."""
+    return label if label in PUBLIC_FAILURE_LABELS else None
 
 
 def public_error_message(metrics: Mapping[str, Any]) -> str:
@@ -126,7 +121,7 @@ def public_error_message(metrics: Mapping[str, Any]) -> str:
         for raw in message[len(CANDIDATE_FAILURE_PREFIX):].split(","):
             label = _public_failure_label(raw.strip())
             if label is None:
-                break
+                return "evaluation rejected; details retained in trusted diagnostics"
             if label not in labels:
                 labels.append(label)
         if labels:

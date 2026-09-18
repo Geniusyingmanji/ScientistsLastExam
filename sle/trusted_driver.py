@@ -84,13 +84,13 @@ def main() -> int:
         "trusted_evaluator_runtime_sha256": runtime["fingerprint_sha256"],
         "metrics": metrics,
     }
-    charged = diagnostics.get("charged_callback_calls") if diagnostics else None
-    if charged is not None:
+    calls = diagnostics.get("callback_invocations") if diagnostics else None
+    if calls is not None:
         # Beside the runtime sha, not inside metrics: the byte-for-byte equality
         # trusted_evaluate == direct evaluation is how a sandboxed run is proven not to have
         # perturbed the science, and a harness-added metrics key breaks it. The count is a
         # diagnostic and rides in the diagnostic channel.
-        envelope["charged_callback_calls"] = charged
+        envelope["callback_invocations"] = calls
     args.result.write_text(json.dumps(envelope, allow_nan=False), encoding="utf-8")
     return 0
 

@@ -44,7 +44,7 @@ admits" in their own `known_best.md` while their structured card says nothing.
 ## The two findings
 
 `at_ceiling_undeclared` is the defect. The reference is at the ceiling and the structured card
-does not say so, so no reader that is not a human reading prose knows the task is on-ramp only.
+does not say so. This observation alone does not establish task difficulty or model saturation.
 `at_ceiling_declared` is not a defect: a task that documents its own saturation honestly is a
 finished on-ramp, and the distinction between the two is the point of the split. Measured
 2026-09-17: five undeclared, one declared.
@@ -69,6 +69,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -164,7 +165,8 @@ def declares_saturation(spec) -> str | None:
         return None
     if not isinstance(card, dict):
         return None
-    status = str((card.get("long_horizon") or {}).get("status") or "")
+    horizon = card.get("long_horizon")
+    status = str(horizon.get("status") or "") if isinstance(horizon, dict) else ""
     if _declares(status):
         return "long_horizon.status=%s" % status
     health = card.get("measurement_health")
@@ -197,6 +199,9 @@ def audit_task(spec, tolerance: float = DEFAULT_TOLERANCE) -> dict:
     it needs a matching interpreter and pinned package set that a reporting audit should not
     depend on, and it would make the audit un-runnable exactly when a reviewer wants it.
     """
+    if (isinstance(tolerance, bool) or not isinstance(tolerance, (int, float))
+            or not math.isfinite(tolerance) or not 0 <= tolerance < 1):
+        raise ValueError("tolerance must be finite and in [0, 1)")
     row = {"task": spec.task_id, "score_mode": spec.metadata.get("score_mode"),
            "declared": declares_saturation(spec)}
     reference = reference_path(spec)
@@ -211,15 +216,25 @@ def audit_task(spec, tolerance: float = DEFAULT_TOLERANCE) -> dict:
     except Exception as exc:  # noqa: BLE001 - an oracle that will not run is not a pass
         row.update(status=NOT_MEASURED, detail="%s: %s" % (type(exc).__name__, str(exc)[:160]))
         return row
-    if not isinstance(metrics, dict) or not isinstance(metrics.get("combined_score"), (int, float)):
+    score = metrics.get("combined_score") if isinstance(metrics, dict) else None
+    valid = metrics.get("valid") if isinstance(metrics, dict) else None
+    if (isinstance(score, bool) or not isinstance(score, (int, float))
+            or not math.isfinite(score)):
         row.update(status=NOT_MEASURED, detail="oracle returned no finite combined_score")
         return row
-    score = float(metrics["combined_score"])
+    if (isinstance(valid, bool) or not isinstance(valid, (int, float)) or valid != 1
+            or metrics.get("infrastructure_failure")):
+        row.update(status=NOT_MEASURED, detail="reference evaluation was not scientifically valid")
+        return row
+    score = float(score)
     row.update(combined_score=score, valid=metrics.get("valid"))
     if row["score_mode"] != "clipped":
         # An uncapped task's ceiling is a number the task itself does not publish; the normalised
         # 1.0 that the clipped tasks share has no meaning here, so no verdict is offered.
         row.update(status=NOT_MEASURED, detail="uncapped task; no normalised ceiling to compare to")
+        return row
+    if not 0.0 <= score <= 1.0 + 1e-9:
+        row.update(status=NOT_MEASURED, detail="score outside the clipped contract")
         return row
     if score < 1.0 - tolerance:
         row.update(status=HEADROOM)
@@ -292,7 +307,7 @@ def main(argv: list[str] | None = None) -> int:
         report = {"schema_version": 1, "word_test_only": True, "rows": rows,
                   "at_ceiling_or_undetermined": [
                       row["task"] for row in rows if not row["declared"]]}
-        Path(args.output).write_text(json.dumps(report, indent=2, default=str), encoding="utf-8")
+        Path(args.output).write_text(json.dumps(report, indent=2, default=str, allow_nan=False), encoding="utf-8")
         print("saturation word test: %d tasks" % len(rows))
         print("report: %s" % args.output)
         return 0
@@ -304,7 +319,7 @@ def main(argv: list[str] | None = None) -> int:
         specs = [spec for spec in list_tasks(None)
                  if args.task is None or spec.task_id == args.task]
     report = build_report(specs, args.tolerance)
-    Path(args.output).write_text(json.dumps(report, indent=2, default=str), encoding="utf-8")
+    Path(args.output).write_text(json.dumps(report, indent=2, default=str, allow_nan=False), encoding="utf-8")
 
     measured = [row for row in report["rows"] if row["status"] != NOT_MEASURED]
     print("saturation audit: %d tasks, %d references scored at the ceiling, %d undeclared"

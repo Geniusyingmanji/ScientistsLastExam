@@ -406,3 +406,9 @@ python -m sle run --task Chemistry/LennardJonesCluster --algorithm greedy_rewrit
 当前过程记录器覆盖四个试点，其余 discovery 任务在全量档案中标记待审查。
 接入新题须提供 callback/逐世界结果适配和回归验证；不能仅凭填好档案或日志齐全提升认证状态。
 过程证据和隐藏结果必须保持 evaluator-only，禁止反馈到搜索者。
+
+Harness diagnostics distinguish `callback_invocations` (all invoked callbacks, including free
+and rejected calls) from oracle-defined budget usage. Trusted callers can pass `diagnostics={}`
+to `evaluate_candidate` to receive this count outside the scientific metric dictionary.
+Public failure feedback uses only the reviewed finite label vocabulary in
+`sle/metric_visibility.py`; identifier syntax alone never makes a label safe to publish.

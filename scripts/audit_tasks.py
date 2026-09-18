@@ -7,6 +7,7 @@ import argparse
 import ast
 import hashlib
 import json
+import math
 import platform
 import sys
 from datetime import datetime, timezone
@@ -96,17 +97,17 @@ def _module_literal(path: Path, name: str):
         tree = ast.parse(path.read_text(encoding="utf-8"))
     except (OSError, SyntaxError):
         return None
+    value = None
     for node in tree.body:
-        if not isinstance(node, ast.Assign):
-            continue
-        if not any(isinstance(target, ast.Name) and target.id == name
-                   for target in node.targets):
+        targets = (node.targets if isinstance(node, ast.Assign) else
+                   [node.target] if isinstance(node, ast.AnnAssign) else [])
+        if not any(isinstance(target, ast.Name) and target.id == name for target in targets):
             continue
         try:
-            return ast.literal_eval(node.value)
-        except (ValueError, SyntaxError):
-            return None
-    return None
+            value = ast.literal_eval(node.value)
+        except (ValueError, SyntaxError, TypeError):
+            value = None
+    return value
 
 
 def _migration_inventory() -> dict:
@@ -125,13 +126,15 @@ def _timeout_issues(metadata: dict, run_eval: Path | None, task_id: str) -> list
         # An absent key is `REQUIRED_METADATA`'s issue, not a second one for the same cause.
         return issues
     declared = metadata["eval_time_seconds"]
-    if isinstance(declared, bool) or not isinstance(declared, (int, float)) or declared <= 0:
+    if (isinstance(declared, bool) or not isinstance(declared, (int, float))
+            or not math.isfinite(declared) or declared <= 0):
         return ["metadata eval_time_seconds is not a positive number"]
     if run_eval is None or not run_eval.is_file():
         return issues
     enforced = _module_literal(run_eval, "EVAL_TIMEOUT_S")
-    if isinstance(enforced, bool) or not isinstance(enforced, (int, float)):
-        return ["run_eval.py does not bind a literal EVAL_TIMEOUT_S"]
+    if (isinstance(enforced, bool) or not isinstance(enforced, (int, float))
+            or not math.isfinite(enforced) or enforced <= 0):
+        return ["run_eval.py does not bind a positive finite literal EVAL_TIMEOUT_S"]
     entry = _migration_inventory().get(task_id)
     if entry is not None:
         # Pending means the disagreement is recorded, not that it was accepted. The entry pins
