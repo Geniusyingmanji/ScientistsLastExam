@@ -123,6 +123,10 @@ def source_binding(task):
                 raise ValueError("episode source cannot be a symlink")
             files[source.relative_to(path).as_posix()] = hashlib.sha256(source.read_bytes()).hexdigest()
     runtime = {}
+    for parent in (path.parent, path.parent.parent):
+        initializer = parent / "__init__.py"
+        if initializer.is_file():
+            runtime[initializer.relative_to(ROOT).as_posix()] = hashlib.sha256(initializer.read_bytes()).hexdigest()
     for source in sorted((ROOT / "sle").rglob("*.py")):
         runtime[source.relative_to(ROOT).as_posix()] = hashlib.sha256(source.read_bytes()).hexdigest()
     from .runtime_identity import current_runtime_descriptor

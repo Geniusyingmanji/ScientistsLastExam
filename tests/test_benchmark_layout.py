@@ -126,6 +126,14 @@ class BenchmarkLayoutTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "Unexpected top-level"):
                     registry.discover_task_dirs()
 
+    def test_import_bytecode_cache_is_not_a_discipline_or_a_task(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            benchmarks = Path(temporary)
+            (benchmarks / "__pycache__" / "NotATask" / "frontier_eval").mkdir(parents=True)
+            (benchmarks / "__pycache__" / "Nested" / "NotATask" / "frontier_eval").mkdir(parents=True)
+            with patch.object(registry, "BENCHMARKS", benchmarks):
+                self.assertEqual(registry.discover_task_dirs(), [])
+
 
 if __name__ == "__main__":
     unittest.main()

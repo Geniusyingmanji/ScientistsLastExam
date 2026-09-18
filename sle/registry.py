@@ -16,16 +16,19 @@ BENCHMARKS = REPO_ROOT / "benchmarks"
 def discover_task_dirs() -> list[Path]:
     if not BENCHMARKS.is_dir():
         return []
-    roots = {path.name for path in BENCHMARKS.iterdir() if path.is_dir()}
+    roots = {path.name for path in BENCHMARKS.iterdir()
+             if path.is_dir() and path.name != "__pycache__"}
     unexpected = roots - set(DISCIPLINE_DOMAINS)
     if unexpected:
         raise ValueError(
             "Unexpected top-level benchmark directories: %s"
             % ", ".join(sorted(unexpected))
         )
-    task_dirs = sorted(p.parent for p in BENCHMARKS.glob("*/*/frontier_eval") if p.is_dir())
+    task_dirs = sorted(p.parent for p in BENCHMARKS.glob("*/*/frontier_eval")
+                       if p.is_dir() and p.parent.parent.name in DISCIPLINE_DOMAINS)
     nested = sorted(
-        path for path in BENCHMARKS.glob("*/*/*/frontier_eval") if path.is_dir()
+        path for path in BENCHMARKS.glob("*/*/*/frontier_eval")
+        if path.is_dir() and path.parents[2].name in DISCIPLINE_DOMAINS
     )
     if nested:
         raise ValueError(
