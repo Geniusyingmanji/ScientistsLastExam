@@ -1,20 +1,36 @@
 # Scientific discovery environments: construction-stage pilots
 
 The `sle episode` command runs stateful, budgeted scientific experiments and
-freezes a claim before releasing fresh confirmation observations. The two
-initial environments are candidates, outside the admitted legacy task registry:
+freezes a claim before releasing fresh confirmation observations. Four
+environments are available, outside the admitted legacy task registry. The two
+new successors implement harder scientific contracts:
+
+- `CausalDiscovery/CausalTransportDiscovery`: reconstruct continuous dose-response
+  curves across biomarker groups from costly, selectively assayed interventions;
+  transport them to fresh population mixtures with honest uncertainty. Source
+  observations alone cannot distinguish paired worlds. Missing bridge support
+  requires partial identification, rather than a guessed point estimate.
+- `SystemsBiology/EnzymeRecoveryDesign`: design loading, washout and rescue
+  experiments under optical nuisance effects; distinguish reversible recovery
+  from irreversible loss, and predict fresh conditions. Effective model complexity
+  is a separate question from fitting a curve or guessing the generator's label.
+
+The earlier prototypes remain available as controls:
 
 - `CausalDiscovery/SurvivorshipAuditDesign`: population effects under direct
   treatment-dependent selection, stratification and paid random follow-up.
+  **Historical control**: fixed-cell estimation is already a strong solution.
 - `SystemsBiology/EnzymeMechanismDiscovery`: compositional dynamical mechanisms,
   costly measurements and perturbations, then fresh trajectory confirmation.
   **Protocol-only**: fixed experimental designs still recovered all mechanisms
   and passed all confirmations across the 60/80/104-unit budget study. It is not
   a sufficiently difficult replacement for the retired enzyme task.
 
-They demonstrate executable contracts and verifiable evidence. They are **not
-frontier-qualified tasks**. A competent reference can solve them; repeated
-model calibration and independent scientific review are still required.
+These are **not frontier-qualified tasks**. The successors are construction
+candidates: a more demanding contract does not by itself establish frontier
+model difficulty. Strong fixed designs, prior-only predictions and redundant
+high-order fits must remain visible in construction results. Repeated model
+calibration and independent scientific review are still required.
 Six saturated or shortcut-compromised legacy tasks are held by the separate
 [eligibility policy](discovery_eligibility.md).
 
@@ -26,6 +42,10 @@ python -m sle episode --task SurvivorshipAuditDesign --baseline reference \
   --output-dir /var/tmp/sle-survivorship-reference
 python -m sle episode --task EnzymeMechanismDiscovery --baseline fixed \
   --output-dir /var/tmp/sle-enzyme-fixed
+python -m sle episode --task CausalTransportDiscovery --baseline reference \
+  --output-dir /var/tmp/sle-transport-reference
+python -m sle episode --task EnzymeRecoveryDesign --baseline reference \
+  --output-dir /var/tmp/sle-recovery-reference
 ```
 
 Each output directory must be new, owner-only and outside every Git checkout.
@@ -81,6 +101,63 @@ JSON-serializable value to `result`; captured output is bounded. Python never
 executes in the trusted environment process. Linux/bubblewrap is required and
 failure does not fall back to host execution. `--analysis none` explicitly
 selects an experiment-only model condition.
+
+## Paired construction controls
+
+```sh
+python -m sle episode-panel --task CausalTransportDiscovery \
+  --policies reference fixed abstain --worlds 24 --seed-start 1000 \
+  --metric curve_rmse --output-dir /var/tmp/sle-transport-panel
+python -m sle episode-panel --task EnzymeRecoveryDesign \
+  --policies reference fixed_optical fixed_orthogonal abstain --worlds 24 \
+  --seed-start 1000 --output-dir /var/tmp/sle-recovery-panel
+```
+
+This runner executes only trusted, explicitly registered construction policies;
+it makes no model API calls. It uses the same generated world and budget cap for
+every policy, resets each policy between worlds, and records actual expenditure.
+Equal caps do not imply equal spending. `--budget-units` can override the cap for
+a construction study; policies must support the chosen cap or report a budget
+failure. A failed cell is not a zero scientific score.
+
+Private `panel.json` binds source/runtime hashes and each individual episode.
+Initialization failures have separate private failure records. Source changes
+during execution invalidate the aggregate. Scalars are reported separately;
+rates pool their numerators and denominators, with zero denominators remaining
+null. Explicitly invalid metrics are excluded. Optional paired differences use
+only the valid intersection and report how many pairs actually spent equally.
+Paired worlds may share generator families: they are not independent model draws
+and these descriptive comparisons do not establish statistical significance.
+
+### Successor construction check (2026-09-18)
+
+A separate 24-world source-bound transport panel completed all 216 cells. Six
+experimental policies each spent exactly 12,000 units per world; prior-only,
+bounds-only and abstention controls spent zero. Sixteen worlds had complete
+support and eight required partial identification. On the complete-support
+worlds, the joint precision condition gave:
+
+| Policy | Joint success | Mean target-population RMSE |
+|---|---:|---:|
+| Reference recruitment policy | 12/16 | 0.01619 |
+| Strong fixed source-plus-bridge design | 14/16 | 0.01565 |
+| Fixed all-bridge factorial design | 8/16 | 0.01914 |
+| Random bridge design | 11/16 | 0.01703 |
+| Source extrapolation | 0/16 | 0.03829 |
+| Zero prior, no observations | 0/16 | 0.03183 |
+
+Source-only, bounds-only and full-abstention controls also achieved 0/16 joint
+success. All four strong designs still resolved 36/36 scorable modifier
+decisions: this component remains easy. Fixed design outperformed the reference
+on this panel; no adaptive advantage is claimed. The declared joint precision
+target adds quantitative requirements, but these are synthetic accuracy targets,
+not clinical standards or evidence of frontier-model difficulty.
+
+Private panel content binding:
+`832f13506f6bc8b6bd5cc93387c864f182b5026ea4dc85cb99cb7cd6fa29871b`.
+Full episode records remain outside Git. The task's separate public construction
+report uses different worlds and binds its listed task source files; neither
+panel contains frontier-model draws.
 
 The program and interactive-model modes share a scientific environment but are
 different solver conditions. Record and compare them separately. Model steps,

@@ -97,6 +97,8 @@ def main(argv=None) -> int:
 
     from .episode_cli import add_parser as add_episode_parser
     add_episode_parser(sub)
+    from .episode_panel import add_parser as add_episode_panel_parser
+    add_episode_panel_parser(sub)
 
     pl = sub.add_parser("list"); pl.set_defaults(fn=_cmd_list)
     pl.add_argument("--all", action="store_true", help="include candidate and quarantined tasks")

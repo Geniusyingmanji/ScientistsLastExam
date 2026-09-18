@@ -58,7 +58,9 @@ discovery(46 个):从受预算约束的证据中建立可检验主张,或在证�
 版本绑定的排除规则见 [`docs/discovery_eligibility.md`](docs/discovery_eligibility.md)。
 新增 `sle episode` 支持有预算的交互实验、冻结主张、独立确认和隔离 Python 分析;
 运行方法见 [`docs/scientific_environments.md`](docs/scientific_environments.md)。
-两个环境原型尚未进入正式任务集合,其中酶动力学仅作为协议测试,不能计作合格难题。
+新增因果迁移与酶恢复实验两道增难候选,分别要求带不确定性的跨人群预测和机制可辨识性判断。
+`sle episode-panel` 可比较同世界、同预算的强固定设计与参考策略,保留真实开销及失败状态。
+四个环境均尚未进入正式任务集合;两个旧原型保留为历史/协议对照,新版仍须顶级模型标定。
 
 ```bash
 python scripts/report_discovery_evidence.py --output /tmp/discovery_profiles.json

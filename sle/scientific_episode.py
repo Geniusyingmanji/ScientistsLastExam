@@ -1,6 +1,6 @@
 """Trusted, stateful discovery episodes with an immutable confirmation boundary.
 
-Only the two reviewed local adapters are loadable. Candidate Python goes through
+Only explicitly registered local adapters are loadable. Candidate Python goes through
 CandidateProxy, never exec/import in this process. This is a pilot execution
 protocol, not a scientific certification or a replacement for the legacy oracle.
 """
@@ -21,10 +21,14 @@ ROOT = Path(__file__).resolve().parents[1]
 PILOTS = {
     "CausalDiscovery/SurvivorshipAuditDesign": "ComputerScience/SurvivorshipAuditDesign",
     "SystemsBiology/EnzymeMechanismDiscovery": "Biology/EnzymeMechanismDiscovery",
+    "CausalDiscovery/CausalTransportDiscovery": "ComputerScience/CausalTransportDiscovery",
+    "SystemsBiology/EnzymeRecoveryDesign": "Biology/EnzymeRecoveryDesign",
 }
 PILOT_ROLES = {
-    "CausalDiscovery/SurvivorshipAuditDesign": "hardening_candidate",
+    "CausalDiscovery/SurvivorshipAuditDesign": "historical_control",
     "SystemsBiology/EnzymeMechanismDiscovery": "protocol_only",
+    "CausalDiscovery/CausalTransportDiscovery": "hardening_candidate",
+    "SystemsBiology/EnzymeRecoveryDesign": "hardening_candidate",
 }
 MAX_JSON_BYTES = 2 * 1024 * 1024
 MAX_EVIDENCE_BYTES = 32 * 1024 * 1024

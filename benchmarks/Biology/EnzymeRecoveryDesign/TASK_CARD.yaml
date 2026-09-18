@@ -1,0 +1,77 @@
+schema_version: 2
+status: candidate
+difficulty: unmeasured
+evaluation_role: hardening_candidate
+frontier_eligible: false
+calibration_required: true
+scientific_question: >-
+  Separate irreversible damage, reversible kinetic populations and optical
+  carryover by charged loading, recovery, calibration and readout choices.
+artifact: >-
+  Resolved or partial loss/minimum-effective-order claims, a frozen activity
+  predictor and valid experiment evidence citations.
+oracle:
+  model: Original effective independent-subpopulation loading/washout model with irreversible hazard and optical carryover.
+  deterministic: true
+  budget_units: 48
+  confirmation: Twelve new mixed-intervention orthogonal assays; independent noise; immutable commitment.
+  interpretation: Bounded synthetic system identification, not unique microscopic mechanism or real-world discovery.
+normalization:
+  score: No combined_score; certified component accuracy and exp(-(confirmation RMSE/0.05)^2) remain separate.
+  refusal: All-abstain exactly0; partial order allowed; unresolved order has no discovery credit.
+  opportunity: Unresolved order excluded from recovery denominator; certified_component_fraction and coverage reported separately.
+citations:
+- id: https://pubmed.ncbi.nlm.nih.gov/3120622/
+  title: The analysis of enzyme progress curves by numerical differentiation, including competitive product inhibition and enzyme reactivation
+- id: https://www.sciencedirect.com/science/article/abs/pii/S0301462206002651
+  title: A test for measuring the effects of enzyme inactivation
+invariants:
+- Activity agrees with independent loading and washout differential equations, remains bounded, and increases during washout.
+- One-condition optical recovery can exactly confound biological sequestration and optical carryover; controls distinguish them.
+- Broad optical loading designs remain legitimate alternative identification methods.
+- Exactly identical kinetic pools merge, and zero fractions do not create extra resolved populations.
+- Positive lower-order witnesses do not depend on the oracle optimizer finding them first.
+- Order2 requires a tolerance-bounded determinant certificate; failed fitting alone never proves order2.
+- Unsupported order assertions are separated from known false component claims.
+- Confirmation is immutable, tamper checked, and independent of exploration history.
+known_shortcuts: >-
+  The generator is a small closed family; generic nonlinear fitting may remain
+  strong. A former predictive-equivalence score was rejected because always
+  fitting order2 received spurious order credit. Broad fixed optical and pure
+  orthogonal baselines are mandatory; calibration calls are not forced.
+review:
+  domain: pending_external
+  evaluator_security: focused_scientific_and_protocol_tests_pending_independent_linux_run
+provenance:
+  class: procedural
+  target_source: Private deterministic world seed; no metadata mechanism hints.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: simulated_same_family
+novelty_risk:
+  level: high
+  rationale: Known effective equations; no frontier draws or external biochemical confirmation yet.
+lineage:
+  status: candidate_construction
+  calibration_runs: []
+  calibration_evidence_status: missing_frontier_draws
+  edits_triggered_by_model: None on this successor; responds to saturation of predecessor tasks.
+long_horizon:
+  status: calibration_required
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_tested_peer_reviewed_not_independently_certified
+  reviewer_domain: pending_external
+  oracle_disagreement_status: independent ODE and analytic determinant error-bound regressions
+  remaining_blockers:
+  - Frozen independent panels and frontier model proposals.
+  - Empirical distinguishability must separate low coverage from difficult science.
+  - Minimum-order certification is sufficient but incomplete; unresolved cases are not proven inaccessible.
+  - Strong fixed and always-max-order controls must not saturate before admission.
+agent_visible_files:
+- Task.md
+- model.py
+- solution.py
+private_files:
+- verification/
