@@ -21,6 +21,10 @@ ORACLE_PACKAGE_PINS = {
 
 # NumPy and SciPy are exposed to every candidate. The Python 3.8--3.11 line preserves the
 # versions used for the recorded oracle anchors; Python 3.12 uses its repository-supported pair.
+# This is the host prerequisite, not a per-run requirement: only a host that installs these
+# (requirements-host.txt, or pip install ".[host]") can reproduce the recorded anchors, and
+# secure_eval warns rather than fails when a host runs without them. Full oracle setup pins the
+# 3.8 line through setup_requirements below.
 BASE_CANDIDATE_PINS = {
     (3, 8): {"numpy": "1.24.4", "scipy": "1.10.1"},
     (3, 9): {"numpy": "1.24.4", "scipy": "1.10.1"},

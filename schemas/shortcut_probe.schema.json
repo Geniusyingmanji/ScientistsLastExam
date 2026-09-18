@@ -68,7 +68,7 @@
     "relative_margin": {
       "type": "number",
       "exclusiveMinimum": 0,
-      "exclusiveMaximum": 1
+      "maximum": 0.3
     },
     "score_tolerance": {
       "type": "number",
@@ -76,5 +76,5 @@
       "exclusiveMaximum": 0.05
     }
   },
-  "$comment": "The runtime validator additionally rejects non-finite numbers, duplicate ids/candidates, absolute or escaping paths, and absent candidate files."
+  "$comment": "The runtime validator additionally rejects non-finite numbers, duplicate ids/candidates, absolute or escaping paths, and absent candidate files. The relative_margin maximum is the runtime policy ceiling (MARGIN_CEILING); a wider margin is a review decision that raises the ceiling, not a card value."
 }
