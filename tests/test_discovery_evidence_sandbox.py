@@ -29,19 +29,23 @@ def test_discovery_candidate_multiturn_replication_and_real_isolation(tmp_path, 
     candidate.write_text('''
 def solve(context, act):
     import os
+    import errno
     import socket
     from pathlib import Path
     assert context["problem"]["evaluation_mode"] == "evidence_only"
     assert "SLE_DISCOVERY_PRIVATE_SENTINEL" not in os.environ
     for path in %r:
         assert not Path(path).exists(), "private host path exposed"
-    try:
-        connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    except PermissionError:
-        pass
-    else:
-        connection.close()
-        raise AssertionError("network socket was allowed")
+    # The network namespace removes connectivity; it need not forbid creating
+    # an unconnected socket. Use the documentation-only TEST-NET address.
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as connection:
+        connection.settimeout(1)
+        try:
+            connection.connect(("198.51.100.1", 443))
+        except OSError as exc:
+            assert exc.errno in (errno.ENETUNREACH, errno.EACCES, errno.EPERM), repr(exc)
+        else:
+            raise AssertionError("network connection was allowed")
     try:
         pid = os.fork()
     except PermissionError:
