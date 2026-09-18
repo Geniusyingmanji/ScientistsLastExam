@@ -23,7 +23,7 @@ Scientists' Last Exam (SLE) 是一个面向跨学科、可执行、预算受限�
 
 <!-- task-inventory:start -->
 
-当前 88 个任务包,横跨 7 个学科,5 个 certified、83 个 candidate。
+当前 88 个任务包,横跨 7 个学科,5 个 certified、77 个 candidate、6 个 quarantined。
 这一段的每个数字都由 `tests/test_readme_inventory_counts.py` 对着注册表核,改不动就是改错了。
 
 optimization(42 个):在受约束的设计空间里把目标做得更好。分四类:
