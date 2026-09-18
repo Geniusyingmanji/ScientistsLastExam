@@ -337,6 +337,15 @@ def sanitized_candidate_failure(error: BaseException | str) -> dict[str, Any]:
         kind = "candidate_response_too_large"
     elif "candidate worker exited" in message:
         kind = "candidate_worker_exit"
+    elif "budget" in message and (
+        "exceed" in message or "exhaust" in message
+    ):
+        # Oracles charge per measurement and enforce their own budget with a RuntimeError. That
+        # text reaches the worker as "<Type>: <message>" and lands here; before this branch it
+        # fell through to candidate_runtime_error, so a candidate that spent its budget - or
+        # swallowed the error and submitted anyway - was indistinguishable from one that
+        # crashed. Only the class is used; the message itself is never forwarded.
+        kind = "callback_budget_exhausted"
     else:
         kind = "candidate_runtime_error"
     result: dict[str, Any] = {
@@ -656,6 +665,9 @@ class CandidateProxy:
         self.packages = tuple(packages)
         self.proc = None
         self._stdout_buffer = b""
+        # All callback invocations across this evaluation, including free calls and
+        # rejected calls. This is not a budget-unit counter or a budget limit.
+        self.callback_invocations = 0
         self._start_worker()
 
     def _start_worker(self) -> None:
@@ -812,6 +824,9 @@ class CandidateProxy:
                     cb_kwargs = decode(response.get("kwargs", {}))
                     if not isinstance(cb_args, list) or not isinstance(cb_kwargs, dict):
                         raise CandidateError("invalid callback arguments")
+                    # Count every invoked callback, including free calls and errors.
+                    # Only the oracle knows whether a call consumed budget units.
+                    self.callback_invocations += 1
                     callback_response.update({"ok": True, "result": encode(callback(*cb_args, **cb_kwargs))})
                 except Exception as exc:
                     callback_response.update({"ok": False, "error": "%s: %s" % (type(exc).__name__, exc)})
@@ -918,7 +933,16 @@ def validate_metrics(value: Any, score_mode: str) -> dict[str, Any]:
 
 def trusted_evaluate(task_dir: Path, candidate: Path, entrypoint: str, score_mode: str,
                      timeout_s: float,
-                     trusted_context: dict[str, Any] | None = None) -> dict[str, Any]:
+                     trusted_context: dict[str, Any] | None = None,
+                     diagnostics: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Evaluate a candidate in the sandbox; the returned dict is the science metrics.
+
+    ``diagnostics``, when given, receives harness observations - currently the callback-invocation
+    count - that must NOT appear in the returned metrics: five repository tests assert this
+    return equals a direct in-process evaluation byte-for-byte, and that equality is how a
+    sandboxed run is proven not to have perturbed the science. Diagnostics are the caller's
+    channel (the trusted_driver envelope), never the oracle's.
+    """
     oracle = load_oracle(
         task_dir, with_trusted_context=trusted_context is not None
     )
@@ -956,6 +980,13 @@ def trusted_evaluate(task_dir: Path, candidate: Path, entrypoint: str, score_mod
             # preserving the same finite, label-blind public failure classification.
             result = sanitized_candidate_failure(exc)
             evaluation_complete = False
+        finally:
+            # Preserve counts when a non-recorded task raises as well as on success.
+            # Keep harness observations outside the oracle's science metrics.
+            calls = getattr(proxy, "callback_invocations", None)
+            if (diagnostics is not None and isinstance(calls, int)
+                    and not isinstance(calls, bool) and calls >= 0):
+                diagnostics["callback_invocations"] = calls
         if recorder is not None:
             result["discovery_evidence"] = recorder.finish(
                 result, evaluation_complete=evaluation_complete)

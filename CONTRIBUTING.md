@@ -126,6 +126,13 @@ oracle 须定义 `evaluate(candidate_callable)`,返回的字典**至少**包含:
 
 可选字段:`feasibility_rate`、`constraint_violations`、`raw_score`、`per_instance` 等。
 
+**失败原因也是反馈。** 只告诉候选"被拒了"无法区分"写错键名"与"科学做错了",两者要的修法相反。
+oracle 自报失败类别时写 `"error_message": "candidate invalid: " + kind`；kind 必须属于
+`sle/metric_visibility.py` 中经审查的有限白名单，多个类别可用逗号分隔。
+任何未知类别都会使整条消息折叠为通用句；仅满足字符与长度限制不能保证内容安全。
+完整原因始终留在可信诊断里。
+不要把 oracle 内部(世界编号、划分、真值、参考值)或候选自己抛出的异常文本放进类别。
+
 多世界或多实例 oracle 必须在每个独立世界开始时调用候选代理的 `reset_session()`
 （直接传入普通测试函数时用 `hasattr` 判断）。重置要覆盖 development → heldout 边界，
 使模块全局变量、已导入库的属性和私有 `/tmp` 都重新初始化。同一世界的测量回调、控制器步进
@@ -238,7 +245,7 @@ credit 不含假发现/弃权惩罚,不能作为综合提交质量分。具体 m
 22. `tests/test_<task>.py` 钉住关键性质。
 
 **F 集成**
-23. 黑盒 `frontier_eval/run_eval.py` 只用标准库启动 `sle.frontier_eval_entrypoint` CLI，保留显式 `TASK_ID` 与 `EVAL_TIMEOUT_S`；后者与卡片 `evaluation_budget` 一致；metadata 的 `eval_time_seconds` 是预计评测成本，生成器缺省预算为 `max(300, 3 * eval_time_seconds)`，可用 `eval_timeout_s` 显式覆盖。禁止同进程 import 候选。验证非 300 秒预算能传到 `sle eval`，导入/基础设施故障返回非零且不生成分数；搜索可见指标走白名单，全量 sidecar 必须放在提案智能体不可读的目录。
+23. 黑盒 `frontier_eval/run_eval.py` 只用标准库启动 `sle.frontier_eval_entrypoint` CLI，保留显式 `TASK_ID` 与 `EVAL_TIMEOUT_S`；`EVAL_TIMEOUT_S` 是评测路径上**唯一**被强制的超时——metadata 的 `eval_time_seconds` 是预计评测成本，没有任何运行时代码读取它。两者必须自洽：生成器缺省预算为 `max(300, 3 * eval_time_seconds)`，可用 `eval_timeout_s` 显式覆盖，`scripts/audit_tasks.py` 按 `[3x, 100x]` 检查实装常量与声明成本的比值（理由见该脚本 `EVAL_TIMEOUT_MIN`/`EVAL_TIMEOUT_MAX` 注释；历史上 dev 分支曾出现声明 1 s、实装 720 s 与声明 600 s、实装 600 s 两种已记录的迁移项）。禁止同进程 import 候选。验证非 300 秒预算能传到 `sle eval`，导入/基础设施故障返回非零且不生成分数；搜索可见指标走白名单，全量 sidecar 必须放在提案智能体不可读的目录。
 24. Linux 主机沙箱内实跑,分数与本地一致;`python scripts/check_task_contribution.py --task <id>` 通过。
 25. 全量测试绿;若改了任务包内文件,还要刷新全局证据。
 
@@ -400,3 +407,9 @@ python -m sle run --task Chemistry/LennardJonesCluster --algorithm greedy_rewrit
 当前过程记录器覆盖四个试点，其余 discovery 任务在全量档案中标记待审查。
 接入新题须提供 callback/逐世界结果适配和回归验证；不能仅凭填好档案或日志齐全提升认证状态。
 过程证据和隐藏结果必须保持 evaluator-only，禁止反馈到搜索者。
+
+Harness diagnostics distinguish `callback_invocations` (all invoked callbacks, including free
+and rejected calls) from oracle-defined budget usage. Trusted callers can pass `diagnostics={}`
+to `evaluate_candidate` to receive this count outside the scientific metric dictionary.
+Public failure feedback uses only the reviewed finite label vocabulary in
+`sle/metric_visibility.py`; identifier syntax alone never makes a label safe to publish.

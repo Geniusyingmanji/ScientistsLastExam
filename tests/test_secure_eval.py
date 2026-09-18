@@ -101,6 +101,33 @@ class SecureEvaluationTests(unittest.TestCase):
         direct = {"combined_score": 1.0, "valid": 1.0, "raw_score": 1.0}
         self.assertEqual(secure, direct)
 
+    def test_callback_diagnostics_cross_the_real_driver_on_success_and_failure(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            task = _fixture_task(root)
+            (task / "verification" / "evaluator.py").write_text(
+                "def evaluate(design_cavity):\n"
+                "    value = design_cavity(lambda: 0.25)\n"
+                "    return {'combined_score': value, 'valid': 1.0}\n",
+                encoding="utf-8",
+            )
+            spec = load_task_spec(task)
+            for fails in (False, True):
+                with self.subTest(fails=fails):
+                    candidate = root / "candidate.py"
+                    candidate.write_text(
+                        "def design_cavity(observe):\n"
+                        "    observe()\n    observe()\n"
+                        + ("    raise ValueError('boom')\n" if fails else "    return 0.5\n"),
+                        encoding="utf-8",
+                    )
+                    diagnostics = {}
+                    result = evaluate_candidate(spec, candidate, timeout_s=10,
+                                                diagnostics=diagnostics)
+                    self.assertEqual(diagnostics, {"callback_invocations": 2})
+                    self.assertNotIn("callback_invocations", result)
+                    self.assertEqual(result["valid"], 0.0 if fails else 1.0)
+
     def test_private_proc_probe_has_well_formed_bind_arguments(self):
         completed = type("Completed", (), {"returncode": 0})()
         library_args = (
@@ -740,6 +767,34 @@ class CodecTests(unittest.TestCase):
             encode(object())
         with self.assertRaises(CodecError):
             encode(float("nan"))
+
+    def test_numpy_boolean_crosses_as_a_python_bool(self):
+        """Oracles type-check booleans, and np.bool_ is not a subclass of bool.
+
+        Measured before the fix: `encode({"abstain": np.bool_(True)})` raised
+        "unsupported value type: bool_" while np.int64 was already normalised, so a candidate
+        that computed its decision mask in numpy failed over a representation detail rather
+        than over its science. Mathematics/HeavyTailEvidence reads the submission with
+        `isinstance(abstain, bool)` at evaluator.py:72, so the value must arrive as a bool.
+        """
+        for value in (np.bool_(True), np.bool_(False)):
+            with self.subTest(value=value):
+                got = decode(json.loads(json.dumps(encode({"abstain": value}))))
+                self.assertIsInstance(got["abstain"], bool)
+                self.assertEqual(got["abstain"], bool(value))
+        # Nested in a list, which is how a per-world verdict usually travels.
+        got = decode(json.loads(json.dumps(encode([np.True_, np.False_]))))
+        self.assertEqual(got, [True, False])
+        self.assertTrue(all(isinstance(entry, bool) for entry in got))
+
+    def test_numpy_timedelta_is_rejected_as_a_codec_error(self):
+        """np.timedelta64 subclasses np.integer but cannot be int()ed.
+
+        Before this guard it escaped the codec as a bare TypeError, breaking this module's
+        promise to raise CodecError for anything it will not carry.
+        """
+        with self.assertRaises(CodecError):
+            encode(np.timedelta64(1, "D"))
 
     def test_metric_validation_preserves_scientific_raw_score(self):
         got = validate_metrics(

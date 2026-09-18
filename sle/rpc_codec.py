@@ -21,12 +21,28 @@ def encode(value: Any, depth: int = 0) -> Any:
         raise CodecError("maximum nesting depth exceeded")
     if value is None or isinstance(value, (bool, str, int)):
         return value
+    # numpy's boolean scalar is not a subclass of Python bool, so without this it falls
+    # through to the unsupported-type error at the bottom. Oracles commonly validate a
+    # submission with `isinstance(submission["abstain"], bool)` (e.g.
+    # Mathematics/HeavyTailEvidence/verification/evaluator.py:72), and a candidate that
+    # computes a mask in numpy returns np.bool_ meaning exactly the same thing. Normalising
+    # here is the same treatment np.integer already gets two branches down: the value crosses
+    # the boundary as the type the oracle expects, not as the type numpy happened to produce.
+    # Rejecting it would fail a correct submission over a representation detail.
+    if isinstance(value, np.bool_):
+        return bool(value)
     if isinstance(value, (float, np.floating)):
         value = float(value)
         if not math.isfinite(value):
             raise CodecError("non-finite float")
         return value
     if isinstance(value, np.integer):
+        # np.timedelta64 is a subclass of np.integer, so it reaches this branch, but int()
+        # refuses it with a TypeError. That escapes as a bare TypeError rather than the
+        # CodecError this function promises, which is the kind of inconsistency the typed
+        # error exists to prevent. Name it and reject it like any other unsupported type.
+        if isinstance(value, np.timedelta64):
+            raise CodecError("unsupported value type: timedelta64")
         return int(value)
     if isinstance(value, (complex, np.complexfloating)):
         value = complex(value)

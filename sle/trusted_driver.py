@@ -35,6 +35,12 @@ def main() -> int:
     parser.add_argument("--expected-runtime-sha256", required=True)
     args = parser.parse_args()
     trusted_context_sha256 = None
+    # Harness diagnostics out-of-band: trusted_evaluate writes into this dict, and the envelope -
+    # not the metrics - is where they are published. Assigned BEFORE the try: the except-Exception
+    # path below runs with diagnostics unbound otherwise, and the runtime-binding-mismatch guard
+    # at the top of the try raises before any assignment - an UnboundLocalError in the driver
+    # process turned that infrastructure failure into a different, wronger one.
+    diagnostics = {}
     runtime = current_runtime_descriptor(task_runtime_distributions(args.task_dir))
     try:
         if runtime["fingerprint_sha256"] != args.expected_runtime_sha256:
@@ -49,6 +55,7 @@ def main() -> int:
         metrics = trusted_evaluate(
             args.task_dir.resolve(), args.candidate.resolve(), args.entrypoint,
             args.score_mode, args.timeout, trusted_context=trusted_context,
+            diagnostics=diagnostics,
         )
     except (CandidateError, TimeoutError) as exc:
         metrics = sanitized_candidate_failure(exc)
@@ -77,6 +84,13 @@ def main() -> int:
         "trusted_evaluator_runtime_sha256": runtime["fingerprint_sha256"],
         "metrics": metrics,
     }
+    calls = diagnostics.get("callback_invocations") if diagnostics else None
+    if calls is not None:
+        # Beside the runtime sha, not inside metrics: the byte-for-byte equality
+        # trusted_evaluate == direct evaluation is how a sandboxed run is proven not to have
+        # perturbed the science, and a harness-added metrics key breaks it. The count is a
+        # diagnostic and rides in the diagnostic channel.
+        envelope["callback_invocations"] = calls
     args.result.write_text(json.dumps(envelope, allow_nan=False), encoding="utf-8")
     return 0
 
