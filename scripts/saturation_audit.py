@@ -45,8 +45,8 @@ admits" in their own `known_best.md` while their structured card says nothing.
 
 `at_ceiling_undeclared` is the defect. The reference is at the ceiling and the structured card
 does not say so. This observation alone does not establish task difficulty or model saturation.
-`at_ceiling_declared` is not a defect: a task that documents its own saturation honestly is a
-finished on-ramp, and the distinction between the two is the point of the split. Measured
+`at_ceiling_declared` records an explicit declaration of reference saturation. Neither status
+establishes how easy the task is for a model. Measured
 2026-09-17: five undeclared, one declared.
 
 ## Why this is reported and not gated
@@ -204,6 +204,11 @@ def audit_task(spec, tolerance: float = DEFAULT_TOLERANCE) -> dict:
         raise ValueError("tolerance must be finite and in [0, 1)")
     row = {"task": spec.task_id, "score_mode": spec.metadata.get("score_mode"),
            "declared": declares_saturation(spec)}
+    if row["score_mode"] != "clipped":
+        # No normalized ceiling exists for this audit to measure. Decide before
+        # importing or executing a potentially expensive reference or oracle.
+        row.update(status=NOT_MEASURED, detail="uncapped task; no normalised ceiling to compare to")
+        return row
     reference = reference_path(spec)
     if reference is None:
         row.update(status=NOT_MEASURED, detail=_no_reference_detail(spec))
@@ -228,11 +233,6 @@ def audit_task(spec, tolerance: float = DEFAULT_TOLERANCE) -> dict:
         return row
     score = float(score)
     row.update(combined_score=score, valid=metrics.get("valid"))
-    if row["score_mode"] != "clipped":
-        # An uncapped task's ceiling is a number the task itself does not publish; the normalised
-        # 1.0 that the clipped tasks share has no meaning here, so no verdict is offered.
-        row.update(status=NOT_MEASURED, detail="uncapped task; no normalised ceiling to compare to")
-        return row
     if not 0.0 <= score <= 1.0 + 1e-9:
         row.update(status=NOT_MEASURED, detail="score outside the clipped contract")
         return row

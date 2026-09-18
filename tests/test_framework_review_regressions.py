@@ -69,6 +69,18 @@ def test_invalid_saturation_tolerance_is_rejected(tolerance):
         saturation_audit.audit_task(None, tolerance=tolerance)
 
 
+def test_uncapped_saturation_does_not_execute_a_reference(tmp_path):
+    spec = SimpleNamespace(task_id="T/t", task_dir=tmp_path,
+                           metadata={"score_mode": "uncapped"})
+    with patch.object(saturation_audit, "reference_path") as reference, \
+            patch.object(saturation_audit, "load_oracle") as oracle:
+        row = saturation_audit.audit_task(spec)
+    assert row["status"] == saturation_audit.NOT_MEASURED
+    assert "uncapped" in row["detail"]
+    reference.assert_not_called()
+    oracle.assert_not_called()
+
+
 def test_non_pilot_failure_preserves_callback_diagnostics(tmp_path):
     proxy = Mock(callback_invocations=3, failure=None)
     proxy.__enter__ = Mock(return_value=proxy)
