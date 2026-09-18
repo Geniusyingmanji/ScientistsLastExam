@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "task": "Hydrology/AquiferPumpingInference",
+  "source_provenance": {
+    "git_revision": "7c7a013930cec400aa7c152881114945752a238e",
+    "source_tree_dirty": false,
+    "task_package_sha256": "dc236ba84aaffb8aaa8f9f2cd55f09f66551658746bbd853c909f6aa2f10f87b",
+    "task_contract_sha256": "8c945b340131f886d0c053bea27ba290b9626d1df04973c888359502e8b2a48a",
+    "runtime_source_sha256": "07eea1137edc86159c139c043b63bf0b3213e739debc176cf08ce7671c165298"
+  },
+  "environment": {
+    "platform": "Linux x86_64 with bubblewrap",
+    "python": "3.10.12",
+    "numpy": "1.24.4",
+    "scipy": "1.10.1"
+  },
+  "task_validation": {
+    "contribution_gate": "passed with structural, runtime, shortcut guard, discovery axes, baseline determinism, degenerate candidates and bad candidates",
+    "targeted_test_count": 8,
+    "targeted_subtest_count": 16,
+    "targeted_tests_passed": true,
+    "complete_metrics_identical_twice": true,
+    "baseline": {
+      "valid": 1.0,
+      "development_score": 0.0,
+      "heldout_score": 0.0
+    },
+    "reference": {
+      "valid": 1.0,
+      "development_score": 0.6361822135987336,
+      "heldout_score": 0.6912861389119417
+    },
+    "strongest_confined_residual_probe": {
+      "valid": 1.0,
+      "development_score": 0.13992861233579554,
+      "heldout_score": 0.1568866433256073,
+      "fraction_of_reference": 0.21995052572163593
+    },
+    "best_tested_half_budget_design": {
+      "valid": 1.0,
+      "development_score": 0.31458941492592774,
+      "heldout_score": 0.40241531432549565
+    }
+  },
+  "model_calibration": {
+    "run_role": "calibration",
+    "algorithm": "greedy_rewrite",
+    "feedback_mode": "selection_blind",
+    "proposal_budget": 1,
+    "replicate_identifiers": [17, 29],
+    "server_side_seed_control": false,
+    "decoding": {
+      "temperature": 0.7,
+      "max_output_tokens": 8000,
+      "thinking_condition": "disabled",
+      "thinking_transport": "repository-external localhost adapter injected thinking.type=disabled into chat requests",
+      "flash_smoke_reply": "AQ60_FLASH_OK",
+      "pro_smoke_reply": "AQ60_PRO_OK.",
+      "smoke_visible_output_tokens": 5
+    },
+    "selection": "two independent first proposals per model; no proposal received evaluated feedback and no redraw was used",
+    "scheduled_proposal_count": 4,
+    "valid_proposal_count": 2,
+    "campaign_status": "incomplete_two_of_four_first_proposals_invalid",
+    "models": [
+      {
+        "model_id": "deepseek-v4-flash",
+        "plan_sha256": "3c261b5998fd6e6b69e1fc205f7951b7a8c737c9442944996148e106a423979c",
+        "private_result_sha256": "b031b66103b5f409751ad33600e7866d53f623428938b986ba53549c6f9416b8",
+        "private_batch_sha256": "6c757316d54b8475a714f62dc40b64d8f09bb6599aa43718a4cc76dfd4befeb7",
+        "proposal_count": 2,
+        "valid_proposal_count": 1,
+        "runs": [
+          {
+            "replicate_identifier": 17,
+            "status": "invalid",
+            "failure_category": "measurement_contract_violated",
+            "candidate_sha256": "24756cca4098b613186ded3dee0af411aaaacc072a9300b21b56348e951dacba",
+            "input_tokens": 2177,
+            "output_tokens": 4100
+          },
+          {
+            "replicate_identifier": 29,
+            "status": "valid",
+            "candidate_sha256": "9553d2a46b351fda525265e921fb6f07f0e2313c92ef5237b515e6a4a71a47cb",
+            "complete_replay_sha256": "080d429e93fef3c8a08ff2dedee4f3b9140448165eac3a88a98beec347845103",
+            "development_score": 0.19262508979331122,
+            "heldout_score": 0.17237206485724677,
+            "development_mechanism_score": 0.625,
+            "heldout_mechanism_score": 0.6111111111111112,
+            "development_correct_refusal_rate": 0.25,
+            "heldout_correct_refusal_rate": 0.2222222222222222,
+            "development_unsupported_prediction_score": 0.2104036511677004,
+            "heldout_unsupported_prediction_score": 0.1881080848463036,
+            "input_tokens": 2177,
+            "output_tokens": 5539
+          }
+        ]
+      },
+      {
+        "model_id": "deepseek-v4-pro",
+        "plan_sha256": "a78c75c97cac44b58bed71039c68f268ccbf02136190c15bd1737dcb562a6ca4",
+        "private_result_sha256": "1f673134088cd2ff2eac8a06c5e088390458533f735d937bde66696fa8970be4",
+        "private_batch_sha256": "265dd2ea0b6ecaa157d18227728e0ef85d8aed2b0a88e66fb242f5c3e248ecdc",
+        "proposal_count": 2,
+        "valid_proposal_count": 1,
+        "runs": [
+          {
+            "replicate_identifier": 17,
+            "status": "valid",
+            "candidate_sha256": "3e3ef85bb34f098602bb212cd4e4005ecea645cb5b4d84780bb9e4bde0fa7a68",
+            "complete_replay_sha256": "1ff0fbe134c21c2a60821b8af500b6d6c85eb12f7417eeb591e3dd946ec183f4",
+            "development_score": 0.01271904509846142,
+            "heldout_score": 0.0,
+            "development_mechanism_score": 0.4583333333333333,
+            "heldout_mechanism_score": 0.3888888888888889,
+            "development_correct_refusal_rate": 0.16666666666666666,
+            "heldout_correct_refusal_rate": 0.0,
+            "development_unsupported_prediction_score": 0.05913725231627583,
+            "heldout_unsupported_prediction_score": 0.0,
+            "input_tokens": 2176,
+            "output_tokens": 5749
+          },
+          {
+            "replicate_identifier": 29,
+            "status": "invalid",
+            "failure_category": "candidate_runtime_error",
+            "candidate_sha256": "ce097cf0fd40eb886f28c679dcec0e12850296231fe282b5e0adc18f2d7af462",
+            "input_tokens": 2176,
+            "output_tokens": 5331
+          }
+        ]
+      }
+    ],
+    "maximum_valid_first_proposal_development_score": 0.19262508979331122,
+    "reference_development_score": 0.6361822135987336,
+    "valid_first_proposals_reach_reference": false,
+    "interpretation": "Both models produced one valid scientific attempt below the reference. The two invalid cells are retained as protocol failures and do not count as evidence of task difficulty. DeepSeek Flash and Pro are supplementary calibration, not a substitute for maintainer-native frontier-model D16 evidence."
+  },
+  "scope": "Current-contract task-level calibration and validation; no full-repository suite or maintainer-owned global evidence refresh was run."
+}

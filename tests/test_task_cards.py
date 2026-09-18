@@ -76,6 +76,7 @@ RECORDED_LINEAGE = {
     "Geophysics/UPbConcordiaInference",
     "Sensors/IMUBiasCalibration",
     "Microbiology/MetagenomeCompositionAssignment",
+    "Hydrology/AquiferPumpingInference",
 }
 
 

@@ -1,0 +1,101 @@
+schema_version: 2
+scientific_question: Can an agent design a multi-radius pumping test, recover confined-aquifer transmissivity and storativity, and refuse leakage, recharge-boundary, or delayed dual-porosity mechanisms?
+artifact: Two confined-aquifer parameters, sealed drawdown predictions, a conceptual-model diagnosis, confidence, and immutable measurement evidence.
+oracle:
+  model: deterministic seeded Theis radial-flow laboratory with three publicly specified reduced-order alternatives motivated by leaky-aquifer attenuation, constant-head image-well boundaries, and delayed dual-porosity storage
+  feasibility: listed radius/time queries, six setup units for each distinct radius plus one unit per observation within a 24-unit budget, exact finite bounded outputs, consistent diagnosis and abstention, and current-world evidence identifiers
+  deterministic: true
+normalization:
+  baseline: six legal observations followed by a valid overconfident confined claim with boundary-valued parameters and zero predictions
+  reference: truth-blind cross-radius nonlinear fits of the confined and three alternative families with information-criterion attribution
+  score: mean supported-world parameter and prediction quality multiplied by mean unsupported-world sealed-prediction quality, where a wrong or undetermined family contributes zero; family accuracy, false discovery, refusal, coverage, attempts and held-out transfer remain separate with counts
+evaluation_budget:
+  total_units_per_world: 24
+  distinct_radius_setup_units: 6
+  measurement_units: 1
+  reference_design: 25 m and 110 m radii with six times at each radius, consuming all 24 units
+  expected_wall_time_seconds: 10
+citations:
+- id: doi:10.1029/TR016i002p00519
+  title: The relation between the lowering of the piezometric surface and the rate and duration of discharge of a well using ground-water storage
+- id: doi:10.1029/TR036i001p00095
+  title: Non-steady radial flow in an infinite leaky aquifer
+- id: doi:10.3133/wsp1536E
+  title: Theory of aquifer tests
+- id: doi:10.1029/WR020i007p00831
+  title: Double-porosity models for a fissured groundwater reservoir with fracture skin
+invariants:
+- confined drawdown follows the Theis exponential-integral solution and increases with elapsed time at fixed radius
+- confined drawdown decreases with radius and is invariant under equal values of radius squared divided by time
+- leakage, a recharge image well, and delayed dual-porosity storage alter different cross-radius or temporal features
+- every observation has a listed radius and time, finite nonnegative drawdown, stated uncertainty, and an immutable current-world ID
+- measurement IDs are deterministic coordinate/repeat digests independent of world seed and world order, and worlds are deterministically shuffled within each split
+- every world starts a fresh candidate session, and observation noise is seeded by world, coordinate, and repeat rather than query order
+- blanket undetermined abstention is valid and scores exactly zero
+- never refusing and any fixed unsupported label score exactly zero
+- malformed, non-finite, extra-key, fabricated-evidence, unlisted-coordinate, and over-budget candidates fail closed
+- valid and invalid evaluation paths return the same 43 top-level metric keys
+- development and held-out worlds use different parameters and deterministic noise seeds
+- the reference consumes only public problems and charged measurement callbacks
+known_shortcuts: The strongest reproducible confined-fit residual probe uses no alternative-family equation, independently selects its best radius pair from all ten pairs, and scores 0.139929/0.156887 development/held out versus the multi-family reference at 0.636182/0.691286. An earlier three-threshold probe scores 0.023665/0.028897. The historical 0.884294 maintainer candidate targeted an obsolete score that awarded full unsupported credit for a correct label without testing whether the candidate could model that family; under the current continuous unsupported-prediction axis, the conservative stronger analog cannot exploit that route. The development-best one-radius half-budget design from 210 tested schedules scores 0.314589/0.402415, fixed storativity scores 0.031206/0.009477, and never refusing scores zero. The reduced-order laboratory omits partial penetration, well storage/skin, heterogeneity, anisotropy, unconfined flow, irregular boundaries and correlated drift.
+review:
+  domain: pending_external_hydrogeology_review
+  evaluator_security: automated_budget_contract_determinism_theis_invariant_bad_candidate_ablation_metric_shape_identifier_leakage_degenerate_policy_and_mechanism_accounting_tests
+provenance:
+  class: procedural
+  target_source: Repository-visible deterministic multi-radius pumping-test generator with development and held-out supported and misspecified worlds.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: current_budget_and_scoring_revision_builder_replayed_on_linux_pending_independent_recomputation
+novelty_risk:
+  level: medium
+  rationale: No repository or Frontier-Eng task performs pumping-test interpretation. GravityInversion reconstructs static density bodies; EnergyBalanceModel fits global climate response; RadiativeTransferFit shares active inversion with refusal but retrieves atmospheric profiles; UPbConcordiaInference attributes coupled radioactive-decay histories. None uses radial groundwater diffusion, pumping-test radius setup costs, or aquifer conceptual-model attribution.
+lineage:
+  status: complete
+  builder_model_ids:
+  - openai-codex:gpt-5
+  builder_scaffolds:
+  - science-benchmark-construction
+  - active_multi_radius_pumping_test_discovery
+  calibrator_model_ids:
+  - deepseek-v4-flash
+  - deepseek-v4-pro
+  calibration_runs:
+  - experiments/aquifer_pumping_deepseek_calibration_2026-09-08.json
+  - experiments/aquifer_pumping_deepseek_calibration_2026-09-09.json
+  - experiments/aquifer_pumping_admission_2026-09-17.json
+  calibration_evidence_status: current_or_migration_replayed
+  edits_triggered_by_model: The September 8 and 9 DeepSeek Flash and Pro draws predate the current world panel, baseline, noise, tolerances, unsupported-prediction axis, and probe set, so they are historical protocol evidence only. Independent maintainer red teams, not those model scores, triggered the scoring and calibration revisions. After executable structure was held fixed at 7c7a0139, current-contract Flash and Pro each produced one valid first proposal below reference and one retained invalid proposal; no evaluator or hidden-world change followed.
+  shortcut_discoverer: independent_maintainer_red_team_then_builder_reproduced_128_strategy_confined_fit_and_residual_threshold_sweep
+  frozen_before_eval: false
+  freeze_timestamp: null
+long_horizon:
+  status: not_tested
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_and_independent_maintainer_red_team_completed_pending_domain_review
+  author_domain: hydrogeology
+  reviewer_domain: independent_maintainer_engineering_review_completed_external_hydrogeology_review_pending
+  expert_hours: null
+  red_team_rounds: 4
+  oracle_disagreement_status: reduced_order_alternative_formulas_are_public_and_explicitly_not_claimed_as_the_full_cited_solutions
+  independent_recomputation_status: the maintainer independently reproduced and attacked earlier revisions; the continuous unsupported-prediction score, confident baseline, truth-blind reference, best-of-ten radius design, best-of-210 half-budget ablation, self-contained residual probes, malformed-candidate checks, identifier probe, and degenerate policies are builder-replayed on Linux pending independent rerun
+shortcut_probe:
+  schema_version: 1
+  metric: combined_score
+  reference:
+    candidate: verification/reference_solver.py
+    expected_score: 0.636182214
+  probes:
+  - id: confined_fit_three_threshold_probe
+    candidate: verification/shortcut_probe.py
+    expected_score: 0.023664768
+  - id: strongest_confined_fit_residual_probe
+    candidate: verification/shortcut_probe_strong.py
+    expected_score: 0.139928612
+  excluded:
+  - candidate: solution.py
+    reason: required zero baseline, tested separately rather than used as scientific shortcut evidence
+  relative_margin: 0.5
+  score_tolerance: 0.000001
