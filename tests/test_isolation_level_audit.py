@@ -219,6 +219,42 @@ class IsolationLevelAuditTests(unittest.TestCase):
                 named[split + "_false_discovery_count"],
                 sum(w["level"] != "strict_serializable" for w in worlds), split)
 
+    def test_the_reference_answer_carries_a_decision_a_probe_can_flip(self):
+        """Both keys on every answer, so overriding the flag actually changes the submission.
+
+        The repository audits a task by rerunning the reference with its abstention forced one way
+        and then the other. That measures nothing if the reference signals a refusal by omitting
+        the level and a claim by omitting the flag, because the override then lands on a key the
+        evaluator was never going to read. Both branches carry both keys, and the two forced runs
+        score below the reference on opposite sides: forcing refusal everywhere gives up every
+        world it had settled, forcing a claim everywhere spends the refusals on wrong levels.
+        """
+        seen = []
+
+        def watch(problem, run):
+            answer = self.ref.audit(problem, run)
+            seen.append(answer)
+            return answer
+
+        reference = self.ev.evaluate(watch)
+        self.assertEqual(len(seen), len(self.specs))
+        for answer in seen:
+            self.assertIsInstance(answer.get("abstain"), bool)
+            self.assertIn(answer.get("level"), self.ev.LEVELS)
+        self.assertTrue(any(a["abstain"] for a in seen))
+        self.assertTrue(any(not a["abstain"] for a in seen))
+
+        def forced(flag):
+            return self.ev.evaluate(
+                lambda p, r: dict(self.ref.audit(p, r), abstain=flag))
+
+        refuse_all, claim_all = forced(True), forced(False)
+        self.assertEqual(refuse_all["combined_score"], 0.0)
+        self.assertEqual(refuse_all["development_refusal_rate"], 1.0)
+        self.assertLess(claim_all["combined_score"], reference["combined_score"])
+        self.assertEqual(claim_all["development_refusal_rate"], 0.0)
+        self.assertGreater(claim_all["development_misidentification_rate"], 0.0)
+
 
 if __name__ == "__main__":
     unittest.main()

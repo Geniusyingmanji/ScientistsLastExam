@@ -320,7 +320,7 @@ def audit(problem, run):
         one(PATTERNS[i % len(PATTERNS)])
         i += 1
         if verdict()[1] == "read_uncommitted":       # nothing can be worse, so stop paying
-            return {"level": "read_uncommitted", "confidence": 0.9,
+            return {"abstain": False, "level": "read_uncommitted", "confidence": 0.9,
                     "evidence": {"hits": _seen(hits), "ops": spent}}
 
     while True:                                      # then only where the verdict could still fall
@@ -335,9 +335,11 @@ def audit(problem, run):
 
     worst, level = verdict()
     short = [lv for lv in LEVELS[:LEVELS.index(level)] if opp[lv] < MIN_OPP[lv]]
-    if short:
-        return {"abstain": True, "confidence": 0.0,
-                "note": "not enough opportunities to rule out " + ",".join(short),
-                "evidence": {"hits": _seen(hits), "opportunities": opp, "ops": spent}}
-    return {"level": level, "confidence": 0.85,
+    # The decision is a flag and it is always present, on both branches, beside the verdict the
+    # evidence reached. A refusal that simply omits the level, and a claim that omits the flag,
+    # would make the calibration decision unreadable from the answer: forcing the flag either way
+    # would leave the submission unchanged, and a probe that flips it would measure nothing.
+    return {"abstain": bool(short), "level": level,
+            "confidence": 0.0 if short else 0.85,
+            "note": ("not enough opportunities to rule out " + ",".join(short)) if short else "",
             "evidence": {"worst": worst, "hits": _seen(hits), "opportunities": opp, "ops": spent}}

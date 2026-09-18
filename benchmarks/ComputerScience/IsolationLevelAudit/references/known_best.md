@@ -17,7 +17,7 @@ repository's Bubblewrap sandbox does not run there, so `shortcut_probe.expected_
 |---|---|---|---|---|---|---|
 | **reference** `verification/reference_opportunity_audit.py` | **0.5000** | **0.6250** | 0.50 | 0.00 | 0.50 | — |
 | baseline `solution.py` (symptom scan) | 0.0000 | 0.0000 | 0.17 | 0.83 | 0.00 | 0 % |
-| no-refusal | 0.1667 | 0.2500 | 0.58 | 0.42 | 0.00 | 33 % |
+| no-refusal | 0.3333 | 0.5000 | 0.67 | 0.33 | 0.00 | 67 % |
 | naive-refusal | 0.1667 | 0.3750 | 0.50 | 0.33 | 0.17 | 33 % |
 | round-count-power | 0.0833 | 0.2500 | 0.50 | 0.42 | 0.08 | 17 % |
 | tenth-budget | 0.0833 | 0.1250 | 0.08 | 0.00 | 0.92 | 17 % |
@@ -30,8 +30,15 @@ repository's Bubblewrap sandbox does not run there, so `shortcut_probe.expected_
 | undesigned-traffic | 0.0000 | 0.0000 | 0.00 | 1.00 | 0.00 | 0 % |
 
 The reference names six of the twelve development worlds and declines six, and it names no world
-wrongly on either split. The best shortcut reaches a third of it, and it is not clean: no-refusal
-names the wrong level in five of the twelve development worlds, naive-refusal in four.
+wrongly on either split. The best shortcut reaches two thirds of it, and it is not clean: no-refusal
+names the wrong level in four of the twelve development worlds, naive-refusal in four as well.
+
+No-refusal is deliberately the strongest member of its family. It is the reference with the last
+step deleted: the same four patterns, the same detector, the same two-phase allocation that spends
+the tail of the budget only where the verdict could still fall, and then it names whatever the
+evidence came to instead of asking whether the quiet levels were ever contended. An earlier version
+cycled the four patterns evenly over the whole budget and scored 0.1667, half as much, so declaring
+that one would have understated what the calibration is worth by a factor of two.
 
 ## The three discovery axes
 
@@ -49,7 +56,7 @@ which is zero for one that declines everything and all twelve for one that names
 |---|---|---|---|---|---|---|
 | **reference** | **0.000** | **1.000** | **1.000** | **0.000** | **1.000** | **1.000** |
 | baseline | 0.833 | 0.000 | 1.000 | 0.750 | 0.000 | 1.000 |
-| no-refusal | 0.417 | 0.000 | 1.000 | 0.375 | 0.000 | 1.000 |
+| no-refusal | 0.333 | 0.000 | 1.000 | 0.250 | 0.000 | 1.000 |
 | naive-refusal | 0.400 | 0.167 | 0.833 | 0.200 | 0.667 | 0.800 |
 | round-count-power | 0.455 | 0.000 | 0.833 | 0.375 | 0.000 | 1.000 |
 | blanket-decline | 0.000 | 1.000 | 0.000 | 0.000 | 1.000 | 0.000 |
@@ -71,13 +78,16 @@ that is merely a restatement of the world's weak rate.
 |---|---|---|---|---|---|
 | **reference** | **0.5417** | 0.5000 | **0.6562** | 0.6250 | **0** |
 | naive-refusal | 0.2917 | 0.0000 | 0.4375 | 0.1250 | 16 |
-| no-refusal | 0.2500 | 0.0000 | 0.3750 | 0.0000 | 28 |
+| no-refusal | 0.2500 | 0.1667 | 0.4375 | 0.2500 | 27 |
 | round-count-power | 0.2083 | 0.0000 | 0.3750 | 0.0000 | 28 |
 | tenth-budget | 0.1042 | 0.0833 | 0.2188 | 0.1250 | 0 |
 | baseline and the seven blind or cheap strategies | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0 to 80 |
 
-The reference is flat across shifts and never wrong. The best shortcut rises to 54 per cent of it
-and stays wrong in 16 of its 80 world-runs.
+The reference is flat across shifts and never wrong. No shortcut passes 54 per cent of it once the
+seeds move, and the one that gets there is wrong in 16 of its 80 world-runs while no-refusal is
+wrong in 27. The order flips here: no-refusal leads on the fixed grid at 67 per cent and falls to 46
+per cent across shifts, because naming a level without checking whether it was contended pays off
+only on the particular draws where the evidence happened to arrive.
 
 ## Which worlds the budget can settle
 

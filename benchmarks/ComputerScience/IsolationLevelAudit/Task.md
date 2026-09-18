@@ -127,7 +127,7 @@ the world scores −1, so count what you spend. A malformed batch raises.
 |---|---|
 | `level` | one of `levels` |
 | `confidence` | in `[0, 1]`; clipped |
-| `abstain` | `True` declines; `level` may then be omitted |
+| `abstain` | `True` declines, and it decides even when `level` is also present; `level` may then be omitted |
 
 Anything malformed scores that world −1, and so does a malformed call to `run`. It is never an
 infrastructure failure.
@@ -187,7 +187,7 @@ fixed level, read anomalies per key, read only the abort rates, spend the budget
 traffic, run the reference on a tenth of the budget, or run the full design and the full anomaly
 analysis with the refusal replaced by something cheaper: never declining, declining only when
 nothing fired at all, or measuring power in rounds instead of in races. The best of them reaches
-0.167 on the development split, **33 per cent of the reference**, and it names four wrong levels
+0.333 on the development split, **67 per cent of the reference**, and it names four wrong levels
 where the reference names none; every strategy that never makes a wrong call scores 0.000 by
 declining everything.
 

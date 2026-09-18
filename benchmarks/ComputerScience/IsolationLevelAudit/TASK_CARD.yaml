@@ -110,12 +110,16 @@ known_shortcuts: >-
   budget on random operations, then the full anomaly analysis (0.000, wrong or invalid in every
   world). The reference under-resourced: the same pipeline on a tenth of the budget (0.083, 17 per
   cent, and it declines eleven of the twelve). And the full design with the full anomaly analysis
-  but a cheaper refusal: never declining (0.167, 33 per cent), declining only when nothing fired at
+  but a cheaper refusal: never declining (0.333, 67 per cent), declining only when nothing fired at
   all (0.167, 33 per cent), and measuring power in rounds of contention rather than in the rounds
-  the clocks show were races (0.083, 17 per cent). The best of them reaches 0.167, 33 per cent of
-  the reference, and it is not clean: it names the wrong level in four or five of the twelve
-  development worlds where the reference names none. Over four seed shifts the best rises to 0.292,
-  54 per cent, still with 16 wrong calls in 80 world-runs against the reference's zero. Every
+  the clocks show were races (0.083, 17 per cent). The never-declining probe is the reference with
+  its last step deleted and nothing else changed, the same two-phase allocation included, because a
+  version that swept the four shapes evenly instead scored 0.167 and would have understated the
+  family by half. The best of them reaches 0.333, 67 per cent of the reference on the development
+  split and 80 per cent held out, and it is not clean: it names the wrong level in four of the
+  twelve development worlds where the reference names none. Over four seed shifts the order flips
+  and the best is 0.292, 54 per cent, still with 16 wrong calls in 80 world-runs against the
+  reference's zero, while never declining falls to 0.250 with 27. Every
   strategy that never names a wrong level scores 0.000 by declining everything. Separately, because
   the headroom the reference leaves is budget concentration, the reference's own rule was rescored
   with its four contention shapes narrowed to one or two, which is what concentration would look
@@ -172,7 +176,7 @@ novelty_risk:
     transactions at once, so a probe that is built correctly still usually returns nothing, and the
     only signal that a round was an experiment at all is in the operation clocks. Every strategy in
     the declared grid that skips that step, including the full Elle-style pipeline with no refusal,
-    stays at or below 33 per cent of the reference on the development split and 54 per cent over
+    stays at or below 67 per cent of the reference on the development split and 54 per cent over
     four seed shifts. Task.md names the classes and the levels but not which worlds are starved,
     not the weak rates, and not the exposure rates the thresholds are read off. Three independent
     first proposals, each written from Task.md, solution.py and constraints.txt alone with no sight
@@ -201,7 +205,7 @@ lineage:
     an anomaly; every level was then caught at every rate the budget could reach and the no-refusal
     strategy scored 1.000, 150 per cent of the reference. The lock now drains what is in flight
     before it is granted, an anomaly needs two weak transactions at once, and no-refusal falls to
-    33 per cent. Parallel snapshot first delivered writes per element rather than per transaction,
+    67 per cent. Parallel snapshot first delivered writes per element rather than per transaction,
     and then without respecting the committing transaction's causal past, which made it exhibit
     intermediate reads and read skew that its level forbids; delivery is now atomic per session and
     ordered after everything the transaction read. Begin and commit did not consume clock ticks, so

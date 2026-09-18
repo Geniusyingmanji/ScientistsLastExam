@@ -1,10 +1,15 @@
 """Shortcut probe: the whole design and the whole detector, and no idea when to stop trusting a
 negative.
 
-It builds the same four contention patterns as the reference and reads the same anomaly classes
-out of the history, but it never declines: it names the level the worst class it happened to see
-implies, and strict serializable when it saw nothing. Where the budget did not buy enough
-opportunities, that is a wrong answer rather than a refusal.
+It builds the same four contention patterns as the reference, reads the same anomaly classes out
+of the history, counts the same opportunities and spends its budget the same way, focusing on the
+patterns that could still lower the verdict. The one thing it will not do is decline: it names the
+level the worst class it saw implies, and strict serializable when it saw nothing. Where the budget
+did not buy enough opportunities, that is a wrong answer rather than a refusal.
+
+This is the strongest member of its family, which is why it is the one declared. A version that
+cycles all four patterns evenly instead of focusing scores half as much, so measuring that one
+would have understated what dropping the calibration is worth.
 """
 from __future__ import annotations
 
@@ -244,30 +249,70 @@ def p_repeat(run, a, b):
 PATTERNS = [("conflict", p_conflict, 14), ("disjoint", p_disjoint, 10), ("fork", p_fork, 8),
             ("repeat", p_repeat, 7)]
 
+SERVES = {"conflict": {"read_uncommitted", "read_committed", "serializable"},
+          "disjoint": {"snapshot_isolation", "serializable"},
+          "fork": {"parallel_snapshot", "serializable"},
+          "repeat": {"read_uncommitted"}}
+
+# The counts below steer the spending and nothing else. They say which levels the budget has not
+# yet given a fair chance, so the second phase knows where to put the remaining operations, but
+# the answer never consults them: whatever the opportunities came to, a level is named.
+MIN_OPP = {"read_uncommitted": 3, "read_committed": 2, "parallel_snapshot": 9,
+           "snapshot_isolation": 2, "serializable": 2, "strict_serializable": 0}
+SWEEP = 0.3
+
+
+def _serves(name, levels):
+    return bool(SERVES[name] & set(levels))
+
+
 def _seen(hits):
     return {c: n for c, n in hits.items() if n}
 
 
-
-def _sweep(problem, run):
-    """Cycle the four patterns over the whole budget and count what fires."""
+# ---- the auditor -------------------------------------------------------------------------------
+def audit(problem, run):
     budget = problem["budget"]
-    spent, key, rounds = 0, 0, 0
+    spent, key = 0, 0
     hits = {c: 0 for c in LADDER}
-    i = 0
-    while spent + 14 <= budget:
-        _name, fn, cost = PATTERNS[i % len(PATTERNS)]
-        txns, _gave = fn(run, key, key + 1)
+    opp = {lv: 0 for lv in LEVELS}
+
+    def one(pattern):
+        nonlocal spent, key
+        _name, fn, cost = pattern
+        txns, gave = fn(run, key, key + 1)
         key += 2
         spent += cost
-        rounds += 1
-        i += 1
+        for lv, yes in gave.items():
+            opp[lv] += bool(yes)
         for c in analyze(txns):
             hits[c] += 1
-        if level_of(next((c for c in LADDER if hits[c]), None)) == "read_uncommitted":
-            break                                    # nothing can be worse, so stop paying
-    return next((c for c in LADDER if hits[c]), None), rounds, _seen(hits)
 
-def audit(problem, run):
-    worst, _rounds, hits = _sweep(problem, run)
-    return {"level": level_of(worst), "confidence": 0.6, "evidence": {"hits": hits}}
+    def verdict():
+        worst = next((c for c in LADDER if hits[c]), None)
+        return worst, level_of(worst)
+
+    i = 0
+    while spent + 16 <= budget * SWEEP:              # look around first
+        one(PATTERNS[i % len(PATTERNS)])
+        i += 1
+        if verdict()[1] == "read_uncommitted":       # nothing can be worse, so stop paying
+            return {"abstain": False, "level": "read_uncommitted", "confidence": 0.9,
+                    "evidence": {"hits": _seen(hits), "ops": spent}}
+
+    while True:                                      # then only where the verdict could still fall
+        below = LEVELS[:LEVELS.index(verdict()[1])]
+        short = [lv for lv in below if opp[lv] < MIN_OPP[lv]]
+        live = sorted((p for p in PATTERNS if _serves(p[0], short)), key=lambda p: p[2])
+        if not live or spent + live[0][2] > budget:
+            break
+        one(live[0])
+        if verdict()[1] == "read_uncommitted":
+            break
+
+    worst, level = verdict()
+    # Here is the whole shortcut. The reference reaches this line with the same evidence and asks
+    # whether the quiet levels were ever given a chance; this one does not ask, and a level that
+    # was never contended reads exactly like a level that was contended and stayed clean.
+    return {"abstain": False, "level": level, "confidence": 0.6,
+            "evidence": {"worst": worst, "hits": _seen(hits), "opportunities": opp, "ops": spent}}
