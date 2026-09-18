@@ -23,12 +23,14 @@ PILOTS = {
     "SystemsBiology/EnzymeMechanismDiscovery": "Biology/EnzymeMechanismDiscovery",
     "CausalDiscovery/CausalTransportDiscovery": "ComputerScience/CausalTransportDiscovery",
     "SystemsBiology/EnzymeRecoveryDesign": "Biology/EnzymeRecoveryDesign",
+    "DiscoveryEvidence/MeasurementAudit": "ComputerScience/MeasurementAudit",
 }
 PILOT_ROLES = {
     "CausalDiscovery/SurvivorshipAuditDesign": "historical_control",
     "SystemsBiology/EnzymeMechanismDiscovery": "protocol_only",
     "CausalDiscovery/CausalTransportDiscovery": "hardening_candidate",
     "SystemsBiology/EnzymeRecoveryDesign": "hardening_candidate",
+    "DiscoveryEvidence/MeasurementAudit": "measurement_protocol_only",
 }
 MAX_JSON_BYTES = 2 * 1024 * 1024
 MAX_EVIDENCE_BYTES = 32 * 1024 * 1024
@@ -105,12 +107,17 @@ def _load_module(path):
     return module
 
 
-def create_environment(task, seed):
+def create_environment(task, seed, *, data_bundle=None):
     if isinstance(seed, bool) or not isinstance(seed, int) or seed < 0:
         raise ValueError("private seed must be a nonnegative integer")
     task_id, path = _task_directory(task)
     module = _load_module(path / "verification" / "episode.py")
-    environment = module.create_environment(seed)
+    if data_bundle is not None:
+        if task_id != "DiscoveryEvidence/MeasurementAudit":
+            raise ValueError("data bundles require the measurement adapter")
+        environment = module.create_environment(seed, bundle_path=data_bundle)
+    else:
+        environment = module.create_environment(seed)
     if environment.task_id != task_id:
         raise ValueError("adapter task identity mismatch")
     return environment
@@ -167,7 +174,7 @@ class EpisodeSession:
         self.budget_units = _positive_int(environment.budget_units, "budget_units")
         self.analysis = analysis
         self.binding = json_copy(binding or {"task_id": environment.task_id})
-        self.problem = json_copy(environment.public_problem())
+        self.problem = json_copy(self._public_problem())
         if self.problem.get("budget_units") != self.budget_units:
             raise ValueError("public and private budget differ")
         self.state = "exploring"
@@ -180,6 +187,9 @@ class EpisodeSession:
         self.claim_sha256 = None
         self.error = None
         self._record("start", {"problem": self.problem, "binding": self.binding})
+
+    def _public_problem(self):
+        return self.environment.public_problem()
 
     @property
     def done(self):
@@ -423,6 +433,11 @@ def validate_episode_report(report):
             raise ValueError("private outcome binding mismatch")
     elif report.get("metrics") is not None:
         raise ValueError("incomplete episodes cannot carry scientific scores")
+    if report["binding"].get("evaluation_mode") == "evidence_only":
+        from .evidence_episode import validate_discovery_report
+        validate_discovery_report(report)
+    elif any(e["kind"].startswith("discovery_") or e["kind"] == "native_observation" for e in events):
+        raise ValueError("discovery evidence requires its review mode binding")
     return {"status": "structurally_consistent" if complete else "incomplete_evidence",
             "scientific_validity": "not_assessed"}
 
@@ -474,6 +489,13 @@ def run_llm(session, llm, files=None):
               "confirmation is new data and cannot be used to revise the committed claim. "
               "When analyze is available, problem, history and public_files are Python variables; "
               "assign result to a JSON value. No evaluator scores are available.")
+    if session.binding.get("evaluation_mode") == "evidence_only":
+        system += (" This is ground-truth-free discovery. Follow the evidence protocol in the "
+                   "initial observation: register competing hypotheses and prospective tests, "
+                   "record concise scientific rationales, then commit an evidence dossier. "
+                   "The active discovery claim schema overrides any legacy task claim schema. "
+                   "Replication tests run only after commitment. All measurements, including "
+                   "replication, count against the experiment budget. No hidden answer is graded.")
     initial = {"observation": session.observation(), "public_files": files or {}}
     while not session.done:
         if session.steps >= session.max_steps or session._expired():

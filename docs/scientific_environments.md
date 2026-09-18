@@ -1,9 +1,24 @@
-# Scientific discovery environments: construction-stage pilots
+# Scientific discovery environments: evidence workflow and construction controls
 
-The `sle episode` command runs stateful, budgeted scientific experiments and
-freezes a claim before releasing fresh confirmation observations. Four
-environments are available, outside the admitted legacy task registry. The two
-new successors implement harder scientific contracts:
+The `sle episode` command defaults to **ground-truth-free evidence review**.
+It supports multiple rounds of competing hypotheses, preregistered tests,
+tool observations, isolated analysis and revisions, then freezes a dossier before
+opening reserved measurements. Operational evidence checks are separate from
+independent scientific review; no discovery score is inferred from prose or logs.
+See the [primary discovery protocol](discovery_evaluation.md).
+
+`DiscoveryEvidence/MeasurementAudit` accepts an operator-supplied measurement
+bundle with provenance and a sealed data partition. It has no hidden mechanism,
+generator or correctness evaluator. The bundled hand-entered example is strictly
+a protocol fixture. Run it without an API call:
+
+```sh
+python -m sle episode --task MeasurementAudit --baseline protocol \
+  --output-dir /var/tmp/sle-discovery-protocol
+```
+
+Five environments remain outside the admitted legacy task registry. The four
+earlier synthetic environments support **explicit oracle construction diagnostics**:
 
 - `CausalDiscovery/CausalTransportDiscovery`: reconstruct continuous dose-response
   curves across biomarker groups from costly, selectively assayed interventions;
@@ -38,13 +53,13 @@ Six saturated or shortcut-compromised legacy tasks are held by the separate
 
 ```sh
 python -m sle episode --list
-python -m sle episode --task SurvivorshipAuditDesign --baseline reference \
+python -m sle episode --task SurvivorshipAuditDesign --evaluation-mode oracle --baseline reference \
   --output-dir /var/tmp/sle-survivorship-reference
-python -m sle episode --task EnzymeMechanismDiscovery --baseline fixed \
+python -m sle episode --task EnzymeMechanismDiscovery --evaluation-mode oracle --baseline fixed \
   --output-dir /var/tmp/sle-enzyme-fixed
-python -m sle episode --task CausalTransportDiscovery --baseline reference \
+python -m sle episode --task CausalTransportDiscovery --evaluation-mode oracle --baseline reference \
   --output-dir /var/tmp/sle-transport-reference
-python -m sle episode --task EnzymeRecoveryDesign --baseline reference \
+python -m sle episode --task EnzymeRecoveryDesign --evaluation-mode oracle --baseline reference \
   --output-dir /var/tmp/sle-recovery-reference
 ```
 
@@ -57,7 +72,7 @@ callback, but executes inside the operator process; this mode is for constructio
 diagnostics. Candidate programs always use the Linux sandbox:
 
 ```sh
-python -m sle episode --task SurvivorshipAuditDesign --program candidate.py \
+python -m sle episode --task SurvivorshipAuditDesign --evaluation-mode oracle --program candidate.py \
   --seed 8173 --max-steps 64 --wall-seconds 300 \
   --output-dir /var/tmp/sle-program-example
 ```
@@ -70,7 +85,7 @@ workspace. NumPy/SciPy availability follows the existing CandidateProxy runtime.
 ## Run a model with experiment feedback
 
 ```sh
-python -m sle episode --task EnzymeMechanismDiscovery \
+python -m sle episode --task MeasurementAudit --data-bundle /private/operator/study \
   --llm-config /private/config/model.yaml --analysis sandbox \
   --seed 9281 --max-steps 32 --wall-seconds 600 \
   --output-dir /var/tmp/sle-interactive-example
@@ -78,7 +93,9 @@ python -m sle episode --task EnzymeMechanismDiscovery \
 
 This uses the existing SLE model configuration and transport. Credentials stay
 in the operator configuration, outside source and agent observations. Each model
-response must be one JSON action:
+response must be one JSON action. The default evidence mode additionally supports
+`hypothesize`, `revise_hypothesis` and `plan_test`, with the complete schemas in
+the initial observation and [discovery protocol](discovery_evaluation.md):
 
 ```json
 {"action":"experiment","tool":"public tool name","arguments":{}}
@@ -93,6 +110,8 @@ response must be one JSON action:
 ```
 
 The initial problem gives exact tool parameters, costs and claim schemas.
+In evidence mode, the final claim is an evidence dossier with registered
+replication tests; it does not use the legacy simulator's answer schema.
 `analyze` runs in a persistent, single-process CandidateProxy sandbox. It can
 read the JSON variables `problem`, `history`, and the explicitly allowlisted
 `public_files`. For the enzyme pilot, `public_files['model.py']` supplies the
@@ -114,7 +133,8 @@ python -m sle episode-panel --task EnzymeRecoveryDesign \
 ```
 
 This runner executes only trusted, explicitly registered construction policies;
-it makes no model API calls. It uses the same generated world and budget cap for
+it makes no model API calls and is explicitly an oracle diagnostic, not the
+no-GT evidence evaluation route. It uses the same generated world and budget cap for
 every policy, resets each policy between worlds, and records actual expenditure.
 Equal caps do not imply equal spending. `--budget-units` can override the cap for
 a construction study; policies must support the chosen cap or report a budget
@@ -213,7 +233,8 @@ main thread with no existing interval alarm; unsupported contexts fail closed.
 ## Evidence and verification
 
 The trusted session records action/observation pairs, actual experimental charges,
-the frozen claim hash, fresh confirmation, and private evaluator output. The
+the frozen claim hash, confirmation, and private review output (or oracle output
+in the explicitly selected diagnostic mode). The
 agent receives confirmation measurements but no oracle metrics. No experiments
 or revised claims are accepted after commitment.
 

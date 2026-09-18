@@ -155,6 +155,7 @@ def run_panel(task, policy_names, output_dir, *, world_count=24, seed_start=0,
         seed = seed_start + world
         for policy_index, policy in enumerate(policy_names):
             cell_binding = {**binding, "private_world_seed": seed, "mode": "operator_baseline",
+                            "evaluation_mode": "oracle_diagnostic",
                             "baseline": policy, "episode_protocol": "sle-scientific-episode-v1"}
             relative = "world_%04d_policy_%02d" % (world, policy_index)
             try:
@@ -188,6 +189,7 @@ def run_panel(task, policy_names, output_dir, *, world_count=24, seed_start=0,
     if source_binding(task) != binding:
         raise ValueError("episode source/runtime changed during panel; cells cannot form a frozen comparison")
     document = {"schema_version": 1, "kind": "episode_construction_panel", "task_id": task_id,
+                "evaluation_mode": "oracle_diagnostic",
                 "binding": binding, "world_count": world_count, "private_seed_start": seed_start,
                 "budget_units_override": budget_units, "policies": list(policy_names),
                 "frontier_eligible": False, "frontier_model_draws": 0,
@@ -210,7 +212,7 @@ def command(args):
 
 
 def add_parser(sub):
-    parser = sub.add_parser("episode-panel", help="paired scientific construction controls; no model API calls")
+    parser = sub.add_parser("episode-panel", help="paired oracle construction diagnostics; not no-GT discovery scoring")
     parser.set_defaults(fn=command)
     parser.add_argument("--task", required=True)
     parser.add_argument("--policies", nargs="+", required=True)

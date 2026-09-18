@@ -1,4 +1,4 @@
-"""Command-line entry for construction-stage scientific discovery environments."""
+"""Evidence-first scientific discovery; explicit oracle construction diagnostics."""
 from __future__ import annotations
 
 import hashlib
@@ -16,6 +16,8 @@ def command(args):
     if args.list:
         print(json.dumps({"environments": list(PILOTS), "stage": "candidate",
                           "evaluation_roles": PILOT_ROLES, "difficulty": "calibration_required",
+                          "default_evaluation_mode": "evidence",
+                          "oracle_mode": "explicit construction diagnostics only",
                           "frontier_eligible": False}, indent=2))
         return 0
     if not args.task or not args.output_dir:
@@ -24,8 +26,24 @@ def command(args):
         raise ValueError("choose exactly one of --baseline, --actions, --program, --llm-config")
     directory = prepare_output(args.output_dir)
     binding = source_binding(args.task)
-    binding.update(private_world_seed=args.seed, episode_protocol="sle-scientific-episode-v1")
-    environment = create_environment(args.task, args.seed)
+    evaluation_mode = getattr(args, "evaluation_mode", "evidence")
+    binding.update(private_world_seed=args.seed, episode_protocol="sle-scientific-episode-v1",
+                   evaluation_mode="evidence_only" if evaluation_mode == "evidence" else "oracle_diagnostic")
+    data_bundle = getattr(args, "data_bundle", None)
+    environment = create_environment(args.task, args.seed, data_bundle=data_bundle)
+    experiment_budget = getattr(args, "experiment_budget", None)
+    if experiment_budget is not None:
+        if isinstance(experiment_budget, bool) or not isinstance(experiment_budget, int) or experiment_budget < 1:
+            raise ValueError("experiment budget must be a positive integer")
+        environment.budget_units = experiment_budget
+        binding["experiment_budget_override"] = experiment_budget
+    if evaluation_mode == "oracle" and not callable(getattr(environment, "evaluate", None)):
+        raise ValueError("this measurement environment has no ground-truth evaluator")
+    if evaluation_mode == "evidence":
+        from .evidence_episode import EvidenceEpisodeSession, run_discovery_policy
+        session_type, policy_runner = EvidenceEpisodeSession, run_discovery_policy
+    else:
+        session_type, policy_runner = EpisodeSession, run_policy
     analysis = None
     worker = None
     session = None
@@ -50,19 +68,22 @@ def command(args):
             binding.update(mode="operator_baseline", baseline=args.baseline)
         else:
             binding.update(mode="action_replay", actions_sha256=hashlib.sha256(Path(args.actions).read_bytes()).hexdigest())
-        session = EpisodeSession(environment, max_steps=args.max_steps,
+        session = session_type(environment, max_steps=args.max_steps,
                                  wall_seconds=args.wall_seconds, analysis=analysis, binding=binding)
         if args.llm_config:
             report = run_llm(session, llm, public_files(args.task))
         elif worker is not None:
-            report = run_policy(session, worker)
+            report = policy_runner(session, worker)
         elif args.baseline:
             _task_id, path = _task_directory(args.task)
             reference = _load_module(path / "verification" / "reference.py")
-            policies = getattr(reference, "POLICIES", {"reference": reference.solve})
+            if evaluation_mode == "evidence":
+                policies = getattr(reference, "EVIDENCE_POLICIES", {})
+            else:
+                policies = getattr(reference, "POLICIES", {"reference": reference.solve})
             if args.baseline not in policies:
-                raise ValueError("unknown baseline; available: " + ", ".join(sorted(policies)))
-            report = run_policy(session, policies[args.baseline])
+                raise ValueError("no such baseline in " + evaluation_mode + " mode; available: " + ", ".join(sorted(policies)))
+            report = policy_runner(session, policies[args.baseline])
         else:
             text = Path(args.actions).read_text(encoding="utf-8")
             actions = parse_json(text)
@@ -79,6 +100,7 @@ def command(args):
         path = save_report(directory, report)
         print(json.dumps({"task": binding["task_id"], "status": report["status"],
                           "mode": binding["mode"], "resources": report["resources"],
+                          "evaluation_mode": evaluation_mode,
                           "private_report": str(path), "frontier_eligible": False,
                           "evaluation_role": binding["evaluation_role"],
                           "difficulty": "calibration_required"}, indent=2))
@@ -96,9 +118,13 @@ def add_parser(sub):
     parser.add_argument("--list", action="store_true")
     parser.add_argument("--task")
     parser.add_argument("--seed", type=int, default=0, help="operator-only world seed; never sent to model")
+    parser.add_argument("--evaluation-mode", choices=("evidence", "oracle"), default="evidence",
+                        help="default evidence: no GT; oracle: explicit synthetic construction diagnostics")
+    parser.add_argument("--data-bundle", help="operator-owned MeasurementAudit manifest/CSV bundle; never mounted in candidate sandbox")
+    parser.add_argument("--experiment-budget", type=int, help="operator-set total budget including replication, recorded in the run binding")
     parser.add_argument("--baseline", help="operator-reviewed baseline, e.g. reference")
-    parser.add_argument("--actions", help="JSON array of experiment/commit requests")
-    parser.add_argument("--program", help="self-contained candidate defining solve(problem, experiment); Linux sandbox required")
+    parser.add_argument("--actions", help="JSON array of multi-round discovery actions")
+    parser.add_argument("--program", help="self-contained solve(context, act) in evidence mode; solve(problem, experiment) in oracle mode; Linux sandbox required")
     parser.add_argument("--llm-config", help="existing SLE model configuration for live interaction")
     parser.add_argument("--analysis", choices=("sandbox", "none"), default="sandbox")
     parser.add_argument("--max-steps", type=int, default=64)

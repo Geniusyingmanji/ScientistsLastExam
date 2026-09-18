@@ -4,7 +4,125 @@
 
 本定义是 SLE 的评测约定。重发现可以测科学能力；它不自动等于领域新发现。优化也可能产生新的数学构造、方法或性能界，`optimization` / `discovery` 是任务组织方式，不是科学价值的互斥分类。
 
-## 当前实现范围
+## 主流程：没有 GT 的科学发现
+
+Discovery 的评估对象是**一项科学主张如何从证据中形成、经受检验并限定适用范围**。
+不要求隐藏正确答案,也不要求恢复任务作者预先选好的机制。负面结果、发现当前证据无法区分
+解释、收缩结论或保留判断,都可以是有效产出。是否形成领域新知识仍需独立审查。
+
+`sle episode` 现在默认 `--evaluation-mode evidence`。该路径不会调用任务的
+`validate_claim`、`confirm` 或 `evaluate` 真值接口;它只向测量工具请求观测,将冻结的假设和
+预测与原生证据进行检查。旧的隐藏真值分数必须显式选择 `--evaluation-mode oracle`,仅用于
+模拟构建诊断。旧结果中的满分不能证明或否定这里的发现质量。
+
+### 多轮科学工作流
+
+```mermaid
+flowchart LR
+  Q[科学问题与观测来源] --> H[竞争假设、假设条件、公开科研理由]
+  H --> P[预注册区分实验、预测与证伪条件]
+  P --> T[受控工具与隔离分析]
+  T --> E[原生观测、样本范围和分析工件]
+  E --> R[反例、修订假设、缩小结论]
+  R --> H
+  E --> C[冻结主张与复核计划]
+  C --> V[开放封存观测并执行复核]
+  V --> A[程序化证据核查与独立科学审查]
+```
+
+允许多轮 `hypothesize`、`plan_test`、`experiment`、`analyze` 和 `revise_hypothesis`。
+假设和计划 ID 不可覆盖;修订创建新 ID 并指向旧假设,保留失败预测和修订理由。
+要求简短、可检查的科研理由、假设条件和推导工件,不按推理文本长度给奖励。
+
+每个检验在观测前绑定工具、精确参数、测量位置与聚合方式,并提出至少两个竞争假设的有限
+预测区间及可选证伪区间。测量提取只支持有限 JSON 路径和 `scalar/mean/sum/min/max`,
+不会在受信评测进程执行候选代码。重叠、嵌套且无法排除替代解释的宽泛预测只有相容性记录,
+不会自动获得区分性支持。
+
+最终 dossier 包含 `claims`、`replication_tests`、`limitations`。每项主张引用假设 ID、
+原生支持/反证 ID、计划 ID,声明 `supported/rejected/inconclusive` 及限制。
+冻结后最多执行八项事前登记的复核检验,所有实验共享同一预算;不再接受改写主张。
+复核结果自动进入核查,即使它反驳了提交者的结论。没有主张的空发现合法,不会产生虚构成功率。
+
+### 分开评价证据与推理
+
+| 维度 | 当前可执行检查 | 仍需独立科学审查 |
+|---|---|---|
+| 问题与假设 | 版本链、显式假设、竞争预测、可操作测量 | 科学问题价值、假设是否实质可证伪、替代解释是否合理 |
+| 实验过程 | 事前计划绑定、真实工具请求、资源消耗、数据来源范围 | 实验是否能区分关键解释、对照和混杂处理是否充分 |
+| 证据使用 | 引用真实观测、重算测量、检查所有相关检验 | 测量与主张的语义是否对应,是否从关联越界到因果 |
+| 反证与修订 | 检测反例遗漏、保留失败预测及旧假设 | 修订是否由证据驱动,是否只是移动判定标准 |
+| 预测与复核 | 提交后观测是否符合事前区间、区分哪些替代解释 | 区间校准、多重检验、复核样本的独立性 |
+| 复现与贡献 | 工具、参数、数据版本和事件链可重放 | 推导和计算可复现性、外部适用性、新颖性及科学贡献 |
+
+运行报告分别输出 `process`、`prospective_checks`、逐主张 `evidence_status` 和
+八轴 `semantic_review`。后者包含待评问题及假设/计划/证据引用,默认全部 `unassessed`。
+尚未进行独立审查的维度不填分。没有 GT 时不报告“机制恢复正确率”或真实 FDR;
+反证披露率和引用核验率都有各自分母,不能改名为发现正确率。N=0 保持 `null`。
+
+`evidence-supported` 仅表示前瞻登记的操作性预测与观测相符,且能区分至少一个声明的替代解释。
+它不证明假设为真、机制唯一、研究无混杂或结论有领域新颖性。一个容易打败的替代假设也可能
+产生相容结果,因此独立审查必须检查替代解释和区间设定。当前没有 LLM judge 或自动 discovery 总分。
+
+### 防止事后验证和自述证据
+
+证据由工具代理生成 `experiment-0001` 等 ID,候选分析代码输出的 ID 或声称成功的日志不能替代它。
+主张核查遍历该假设的所有相关检验,不只看提交者挑选的支持证据。看到数据后才写入的计划,
+以及换工具对已经看过的同一列、同一批样本再求均值,都标为事后描述,不能获得前瞻支持。
+
+测量适配器记录数据摘要、分区、测量列和样本 ID。即使计划在前,反复读取相同样本也只是
+复用数据,不是增加独立样本数。未知来源范围不推断为新样本;封存分区也不自动等于独立采集。
+同一数据包更换 `--seed` 不会制造新的科学世界。跨 episode 的污染、公开数据记忆、来源真实性
+和采集独立性需要在正式数据/评测设计中另行控制。
+
+### 隔离执行与真实数据入口
+
+`DiscoveryEvidence/MeasurementAudit` 接受只有数值观测的两文件数据包:
+`manifest.json` 描述列、单位、采集来源、总体、独立性单位、复核设计和限制,
+并绑定 `measurements.csv` 的 SHA256。CSV 具有样本 ID、事先指定的探索/复核分区和数值列。
+没有机制标签、隐藏参数、数据生成器或正确答案函数。
+
+数据包按白名单读取,拒绝符号链接、额外文件、重复 ID、非有限数值和摘要不一致。
+加载后固定内存快照,数据来源陈述标为 `operator_asserted_not_verified`。
+`read_measurements` 只能读探索数据;`summarize` 提供有费用的均值和组间差异观测。
+封存数据只有冻结提交后才能通过工具读取。查询价格和输入校验不依赖封存分组成员,
+避免通过费用或报错探测未开放数据。
+
+候选程序及持久 Python 分析均运行于 Linux CandidateProxy/bubblewrap:
+网络和进程创建被禁用,文件系统仅挂载白名单 Python/NumPy/SciPy 与候选文件,
+不挂载数据包、验证代码、宿主目录或凭证。每个 episode 使用新进程和独立临时文件系统;
+同一 episode 内可保留分析变量。工具只接受声明过的 JSON 参数,不开放宿主 shell。
+模型调用与探索工具受总时限约束;冻结后的复核另有最多 60 秒时限。
+CPU、内存、文件大小、文件描述符、步数、实验量、JSON 和证据体积均有界。
+Linux 沙箱不可用时会失败,不会回退为宿主 Python 执行。
+
+```bash
+# 工程协议示例:没有科学发现能力含义,不调用模型 API。
+python -m sle episode --task MeasurementAudit --baseline protocol \
+  --output-dir /var/tmp/sle-discovery-protocol
+
+# 真实观测包由可信评测侧提供;凭证仅存在于模型配置,不进入候选环境。
+python -m sle episode --task MeasurementAudit \
+  --data-bundle /private/operator/observed-study \
+  --llm-config /private/operator/model.yaml --analysis sandbox \
+  --max-steps 64 --wall-seconds 600 --experiment-budget 20000 \
+  --output-dir /var/tmp/sle-observed-discovery
+
+# 程序接口:solve(context, act),通过 act(JSON action) 进行多轮科学操作。
+python -m sle episode --task MeasurementAudit --program scientist.py \
+  --data-bundle /private/operator/observed-study \
+  --output-dir /var/tmp/sle-observed-program
+```
+
+完整动作示例见 `benchmarks/ComputerScience/MeasurementAudit/examples/discovery_actions.json`。
+操作方可用 `--experiment-budget` 为较大数据包设定足够的总预算;该条件绑定到报告,
+所有模型应使用事先固定的同一预算,并为提交后复核预留实验量。
+默认随附数据是公开、手工填写的协议夹具,用于验证管线,不得计作真实研究数据或难题评测。
+`protocol/null/fabricated_citation/broad_predictions/posthoc_retest` 是协议正负对照。
+模型只能获得观测反馈;评审结果保存在可信侧。完整报告可由原生事件重建核查,但可重算的
+哈希仍不提供来源认证。生产任务需要实际科学问题、有来源的观测和独立审查。
+
+## 旧 oracle 任务的证据记录范围
 
 - 注册表中每个 discovery 任务都有可生成的 profile；尚未审查者标记 `not_assessed`，不按名称或 kind 推断层级。
 - 四个试点已静态检查，并在正式可信评测入口记录输入、callback 请求/返回/错误和最终提交：ForceFieldCalibration、InterventionalSCM、ActiveLawDiscovery、ProspectiveMetaAnalysis。

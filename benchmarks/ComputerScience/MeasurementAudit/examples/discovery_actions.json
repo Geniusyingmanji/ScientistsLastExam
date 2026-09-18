@@ -1,0 +1,182 @@
+[
+  {
+    "action": "hypothesize",
+    "hypothesis": {
+      "id": "batch_association",
+      "statement": "In these example records, batch 1 has a signal mean around one unit above batch 0. This is an association, not a causal claim.",
+      "rationale": "A recorded batch category could account for a reproducible difference in measurement averages.",
+      "assumptions": [
+        "Rows can be summarized as separate observations for this engineering demonstration."
+      ],
+      "alternatives": [
+        "There is no meaningful difference between recorded batch means.",
+        "An uncontrolled covariate or measurement artifact explains the association."
+      ]
+    }
+  },
+  {
+    "action": "hypothesize",
+    "hypothesis": {
+      "id": "no_mean_difference",
+      "statement": "The difference between batch 1 and batch 0 signal means is within 0.2 units in the reserved records.",
+      "rationale": "Observed categories need not have a reproducible association with response.",
+      "assumptions": [
+        "The declared partitions are comparable enough for this narrowly scoped numerical prediction."
+      ],
+      "alternatives": [
+        "A positive difference around one unit recurs in both partitions."
+      ]
+    }
+  },
+  {
+    "action": "plan_test",
+    "test": {
+      "id": "explore_difference",
+      "phase": "exploration",
+      "tool": "summarize",
+      "arguments": {
+        "partition": "exploration",
+        "column": "signal",
+        "statistic": "mean_difference",
+        "group_column": "batch",
+        "group_values": [
+          0,
+          1
+        ]
+      },
+      "rationale": "Compare preregistered group-mean predictions; distinct intervals allow this scalar observation to distinguish these two predictions, without identifying a unique mechanism.",
+      "measurement": {
+        "path": [
+          "value"
+        ],
+        "reducer": "scalar"
+      },
+      "predictions": [
+        {
+          "hypothesis_id": "batch_association",
+          "interval": [
+            0.7,
+            1.3
+          ],
+          "falsifiers": [
+            [
+              -10,
+              0.2
+            ]
+          ]
+        },
+        {
+          "hypothesis_id": "no_mean_difference",
+          "interval": [
+            -0.2,
+            0.2
+          ],
+          "falsifiers": [
+            [
+              0.7,
+              10
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "action": "experiment",
+    "tool": "summarize",
+    "arguments": {
+      "partition": "exploration",
+      "column": "signal",
+      "statistic": "mean_difference",
+      "group_column": "batch",
+      "group_values": [
+        0,
+        1
+      ]
+    },
+    "test_id": "explore_difference"
+  },
+  {
+    "action": "plan_test",
+    "test": {
+      "id": "replicate_difference",
+      "phase": "replication",
+      "tool": "summarize",
+      "arguments": {
+        "partition": "replication",
+        "column": "signal",
+        "statistic": "mean_difference",
+        "group_column": "batch",
+        "group_values": [
+          0,
+          1
+        ]
+      },
+      "rationale": "Compare preregistered group-mean predictions; distinct intervals allow this scalar observation to distinguish these two predictions, without identifying a unique mechanism.",
+      "measurement": {
+        "path": [
+          "value"
+        ],
+        "reducer": "scalar"
+      },
+      "predictions": [
+        {
+          "hypothesis_id": "batch_association",
+          "interval": [
+            0.7,
+            1.3
+          ],
+          "falsifiers": [
+            [
+              -10,
+              0.2
+            ]
+          ]
+        },
+        {
+          "hypothesis_id": "no_mean_difference",
+          "interval": [
+            -0.2,
+            0.2
+          ],
+          "falsifiers": [
+            [
+              0.7,
+              10
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "action": "commit",
+    "claim": {
+      "claims": [
+        {
+          "hypothesis_id": "batch_association",
+          "conclusion": "supported",
+          "support": [
+            "experiment-0001"
+          ],
+          "counterevidence": [],
+          "tests": [
+            "explore_difference",
+            "replicate_difference"
+          ],
+          "limitations": [
+            "Only a descriptive mean association is tested; possible confounding and measurement artifacts remain.",
+            "The default table is hand-entered for protocol testing and supports no empirical scientific claim."
+          ]
+        }
+      ],
+      "replication_tests": [
+        "replicate_difference"
+      ],
+      "limitations": [
+        "No answer key or known mechanism is used. Numerical compatibility does not establish scientific truth or novelty.",
+        "Public hand-entered fixture results must not enter frontier capability or scientific discovery leaderboards."
+      ]
+    }
+  }
+]
