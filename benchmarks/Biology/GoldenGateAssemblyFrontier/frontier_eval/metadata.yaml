@@ -6,7 +6,7 @@ tier: candidate
 oracle_type: dataset_oracle
 score_mode: uncapped
 gpu_required: false
-eval_time_seconds: 1
+eval_time_seconds: 20
 science_metric: mean_log_predicted_ligation_fidelity_progress_with_exact_reconstruction
 reference_baseline: evenly spaced target fragments using the nearest legal unused measured junction
 reference_sota: deterministic public-data beam search plus coordinate refinement; a witness, not an optimum
