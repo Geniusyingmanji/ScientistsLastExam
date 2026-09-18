@@ -48,8 +48,15 @@ class TaskMaturityAuditTests(unittest.TestCase):
         # unfrozen task is then exactly the regression this assertion is for.
         gates = [(row["task"], row["gates"]["internal_science_admission"])
                  for row in self.report["tasks"]]
+        intentionally_excluded = {
+            row["task"] for row in self.report["tasks"]
+            if row["certification_status"] == "quarantined"
+            and (row["discovery_exclusion"]["passed"] or row["quarantine_reaudit"]["passed"])
+        }
         stale = ["%s: %s" % (task, gate["blockers"]) for task, gate in gates
-                 if not gate["passed"] and not gate.get("awaiting_freeze")]
+                 if not gate["passed"] and not gate.get("awaiting_freeze")
+                 and not (task in intentionally_excluded and gate["blockers"] ==
+                          ["certification_status_is_quarantined"])]
         self.assertEqual(stale, [], "frozen evidence is stale; regenerate with "
                                     "scripts/refresh_global_evidence.py")
         unfrozen = [task for task, gate in gates if gate.get("awaiting_freeze")]
@@ -98,10 +105,11 @@ class TaskMaturityAuditTests(unittest.TestCase):
 
     def test_look_elsewhere_is_listed_and_not_self_admitted(self):
         row = self.tasks["ParticlePhysics/LookElsewhereAnomaly"]
-        self.assertEqual(row["certification_status"], "candidate")
+        self.assertEqual(row["certification_status"], "quarantined")
         gate = row["gates"]["internal_science_admission"]
-        self.assertTrue(gate["passed"])
-        self.assertEqual(gate["blockers"], [])
+        self.assertFalse(gate["passed"])
+        self.assertEqual(gate["blockers"], ["certification_status_is_quarantined"])
+        self.assertEqual(row["discovery_exclusion"]["status"], "quarantined_provisional")
 
     def test_wave1_discovery_constructions_are_listed_and_not_self_admitted(self):
         for task_id in (
@@ -109,10 +117,11 @@ class TaskMaturityAuditTests(unittest.TestCase):
             "Oceanography/AMOCTippingRefusal",
         ):
             row = self.tasks[task_id]
-            self.assertEqual(row["certification_status"], "candidate", task_id)
+            self.assertEqual(row["certification_status"], "quarantined", task_id)
             gate = row["gates"]["internal_science_admission"]
-            self.assertTrue(gate["passed"], task_id)
-            self.assertEqual(gate["blockers"], [], task_id)
+            self.assertFalse(gate["passed"], task_id)
+            self.assertEqual(gate["blockers"], ["certification_status_is_quarantined"], task_id)
+            self.assertTrue(row["discovery_exclusion"]["passed"], task_id)
 
     def test_wave2_discovery_constructions_are_listed_and_not_self_admitted(self):
         for task_id in (
@@ -121,10 +130,16 @@ class TaskMaturityAuditTests(unittest.TestCase):
             "MaterialsScience/QuinaryConvexHull",
         ):
             row = self.tasks[task_id]
-            self.assertEqual(row["certification_status"], "candidate", task_id)
             gate = row["gates"]["internal_science_admission"]
-            self.assertTrue(gate["passed"], task_id)
-            self.assertEqual(gate["blockers"], [], task_id)
+            if task_id == "Gravitation/PTAHellingsDowns":
+                self.assertEqual(row["certification_status"], "quarantined", task_id)
+                self.assertFalse(gate["passed"], task_id)
+                self.assertEqual(gate["blockers"], ["certification_status_is_quarantined"], task_id)
+                self.assertTrue(row["discovery_exclusion"]["passed"], task_id)
+            else:
+                self.assertEqual(row["certification_status"], "candidate", task_id)
+                self.assertTrue(gate["passed"], task_id)
+                self.assertEqual(gate["blockers"], [], task_id)
 
     def test_explicit_current_full_suite_gate_is_fail_closed(self):
         revision = "a" * 40
@@ -214,22 +229,26 @@ class TaskMaturityAuditTests(unittest.TestCase):
             self.report["evidence_coverage"]["current_model_measurement_count"],
         )
 
-    def test_every_quarantined_task_has_current_reproduced_defect_evidence(self):
+    def test_every_quarantine_has_its_own_current_evidence_kind(self):
         self.assertEqual(
             self.report["evidence_coverage"][
                 "current_quarantine_defect_reproduction_count"
-            ],
+            ] + self.report["evidence_coverage"]["current_discovery_exclusion_count"],
             self.report["status_counts"].get("quarantined", 0),
         )
         quarantined = [
             row for row in self.report["tasks"]
             if row["certification_status"] == "quarantined"
         ]
-        # The quarantine is empty: its wave was retired rather than readmitted. The loop below is
-        # the invariant that matters and it holds whether the quarantine has nine tasks or none.
         self.assertEqual(len(quarantined),
                          self.report["status_counts"].get("quarantined", 0))
         for row in quarantined:
+            if row["discovery_exclusion"]["applicable"]:
+                self.assertTrue(row["discovery_exclusion"]["passed"], row)
+                self.assertTrue(row["discovery_exclusion"]["reviewed_package_matches"], row)
+                self.assertFalse(row["discovery_exclusion"]["frontier_eligible"], row)
+                self.assertFalse(row["quarantine_reaudit"]["passed"], row)
+                continue
             evidence = row["quarantine_reaudit"]
             self.assertTrue(evidence["passed"], row)
             self.assertTrue(evidence["defect_reproduced"])
@@ -238,6 +257,30 @@ class TaskMaturityAuditTests(unittest.TestCase):
                 evidence["contract_binding"],
                 {"current_contract_bound", "migration_replayed"},
             )
+
+    def test_difficulty_exclusion_cannot_excuse_an_unrelated_oracle_defect(self):
+        task = "Test/BrokenOracle"
+        row = {"task": task, "certification_status": "quarantined",
+               "discovery_exclusion": {"applicable": False},
+               "quarantine_reaudit": {"passed": False}}
+        empty = {"trusted_evidence": True, "execution_passed": True,
+                 "summary": {"manifest_quarantined_count": 0, "audited_count": 0,
+                             "reproduced_defect_count": 0, "meets_internal_benchmark_standard_count": 0}}
+        issues = self.module._quarantine_evidence_issues([row], empty, {})
+        self.assertTrue(any("current reproduced defect evidence" in issue for issue in issues))
+        valid = {**empty, "summary": {**empty["summary"], "manifest_quarantined_count": 1,
+                                     "audited_count": 1, "reproduced_defect_count": 1}}
+        row["quarantine_reaudit"]["passed"] = True
+        self.assertEqual(self.module._quarantine_evidence_issues([row], valid, {task: {}}), [])
+
+    def test_changed_retired_package_requires_updated_exclusion_review(self):
+        from sle.registry import find_task
+        spec = find_task("PTAHellingsDowns", include_uncertified=True)
+        with patch("sle.algorithms.common.task_package_sha256", return_value="f" * 64):
+            exclusion = self.module._discovery_exclusion_state(spec, {"status": "quarantined"})
+        self.assertTrue(exclusion["applicable"])
+        self.assertFalse(exclusion["passed"])
+        self.assertFalse(exclusion["frontier_eligible"])
 
     def test_track_f_tasks_have_repeated_controls_and_fresh_confirmation(self):
         """Unbound, not withdrawn - and the binding rule is what this now pins.

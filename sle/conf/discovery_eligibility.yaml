@@ -1,0 +1,80 @@
+schema_version: 1
+decision_date: '2026-09-18'
+reviewed_source_revision: d2a571dafbe92e59e97fc1b777f52abe72634db8
+default_discovery_status: calibration_required
+# Holds follow the task ID; a changed hash does not silently lift a hold.
+# These are exclusion decisions, not claims that every scientific axis is solved.
+tasks:
+  CausalDiscovery/SurvivorshipConfoundedDesign:
+    status: retired_saturated
+    task_package_sha256: 1d456505aeaae6391c44a0b3b34f0e01ccb2ae34acdada06f4b3aa3c9557d1e5
+    reason: Six of six gpt-5.6-terra first proposals scored 1.0; the gpt-6-astra first draw also scored 1.0. Keep the old package for historical comparison and replace it with a calibrated version.
+    evidence:
+      - artifact: docs/discovery_discrimination.md
+        condition: gpt-5.6-terra / responses / medium / greedy_rewrite
+        scope: six independent first proposals; not a current-main rerun
+      - artifact: operator/discovery-first-draw/aggregate-results.json
+        artifact_sha256: c30ec2500f3a26bf65ddb9d5ef9e25b79fed2de177aacb1aca88bc0cecb21dfc
+        source_revision: a2907479ae895336f5894488e25b8fd501072743
+        condition: gpt-6-astra / low / streaming / one first proposal
+        date: '2026-09-18'
+        score: 1.0
+  SystemsBiology/EnzymeKineticsLaw:
+    status: retired_saturated
+    task_package_sha256: 7214fb6b48dac795003e3b8e8933c30e9e446e02f48a2636579ac7f3cfa76fea
+    reason: The task card already declares saturated_for_current_frontier after prior calibration; the gpt-6-astra first draw is near ceiling (0.991915). A new mechanism-recovery task needs independent calibration.
+    evidence:
+      - artifact: experiments/opus5_enzyme_kinetics_calibration_2026-09-02.json
+        artifact_sha256: eedca16bf3b907b27d7f4bfe49b8d731451f7331da1bae1026a84e9b1469bf50
+        source_revision: 8bf544e7793a55bf9eb21efac21ac72f162e349a
+        condition: claude-opus-5 / calibration recorded in task card
+        date: '2026-09-02'
+        provenance_limit: source tree dirty; task card records degraded provenance and byte-identical replay
+      - artifact: benchmarks/Biology/EnzymeKineticsLaw/TASK_CARD.yaml
+        scope: long_horizon.status is saturated_for_current_frontier
+  Gravitation/PTAHellingsDowns:
+    status: quarantined_shortcut
+    task_package_sha256: 8aea28926f686865101e41c38b9d5a9544c0c6f8d90393dd500b978ef408b32d
+    reason: A direct four-template SSE comparison without uncertainty margins or bootstrap attains the ceiling; the gpt-6-astra first draw also scored 1.0. The current task cannot require the intended evidential work.
+    evidence:
+      - artifact: tests/test_saturation_audit.py
+        condition: deterministic template comparison diagnostic, no model call
+        date: '2026-09-18'
+        source_revision: d2a571dafbe92e59e97fc1b777f52abe72634db8
+      - artifact: operator/discovery-first-draw/aggregate-results.json
+        artifact_sha256: c30ec2500f3a26bf65ddb9d5ef9e25b79fed2de177aacb1aca88bc0cecb21dfc
+        source_revision: a2907479ae895336f5894488e25b8fd501072743
+        condition: gpt-6-astra / low / streaming / one first proposal
+        date: '2026-09-18'
+        score: 1.0
+  Oceanography/AMOCTippingRefusal:
+    status: quarantined_shortcut
+    task_package_sha256: 2e3fecbe74e097f23507e2f63e647ae81cca1631786ce4f9a68c2cc40230010b
+    reason: A no-experiment historical-feature rule reaches full score. The model's all-abstain zero score is not evidence that this task is hard.
+    evidence:
+      - artifact: tests/test_saturation_audit.py
+        condition: deterministic zero-probe shortcut diagnostic, no model call
+        date: '2026-09-18'
+        source_revision: d2a571dafbe92e59e97fc1b777f52abe72634db8
+  ParticlePhysics/LookElsewhereAnomaly:
+    status: quarantined_provisional
+    task_package_sha256: c9a6cbe0c2e9cfcd76cc9ffc0965aecd76f72bcefe37ce6d5ed34a90a75884f6
+    reason: One gpt-6-astra first proposal scored 1.0. This is enough to exclude the current version pending hardening/calibration, but not to claim a measured population saturation rate.
+    evidence:
+      - artifact: operator/discovery-first-draw/aggregate-results.json
+        artifact_sha256: c30ec2500f3a26bf65ddb9d5ef9e25b79fed2de177aacb1aca88bc0cecb21dfc
+        source_revision: a2907479ae895336f5894488e25b8fd501072743
+        condition: gpt-6-astra / low / streaming / one first proposal
+        date: '2026-09-18'
+        score: 1.0
+  Mathematics/BlackBoxGroupIdentification:
+    status: quarantined_provisional
+    task_package_sha256: 4e5651ab34613103b221caebbf5463296f6b8af834cc3dcbcc7649fa674b2bc3
+    reason: One gpt-6-astra first proposal scored 1.0. Hold frontier use until new groups, relabellings, and repeated calibration establish headroom; a single draw does not establish stable difficulty.
+    evidence:
+      - artifact: operator/discovery-first-draw/aggregate-results.json
+        artifact_sha256: c30ec2500f3a26bf65ddb9d5ef9e25b79fed2de177aacb1aca88bc0cecb21dfc
+        source_revision: a2907479ae895336f5894488e25b8fd501072743
+        condition: gpt-6-astra / low / streaming / one first proposal
+        date: '2026-09-18'
+        score: 1.0

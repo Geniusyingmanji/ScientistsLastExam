@@ -31,6 +31,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from sle.registry import list_tasks  # noqa: E402
+from sle.discovery_eligibility import discovery_eligibility  # noqa: E402
 
 
 def role_index() -> dict[str, str]:
@@ -328,6 +329,12 @@ def main(argv: list[str] | None = None) -> int:
 
     document = json.loads(Path(args.admission).read_text(encoding="utf-8"))
     roles = role_index()
+    eligibility = {}
+    for spec in list_tasks(None):
+        if spec.metadata.get("scientific_role") == "discovery":
+            decision = discovery_eligibility(spec)
+            eligibility[spec.task_id] = decision
+            eligibility[spec.task_dir.name] = decision
     by_run, by_coarse = {}, {}
     strict_triples = {}
     if args.triple:
@@ -402,6 +409,16 @@ def main(argv: list[str] | None = None) -> int:
                            axis_evidence[0]["join_status"] == "joined" else "evidence_runs")
         classified = classify_discovery_row(
             row, role, axes, axis_evidence if "evidence_runs" in row else None)
+        if role == "discovery":
+            decision = eligibility.get(task) or eligibility.get(task.split("/")[-1])
+            classified["current_task_eligibility"] = decision
+            classified["frontier_claim_eligible"] = bool(
+                decision and decision["frontier_eligible"] is True
+                and row.get("task_version") == decision["task_package_sha256"])
+            # Keep historical scalar/axis statements intact, but make their
+            # inability to qualify the current frontier explicit.
+            if not classified["frontier_claim_eligible"]:
+                classified["frontier_claim_status"] = "blocked_by_eligibility_or_version"
         classified["axes_join"] = join_status
         if attached:
             classified["axes_by_run"] = attached
@@ -417,7 +434,7 @@ def main(argv: list[str] | None = None) -> int:
     join_statuses = [item["join_status"] for row in discovery
                      for item in row.get("axis_evidence", [])]
     report = {
-        "schema_version": 4,
+        "schema_version": 5,
         "expected_evidence_run_count": len(join_statuses),
         "axis_join_status_counts": dict(Counter(join_statuses)),
         "evidence_runs_missing_axes_count": sum(

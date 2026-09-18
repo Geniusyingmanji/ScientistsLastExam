@@ -64,10 +64,19 @@ class CertificationPolicyTests(unittest.TestCase):
         clone_ids = {k for k, v in records.items()
                      if v.get("duplicate_group") == "generic_trig_8d_v1"}
         self.assertEqual(clone_ids, set())
+        # These discovery packages remain available for historical replay, but
+        # known saturation/shortcuts exclude them from the current frontier.
         self.assertEqual(
             {task for task, record in records.items()
              if record.get("status") == "quarantined"},
-            set(),
+            {
+                "CausalDiscovery/SurvivorshipConfoundedDesign",
+                "SystemsBiology/EnzymeKineticsLaw",
+                "Gravitation/PTAHellingsDowns",
+                "Oceanography/AMOCTippingRefusal",
+                "ParticlePhysics/LookElsewhereAnomaly",
+                "Mathematics/BlackBoxGroupIdentification",
+            },
         )
 
     def test_certified_tasks_have_stable_citation_ids(self):

@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Reproduce the material defects for every currently quarantined task.
+"""Audit version-bound discovery holds and reproduce quarantined oracle defects.
 
 The certification inventory deliberately keeps defective packages for provenance.  A
 quarantine label alone is not evidence that the defect still exists, so this audit binds
-the manifest's complete quarantine set to executable adversarial checks.  If a task is
-added to or removed from quarantine without updating the checks, the audit fails closed.
+the manifest's oracle-defect quarantine set to executable adversarial checks.
+Difficulty exclusions are separately bound to reviewed package hashes; they are
+never represented as reproduced oracle defects. Both coverage checks fail closed.
 """
 
 from __future__ import annotations
@@ -27,6 +28,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from sle.certification import load_certification  # noqa: E402
+from sle.discovery_eligibility import EXCLUSION_STATUSES, discovery_eligibility  # noqa: E402
 from sle.provenance import (  # noqa: E402
     finalize_report_trust,
     source_provenance,
@@ -256,6 +258,17 @@ def audit() -> dict[str, Any]:
         task_id for task_id, record in manifest["tasks"].items()
         if record.get("status") == "quarantined"
     }
+    discovery_exclusions = []
+    for task_id in sorted(manifest_quarantined):
+        spec = find_task(task_id, include_uncertified=True)
+        decision = discovery_eligibility(spec)
+        if decision["status"] in EXCLUSION_STATUSES:
+            discovery_exclusions.append(decision)
+    exclusion_ids = {row["task_id"] for row in discovery_exclusions}
+    oracle_quarantined = manifest_quarantined - exclusion_ids
+    unbound_exclusions = [row["task_id"] for row in discovery_exclusions
+                          if row.get("reviewed_package_matches") is not True
+                          or not row.get("evidence") or row["frontier_eligible"] is not False]
     # A quarantined task can leave the inventory two ways: it is rebuilt and readmitted, or it is
     # retired outright. The wave-4 checks below name tasks from an earlier quarantine wave, and
     # once those tasks are retired their files are gone - so reproducing their defect is not
@@ -292,13 +305,14 @@ def audit() -> dict[str, Any]:
     ]
     records.sort(key=lambda row: row["task"])
 
-    missing_checks = sorted(manifest_quarantined - covered)
-    stale_checks = sorted(covered - manifest_quarantined)
+    missing_checks = sorted(oracle_quarantined - covered)
+    stale_checks = sorted(covered - oracle_quarantined)
     execution_passed = bool(
         not missing_checks
         and not stale_checks
+        and not unbound_exclusions
         and len(unique_generic_fingerprints) == (1 if clone_tasks else 0)
-        and len(records) == len(manifest_quarantined)
+        and len(records) == len(oracle_quarantined)
         and all(row["defect_reproduced"] for row in records)
         and all(
             row["meets_internal_benchmark_standard"] is False
@@ -306,7 +320,7 @@ def audit() -> dict[str, Any]:
         )
     )
     report = {
-        "schema_version": 1,
+        "schema_version": 2,
         "trust_status": "TRUSTED_QUARANTINED_TASK_REAUDIT",
         "created_at": datetime.now(timezone.utc).isoformat(),
         "source_provenance": source_provenance(ROOT),
@@ -316,9 +330,12 @@ def audit() -> dict[str, Any]:
                 "A reproduced defect proves that quarantine remains warranted; it does "
                 "not validate the task as benchmark-admissible."
             ),
-            "required_coverage": "all manifest tasks whose status is quarantined",
+            "required_coverage": "all oracle-defect quarantines require reproduced checks; discovery exclusions require reviewed package bindings",
         },
         "manifest_quarantined_tasks": sorted(manifest_quarantined),
+        "oracle_defect_quarantined_tasks": sorted(oracle_quarantined),
+        "discovery_exclusions": discovery_exclusions,
+        "unbound_discovery_exclusions": unbound_exclusions,
         "missing_checks": missing_checks,
         "stale_checks": stale_checks,
         "retired_checks": retired_checks,
@@ -330,6 +347,8 @@ def audit() -> dict[str, Any]:
         "records": records,
         "summary": {
             "manifest_quarantined_count": len(manifest_quarantined),
+            "oracle_defect_quarantined_count": len(oracle_quarantined),
+            "discovery_exclusion_count": len(discovery_exclusions),
             "audited_count": len(records),
             "reproduced_defect_count": sum(
                 row["defect_reproduced"] for row in records

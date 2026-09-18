@@ -372,8 +372,10 @@ tasks:
       - doi:10.1142/3171
       - doi:10.1016/j.jqsrt.2004.05.058
   SystemsBiology/EnzymeKineticsLaw:
-    status: candidate
+    status: quarantined
     reason: >-
+      Frontier exclusion 2026-09-18 (retired_saturated). Historical replay only;
+      see sle/conf/discovery_eligibility.yaml for version-bound evidence and re-entry gates.
       Active rate-law identification: the candidate spends a 28-call budget on a substrate-and-inhibitor
       assay, names one of six published laws with its constants, and declines on the three worlds that
       obey none. Competitive, uncompetitive and noncompetitive inhibition are provably inseparable from a
@@ -433,14 +435,16 @@ tasks:
       - doi:10.1021/ac302337u
       - doi:10.1021/ac00096a002
   ParticlePhysics/LookElsewhereAnomaly:
-    status: candidate
+    status: quarantined
     reason: >-
+      Frontier exclusion 2026-09-18 (quarantined_provisional). Historical replay only;
+      see sle/conf/discovery_eligibility.yaml for version-bound evidence and re-entry gates.
       Evidence cell that is not a clone of DiscrepantMeasurements: one Poisson mass
       histogram is scanned in 40 windows, and a local 5σ that dies after a Bonferroni
       trials factor, a linearly sculpted background, or a blank must be refused. A
       genuine narrow resonance remains global-5σ with clean sidebands. The naive
-      local-z baseline never buys toys and never declines. Candidate, not certified.
-      No frontier searcher draw; in-process pins require blanket abstention to score
+      local-z baseline never buys toys and never declines. A GPT-6 first proposal
+      reached 1.0; in-process pins require blanket abstention to score
       zero and the baseline to sit below the sealed reference.
     citation_ids:
       - doi:10.1088/1361-6633/ac36b9
@@ -463,13 +467,15 @@ tasks:
       and fresh server-held confirmation remain pending.
     citation_ids: [doi:10.14778/3055330.3055331, doi:10.1145/3243734.3243818, doi:10.1145/3243734.3243863, doi:10.1109/SP40001.2021.00081, doi:10.1561/0400000042, doi:10.1145/1536414.1536467, doi:10.1145/2382196.2382264, doi:10.1093/biomet/26.4.404, arxiv:2006.07709, doi:10.1109/SP40001.2021.00069, doi:10.1137/09076828X, doi:10.1109/ALLERTON.2018.8636068]
   CausalDiscovery/SurvivorshipConfoundedDesign:
-    status: candidate
+    status: quarantined
     reason: >-
+      Frontier exclusion 2026-09-18 (retired_saturated). Historical replay only;
+      see sle/conf/discovery_eligibility.yaml for version-bound evidence and re-entry gates.
       Structure cell that is not a clone of InterventionalSCM: only survivors are
       returned from a hidden SCM, a confounder opens T←C→Y and feeds selection, and
       OLS on the returned table therefore publishes a collider. Two charged
-      interventions identify T→Y by moving the survival probability. Candidate, not
-      certified. No frontier searcher draw; in-process pins require blanket
+      interventions identify T→Y by moving the survival probability. Six of six
+      terra first proposals reached 1.0; in-process pins require blanket
       abstention to score zero and the survivor-OLS baseline to sit below the sealed
       reference.
     citation_ids:
@@ -477,25 +483,30 @@ tasks:
       - doi:10.1093/aje/kwh188
       - doi:10.1017/CBO9780511804090
   Oceanography/AMOCTippingRefusal:
-    status: candidate
+    status: quarantined
     reason: >-
+      Frontier exclusion 2026-09-18 (quarantined_shortcut). Historical replay only;
+      see sle/conf/discovery_eligibility.yaml for version-bound evidence and re-entry gates.
       Formula cell that is not EnergyBalanceModel parameter inversion: a cubic fold
       still lies in the future of the public fingerprint, while red-noise and
       ice-restored unique attractors can still go negative historically. Plus/minus
       hysteresis plus a continued probe recovers the fold; a first negative year is
-      a false discovery. Candidate, not certified. No frontier searcher draw.
+      a false discovery. A zero-experiment historical-feature shortcut nevertheless
+      reaches 1.0, so this package cannot support a frontier difficulty claim.
     citation_ids:
       - doi:10.1038/s41467-023-39810-w
       - doi:10.1126/sciadv.adl4841
       - doi:10.3402/tellusa.v13i2.9494
   Gravitation/PTAHellingsDowns:
-    status: candidate
+    status: quarantined
     reason: >-
+      Frontier exclusion 2026-09-18 (quarantined_shortcut). Historical replay only;
+      see sle/conf/discovery_eligibility.yaml for version-bound evidence and re-entry gates.
       Evidence cell that is not a LookElsewhere bump hunt: pulsar-pair correlations
       are drawn from a Hellings-Downs quadrupole, a clock monopole, an ephemeris
       dipole, or an uncorrelated common process. Publishing HD on the last three is
-      a false discovery. The mean-correlation baseline never declines. Candidate,
-      not certified. No frontier searcher draw; in-process pins require blanket
+      a false discovery. The mean-correlation baseline never declines. A direct
+      template comparison reaches 1.0; in-process pins require blanket
       abstention to score zero and the baseline to sit below the sealed reference.
     citation_ids:
       - doi:10.3847/2041-8213/acdac6
@@ -669,13 +680,16 @@ tasks:
       - doi:10.1007/BF01388452
       - doi:10.4007/annals.2017.185.1.8
   Mathematics/BlackBoxGroupIdentification:
-    status: candidate
+    status: quarantined
     reason: >-
+      Frontier exclusion 2026-09-18 (quarantined_provisional). Historical replay only;
+      see sle/conf/discovery_eligibility.yaml for version-bound evidence and re-entry gates.
       A structure task with an exact oracle: from a black-box product on relabelled elements and a
       query budget of six times the order, name the isomorphism type from a public catalogue given
       with explicit constructions, or decline because the operation is not associative or the group
       is not listed. Catalogue and outside groups are pinned pairwise non-isomorphic by invariants;
-      sealed split at orders 24 and 48; pending a frontier-model draw and external review.
+      sealed split at orders 24 and 48. One GPT-6 first proposal reached 1.0;
+      repeated calibration and external review remain pending.
     citation_ids: [doi:10.1109/SFCS.1984.715919, doi:10.1145/800133.804331]
   StructuralEngineering/ModalDamageAttribution:
     status: candidate

@@ -5,10 +5,9 @@ shared non-physical oracle fingerprint, the axes each failed. All nine have sinc
 their files are gone from the repository - so those assertions describe deleted code and cannot
 pass. Keeping them would have meant keeping a permanently red suite that says nothing.
 
-What survives retirement is the coverage invariant: every task the manifest calls quarantined has
-a reproduced check, and every check the audit carries refers to a task that is still quarantined.
-That is the claim worth pinning, it is what would catch a task being quarantined and quietly not
-re-audited, and it holds whether the quarantine holds nine tasks or none.
+What survives retirement is the coverage invariant: every oracle-defect quarantine has
+a reproduced check. Discovery difficulty holds instead have an explicit version-bound
+exclusion decision. Neither evidence kind may excuse a missing check of the other kind.
 
 When a task is quarantined again, the per-record assertions belong back here, written against that
 task.
@@ -17,6 +16,7 @@ from __future__ import annotations
 
 import importlib.util
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -39,19 +39,24 @@ class QuarantinedTaskAuditTests(unittest.TestCase):
         cls.report = cls.module.audit()
         cls.records = {row["task"]: row for row in cls.report["records"]}
 
-    def test_every_manifest_quarantine_has_a_reproduced_check(self):
+    def test_every_manifest_quarantine_has_its_required_evidence_kind(self):
         self.assertTrue(self.report["execution_passed"], self.report)
         self.assertEqual(self.report["missing_checks"], [])
         self.assertEqual(self.report["stale_checks"], [])
+        self.assertEqual(self.report["unbound_discovery_exclusions"], [])
+        exclusions = {row["task_id"] for row in self.report["discovery_exclusions"]}
         self.assertEqual(
-            set(self.records), set(self.report["manifest_quarantined_tasks"])
+            set(self.records) | exclusions, set(self.report["manifest_quarantined_tasks"])
         )
+        self.assertFalse(set(self.records) & exclusions)
 
     def test_the_summary_counts_agree_with_the_records_it_summarizes(self):
         summary = self.report["summary"]
         self.assertEqual(summary["manifest_quarantined_count"],
                          len(self.report["manifest_quarantined_tasks"]))
         self.assertEqual(summary["audited_count"], len(self.records))
+        self.assertEqual(summary["oracle_defect_quarantined_count"], len(self.records))
+        self.assertEqual(summary["discovery_exclusion_count"], len(self.report["discovery_exclusions"]))
         self.assertEqual(summary["reproduced_defect_count"],
                          sum(row["defect_reproduced"] for row in self.records.values()))
         self.assertEqual(summary["recommended_retain_quarantine_count"],
@@ -89,6 +94,22 @@ class QuarantinedTaskAuditTests(unittest.TestCase):
         for task in self.report["retired_checks"]:
             self.assertNotIn(task, self.records)
             self.assertNotIn(task, self.report["stale_checks"])
+
+    def test_unrecognized_quarantine_cannot_borrow_a_discovery_exclusion(self):
+        manifest = self.module.load_certification()
+        tasks = {key: dict(value) for key, value in manifest["tasks"].items()}
+        task = "Chemistry/LennardJonesCluster"
+        tasks[task]["status"] = "quarantined"
+        with patch.object(self.module, "load_certification", return_value={**manifest, "tasks": tasks}):
+            report = self.module.audit()
+        self.assertFalse(report["execution_passed"])
+        self.assertIn(task, report["missing_checks"])
+
+    def test_changed_discovery_package_cannot_use_old_exclusion_evidence(self):
+        with patch("sle.algorithms.common.task_package_sha256", return_value="f" * 64):
+            report = self.module.audit()
+        self.assertFalse(report["execution_passed"])
+        self.assertTrue(report["unbound_discovery_exclusions"])
 
 
 if __name__ == "__main__":

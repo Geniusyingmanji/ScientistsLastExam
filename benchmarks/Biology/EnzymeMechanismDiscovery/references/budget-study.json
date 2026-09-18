@@ -1,0 +1,81 @@
+{
+  "rows": [
+    {
+      "charged_cost": 52.0,
+      "comparison_cap": 60,
+      "confirmation_denominator": 72,
+      "confirmation_passes": 72,
+      "mean_rmse_mM": 0.004604219772385116,
+      "mean_score": 0.9881272201577418,
+      "mechanism_successes": 24,
+      "policy": "fixed",
+      "worlds": 24
+    },
+    {
+      "charged_cost": 52.0,
+      "comparison_cap": 60,
+      "confirmation_denominator": 72,
+      "confirmation_passes": 72,
+      "mean_rmse_mM": 0.003052889659854752,
+      "mean_score": 0.9943608984166753,
+      "mechanism_successes": 24,
+      "policy": "adaptive",
+      "worlds": 24
+    },
+    {
+      "charged_cost": 72.0,
+      "comparison_cap": 80,
+      "confirmation_denominator": 72,
+      "confirmation_passes": 72,
+      "mean_rmse_mM": 0.003040328411157785,
+      "mean_score": 0.9945946125667757,
+      "mechanism_successes": 24,
+      "policy": "fixed",
+      "worlds": 24
+    },
+    {
+      "charged_cost": 72.0,
+      "comparison_cap": 80,
+      "confirmation_denominator": 72,
+      "confirmation_passes": 72,
+      "mean_rmse_mM": 0.0017230289776065603,
+      "mean_score": 0.998968701822283,
+      "mechanism_successes": 24,
+      "policy": "adaptive",
+      "worlds": 24
+    },
+    {
+      "charged_cost": 104.0,
+      "comparison_cap": 104,
+      "confirmation_denominator": 72,
+      "confirmation_passes": 72,
+      "mean_rmse_mM": 0.0016807597524598186,
+      "mean_score": 0.9990686001947751,
+      "mechanism_successes": 24,
+      "policy": "fixed",
+      "worlds": 24
+    },
+    {
+      "charged_cost": 104.0,
+      "comparison_cap": 104,
+      "confirmation_denominator": 72,
+      "confirmation_passes": 72,
+      "mean_rmse_mM": 0.001467092105520142,
+      "mean_score": 0.999318059938605,
+      "mechanism_successes": 24,
+      "policy": "adaptive",
+      "worlds": 24
+    }
+  ],
+  "source_sha256": {
+    "model.py": "812d9204c66ded026dc8ce744cdca71c60761d7fdf78ce0fd8882923899970a0",
+    "verification/audit_budgets.py": "05fa23e99d83c806fd26ea7d85697d78bd9a719ec61a9835418a2f3d83ac8083",
+    "verification/episode.py": "d5dfe11483f9bced98aad65d1d3578489e3f9f34aabe51976f6b29b749441e32",
+    "verification/reference.py": "b52b39639e8d3dc3304b7450e52f26e551e224d7389b1f1046e7240d1b8e7a66"
+  },
+  "status": "construction_budget_study_not_frontier_calibration",
+  "world_seed_range": [
+    0,
+    23
+  ]
+}

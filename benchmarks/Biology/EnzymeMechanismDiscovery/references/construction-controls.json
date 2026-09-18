@@ -1,0 +1,178 @@
+{
+  "frontier_model_draws": 0,
+  "rows": [
+    {
+      "confirmation_pass_rate": {
+        "denominator": 72,
+        "numerator": 72,
+        "value": 1.0
+      },
+      "correct_refusal_rate": {
+        "denominator": 0,
+        "numerator": 0,
+        "value": null
+      },
+      "discovery_coverage": {
+        "denominator": 24,
+        "numerator": 24,
+        "value": 1.0
+      },
+      "false_discovery_rate": {
+        "denominator": 24,
+        "numerator": 0,
+        "value": 0.0
+      },
+      "mean_budget_used": 104.0,
+      "mean_combined_score": 0.999318059938605,
+      "mean_confirmation_rmse_mM": 0.001467092105520142,
+      "mechanism_recovery": {
+        "denominator": 24,
+        "numerator": 24,
+        "value": 1.0
+      },
+      "method": "adaptive_witness",
+      "worlds": 24
+    },
+    {
+      "confirmation_pass_rate": {
+        "denominator": 72,
+        "numerator": 72,
+        "value": 1.0
+      },
+      "correct_refusal_rate": {
+        "denominator": 0,
+        "numerator": 0,
+        "value": null
+      },
+      "discovery_coverage": {
+        "denominator": 24,
+        "numerator": 24,
+        "value": 1.0
+      },
+      "false_discovery_rate": {
+        "denominator": 24,
+        "numerator": 0,
+        "value": 0.0
+      },
+      "mean_budget_used": 104.0,
+      "mean_combined_score": 0.9990686001947751,
+      "mean_confirmation_rmse_mM": 0.0016807597524598186,
+      "mechanism_recovery": {
+        "denominator": 24,
+        "numerator": 24,
+        "value": 1.0
+      },
+      "method": "fixed_dynamic_design",
+      "worlds": 24
+    },
+    {
+      "confirmation_pass_rate": {
+        "denominator": 72,
+        "numerator": 9,
+        "value": 0.125
+      },
+      "correct_refusal_rate": {
+        "denominator": 0,
+        "numerator": 0,
+        "value": null
+      },
+      "discovery_coverage": {
+        "denominator": 24,
+        "numerator": 24,
+        "value": 1.0
+      },
+      "false_discovery_rate": {
+        "denominator": 24,
+        "numerator": 11,
+        "value": 0.4583333333333333
+      },
+      "mean_budget_used": 102.0,
+      "mean_combined_score": 0.08637747195716462,
+      "mean_confirmation_rmse_mM": 0.30126385939881173,
+      "mechanism_recovery": {
+        "denominator": 24,
+        "numerator": 13,
+        "value": 0.5416666666666666
+      },
+      "method": "static_rate_control",
+      "worlds": 24
+    },
+    {
+      "confirmation_pass_rate": {
+        "denominator": 72,
+        "numerator": 1,
+        "value": 0.013888888888888888
+      },
+      "correct_refusal_rate": {
+        "denominator": 0,
+        "numerator": 0,
+        "value": null
+      },
+      "discovery_coverage": {
+        "denominator": 24,
+        "numerator": 24,
+        "value": 1.0
+      },
+      "false_discovery_rate": {
+        "denominator": 24,
+        "numerator": 23,
+        "value": 0.9583333333333334
+      },
+      "mean_budget_used": 0.0,
+      "mean_combined_score": 3.633588464849513e-08,
+      "mean_confirmation_rmse_mM": 0.5648862150781961,
+      "mechanism_recovery": {
+        "denominator": 24,
+        "numerator": 1,
+        "value": 0.041666666666666664
+      },
+      "method": "no_query",
+      "worlds": 24
+    },
+    {
+      "confirmation_pass_rate": {
+        "denominator": 0,
+        "numerator": 0,
+        "value": null
+      },
+      "correct_refusal_rate": {
+        "denominator": 0,
+        "numerator": 0,
+        "value": null
+      },
+      "discovery_coverage": {
+        "denominator": 24,
+        "numerator": 0,
+        "value": 0.0
+      },
+      "false_discovery_rate": {
+        "denominator": 0,
+        "numerator": 0,
+        "value": null
+      },
+      "mean_budget_used": 0.0,
+      "mean_combined_score": 0.0,
+      "mean_confirmation_rmse_mM": null,
+      "mechanism_recovery": {
+        "denominator": 24,
+        "numerator": 0,
+        "value": 0.0
+      },
+      "method": "always_abstain",
+      "worlds": 24
+    }
+  ],
+  "schema_version": 1,
+  "source_sha256": {
+    "model.py": "812d9204c66ded026dc8ce744cdca71c60761d7fdf78ce0fd8882923899970a0",
+    "verification/audit_controls.py": "9b07d5b832e899c5e946fc6b80e5d5946f34d21b95797c609b4894c627ea3cd8",
+    "verification/episode.py": "d5dfe11483f9bced98aad65d1d3578489e3f9f34aabe51976f6b29b749441e32",
+    "verification/reference.py": "b52b39639e8d3dc3304b7450e52f26e551e224d7389b1f1046e7240d1b8e7a66"
+  },
+  "status": "construction_controls_not_difficulty_calibration",
+  "task_id": "SystemsBiology/EnzymeMechanismDiscovery",
+  "world_seed_range": [
+    0,
+    23
+  ]
+}

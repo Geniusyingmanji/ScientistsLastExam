@@ -1022,10 +1022,16 @@ def promote_frontier_receipt(
     )
     from .evaluate import resolve_trusted_runtime
     from .run_verification import verify_run
+    from .discovery_eligibility import require_discovery_frontier_eligibility
 
+    # This is independent of registry certification. --allow-uncertified permits
+    # historical evaluation, never promotion of a retired/uncalibrated task.
+    require_discovery_frontier_eligibility(spec)
     wave = load_frozen_wave(spec)
     if wave is None:
         raise ValueError("task is not opted into a frontier family")
+    if any(cell["kind"] == "discovery" for cell in wave.cells.values()):
+        require_discovery_frontier_eligibility(spec, scientific_role="discovery")
     run_root = Path(run_workdir).resolve()
     ledger_path = Path(ledger_root).resolve()
     if ledger_path == run_root or run_root in ledger_path.parents:

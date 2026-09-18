@@ -186,7 +186,7 @@ class DiscoveryAdmissionTests(unittest.TestCase):
                 "--output", str(output_path),
             ])
             document = json.loads(output_path.read_text(encoding="utf-8"))
-        self.assertEqual(document["schema_version"], 4)
+        self.assertEqual(document["schema_version"], 5)
         self.assertEqual(document["rows"][0]["axes"], axes0)
         self.assertEqual(document["rows"][1]["axes"], axes1)
         self.assertEqual(document["rows"][0]["missing_axes"], [])

@@ -28,6 +28,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from sle.certification import certification_record  # noqa: E402
+from sle.discovery_eligibility import EXCLUSION_STATUSES, discovery_eligibility  # noqa: E402
 from sle.benchmark_layout import task_path  # noqa: E402
 from sle.provenance import (  # noqa: E402
     SOURCE_SCOPE,
@@ -827,6 +828,55 @@ def _certified_without_current_admission(task_records: list[dict[str, Any]]) -> 
     )
 
 
+def _discovery_exclusion_state(spec, certification: dict) -> dict:
+    """A difficulty hold is not evidence that the scientific oracle is broken."""
+    decision = discovery_eligibility(spec)
+    applicable = bool(
+        certification.get("status") == "quarantined"
+        and decision["status"] in EXCLUSION_STATUSES
+    )
+    return {
+        "applicable": applicable,
+        "path": "sle/conf/discovery_eligibility.yaml" if applicable else None,
+        "status": decision["status"],
+        "reason": decision["reason"],
+        "task_package_sha256": decision.get("task_package_sha256"),
+        "reviewed_task_package_sha256": decision.get("reviewed_task_package_sha256"),
+        "reviewed_package_matches": decision.get("reviewed_package_matches"),
+        "evidence": decision.get("evidence", []),
+        "frontier_eligible": decision["frontier_eligible"],
+        "passed": bool(applicable and decision.get("reviewed_package_matches") is True
+                       and decision.get("evidence") and decision["frontier_eligible"] is False),
+    }
+
+
+def _quarantine_evidence_issues(task_records: list[dict], document: dict, rows: dict) -> list[str]:
+    """Retain the old reproduction gate for every actual oracle-defect hold."""
+    quarantined = [row for row in task_records if row["certification_status"] == "quarantined"]
+    exclusions = [row for row in quarantined if row.get("discovery_exclusion", {}).get("applicable")]
+    oracle_defects = {row["task"] for row in quarantined
+                     if not row.get("discovery_exclusion", {}).get("applicable")}
+    issues = []
+    if any(row["discovery_exclusion"].get("passed") is not True for row in exclusions):
+        issues.append("discovery exclusion policy does not bind every current quarantined package")
+    if not _trusted_document(document):
+        issues.append("quarantined task reaudit is missing or untrusted")
+    if set(rows) != oracle_defects:
+        issues.append("oracle-defect quarantine reaudit coverage differs from current manifest")
+    summary = document.get("summary") or {}
+    if not (
+        summary.get("oracle_defect_quarantined_count", summary.get("manifest_quarantined_count")) == len(oracle_defects)
+        and summary.get("audited_count") == len(oracle_defects)
+        and summary.get("reproduced_defect_count") == len(oracle_defects)
+        and summary.get("meets_internal_benchmark_standard_count") == 0
+    ):
+        issues.append("oracle-defect quarantine reaudit summary is inconsistent")
+    if any(row["quarantine_reaudit"].get("passed") is not True
+           for row in quarantined if row["task"] in oracle_defects):
+        issues.append("not every oracle-defect quarantine has current reproduced defect evidence")
+    return issues
+
+
 def build_report(full_test_suite: Optional[str] = None) -> dict[str, Any]:
     global_reports = dict(GLOBAL_REPORTS)
     if full_test_suite is not None:
@@ -883,6 +933,7 @@ def build_report(full_test_suite: Optional[str] = None) -> dict[str, Any]:
     for spec in specs:
         task_id = spec.task_id
         certification = certification_record(task_id)
+        discovery_exclusion = _discovery_exclusion_state(spec, certification)
         raw_card, card = _card_state(spec.task_dir)
         measurement = _measurement_state(model_runs.get(task_id, []))
         evidence = evidence_by_task.get(task_id, [])
@@ -1030,6 +1081,7 @@ def build_report(full_test_suite: Optional[str] = None) -> dict[str, Any]:
             "oracle_type": spec.metadata.get("oracle_type"),
             "science_metric": spec.metadata.get("science_metric"),
             "current_contract_sha256": _contract_sha256(spec.task_dir),
+            "discovery_exclusion": discovery_exclusion,
             "task_card": card,
             "baseline_evidence": {
                 "path": GLOBAL_REPORTS["secure_baseline"] if baseline is not None else None,
@@ -1139,6 +1191,9 @@ def build_report(full_test_suite: Optional[str] = None) -> dict[str, Any]:
         "current_quarantine_defect_reproduction_count": sum(
             row["quarantine_reaudit"]["passed"] for row in task_records
         ),
+        "current_discovery_exclusion_count": sum(
+            row["discovery_exclusion"]["passed"] for row in task_records
+        ),
         "certified_without_current_admission_count": len(
             _certified_without_current_admission(task_records)
         ),
@@ -1170,29 +1225,7 @@ def build_report(full_test_suite: Optional[str] = None) -> dict[str, Any]:
     # evidence expired remain visible below rather than being hidden by aggregate counts or
     # silently removed from the default registry.
     issues.extend(_status_admission_issues(task_records))
-    current_quarantined = {
-        row["task"] for row in task_records
-        if row["certification_status"] == "quarantined"
-    }
-    if not _trusted_document(quarantine_document):
-        issues.append("quarantined task reaudit is missing or untrusted")
-    if set(quarantine_rows) != current_quarantined:
-        issues.append("quarantined task reaudit coverage differs from current manifest")
-    quarantine_summary = quarantine_document.get("summary") or {}
-    if not (
-        quarantine_summary.get("manifest_quarantined_count")
-        == len(current_quarantined)
-        and quarantine_summary.get("audited_count")
-        == len(current_quarantined)
-        and quarantine_summary.get("reproduced_defect_count")
-        == len(current_quarantined)
-        and quarantine_summary.get("meets_internal_benchmark_standard_count") == 0
-    ):
-        issues.append("quarantined task reaudit summary is inconsistent")
-    if coverage["current_quarantine_defect_reproduction_count"] != len(
-        current_quarantined
-    ):
-        issues.append("not every quarantined task has current reproduced defect evidence")
+    issues.extend(_quarantine_evidence_issues(task_records, quarantine_document, quarantine_rows))
 
     report: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
@@ -1241,6 +1274,7 @@ def build_report(full_test_suite: Optional[str] = None) -> dict[str, Any]:
                 "Single-seed budget-one/budget-three/blind runs are calibration evidence, not feedback-causal evidence.",
                 "Internal certification and a complete task card are not external scientific validation.",
                 "Fresh procedural simulator replay is not laboratory or physical confirmation.",
+                "Frontier discovery exclusion is a version-bound policy hold, not proof of an oracle defect.",
             ],
         },
         "head_revision": head_revision,
@@ -1309,6 +1343,7 @@ def render_markdown(report: dict[str, Any]) -> str:
         "| Novelty risk declared | %d |" % coverage["novelty_risk_declared_task_count"],
         "| Declared material post-2h headroom | %d |" % coverage["declared_post_2h_headroom_task_count"],
         "| Current/migration-safe quarantine defect reproduction | %d |" % coverage["current_quarantine_defect_reproduction_count"],
+        "| Current version-bound discovery exclusions | %d |" % coverage["current_discovery_exclusion_count"],
         "",
         "## Per-task audit",
         "",

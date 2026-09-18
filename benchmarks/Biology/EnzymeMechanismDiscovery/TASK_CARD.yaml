@@ -1,0 +1,103 @@
+schema_version: 2
+status: candidate
+evaluation_role: protocol_only
+frontier_eligible: false
+admission_blocker: >-
+  Matched-cost fixed and adaptive controls both recover every construction
+  mechanism at 52, 72 and 104 charged units. Further scientific family redesign
+  is required; this fixture must not replace the retired saturated task.
+difficulty: unmeasured
+calibration_required: true
+integration_status: protocol_fixture_outside_legacy_task_registry
+scientific_question: >-
+  Infer a composition of effective product-feedback, substrate-inhibition and
+  enzyme-loss modules from charged dynamic perturbation assays, and predict
+  new mixed-load pulse experiments after freezing the model.
+artifact: >-
+  A complete module presence/absence claim, six typed kinetic parameters,
+  genuine episode evidence IDs, or explicit abstention.
+oracle:
+  model: >-
+    S to X to P cascade with a compositional effective saturating first step,
+    first-order intermediate conversion and optional first-order enzyme loss.
+  feasibility: Public parameter ranges, bounded assays, 216 charged experiment units.
+  deterministic: true
+  confirmation: Independent design and observation streams; immutable claim; fresh simulated trajectories.
+  evidence_limit: Same model family simulation; no independent physical or cross-simulator validation.
+normalization:
+  baseline: Data-free no-module claim using midpoint parameters; not guaranteed zero on every world.
+  reference: Truth-blind continuous kinetic fit plus experiment selection; attainable witness only.
+  score: Exact effective composition recovery times exp(-(fresh trajectory RMSE / 0.06 mM)^2).
+  abstention: Exactly zero discovery credit; calibrated refusal has zero opportunities in this pilot.
+citations:
+- id: doi:10.1002/bit.260100602
+  title: A mathematical model for the continuous culture of microorganisms utilizing inhibitory substrates
+- id: https://pubmed.ncbi.nlm.nih.gov/3120622/
+  title: The analysis of enzyme progress curves by numerical differentiation, including competitive product inhibition and enzyme reactivation
+- id: https://www.sciencedirect.com/science/article/abs/pii/S0301462206002651
+  title: A test for measuring the effects of enzyme inactivation
+- id: arXiv:2507.02083
+  title: SciGym
+invariants:
+- Substrate plus intermediate plus product is conserved between pulses.
+- Enzyme pulses change activity without adding substrate/product mass.
+- Equal initial rate curves can hide different enzyme decay and intermediate conversion.
+- Product-free initial rates cannot identify product feedback; product perturbation can.
+- ODE trajectories agree with an independent four-state high-accuracy integration.
+- Truth-blind witness recovers all eight module compositions in the construction test panel within budget.
+- Confirmation data do not change with exploration history and cannot be replaced after commitment.
+- Invalid inputs do not consume budget; exhausted budgets and post-commit exploration fail closed.
+- Correct-refusal and no-claim false-discovery values remain null when their denominators are zero.
+known_shortcuts: >-
+  A small known eight-composition family and explicit active-effect gaps may be
+  solvable by a generic nonlinear fitting program. Fixed dynamic designs can
+  be sufficient; adaptive advantage is not established. Construction controls
+  are published, not held out. No-query guesses can occasionally recover an
+  empty composition. This pilot is not certified hard and must not silently
+  replace the saturated static task in the default benchmark.
+review:
+  domain: pending_external
+  evaluator_security: local_scientific_and_protocol_tests_only
+provenance:
+  class: procedural
+  target_source: Original small effective model and private per-episode seed.
+  task_contract_public_before_evaluation: true
+  fresh_confirmation_status: executable_simulated_confirmation
+novelty_risk:
+  level: high
+  rationale: >-
+    Dynamic experiment design and compositional identification extend the
+    saturated static task, but all equations are public and the family is small.
+    New frontier draws are required before any empirical difficulty claim.
+lineage:
+  status: candidate_construction
+  calibration_runs: []
+  calibration_evidence_status: missing_frontier_draws
+  edits_triggered_by_model: >-
+    Motivated by previous static EnzymeKineticsLaw saturation; no frontier model
+    has been evaluated on this pilot and no difficulty conclusion is asserted.
+long_horizon:
+  status: calibration_required
+  measurement_health_passed: false
+  material_headroom_after_2h: false
+  evidence: []
+construction_audit:
+  status: builder_audited_pending_external
+  reviewer_domain: pending_external
+  expert_hours: null
+  oracle_disagreement_status: independent_four_state_integrator_test_passed
+  independent_recomputation_status: scientific invariants plus truth-blind controls are executable
+  evidence: references/construction-controls.json
+  budget_study_evidence: references/budget-study.json
+agent_visible_files:
+- Task.md
+- model.py
+- solution.py
+private_files:
+- verification/
+metric_contract:
+  mechanism_recovery: exact recovered effective compositions / evaluated worlds
+  false_discovery_rate: incorrect full composition claims / full discovery claims
+  module_false_discovery_rate: false positive optional modules / claimed positive optional modules
+  correct_refusal_rate: no opportunities in this pilot; numerator 0 and denominator 0, value null
+  discovery_coverage: full discovery claims / evaluated worlds

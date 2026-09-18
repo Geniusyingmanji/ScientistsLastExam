@@ -84,12 +84,20 @@ class MeasurementHealthAuditTests(unittest.TestCase):
         for task in (
             "Spectroscopy/CrowdedSpectrumAssignment",
             "Mathematics/RamseyLowerBound",
-            "ParticlePhysics/LookElsewhereAnomaly",
-            "Gravitation/PTAHellingsDowns",
         ):
             row = self.tasks[task]
             self.assertEqual(row["certification_status"], "candidate")
             self.assertEqual(row["classification"], self.module.REPAIR_FIRST)
+
+    def test_discovery_difficulty_holds_are_excluded_before_run_allocation(self):
+        from sle.discovery_eligibility import load_discovery_eligibility
+        for task in load_discovery_eligibility()["tasks"]:
+            with self.subTest(task=task):
+                row = self.tasks[task]
+                self.assertEqual(row["certification_status"], "quarantined")
+                self.assertEqual(row["classification"], self.module.QUARANTINED)
+                self.assertFalse(row["internal_science_admission"])
+                self.assertFalse(row["confirmatory_cohort_eligible"])
 
     def test_model_derived_checks_report_observed_run_counts_consistently(self):
         """Re-measurement may legitimately turn zero into a positive current-bound count."""
