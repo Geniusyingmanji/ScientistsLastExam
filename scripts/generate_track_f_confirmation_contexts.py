@@ -38,19 +38,15 @@ from sle.registry import find_task  # noqa: E402
 
 
 SUPPORTED_TASKS = (
-    "DynamicalSystems/ActiveLawDiscovery",
     "Optics/DiffractionGratingDesign",
 )
 TASK_SHORT_NAMES = {
-    "DynamicalSystems/ActiveLawDiscovery": "active-law",
     "Optics/DiffractionGratingDesign": "diffraction",
 }
 GENERATOR_ENTRYPOINTS = {
-    "DynamicalSystems/ActiveLawDiscovery": "active_law_fresh_v1",
     "Optics/DiffractionGratingDesign": "diffraction_grating_fresh_v1",
 }
 WORLD_COUNTS = {
-    "DynamicalSystems/ActiveLawDiscovery": 7,
     "Optics/DiffractionGratingDesign": 3,
 }
 

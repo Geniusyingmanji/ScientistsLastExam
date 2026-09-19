@@ -95,8 +95,7 @@ class InventoryTests(unittest.TestCase):
         closed = set(self.report["closed_form_reference"])
         for task in ("QuantumErrorCorrection/QuantumErrorDecoder",
                      "MedicinalChemistry/MolecularLeadOptimization",
-                     "RNAEngineering/RNAEnsembleDesign",
-                     "Spectroscopy/SpinSystemInference"):
+                     "RNAEngineering/RNAEnsembleDesign"):
             self.assertNotIn(task, closed)
 
 

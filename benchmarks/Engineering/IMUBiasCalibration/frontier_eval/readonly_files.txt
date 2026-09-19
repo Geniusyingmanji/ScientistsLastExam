@@ -1,3 +1,0 @@
-Task.md
-frontier_eval/constraints.txt
-frontier_eval/metadata.yaml

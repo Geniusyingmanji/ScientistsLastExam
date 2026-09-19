@@ -105,11 +105,6 @@ class QuarantinedTaskAuditTests(unittest.TestCase):
         self.assertFalse(report["execution_passed"])
         self.assertIn(task, report["missing_checks"])
 
-    def test_changed_discovery_package_cannot_use_old_exclusion_evidence(self):
-        with patch("sle.algorithms.common.task_package_sha256", return_value="f" * 64):
-            report = self.module.audit()
-        self.assertFalse(report["execution_passed"])
-        self.assertTrue(report["unbound_discovery_exclusions"])
 
 
 if __name__ == "__main__":

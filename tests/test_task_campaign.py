@@ -223,6 +223,14 @@ class CampaignTests(unittest.TestCase):
         with self.assertRaises(SystemExit):
             campaign.main("delta_ladder", ["--plan", str(path), "--output", str(self.root / "out.json"), "--budgets", "20"])
 
+    def test_auxiliary_report_commands_resolve_to_current_optimization_tools(self):
+        commands = campaign.report_commands(self.plan(), self.root / "reports")
+        self.assertEqual([Path(command[1]).name for command in commands],
+                         ["report_admission_criterion.py"])
+        self.assertTrue(all(Path(command[1]).is_file() for command in commands))
+        self.assertTrue(all((campaign.ROOT / path).is_file()
+                            for path in campaign.ORCHESTRATION_FILES))
+
     def test_auxiliary_reporters_refuse_unplanned_input_runs(self):
         plan = self.plan()
         self.populate(plan)

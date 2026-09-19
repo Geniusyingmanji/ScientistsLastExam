@@ -30,8 +30,7 @@ from sle.registry import find_task  # noqa: E402
 ORCHESTRATION_FILES = (
     "scripts/task_campaign.py", "scripts/calibrate_task.py", "scripts/run_delta_ladder.py",
     "scripts/batch_evolve.py", "scripts/reporting_trajectory.py",
-    "scripts/report_admission_criterion.py", "scripts/report_discovery_triple.py",
-    "scripts/report_discovery_admission.py",
+    "scripts/report_admission_criterion.py",
 )
 
 
@@ -253,21 +252,15 @@ def replay(plan):
             "completion_rate": completed / len(cells), "cell_status_counts": counts,
             "cells": cells, "paired": paired, "ladder": ladder,
             "scientific_admission": "not_assessed", "trusted_evidence": False,
-            "note": "Content-checked operator replay; no certification, difficulty label, or task-card update. Review independent reference/shortcut calibration and discovery axes before admission."}
+            "note": "Content-checked operator replay; no certification, difficulty label, or task-card update. Review independent reference/shortcut calibration and feasibility/held-out diagnostics before admission."}
 
 
 def report_commands(plan, directory):
     """Reuse repository reports, separately from the fixed-cell completeness result."""
     directory = Path(directory)
-    admission, triple = directory / "admission.json", directory / "discovery_triple.json"
     return [
         [sys.executable, str(ROOT / "scripts/report_admission_criterion.py"),
-         "--runs", plan["workdir"], "--output", str(admission)],
-        [sys.executable, str(ROOT / "scripts/report_discovery_triple.py"),
-         "--runs", plan["workdir"], "--split", "heldout", "--output", str(triple)],
-        [sys.executable, str(ROOT / "scripts/report_discovery_admission.py"),
-         "--admission", str(admission), "--triple", str(triple),
-         "--output", str(directory / "discovery_admission.json")],
+         "--runs", plan["workdir"], "--output", str(directory / "admission.json")],
     ]
 
 

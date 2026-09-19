@@ -70,7 +70,7 @@ class GeneratedRunEvalTests(unittest.TestCase):
         match = re.search(r"parents\[(\d+)\]", _render())
         self.assertIsNotNone(match)
         depth = int(match.group(1))
-        example = REPO / "benchmarks" / "Engineering" / "ModalDamageAttribution" / \
+        example = REPO / "benchmarks" / "Engineering" / "TrussWeightMinimization" / \
             "frontier_eval" / "run_eval.py"
         self.assertTrue(example.is_file())
         self.assertEqual(example.resolve().parents[depth], REPO)

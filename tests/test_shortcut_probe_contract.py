@@ -93,7 +93,7 @@ class ShortcutContractTests(unittest.TestCase):
         self.assertEqual(result["status"], "migration_pending")
         self.assertFalse(result["passed"])
         migration = json.loads(MIGRATION.read_text())["tasks"]
-        self.assertEqual(len(migration), 85)
+        self.assertEqual(len(migration), 42)
         self.assertTrue(set(migration).issubset({spec.task_id for spec in list_tasks(None)}))
 
     def test_an_undeclared_in_tree_candidate_fails_the_contract(self):

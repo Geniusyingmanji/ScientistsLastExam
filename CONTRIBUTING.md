@@ -1,3 +1,9 @@
+> **Branch scope:** this `optimization` branch accepts only tasks with explicit
+> `scientific_role: optimization`. Discovery tasks and GT-free discovery environments
+> belong on `main`. Shared infrastructure and historical evidence formats remain
+> compatible; historical records are not current branch inventory or fresh calibration.
+> The split baseline is `18be7da5752e1903944bf25717bd9a6764ac2e46`.
+
 # 为 Scientists' Last Exam 贡献
 
 当前同时做两件事:**加固已有清单**,以及按 `sle/conf/exam_taxonomy.yaml` 的空格扩 task。
@@ -10,24 +16,9 @@
 
 ## 任务要求
 
-### 无 GT discovery 的主流程
+### Optimization 的准入要求
 
-新 discovery 任务可以只有观测、工具、科学问题与可复核证据,不要求提供隐藏答案或已知机制。
-`sle episode` 默认采用 `--evaluation-mode evidence`;确定性指同一冻结证据应得到一致的程序化检查,
-不意味着把未知科学真相预先写进 oracle。下文关于 `combined_score`、已知锚点和真值 oracle
-的旧规范用于优化任务与显式 `--evaluation-mode oracle` 的模拟构建诊断。
-
-无 GT 任务必须提供:科学问题与主张范围;数据/仪器来源及限制;竞争解释和可证伪的预测接口;
-多轮预算与工具契约;原生观测及样本来源记录;冻结主张后的复核路径;可重放分析;
-关于实验设计、反证、推理、不确定性、复现和新颖性的独立审查标准。
-不能把日志完整、工具次数、长篇理由、宽泛预测或重复读取同一批数据当作发现质量。
-共享分区也不自动等于独立采集,检测到相关性也不自动得到因果结论。
-
-当前 `MeasurementAudit` 提供通用观测数据入口,默认手工表格只测试协议。
-生产任务应交付真实科学问题和有来源的数据包,保持 candidate,等待独立科学审查和模型标定。
-完整协议见 [发现评估](docs/discovery_evaluation.md)。
-
-采用传统 oracle 契约的 certified 任务必须满足**全部七条**:
+本分支的 certified 优化任务必须满足**全部七条**:
 
 1. **博士/专家级难度下限。** 任务须要求博士层次的领域知识、进阶数值优化,或当前的研究性启发式。
    不要把教学题、教科书习题、玩具演示或入门级任务作为基准条目提交。
@@ -105,6 +96,7 @@ benchmarks/
 ```yaml
 domain: Chemistry                    # 稳定的逻辑 domain(不是顶层目录名)
 task: LennardJonesCluster            # 任务目录名
+scientific_role: optimization        # 本分支的任务形式
 difficulty: hard                     # unmeasured | hard | flagship
 tier: T2                             # candidate | T2(专家) | T3(flagship)
 oracle_type: analytical              # analytical | physical_sim | dataset_oracle | neural_surrogate
@@ -156,16 +148,7 @@ oracle 自报失败类别时写 `"error_message": "candidate invalid: " + kind`�
 及返回的远程 callable 要继续使用该世界的会话。请用真实 `CandidateProxy` 验证这些边界；
 只检查基线分数确定，无法发现程序按世界顺序积累状态的问题。
 
-**发现类任务另有要求。** 三个轴必须**分开**报出、永不平均:机制恢复、假发现率、校准拒答。
-再加一列"是否尝试过发现"——没有它,"每个提案都拒绝了每个世界"与"科学太难做不出来"在报表上一样,
-而这两种情况需要相反的处置。归一化要让**全面弃权恰好得零**:
-
-```python
-always_abstain = unsupported_count / len(records)
-normalized = (raw_mechanism - always_abstain) / (1.0 - always_abstain)
-```
-
-比率类指标要发布**分母**。只发布计数会让三元组无法补全 —— 已有四个任务卡在这一步。
+比率类指标必须同时发布分母或计数。
 
 ---
 
@@ -210,19 +193,9 @@ credit 不含假发现/弃权惩罚,不能作为综合提交质量分。具体 m
 
 ## 范例任务
 
-`benchmarks/Engineering/ModalDamageAttribution` 是照着抄的那一个。它的每份文件都为一件事存在:
-
-| 文件 | 它回答什么 |
-|---|---|
-| `Task.md` | 「关系与区别」小节点名仓库内最近的三到五个任务并说清差别;每个 `problem` 键都列出;消融阶梯与捷径探针的数字都在里面 |
-| `verification/evaluator.py` | 冻结 oracle。三类世界(可判、可判但答案是「没有」、不可判须拒答),全弃权恰好得零,畸形提交得零且不抛出 |
-| `verification/reference_*.py` | 真值盲参考解,只读公开问题与收费接口。**要能力完整**:它是「称职方法的可运行见证」,不是归一化基准。缺一步标准实践的参考解会让准入线形同虚设 |
-| `solution.py` | 自信地错的基线,分数为零。它该做仪器诱导你做的那件事,然后掉进陷阱 |
-| `references/known_best.md` | 参考解、基线、消融阶梯、捷径探针、前沿 draw、构造错误、稳健性,七节 |
-| `TASK_CARD.yaml` | `known_shortcuts` 写捷径探针上限;`lineage.edits_triggered_by_model` 写清哪些改动是被模型逼出来的 |
-| `tests/test_<task>.py` | 钉住任务赖以成立的性质,不是钉分数。这题钉的是「温度在频率比上精确抵消」和「测一天必须明显差于测九天」 |
-
-这个范例的建造过程本身是记录的一部分:检查点在任何模型看到题目之前抓到三处构造错误(预算是免费的、混淆可以靠挑暖日绕过、一个拒答世界不可判),第一次前沿 draw 又证明参考解建造不足。全部写在 `references/known_best.md` 里,没有删掉难看的部分。
+可从 `benchmarks/Mathematics/CapSet` 查看可执行构造任务，或从
+`benchmarks/Engineering/TrussWeightMinimization` 查看预算、设计可行性、留出验证与多世界隔离。
+范例是否已有认证与模型标定，应读它自己的卡片和绑定证据，不能由目录存在推断。
 
 ## 任务贡献检查点
 
@@ -230,7 +203,7 @@ credit 不含假发现/弃权惩罚,不能作为综合提交质量分。具体 m
 
 **A 科学与新颖性**
 1. 填补 `sle/conf/exam_taxonomy.yaml` 的学科 × 形式空格(`python scripts/report_exam_taxonomy.py`)。
-2. `Task.md` 有「关系与区别」小节,点名仓库内最近邻并说明差在哪(产物形式、可判错世界、拒答轴、实例集)。
+2. `Task.md` 有「关系与区别」小节,点名仓库内最近邻并说明差在哪(产物形式、目标与约束、预算、实例集)。
 3. 与 Frontier-Eng 的两份目录(论文附录 47 题、仓库 `TASK_DETAILS` 的全部条目)逐条对照,
    记录目录修订与实际条目数,同一问题类不立题。仓库目录会变化,不要照抄历史的 95 条计数。
 4. 引用支撑 oracle 里的模型本身,不是只支撑领域。
@@ -239,16 +212,16 @@ credit 不含假发现/弃权惩罚,不能作为综合提交质量分。具体 m
 5. 确定:同一候选两次评测键级一致。
 6. 十种以上畸形提交全部 `valid=0`、`combined_score=0`,且不抛出。
 7. 预算收费,超支 fail closed。
-8. 全弃权恰好 0;若有「没有机制」的世界,全盘否认也恰好 0。
-9. heldout 与机制轴不在 `SEARCH_VISIBLE_KEYS` 里。
+8. 空产物、恒定策略等合法但无效的捷径不得获得科学增益。
+9. heldout 与私有诊断不在 `SEARCH_VISIBLE_KEYS` 里。
 10. `python scripts/check_numeric_keys_hold_numbers.py` 通过 —— 读起来像数值的键不能装散文。
 11. 公开问题字典的每个键都在 `Task.md` 列出。
 
 **C 难度与不可捷径**
 12. **捷径探针**:对提交做低维参数化的网格搜索(数百到数千次评测),报告最好分,写进卡片 `known_shortcuts`。超过参考解就必须加固。这一条是被一个两参数网格搜索能拿 0.94 的投稿逼出来的。
 13. 消融阶梯:每拿掉参考解的一项能力都要掉分,掉幅写进 `Task.md`。不掉分的能力说明那部分设计没起作用。
-14. 参考解真值盲、可独立运行、**能力完整但故意不打满**,留的空间要说清是哪一项。
-15. 基线自信地错,分数为零。历史任务有例外,新投稿仍须归一化到 0。
+14. 参考解只读合法输入、可独立运行且能力完整；公开目标与实际余量，不能故意削弱参考解以制造难度。
+15. 基线弱但合法,分数为零。历史任务有例外,新投稿仍须归一化到 0。
 
 **D 证据与准入**
 16. 前沿模型 draw(`batch_evolve.py --run-role calibration`,干净树上跑)。准入线:首提案不得够到参考解。
@@ -290,15 +263,12 @@ credit 不含假发现/弃权惩罚,不能作为综合提交质量分。具体 m
 - [ ] 若加入 frontier family:`wave.yaml` 通过语义校验,predecessor 链正确,cell ID/定义未被改写。
 - [ ] flagship(`uncapped`)任务:`references/known_best.md` 存在且值有出处。
 - [ ] `python scripts/audit_tasks.py` 无准入问题,不变量测试全部通过。
-- [ ] 在 `sle/conf/exam_taxonomy.yaml` 里占**恰好一格**(optimization analogue 或
-      discovery kind)。`python scripts/report_exam_taxonomy.py` 必须干净。
+- [ ] 在 `sle/conf/exam_taxonomy.yaml` 里占**恰好一格**(optimization analogue)。`python scripts/report_exam_taxonomy.py` 必须干净。
 - [ ] 不与 Frontier-Eng 重合:建题前对照其论文附录 A 的 47 题与仓库 `TASK_DETAILS.md` 的全部条目,
       同一问题类(如桁架减重、光栅衍射级配、月面着陆轨迹)不再立题;同形式不同问题可以,但要在卡片
       `novelty_risk` 里写清区别。核查记录见 `.research/frontier_eng_overlap_audit_2026-09-03.md`。
 - [ ] `python scripts/check_task_contribution.py --task <Domain>/<Task>` 通过
       （上面大部分检查的一条命令;不调用 LLM,也不宣称认证）。
-      EnzymeKineticsLaw / DiscrepantMeasurements 已标 `on_ramp_do_not_pair`,不要拿它们
-      做配对对照,也不要再加一题同构的 on-ramp。
 
 ---
 
@@ -313,7 +283,7 @@ credit 不含假发现/弃权惩罚,不能作为综合提交质量分。具体 m
    python -m sle eval --allow-uncertified --task <Domain>/<Task>
    python -m sle run --allow-uncertified --task <Domain>/<Task> --budget 3
    ```
-5. **提交 Pull Request** 到 `main`。PR 描述里写:
+5. **提交 Pull Request** 到 `optimization`。PR 描述里写:
    - 科学背景(一到两句)。
    - oracle 细节:它计算什么、依赖、计算开销。
    - 基线分数与参考 SoTA。
@@ -326,7 +296,7 @@ credit 不含假发现/弃权惩罚,不能作为综合提交质量分。具体 m
 `scripts/refresh_global_evidence.py` 重新生成。**这不是你的 PR 的缺陷,你也修不了。**
 
 因此该断言在 fork PR 上只检查"已冻结任务的证据有没有漂",新任务归入 `awaiting_freeze` 不判红;
-本仓库内的维护者集成 PR 与 `main` 都设置 `SLE_REQUIRE_FROZEN_INVENTORY=1`,
+本仓库内的维护者集成 PR 与 `optimization` 都设置 `SLE_REQUIRE_FROZEN_INVENTORY=1`,
 要求完整冻结清单。维护者须在集成分支上先完成 Linux refresh 与全量 CI,再合并。
 你的 PR 里**不要**提交重新生成的证据文档 —— 它们会记录你本机的 revision,反而把绑定弄脏。
 
@@ -414,17 +384,6 @@ python -m sle run --task Chemistry/LennardJonesCluster --algorithm greedy_rewrit
 ---
 
 > 有问题?先开一个 Issue 讨论你的任务想法,再动手写代码。
-## Discovery 的主张与证据
-
-发现类任务应明确：模型已经知道什么、真正未知什么、输出哪类科学主张、可识别范围、
-竞争解释和结果验证路径。主张类型、开放度、验证方式与新颖性分别说明；只在模拟器中成立
-的结果不能称为真实实验确认。细则与四题试点见
-[`docs/discovery_evaluation.md`](docs/discovery_evaluation.md)。
-
-当前过程记录器覆盖四个试点，其余 discovery 任务在全量档案中标记待审查。
-接入新题须提供 callback/逐世界结果适配和回归验证；不能仅凭填好档案或日志齐全提升认证状态。
-过程证据和隐藏结果必须保持 evaluator-only，禁止反馈到搜索者。
-
 Harness diagnostics distinguish `callback_invocations` (all invoked callbacks, including free
 and rejected calls) from oracle-defined budget usage. Trusted callers can pass `diagnostics={}`
 to `evaluate_candidate` to receive this count outside the scientific metric dictionary.

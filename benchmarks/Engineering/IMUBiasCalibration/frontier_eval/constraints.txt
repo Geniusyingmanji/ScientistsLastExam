@@ -1,4 +1,0 @@
-Only edit solution.py and keep infer_imu(problem, measure).
-Use deterministic CPU-only Python with the standard library, NumPy and SciPy.
-measure(setting_id) costs one unit, including repeated measurements. Never exceed measurement_budget.
-Do not read verification or create processes/network requests.

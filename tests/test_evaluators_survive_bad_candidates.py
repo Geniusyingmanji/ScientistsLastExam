@@ -64,19 +64,6 @@ def _instance_rows(tree: ast.AST) -> tuple[list[set[str]], list[set[str]]]:
 
 
 class EvaluatorRowShapeTests(unittest.TestCase):
-    def test_the_two_tasks_this_was_found_on_carry_the_key_that_broke(self):
-        """`abstained` is read by `discovery_coverage`, which was added after the failure rows.
-
-        Four runs died and a 129-block campaign's report was invalidated because these two rows
-        lacked it.
-        """
-        for name in ("ReactionMechanismFitting", "GravityInversion"):
-            path = next(p for p in (ROOT / "benchmarks").rglob(
-                "%s/verification/evaluator.py" % name))
-            _good, bad = _instance_rows(ast.parse(path.read_text(encoding="utf-8")))
-            self.assertTrue(bad, name)
-            for keys in bad:
-                self.assertIn("abstained", keys, name)
 
     def test_the_pendulum_separates_a_bad_controller_from_a_broken_evaluator(self):
         """It had no failure path at all: a controller returning a dictionary raised out of

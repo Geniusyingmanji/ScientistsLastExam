@@ -11,7 +11,6 @@ import pytest
 
 from scripts import report_admission_criterion as admission
 from scripts import report_cross_model as cross
-from scripts import report_discovery_triple as triple
 from scripts.reporting_runtime import report_runtime_binding
 from test_report_runtime_identity import write_verified_run
 
@@ -47,12 +46,6 @@ def test_tampered_new_format_is_unusable_in_every_reporter(tmp_path):
     row = cross.read_runs(tmp_path / "runs")[0]
     assert row["trusted_evidence"] is False
     assert not cross.attributable_score_run(row)
-    with contextlib.redirect_stdout(io.StringIO()), patch.object(triple, "discovery_task_names", return_value={"X"}), patch.object(triple, "current_contracts", return_value={}):
-        output = tmp_path / "triple.json"
-        triple.main(["--runs", str(tmp_path / "runs"), "--output", str(output)])
-    triple_row = json.loads(output.read_text())["rows"][0]
-    assert triple_row["status"] == "unverified_run"
-    assert triple_row["trusted_evidence"] is False
     with contextlib.redirect_stdout(io.StringIO()):
         output = tmp_path / "admission.json"
         admission.main(["--runs", str(tmp_path / "runs"), "--output", str(output)])

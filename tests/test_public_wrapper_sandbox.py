@@ -12,8 +12,8 @@ from sle.registry import find_task
 
 
 @skip_unless_sandbox("bwrap")
-def test_critical_phenomena_wrapper_isolates_module_initialization(tmp_path):
-    spec = find_task("Physics/CriticalPhenomenaLab", include_uncertified=True)
+def test_capset_wrapper_isolates_module_initialization(tmp_path):
+    spec = find_task("Mathematics/CapSet", include_uncertified=True)
     marker = tmp_path / "host_marker"
     candidate = tmp_path / "candidate.py"
     oracle = spec.task_dir / "verification/evaluator.py"

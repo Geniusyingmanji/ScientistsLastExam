@@ -71,24 +71,7 @@ class TaskMaturityAuditTests(unittest.TestCase):
         self.assertEqual(self.report["issues"], [])
         self.assertTrue(self.report["execution_passed"])
 
-    # The five tests below cover the twelve tasks merged from #4. As written at merge time they
-    # asserted that internal science admission FAILED for each, on the reading that "listing a
-    # task does not grant it admission". That reading confused two ledgers. The admission gate
-    # measures runnable integrity - a valid card, a current certification record, and a
-    # deterministic baseline in the sandbox - and the blocker they pinned,
-    # `current_certification_record_failed`, meant only that the frozen certification audit had
-    # not yet been regenerated with these tasks in it. Once v69/v52 were regenerated for the
-    # merged inventory the gate passes for all twelve, exactly as it did for every earlier task
-    # once its baseline ran. What "not self-admitted" actually protects - no task certifies
-    # itself by being listed - is the certification status, which stays `candidate`, and the
-    # default registry, which excludes them. That is what is asserted now.
-    def test_crowded_spectrum_is_listed_and_not_self_admitted(self):
-        row = self.tasks["Spectroscopy/CrowdedSpectrumAssignment"]
-        self.assertEqual(row["certification_status"], "candidate")
-        gate = row["gates"]["internal_science_admission"]
-        self.assertTrue(gate["passed"])
-        self.assertEqual(gate["blockers"], [])
-
+    # Listing an optimization construction never promotes its certification status.
     def test_wave0_constructions_are_listed_and_not_self_admitted(self):
         for task_id in (
             "Mathematics/RamseyLowerBound",
@@ -103,43 +86,8 @@ class TaskMaturityAuditTests(unittest.TestCase):
             self.assertTrue(gate["passed"], task_id)
             self.assertEqual(gate["blockers"], [], task_id)
 
-    def test_look_elsewhere_is_listed_and_not_self_admitted(self):
-        row = self.tasks["ParticlePhysics/LookElsewhereAnomaly"]
-        self.assertEqual(row["certification_status"], "quarantined")
-        gate = row["gates"]["internal_science_admission"]
-        self.assertFalse(gate["passed"])
-        self.assertEqual(gate["blockers"], ["certification_status_is_quarantined"])
-        self.assertEqual(row["discovery_exclusion"]["status"], "quarantined_provisional")
 
-    def test_wave1_discovery_constructions_are_listed_and_not_self_admitted(self):
-        for task_id in (
-            "CausalDiscovery/SurvivorshipConfoundedDesign",
-            "Oceanography/AMOCTippingRefusal",
-        ):
-            row = self.tasks[task_id]
-            self.assertEqual(row["certification_status"], "quarantined", task_id)
-            gate = row["gates"]["internal_science_admission"]
-            self.assertFalse(gate["passed"], task_id)
-            self.assertEqual(gate["blockers"], ["certification_status_is_quarantined"], task_id)
-            self.assertTrue(row["discovery_exclusion"]["passed"], task_id)
 
-    def test_wave2_discovery_constructions_are_listed_and_not_self_admitted(self):
-        for task_id in (
-            "Gravitation/PTAHellingsDowns",
-            "Physics/ComplexBoseLaw",
-            "MaterialsScience/QuinaryConvexHull",
-        ):
-            row = self.tasks[task_id]
-            gate = row["gates"]["internal_science_admission"]
-            if task_id == "Gravitation/PTAHellingsDowns":
-                self.assertEqual(row["certification_status"], "quarantined", task_id)
-                self.assertFalse(gate["passed"], task_id)
-                self.assertEqual(gate["blockers"], ["certification_status_is_quarantined"], task_id)
-                self.assertTrue(row["discovery_exclusion"]["passed"], task_id)
-            else:
-                self.assertEqual(row["certification_status"], "candidate", task_id)
-                self.assertTrue(gate["passed"], task_id)
-                self.assertEqual(gate["blockers"], [], task_id)
 
     def test_explicit_current_full_suite_gate_is_fail_closed(self):
         revision = "a" * 40
@@ -273,26 +221,17 @@ class TaskMaturityAuditTests(unittest.TestCase):
         row["quarantine_reaudit"]["passed"] = True
         self.assertEqual(self.module._quarantine_evidence_issues([row], valid, {task: {}}), [])
 
-    def test_changed_retired_package_requires_updated_exclusion_review(self):
-        from sle.registry import find_task
-        spec = find_task("PTAHellingsDowns", include_uncertified=True)
-        with patch("sle.algorithms.common.task_package_sha256", return_value="f" * 64):
-            exclusion = self.module._discovery_exclusion_state(spec, {"status": "quarantined"})
-        self.assertTrue(exclusion["applicable"])
-        self.assertFalse(exclusion["passed"])
-        self.assertFalse(exclusion["frontier_eligible"])
 
     def test_track_f_tasks_have_repeated_controls_and_fresh_confirmation(self):
         """Unbound, not withdrawn - and the binding rule is what this now pins.
 
-        These two tasks carried 48 matched-control replicates and a fresh post-commit
-        confirmation. Both read zero now for the same reason every model measurement does: the
+        This optimization task carried 48 matched-control replicates and a fresh post-commit
+        confirmation. It reads zero now for the same reason every model measurement does: the
         evidence is bound to a contract that has since changed. What still has to hold, and is the
         durable half of the original claim, is that anything the audit *does* count as current is
         genuinely bound - never counted while historical.
         """
         for task_id in (
-            "DynamicalSystems/ActiveLawDiscovery",
             "Optics/DiffractionGratingDesign",
         ):
             row = self.tasks[task_id]

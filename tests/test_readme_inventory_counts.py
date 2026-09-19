@@ -84,7 +84,7 @@ class ReadmeInventoryCountTests(unittest.TestCase):
 
     def test_form_totals(self):
         self.assertEqual(_one(r"optimization\((\d+) 个\)"), self.form["optimization"])
-        self.assertEqual(_one(r"discovery\((\d+) 个\)"), self.form["discovery"])
+        self.assertEqual(self.form["discovery"], 0)
 
     def test_optimization_categories(self):
         self.assertEqual(_one(r"工程设计\(.*?等 (\d+) 题\)"), self.analogue["engineering_design"])
@@ -98,13 +98,7 @@ class ReadmeInventoryCountTests(unittest.TestCase):
                          len(named), "the category count word disagrees with the categories")
 
     def test_discovery_categories(self):
-        for label, key in (("公式", "formula"), ("结构", "structure"), ("证据", "evidence"),
-                           ("物质", "substance"), ("参数反演", "parameter_inversion")):
-            with self.subTest(kind=key):
-                self.assertEqual(_one(r"%s (\d+)" % label), self.kind[key])
-        self.assertEqual(set(self.kind) - {None},
-                         {"formula", "structure", "evidence", "substance", "parameter_inversion"},
-                         "a new discovery kind needs its own entry in README.md")
+        self.assertEqual(dict(self.kind), {}, "discovery task kinds belong on main")
 
 
 if __name__ == "__main__":

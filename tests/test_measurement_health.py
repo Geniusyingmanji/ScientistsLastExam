@@ -59,15 +59,14 @@ class MeasurementHealthAuditTests(unittest.TestCase):
         for task in (
             "Chemistry/LennardJonesCluster",
             "SignalProcessing/SparseRecovery",
-            "Geophysics/GravityInversion",
             "NuclearEngineering/NeutronDiffusionCriticality",
         ):
             self.assertEqual(
                 self.tasks[task]["classification"], self.module.SATURATED_ON_RAMP
             )
 
-    def test_active_law_is_a_control_not_a_headline_optimization_task(self):
-        row = self.tasks["DynamicalSystems/ActiveLawDiscovery"]
+    def test_pendulum_is_a_control_not_a_headline_optimization_task(self):
+        row = self.tasks["ControlTheory/InvertedPendulumSwingUp"]
         self.assertEqual(row["classification"], self.module.CONTROL_ONLY)
 
     def test_expired_certified_task_is_repaired_before_measurement_allocation(self):
@@ -82,22 +81,31 @@ class MeasurementHealthAuditTests(unittest.TestCase):
 
     def test_unadmitted_candidates_are_repair_first_not_quarantined(self):
         for task in (
-            "Spectroscopy/CrowdedSpectrumAssignment",
             "Mathematics/RamseyLowerBound",
         ):
             row = self.tasks[task]
             self.assertEqual(row["certification_status"], "candidate")
             self.assertEqual(row["classification"], self.module.REPAIR_FIRST)
 
-    def test_discovery_difficulty_holds_are_excluded_before_run_allocation(self):
-        from sle.discovery_eligibility import load_discovery_eligibility
-        for task in load_discovery_eligibility()["tasks"]:
-            with self.subTest(task=task):
-                row = self.tasks[task]
-                self.assertEqual(row["certification_status"], "quarantined")
-                self.assertEqual(row["classification"], self.module.QUARANTINED)
-                self.assertFalse(row["internal_science_admission"])
-                self.assertFalse(row["confirmatory_cohort_eligible"])
+
+    def test_branch_scope_rejects_unexplained_missing_frozen_tasks(self):
+        from unittest.mock import patch
+        present = [{"task": spec.task_id} for spec in list_tasks(None)]
+        current = {"execution_passed": True, "tasks": present}
+        frozen = {"tasks": present + [{"task": "Unknown/Unexplained"}]}
+        with patch.object(self.module, "_load_maturity", return_value=frozen), \
+                patch.object(self.module, "build_maturity_report", return_value=current):
+            with self.assertRaisesRegex(ValueError, "unexplained tasks"):
+                self.module.build_report()
+
+    def test_branch_scope_rejects_a_silently_reduced_current_registry(self):
+        from unittest.mock import patch
+        reduced = [{"task": spec.task_id} for spec in list_tasks(None)][1:]
+        current = {"execution_passed": True, "tasks": reduced}
+        with patch.object(self.module, "_load_maturity", return_value={"tasks": reduced}), \
+                patch.object(self.module, "build_maturity_report", return_value=current):
+            with self.assertRaisesRegex(ValueError, "branch scope and current inventory disagree"):
+                self.module.build_report()
 
     def test_model_derived_checks_report_observed_run_counts_consistently(self):
         """Re-measurement may legitimately turn zero into a positive current-bound count."""

@@ -43,28 +43,7 @@ def probe(callback):
 
 # (package, original world boundary, collection names). All are independent top-level instances;
 # scoring shifted physical cases of the same submitted design is deliberately outside this list.
-CASES = (
-    ('Biology/EnzymeKineticsLaw', 'world', 'DEVELOPMENT_WORLDS', 'HELDOUT_WORLDS'),
-    ('Biology/OccupancyDetectionDesign', 'world', 'DEVELOPMENT_WORLDS', 'HELDOUT_WORLDS'),
-    ('Chemistry/NMRSpectrumFitting', 'instance', 'DEVELOPMENT_INSTANCES', 'HELDOUT_INSTANCES'),
-    ('Chemistry/PhaseDiagramDiscovery', 'world', 'DEVELOPMENT_WORLDS', 'HELDOUT_WORLDS'),
-    ('Chemistry/ReactionMechanismFitting', 'world', 'DEVELOPMENT_SPECS', 'HELDOUT_SPECS'),
-    ('Chemistry/SpinSystemInference', 'split', 'development_worlds', 'sealed_worlds'),
-    ('ComputerScience/GraphFromDistances', 'split', 'development_worlds', 'sealed_worlds'),
-    ('ComputerScience/InterventionalSCM', 'evaluate', None, None),
-    ('EarthScience/ForcedSignalAttribution', 'world', 'DEVELOPMENT_WORLDS', 'HELDOUT_WORLDS'),
-    ('EarthScience/GravityInversion', 'world', 'DEVELOPMENT_SPECS', 'HELDOUT_SPECS'),
-    ('EarthScience/UPbConcordiaInference', 'world', 'DEVELOPMENT_WORLDS', 'HELDOUT_WORLDS'),
-    ('Engineering/HeatExchangerDesign', 'instance', 'DEVELOPMENT_INSTANCES', 'HELDOUT_INSTANCES'),
-    ('Engineering/ModalDamageAttribution', 'world', 'DEVELOPMENT_WORLDS', 'HELDOUT_WORLDS'),
-    ('Engineering/TrussWeightMinimization', 'instance', 'DEVELOPMENT_INSTANCES', 'HELDOUT_INSTANCES'),
-    ('Mathematics/BlackBoxGroupIdentification', 'world', 'DEVELOPMENT_WORLDS', 'HELDOUT_WORLDS'),
-    ('Mathematics/SequenceLawRecovery', 'split', 'development_worlds', 'sealed_worlds'),
-    ('Physics/DiscrepantMeasurements', 'world', 'DEVELOPMENT_WORLDS', 'HELDOUT_WORLDS'),
-    ('Physics/HamiltonianLearning', 'split', 'development_worlds', 'sealed_worlds'),
-    ('Physics/HiddenCouplingNetwork', 'world', 'DEVELOPMENT_WORLDS', 'HELDOUT_WORLDS'),
-    ('Physics/RadialVelocityPlanets', 'split', 'development_worlds', 'sealed_worlds'),
-)
+CASES = (('Engineering/HeatExchangerDesign', 'instance', 'DEVELOPMENT_INSTANCES', 'HELDOUT_INSTANCES'), ('Engineering/TrussWeightMinimization', 'instance', 'DEVELOPMENT_INSTANCES', 'HELDOUT_INSTANCES'))
 
 
 def _load(package):

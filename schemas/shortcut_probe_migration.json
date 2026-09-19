@@ -3,30 +3,6 @@
   "inventory_revision": "f9c05b65b100e0b7d6acabbf16e64602fb73eea9",
   "policy": "Explicit legacy pending inventory; never an exemption that claims difficulty passed. Remove a task after its card declares a reviewed shortcut_probe contract.",
   "tasks": {
-    "PopulationGenetics/DemographicSFS": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "SystemsBiology/EnzymeKineticsLaw": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "SystemsBiology/GeneNetworkIntervention": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Microbiology/MetagenomeCompositionAssignment": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Ecology/OccupancyDetectionDesign": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "EvidenceSynthesis/ProspectiveMetaAnalysis": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
     "ProteinEngineering/ProteinStabilityDesign": {
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
@@ -43,14 +19,6 @@
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
-    "Catalysis/CatalystDeactivationLab": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Spectroscopy/CrowdedSpectrumAssignment": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
     "ChemicalProcess/DistillationColumnDesign": {
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
@@ -59,43 +27,11 @@
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
-    "MolecularDynamics/ForceFieldCalibration": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
     "Chemistry/LennardJonesCluster": {
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
     "MedicinalChemistry/MolecularLeadOptimization": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Spectroscopy/NMRSpectrumFitting": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "MaterialsScience/PhaseDiagramDiscovery": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "MaterialsScience/QuinaryConvexHull": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "ChemicalKinetics/ReactionMechanismFitting": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Spectroscopy/SpinSystemInference": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Algorithm/GraphFromDistances": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "CausalDiscovery/InterventionalSCM": {
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
@@ -111,51 +47,11 @@
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
-    "CausalDiscovery/SurvivorshipConfoundedDesign": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
     "Algorithm/TensorRank555": {
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
-    "Oceanography/AMOCTippingRefusal": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "ClimateScience/EnergyBalanceModel": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "ClimateScience/ForcedSignalAttribution": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Geophysics/GravityInversion": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "AtmosphericChemistry/MethaneSourceAttribution": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "AtmosphericScience/RadiativeTransferFit": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Geophysics/UPbConcordiaInference": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "HeatTransfer/ConvectionDiffusionOpt": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
     "Thermodynamics/HeatExchangerDesign": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Sensors/IMUBiasCalibration": {
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
@@ -171,15 +67,7 @@
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
-    "StructuralEngineering/ModalDamageAttribution": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
     "NuclearEngineering/NeutronDiffusionCriticality": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Sensors/QuartzCrystalMicrobalanceLab": {
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
@@ -192,18 +80,6 @@
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
     "StructuralEngineering/TrussWeightMinimization": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Turbulence/WallClosureDiscovery": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "DynamicalSystems/ActiveLawDiscovery": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Mathematics/BlackBoxGroupIdentification": {
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
@@ -224,10 +100,6 @@
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
     "Mathematics/ErdosMinimumOverlap": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Mathematics/HeavyTailEvidence": {
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
@@ -255,10 +127,6 @@
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
-    "Mathematics/SequenceLawRecovery": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
     "DiscreteGeometry/SpherePackingCertificate": {
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
@@ -275,10 +143,6 @@
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
-    "QuantumControl/ActiveNoiseSpectroscopy": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
     "QuantumFoundations/BellBoundCertificate": {
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
@@ -287,19 +151,7 @@
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
-    "Physics/ComplexBoseLaw": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Physics/CriticalPhenomenaLab": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
     "Optics/DiffractionGratingDesign": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "ParticlePhysics/DiscrepantMeasurements": {
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
@@ -310,23 +162,7 @@
         "references/pairing_shortcut.py"
       ]
     },
-    "QuantumDynamics/HamiltonianLearning": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Physics/HiddenCouplingNetwork": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "ParticlePhysics/LookElsewhereAnomaly": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
     "Photonics/MultilayerThinFilm": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Gravitation/PTAHellingsDowns": {
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
@@ -334,17 +170,14 @@
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     },
-    "Exoplanets/RadialVelocityPlanets": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
     "Superconductivity/SuperconductorTcRecord": {
       "status": "pending",
       "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
-    },
-    "Exoplanets/TransmissionSpectrumSpecies": {
-      "status": "pending",
-      "reason": "Legacy inventory predates the executable shortcut contract; not a difficulty pass."
     }
+  },
+  "branch_scope": {
+    "role": "optimization",
+    "split_base": "18be7da5752e1903944bf25717bd9a6764ac2e46",
+    "note": "Current migration entries only; original unsplit records remain in Git history."
   }
 }

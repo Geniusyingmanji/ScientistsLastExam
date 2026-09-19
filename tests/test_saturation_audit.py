@@ -44,13 +44,7 @@ from scripts.saturation_audit import (  # noqa: E402
 # each - minutes, dominated by the flagship contracts - and would run for every reviewer. The
 # tests below measure exactly the tasks whose status is in question, and the word test covers the
 # rest of the inventory cheaply. Measured scores were produced by `scripts/saturation_audit.py`.
-FLAGGED = (
-    "CausalDiscovery/SurvivorshipConfoundedDesign",
-    "Gravitation/PTAHellingsDowns",
-    "MaterialsScience/QuinaryConvexHull",
-    "Oceanography/AMOCTippingRefusal",
-    "ParticlePhysics/LookElsewhereAnomaly",
-)
+FLAGGED = ()  # The five pre-split flagged discovery tasks belong on main.
 
 
 def _load(name: str, path: Path):
@@ -65,22 +59,6 @@ class SaturationAuditTests(unittest.TestCase):
     def setUpClass(cls):
         cls.inventory = json.loads(MIGRATION.read_text(encoding="utf-8"))["tasks"]
 
-    def test_each_pinned_task_measures_at_the_ceiling_and_is_undeclared(self):
-        """The measured verdict each inventory entry claims, re-derived rather than trusted.
-
-        A task whose reference hardens below the ceiling, or whose card starts declaring the
-        verdict, stops being flagged here and has to leave the inventory - so the two cannot drift.
-        """
-        for task_id in FLAGGED:
-            with self.subTest(task=task_id):
-                spec = find_task(task_id, include_uncertified=True)
-                row = audit_task(spec)
-                self.assertEqual(row["status"], AT_CEILING_UNDECLARED, row)
-                self.assertGreaterEqual(row["combined_score"], 1.0 - 0.01)
-                self.assertIsNone(declares_saturation(spec))
-                self.assertIn(task_id, self.inventory)
-                self.assertEqual(
-                    self.inventory[task_id]["measured_combined_score"], row["combined_score"])
 
     def test_a_denial_or_an_unknown_is_not_a_declaration(self):
         """The classifier must read an affirmation, not a substring.
@@ -133,20 +111,6 @@ class SaturationAuditTests(unittest.TestCase):
                 self.assertTrue(declares_ceiling(spec), task_id)
                 self.assertIsNone(declares_saturation(spec), task_id)
 
-    def test_a_structured_declaration_is_what_separates_honest_from_silent(self):
-        """A prose sentence is not a field a reader can act on.
-
-        Five of the six cards at the ceiling carry the sentence "The reference sits at the scoring
-        ceiling this contract admits" in `known_best.md` while `long_horizon.status` still reads
-        `not_tested`. That gap is the defect: nothing that reads the tree can tell an on-ramp from
-        a hard task. A card that records the verdict structurally is classified separately and is
-        not an inventory entry.
-        """
-        honest = find_task("SystemsBiology/EnzymeKineticsLaw", include_uncertified=True)
-        self.assertIn("saturat", (declares_saturation(honest) or "").lower())
-        self.assertNotIn(honest.task_id, self.inventory)
-        row = audit_task(honest)
-        self.assertEqual(row["status"], AT_CEILING_DECLARED)
 
     def test_an_unmeasured_reference_is_never_a_pass(self):
         """Thirty-nine tasks keep the reference inside the evaluator, where nothing can score it.
@@ -157,7 +121,10 @@ class SaturationAuditTests(unittest.TestCase):
         evaluation per task.
         """
         # An evaluator-internal reference: nothing submitable to score.
-        internal = find_task("PopulationGenetics/DemographicSFS", include_uncertified=True)
+        internal = find_task("Mathematics/CapSet", include_uncertified=True)
+        from dataclasses import replace
+        # Test the missing-reference branch independently of the package's uncapped score.
+        internal = replace(internal, metadata={**internal.metadata, "score_mode": "clipped"})
         row = audit_task(internal)
         self.assertEqual(row["status"], NOT_MEASURED)
         self.assertIn("evaluator-internal", row["detail"])
@@ -203,121 +170,7 @@ class SaturationAuditTests(unittest.TestCase):
         self.assertIsNone(reference_path(spec))
         self.assertEqual(audit_task(spec)["status"], NOT_MEASURED)
 
-    def test_the_two_reproducible_trivial_strategies_tie_their_references(self):
-        """The task-specific claims, executed rather than asserted in prose.
 
-        `PTAHellingsDowns`: `frontier_eval/metadata.yaml:12` says the reference publishes
-        Hellings-Downs only when it "uniquely" beats monopole, dipole and uncorrelated, but the
-        oracle's `_metrics` tests `kind ==` and nothing else. A four-kernel argmin with no margin
-        at all therefore reaches the same 1.0.
-
-        `AMOCTippingRefusal`: the reference spends its probe budget on a hysteresis test; a
-        zero-probe constant-year heuristic gated on the historical endpoint reaches the same 1.0,
-        so the probes buy nothing.
-        """
-        # --- PTAHellingsDowns -------------------------------------------------------------
-        pta = find_task("Gravitation/PTAHellingsDowns", include_uncertified=True)
-        oracle = _load("sat_pta_oracle", pta.task_dir / "verification/evaluator.py")
-        reference = _load("sat_pta_ref", pta.task_dir / "verification/reference_kernel.py")
-        pta_reference = oracle.evaluate(reference.interpret_correlations)
-
-        def _orf_hd(theta):
-            x = 0.5 * (1.0 - math.cos(theta))
-            x = min(1.0, max(x, 1e-15))
-            return 0.5 - 0.25 * x + 1.5 * x * math.log(x)
-
-        def no_margin_argmin(problem, bootstrap):
-            del bootstrap
-            theta = [float(t) for t in problem["theta_rad"]]
-            rho = [float(r) for r in problem["rho"]]
-            templates = {
-                "hellings_downs": [_orf_hd(t) for t in theta],
-                "monopole": [1.0] * len(theta),
-                "dipole": [math.cos(t) for t in theta],
-                "uncorrelated": [0.0] * len(theta),
-            }
-            sse = {name: sum((a - b) ** 2 for a, b in zip(rho, pred))
-                   for name, pred in templates.items()}
-            best = min(sse, key=lambda key: sse[key])
-            if best != "hellings_downs":
-                return {"abstain": True, "confidence": 0.5}
-            return {"abstain": False, "kernel": "hellings_downs", "confidence": 0.5}
-
-        pta_trivial = oracle.evaluate(no_margin_argmin)
-        self.assertEqual(pta_trivial["combined_score"], pta_reference["combined_score"])
-        self.assertAlmostEqual(pta_reference["combined_score"], 1.0)
-
-        # --- AMOCTippingRefusal -----------------------------------------------------------
-        amoc = find_task("Oceanography/AMOCTippingRefusal", include_uncertified=True)
-        oracle = _load("sat_amoc_oracle", amoc.task_dir / "verification/evaluator.py")
-        reference = _load("sat_amoc_ref", amoc.task_dir / "verification/reference_probe.py")
-        amoc_reference = oracle.evaluate(reference.interpret_amoc)
-
-        def constant_year(problem, probe):
-            del probe
-            if float(list(problem["historical_amoc"])[-1]) > 0.3:
-                return {"abstain": False, "has_tipping": True,
-                        "collapse_year": 2098.0, "confidence": 0.8}
-            return {"abstain": True, "confidence": 0.5}
-
-        amoc_trivial = oracle.evaluate(constant_year)
-        self.assertEqual(amoc_trivial["combined_score"], amoc_reference["combined_score"])
-        self.assertAlmostEqual(amoc_reference["combined_score"], 1.0)
-
-    def test_the_dropped_replicate_gate_is_worth_half_of_quinary_convex_hull(self):
-        """The reference at 1.0 is only interesting if the work is separable from the tie.
-
-        `QuinaryConvexHull`'s reference replicates energies and refuses a catalog that does not
-        reproduce; removing just that gate drops the hull computation from 1.0 to 0.5. The gate is
-        therefore half the score, and a strategy that ties the witness is not automatically
-        equivalent to it - which is why the audit reports the observation rather than a verdict.
-        """
-        spec = find_task("MaterialsScience/QuinaryConvexHull", include_uncertified=True)
-        oracle = _load("sat_qh_oracle", spec.task_dir / "verification/evaluator.py")
-        reference = _load("sat_qh_ref", spec.task_dir / "verification/reference_hull.py")
-        self.assertAlmostEqual(
-            oracle.evaluate(reference.recover_hull)["combined_score"], 1.0)
-
-        def hull_only(problem, relax):
-            catalog = list(problem["catalog"])
-            n_atoms = int(problem["n_atoms"])
-            elements = list(problem["elements"])
-            budget = int(problem["relax_budget_calls"])
-
-            def composition(name):
-                counts = []
-                rest = name
-                for element in elements:
-                    rest = rest[len(element):]
-                    digits = ""
-                    while rest and rest[0].isdigit():
-                        digits += rest[0]
-                        rest = rest[1:]
-                    counts.append(int(digits))
-                return np.array(counts, dtype=float) / float(n_atoms)
-
-            unaries = [n for n in catalog if float(np.max(composition(n))) >= 1 - 1e-12]
-            others = [n for n in catalog if n not in unaries]
-            energies = {}
-            for name in unaries + others:
-                if len(energies) >= budget:
-                    break
-                try:
-                    energies[name] = float(relax(name))
-                except Exception:
-                    break
-            names = [n for n in catalog if n in energies]
-            comps = np.vstack([composition(n) for n in names])
-            evec = np.array([energies[n] for n in names])
-            points = np.column_stack([comps[:, :4], evec])
-            hull = ConvexHull(points)
-            lower = hull.simplices[hull.equations[:, -2] < -1e-10]
-            vertices = set(int(i) for i in lower.ravel())
-            claimed = [n for i, n in enumerate(names) if i in vertices and n not in unaries]
-            return {"abstain": False, "stable": claimed, "confidence": 0.88}
-
-        self.assertAlmostEqual(
-            oracle.evaluate(hull_only)["combined_score"], 0.5, places=6)
 
 
 if __name__ == "__main__":

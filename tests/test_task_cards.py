@@ -31,52 +31,23 @@ from scripts.audit_tasks import (
 
 # Tasks built inside this repository, whose builder model, scaffold and red-team history are
 # recorded on the card rather than reconstructed after the fact. Everything else is inherited.
-RECORDED_LINEAGE = {
-    "Ecology/OccupancyDetectionDesign",
-    "DataPrivacy/SparseVectorAudit",
-    "Physics/CriticalPhenomenaLab",
-    "SystemsBiology/EnzymeKineticsLaw",
-    "ParticlePhysics/DiscrepantMeasurements",
-    "ComputerArchitecture/CacheReplacementPolicyID",
-    "MaterialsScience/PhaseDiagramDiscovery",
-    "Physics/HiddenCouplingNetwork",
-    "ClimateScience/ForcedSignalAttribution",
-    "StructuralEngineering/ModalDamageAttribution",
-    "Mathematics/BlackBoxGroupIdentification",
-    "Spectroscopy/CrowdedSpectrumAssignment",
-    "Mathematics/RamseyLowerBound",
-    "Mathematics/KissingNumber",
-    "Mathematics/ZarankiewiczMatrix",
-    "Mathematics/DegreeDiameterGraph",
-    "Mathematics/VanDerWaerdenColoring",
-    "Mathematics/SchurPartition",
-    "Mathematics/ErdosMinimumOverlap",
-    "Mathematics/HeilbronnTrianglePacking",
-    "Algorithm/TensorRank555",
-    "Mathematics/Superpermutation",
-    "AtmosphericChemistry/MethaneSourceAttribution",
-    "Turbulence/WallClosureDiscovery",
-    "Exoplanets/TransmissionSpectrumSpecies",
-    "DiscreteGeometry/SpherePackingCertificate",
-    "QuantumFoundations/BellBoundCertificate",
-    "InformationTheory/ShannonCapacityCertificate",
-    "QuantumControl/ActiveNoiseSpectroscopy",
-    "Mathematics/NonlinearCodeRecords",
-    "Mathematics/CapSetFrontier",
-    "ParticlePhysics/LookElsewhereAnomaly",
-    "CausalDiscovery/SurvivorshipConfoundedDesign",
-    "Oceanography/AMOCTippingRefusal",
-    "Gravitation/PTAHellingsDowns",
-    "Physics/ComplexBoseLaw",
-    "MaterialsScience/QuinaryConvexHull",
-    "Mathematics/HeavyTailEvidence",
-    "Exoplanets/TransitTimingAttribution",
-    "Mathematics/NarrowAdmissibleTuple",
-    "Superconductivity/SuperconductorTcRecord",
-    "Geophysics/UPbConcordiaInference",
-    "Sensors/IMUBiasCalibration",
-    "Microbiology/MetagenomeCompositionAssignment",
-}
+RECORDED_LINEAGE = {'Algorithm/TensorRank555',
+ 'DiscreteGeometry/SpherePackingCertificate',
+ 'InformationTheory/ShannonCapacityCertificate',
+ 'Mathematics/CapSetFrontier',
+ 'Mathematics/DegreeDiameterGraph',
+ 'Mathematics/ErdosMinimumOverlap',
+ 'Mathematics/HeilbronnTrianglePacking',
+ 'Mathematics/KissingNumber',
+ 'Mathematics/NarrowAdmissibleTuple',
+ 'Mathematics/NonlinearCodeRecords',
+ 'Mathematics/RamseyLowerBound',
+ 'Mathematics/SchurPartition',
+ 'Mathematics/Superpermutation',
+ 'Mathematics/VanDerWaerdenColoring',
+ 'Mathematics/ZarankiewiczMatrix',
+ 'QuantumFoundations/BellBoundCertificate',
+ 'Superconductivity/SuperconductorTcRecord'}
 
 
 class TaskCardAuditTests(unittest.TestCase):
@@ -339,11 +310,10 @@ class DomainReviewFieldTests(unittest.TestCase):
         ]
         self.assertEqual(completed, [])
 
-    def test_the_migration_inventory_is_scoped_to_the_two_recorded_tasks(self):
+    def test_the_migration_inventory_is_scoped_to_the_recorded_optimization_task(self):
         self.assertEqual(
             set(audit_tasks._migration_inventory()),
-            {"Microbiology/MetagenomeCompositionAssignment",
-             "InformationTheory/ShannonCapacityCertificate"})
+            {"InformationTheory/ShannonCapacityCertificate"})
         for entry in audit_tasks._migration_inventory().values():
             self.assertEqual(entry["status"], "pending")
             self.assertTrue(entry["reason"])

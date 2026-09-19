@@ -8,31 +8,10 @@
     "A reference at the ceiling is legitimate when the ceiling is the scientific record, which is why this is an inventory for review and not a gate verdict.",
     "Every entry was measured by scripts/saturation_audit.py on 2026-09-17 with the reference imported in process through the task's own oracle."
   ],
-  "tasks": {
-    "CausalDiscovery/SurvivorshipConfoundedDesign": {
-      "status": "pending",
-      "measured_combined_score": 1.0,
-      "reason": "Reference scores 1.0, the maximum the clipped contract admits; the card's long_horizon.status is not_tested although known_best.md states the reference sits at the scoring ceiling. The decision is a 1-bit gate, so a trivial strategy that is right once ties the witness."
-    },
-    "Gravitation/PTAHellingsDowns": {
-      "status": "pending",
-      "measured_combined_score": 1.0,
-      "reason": "Reference scores 1.0. metadata.yaml:12 requires Hellings-Downs to uniquely beat monopole, dipole and uncorrelated, but the oracle only tests kind==; a four-kernel argmin with no margin at all also scores 1.0. Card is not_tested; known_best.md already says the reference sits at the ceiling."
-    },
-    "MaterialsScience/QuinaryConvexHull": {
-      "status": "pending",
-      "measured_combined_score": 1.0,
-      "reason": "Reference scores 1.0. Dropping the reference's replicate gate costs 0.5, so half the score is the hull computation and half the replicate check; a strategy that ties the witness does not need the replicate gate. Card is not_tested; known_best.md already says the reference sits at the ceiling."
-    },
-    "Oceanography/AMOCTippingRefusal": {
-      "status": "pending",
-      "measured_combined_score": 1.0,
-      "reason": "Reference scores 1.0 and a zero-probe constant-year heuristic also scores 1.0, so the probe budget the reference spends buys nothing the trivial policy lacks. Card is not_tested; known_best.md already says the reference sits at the ceiling."
-    },
-    "ParticlePhysics/LookElsewhereAnomaly": {
-      "status": "pending",
-      "measured_combined_score": 1.0,
-      "reason": "Reference scores 1.0. The reference and a strategy differing only in the trials factor both reach 1.0, so the look-elsewhere correction the task is named for is not what separates the top of the range. Card is not_tested; known_best.md already says the reference sits at the ceiling."
-    }
+  "tasks": {},
+  "branch_scope": {
+    "role": "optimization",
+    "split_base": "18be7da5752e1903944bf25717bd9a6764ac2e46",
+    "note": "Current migration entries only; original unsplit records remain in Git history."
   }
 }

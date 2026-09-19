@@ -1,4 +1,0 @@
-1) Only edit solution.py. Keep audit(problem, sample).
-2) Return {"verdict", "dataset", "neighbour", "event", "confidence"}. `verdict` is "violation" or "no_violation". When it is "violation", `dataset` and `neighbour` are two neighbouring query vectors, each a list of problem["n_queries"] integers in problem["query_min"]..problem["query_max"], that differ and whose answers differ by at most one at every position; `event` is a non-empty list of distinct output strings from problem["output_patterns"]. `confidence` in [0,1]. `abstain: true` is accepted as a synonym for the no_violation verdict.
-3) sample(queries, n) runs the deployed implementation n times on the query vector and returns a mapping from output string to count; `n` must be an integer in 1..200000 and it is charged n runs. Do not exceed problem["sample_budget"] runs per world.
-4) NumPy/SciPy only. Deterministic CPU code. No network/process creation. Do not read verification/ or frontier_eval/.

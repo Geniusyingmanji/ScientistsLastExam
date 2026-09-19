@@ -11,15 +11,13 @@ import pytest
 from scripts import batch_evolve as batch
 from scripts import report_admission_criterion as admission
 from scripts import report_cross_model as cross
-from scripts import report_discovery_admission as discovery
-from scripts import report_discovery_triple as triple
 from scripts.reporting_trajectory import read_events, read_incumbents, trajectory_selection_evidence
 
 
 def write_run(path: Path, *, model="m", seed=0, mode="normal", algorithm="greedy_rewrite",
               runtime="r", budget=3, condition=None, baseline=.6, score=.2, accepted=False):
     path.mkdir(parents=True)
-    manifest = {"task_id": "Mathematics/SequenceLawRecovery", "seed": seed,
+    manifest = {"task_id": "Mathematics/CapSet", "seed": seed,
                 "feedback_mode": mode, "algorithm": algorithm, "budget": budget,
                 "task_package_sha256": "package", "runtime_source_sha256": runtime,
                 "llm_condition_sha256": condition or "condition:" + model,
@@ -135,52 +133,10 @@ def test_admission_separates_algorithms_and_preserves_run_paths(tmp_path):
         admission.collect(root)
 
 
-def test_discovery_join_disambiguates_same_seed_arm_by_exact_run(tmp_path):
-    common = {"task": "T/X", "model": "m", "llm_condition_sha256": "c",
-              "task_version": "v", "runtime_source_sha256": "r", "seed": 0,
-              "feedback_mode": "normal", "algorithm": "greedy_rewrite", "status": "ok"}
-    a = dict(common, run_directory="/runs/cohort-a/cell", axes={"mechanism": {"value": .2}})
-    b = dict(common, run_directory="/runs/cohort-b/cell", axes={"mechanism": {"value": .8}})
-    by_run, by_coarse = discovery.index_triples({"rows": [a, b]})
-    row = dict(common, runs=[{"seed": 0, "feedback_mode": "normal",
-                            "run_directory": b["run_directory"]}])
-    axes, attached, status = discovery.lookup_triple_axes(by_run, by_coarse, row)
-    assert status == "pooled_runs"
-    assert axes["mechanism"]["value"] == .8
-    assert attached[0]["run_directory"] == b["run_directory"]
-    row["runs"][0].pop("run_directory")
-    axes, attached, status = discovery.lookup_triple_axes(by_run, by_coarse, row)
-    assert status == "ambiguous_runs"
-    assert axes is None
-    assert attached[0]["axes_match_status"] == "ambiguous"
 
 
-def test_discovery_partial_join_retains_missing_planned_attachment(tmp_path):
-    common = {"task": "T/X", "model": "m", "llm_condition_sha256": "c",
-              "task_version": "v", "runtime_source_sha256": "r"}
-    a = dict(common, seed=0, feedback_mode="normal", status="ok", axes={"mechanism": {"value": .2}})
-    by_run, by_coarse = discovery.index_triples({"rows": [a]})
-    row = dict(common, runs=[{"seed": seed, "feedback_mode": "normal"} for seed in (0, 1)])
-    _, attached, status = discovery.lookup_triple_axes(by_run, by_coarse, row)
-    assert status == "pooled_runs_partial"
-    assert len(attached) == 2
-    assert attached[1]["axes_match_status"] == "missing"
-    assert attached[1]["axes"] is None
 
 
-def test_bad_metric_is_located_without_hiding_other_triple_runs(tmp_path):
-    root = tmp_path / "runs"
-    write_run(root / "good")
-    write_run(root / "bad", seed=1)
-    path = root / "bad/trajectory.jsonl"
-    events = read_events(path)
-    events[0]["metrics"]["combined_score"] = .9
-    path.write_text("\n".join(map(json.dumps, events)))
-    report = run_report(triple, root, tmp_path)
-    records = {Path(row["run_directory"]).name: row for row in report["rows"] if "run_directory" in row}
-    assert records["good"]["status"] == "ok"
-    assert records["bad"]["status"] == "invalid_trajectory_or_metrics"
-    assert "bad/trajectory.jsonl" in records["bad"]["error"]
 
 
 def test_plan_denominator_is_fixed_and_legacy_scope_explicit():

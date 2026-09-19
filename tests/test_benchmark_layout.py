@@ -18,7 +18,7 @@ from scripts.gen_task import create_task
 class BenchmarkLayoutTests(unittest.TestCase):
     def test_inventory_uses_only_declared_discipline_roots(self):
         roots = {path.parent.name for path in discover_task_dirs()}
-        self.assertEqual(roots, set(DISCIPLINE_DOMAINS))
+        self.assertLessEqual(roots, set(DISCIPLINE_DOMAINS))
         # Fifteen tasks were retired when every model reached their cap: a score pinned at 1.0
         # cannot separate two searchers, so those tasks were costing evaluation budget without
         # answering anything. Tasks scoring above 1.0 were kept - on an uncapped task that is the

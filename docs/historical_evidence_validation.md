@@ -32,10 +32,18 @@ candidate sources cannot be recreated. Checkpoint/summary files without an
 original digest are explicitly listed as `unbound_files`; their presence is not
 claimed as verified evidence.
 
+## Branch split
+
+The optimization branch keeps the original frozen reports, including discovery
+records, for integrity checks. Discovery-specific calibration analyzers and tests
+are maintained on main. To reproduce a pre-split mixed-task analysis, check out
+its recorded source revision; missing tasks must not be silently dropped from the
+original cohort or replaced with current optimization tasks.
+
 ## Current compatibility and replay
 
-The first nine analysis entry points continue to enforce their source migration
-checks. With the present source tree, they reject current compatibility: the task/runtime changes exceed the old
+The retained optimization analysis entry points continue to enforce their source migration
+checks. They must reject current compatibility when: the task/runtime changes exceed the old
 audited scope, and current file hashes differ. Intact old migration reports or
 a successful direct oracle replay do not override that refusal. New current
 evidence requires a separately reviewed migration or new experiments with their
@@ -47,9 +55,8 @@ It now checks the whole runtime package (a conservative superset of the former
 Python-only scope), retains that historical comparison, and independently gates
 the model-to-current comparison. Its public tests use pinned archived records as
 fixtures; the raw files must still pass the separate audit on a data host.
-ProspectiveMetaAnalysis separately validates its historical task contract at the
-recorded revision. Its archived files are included in the same integrity audit;
-that audit makes no claim about compatibility with the current runtime.
+Archived discovery files remain included in the same integrity audit; that audit
+makes no claim about compatibility with the current runtime or branch membership.
 
 The raw-data integration tests now assert both original integrity and current
 refusal. They do not skip on a migration failure. Existing missing-raw-data skips
@@ -61,11 +68,10 @@ scientific dependencies because the historical comparisons are exact.
 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 \
 python -m pytest tests/test_historical_records.py \
   tests/test_alloy_hardness_analysis.py tests/test_calorimeter_analysis.py \
-  tests/test_rans_analysis.py tests/test_demographic_sfs_analysis.py \
+  tests/test_rans_analysis.py \
   tests/test_diffraction_grating_analysis.py tests/test_electrolyte_conductivity_analysis.py \
-  tests/test_force_field_hypothesis_analysis.py tests/test_protein_stability_analysis.py \
+  tests/test_protein_stability_analysis.py \
   tests/test_photovoltaic_analysis.py \
-  tests/test_prospective_meta_analysis_analysis.py \
   -q -p no:cacheprovider
 ```
 

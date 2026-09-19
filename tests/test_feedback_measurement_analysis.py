@@ -30,7 +30,7 @@ MODULE = _module()
 
 
 def _fixture(mode):
-    spec = find_task("DynamicalSystems/ActiveLawDiscovery", include_uncertified=True)
+    spec = find_task("Optics/DiffractionGratingDesign", include_uncertified=True)
     baseline = spec.initial_program_path.read_text(encoding="utf-8")
     sources = {
         0: baseline,
@@ -61,14 +61,15 @@ def _fixture(mode):
                 "valid": 1.0,
                 "feasibility_rate": 1.0,
                 "raw_score": score,
-                "mechanism_score": score / 2,
-                "development_prediction_score": score / 2,
-                "validation_prediction_score": score / 2,
                 "robustness_score": score / 2,
-                "development_false_discoveries": 0,
-                "validation_false_discoveries": 0,
-                "development_correct_abstentions": 1,
-                "validation_correct_abstentions": 1,
+                "heldout_policy_score": score / 2,
+                "heldout_robustness_score": score / 2,
+                "development_minimum_target_efficiency": score / 2,
+                "development_mean_target_efficiency": score / 2,
+                "heldout_minimum_target_efficiency": score / 2,
+                "heldout_mean_target_efficiency": score / 2,
+                "development_shift_geometry_feasibility": 1,
+                "heldout_shift_geometry_feasibility": 1,
             },
             "llm": {} if step == 0 else {
                 "input_tokens": 10, "output_tokens": 5, "total_tokens": 15,
@@ -181,7 +182,7 @@ class FeedbackMeasurementAnalysisTests(unittest.TestCase):
                     "total_tokens": per_call,
                 }
             records.append({
-                "task": "DynamicalSystems/ActiveLawDiscovery",
+                "task": "Optics/DiffractionGratingDesign",
                 "replicate_id": 0,
                 "condition": mode,
                 "total_tokens": total,

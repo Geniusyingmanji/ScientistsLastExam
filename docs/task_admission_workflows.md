@@ -7,8 +7,8 @@ or certification decision. New model draws and paired feedback experiments are s
 ## Contribution gate
 
 ```bash
-python scripts/check_task_contribution.py --task MaterialsScience/PhaseDiagramDiscovery \
-  --skip-eval --output /tmp/phase-structure.json
+python scripts/check_task_contribution.py --task Mathematics/RamseyLowerBound \
+  --skip-eval --output /tmp/ramsey-structure.json
 ```
 
 Exit codes: **0** = all contribution checks executed and passed; **1** = a check failed;
@@ -18,7 +18,7 @@ Exit codes: **0** = all contribution checks executed and passed; **1** = a check
 is always `unassessed`: this gate does not replace a model calibration or delta ladder.
 Repeated infrastructure failures do not establish deterministic scoring.
 
-The 85 tasks present at main `f9c05b65` are explicitly listed in
+The current optimization entries carried forward from main `f9c05b65` are explicitly listed in
 `schemas/shortcut_probe_migration.json` as **pending**. This list prevents an undocumented
 legacy omission from being confused with a new task missing its contract. It never awards
 a pass or silently exempts a task from difficulty measurement. Remove a task after the
@@ -144,12 +144,12 @@ batch snapshot hashes. It validates task/model/runtime identity, expected budget
 acceptance, and incumbent replay. Missing runs, failed attempts, damaged files, mismatched
 versions and shortened runs are represented explicitly. It uses the latest attempt, counts all
 scheduled cells in the denominator, and leaves a paired delta null unless both arms completed.
-A full-budget mean delta is null unless every planned pair completed. Selected discovery metrics
+A full-budget mean delta is null unless every planned pair completed. Selected scientific diagnostics
 remain attached to each run and are not combined into a scalar quality estimate. Reported usage
 is the latest run's reported usage; it is not a total of superseded/failed provider attempts.
 
-`--reports` optionally runs the existing admission criterion, heldout discovery triple, and
-discovery admission report CLIs only after all planned proposal cells complete and the run tree
+`--reports` optionally runs the optimization admission criterion CLI only after all planned
+proposal cells complete and the run tree
 contains exactly the scheduled manifests. Their outputs remain separate from the campaign's
 completeness and paired-budget table. The existing admission reporter uses its own supported
 proposal cuts and rules; its output is not an automatic task-card update. A failed auxiliary

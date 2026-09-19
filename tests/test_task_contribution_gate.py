@@ -1,6 +1,6 @@
 """The contribution gate must catch a missing package before an LLM run does.
 
-It wraps checks CONTRIBUTING.md already names. This file pins that PhaseDiagramDiscovery
+It wraps checks CONTRIBUTING.md already names. This file pins that RamseyLowerBound
 passes the structural half, so the hy3 debug path is exercising eval and the model, not a
 missing Task.md.
 """
@@ -43,7 +43,6 @@ class TaskContributionGateTests(unittest.TestCase):
             "task_card",
             "metadata",
             "frontier_wave",
-            "discovery_contract_lint_documented",
             "numeric_keys",
             "documented_keys",
         ):
@@ -52,20 +51,10 @@ class TaskContributionGateTests(unittest.TestCase):
                       if row["check"] == "certification_status")
         self.assertEqual(status, "candidate")
 
-    def test_phase_diagram_passes_the_structural_gate(self):
-        self._assert_structural_gate("MaterialsScience/PhaseDiagramDiscovery")
+    def test_ramsey_passes_the_structural_gate(self):
+        self._assert_structural_gate("Mathematics/RamseyLowerBound")
 
-    def test_crowded_spectrum_passes_the_structural_gate(self):
-        self._assert_structural_gate("Spectroscopy/CrowdedSpectrumAssignment")
 
-    def test_wave2_discovery_packages_pass_the_structural_gate(self):
-        for task_id in (
-            "Gravitation/PTAHellingsDowns",
-            "Physics/ComplexBoseLaw",
-            "MaterialsScience/QuinaryConvexHull",
-            "Mathematics/HeavyTailEvidence",
-        ):
-            self._assert_structural_gate(task_id)
 
     @mock.patch("scripts.check_task_contribution.evaluate_candidate")
     def test_runtime_gate_rejects_a_high_scoring_baseline_and_valid_bad_candidates(
@@ -91,9 +80,10 @@ class TaskContributionGateTests(unittest.TestCase):
         }
         malformed = {"combined_score": 0.25, "valid": 0.0}
         evaluate_candidate.side_effect = [baseline, dict(baseline), malformed, malformed, malformed]
-        report = check_task("ParticlePhysics/LookElsewhereAnomaly")
+        report = check_task("Mathematics/RamseyLowerBound")
         checks = {row["check"]: row for row in report["checks"]}
         self.assertFalse(checks["bad_candidates_score_zero"]["ok"])
+
 
     @mock.patch("scripts.check_task_contribution.load_frozen_wave")
     @mock.patch("scripts.check_task_contribution.evaluate_candidate")
@@ -104,10 +94,17 @@ class TaskContributionGateTests(unittest.TestCase):
         malformed = {"combined_score": 0.0, "valid": 0.0}
         evaluate.side_effect = [baseline, dict(baseline), abstention, abstention,
                                 malformed, malformed, malformed]
-        report = check_task("MaterialsScience/PhaseDiagramDiscovery")
+        # The shared frontier gate also accepts discovery-shaped records. Exercise
+        # that branch with a test-only spec; no discovery package is registered here.
+        from dataclasses import replace
+        spec = gate.find_task("Mathematics/RamseyLowerBound", include_uncertified=True)
+        fixture = replace(spec, metadata={**spec.metadata, "scientific_role": "discovery"})
+        with mock.patch.object(gate, "find_task", return_value=fixture):
+            report = check_task(spec.task_id)
         checks = {r["check"]: r for r in report["checks"]}
         self.assertFalse(checks["frontier_degenerate_credit_zero"]["ok"])
         self.assertIn("blanket_abstention", checks["frontier_degenerate_credit_zero"]["detail"])
+
 
     @mock.patch("scripts.check_task_contribution.evaluate_candidate")
     def test_repeated_infrastructure_failure_is_not_deterministic_science(self, evaluate):
@@ -183,7 +180,7 @@ class DiscoveryAxisDenominatorTests(unittest.TestCase):
         pending = json.loads(gate.DISCOVERY_AXIS_MIGRATION.read_text(encoding="utf-8"))["tasks"]
         compliant, missing = self._split()
         self.assertEqual(sorted(pending), sorted(missing))
-        self.assertTrue(compliant, "at least one discovery task must already comply")
+        self.assertEqual(compliant, [], "discovery tasks belong on main")
         for task_id, entry in pending.items():
             with self.subTest(task=task_id):
                 self.assertEqual(entry.get("status"), "pending")
@@ -208,15 +205,28 @@ class ReportRowTests(unittest.TestCase):
     """A row that only states an observation must not decide a phase."""
 
     def test_a_report_row_leaves_the_verdict_alone(self):
-        task_id = "DataPrivacy/SparseVectorAudit"
+        task_id = "Mathematics/RamseyLowerBound"
         axes = {"development_false_discovery_rate": 0.0,
                 "development_correct_refusal_rate": 1.0,
                 "development_discovery_coverage": 1.0,
                 "development_mechanism_score": 0.8}
         probe = {"status": "passed", "passed": True, "detail": "declared guard held",
                  "observations": [], "reference_axes": axes, "reference_axes_saturated": True}
-        with mock.patch.object(gate, "inspect_probe", return_value=probe):
-            report = check_task(task_id, skip_eval=True)
+        import shutil
+        import tempfile
+        from dataclasses import replace
+        original = gate.find_task(task_id, include_uncertified=True)
+        with tempfile.TemporaryDirectory() as temporary:
+            task_dir = Path(temporary) / "fixture"
+            shutil.copytree(original.task_dir, task_dir)
+            prose = task_dir / "Task.md"
+            prose.write_text(prose.read_text() + "\ncontract_lint test fixture\n")
+            fixture = replace(original, task_dir=task_dir, eval_dir=task_dir / "frontier_eval",
+                              metadata={**original.metadata, "scientific_role": "discovery"})
+            with mock.patch.object(gate, "inspect_probe", return_value=probe), \
+                    mock.patch.object(gate, "find_task", return_value=fixture), \
+                    mock.patch.object(gate, "ROOT", Path(temporary)):
+                report = check_task(task_id, skip_eval=True)
         note = [row for row in report["checks"] if row["check"] == "discovery_axes_at_reference"]
         self.assertEqual(len(note), 1, report["checks"])
         self.assertTrue(note[0]["report"])

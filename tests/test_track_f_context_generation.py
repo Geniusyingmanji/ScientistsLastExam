@@ -23,12 +23,12 @@ class TrackFContextGenerationTests(unittest.TestCase):
 
     def test_seed_derivation_is_deterministic_and_domain_separated(self):
         first = MODULE.derive_master_seed(
-            self.ROOT_ENTROPY, "DynamicalSystems/ActiveLawDiscovery", 0
+            self.ROOT_ENTROPY, "Optics/DiffractionGratingDesign", 0
         )
         self.assertEqual(
             first,
             MODULE.derive_master_seed(
-                self.ROOT_ENTROPY, "DynamicalSystems/ActiveLawDiscovery", 0
+                self.ROOT_ENTROPY, "Optics/DiffractionGratingDesign", 0
             ),
         )
         values = {
@@ -36,7 +36,7 @@ class TrackFContextGenerationTests(unittest.TestCase):
             for task in MODULE.SUPPORTED_TASKS
             for replicate in (0, 1)
         }
-        self.assertEqual(len(values), 4)
+        self.assertEqual(len(values), len(MODULE.SUPPORTED_TASKS) * 2)
         self.assertTrue(all(0 <= value < 2**63 for value in values))
 
     def test_private_manifest_and_public_commitment_are_separated(self):
@@ -56,7 +56,7 @@ class TrackFContextGenerationTests(unittest.TestCase):
             public_path = root / "nested" / "commitment.json"
             private, public = MODULE.generate(
                 cohort_id="test-cohort",
-                tasks=["DynamicalSystems/ActiveLawDiscovery"],
+                tasks=["Optics/DiffractionGratingDesign"],
                 replicates=[0, 1],
                 root_entropy_hex=self.ROOT_ENTROPY,
                 private_output=private_path,
@@ -115,7 +115,7 @@ class TrackFContextGenerationTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "clean source"):
                 MODULE.generate(
                     cohort_id="dirty",
-                    tasks=["DynamicalSystems/ActiveLawDiscovery"],
+                    tasks=["Optics/DiffractionGratingDesign"],
                     replicates=[0],
                     root_entropy_hex=self.ROOT_ENTROPY,
                     private_output=root / "private.json",
@@ -137,7 +137,7 @@ class TrackFContextGenerationTests(unittest.TestCase):
             with self.assertRaisesRegex(SystemExit, "overwrite"):
                 MODULE.main([
                     "--cohort-id", "test",
-                    "--tasks", "DynamicalSystems/ActiveLawDiscovery",
+                    "--tasks", "Optics/DiffractionGratingDesign",
                     "--replicates", "0",
                     "--private-output", str(private_path),
                     "--public-output", str(public_path),
