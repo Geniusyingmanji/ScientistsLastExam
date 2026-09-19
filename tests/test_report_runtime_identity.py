@@ -19,12 +19,8 @@ from sle.runtime_identity import current_runtime_descriptor
 ROOT = Path(__file__).resolve().parents[1]
 
 ANALYZERS = (
-    "analyze_alloy_hardness_calibrations.py",
-    "analyze_calorimeter_v2_calibrations.py",
     "analyze_catalyst_deactivation_lab_calibrations.py",
     "analyze_demographic_sfs_v2_calibrations.py",
-    "analyze_diffraction_grating_calibrations.py",
-    "analyze_electrolyte_conductivity_design_calibrations.py",
     "analyze_force_field_hypothesis_calibrations.py",
     "analyze_photovoltaic_tandem_calibrations.py",
     "analyze_prospective_meta_analysis_calibrations.py",

@@ -12,7 +12,7 @@ from unittest.mock import patch
 from sle import evaluate
 from sle.algorithms import common
 from sle.algorithms.evolve import greedy_rewrite
-from sle.registry import find_task
+from _branch_fixtures import find_task
 from sle.runtime_identity import (
     TrustedRuntime,
     current_runtime_descriptor,

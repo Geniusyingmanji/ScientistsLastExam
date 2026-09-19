@@ -14,7 +14,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "scientists-last-exam"
 version = "0.1.0"
-description = "Multi-discipline open-ended scientific optimization benchmark with frozen, deterministic oracles"
+description = "Multi-discipline scientific discovery with evidence, budgeted tools, and isolated multi-turn experiments"
 readme = "README.md"
 # The floor is 3.8, with no ceiling. 3.8 is the only interpreter the full oracle setup certifies -
 # setup_requirements() in sle/oracle_package_pins.py fails closed on anything else, and

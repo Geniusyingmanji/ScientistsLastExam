@@ -487,8 +487,17 @@ class ScoreModeTests(unittest.TestCase):
         from sle.registry import list_tasks
         self.assertEqual(set(modes), {spec.task_id for spec in list_tasks(None)})
         self.assertTrue(modes)
-        self.assertEqual(modes["Chemistry/LennardJonesCluster"], "uncapped")
-        self.assertEqual(modes["QuantumErrorCorrection/QuantumErrorDecoder"], "uncapped")
+        self.assertEqual(modes, {
+            spec.task_id: str(spec.metadata.get("score_mode", "clipped"))
+            for spec in list_tasks(None)
+        })
+
+    def test_an_uncapped_control_is_not_silently_defaulted_to_clipped(self):
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        spec = SimpleNamespace(task_id="Fixture/Uncapped", metadata={"score_mode": "uncapped"})
+        with patch("sle.registry.list_tasks", return_value=[spec]):
+            self.assertEqual(MODULE.score_modes(), {"Fixture/Uncapped": "uncapped"})
 
 
 class SaturationTests(unittest.TestCase):

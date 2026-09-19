@@ -110,9 +110,6 @@ class InventoryTests(unittest.TestCase):
             if row["standards"]["oracle_is_community"]
         }
         self.assertEqual(community, {
-            "QuantumErrorCorrection/QuantumErrorDecoder",
-            "MedicinalChemistry/MolecularLeadOptimization",
-            "RNAEngineering/RNAEnsembleDesign",
             "Spectroscopy/SpinSystemInference",
             "Algorithm/GraphFromDistances",
             "Mathematics/SequenceLawRecovery",

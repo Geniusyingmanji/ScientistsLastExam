@@ -32,12 +32,12 @@ class BenchmarkLayoutTests(unittest.TestCase):
 
     def test_logical_domain_is_independent_of_physical_discipline(self):
         specs = {spec.task_id: spec for spec in list_tasks(None)}
-        chemistry = specs["Chemistry/LennardJonesCluster"]
+        chemistry = specs["Catalysis/CatalystDeactivationLab"]
         self.assertEqual(chemistry.discipline, "Chemistry")
-        self.assertEqual(chemistry.domain, "Chemistry")
+        self.assertEqual(chemistry.domain, "Catalysis")
         self.assertEqual(
-            task_path(Path("benchmarks"), "Chemistry", "LennardJonesCluster"),
-            Path("benchmarks/Chemistry/LennardJonesCluster"),
+            task_path(Path("benchmarks"), "Catalysis", "CatalystDeactivationLab"),
+            Path("benchmarks/Chemistry/CatalystDeactivationLab"),
         )
 
     def test_every_inventory_domain_has_one_declared_discipline(self):

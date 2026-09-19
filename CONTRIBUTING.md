@@ -1,5 +1,7 @@
 # 为 Scientists' Last Exam 贡献
 
+本分支仅接受 discovery task; optimization task 及专用代码请提交到 `optimization` 分支。
+
 当前同时做两件事:**加固已有清单**,以及按 `sle/conf/exam_taxonomy.yaml` 的空格扩 task。
 新包一律 `candidate`,被发现只让它在 `--all` 下可见;进入默认基准仍要过下面的认证门槛,
 不要自我认证。SFE / HLE / sgi-bench 写在 taxonomy 的 `out_of_scope` 里,不是本仓库的题型。
@@ -78,7 +80,7 @@
 ```
 benchmarks/
 └── <Discipline>/                     # 下列七个大类之一
-    └── <Task>/                       # 例如 LennardJonesCluster、CapSet
+    └── <Task>/                       # 例如 InterventionalSCM、PhaseDiagramDiscovery
         ├── Task.md                   # [必需] 智能体可见的任务描述
         ├── TASK_CARD.yaml            # [认证必需] 证据与评审
         ├── solution.py               # [必需] 弱但合法的基线程序
@@ -104,7 +106,7 @@ benchmarks/
 
 ```yaml
 domain: Chemistry                    # 稳定的逻辑 domain(不是顶层目录名)
-task: LennardJonesCluster            # 任务目录名
+task: InterventionalSCM            # 任务目录名
 difficulty: hard                     # unmeasured | hard | flagship
 tier: T2                             # candidate | T2(专家) | T3(flagship)
 oracle_type: analytical              # analytical | physical_sim | dataset_oracle | neural_surrogate
@@ -306,7 +308,7 @@ credit 不含假发现/弃权惩罚,不能作为综合提交质量分。具体 m
 
 1. **Fork** 本仓库并 **clone** 你的 fork。
 2. **建分支**:`feat/<Domain>/<Task>`(例如 `feat/Biology/RNAInverseFolding`)。
-3. **按上面的目录结构添加任务**。可拿已有任务当模板 —— `Chemistry/LennardJonesCluster`
+3. **按上面的目录结构添加任务**。可拿已有任务当模板 —— `CausalDiscovery/InterventionalSCM`
    是 clipped,`Mathematics/CapSet` 是 uncapped。
 4. **测试**(新任务包默认未认证;下面两条要在 Linux 主机上跑,见"运行环境"):
    ```bash
@@ -403,7 +405,7 @@ harness 支持 Anthropic wire 与任何 OpenAI 兼容端点(chat 或 responses)�
 cp sle/conf/llm/anthropic.example.yaml sle/conf/llm/local.claude.yaml
 # base_url / model 按需改;api_key 保持 ${ANTHROPIC_API_KEY}
 export ANTHROPIC_API_KEY=...        # 只在当前 shell,来自你们的密钥管理,不写进文件
-python -m sle run --task Chemistry/LennardJonesCluster --algorithm greedy_rewrite \
+python -m sle run --task CausalDiscovery/InterventionalSCM --algorithm greedy_rewrite \
   --budget 3 --seed 0 --workdir runs/smoke --llm-config sle/conf/llm/local.claude.yaml
 ```
 

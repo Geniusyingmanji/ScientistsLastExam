@@ -93,9 +93,8 @@ class InventoryTests(unittest.TestCase):
 
     def test_the_flagship_tasks_are_not_flagged_as_closed_form(self):
         closed = set(self.report["closed_form_reference"])
-        for task in ("QuantumErrorCorrection/QuantumErrorDecoder",
-                     "MedicinalChemistry/MolecularLeadOptimization",
-                     "RNAEngineering/RNAEnsembleDesign",
+        for task in ("CausalDiscovery/InterventionalSCM",
+                     "MaterialsScience/PhaseDiagramDiscovery",
                      "Spectroscopy/SpinSystemInference"):
             self.assertNotIn(task, closed)
 

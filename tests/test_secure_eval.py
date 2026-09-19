@@ -310,11 +310,18 @@ class SecureEvaluationTests(unittest.TestCase):
         self.assertNotIn("infrastructure_failure", result)
 
     def test_caught_multi_instance_timeout_is_not_masked_by_closed_worker(self):
-        spec = load_task_spec(BENCHMARKS / "Mathematics" / "CirclePacking")
         with tempfile.TemporaryDirectory() as tmp:
+            task = _fixture_task(Path(tmp))
+            (task / "verification/evaluator.py").write_text(
+                "def evaluate(candidate):\n"
+                "    for instance in range(2):\n"
+                "        try: candidate(instance)\n"
+                "        except Exception: pass\n"
+                "    return {'combined_score': 0.0, 'valid': 0.0}\n")
+            spec = load_task_spec(task)
             candidate = Path(tmp) / "candidate.py"
             candidate.write_text(textwrap.dedent("""
-                def pack_circles(n):
+                def design_cavity(n):
                     while True:
                         pass
             """), encoding="utf-8")
@@ -324,14 +331,19 @@ class SecureEvaluationTests(unittest.TestCase):
         self.assertNotIn("closed file", result["error_message"])
 
     def test_trusted_callback_is_also_wall_time_supervised(self):
-        spec = load_task_spec(BENCHMARKS / "Chemistry" / "AlloyHardnessOptimization")
         with tempfile.TemporaryDirectory() as tmp:
+            task = _fixture_task(Path(tmp))
+            (task / "verification/evaluator.py").write_text(
+                "def evaluate(candidate):\n"
+                "    candidate({'probe': 1}, lambda value: value)\n"
+                "    return {'combined_score': 0.0, 'valid': 1.0}\n")
+            spec = load_task_spec(task)
             candidate = Path(tmp) / "candidate.py"
             candidate.write_text(textwrap.dedent("""
-                def design_alloy_batch(problem, assay):
+                def design_cavity(problem, assay):
                     while True:
                         try:
-                            assay(problem['candidates'][0]['id'])
+                            assay(problem['probe'])
                         except Exception:
                             pass
             """), encoding="utf-8")

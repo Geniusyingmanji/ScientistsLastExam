@@ -1,3 +1,0 @@
-1) Only edit solution.py. Keep build_algorithm(m, n, p) -> (U, V, W) with the documented shapes.
-2) The decomposition must be EXACT (verified to 1e-7), not approximate.
-3) numpy only, CPU, seconds. Do not read verification/ or frontier_eval/.

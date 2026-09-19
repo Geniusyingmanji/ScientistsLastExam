@@ -60,19 +60,23 @@ class TaskContributionGateTests(unittest.TestCase):
 
     def test_wave2_discovery_packages_pass_the_structural_gate(self):
         for task_id in (
-            "Gravitation/PTAHellingsDowns",
             "Physics/ComplexBoseLaw",
             "MaterialsScience/QuinaryConvexHull",
             "Mathematics/HeavyTailEvidence",
         ):
             self._assert_structural_gate(task_id)
+        held = check_task("Gravitation/PTAHellingsDowns", skip_eval=True)
+        checks = {row["check"]: row for row in held["checks"]}
+        self.assertFalse(checks["certification_status"]["ok"])
+        self.assertEqual(checks["certification_status"]["detail"], "quarantined")
+        self.assertEqual(held["phases"]["structural"], "failed")
 
     @mock.patch("scripts.check_task_contribution.evaluate_candidate")
     def test_runtime_gate_rejects_a_high_scoring_baseline_and_valid_bad_candidates(
         self, evaluate_candidate
     ):
         evaluate_candidate.return_value = {"combined_score": 1.0, "valid": 1.0}
-        report = check_task("Mathematics/RamseyLowerBound")
+        report = check_task("MaterialsScience/PhaseDiagramDiscovery")
         checks = {row["check"]: row for row in report["checks"]}
         self.assertFalse(checks["baseline_eval"]["ok"])
         self.assertFalse(checks["bad_candidates_score_zero"]["ok"])
@@ -112,14 +116,14 @@ class TaskContributionGateTests(unittest.TestCase):
     @mock.patch("scripts.check_task_contribution.evaluate_candidate")
     def test_repeated_infrastructure_failure_is_not_deterministic_science(self, evaluate):
         evaluate.return_value = {"combined_score": -1e18, "valid": 0.0, "infrastructure_failure": 1.0}
-        report = check_task("Mathematics/RamseyLowerBound")
+        report = check_task("MaterialsScience/PhaseDiagramDiscovery")
         checks = {r["check"]: r for r in report["checks"]}
         self.assertFalse(checks["deterministic_baseline"]["ok"])
 
     @mock.patch("scripts.check_task_contribution.load_certification")
     def test_structural_gate_requires_an_explicit_certification_record(self, load_certification):
         load_certification.return_value = {"schema_version": 1, "tasks": {}}
-        report = check_task("Mathematics/RamseyLowerBound", skip_eval=True)
+        report = check_task("MaterialsScience/PhaseDiagramDiscovery", skip_eval=True)
         checks = {row["check"]: row for row in report["checks"]}
         self.assertFalse(checks["registered_in_certification"]["ok"])
 
@@ -127,7 +131,7 @@ class TaskContributionGateTests(unittest.TestCase):
     def test_identical_infrastructure_failures_never_prove_determinism(self, evaluate):
         evaluate.return_value = {"combined_score": -1e18, "valid": 0.0,
                                  "infrastructure_failure": True}
-        report = check_task("Mathematics/RamseyLowerBound")
+        report = check_task("MaterialsScience/PhaseDiagramDiscovery")
         checks = {row["check"]: row for row in report["checks"]}
         self.assertFalse(checks["deterministic_baseline"]["ok"])
 
@@ -137,7 +141,7 @@ def test_missing_initial_solution_produces_failed_structural_report(tmp_path):
     from dataclasses import replace
     from scripts import check_task_contribution as gate
 
-    original = gate.find_task("Mathematics/RamseyLowerBound", include_uncertified=True)
+    original = gate.find_task("MaterialsScience/PhaseDiagramDiscovery", include_uncertified=True)
     task_dir = tmp_path / original.task_dir.name
     shutil.copytree(original.task_dir, task_dir)
     spec = replace(original, task_dir=task_dir, eval_dir=task_dir / "frontier_eval")

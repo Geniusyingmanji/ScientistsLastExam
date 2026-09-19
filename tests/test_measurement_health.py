@@ -35,18 +35,15 @@ class MeasurementHealthAuditTests(unittest.TestCase):
         self.assertEqual(self.report["complete_measurement_health_passed_count"], 0)
         self.assertEqual(self.report["confirmatory_cohort_eligible_count"], 0)
 
-    def test_result_selected_exploratory_cohort_is_frozen(self):
+    def test_optimization_exploratory_cohort_is_absent_from_discovery_branch(self):
         self.assertEqual(set(self.report["exploratory_cohort"]), self.module.EXPLORATORY_TASKS)
         self.assertEqual(
-            self.report["classification_counts"][
-                self.module.EXPLORATORY_LONG_HORIZON_SCREEN
-            ],
-            7,
+            self.report["classification_counts"].get(
+                self.module.EXPLORATORY_LONG_HORIZON_SCREEN, 0
+            ),
+            0,
         )
-        for task in self.module.EXPLORATORY_TASKS:
-            row = self.tasks[task]
-            self.assertFalse(row["confirmatory_cohort_eligible"])
-            self.assertIn("material_post_2h_headroom_demonstrated", row["missing_complete_gate_checks"])
+        self.assertEqual(self.module.EXPLORATORY_TASKS, set())
 
     def test_known_saturated_gap_tasks_are_onramps(self):
         """Tasks whose ceiling is already reached are on-ramps, not headline measurements.
@@ -57,10 +54,7 @@ class MeasurementHealthAuditTests(unittest.TestCase):
         not about a particular list, so it is asked of whichever tasks currently carry it.
         """
         for task in (
-            "Chemistry/LennardJonesCluster",
-            "SignalProcessing/SparseRecovery",
             "Geophysics/GravityInversion",
-            "NuclearEngineering/NeutronDiffusionCriticality",
         ):
             self.assertEqual(
                 self.tasks[task]["classification"], self.module.SATURATED_ON_RAMP
@@ -72,18 +66,21 @@ class MeasurementHealthAuditTests(unittest.TestCase):
 
     def test_expired_certified_task_is_repaired_before_measurement_allocation(self):
         row = {
-            "task": "Semiconductor/MOSFETDoping",
+            "task": "Fixture/ExpiredCalibration",
             "certification_status": "certified",
             "gates": {"internal_science_admission": {"passed": False}},
         }
-        classification, reasons = self.module._classification(row, {})
+        checks = {
+            "budget_one_below_observed_ceiling_warning": {"passed": True},
+            "normal_budget_one_observed": {"passed": False},
+        }
+        classification, reasons = self.module._classification(row, checks)
         self.assertEqual(classification, self.module.REPAIR_FIRST)
         self.assertIn("current science admission", reasons[0])
 
     def test_unadmitted_candidates_are_repair_first_not_quarantined(self):
         for task in (
             "Spectroscopy/CrowdedSpectrumAssignment",
-            "Mathematics/RamseyLowerBound",
         ):
             row = self.tasks[task]
             self.assertEqual(row["certification_status"], "candidate")
@@ -98,6 +95,25 @@ class MeasurementHealthAuditTests(unittest.TestCase):
                 self.assertEqual(row["classification"], self.module.QUARANTINED)
                 self.assertFalse(row["internal_science_admission"])
                 self.assertFalse(row["confirmatory_cohort_eligible"])
+
+    def test_branch_scope_rejects_unexplained_missing_frozen_tasks(self):
+        from unittest.mock import patch
+        present = [{"task": spec.task_id} for spec in list_tasks(None)]
+        current = {"execution_passed": True, "tasks": present}
+        frozen = {"tasks": present + [{"task": "Unknown/Unexplained"}]}
+        with patch.object(self.module, "_load_maturity", return_value=frozen), \
+                patch.object(self.module, "build_maturity_report", return_value=current):
+            with self.assertRaisesRegex(ValueError, "unexplained tasks"):
+                self.module.build_report()
+
+    def test_branch_scope_rejects_a_silently_reduced_current_registry(self):
+        from unittest.mock import patch
+        reduced = [{"task": spec.task_id} for spec in list_tasks(None)][1:]
+        current = {"execution_passed": True, "tasks": reduced}
+        with patch.object(self.module, "_load_maturity", return_value={"tasks": reduced}), \
+                patch.object(self.module, "build_maturity_report", return_value=current):
+            with self.assertRaisesRegex(ValueError, "branch scope and current inventory disagree"):
+                self.module.build_report()
 
     def test_model_derived_checks_report_observed_run_counts_consistently(self):
         """Re-measurement may legitimately turn zero into a positive current-bound count."""

@@ -54,7 +54,8 @@ class DiscoveryEligibilityTests(unittest.TestCase):
         self.assertFalse(verdict["frontier_eligible"])
 
     def test_optimization_is_not_qualified_by_discovery_policy(self):
-        verdict = discovery_eligibility(find_task("LennardJonesCluster"))
+        verdict = discovery_eligibility(SimpleNamespace(task_id="Fixture/Optimization",
+                                                       metadata={"scientific_role": "optimization"}))
         self.assertEqual(verdict["status"], "not_applicable")
         self.assertIsNone(verdict["frontier_eligible"])
 
@@ -79,7 +80,9 @@ class DiscoveryEligibilityTests(unittest.TestCase):
                   "--ledger-root", "/nonexistent/ledger", "--request-id", "a" * 64])
 
     def test_discovery_wave_cannot_hide_under_optimization_role(self):
-        spec = find_task("LennardJonesCluster")
+        from _branch_fixtures import find_task as fixture_task
+        spec = fixture_task("LennardJonesCluster")
+        spec.metadata = {**spec.metadata, "scientific_role": "optimization"}
         wave = SimpleNamespace(cells={"cell": {"kind": "discovery"}})
         with patch("sle.frontier.load_frozen_wave", return_value=wave):
             with self.assertRaisesRegex(ValueError, "calibration_required"):

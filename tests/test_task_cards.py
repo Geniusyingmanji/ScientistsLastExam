@@ -44,25 +44,10 @@ RECORDED_LINEAGE = {
     "StructuralEngineering/ModalDamageAttribution",
     "Mathematics/BlackBoxGroupIdentification",
     "Spectroscopy/CrowdedSpectrumAssignment",
-    "Mathematics/RamseyLowerBound",
-    "Mathematics/KissingNumber",
-    "Mathematics/ZarankiewiczMatrix",
-    "Mathematics/DegreeDiameterGraph",
-    "Mathematics/VanDerWaerdenColoring",
-    "Mathematics/SchurPartition",
-    "Mathematics/ErdosMinimumOverlap",
-    "Mathematics/HeilbronnTrianglePacking",
-    "Algorithm/TensorRank555",
-    "Mathematics/Superpermutation",
     "AtmosphericChemistry/MethaneSourceAttribution",
     "Turbulence/WallClosureDiscovery",
     "Exoplanets/TransmissionSpectrumSpecies",
-    "DiscreteGeometry/SpherePackingCertificate",
-    "QuantumFoundations/BellBoundCertificate",
-    "InformationTheory/ShannonCapacityCertificate",
     "QuantumControl/ActiveNoiseSpectroscopy",
-    "Mathematics/NonlinearCodeRecords",
-    "Mathematics/CapSetFrontier",
     "ParticlePhysics/LookElsewhereAnomaly",
     "CausalDiscovery/SurvivorshipConfoundedDesign",
     "Oceanography/AMOCTippingRefusal",
@@ -71,8 +56,6 @@ RECORDED_LINEAGE = {
     "MaterialsScience/QuinaryConvexHull",
     "Mathematics/HeavyTailEvidence",
     "Exoplanets/TransitTimingAttribution",
-    "Mathematics/NarrowAdmissibleTuple",
-    "Superconductivity/SuperconductorTcRecord",
     "Geophysics/UPbConcordiaInference",
     "Sensors/IMUBiasCalibration",
     "Microbiology/MetagenomeCompositionAssignment",
@@ -339,11 +322,10 @@ class DomainReviewFieldTests(unittest.TestCase):
         ]
         self.assertEqual(completed, [])
 
-    def test_the_migration_inventory_is_scoped_to_the_two_recorded_tasks(self):
+    def test_the_migration_inventory_is_scoped_to_the_retained_discovery_task(self):
         self.assertEqual(
             set(audit_tasks._migration_inventory()),
-            {"Microbiology/MetagenomeCompositionAssignment",
-             "InformationTheory/ShannonCapacityCertificate"})
+            {"Microbiology/MetagenomeCompositionAssignment"})
         for entry in audit_tasks._migration_inventory().values():
             self.assertEqual(entry["status"], "pending")
             self.assertTrue(entry["reason"])

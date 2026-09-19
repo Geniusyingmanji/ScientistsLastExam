@@ -71,43 +71,7 @@ class OracleRandomnessTests(unittest.TestCase):
                     task_id, path.relative_to(ROOT)))
         self.assertEqual(offenders, [], "\n".join(offenders))
 
-    def test_the_known_case_seeds_every_drawing_call_site(self):
-        """RNAEnsembleDesign is the task this was found on, so it is pinned by name too.
 
-        The inventory scan above only asks whether a file seeds *somewhere*. That is the right
-        question to ask of code nobody has read yet, and the wrong question to ask of the case
-        already known to be delicate: here every drawing call has to be immediately preceded by a
-        seed, or a later call inherits whatever state the previous one left.
-        """
-        spec = next(s for s in list_tasks(None) if s.task_id.endswith("/RNAEnsembleDesign"))
-        source = (spec.task_dir / "verification" / "evaluator.py").read_text(encoding="utf-8")
-        tree = ast.parse(source)
-
-        for function in [node for node in ast.walk(tree)
-                         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))]:
-            body = list(ast.walk(function))
-            drawing = [node for node in body
-                       if isinstance(node, ast.Call)
-                       and _call_name(node) in UNSEEDED_WHEN_NONE
-                       and _starts_from_none(node)]
-            if not drawing:
-                continue
-            seeded_lines = {node.lineno for node in body
-                            if isinstance(node, ast.Call) and _call_name(node) in SEEDING_CALLS}
-            for call in drawing:
-                self.assertTrue(
-                    any(0 < call.lineno - line <= 3 for line in seeded_lines),
-                    "%s draws at line %d with no seed in the three lines above it"
-                    % (function.name, call.lineno),
-                )
-
-    def test_the_seed_is_derived_from_the_call_inputs_not_the_clock(self):
-        """A seed taken from the clock or the process id is not a seed, it is a fresh draw."""
-        spec = next(s for s in list_tasks(None) if s.task_id.endswith("/RNAEnsembleDesign"))
-        source = (spec.task_dir / "verification" / "evaluator.py").read_text(encoding="utf-8")
-        for forbidden in ("time.time()", "os.getpid()", "time.time_ns()", "uuid"):
-            self.assertNotIn(forbidden, source)
-        self.assertIn("hashlib.sha256", source)
 
 
 if __name__ == "__main__":

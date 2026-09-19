@@ -15,6 +15,9 @@ loss only shows up as unrelated-looking check failures one layer down.
 from __future__ import annotations
 
 import importlib.util
+import contextlib
+import io
+from types import SimpleNamespace
 import json
 import subprocess
 import sys
@@ -112,42 +115,47 @@ class RebindingPreservesMeasurementsTests(unittest.TestCase):
                 % row["task"])
             self.assertTrue(measured.get("files_changed"), row["task"])
 
+    @contextlib.contextmanager
+    def _isolated_current_binding(self):
+        """Exercise the writer against one unchanged test binding, not a live cohort."""
+        module = _rebinder()
+        with tempfile.TemporaryDirectory() as temporary, contextlib.ExitStack() as stack:
+            root = Path(temporary)
+            spec_path = root / "spec.json"
+            manifest_path = root / "manifest.json"
+            spec_path.write_text("{}")
+            row = {"task": "Fixture/Task", "task_package_sha256": "a" * 64}
+            manifest_path.write_text(json.dumps({"tasks": [{
+                "task": "Fixture/Task", "runtime_contract_sha256": "b" * 64,
+                "maturity_contract_sha256": "c" * 64,
+            }]}))
+            stack.enter_context(patch.object(module._module, "_resolve_preflight_spec",
+                                            return_value=({"tasks": [row]}, [], [])))
+            stack.enter_context(patch.object(module, "find_task", return_value=SimpleNamespace()))
+            stack.enter_context(patch.object(module, "task_package_sha256", return_value="a" * 64))
+            stack.enter_context(patch.object(module, "task_contract_sha256", return_value="b" * 64))
+            stack.enter_context(patch.object(module, "_maturity_contract_sha256", return_value="c" * 64))
+            outputs = [root / name for name in ("successor.json", "next_manifest.json", "artifacts.json")]
+            argv = ["--spec", str(spec_path), "--manifest", str(manifest_path),
+                    "--output", str(outputs[0]), "--manifest-output", str(outputs[1]),
+                    "--artifacts-output", str(outputs[2]),
+                    "--rebind-evidence", "exactly_once_recovery=fixture-evidence.json"]
+            yield module, argv, outputs
+
     def test_explicit_shared_remeasurement_is_not_ignored_when_hashes_match(self):
-        evidence = self.spec["shared_task_overrides"]["exactly_once_recovery"]["evidence"]
-        result = subprocess.run(
-            [
-                sys.executable,
-                str(ROOT / "scripts" / "rebind_measurement_health_spec.py"),
-                "--output", str(ROOT / ".research" / "unused_spec.json"),
-                "--manifest-output", str(ROOT / ".research" / "unused_manifest.json"),
-                "--artifacts-output", str(ROOT / ".research" / "unused_artifacts.json"),
-                "--rebind-evidence",
-                "exactly_once_recovery=%s" % evidence["path"],
-                "--dry-run",
-            ],
-            cwd=ROOT,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            check=False,
-        )
-        self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("%d task(s) rebound" % len(self.spec["task_overrides"]), result.stdout)
-        self.assertNotIn("nothing to write", result.stdout)
+        with self._isolated_current_binding() as (module, argv, outputs):
+            output = io.StringIO()
+            with contextlib.redirect_stdout(output):
+                result = module.main(argv + ["--dry-run"])
+            self.assertEqual(result, 0)
+            self.assertIn("1 task(s) rebound", output.getvalue())
+            self.assertNotIn("nothing to write", output.getvalue())
+            self.assertFalse(any(path.exists() for path in outputs))
 
     def test_dirty_tree_cannot_write_a_successor(self):
-        module = _rebinder()
-        evidence = self.spec["shared_task_overrides"]["exactly_once_recovery"]["evidence"]
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            outputs = [root / name for name in ("spec.json", "manifest.json", "artifacts.json")]
+        with self._isolated_current_binding() as (module, argv, outputs):
             with patch.object(module, "tree_is_clean", return_value=False):
-                result = module.main([
-                    "--output", str(outputs[0]),
-                    "--manifest-output", str(outputs[1]),
-                    "--artifacts-output", str(outputs[2]),
-                    "--rebind-evidence", "exactly_once_recovery=%s" % evidence["path"],
-                ])
+                result = module.main(argv)
             self.assertEqual(result, 1)
             self.assertFalse(any(path.exists() for path in outputs))
 

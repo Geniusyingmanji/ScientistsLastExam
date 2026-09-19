@@ -161,47 +161,34 @@ class SaturationAuditTests(unittest.TestCase):
         row = audit_task(internal)
         self.assertEqual(row["status"], NOT_MEASURED)
         self.assertIn("evaluator-internal", row["detail"])
-        # More than one reference-named candidate: the audit refuses to guess.
-        ambiguous = find_task(
-            "QuantumErrorCorrection/QuantumErrorDecoder", include_uncertified=True)
-        self.assertEqual(audit_task(ambiguous)["status"], NOT_MEASURED)
+        # Ambiguous references are tested with the local two-reference fixture below.
         # Unmeasured statuses are distinct from the two verdicts, so neither can be read as one.
         self.assertNotEqual(NOT_MEASURED, AT_CEILING_DECLARED)
         self.assertNotEqual(NOT_MEASURED, HEADROOM)
         self.assertNotEqual(NOT_MEASURED, AT_CEILING_UNDECLARED)
 
     def test_an_uncapped_task_is_not_compared_to_a_normalised_ceiling(self):
-        """1.0 is only a ceiling where the contract clips to one.
-
-        An uncapped task's maximum is a number the task does not publish, and one shipped
-        reference already scores above 1.0. No submitable reference on an uncapped task may
-        receive a ceiling verdict, whether the reason recorded is the score mode or an oracle
-        that would not import on this host - both are unmeasured, and neither is a pass.
-        """
-        uncapped = [spec for spec in list_tasks(None)
-                    if str(spec.metadata.get("score_mode")) == "uncapped"
-                    and reference_path(spec) is not None]
-        self.assertTrue(uncapped, "expected uncapped tasks that ship a reference")
-        reasons = []
-        for spec in uncapped:
-            with self.subTest(task=spec.task_id):
-                row = audit_task(spec)
-                self.assertEqual(row["status"], NOT_MEASURED)
-                reasons.append(row["detail"])
-        # At least one was reached far enough to be refused for its score mode rather than for a
-        # missing dependency, so the refusal is about the ceiling and not only about the host.
-        self.assertTrue(any("uncapped" in detail for detail in reasons), reasons)
+        from tempfile import TemporaryDirectory
+        from types import SimpleNamespace
+        with TemporaryDirectory() as directory:
+            spec = SimpleNamespace(task_id="Fixture/Uncapped", task_dir=Path(directory),
+                                   metadata={"score_mode": "uncapped"}, entrypoint="solve")
+            row = audit_task(spec)
+        self.assertEqual(row["status"], NOT_MEASURED)
+        self.assertIn("uncapped", row["detail"])
 
     def test_the_reference_lookup_refuses_to_guess_between_candidates(self):
-        """A task with two reference-named files is reported unmeasured, not silently mis-scored.
-
-        Four tasks in the tree ship more than one candidate exposing the entrypoint - a reference
-        and an ablation. Choosing one arbitrarily would report the ablation's saturation as the
-        task's, which is the error this refusal exists to prevent.
-        """
-        spec = find_task("QuantumErrorCorrection/QuantumErrorDecoder", include_uncertified=True)
-        self.assertIsNone(reference_path(spec))
-        self.assertEqual(audit_task(spec)["status"], NOT_MEASURED)
+        from tempfile import TemporaryDirectory
+        from types import SimpleNamespace
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "verification").mkdir()
+            for name in ("reference.py", "reference_ablation.py"):
+                (root / "verification" / name).write_text("def solve(): return 0.0\n")
+            spec = SimpleNamespace(task_id="Fixture/AmbiguousReference", task_dir=root,
+                                   metadata={"score_mode": "clipped"}, entrypoint="solve")
+            self.assertIsNone(reference_path(spec))
+            self.assertEqual(audit_task(spec)["status"], NOT_MEASURED)
 
     def test_the_two_reproducible_trivial_strategies_tie_their_references(self):
         """The task-specific claims, executed rather than asserted in prose.

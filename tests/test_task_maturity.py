@@ -33,7 +33,7 @@ class TaskMaturityAuditTests(unittest.TestCase):
         self.assertEqual(self.report["status_counts"],
                          {k: expected_status.get(k, 0) for k in ("certified", "candidate", "quarantined")})
         # Policy literal, kept on purpose: certification is a deliberate act, not a count.
-        self.assertEqual(expected_status.get("certified", 0), 5)
+        self.assertEqual(expected_status.get("certified", 0), 0)
         # Admission is fail-closed against the current evidence bindings. Candidate registration
         # does not imply admission, and older reports whose task/runtime contract drifted do not
         # count toward this total.
@@ -89,19 +89,6 @@ class TaskMaturityAuditTests(unittest.TestCase):
         self.assertTrue(gate["passed"])
         self.assertEqual(gate["blockers"], [])
 
-    def test_wave0_constructions_are_listed_and_not_self_admitted(self):
-        for task_id in (
-            "Mathematics/RamseyLowerBound",
-            "Mathematics/KissingNumber",
-            "Algorithm/TensorRank555",
-            "Mathematics/Superpermutation",
-            "Mathematics/CapSetFrontier",
-        ):
-            row = self.tasks[task_id]
-            self.assertEqual(row["certification_status"], "candidate", task_id)
-            gate = row["gates"]["internal_science_admission"]
-            self.assertTrue(gate["passed"], task_id)
-            self.assertEqual(gate["blockers"], [], task_id)
 
     def test_look_elsewhere_is_listed_and_not_self_admitted(self):
         row = self.tasks["ParticlePhysics/LookElsewhereAnomaly"]
@@ -293,7 +280,6 @@ class TaskMaturityAuditTests(unittest.TestCase):
         """
         for task_id in (
             "DynamicalSystems/ActiveLawDiscovery",
-            "Optics/DiffractionGratingDesign",
         ):
             row = self.tasks[task_id]
             replicates = row["model_measurement"]["maximum_matched_control_replicates"]
@@ -317,7 +303,7 @@ class TaskMaturityAuditTests(unittest.TestCase):
                     self.assertIn(item["contract_binding"], allowed)
 
     def test_proposal_health_is_observed_and_condition_specific(self):
-        rna = self.tasks["RNAEngineering/RNAInverseDesign"]["model_measurement"]
+        rna = self.tasks["CausalDiscovery/InterventionalSCM"]["model_measurement"]
         b3 = rna["proposal_trajectory_health"]["normal_budget_three"]
         # Observed, never inferred: a zero-run condition has no rate; once current-contract runs
         # exist, counts and the observed rate must become populated consistently.
@@ -330,7 +316,7 @@ class TaskMaturityAuditTests(unittest.TestCase):
             self.assertLessEqual(b3["runs_with_valid_proposals"], b3["run_count"])
             self.assertIsNotNone(b3["observed_first_valid_run_rate"])
 
-        matrix = self.tasks["Algorithm/MatrixMultiplicationRank"]["model_measurement"]
+        matrix = self.tasks["Spectroscopy/NMRSpectrumFitting"]["model_measurement"]
         matrix_b3 = matrix["proposal_trajectory_health"]["normal_budget_three"]
         if matrix_b3["run_count"] == 0:
             self.assertIsNone(matrix_b3["observed_first_valid_run_rate"])
@@ -349,12 +335,12 @@ class TaskMaturityAuditTests(unittest.TestCase):
         )
 
     def test_contract_binding_is_independent_of_discipline_path(self):
-        task = "Optics/DiffractionGratingDesign"
+        task = "Physics/HiddenCouplingNetwork"
         tree = self.module._contract_tree("HEAD", task)
         self.assertTrue(tree)
         self.assertTrue(self.module._contract_equal("HEAD", "HEAD", task))
         self.assertIn(
-            "benchmarks/Physics/DiffractionGratingDesign",
+            "benchmarks/Physics/HiddenCouplingNetwork",
             self.module._task_contract_bases(task),
         )
 

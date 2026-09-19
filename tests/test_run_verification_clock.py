@@ -12,7 +12,7 @@ from unittest.mock import patch
 from sle.algorithms import evolve
 from sle.evaluation_ledger import EvaluationLedger
 from sle.protocol import load_trajectory, summarize_trajectory
-from sle.registry import find_task
+from _branch_fixtures import find_task
 from sle.run_verification import verify_run
 from test_protocol import FakeLLM
 import test_run_verification as fixtures

@@ -12,12 +12,6 @@
       "declared_eval_time_seconds": 600,
       "enforced_timeout_s": 600.0,
       "reason": "The wrapper timeout equals the declared single-evaluation cost instead of covering it threefold. The declared 600 s is the last of the 3 mismatches against the generator rule at HEAD; the ratio is 1.0x rather than the required 3.0x."
-    },
-    "InformationTheory/ShannonCapacityCertificate": {
-      "status": "pending",
-      "declared_eval_time_seconds": 1,
-      "enforced_timeout_s": 720.0,
-      "reason": "Declared cost is 1 s while the enforced timeout is 720 s - a 720x margin against a ceiling of 100x. Only the declaration can be wrong by that much; the wrapper is the side that stopped an evaluation."
     }
   }
 }

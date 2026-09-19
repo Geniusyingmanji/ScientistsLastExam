@@ -88,13 +88,19 @@ class ShortcutContractTests(unittest.TestCase):
         (self.root / "TASK_CARD.yaml").write_text("{}\n")
         result = inspect_probe(self.spec, None, skip_eval=True)
         self.assertEqual(result["status"], "failed")
-        self.spec.task_id = "Chemistry/LennardJonesCluster"
+        self.spec.task_id = "CausalDiscovery/InterventionalSCM"
         result = inspect_probe(self.spec, None, skip_eval=True)
         self.assertEqual(result["status"], "migration_pending")
         self.assertFalse(result["passed"])
         migration = json.loads(MIGRATION.read_text())["tasks"]
-        self.assertEqual(len(migration), 85)
-        self.assertTrue(set(migration).issubset({spec.task_id for spec in list_tasks(None)}))
+        import subprocess
+        repository = Path(__file__).resolve().parents[1]
+        scope = yaml.safe_load((repository / "sle/conf/branch_scope.yaml").read_text())
+        original = json.loads(subprocess.check_output([
+            "git", "show", scope["split_base"] + ":" + MIGRATION.relative_to(repository).as_posix(),
+        ], cwd=repository, text=True))["tasks"]
+        current_ids = {spec.task_id for spec in list_tasks(None)}
+        self.assertEqual(set(migration), set(original) & current_ids)
 
     def test_an_undeclared_in_tree_candidate_fails_the_contract(self):
         """The guard only sees what the card declares, so the card has to name everything.
@@ -299,7 +305,7 @@ class ShortcutContractTests(unittest.TestCase):
         its own key instead of being dropped.
         """
         (self.root / "TASK_CARD.yaml").write_text("{}\n")
-        self.spec.task_id = "Chemistry/LennardJonesCluster"
+        self.spec.task_id = "CausalDiscovery/InterventionalSCM"
         result = inspect_probe(self.spec, None, skip_eval=True)
         self.assertEqual(result["status"], "migration_pending")
         self.assertIsInstance(result["detail"], str)
@@ -325,28 +331,6 @@ class ShortcutContractTests(unittest.TestCase):
             self.assertEqual(result["status"], "failed")
             self.assertFalse(result["passed"])
 
-    def test_existing_pairing_shortcut_is_executed_as_a_regression_not_a_calibration(self):
-        # Existing exact oracle regression: no model call, no frozen evidence output,
-        # and no assertion that this task passes the new difficulty gate.
-        root = Path(__file__).resolve().parents[1] / "benchmarks/Physics/FourSettingMomentCertificate"
-        def load(name, path):
-            spec = importlib.util.spec_from_file_location(name, path)
-            module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(module)
-            return module
-        oracle = load("admission_pairing_oracle", root / "verification/evaluator.py")
-        shortcut = load("admission_pairing_probe", root / "references/pairing_shortcut.py")
-        def candidate(instance):
-            certificate = shortcut.build_certificate(instance)
-            certificate["basis"] = certificate["basis"][:9]
-            for square in certificate["squares"]:
-                square["vector"] = square["vector"][:9]
-            return certificate
-        metrics = oracle.evaluate(candidate)
-        self.assertEqual(metrics["valid"], 1)
-        self.assertEqual(metrics["combined_score"], 0)
-        self.assertEqual(json.loads(MIGRATION.read_text())["tasks"][
-            "QuantumFoundations/FourSettingMomentCertificate"]["status"], "pending")
 
 
 if __name__ == "__main__":

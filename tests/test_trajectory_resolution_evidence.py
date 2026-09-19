@@ -26,7 +26,9 @@ import sys  # noqa: E402
 sys.path.insert(0, str(ROOT))
 
 from sle.algorithms.common import task_contract_sha256, task_package_sha256  # noqa: E402
-from sle.registry import find_task  # noqa: E402
+from _branch_fixtures import find_task  # noqa: E402
+
+builder.find_task = find_task
 
 TASK = "Optics/DiffractionGratingDesign"
 

@@ -14,7 +14,7 @@ from sle.metric_visibility import (
     EvaluationInfrastructureError, load_full_metrics, require_healthy_evaluations,
     search_visible_metrics, store_full_metrics,
 )
-from sle.registry import find_task
+from _branch_fixtures import find_task
 
 
 FAULT = {'combined_score': -1e18, 'valid': 0.0, 'infrastructure_failure': 1.0,

@@ -205,7 +205,7 @@ def test_real_run_manifest_uses_summary_budget_and_sums_per_call_tokens(tmp_path
     from sle.algorithms.common import ensure_run_manifest, write_summary
     from sle.llm import LLMClient, LLMConfig
     from sle.protocol import TrajectoryEvent, summarize_trajectory
-    from sle.registry import find_task
+    from _branch_fixtures import find_task
 
     directory = tmp_path / "actual-format"
     directory.mkdir()

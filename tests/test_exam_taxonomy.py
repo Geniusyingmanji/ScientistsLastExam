@@ -18,7 +18,7 @@ class ExamTaxonomyTests(unittest.TestCase):
         report = summary()
         self.assertEqual(report["task_count"], len(list_tasks(None)))
         self.assertEqual(
-            report["forms"]["optimization"] + report["forms"]["discovery"],
+            report["forms"].get("optimization", 0) + report["forms"]["discovery"],
             report["task_count"],
         )
 
@@ -37,7 +37,7 @@ class ExamTaxonomyTests(unittest.TestCase):
             row["kind"] for row in tax["tasks"].values()
             if row.get("form") == "discovery"
         }
-        self.assertEqual(optimization, set(tax["optimization_analogue"]))
+        self.assertEqual(optimization, set())
         self.assertEqual(discovery, set(tax["discovery_kind"]))
 
     def test_on_ramps_are_named_rather_than_paired(self):
@@ -51,19 +51,8 @@ class ExamTaxonomyTests(unittest.TestCase):
             "on_ramp_do_not_pair",
         )
 
-    def test_wave0_siblings_are_named_as_disjoint_instance_sets(self):
-        """CapSetFrontier and TensorRank555 share an oracle family with a certified
-        package. The taxonomy note is the ledger that they are new instance sets,
-        not silent extensions of those certified cells."""
+    def test_discovery_instances_are_named_as_distinct_scientific_questions(self):
         tax = load_taxonomy()
-        self.assertEqual(
-            tax["tasks"]["Mathematics/CapSetFrontier"].get("note"),
-            "open_dims_not_extension_of_certified_capset",
-        )
-        self.assertEqual(
-            tax["tasks"]["Algorithm/TensorRank555"].get("note"),
-            "new_sizes_not_extension_of_certified_matmul",
-        )
         self.assertEqual(
             tax["tasks"]["ParticlePhysics/LookElsewhereAnomaly"].get("note"),
             "trials_factor_not_clone_of_discrepant_measurements",

@@ -1,4 +1,0 @@
-1) Only edit solution.py. Keep the build_cluster(n_atoms, seed=0) -> (n_atoms, 3) ndarray contract.
-2) Deterministic given (n_atoms, seed). No network access. CPU only.
-3) numpy and scipy only. Each cluster size must return within a few seconds.
-4) Do not read or import anything under verification/ or frontier_eval/.

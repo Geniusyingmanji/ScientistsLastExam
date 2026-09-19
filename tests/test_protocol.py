@@ -28,7 +28,7 @@ from sle.protocol import (TrajectoryEvent, append_event, best_so_far_auc,
                                        mean_confidence_interval,
                                        realized_token_curve, sha256_text,
                                        summarize_at_token_horizon, summarize_trajectory)
-from sle.registry import find_task
+from _branch_fixtures import find_task
 from sle.runtime_identity import TrustedRuntime
 from sle.run_verification import verify_run
 from sle import upstream_evaluator

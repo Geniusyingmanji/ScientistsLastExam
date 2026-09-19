@@ -15,6 +15,8 @@ import json
 import math
 import platform
 import sys
+
+import yaml
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
@@ -47,44 +49,15 @@ CLASSIFICATION_ORDER = (
 # These roles were inferred after inspecting current GPT-5.5 calibration results.
 # They allocate exploratory measurement only and are prohibited from serving as
 # a confirmatory cohort for claims about the same model or selection procedure.
-EXPLORATORY_TASKS = {
-    "Electrochemistry/ElectrolyteConductivityDesign",
-    "Optics/DiffractionGratingDesign",
-    "RNAEngineering/RNAInverseDesign",
-    "Semiconductor/MOSFETDoping",
-    "StructuralEngineering/TrussWeightMinimization",
-    "Thermodynamics/HeatExchangerDesign",
-    "Turbulence/RANSCalibration",
-}
+EXPLORATORY_TASKS = set()
 
-CONTROL_ONLY_TASKS = {
-    "DynamicalSystems/ActiveLawDiscovery": (
-        "repeated mechanism/refusal and feedback-protocol control; the current "
-        "normal-minus-selection-blind contrast identifies no normal-feedback advantage"
-    ),
-    "ControlTheory/InvertedPendulumSwingUp": (
-        "known-answer positive control with three matched short-budget repetitions"
-    ),
-}
+CONTROL_ONLY_TASKS = {'DynamicalSystems/ActiveLawDiscovery': 'repeated mechanism/refusal and '
+                                        'feedback-protocol control; the '
+                                        'current normal-minus-selection-blind '
+                                        'contrast identifies no '
+                                        'normal-feedback advantage'}
 
-KNOWN_SATURATED_TASKS = {
-    "BayesianInference/OptimalExperimentDesign",
-    "Chemistry/LennardJonesCluster",
-    "DynamicalSystems/LyapunovControl",
-    "Electromagnetics/AntennaArraySynthesis",
-    "FluidDynamics/LidDrivenCavity",
-    "Geophysics/GravityInversion",
-    "Geophysics/SeismicInversion",
-    "NuclearEngineering/NeutronDiffusionCriticality",
-    "Photovoltaics/PhotovoltaicTandemDesign",
-    "Physics/SpinGlassGroundState",
-    "PowerSystems/OptimalPowerFlow",
-    "QuantumChemistry/HartreeFockSCF",
-    "QuantumControl/GateSynthesis",
-    "ScientificComputing/PoissonSolver2D",
-    "SignalProcessing/SparseRecovery",
-    "Thermodynamics/RankineCycleOpt",
-}
+KNOWN_SATURATED_TASKS = {'Geophysics/GravityInversion'}
 
 
 def _sha256(path: Path) -> str:
@@ -284,8 +257,15 @@ def build_report(maturity_path: Path = DEFAULT_MATURITY) -> dict[str, Any]:
         raise ValueError("current maturity reconstruction failed")
     frozen_tasks = {row["task"] for row in maturity["tasks"]}
     current_tasks = {row["task"] for row in current_maturity["tasks"]}
-    if not frozen_tasks <= current_tasks:
-        raise ValueError("frozen maturity contains tasks absent from the current inventory")
+    # Preserve historical evidence bytes and exclude only the explicit branch complement.
+    scope_path = ROOT / "sle/conf/branch_scope.yaml"
+    branch_scope = yaml.safe_load(scope_path.read_text()) if scope_path.is_file() else {}
+    archived = set(branch_scope.get("archived_task_ids", []))
+    excluded_frozen = frozen_tasks - current_tasks
+    if excluded_frozen - archived:
+        raise ValueError("frozen maturity contains unexplained tasks absent from the current inventory")
+    if branch_scope and set(branch_scope.get("retained_task_ids", [])) != current_tasks:
+        raise ValueError("branch scope and current inventory disagree")
 
     task_records = []
     for row in current_maturity["tasks"]:
@@ -337,6 +317,12 @@ def build_report(maturity_path: Path = DEFAULT_MATURITY) -> dict[str, Any]:
         "created_at": datetime.now(timezone.utc).isoformat(),
         "source_provenance": source_provenance(ROOT),
         "environment": {"python": sys.version, "platform": platform.platform()},
+        "branch_scope": {
+            "role": branch_scope.get("role"),
+            "split_base": branch_scope.get("split_base"),
+            "frozen_archived_tasks_excluded": sorted(excluded_frozen),
+            "historical_input_unchanged": True,
+        },
         "input": {
             "path": str(maturity_path.relative_to(ROOT)),
             "sha256": _sha256(maturity_path),

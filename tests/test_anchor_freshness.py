@@ -38,7 +38,21 @@ class AnchorFreshnessTests(unittest.TestCase):
     def test_actively_researched_cells_get_the_tighter_window(self):
         """Cap sets, kissing numbers and matrix-multiplication ranks are being moved by AlphaEvolve
         and FunSearch right now. They must not sit under the same window as a proven optimum."""
-        report = MODULE.collect()
+        import json
+        from tempfile import TemporaryDirectory
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        with TemporaryDirectory() as temporary:
+            task_dir = Path(temporary)
+            (task_dir / "references").mkdir()
+            (task_dir / "references/anchors.json").write_text(json.dumps({"anchors": [{
+                "name": "cap set fixture", "value": 1,
+                "retrieved_on": date.today().isoformat(),
+                "source_url": "https://example.invalid/fixture",
+            }]}))
+            spec = SimpleNamespace(task_id="Fixture/LiveAnchor", task_dir=task_dir)
+            with patch.object(MODULE, "list_tasks", return_value=[spec]):
+                report = MODULE.collect()
         live = [a for a in report["anchors"] if a["actively_researched"]]
         self.assertGreater(len(live), 0, "the live-research hints no longer match any anchor")
         for anchor in live:

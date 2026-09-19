@@ -62,7 +62,7 @@ class TrustedEnvironmentScrubbingTests(unittest.TestCase):
         composition of the child environment rather than the helper in isolation.
         """
         import sle.evaluate as evaluate_module
-        from sle.registry import find_task
+        from _branch_fixtures import find_task
 
         captured = {}
 

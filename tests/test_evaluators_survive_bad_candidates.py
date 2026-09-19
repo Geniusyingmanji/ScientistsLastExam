@@ -78,21 +78,6 @@ class EvaluatorRowShapeTests(unittest.TestCase):
             for keys in bad:
                 self.assertIn("abstained", keys, name)
 
-    def test_the_pendulum_separates_a_bad_controller_from_a_broken_evaluator(self):
-        """It had no failure path at all: a controller returning a dictionary raised out of
-        `float()` and was reported as an infrastructure failure, aborting the run."""
-        path = next((ROOT / "benchmarks").rglob(
-            "InvertedPendulumSwingUp/verification/evaluator.py"))
-        source = path.read_text(encoding="utf-8")
-        self.assertIn("class CandidateFailure", source)
-        tree = ast.parse(source)
-        raised = {node.exc.func.id for node in ast.walk(tree)
-                  if isinstance(node, ast.Raise) and isinstance(node.exc, ast.Call)
-                  and isinstance(node.exc.func, ast.Name)}
-        self.assertNotIn(
-            "ValueError", raised,
-            "a bare ValueError here reaches the harness as an infrastructure failure, which "
-            "aborts the run instead of scoring the candidate zero")
 
 
 if __name__ == "__main__":

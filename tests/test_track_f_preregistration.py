@@ -15,6 +15,10 @@ SPEC = importlib.util.spec_from_file_location("track_f_prereg_for_test", SCRIPT)
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
 
+from _branch_fixtures import find_task as _fixture_find_task
+
+MODULE.find_task = _fixture_find_task
+
 
 class TrackFPreregistrationTests(unittest.TestCase):
     def test_williams_schedule_is_seeded_reproducible_and_balanced(self):

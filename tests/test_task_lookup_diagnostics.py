@@ -31,11 +31,11 @@ class TaskLookupDiagnosticsTests(unittest.TestCase):
                 self.assertLess(len(self._message(probe)), TAIL_SLICE)
 
     def test_message_names_the_closest_match_by_public_id(self):
-        message = self._message("LennardJones")
-        self.assertIn("Chemistry/LennardJonesCluster", message)
+        message = self._message("Interventional")
+        self.assertIn("CausalDiscovery/InterventionalSCM", message)
         # The bare directory name is a legal argument to find_task, but the message reports
         # the stable public id so a reader is never handed a form they cannot look up.
-        self.assertNotIn("lennardjonescluster", message)
+        self.assertNotIn("interventionalscm", message)
 
     def test_count_comes_from_the_inventory_not_the_filtered_view(self):
         """On the default path `specs` holds only certified tasks.

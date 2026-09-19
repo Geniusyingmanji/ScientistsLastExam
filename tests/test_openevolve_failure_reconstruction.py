@@ -11,7 +11,7 @@ from sle.metric_visibility import (
     EvaluationInfrastructureError, require_healthy_evaluations, store_full_metrics,
 )
 from sle.protocol import load_trajectory, sha256_text
-from sle.registry import find_task
+from _branch_fixtures import find_task
 
 
 @pytest.mark.parametrize("missing", ["baseline", "proposal", None])

@@ -76,26 +76,21 @@ class ReadmeInventoryCountTests(unittest.TestCase):
                   for spec in list_tasks(None))}))
         headline = _only(r"当前 \d+ 个任务包,横跨 \d+ 个学科,([^。]+)。")
         self.assertEqual(
-            int(re.search(r"(\d+) 个 certified", headline).group(1)),
+            int(re.search(r"(\d+) 个 certified", headline).group(1))
+            if re.search(r"(\d+) 个 certified", headline) else 0,
             self.status["certified"])
         self.assertEqual(
             int(re.search(r"(\d+) 个 candidate", headline).group(1)),
             self.status["candidate"])
 
     def test_form_totals(self):
-        self.assertEqual(_one(r"optimization\((\d+) 个\)"), self.form["optimization"])
+        self.assertEqual(self.form["optimization"], 0)
         self.assertEqual(_one(r"discovery\((\d+) 个\)"), self.form["discovery"])
 
-    def test_optimization_categories(self):
-        self.assertEqual(_one(r"工程设计\(.*?等 (\d+) 题\)"), self.analogue["engineering_design"])
-        self.assertEqual(_one(r"张量秩、超排列等 (\d+) 题"), self.analogue["combinatorial"])
-        self.assertEqual(_one(r"分子与大分子设计\((\d+) 题\)"), self.analogue["molecular_design"])
-        self.assertEqual(_one(r"证书上界\((\d+) 题"), self.analogue["certificate_bound"])
-        named = {"engineering_design", "combinatorial", "molecular_design", "certificate_bound"}
-        self.assertEqual(set(self.analogue) - {None}, named,
-                         "a new optimization analogue needs its own sentence in README.md")
-        self.assertEqual(_one(r"optimization\(\d+ 个\):在受约束的设计空间里把目标做得更好。分(.)类:"),
-                         len(named), "the category count word disagrees with the categories")
+    def test_main_contains_only_discovery_tasks(self):
+        self.assertTrue(self.task_ids)
+        self.assertEqual(set(self.form), {"discovery"})
+        self.assertEqual(self.analogue, {})
 
     def test_discovery_categories(self):
         for label, key in (("公式", "formula"), ("结构", "structure"), ("证据", "evidence"),

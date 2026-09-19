@@ -82,8 +82,8 @@ class RuntimeMigrationTests(unittest.TestCase):
             ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
         ).strip()
         for scope in (
-            ["benchmarks/Optics/DiffractionGratingDesign"],
-            ["benchmarks/Physics/DiffractionGratingDesign"],
+            ["benchmarks/Geophysics/GravityInversion"],
+            ["benchmarks/EarthScience/GravityInversion"],
         ):
             self.assertEqual(
                 runtime_source_changes(revision, revision, scope, root=ROOT),
@@ -97,8 +97,8 @@ class RuntimeMigrationTests(unittest.TestCase):
             "sle/spec.py",
         ]
         for task_scope in (
-            "benchmarks/Turbulence/RANSCalibration",
-            "benchmarks/Engineering/RANSCalibration",
+            "benchmarks/Geophysics/GravityInversion",
+            "benchmarks/EarthScience/GravityInversion",
         ):
             self.assertEqual(
                 runtime_source_changes(

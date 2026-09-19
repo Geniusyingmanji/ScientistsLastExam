@@ -98,7 +98,7 @@ class QuarantinedTaskAuditTests(unittest.TestCase):
     def test_unrecognized_quarantine_cannot_borrow_a_discovery_exclusion(self):
         manifest = self.module.load_certification()
         tasks = {key: dict(value) for key, value in manifest["tasks"].items()}
-        task = "Chemistry/LennardJonesCluster"
+        task = "CausalDiscovery/InterventionalSCM"
         tasks[task]["status"] = "quarantined"
         with patch.object(self.module, "load_certification", return_value={**manifest, "tasks": tasks}):
             report = self.module.audit()
