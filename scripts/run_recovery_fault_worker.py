@@ -34,6 +34,7 @@ def recovery_task(workdir: Path, *, create: bool = False) -> TaskSpec:
             "Task.md": "# Recovery protocol fixture\nReturn a finite scalar; no scientific claim is measured.\n",
             "solution.py": "def probe(context):\n    return 0.5\n",
             "frontier_eval/entrypoint.txt": "probe\n",
+            "frontier_eval/constraints.txt": "Return one finite scalar.\n",
             "frontier_eval/metadata.yaml": "domain: Mathematics\nscientific_role: sandbox_fixture\nscore_mode: clipped\n",
             "verification/evaluator.py": (
                 "import math\n"
