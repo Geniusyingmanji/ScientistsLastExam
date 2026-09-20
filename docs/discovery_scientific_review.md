@@ -132,3 +132,25 @@ python scripts/prepare_discovery_review.py \
 Packet 含有指向私有记录的引用，原件和填写后的审阅资料应由操作者保存在私有位置；公开方法说明不能顺带发布凭证、私有观测或候选不可见材料。后续若实际重放分析，须单独记录所用源码、运行时、输入、输出和 Linux 隔离执行证据，不能将本次只读准备标记为重放完成。
 
 相关约定见[发现定义与评估](discovery_evaluation.md)、[检验后只读解释协议](discovery_posttest_v2.md)和[首轮真实观测试点记录](discovery_observational_pilot_results_20260920.md)。
+
+## 本次实际准备与验证（2026-09-20）
+
+实现提交为 `7bea45a7d96e22ee162e900d66add1c08bec7ebf`。用该版本对首轮 `control-fixed_pooled`、`control-null`、`model-01`、`model-02`、`model-03` 五份既有报告生成了私有空白审阅包，未新增 episode、测量或模型请求。每份原报告的文件摘要都先与冻结结果记录核对，导出后再次确认字节未变；原结果文档及原 `semantic_review` 未更新。
+
+五份表单的科学判断均为 `unassessed`。超时的 `model-01` 仍是 `budget_exhausted`，不生成科学失败判断；其余四份原状态为 `completed`，同样不自动填科学通过。五份都属 v1，检验后解释标为 `not_available_in_protocol`。准备表单和独立领域科学审阅的完成是两个不同事项，本次没有完成后者。
+
+最终准备记录为 `/private/tmp/sle-scientific-review-preparation-7bea45a7-20260920/preparation.json`，SHA-256 为 `79f88892eb27ee43ae7613e8d8823faf9870510a5fba826065adb94bb4648077`。同目录分别保存各对象的 `review-template.json`；记录绑定实现 commit、各源文件和模板文件摘要，声明 `model_calls=0`、`candidate_code_executed=false`、`scientific_review_completed=false`。这些私有文件不纳入 Git，也不公开完整观测。
+
+实际执行的定向测试如下；macOS 与 g450 Linux 均为 **141 passed、0 failed、0 error、0 skipped**：
+
+| 测试文件 | 通过数 | 检查范围 |
+| --- | ---: | --- |
+| `tests/test_discovery_review_packet.py` | 13 | v1/v2 引用可解析、不修改输入、空发现与缺失解释、失败分析只读索引、私有内容不复制、坏报告拒绝、文件摘要及私有排他输出 |
+| `tests/test_evidence_episode.py` | 30 | 原 v1 证据模式回归 |
+| `tests/test_posttest_validation.py` | 98 | 原 v2 报告结构重放回归 |
+
+Linux 通过 Git bundle 检出上述实现提交，pytest 耗时 1.25 秒。这是三文件定向范围，与此前的 352 项协议测试有重叠，不累加为独立测试数；本次未改沙箱实现，也未将只读表单测试声称为新增隔离认证。
+
+- macOS JUnit：`/private/tmp/sle-review-preparation-local-20260920.xml`，SHA-256 `599ad6b8bfecfe08ebca482d1bcba6152f7c859997ab6120cb8b32721109323e`。
+- g450 JUnit：`/var/tmp/sle-review-preparation-7bea45a7-20260920.xml`，SHA-256 `d8a74aeb04cd84503b4076f86e820d523cdd60795f2f94adb800c0145e222bb6`。
+- g450 日志：同前缀 `.log`，SHA-256 `23eefb98e09333254d00d29c7213589f218417646379875fd7287c4922a9d2af`。
