@@ -17,11 +17,42 @@ sys.path.insert(0, str(ROOT))
 from sle.algorithms.evolve import greedy_rewrite  # noqa: E402
 from sle.evaluation_ledger import EvaluationLedger, RunLease  # noqa: E402
 from sle.llm import LLMConfig  # noqa: E402
-from sle.registry import find_task  # noqa: E402
+from sle.spec import TaskSpec, load_task_spec  # noqa: E402
 
 
 FAULT_EXIT_CODE = 86
-TASK = "Chemistry/LennardJonesCluster"
+
+def recovery_task(workdir: Path, *, create: bool = False) -> TaskSpec:
+    """Own a stable protocol fixture shared by the fault worker and its resumer.
+
+    This is outside the scientific registry and survives child-process death.
+    Resuming only reads it, so source changes cannot be silently overwritten.
+    """
+    task_dir = workdir.parent / "protocol_fixture" / "Mathematics" / "RecoveryProtocol"
+    if create:
+        files = {
+            "Task.md": "# Recovery protocol fixture\nReturn a finite scalar; no scientific claim is measured.\n",
+            "solution.py": "def probe(context):\n    return 0.5\n",
+            "frontier_eval/entrypoint.txt": "probe\n",
+            "frontier_eval/metadata.yaml": "domain: Mathematics\nscientific_role: sandbox_fixture\nscore_mode: clipped\n",
+            "verification/evaluator.py": (
+                "import math\n"
+                "def evaluate(candidate):\n"
+                "    value = float(candidate({'probe': 1}))\n"
+                "    if not math.isfinite(value):\n"
+                "        raise ValueError('fixture value must be finite')\n"
+                "    return {'combined_score': value, 'valid': 1.0}\n"
+            ),
+        }
+        for name, content in files.items():
+            path = task_dir / name
+            if path.exists():
+                if path.read_text(encoding="utf-8") != content:
+                    raise ValueError("recovery fixture source changed: " + name)
+            else:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(content, encoding="utf-8")
+    return load_task_spec(task_dir)
 
 
 class FixtureLLM:
@@ -47,8 +78,7 @@ class FixtureLLM:
         return next(self.replies)
 
 
-def fixture_llm_for_budget(budget: int) -> FixtureLLM:
-    spec = find_task(TASK, include_uncertified=True)
+def fixture_llm_for_budget(budget: int, spec: TaskSpec) -> FixtureLLM:
     baseline = spec.initial_program_path.read_text(encoding="utf-8")
     reply = "```python\n%s\n```" % baseline
     return FixtureLLM([reply] * int(budget))
@@ -83,11 +113,11 @@ def _run_greedy_fault(mode: str, workdir: Path) -> None:
             real_append(path, event)
         _exit_now()
 
-    spec = find_task(TASK, include_uncertified=True)
+    spec = recovery_task(workdir, create=True)
     with patch.object(evolve_module, "append_event", side_effect=fault_append):
         greedy_rewrite(
             spec,
-            fixture_llm_for_budget(budget),
+            fixture_llm_for_budget(budget, spec),
             budget=budget,
             timeout_s=20,
             workdir=workdir,

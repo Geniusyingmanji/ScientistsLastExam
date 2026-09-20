@@ -23,12 +23,11 @@ from sle.algorithms.evolve import greedy_rewrite  # noqa: E402
 from sle.evaluation_ledger import EvaluationLedger, RunLease  # noqa: E402
 from sle.provenance import finalize_report_trust, source_provenance  # noqa: E402
 from sle.protocol import load_trajectory  # noqa: E402
-from sle.registry import find_task  # noqa: E402
 from scripts.run_recovery_fault_worker import (  # noqa: E402
     FAULT_EXIT_CODE,
-    TASK,
     direct_request,
     fixture_llm_for_budget,
+    recovery_task,
 )
 
 
@@ -110,9 +109,10 @@ def _audit_greedy_mode(root: Path, mode: str) -> dict[str, Any]:
             "sle.algorithms.evolve.evaluate_candidate",
             side_effect=forbidden_evaluator,
         ):
+            spec = recovery_task(workdir)
             result = greedy_rewrite(
-                find_task(TASK, include_uncertified=True),
-                fixture_llm_for_budget(0),
+                spec,
+                fixture_llm_for_budget(0, spec),
                 budget=budget,
                 timeout_s=20,
                 workdir=workdir,
@@ -135,6 +135,9 @@ def _audit_greedy_mode(root: Path, mode: str) -> dict[str, Any]:
         "trajectory_is_complete": bool(
             len(events) == expected_events
             and [row["step"] for row in events] == list(range(expected_events))
+        ),
+        "fixture_evaluations_are_valid": bool(
+            events and all(row["valid"] and row["score"] == 0.5 for row in events)
         ),
         "logical_oracle_budget_is_exact": bool(
             events and events[-1]["oracle_calls"] == expected_events
@@ -367,7 +370,7 @@ def build_report() -> dict[str, Any]:
             "The fault workers use SIG-like abrupt os._exit process death, not whole-host power loss or filesystem corruption.",
             "A crash before receipt commit may repeat deterministic computation; it remains one logical request, receipt, scientific outcome and oracle-budget unit.",
             "Physical exactly-once execution requires an idempotency-aware remote instrument or laboratory service and is not established here.",
-            "The end-to-end runner fault injection uses LennardJonesCluster as a protocol fixture and is not model-performance or scientific-discovery evidence.",
+            "The end-to-end runner fault injection uses an audit-owned scalar protocol fixture outside the scientific task registry and is not model-performance or scientific-discovery evidence.",
         ],
     }
     issues.extend(
