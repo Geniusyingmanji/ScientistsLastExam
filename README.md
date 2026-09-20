@@ -23,6 +23,8 @@
 [实际结果与方法审阅](docs/discovery_observational_pilot_results_20260920.md)单列过程记录和科学判断。
 显式选择 `--evidence-protocol posttest-v2` 可启用[检验后只读解释与复合主张核查](docs/discovery_posttest_v2.md)，
 在同一预算内分别冻结研究计划和最终解释。默认与历史评测仍使用 v1；结构核查不替代独立科学审阅。
+[分阶段科学审阅](docs/discovery_scientific_review.md)提供六阶段与八轴对应的空白审阅包，
+单独记录审阅者、证据定位、反证、缺项和结论范围；导出材料不自动给科学评分。
 
 ## 当前任务
 
