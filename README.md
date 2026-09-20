@@ -21,7 +21,8 @@
 分支切分的原始失败、跳过及定向复验见 [验证记录](docs/discovery_split_validation.md)。
 该试点已完成两个 `gpt-5.6-sol` 多轮 episode（另一个槽位为网络超时），
 [实际结果与方法审阅](docs/discovery_observational_pilot_results_20260920.md)单列过程记录和科学判断。
-检验后的只读解释及复合主张核查仍是[下一版要求](docs/discovery_posttest_interpretation_plan.md)，尚未实现。
+显式选择 `--evidence-protocol posttest-v2` 可启用[检验后只读解释与复合主张核查](docs/discovery_posttest_v2.md)，
+在同一预算内分别冻结研究计划和最终解释。默认与历史评测仍使用 v1；结构核查不替代独立科学审阅。
 
 ## 当前任务
 

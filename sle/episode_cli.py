@@ -12,11 +12,30 @@ from .scientific_episode import (
 )
 
 
+def _resolve_posttest_replay_action(action, session):
+    """Expand only explicit digest placeholders, never scientific content."""
+    if not isinstance(action, dict) or action.get("action") != "submit_interpretation":
+        return action
+    interpretation = action.get("interpretation")
+    if not isinstance(interpretation, dict):
+        return action
+    resolved = dict(interpretation)
+    for field in ("plan_sha256", "results_sha256"):
+        if resolved.get(field) == "$commit." + field:
+            frozen = getattr(session, field, None)
+            if session.state != "interpreting" or not isinstance(frozen, str) or len(frozen) != 64:
+                raise ValueError("posttest digest placeholders require this episode's completed plan and results freeze")
+            resolved[field] = frozen
+    return {**action, "interpretation": resolved}
+
+
 def command(args):
     if args.list:
         print(json.dumps({"environments": list(PILOTS), "stage": "candidate",
                           "evaluation_roles": PILOT_ROLES, "difficulty": "calibration_required",
                           "default_evaluation_mode": "evidence",
+                          "evidence_protocols": ["v1", "posttest-v2"],
+                          "default_evidence_protocol": "v1",
                           "oracle_mode": "explicit construction diagnostics only",
                           "frontier_eligible": False}, indent=2))
         return 0
@@ -24,11 +43,28 @@ def command(args):
         raise ValueError("episode requires --task and private --output-dir")
     if sum(value is not None for value in (args.baseline, args.actions, args.program, args.llm_config)) != 1:
         raise ValueError("choose exactly one of --baseline, --actions, --program, --llm-config")
+    evaluation_mode = getattr(args, "evaluation_mode", "evidence")
+    evidence_protocol = getattr(args, "evidence_protocol", "v1")
+    if evidence_protocol not in {"v1", "posttest-v2"}:
+        raise ValueError("unknown evidence protocol")
+    if evidence_protocol == "posttest-v2" and evaluation_mode != "evidence":
+        raise ValueError("posttest-v2 requires --evaluation-mode evidence")
+    max_steps = getattr(args, "max_steps", None)
+    if max_steps is None:
+        max_steps = 32 if evidence_protocol == "posttest-v2" else 64
+    if evidence_protocol == "posttest-v2":
+        if (isinstance(max_steps, bool) or not isinstance(max_steps, int)
+                or not 2 <= max_steps <= 32):
+            raise ValueError("posttest-v2 --max-steps must be between 2 and 32, including final interpretation")
+        if args.baseline:
+            raise ValueError("posttest-v2 has no reviewed operator baseline; use --actions, --program, "
+                             "or --llm-config. Existing evidence baselines use v1.")
     directory = prepare_output(args.output_dir)
     binding = source_binding(args.task)
-    evaluation_mode = getattr(args, "evaluation_mode", "evidence")
     binding.update(private_world_seed=args.seed, episode_protocol="sle-scientific-episode-v1",
                    evaluation_mode="evidence_only" if evaluation_mode == "evidence" else "oracle_diagnostic")
+    if evidence_protocol == "posttest-v2":
+        binding.update(episode_protocol="sle-discovery-posttest-v2", evidence_protocol=evidence_protocol)
     data_bundle = getattr(args, "data_bundle", None)
     environment = create_environment(args.task, args.seed, data_bundle=data_bundle)
     experiment_budget = getattr(args, "experiment_budget", None)
@@ -39,7 +75,10 @@ def command(args):
         binding["experiment_budget_override"] = experiment_budget
     if evaluation_mode == "oracle" and not callable(getattr(environment, "evaluate", None)):
         raise ValueError("this measurement environment has no ground-truth evaluator")
-    if evaluation_mode == "evidence":
+    if evidence_protocol == "posttest-v2":
+        from .posttest_episode import PostTestEvidenceSession, run_posttest_policy
+        session_type, policy_runner = PostTestEvidenceSession, run_posttest_policy
+    elif evaluation_mode == "evidence":
         from .evidence_episode import EvidenceEpisodeSession, run_discovery_policy
         session_type, policy_runner = EvidenceEpisodeSession, run_discovery_policy
     else:
@@ -51,6 +90,10 @@ def command(args):
         if args.llm_config:
             from .config import load_llm_client
             llm = load_llm_client(args.llm_config)
+            if evidence_protocol == "posttest-v2":
+                from .posttest_transport import PostTestLLMClient
+                llm = PostTestLLMClient(llm.config, max_attempts=max_steps)
+                binding["model_transport_policy"] = {"max_attempts": max_steps, "automatic_retries": 0}
             # One request cannot wait longer than the episode's remaining budget.
             llm.config.timeout_seconds = min(llm.config.timeout_seconds, args.wall_seconds)
             binding["mode"] = "llm_interactive"
@@ -68,7 +111,9 @@ def command(args):
             binding.update(mode="operator_baseline", baseline=args.baseline)
         else:
             binding.update(mode="action_replay", actions_sha256=hashlib.sha256(Path(args.actions).read_bytes()).hexdigest())
-        session = session_type(environment, max_steps=args.max_steps,
+            if evidence_protocol == "posttest-v2":
+                binding["action_replay_substitutions"] = "posttest_digest_placeholders_v1"
+        session = session_type(environment, max_steps=max_steps,
                                  wall_seconds=args.wall_seconds, analysis=analysis, binding=binding)
         if args.llm_config:
             report = run_llm(session, llm, public_files(args.task))
@@ -91,6 +136,8 @@ def command(args):
                 raise ValueError("actions file must contain a JSON array")
             for action in actions:
                 # Apply the same strict JSON validation as live model requests.
+                if evidence_protocol == "posttest-v2":
+                    action = _resolve_posttest_replay_action(action, session)
                 session.step(parse_action(json.dumps(action, allow_nan=False)))
                 if session.done:
                     break
@@ -101,6 +148,7 @@ def command(args):
         print(json.dumps({"task": binding["task_id"], "status": report["status"],
                           "mode": binding["mode"], "resources": report["resources"],
                           "evaluation_mode": evaluation_mode,
+                          "evidence_protocol": evidence_protocol if evaluation_mode == "evidence" else None,
                           "private_report": str(path), "frontier_eligible": False,
                           "evaluation_role": binding["evaluation_role"],
                           "difficulty": "calibration_required"}, indent=2))
@@ -120,6 +168,8 @@ def add_parser(sub):
     parser.add_argument("--seed", type=int, default=0, help="operator-only world seed; never sent to model")
     parser.add_argument("--evaluation-mode", choices=("evidence", "oracle"), default="evidence",
                         help="default evidence: no GT; oracle: explicit synthetic construction diagnostics")
+    parser.add_argument("--evidence-protocol", choices=("v1", "posttest-v2"), default="v1",
+                        help="v1 preserves the existing protocol; opt-in posttest-v2 adds read-only final interpretation")
     parser.add_argument("--data-bundle", help="operator-owned MeasurementAudit manifest/CSV bundle; never mounted in candidate sandbox")
     parser.add_argument("--experiment-budget", type=int, help="operator-set total budget including replication, recorded in the run binding")
     parser.add_argument("--baseline", help="operator-reviewed baseline, e.g. reference")
@@ -127,6 +177,7 @@ def add_parser(sub):
     parser.add_argument("--program", help="self-contained solve(context, act) in evidence mode; solve(problem, experiment) in oracle mode; Linux sandbox required")
     parser.add_argument("--llm-config", help="existing SLE model configuration for live interaction")
     parser.add_argument("--analysis", choices=("sandbox", "none"), default="sandbox")
-    parser.add_argument("--max-steps", type=int, default=64)
+    parser.add_argument("--max-steps", type=int,
+                        help="total action/model-call budget: default 64 for v1, 32 for posttest-v2 (range 2..32, including interpretation)")
     parser.add_argument("--wall-seconds", type=float, default=300.0)
     parser.add_argument("--output-dir", help="owner-only evidence directory outside every Git checkout")

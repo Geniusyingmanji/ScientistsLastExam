@@ -361,6 +361,9 @@ class EpisodeSession:
 
 def validate_episode_report(report):
     """Structural and resource checks, not authentication or scientific review."""
+    if isinstance(report, dict) and report.get("schema_version") == 2:
+        from .posttest_validation import validate_posttest_report
+        return validate_posttest_report(report)
     if not isinstance(report, dict) or report.get("schema_version") != 1:
         raise ValueError("invalid episode report")
     if (report.get("kind") != "scientific_episode_pilot"
@@ -496,8 +499,31 @@ def run_llm(session, llm, files=None):
                    "The active discovery claim schema overrides any legacy task claim schema. "
                    "Replication tests run only after commitment. All measurements, including "
                    "replication, count against the experiment budget. No hidden answer is graded.")
+    posttest = session.binding.get("episode_protocol") == "sle-discovery-posttest-v2"
+    if posttest:
+        from .llm import LLMClient
+        from .posttest_transport import PostTestLLMClient
+        if isinstance(llm, LLMClient) and not isinstance(llm, PostTestLLMClient):
+            raise ValueError("posttest-v2 requires PostTestLLMClient: automatic transport retries are not permitted")
+        if isinstance(llm, PostTestLLMClient):
+            transport = llm.transport_summary()
+            if transport["attempts"] != 0 or transport["max_attempts"] > session.max_steps:
+                raise ValueError("posttest-v2 requires a fresh transport bounded by this episode's max_steps")
+        # Do not leave the legacy 'commit ends the episode' instruction in the
+        # new protocol's system prompt. All scientific judgments remain private.
+        system = ("You are solving a ground-truth-free scientific discovery episode. Reply with exactly one JSON action. "
+                  "Use the public schemas, tools and total budget. Register competing hypotheses and prospective tests; "
+                  "record concise scientific rationales, not private reasoning traces. Commit freezes the complete "
+                  "dossier, test plans and optional compound-claim structure; sealed tests then return their observations. "
+                  "After commit, submit exactly one read-only interpretation covering every returned test and frozen claim. "
+                  "You cannot add tests, run analysis or change earlier predictions after commit. New ideas are posthoc_unvalidated. "
+                  "Reserve the final action within the original at-most-32 actions for interpretation; commit by the penultimate action. "
+                  "In exploration analyze receives problem, history and public_files as Python variables; assign result to JSON. "
+                  "No hidden answer, scientific score or automatic scientific review is available.")
     initial = {"observation": session.observation(), "public_files": files or {}}
     while not session.done:
+        if posttest and not session.prepare_model_call():
+            break
         if session.steps >= session.max_steps or session._expired():
             session.stop()
             break
@@ -505,6 +531,8 @@ def run_llm(session, llm, files=None):
             if hasattr(llm, "config") and hasattr(llm.config, "timeout_seconds"):
                 llm.config.timeout_seconds = min(llm.config.timeout_seconds,
                                                 max(0.001, session.deadline - session.clock()))
+            if posttest:
+                initial["observation"] = session.observation()
             prompt = json.dumps({**initial, "history": session.transcript}, allow_nan=False)
             reply = call_with_deadline(lambda: llm.complete(prompt, system=system),
                                        max(0.001, session.deadline - session.clock()))
@@ -532,6 +560,8 @@ def run_llm(session, llm, files=None):
             session.metrics = None
             break
         session.step(action)
+    if posttest and hasattr(llm, "transport_summary"):
+        session.model_transport = llm.transport_summary()
     return session.report()
 
 
