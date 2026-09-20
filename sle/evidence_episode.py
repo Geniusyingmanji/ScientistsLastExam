@@ -26,12 +26,15 @@ DISCOVERY_CONTRACT = {
              "requirements": "at least two registered competing predictions; exact tool/arguments; one execution"},
     "claim_schema": {
         "claims": [{"hypothesis_id": "registered id", "conclusion": "supported, rejected or inconclusive",
-                    "support": ["native evidence id"], "counterevidence": ["native evidence id"],
-                    "tests": ["registered test id, including pending replication"],
+                    "support": ["outer broker evidence_id, e.g. experiment-0001"],
+                    "counterevidence": ["outer broker evidence_id, e.g. experiment-0001"],
+                    "tests": ["registered test id whose predictions include this claim's hypothesis_id; pending replication allowed"],
                     "limitations": ["scope and uncertainty"]}],
         "replication_tests": ["pending replication-phase test ids, at most 8"],
         "limitations": ["episode-level limitations"],
     },
+    "citation_rule": "Use the outer experiment response's evidence_id (experiment-XXXX) in support and counterevidence. Nested observation.evidence_id values such as measurement-... identify adapter records and are not dossier citations.",
+    "claim_test_rule": "Every ID in a claim's tests must name a registered test whose predictions include that claim's hypothesis_id. A test of another hypothesis cannot be attached to this claim.",
     "interpretation": "Compatibility and discrimination of preregistered predictions are evidence, not ground-truth correctness.",
     "review_limits": "Scientific meaning, novelty, causal justification and adequacy of assumptions require explicit independent review.",
     "budget": "exploration and postcommit replication share the same finite experimental budget",
@@ -174,6 +177,20 @@ class EvidenceEpisodeSession(EpisodeSession):
         try:
             claim = json_copy(claim)
             self.ledger.validate_dossier(claim, allow_pending=True)
+        except (ValueError, TypeError, KeyError) as exc:
+            response = {"ok": False, "error": "invalid_discovery_dossier"}
+            # Only these two ledger errors describe already-public references.
+            # Never echo exception text or diagnose environment/preflight errors.
+            public_reasons = {
+                "claim cites non-native or unknown evidence": "unknown_native_evidence",
+                "claim test does not test this hypothesis": "claim_test_hypothesis_mismatch",
+            }
+            if type(exc) is ValueError and len(exc.args) == 1 and isinstance(exc.args[0], str):
+                reason = public_reasons.get(exc.args[0])
+                if reason is not None:
+                    response["reason"] = reason
+            return response
+        try:
             if len(claim["replication_tests"]) > 8:
                 raise ValueError("too many replication tests")
             calls = []

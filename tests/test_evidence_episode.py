@@ -141,6 +141,73 @@ def test_fabricated_analysis_evidence_cannot_support_a_claim():
     assert not session.step({"action": "native_observation", "value": 0.3})["ok"]
 
 
+@pytest.mark.parametrize("citation_field", ["support", "counterevidence"])
+def test_nested_adapter_id_gets_public_citation_diagnostic_and_can_be_repaired(citation_field):
+    class NestedObservations(ObservationsOnly):
+        def experiment(self, tool, arguments):
+            return {**super().experiment(tool, arguments), "evidence_id": "measurement-adapter-fixture"}
+    session = EvidenceEpisodeSession(NestedObservations())
+    register(session)
+    contract = session.observation()["problem"]["discovery_contract"]
+    assert "experiment-XXXX" in contract["citation_rule"]
+    assert "observation.evidence_id" in contract["citation_rule"]
+    observed = session.step({"action": "experiment", "tool": "measure",
+                             "arguments": {"partition": "exploration"}, "test_id": "test"})
+    bad = dossier()
+    bad["claims"][0][citation_field] = [observed["observation"]["evidence_id"]]
+    previous_steps = session.steps
+    assert session.step({"action": "commit", "claim": bad}) == {
+        "ok": False, "error": "invalid_discovery_dossier", "reason": "unknown_native_evidence"}
+    assert session.steps == previous_steps + 1  # Invalid submissions still cost a turn.
+    assert session.units == 1 and session.experiments == 1
+    assert session.state == "exploring" and session.claim is None and session.metrics is None
+    assert session.environment.phase == "exploration"
+    assert session.step({"action": "commit", "claim": dossier([observed["evidence_id"]])})["ok"]
+    assert session.units == 2 and session.metrics["ground_truth_used"] is False
+    assert session.metrics["claims"][0]["evidence_status"] == "evidence-supported"
+    assert session.metrics["claims"][0]["unverified_support_citations"] == []
+    validate_episode_report(session.report())
+
+
+def test_test_for_other_hypothesis_has_safe_binding_diagnostic_without_running_replication():
+    session = EvidenceEpisodeSession(ObservationsOnly())
+    register(session, exploration=False)
+    assert session.step({"action": "hypothesize", "hypothesis": hypothesis("different")})["ok"]
+    contract = session.observation()["problem"]["discovery_contract"]
+    assert "predictions include" in contract["claim_test_rule"]
+    bad = dossier()
+    bad["claims"][0]["hypothesis_id"] = "different"
+    assert session.step({"action": "commit", "claim": bad}) == {
+        "ok": False, "error": "invalid_discovery_dossier", "reason": "claim_test_hypothesis_mismatch"}
+    assert session.units == 0 and session.environment.calls == []
+    assert session.state == "exploring" and session.claim is None
+    assert session.step({"action": "commit", "claim": dossier()})["ok"]
+    assert session.units == 1 and session.metrics["ground_truth_used"] is False
+    assert session.metrics["claims"][0]["evidence_status"] == "evidence-supported"
+    validate_episode_report(session.report())
+
+
+@pytest.mark.parametrize("exception", [
+    ValueError("private-secret-or-path"), TypeError("private-secret-or-path"), KeyError("private-secret-or-path"),
+])
+def test_unrecognized_dossier_validation_errors_do_not_expose_exception_text(exception):
+    session = EvidenceEpisodeSession(ObservationsOnly())
+    with patch.object(session.ledger, "validate_dossier", side_effect=exception):
+        response = session.step({"action": "commit", "claim": dossier()})
+    assert response == {"ok": False, "error": "invalid_discovery_dossier"}
+    assert session.units == 0 and session.environment.calls == []
+    assert "private-secret-or-path" not in json.dumps(session.report())
+
+
+def test_environment_error_cannot_be_misreported_as_public_citation_validation():
+    session = EvidenceEpisodeSession(ObservationsOnly())
+    register(session, exploration=False)
+    with patch.object(session.environment, "action_cost", side_effect=ValueError("claim cites non-native or unknown evidence")):
+        response = session.step({"action": "commit", "claim": dossier()})
+    assert response == {"ok": False, "error": "invalid_discovery_dossier"}
+    assert session.units == 0 and session.environment.calls == []
+
+
 def test_analysis_artifact_is_linked_for_review_but_not_promoted_to_native_evidence():
     session = EvidenceEpisodeSession(ObservationsOnly(), analysis=lambda *args: {"ok": True, "result": 42})
     register(session, exploration=False)
