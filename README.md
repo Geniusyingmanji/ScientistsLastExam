@@ -17,6 +17,8 @@
 
 协议、指标、限制和 Linux 验证记录见 [发现评估](docs/discovery_evaluation.md)，
 运行入口见 [科学实验环境](docs/scientific_environments.md)。
+真实观测准备与分阶段审阅见 [北京 PM2.5 方法试点](docs/discovery_observational_pilot.md)；
+分支切分的原始失败、跳过及定向复验见 [验证记录](docs/discovery_split_validation.md)。
 
 ## 当前任务
 

@@ -24,7 +24,7 @@ It can repeatedly call tools and use the session's isolated Python analysis.
 * `read_measurements` returns selected numeric columns from exploration rows;
   `partition` must be `exploration`, `offset` is zero-based, and `limit` is 1–256.
   Cost is returned rows times selected numeric columns.
-* `summarize` computes a mean or a two-group mean difference. Supply all six
+* `summarize` computes a mean or a two-group mean difference. Supply all five
   arguments: `partition`, `column`, `statistic`, `group_column`, `group_values`.
   For a mean, both grouping fields are null. For `mean_difference`, the value
   is the second group's mean minus the first group's mean. Both groups need
