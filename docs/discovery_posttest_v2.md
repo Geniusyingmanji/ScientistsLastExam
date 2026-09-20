@@ -66,3 +66,36 @@ python -m sle episode \
 每次检验逐对列出预测区间相同、重叠或分离的关系；端点相接仍为重叠。这只表示该次测量上的预测关系，不替代统计效力或机制辨识。证据引用另存背景、探索和前瞻检验角色；即使证据 ID 真实，也不能给未被该检验针对的主张自动添加前瞻支持。
 
 这一版的协议验证使用人工 fixture 和模拟模型，不读取已见真实封存值调参。首轮模型评测及其已消耗的三个名额保持冻结，详见[原始试点结果](discovery_observational_pilot_results_20260920.md)；设计动机与后续要求见[解释阶段计划](discovery_posttest_interpretation_plan.md)。
+
+## 2026-09-20 实际工程验证
+
+实现源码：`abc24479bb18447bf37f4c58019d9cd762d64158`。通过 Git bundle 传到 g450 现有隔离测试目录，检出该 commit 后工作树干净。以下是同一组 11 个文件的定向检查，不是仓库全量测试，也不与此前 65、59、97 项测试累加。
+
+| 测试文件（`tests/` 下） | macOS 通过 / 跳过 | Linux 通过 / 跳过 |
+| --- | ---: | ---: |
+| `test_posttest_episode.py` | 27 / 0 | 27 / 0 |
+| `test_posttest_validation.py` | 98 / 0 | 98 / 0 |
+| `test_posttest_cli.py` | 22 / 0 | 22 / 0 |
+| `test_posttest_transport.py` | 37 / 0 | 37 / 0 |
+| `test_discovery_structure.py` | 41 / 0 | 41 / 0 |
+| `test_evidence_episode.py` | 30 / 0 | 30 / 0 |
+| `test_scientific_episode.py` | 27 / 0 | 27 / 0 |
+| `test_discovery_review.py` | 45 / 0 | 45 / 0 |
+| `test_measurement_audit.py` | 17 / 0 | 17 / 0 |
+| `test_posttest_sandbox.py` | 0 / 3 | 3 / 0 |
+| `test_scientific_episode_sandbox.py` | 0 / 5 | 5 / 0 |
+| **合计** | **344 / 8** | **352 / 0** |
+
+最终两轮均为 0 failure、0 error。macOS 的 8 项跳过没有算作通过，Linux 实际执行 352 / 收集 352。macOS 另外显示的 28 个 unittest subtest 不作为独立 test case 加总。Linux 运行于 `t2vg-a100-G4-50`，Python 3.8.10，UTC 11:14:56–11:15:06，pytest 耗时 9.29 秒；使用已有 `/var/tmp/sle-split-runtime-final-20260920/bin/python` 与现有 pytest 运行时。
+
+新增 Linux 测试实际启动 `CandidateProxy`，完成两次冻结与解释；使用人工 canary 确认控制端私有路径和环境变量不可见，并确认检验后请求 `analyze` 或新测量会被拒绝且不会执行。它只证明这些实际检查的边界，不代表所有隔离面已被认证。所有模型传输测试均为 mock，没有真实 API 调用。
+
+开发复核修正了证据容量异常被普通失败吞掉、成功公开回执缺失原生事件仍能通过重放、自动传输重试扩张请求数，以及截断 SSE 被当作有效回答的边界。最终回归包含对应失败场景，也覆盖原生记录与回执的双向绑定、完整检验包、两个冻结摘要、必要条件遗漏、逐对预测重叠、未知用量和不增加第 33 次请求。
+
+验证原件保存在仓库外：
+
+- macOS JUnit：`/private/tmp/sle-posttest-v2-local-20260920-final.xml`；SHA-256 `713c5ce36dcfe6f7956e90e82367bd6ecefdc232b227631f09192fa1becf370b`。
+- g450 文件前缀：`/var/tmp/sle-posttest-v2-abc24479bb18447bf37f4c58019d9cd762d64158-20260920`，分别保存 `.xml`、`.log` 与记录 commit、运行时、时间和退出码的 `.json`。
+- Linux JUnit SHA-256：`0d035cf3365baeda081a6371da68ff02cdfdb7133454232058430397aa8897c6`；日志 SHA-256：`d323c1eb51e34ab59eff85f187b9dd9af3ede8317b66d4bdf5f5755bda4bfb57`。
+
+这组结果只验证新版工程与人工 fixture，不证明题目已增难，不构成新版模型能力结果。独立领域科学审阅尚未完成，首轮模型的原始报告与 `unassessed` 科学质量轴保持原样；后续真实模型运行仍需新的明确预算。
