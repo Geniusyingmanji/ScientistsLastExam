@@ -19,6 +19,9 @@
 运行入口见 [科学实验环境](docs/scientific_environments.md)。
 真实观测准备与分阶段审阅见 [北京 PM2.5 方法试点](docs/discovery_observational_pilot.md)；
 分支切分的原始失败、跳过及定向复验见 [验证记录](docs/discovery_split_validation.md)。
+该试点已完成两个 `gpt-5.6-sol` 多轮 episode（另一个槽位为网络超时），
+[实际结果与方法审阅](docs/discovery_observational_pilot_results_20260920.md)单列过程记录和科学判断。
+检验后的只读解释及复合主张核查仍是[下一版要求](docs/discovery_posttest_interpretation_plan.md)，尚未实现。
 
 ## 当前任务
 
