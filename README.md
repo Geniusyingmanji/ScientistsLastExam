@@ -28,6 +28,11 @@
 
 ## 当前任务
 
+另有可运行的[微生态虚拟世界原型](worlds/microecology/README.md)：三菌培养、持续演化的培养舱、
+匿名化学测量、采样与上清转移、组分去除，以及冻结后对自选数值主张执行新实验。
+`python -m sle world demo --output-dir /var/tmp/sle-microecology-demo` 可生成实验图和证据报告，无需模型 API。
+它尚未进行难度、结构抗污染或 Discovery Depth 标定，不计入下方认证任务数量。
+
 <!-- task-inventory:start -->
 
 当前 46 个任务包,横跨 7 个学科,0 个 certified、40 个 candidate、6 个 quarantined。

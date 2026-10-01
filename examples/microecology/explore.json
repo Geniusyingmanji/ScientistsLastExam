@@ -1,0 +1,10 @@
+[
+  {"request_id":"prepare-abc","operation":"create","arguments":{"label":"ABC","biomass":{"A":0.06,"B":0.04,"C":0.06},"nutrient":4,"volume_ml":10,"temperature_c":30}},
+  {"request_id":"prepare-ac","operation":"create","arguments":{"label":"AC","biomass":{"A":0.06,"B":0,"C":0.06},"nutrient":4,"volume_ml":10,"temperature_c":30}},
+  {"request_id":"grow","operation":"advance","arguments":{"hours":12}},
+  {"request_id":"count-abc","operation":"measure","arguments":{"vessel_id":"vessel-0001","instrument":"counts"}},
+  {"request_id":"count-ac","operation":"measure","arguments":{"vessel_id":"vessel-0002","instrument":"counts"}},
+  {"request_id":"chemistry","operation":"measure","arguments":{"vessel_id":"vessel-0001","instrument":"chemistry"}},
+  {"request_id":"sample","operation":"sample","arguments":{"vessel_id":"vessel-0001","volume_ml":1,"cell_free":true,"label":"filtered-sample"}},
+  {"request_id":"inventory","operation":"inventory","arguments":{}}
+]

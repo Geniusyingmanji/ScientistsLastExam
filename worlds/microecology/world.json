@@ -1,0 +1,27 @@
+{
+  "world_family": "Microecology",
+  "version": "microecology-0.1.0",
+  "api_version": "sle-world-v1",
+  "status": "construction_prototype",
+  "description": "Persistent synthetic microcosms with anonymous extracellular fractions, public interventions and fresh experimental verification.",
+  "trusted_implementation": {
+    "kernel": "sle.microecology_kernel:MicroecologyKernel",
+    "lab": "sle.microecology_lab:MicroecologyLab",
+    "session": "sle.world_session:WorldSession",
+    "verification": "sle.microecology_verification:verify_claims"
+  },
+  "capabilities": ["persistent_vessels", "explicit_global_clock", "material_accounting", "sampling", "supernatant_transfer", "anonymous_chemical_assays", "fraction_depletion", "nutrient_pulses", "temperature_control", "idempotent_requests", "frozen_paired_effect_claims", "fresh_confirmation", "read_only_interpretation", "exact_same_runtime_replay"],
+  "numerical_model": "deterministic_ODE",
+  "process_noise": false,
+  "measurement_noise": "independent_additive_Gaussian_clipped_at_zero",
+  "instance_variation": "parameter_jitter_and_channel_permutation_only",
+  "structural_holdout": false,
+  "discovery_depth_scoring": false,
+  "difficulty_calibrated": false,
+  "automatic_claim_types": ["paired_effect"],
+  "agent_code_execution": "existing_CandidateProxy_Linux_sandbox_only",
+  "agent_public_files": [],
+  "public_contract": "WorldSession.describe() and public JSON responses; operator source and recipes are not agent attachments",
+  "limits": {"vessels": 32, "simulation_hours": 240, "claims": 6, "confirmation_replicates": [4, 12]},
+  "version_policy": "Scientific dynamics, observation semantics, intervention or verifier changes require a new world version before benchmark release. This prototype is not a frozen benchmark release."
+}
