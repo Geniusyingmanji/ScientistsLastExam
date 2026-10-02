@@ -1,6 +1,6 @@
 {
   "schema": "sle-public-progress-0.1",
-  "generated_at_utc": "2026-10-02T21:20:36.845908+00:00",
+  "generated_at_utc": "2026-10-02T21:37:07.595506+00:00",
   "cohorts": [
     {
       "cohort": "core-c2",
@@ -1188,7 +1188,7 @@
     "headline": "GPT-5.6 首轮科学环境评测",
     "summary": "20 个正式实例得到 56.7 分的 pilot 综合成绩。预测能力随环境和运行明显波动；局部数值效应、可迁移的模型和有证据的机制发现需要分开看。",
     "status": "正式与扩展批次完成 · 7个已评测世界 + 4个实验性世界 · 工作持续至2026-10-03 09:05（北京时间）",
-    "review_status": "首次全量复核：核心20例为17个D2、3个局部D3；扩展6例为4个D2、2个已知族内D3。七例去身份盲审曾有三例等级不同；逐项核对后撤回两项D4边界判定及一项无条件D3判定，保留全部原记录和更正附录。无重拟合迁移确实出现，但目前没有稳定支持的D4结论；等级判据需进一步操作化，不能直接计算发现率。",
+    "review_status": "首次全量复核：核心20例为17个D2、3个局部D3；扩展6例为4个D2、2个已知族内D3。七例隐藏成绩和实例标识的审阅（非完全匿名）曾有三例等级不同；逐项核对后撤回两项D4边界判定及一项无条件D3判定，保留全部原记录和更正附录。无重拟合迁移确实出现，但目前没有稳定支持的D4结论；等级判据需进一步操作化，不能直接计算发现率。",
     "findings": [
       {
         "tag": "FORMAL / MICROECOLOGY",
@@ -1332,7 +1332,7 @@
         "status": "第十一世界已接入；312项集成回归与root另验223项通过，未做GPT评测"
       }
     ],
-    "task_summary": "五种任务方向已接入：开放发现、竞争机制区分、跨条件迁移、失败后模型修订、适用范围测绘。新任务题面不等于已完成科学验证；单模型有限网格的前瞻测绘执行器正在实现。十一个世界已注册，其中四个为实验性扩展；新研究入口尚未做GPT评测。",
+    "task_summary": "五种任务方向已接入：开放发现、竞争机制区分、跨条件迁移、失败后模型修订、适用范围测绘。新任务题面不等于已完成科学验证；单模型有限网格的前瞻测绘执行器已实现并在修复独立审查发现的验收问题。十一个世界已注册，其中四个为实验性扩展；新研究入口尚未做GPT评测。",
     "next_steps": [
       {
         "title": "把前瞻性变成可核验的执行记录",
@@ -1367,9 +1367,100 @@
       "轨道强参考b1d1660d：六实例预先冻结，六次拟合收敛；独立RK45参考不调用私有kernel，48个查询全部完成。",
       "材料来源数据检验c55bf18b：4/4实例完成，128次预测与512次新观测；26项定向Linux测试通过。",
       "新任务目录dd81548a：五个任务方向；原三个方向正文和计分不变，新增两个方向尚无GPT结果。",
-      "电路接入d0743ca4：原10世界契约、7世界null库与五任务科学内容对照不变；完整11世界Linux验证正在运行。",
-      "分析错误重放3ccf34c2：11实例、72次历史分析、29条目标错误全部完成；28项Linux测试通过，原输入/源码哈希保持。"
-    ]
+      "电路接入d0743ca4：原10世界契约、7世界null库与五任务科学内容对照不变；完整11世界Linux验证1,514项通过、1项可选重复smoke跳过，1,005.01秒。",
+      "分析错误重放3ccf34c2：11实例、72次历史分析、29条目标错误全部完成；28项Linux测试通过，原输入/源码哈希保持。",
+      "七例结构化科学证据复核：42个维度判断、七份标注及引用/顺序校验；源包哈希均保持。基因样例有两项审阅分歧，未做语义裁决或等级汇总。"
+    ],
+    "evidence_sample": {
+      "selection": "固定选取核心批次四个世界、扩展批次三个世界各自首个审阅包，共七例；这是描述性样例，不代表随机抽样或全体运行的发现率。",
+      "review_scope": "同模型家族的独立上下文人工复核，结论暂定。引文和记录顺序已机械核验，外部时间未认证。基因调控样例的两次结构化审阅在迁移、不确定性处理上分别给出“部分支持”和“支持”；两份原判断都保留，本表呈现新一轮判断，不表示已达成共识。",
+      "rows": [
+        {
+          "case": "耦合振子样例",
+          "assessments": {
+            "quantitative_model": "supported",
+            "prospective_test": "supported",
+            "meaningful_rival": "partial",
+            "changed_regime_transfer": "supported",
+            "empirical_boundary": "not_demonstrated",
+            "uncertainty_and_negative_results": "partial"
+          },
+          "limitation": "沿用旧系数的跨条件预测得到支持；实质竞争解释与经验适用边界仍不完整。"
+        },
+        {
+          "case": "热输运样例",
+          "assessments": {
+            "quantitative_model": "partial",
+            "prospective_test": "partial",
+            "meaningful_rival": "partial",
+            "changed_regime_transfer": "not_demonstrated",
+            "empirical_boundary": "not_demonstrated",
+            "uncertainty_and_negative_results": "partial"
+          },
+          "limitation": "有参数估计与局部检验，但不足以证明冻结模型在新条件下的迁移。"
+        },
+        {
+          "case": "微生态样例",
+          "assessments": {
+            "quantitative_model": "partial",
+            "prospective_test": "supported",
+            "meaningful_rival": "partial",
+            "changed_regime_transfer": "partial",
+            "empirical_boundary": "partial",
+            "uncertainty_and_negative_results": "partial"
+          },
+          "limitation": "局部干预支持部分因果关系；一项近零效应主张与约+0.091的已观测效应冲突。时间裁剪不能作为温度边界证据。"
+        },
+        {
+          "case": "反应动力学样例",
+          "assessments": {
+            "quantitative_model": "supported",
+            "prospective_test": "partial",
+            "meaningful_rival": "partial",
+            "changed_regime_transfer": "partial",
+            "empirical_boundary": "not_demonstrated",
+            "uncertainty_and_negative_results": "partial"
+          },
+          "limitation": "数量模型有支持；所报告的部分低误差来自看过目标后的重新拟合，前瞻性仅部分支持。"
+        },
+        {
+          "case": "基因调控样例",
+          "assessments": {
+            "quantitative_model": "supported",
+            "prospective_test": "supported",
+            "meaningful_rival": "partial",
+            "changed_regime_transfer": "supported",
+            "empirical_boundary": "not_demonstrated",
+            "uncertainty_and_negative_results": "supported"
+          },
+          "limitation": "旧参数的幅度迁移有支持；持续时间检验的协议不匹配。迁移和不确定性两个维度存在审阅分歧。"
+        },
+        {
+          "case": "材料滞回样例",
+          "assessments": {
+            "quantitative_model": "partial",
+            "prospective_test": "partial",
+            "meaningful_rival": "supported",
+            "changed_regime_transfer": "not_demonstrated",
+            "empirical_boundary": "partial",
+            "uncertainty_and_negative_results": "partial"
+          },
+          "limitation": "竞争解释得到有意义的检验；最终参数使用全部观测拟合，尚缺冻结模型的独立迁移。"
+        },
+        {
+          "case": "平衡自旋样例",
+          "assessments": {
+            "quantitative_model": "supported",
+            "prospective_test": "supported",
+            "meaningful_rival": "supported",
+            "changed_regime_transfer": "supported",
+            "empirical_boundary": "not_demonstrated",
+            "uncertainty_and_negative_results": "partial"
+          },
+          "limitation": "旧系数在重拟合前通过后续检验；误差统计包含受夹持坐标，尚无经验适用边界。"
+        }
+      ]
+    }
   },
   "privacy": "Aggregate metrics and explicitly curated notes only; private seeds, targets and raw traces are excluded."
 }
