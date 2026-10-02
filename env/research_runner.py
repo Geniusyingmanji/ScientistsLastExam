@@ -149,13 +149,47 @@ def create_manifest(episode_id, environment, seed, *, profile="open_discovery",
     return manifest
 
 
+def create_reference_manifest(episode_id, environment, seed, *, reference_id,
+                              reference_source_sha256, profile="open_discovery",
+                              limits=None, science_limits=None, call_timeout_seconds=10.0):
+    """Freeze a trusted, non-API authored policy without a model identity.
+
+    This Python-only path shares scientific execution, not the API CLI. The
+    factory is trusted operator code; its identity assertion is not a network
+    sandbox. The reference implementation must be independently inspected.
+    """
+    if (type(reference_id) is not str or
+            re.fullmatch(r"[a-z0-9][a-z0-9_.-]{0,79}", reference_id) is None or
+            type(reference_source_sha256) is not str or
+            re.fullmatch(r"[0-9a-f]{64}", reference_source_sha256) is None):
+        raise ValueError("invalid authored reference identity")
+    if (type(call_timeout_seconds) not in (int, float) or
+            not 0 < call_timeout_seconds <= 30):
+        raise ValueError("reference call timeout must be finite and within 30 seconds")
+    manifest = create_manifest(episode_id, environment, seed, profile=profile,
+                               limits=limits, science_limits=science_limits)
+    manifest.pop("sha256")
+    manifest.update(client_kind="scripted_reference", requested_model=None, decoding={},
+                    reference={"id": reference_id, "source_sha256": reference_source_sha256,
+                               "call_timeout_seconds": float(call_timeout_seconds)})
+    manifest["sha256"] = digest(manifest)
+    return manifest
+
+
 def validate_manifest(manifest):
     if type(manifest) is not dict:
         raise ValueError("invalid research manifest")
     try:
-        expected = create_manifest(manifest["episode_id"], manifest["environment"], manifest["private_world_seed"],
-                                   profile=manifest["profile"]["name"], limits=manifest["limits"],
-                                   science_limits=manifest["science_limits"])
+        arguments = {"profile": manifest["profile"]["name"], "limits": manifest["limits"],
+                     "science_limits": manifest["science_limits"]}
+        factory = create_manifest
+        if manifest.get("client_kind") == "scripted_reference":
+            factory = create_reference_manifest
+            arguments.update(reference_id=manifest["reference"]["id"],
+                             reference_source_sha256=manifest["reference"]["source_sha256"],
+                             call_timeout_seconds=manifest["reference"]["call_timeout_seconds"])
+        expected = factory(manifest["episode_id"], manifest["environment"],
+                           manifest["private_world_seed"], **arguments)
     except (KeyError, TypeError, ValueError, OverflowError):
         raise ValueError("invalid research manifest") from None
     if manifest != expected:
@@ -276,6 +310,7 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
     directory = Path(directory).absolute()
     directory.mkdir(mode=0o700, parents=False)  # Existing paths fail before clients.
     limits, started = manifest["limits"], time.monotonic()
+    reference_run = manifest.get("client_kind") == "scripted_reference"
     deadline = started + limits["wall_seconds"]
     history, rounds, models, cleanup_errors = [], [], set(), []
     task = analysis = snapshots = client = journal = None
@@ -283,6 +318,8 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
     analysis_remaining = float(limits["analysis_seconds"])
     usage = {"model_request_attempts": 0, "research_action_attempts": 0,
              "analysis_attempts": 0, "analysis_seconds_actual": 0.0, "analysis_startup_seconds": 0.0}
+    if reference_run:
+        usage["reference_request_attempts"] = 0
 
     def write(path, value, **kwargs):
         try:
@@ -327,9 +364,19 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
         transport = directory / "transport"
         transport.mkdir(mode=0o700)
         client = client_factory(transport)
-        if (client.config.model != manifest["requested_model"] or
+        if reference_run:
+            reference = manifest["reference"]
+            if (getattr(client, "client_kind", None) != "scripted_reference" or
+                    getattr(client, "reference_id", None) != reference["id"] or
+                    getattr(client, "reference_source_sha256", None) != reference["source_sha256"]):
+                raise ValueError("reference client differs from frozen identity")
+            request_timeout = reference["call_timeout_seconds"]
+        elif (getattr(client, "client_kind", None) == "scripted_reference" or
+                client.config.model != manifest["requested_model"] or
                 any(getattr(client.config, key) != value for key, value in manifest["decoding"].items())):
             raise ValueError("client configuration differs from frozen manifest")
+        else:
+            request_timeout = client.config.timeout_seconds + 65
         for number in range(1, limits["rounds"] + 1):
             if remaining() <= 0:
                 stop = "wall_budget"
@@ -349,22 +396,25 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
                 break
             row = {"round": number, "prompt_sha256": digest(prompt), "system_sha256": digest(SYSTEM)}
             rounds.append(row)
-            usage["model_request_attempts"] += 1
-            append("model_request_started", dict(row, prompt=prompt))
+            usage["reference_request_attempts" if reference_run else "model_request_attempts"] += 1
+            append("reference_request_started" if reference_run else "model_request_started", dict(row, prompt=prompt))
             # A failed later call must not inherit the previous call's token use.
             client.last_usage, client.last_response_metadata, client.last_stop_reason = None, {}, None
             try:
                 raw = call_with_deadline(lambda: client.complete(encoded, system=SYSTEM),
-                                         min(remaining(), client.config.timeout_seconds + 65))
+                                         min(remaining(), request_timeout))
             except Exception as error:
                 row.update(error=type(error).__name__, usage=deepcopy(getattr(client, "last_usage", None)))
-                append("model_request_failed", row)
+                append("reference_request_failed" if reference_run else "model_request_failed", row)
                 if remaining() <= 0:
                     state, stop = "incomplete", "wall_budget"
                 else:
-                    infrastructure_failed("model_transport_error")
+                    infrastructure_failed("reference_policy_error" if reference_run else "model_transport_error")
                 break
             metadata = deepcopy(client.last_response_metadata)
+            if reference_run and (metadata != {} or client.last_usage is not None):
+                infrastructure_failed("reference_identity_metadata_mismatch")
+                break
             if (not isinstance(metadata, dict) or not isinstance(metadata.get("provider_reported_models", []), list) or
                     any(not isinstance(name, str) for name in metadata.get("provider_reported_models", []))):
                 raise RuntimeError("invalid provider metadata")
@@ -376,7 +426,7 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
                        finish_reason=client.last_stop_reason)
             if not raw_storable:
                 row["response_rejected"] = "invalid_response_size_or_encoding"
-            append("model_response_returned", row)
+            append("reference_action_returned" if reference_run else "model_response_returned", row)
             models.update(metadata.get("provider_reported_models", []))
             if models and models != {manifest["requested_model"]}:
                 infrastructure_failed("provider_model_mismatch")
@@ -555,6 +605,13 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
                   "model_snapshots": catalog, "scientific_task": scientific,
                   "score": None, "discovery_depth_certified": False,
                   "mechanism_identified": False, "elapsed_seconds": time.monotonic() - started}
+        if reference_run:
+            report.update(client_kind="scripted_reference", reference=deepcopy(manifest["reference"]),
+                          autonomous_discovery=False)
+            if report["failure_attribution"] == "model":
+                report["failure_attribution"] = "reference_policy"
+            if report["stop_reason"] == "model_budget":
+                report["stop_reason"] = "reference_request_budget"
         try:
             if journal is not None:
                 append("research_closed", {"status": state, "report_sha256": digest(report)})
@@ -595,6 +652,8 @@ def _main(argv=None):
     from .transport import CampaignClient
     manifest = json.loads(Path(args.manifest).read_text())
     validate_manifest(manifest)
+    if manifest.get("client_kind") == "scripted_reference":
+        raise ValueError("API CLI does not execute authored reference manifests")
     if not Path(args.ledger).is_file():
         raise ValueError("research runner requires an existing shared attempt ledger")
     ledger = CampaignLedger(args.ledger)

@@ -91,6 +91,27 @@ class FakeClient:
         return value if isinstance(value, str) else json.dumps(value)
 
 
+class ReferenceClient:
+    client_kind = "scripted_reference"
+
+    def __init__(self, manifest, steps):
+        self.reference_id = manifest["reference"]["id"]
+        self.reference_source_sha256 = manifest["reference"]["source_sha256"]
+        self.steps, self.prompts = list(steps), []
+        self.last_usage, self.last_response_metadata, self.last_stop_reason = None, {}, None
+
+    def complete(self, encoded, *, system):
+        assert system == runner.SYSTEM
+        prompt = json.loads(encoded)
+        self.prompts.append(prompt)
+        step = self.steps[len(self.prompts) - 1]
+        if isinstance(step, Exception):
+            raise step
+        value = step(prompt) if callable(step) else step
+        self.last_stop_reason = "reference_action"
+        return value if isinstance(value, str) else json.dumps(value)
+
+
 @pytest.fixture
 def fixture_environment(monkeypatch):
     original_profile = runner.get_task_profile
@@ -218,6 +239,123 @@ def test_new_prospective_arrays_are_readonly_to_later_analysis(tmp_path, numeric
     bundle = json.loads((tmp_path / "run/science/bundle-private.json").read_text())
     assert bundle["records"][-1]["observation"]["values"] == values
     assert prospective.verify_directory(tmp_path / "run/science")["replayed_tests"] == 1
+
+
+def reference_manifest(**kwargs):
+    return runner.create_reference_manifest(
+        "authored-fixture", "prospective_fixture", 7, reference_id="authored-fixture-0.1",
+        reference_source_sha256="a" * 64, **kwargs)
+
+
+def test_authored_reference_uses_science_without_claiming_model_or_provider(tmp_path, numeric):
+    manifest = reference_manifest(limits={"rounds": 4})
+    client = ReferenceClient(manifest, successful_steps())
+    report = runner.run_research(manifest, tmp_path / "reference", lambda _: client,
+                                 analysis_factory=FakeAnalysis)
+    assert report["status"] == "completed"
+    assert report["requested_model"] is None and report["provider_reported_models"] == []
+    assert report["client_kind"] == "scripted_reference"
+    assert report["reference"] == manifest["reference"]
+    assert report["autonomous_discovery"] is False
+    assert report["usage"]["model_request_attempts"] == 0
+    assert report["usage"]["reference_request_attempts"] == 4
+    assert all(row["usage"] is None and row["provider"] == {} for row in report["rounds"])
+    assert len(NumericProxy.calls) == 4
+    kinds = [entry["kind"] for entry in receipts(tmp_path / "reference")]
+    assert kinds.count("reference_request_started") == 4
+    assert "model_request_started" not in kinds
+    assert prospective.verify_directory(tmp_path / "reference/science")["replayed_tests"] == 1
+
+
+@pytest.mark.parametrize("field", ["reference_id", "reference_source_sha256", "client_kind"])
+def test_reference_identity_mismatch_stops_before_any_action_request(tmp_path, numeric, field):
+    manifest = reference_manifest(limits={"rounds": 4})
+    client = ReferenceClient(manifest, successful_steps())
+    setattr(client, field, "wrong")
+    report = runner.run_research(manifest, tmp_path / "reference", lambda _: client,
+                                 analysis_factory=FakeAnalysis)
+    assert report["status"] == "failed" and client.prompts == []
+    assert report["usage"]["model_request_attempts"] == 0
+    assert report["usage"]["reference_request_attempts"] == 0
+
+
+@pytest.mark.parametrize("kind", ["token_usage", "provider_model", "provider_metadata"])
+def test_reference_cannot_report_provider_or_token_usage(tmp_path, numeric, kind):
+    manifest = reference_manifest(limits={"rounds": 4})
+
+    class ContaminatedReference(ReferenceClient):
+        def complete(self, encoded, *, system):
+            value = super().complete(encoded, system=system)
+            if kind == "token_usage":
+                self.last_usage = {"total_tokens": 9}
+            elif kind == "provider_model":
+                self.last_response_metadata = {"provider_reported_models": ["gpt-5.6-sol"]}
+            else:
+                self.last_response_metadata = {"request_id": "unexpected"}
+            return value
+
+    client = ContaminatedReference(manifest, successful_steps())
+    report = runner.run_research(manifest, tmp_path / "reference", lambda _: client,
+                                 analysis_factory=FakeAnalysis)
+    assert report["status"] == "failed"
+    assert report["stop_reason"] == "reference_identity_metadata_mismatch"
+    assert report["usage"]["reference_request_attempts"] == 1
+    assert report["usage"]["research_action_attempts"] == 0
+    assert report["provider_reported_models"] == []
+
+
+def test_authored_policy_invalid_action_is_not_a_model_failure(tmp_path, numeric):
+    manifest = reference_manifest(limits={"rounds": 4})
+    client = ReferenceClient(manifest, [{"note": "invalid", "experiments": []}])
+    report = runner.run_research(manifest, tmp_path / "reference", lambda _: client,
+                                 analysis_factory=FakeAnalysis)
+    assert report["status"] == "invalid_action"
+    assert report["failure_attribution"] == "reference_policy"
+    assert report["usage"]["model_request_attempts"] == 0
+
+
+def test_api_client_path_cannot_accept_reference_identity(tmp_path, numeric):
+    manifest = numeric(limits={"rounds": 4})
+    client = FakeClient(manifest, successful_steps())
+    client.client_kind = "scripted_reference"
+    report = runner.run_research(manifest, tmp_path / "run", lambda _: client,
+                                 analysis_factory=FakeAnalysis)
+    assert report["status"] == "failed" and client.prompts == []
+
+
+@pytest.mark.parametrize("field,value", [
+    ("requested_model", "gpt-5.6-sol"), ("decoding", {"wire": "chat"}),
+    ("client_kind", "model_api"), ("reference", {"id": "bad"}),
+])
+def test_reference_manifest_rejects_identity_contract_mutation(numeric, field, value):
+    manifest = reference_manifest(limits={"rounds": 4})
+    manifest[field] = value
+    manifest["sha256"] = runner.digest({k: v for k, v in manifest.items() if k != "sha256"})
+    with pytest.raises(ValueError):
+        runner.validate_manifest(manifest)
+
+
+@pytest.mark.parametrize("timeout", [True, 0, -1, float("nan"), float("inf"), 31])
+def test_reference_request_timeouts_are_bounded(numeric, timeout):
+    with pytest.raises(ValueError):
+        reference_manifest(call_timeout_seconds=timeout)
+
+
+def test_api_cli_rejects_reference_before_ledger_or_client(tmp_path, numeric, monkeypatch):
+    import env.ledger as ledger
+    import env.transport as transport
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("ledger or API client must never be constructed")
+
+    monkeypatch.setattr(ledger, "CampaignLedger", forbidden)
+    monkeypatch.setattr(transport, "CampaignClient", forbidden)
+    manifest = tmp_path / "reference.json"
+    manifest.write_text(json.dumps(reference_manifest(limits={"rounds": 4})))
+    with pytest.raises(ValueError, match="API CLI does not execute"):
+        runner._main(["run", "--manifest", str(manifest), "--model-config", str(tmp_path / "absent-config"),
+                      "--ledger", str(tmp_path / "absent-ledger"), "--directory", str(tmp_path / "run")])
+    assert not (tmp_path / "run").exists()
 
 
 @pytest.mark.parametrize("action", [{"experiments": []}, {"preregister": {"rivals": []}},

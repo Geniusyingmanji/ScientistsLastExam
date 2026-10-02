@@ -100,3 +100,26 @@ execution, not autonomous scientific ability.
 ```sh
 python -m pytest tests/test_research_runner.py tests/test_prospective_runner.py -q
 ```
+
+## Authored reference policies
+
+The Python-only `create_reference_manifest(...)` path freezes an explicit
+`scripted_reference` identity, implementation hash and bounded action-call time.
+It sets `requested_model` to null and `decoding` to an empty object. A trusted
+reference client must expose matching `client_kind`, `reference_id` and
+`reference_source_sha256` attributes, implement the same `complete` action
+interface, and return no provider metadata or token usage. Its implementation
+must be inspected to establish that it makes no API calls; a Python identity
+assertion is not a host network sandbox.
+
+Reference requests have their own counter and journal event names. They cannot
+contribute model-request counts or impersonate a model/provider in the report.
+Invalid authored actions are attributed to `reference_policy`, and completion
+retains `autonomous_discovery: false`. The ordinary API CLI rejects these
+manifests before opening a ledger or constructing an API client. It has no new
+budget bypass, reference-mode CLI switch, or automatic fallback.
+
+The reference policy still uses the same isolated analysis and prediction
+workers, immutable snapshots, scientific budgets, prospective seals, receipt
+chain and negative-outcome semantics. This path supports authored integration
+and learnability experiments; it is separate from live model evaluation.
