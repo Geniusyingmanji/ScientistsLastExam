@@ -30,8 +30,9 @@ out-of-family or contamination-resistant benchmark.
 
 The eighth world, [microecology_causal](microecology_causal/README.md), is registered
 for explicit experimental selection. Its hidden causal structures share one
-public batch instrument contract. Independent mechanism-design review remains
-pending; registration does not certify difficulty or mechanistic discovery.
+public batch instrument contract. Independent development review has checked
+conservation and several limits of causal identification; registration does not
+certify difficulty or mechanistic discovery.
 It is outside the completed core/expansion cohorts and the existing seven-world
 null calibration. Its separate offline development evidence is documented in
 [operator notes](microecology_causal/SCIENTIFIC_NOTES.md).
@@ -129,6 +130,12 @@ by public controls when complete prediction matrices exist.
 [CLAIM_PROTOCOL_FUTURE.md](CLAIM_PROTOCOL_FUTURE.md) keeps proposed interval-loss
 and effect-significance changes disabled while their assumptions are calibrated.
 None changes historical model scores.
+
+[EVIDENCE_PACKET.md](EVIDENCE_PACKET.md) exports a separate review packet from
+recorded public interactions. It preserves original public task context and
+candidate reasoning while excluding operator score/identity/target metadata.
+These packets document evidence gaps and do not themselves replay experiments,
+authenticate time, or assign a discovery depth.
 
 ## Evaluation and extension
 

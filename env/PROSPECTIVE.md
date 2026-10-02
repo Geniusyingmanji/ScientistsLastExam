@@ -14,6 +14,14 @@ place one prediction within a small declared tolerance while excluding the
 other?** This is a numerical comparison of specified predictors. It is not
 identification of a mechanism, proof of a theory, or a measure of discovery depth.
 
+A rejected fitted program does not necessarily reject its whole mechanism
+family: another parameter fit consistent with the source data may survive.
+Conversely, two programs can differ numerically while sharing the same causal
+assumptions. Scientific depth review must examine parameter uncertainty,
+alternative source-compatible fits, and what the experiment actually excludes.
+The material reference runs illustrate why a numerical counterexample must be
+reported at the program/readout scope rather than renamed a theory falsification.
+
 ## Why the current profile text needs this layer
 
 `mechanism_discrimination` already asks for at least two plausible mechanisms,
