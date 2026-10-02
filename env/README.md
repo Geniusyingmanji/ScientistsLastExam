@@ -17,6 +17,7 @@ laboratory or external simulator service is required.
 | `orbital_dynamics` (experimental) | Position and velocity of a body in a central field | Initial radius/velocity and timed impulses | Force-law ambiguity, dissipation and transfer beyond a circular trajectory |
 | `pattern_formation` (experimental) | Sixteen probes on a periodic scalar field | Initial modes, ring length and uniform drive | Mode growth, forcing, symmetry and partial observability |
 | `electrical_impedance` (experimental) | Quadrature voltage at a sealed linear one-port | Frequency, source resistance, parallel load and amplitude | Spectral response, resonance, relaxation and nonunique internal topology |
+| `spin_echo` (experimental) | Mean classical magnetization x/y/z | Initial vector, waiting times, ideal rotation pulses and detuning | Reversible dispersion, transverse loss, finite-ensemble response and limited identification |
 
 These are synthetic, deliberately tractable scientific families. Hidden
 parameters and structures create new instances, but do not by themselves prove
@@ -61,6 +62,14 @@ elapsed time; it has no assigned initial readout or temporal-lag rule. Finite
 passive circuits can share an identical port response, so accurate spectral
 prediction need not identify an internal topology. Its prototype checks and
 experimental registration are separate from the completed GPT cohorts.
+
+The twelfth world, [spin_echo](spin_echo/README.md), exposes a bounded classical
+magnetic ensemble with ideal instantaneous rotations. Static dispersion can
+refocus while transverse loss remains, but finite mean-vector observations do
+not uniquely identify an internal ensemble. Its 1 ms public claim lag and
+known-coordinate exclusions are administrative guards, not detection or
+discovery guarantees. It is outside the frozen GPT cohorts and the audited
+seven-world null bank; prototype research and integration smoke tests are separate.
 
 ## Interfaces
 
@@ -112,7 +121,7 @@ and the scoring rules remain visible. Family-informed baselines are not blind
 controls. `--balanced-strata hysteresis_material` uses its trusted operator strata
 to balance hidden mechanism classes before freezing; the private labels are never
 included in the agent's problem. The experimental `microecology_causal` and
-`orbital_dynamics`, `pattern_formation` and `electrical_impedance` worlds also support this option when explicitly selected. Multiple selected worlds may be
+`orbital_dynamics`, `pattern_formation`, `electrical_impedance` and `spin_echo` worlds also support this option when explicitly selected. Multiple selected worlds may be
 comma-separated. Both settings are stored in the cohort manifest.
 
 Future cohorts may explicitly use `--analysis-protocol sle-analysis-snapshots-0.1`

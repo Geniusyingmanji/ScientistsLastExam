@@ -45,8 +45,8 @@ def decide(control, treatment, row=0, channel="voltage_real", axis="frequencies_
 
 
 def test_eleventh_experimental_world_preserves_hidden_menu_and_all_full_tasks():
-    assert ENVIRONMENTS == PREVIOUS + (NAME,)
-    assert EXPERIMENTAL_ENVIRONMENTS == ("microecology_causal", "orbital_dynamics", "pattern_formation", NAME)
+    assert ENVIRONMENTS[:len(PREVIOUS) + 1] == PREVIOUS + (NAME,)
+    assert EXPERIMENTAL_ENVIRONMENTS[:4] == ("microecology_causal", "orbital_dynamics", "pattern_formation", NAME)
     worlds = [load_world(NAME, seed)[0] for seed in (7, 46, 1439, 8743)]
     assert [w.operator_stratum() for w in worlds].count("leaky_single_rc") == 0
     assert [w.operator_stratum() for w in worlds].count("leaky_double_rc") == 3
@@ -259,7 +259,9 @@ def test_previous_ten_contracts_and_old_scientific_fingerprints_are_exact():
     contract = score_contract()
     assert canonical_hash(contract) == presentation_profiles._SCORE_HASH
     policy = contract["claim_eligibility"]
-    assert policy["protocol"] == "public-claim-eligibility-0.8"
+    assert policy["protocol"] == "public-claim-eligibility-0.9"
+    policy.pop("spin_echo_rule")
+    policy["minimum_lag"].pop("spin_echo")
     assert set(policy.pop("frequency_rules")) == {NAME}
     policy["protocol"] = "public-claim-eligibility-0.7"
     assert canonical_hash(contract) == "665c0b8946b72e302e1ee250a671148677681a694f0c2fd3cda610d419c5adda"
@@ -268,8 +270,9 @@ def test_previous_ten_contracts_and_old_scientific_fingerprints_are_exact():
                                "3c870a6cf020b6d07789eaa25eadc64f51be7e9d3cb3f8b40bb5d2e386557652")):
         profiles = {name: accessor(name) for name in TASK_PROFILE_NAMES}
         for profile in profiles.values():
-            assert profile["catalog_version"] == "scientific-task-profiles-0.1.5"
-            assert profile["applicable_environments"] == list(PREVIOUS) + [NAME]
+            assert profile["catalog_version"] == "scientific-task-profiles-0.1.6"
+            assert profile["applicable_environments"] == list(PREVIOUS) + [NAME, "spin_echo"]
             profile["catalog_version"] = "scientific-task-profiles-0.1.4"
             profile["applicable_environments"].remove(NAME)
+            profile["applicable_environments"].remove("spin_echo")
         assert canonical_hash(profiles) == expected

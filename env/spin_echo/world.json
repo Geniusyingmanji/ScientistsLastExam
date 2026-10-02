@@ -1,0 +1,64 @@
+{
+  "name": "spin_echo",
+  "world_family": "SpinEcho",
+  "version": "spin_echo-0.1.0-experimental",
+  "api_version": "sle-batch-world-v0.2",
+  "status": "experimental",
+  "axis_field": "times_ms",
+  "description": "Mean classical magnetization of a sealed ensemble under ideal calibrated rotations and waiting.",
+  "trusted_implementation": {
+    "world": "env.spin_echo.world:World",
+    "baseline": "env.spin_echo.baseline:baseline"
+  },
+  "channels": [
+    "magnetization_x",
+    "magnetization_y",
+    "magnetization_z"
+  ],
+  "normalization_scales": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "measurement_noise_std": [
+    0.002,
+    0.002,
+    0.002
+  ],
+  "measurement_noise": "independent_additive_Gaussian_unclipped",
+  "process_noise": false,
+  "numerical_model": "exact_piecewise_free_Bloch_propagation_and_Rodrigues_rotations_float64",
+  "instance_variation": [
+    "finite_frequency_ensemble",
+    "positive_weights",
+    "transverse_decay_rate"
+  ],
+  "operator_strata": [
+    "static_frequency_spread",
+    "irreversible_transverse_decay",
+    "mixed"
+  ],
+  "public_model_family_menu": false,
+  "structural_holdout": false,
+  "contamination_resistance_proven": false,
+  "discovery_depth_scoring": false,
+  "difficulty_calibrated": false,
+  "holdout_kinds": [
+    "conditions",
+    "interventions"
+  ],
+  "agent_public_files": [],
+  "public_contract": "Only World.describe() and budgeted noisy observations are candidate-facing. Source, manifest, parameters, seeds, references, strata, panels and diagnostics are operator-only.",
+  "limits": {
+    "time_ms": [
+      0,
+      250
+    ],
+    "sample_rows": 129,
+    "subensembles": 9,
+    "pulses": 12,
+    "free_propagations": 141,
+    "maximum_experiment_cost": 183
+  },
+  "version_policy": "Twelfth registered world, for explicit experimental selection only. Frozen prototype author and independent-review results keep their original source/version. Public eligibility 0.9 excludes preparation, event and known-coordinate facts; its 1 ms lag is an administrative guard, not detectability or mechanism certification. Outside completed GPT cohorts and the audited seven-world null bank."
+}

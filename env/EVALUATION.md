@@ -217,3 +217,7 @@ one fixed predictor under explicit noise and independence assumptions. They do
 not cover unsampled points, continuous boundary locations, other channels or
 multiple later maps. The execution facility and scientific interpretation have
 separate validation requirements and do not change the historical pilot score.
+
+For the remaining prerequisites and a prospective paired-budget design, see
+[SCALING_READINESS.md](SCALING_READINESS.md). It distinguishes interface,
+scientific and statistical readiness and does not schedule new model requests.

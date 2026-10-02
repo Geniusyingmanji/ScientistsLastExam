@@ -50,8 +50,8 @@ def submission(row):
 
 
 def test_registered_experimental_world_has_public_tasks_and_loadable_baseline():
-    assert ENVIRONMENTS == PREVIOUS + (NAME, "pattern_formation", "electrical_impedance")
-    assert EXPERIMENTAL_ENVIRONMENTS == ("microecology_causal", NAME, "pattern_formation", "electrical_impedance")
+    assert ENVIRONMENTS[:len(PREVIOUS) + 1] == PREVIOUS + (NAME,)
+    assert EXPERIMENTAL_ENVIRONMENTS[:2] == ("microecology_causal", NAME)
     worlds = [load_world(NAME, seed)[0] for seed in (7, 46, 1439, 8743)]
     for task_name in TASK_PROFILE_NAMES:
         descriptions = []
@@ -82,7 +82,7 @@ def test_pilot_lag_excludes_assigned_and_short_lag_readouts_in_either_arm(channe
             assert decide(left, right, row, channel)["reason"] == "readout_too_soon_after_event"
         assert decide(left, right, 4, channel)["eligible"]
     policy = policy_description()
-    assert policy["protocol"] == "public-claim-eligibility-0.8"
+    assert policy["protocol"] == "public-claim-eligibility-0.9"
     assert policy["minimum_lag"][NAME] == {"value": .25, "unit": "T", "axis_field": "times",
                                             "event_field": "impulses", "event_time_field": "time"}
 
@@ -172,6 +172,8 @@ def test_registration_preserves_old_scientific_envelopes_and_task_content():
         "cd2f13fea58cd7705161ab8c6ca9a31e2fdef5d0d25431f16595adea5f8690e8"
     policy = policy_description()
     policy.pop("protocol")
+    policy.pop("spin_echo_rule")
+    policy["minimum_lag"].pop("spin_echo")
     assert set(policy.pop("frequency_rules")) == {"electrical_impedance"}
     policy["minimum_lag"].pop(NAME)
     policy["minimum_lag"].pop("pattern_formation")

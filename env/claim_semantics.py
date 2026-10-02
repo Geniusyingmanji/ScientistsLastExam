@@ -10,6 +10,7 @@ import numbers
 
 
 _COORDINATE_TOLERANCE = 1e-12
+_SPIN_ANGLE_TOLERANCE = 1e-12
 _TIME_RULES = {
     "microecology": ("times_h", 1.0, "h", "events", "time_h", 32),
     "microecology_causal": ("times_h", 1.0, "h", "events", "time_h", 32),
@@ -20,6 +21,7 @@ _TIME_RULES = {
     "hysteresis_material": ("times", 0.5, "s", None, None, 129),
     "orbital_dynamics": ("times", 0.25, "T", "impulses", "time", 65),
     "pattern_formation": ("times", 0.25, "T", None, None, 33),
+    "spin_echo": ("times_ms", 1.0, "ms", "pulses", "time_ms", 129),
 }
 _OSCILLATOR_NODES = ("A", "B", "C", "D")
 _SPIN_NODES = ("A", "B", "C", "D", "E", "F")
@@ -34,6 +36,7 @@ _CHANNELS = {
     "orbital_dynamics": ("x", "y", "vx", "vy"),
     "pattern_formation": tuple("probe_%02d" % index for index in range(16)),
     "electrical_impedance": ("voltage_real", "voltage_imag"),
+    "spin_echo": ("magnetization_x", "magnetization_y", "magnetization_z"),
     "ising_spin": (tuple("m_" + node for node in _SPIN_NODES) +
                    tuple("c_" + left + "_" + right for index, left in enumerate(_SPIN_NODES)
                          for right in _SPIN_NODES[index + 1:])),
@@ -59,7 +62,7 @@ def _decision(eligible, reason):
 def policy_description():
     """Return detached JSON-safe public policy; no sampled instance data."""
     return {
-        "protocol": "public-claim-eligibility-0.8",
+        "protocol": "public-claim-eligibility-0.9",
         "input_contract": "Apply to canonical public specs after normal experiment/readout validation.",
         "matched_coordinate": "Time-dependent worlds must observe the same time in both arms at the selected readout row. Ising temperatures may differ because temperature itself is a controlled treatment.",
         "absolute_coordinate_tolerance": _COORDINATE_TOLERANCE,
@@ -81,6 +84,13 @@ def policy_description():
                 "limits": "Public amplitude linearity and known external divider transformations are instrument facts. Eligibility or numerical verification does not certify discovery of a device mechanism or unique internal topology.",
             },
         },
+        "spin_echo_rule": {
+            "maximum_pulses": 12,
+            "integer_pi_angle_tolerance_rad": _SPIN_ANGLE_TOLERANCE,
+            "readout_rule": "Match readout times in both arms. Exclude t=0 and pulse timestamps; require at least 1 ms after preparation and every pulse at or before the readout. Future pulses do not affect earlier eligibility. Reject all channels for a zero initial vector. Integer-pi pulses preserve known z up to sign flips. A non-pi pulse can introduce hidden dependence into z only when transverse response already depends on hidden waiting dynamics. Thus a pure-z preparation retains known z through its first non-pi pulse; a later non-pi pulse can mix the intervening unknown transverse evolution into z. Reject channels still fixed by these public dependencies in either arm.",
+            "reason_codes": {"public_preparation_assigns_readout": "The initial vector and declared ideal rotations already fix the selected readout in at least one arm."},
+            "limits": "These public dependency guards are conservative exclusions, not an algebraically complete test or a detectability guarantee. The 1 ms lag is an administrative pilot resolution, not a fitted physical time constant. The integer-pi angular tolerance is a floating-point policy convention, not exact mathematical equivalence. Known detuning and rotation transformations still require separate scientific evidence review; passing eligibility does not certify discovery. Once a non-pi pulse mixes hidden transverse dependence into z, subsequent waiting does not restore known z.",
+        },
         "limits": "Eligibility does not certify causal isolation, evidential relevance, semantic independence, surprise, identifiable mechanism, or novelty. Other analytically predetermined effects require separate evidence review.",
         "reason_codes": {
             "eligible": "Passes these public-semantic eligibility checks only.",
@@ -94,6 +104,52 @@ def policy_description():
             "public_clamp_assigns_readout": "At least one arm directly fixes this observable through a public clamp.",
         },
     }
+
+
+def _spin_echo_known_readout(spec, coordinate, channel):
+    """Public preparation/rotation facts only; no hidden ensemble or simulation."""
+    if set(spec) != {"initial_magnetization", "detuning_hz", "times_ms", "pulses"}:
+        raise ValueError("invalid spin echo public spec")
+    initial = spec["initial_magnetization"]
+    if not isinstance(initial, list) or len(initial) != 3:
+        raise ValueError("invalid initial vector")
+    initial = [_number(value) for value in initial]
+    if any(abs(value) > 1 for value in initial) or math.sqrt(sum(value*value for value in initial)) > 1 + 1e-12:
+        raise ValueError("invalid initial norm")
+    if not -40 <= _number(spec["detuning_hz"]) <= 40:
+        raise ValueError("invalid detuning")
+    times = spec["times_ms"]
+    if not isinstance(times, list) or not 1 <= len(times) <= 129:
+        raise ValueError("invalid time axis")
+    times = [_number(value) for value in times]
+    if any(not 0 <= value <= 250 for value in times) or any(b <= a for a, b in zip(times, times[1:])):
+        raise ValueError("invalid time axis")
+    pulses = spec["pulses"]
+    if not isinstance(pulses, list) or len(pulses) > 12:
+        raise ValueError("invalid pulse list")
+    previous, z_known = None, True
+    transverse_hidden_dependency = initial[0] != 0 or initial[1] != 0
+    for pulse in pulses:
+        if not isinstance(pulse, dict) or set(pulse) != {"time_ms", "angle_rad", "phase_rad"}:
+            raise ValueError("invalid pulse")
+        time = _number(pulse["time_ms"])
+        angle, phase = _number(pulse["angle_rad"]), _number(pulse["phase_rad"])
+        if (not .1 <= time <= times[-1] or not -2*math.pi <= angle <= 2*math.pi or
+                not -math.pi <= phase <= math.pi or
+                (previous is not None and time - previous < .1 - 1e-12)):
+            raise ValueError("invalid pulse controls")
+        previous = time
+        if time <= coordinate and not math.isclose(angle, round(angle/math.pi)*math.pi,
+                                                   rel_tol=0.0, abs_tol=_SPIN_ANGLE_TOLERANCE):
+            # Positive waits precede all legal pulses. Initial transverse
+            # components, or transverse components created by an earlier
+            # non-pi pulse, can therefore depend on hidden waiting dynamics.
+            # A first non-pi pulse after pure-z preparation creates that later
+            # dependence but its z projection is still known from preparation.
+            z_known = z_known and not transverse_hidden_dependency
+            transverse_hidden_dependency = True
+    zero_state = all(value == 0 for value in initial)
+    return zero_state or (z_known if channel == "magnetization_z" else not transverse_hidden_dependency)
 
 
 def claim_eligibility(world_name, control, treatment, readout, axis_field):
@@ -137,6 +193,7 @@ def claim_eligibility(world_name, control, treatment, readout, axis_field):
         return _decision(True, "eligible")
     arms = (control, treatment)
     coordinates = []
+    spin_known = []
     try:
         for spec in arms:
             if not isinstance(spec, dict):
@@ -151,6 +208,8 @@ def claim_eligibility(world_name, control, treatment, readout, axis_field):
             if coordinate < 0 or (world_name == "ising_spin" and coordinate <= 0):
                 raise ValueError("invalid public coordinate")
             coordinates.append(coordinate)
+            if world_name == "spin_echo":
+                spin_known.append(_spin_echo_known_readout(spec, coordinate, channel))
         if world_name != "ising_spin" and not math.isclose(coordinates[0], coordinates[1], rel_tol=0.0,
                                                            abs_tol=_COORDINATE_TOLERANCE):
             return _decision(False, "unmatched_readout_coordinate")
@@ -181,7 +240,8 @@ def claim_eligibility(world_name, control, treatment, readout, axis_field):
             if coordinate + _COORDINATE_TOLERANCE < minimum_lag:
                 return _decision(False, "readout_before_temporal_resolution")
             events = [] if event_field is None else spec.get(event_field, [])
-            if not isinstance(events, (list, tuple)) or len(events) > 4:
+            maximum_events = 12 if world_name == "spin_echo" else 4
+            if not isinstance(events, (list, tuple)) or len(events) > maximum_events:
                 raise ValueError("invalid public event list")
             for event in events:
                 if not isinstance(event, dict):
@@ -191,6 +251,8 @@ def claim_eligibility(world_name, control, treatment, readout, axis_field):
                     raise ValueError("invalid public event time")
                 if event_time <= coordinate and coordinate - event_time + _COORDINATE_TOLERANCE < minimum_lag:
                     return _decision(False, "readout_too_soon_after_event")
+        if any(spin_known):
+            return _decision(False, "public_preparation_assigns_readout")
     except (KeyError, TypeError, ValueError, OverflowError):
         return _decision(False, "invalid_public_spec")
     return _decision(True, "eligible")

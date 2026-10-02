@@ -47,6 +47,8 @@ def _initial(name, spec, channels):
         return list(spec["initial_position"]) + list(spec["initial_velocity"])
     if name == "orbital_dynamics":
         return list(spec["position"]) + list(spec["velocity"])
+    if name == "spin_echo":
+        return list(spec["initial_magnetization"])
     if name == "pattern_formation":
         # Public sinusoidal assignment at the declared probe positions only.
         from .pattern_formation.protocol import initial_values

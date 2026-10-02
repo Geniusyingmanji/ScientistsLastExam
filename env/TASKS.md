@@ -5,7 +5,7 @@ environment. They provide public prompts, machine-readable evidence checklists
 and the scope of a scientific conclusion. They add no simulator access, scoring
 weights, hidden answers, submission fields or model calls.
 
-The catalog version is `scientific-task-profiles-0.1.5`. Stable profile names are
+The catalog version is `scientific-task-profiles-0.1.6`. Stable profile names are
 `open_discovery`, `mechanism_discrimination`, `regime_transfer`, `model_revision`
 and `boundary_mapping`; each profile
 also has its own `<name>-0.1.0` version. `open_discovery` is the default.
@@ -13,7 +13,7 @@ also has its own `<name>-0.1.0` version. `open_discovery` is the default.
 All five apply to the four core environments (`microecology`,
 `coupled_oscillators`, `reaction_kinetics`, `heat_transport`) and to the expansion
 environments (`gene_regulation`, `ising_spin`, `hysteresis_material`) and the
-experimental worlds (`microecology_causal`, `orbital_dynamics`, `pattern_formation`, `electrical_impedance`). Applicability is a statement about
+experimental worlds (`microecology_causal`, `orbital_dynamics`, `pattern_formation`, `electrical_impedance`, `spin_echo`). Applicability is a statement about
 the scientific interface; it does not register an environment, select a cohort
 or schedule an experiment.
 
