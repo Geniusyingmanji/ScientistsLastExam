@@ -51,6 +51,15 @@ semantic duplication, relevance of evidence citations and scientific novelty
 require review. Wide uninformative intervals are penalized rather than passed
 as discoveries.
 
+The raw interval score elicits a central 90% interval in expectation. The
+subsequent exponential transformation does **not** preserve strict propriety:
+averaging the bounded slot scores can slightly favor narrower intervals. A
+development Gaussian integration check at standard error divided by score
+temperature = 0.03 found a best symmetric coverage of about 87.67%, with expected
+score 88.806 versus 88.753 for a 90% interval. These are calibration diagnostics,
+not a change to the frozen pilot. Report raw normalized interval scores as well
+as the display score; do not call the final exponential reward proper.
+
 Public-only eligibility excludes immediate additions/removals and directly
 clamped observables. Time-dependent paired readouts use a matched time and a
 minimum evolution lag after preparation and every preceding event: microecology
@@ -74,6 +83,21 @@ errors, and the interval width must be at most 0.2 times the channel scale.
 These are pilot thresholds, not a calibrated universal significance test. A null
 effect can receive an interval score but is not counted as a nonzero discovery.
 Three checked claims do not automatically constitute three independent mechanisms.
+
+With eight Gaussian differences, the sample-standard-error gate alone is a
+two-sided Student-t(7) threshold at 3: its null tail probability is about 1.994%,
+not the normal 3-sigma 0.27%. Coverage and width filters further change the
+operational false-positive rate. The development null calibration measured
+48/2400 Gaussian gate exceedances. Clipped microecology measurements need their
+own uncertainty treatment; one exploration-based reference interval covered
+83/100 boundary-null fresh means. Neither a single-slot rate nor its conditional
+three-slot union bound is an empirically measured adaptive episode success rate.
+
+Future source versions preserve each valid prediction matrix and all eight
+paired claim readouts/differences in private episode reports, enabling numeric
+recomputation without rerunning the candidate or sensor. Core-c2, expansion-e1
+and the frozen interface-smoke-s1 do not have these newly added raw arrays and
+retain that audit limitation. Public aggregate exports omit the raw arrays.
 
 ## Denominators and uncertainty
 

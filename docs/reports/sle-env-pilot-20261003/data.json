@@ -1,6 +1,6 @@
 {
   "schema": "sle-public-progress-0.1",
-  "generated_at_utc": "2026-10-02T18:47:39.536325+00:00",
+  "generated_at_utc": "2026-10-02T19:18:51.707302+00:00",
   "cohorts": [
     {
       "cohort": "core-c2",
@@ -480,6 +480,8 @@
         "runs_with_exhausted_analysis_allowance": 7,
         "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
       },
+      "analysis_protocol": "legacy",
+      "presentation_profile": "full_description",
       "role": "formal"
     },
     {
@@ -810,6 +812,8 @@
         "runs_with_exhausted_analysis_allowance": 1,
         "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
       },
+      "analysis_protocol": "legacy",
+      "presentation_profile": "full_description",
       "role": "expansion"
     },
     {
@@ -1175,6 +1179,8 @@
         "runs_with_exhausted_analysis_allowance": 1,
         "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
       },
+      "analysis_protocol": "legacy",
+      "presentation_profile": "full_description",
       "role": "development"
     }
   ],
@@ -1182,7 +1188,7 @@
     "headline": "GPT-5.6 首轮科学环境评测",
     "summary": "20 个正式实例得到 56.7 分的 pilot 综合成绩。预测能力随环境和运行明显波动；局部数值效应、可迁移的模型和有证据的机制发现需要分开看。",
     "status": "正式与扩展批次完成 · 7 个世界 · 协议与任务继续开发至 2026-10-03 09:05（北京时间）",
-    "review_status": "核心批次 20 条完整轨迹已逐条复核：最高局部证据为 17 个 D2、3 个 D3、0 个 D4。D3 仅指限定范围内的解释与区分，不能直接视为模型发现率；审核为同系列模型，结论 provisional。扩展批次另行审核。 D2 指有对照支持的局部效应；D3 要求定量解释通过区分竞争机制的前瞻检验；D4 还要求在明显改变的条件下迁移，并刻画失效边界。",
+    "review_status": "核心20条轨迹：17个D2、3个局部D3、0个D4。扩展6条轨迹：4个D2、2个已知方程族内D3、0个D4。D2指有对照支持的局部效应；D3要求定量解释通过区分竞争机制的前瞻检验；D4还要求跨明显改变的条件迁移并刻画失效边界。均为同系列模型复核、provisional；这些分层不能直接视为模型发现率。",
     "findings": [
       {
         "tag": "FORMAL / MICROECOLOGY",
@@ -1217,8 +1223,26 @@
       {
         "tag": "TRACE AUDIT / FINAL ARTIFACT",
         "title": "探索中的有效模型没有总能进入最终交付",
-        "body": "部分最终预测器换用了不同于已验证版本的系数；另有运行把包含目标观测的重新拟合误差称为迁移验证。正在增加候选者模型快照与前瞻记录，将参数版本、预测时间和新观测绑定。",
+        "body": "部分最终预测器换用了不同于已验证版本的系数；另有运行把包含目标观测的重新拟合误差称为迁移验证。模型快照与前瞻记录已通过真实隔离测试。单独1次接口试跑没有使用快照，尚不能声称该功能改善了科学表现。",
         "evidence": "核心轨迹与最终 predictor 的逐项比对；新接口只用于未来批次。"
+      },
+      {
+        "tag": "CALIBRATION / UNCERTAINTY",
+        "title": "非零效应门槛和预测区间仍需校准",
+        "body": "2,800 次无效应复验中，Gaussian读数的3SE门约有2%越界，符合8次重复下的t分布门槛。微生态零截断边界的一个参考预测区间仅覆盖83/100。另有数值反例表明，指数变换后的最终区间分数会略偏好窄于90%的区间；旧分数保留，后续规则另立版本。",
+        "evidence": "七世界开发实例；零API；67,264次查询全部成功。单槽误报与整次研究成功率不可互换。"
+      },
+      {
+        "tag": "EXPANSION / PROSPECTIVE EVIDENCE",
+        "title": "自旋有前瞻预测，材料高分仍有边界",
+        "body": "自旋两例在拟合之后才取得新干预观测，旧参数重建误差约0.003，与读数噪声相当。材料两例则先完成全部观测再形成数量模型；其中一例在两种组合历史上误差很大。相近的综合分不能替代时间顺序与覆盖范围审核。",
+        "evidence": "expansion-e1 六条完整轨迹与冻结程序复核；无新增模型请求。"
+      },
+      {
+        "tag": "TASK CALIBRATION / FALSIFICATION",
+        "title": "任务需要允许“两个解释都错了”",
+        "body": "四个材料开发任务用公开观测拟合两个作者提供的模型，再封存预测并做独立实验。三例得到限定读数上的预测区分，一例同时反驳两个模型；四例记录均可重放。负结果被保留，接下来测试如何根据反例修正模型。",
+        "evidence": "无API的作者参考策略，不属于GPT成绩或自动D3/D4认证。"
       }
     ],
     "worlds": [
@@ -1245,28 +1269,28 @@
       {
         "name": "基因调控",
         "question": "调控符号、脉冲响应与内部适应",
-        "status": "扩展 2/2 完成；均分 54.7；待深度审核"
+        "status": "扩展2/2完成；均分54.7；两例D2，一例最终为常数fallback"
       },
       {
         "name": "平衡自旋",
         "question": "相互作用、相关性与受控扰动",
-        "status": "扩展 2/2 完成；均分 95.9；待深度审核"
+        "status": "扩展2/2完成；均分95.9；两例已知族内D3"
       },
       {
         "name": "材料滞回",
         "question": "慢弛豫回线与双稳态记忆的区分",
-        "status": "扩展 2/2 完成；均分 80.9；待深度审核"
+        "status": "扩展2/2完成；均分80.9；两例D2，迁移覆盖仍有限"
       }
     ],
-    "task_summary": "任务层包括开放研究、竞争机制区分、跨条件迁移。已实现 apparatus-only 展示和前瞻验证协议；正在接入隔离执行器、模型快照，以及保留反例的模型修正流程。",
+    "task_summary": "三种任务方向已有文本协议；竞争预测封存、独立观测、反例与模型修正另有可执行前瞻协议。Linux真实隔离下770项测试通过，四个材料参考任务完成。多结构微生态与后续评分诊断继续开发。",
     "next_steps": [
       {
         "title": "把前瞻性变成可核验的执行记录",
         "body": "核心轨迹复核已完成。接下来让模型代码、竞争预测、实验设计、阈值在观测之前封存，并保留反例和修正版本；避免把重新拟合当作迁移。"
       },
       {
-        "title": "扩展结果单列，继续检查发现内容",
-        "body": "新增 3 个世界各 2 实例、每实例最多 10 次调用，6/6 完成。实际使用 54 次 API 请求；它们与核心 16 次预算及旧计分协议分开报告，不混算分数。"
+        "title": "在新任务上验证失败后的模型修正",
+        "body": "扩展轨迹审核完成。使用独立参考策略校准反例保留、旧程序冻结、修正后新条件验证；已有GPT批次保持原样。"
       },
       {
         "title": "增强机制类别变化",
@@ -1281,8 +1305,9 @@
       "正式源码 d5ed0ae4；冻结后未改评分公式、权重、实例或目标。",
       "正式共 270 次请求；269 返回、1 断连；无自动重试。已知响应 token 下界 3,869,923。",
       "正式 HTML 渲染曾因百分号格式化失败；数值汇总与原始 episode 已保存，现仅修复展示并重新生成。",
-      "最新冻结扩展源码在 Linux 通过 643 项测试，覆盖七个世界与真实隔离执行；公开报告导出另有只读回归验证。",
-      "完整原始轨迹、世界 seed 与封存预测目标留在私有操作目录，不进入此公开汇总。"
+      "新协议源码91d86b3e在Linux通过770项测试，覆盖七世界、模型快照与前瞻执行器；公开导出有只读与隐私回归验证。",
+      "完整原始轨迹、世界 seed 与封存预测目标留在私有操作目录，不进入此公开汇总。",
+      "累计351次API请求；其中接口试跑单列为6次、24个实验，不进入核心或扩展成绩。"
     ]
   },
   "privacy": "Aggregate metrics and explicitly curated notes only; private seeds, targets and raw traces are excluded."

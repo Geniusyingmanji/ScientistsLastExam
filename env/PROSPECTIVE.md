@@ -178,6 +178,28 @@ accounts; these outcomes are retained. The two scientific priors and the
 high-field design are authored, so this is a task calibration, not a GPT score,
 autonomous model selection result, or automatic discovery-depth certificate.
 
+`env/hysteresis_material/refinement_demo.py` adds one bounded revision to that
+authored policy. It starts a new task with a two-test family fixed in advance;
+it does not reopen or replace an earlier reference run. If the initial cubic
+program is refuted, the fitter receives only public source and counterexample
+records. The revision permits a negative linear drift coefficient and therefore
+a single stable state. It retains the old program byte for byte, then chooses
+the largest old-versus-revised contrast from a fixed grid of 14 previously
+unobserved fields and three hold durations. The model-only design search and
+revised coefficients are saved before any new target measurements.
+
+Both tests keep tolerance 0.07 and 16 replicates per arm. The complete policy
+allows at most 72 experiments and 16 fresh sandbox calls, with family alpha
+0.05 split over the two available tests. A failed or inconclusive revision is
+retained; there is no seed retry or threshold adjustment. Source-fit residuals
+are diagnostics, not independent validation. This supplied fitting strategy
+tests the execution protocol, not autonomous scientific judgment.
+
+```sh
+python -m env.hysteresis_material.refinement_demo \
+  --seed 7 --output /private/material-refinement-new
+```
+
 For `regime_transfer`, target controls must also differ from previously observed
 controls; changing the sampling axis alone does not count. These comparisons use
 canonical spec fields excluding the observation axis. They do not prove that a

@@ -111,12 +111,13 @@ def verify_claims(world, claims, confirmation_key):
         seen.add(signature)
         channel = world.channels.index(claim["readout"]["channel"])
         row = claim["readout"]["row"]
-        differences = []
+        differences, arm_values = [], {"control": [], "treatment": []}
         for replica in range(CONFIRMATION_REPLICATES):
             values = []
             for arm in ("control", "treatment"):
                 key = "%s:claim:%d:%s:%d" % (confirmation_key, index, arm, replica)
                 values.append(world.run(claim[arm], noise_key=key)["values"][row][channel])
+                arm_values[arm].append(float(values[-1]))
             differences.append(values[1] - values[0])
         mean = float(np.mean(differences))
         se = float(np.std(differences, ddof=1) / np.sqrt(CONFIRMATION_REPLICATES))
@@ -130,6 +131,8 @@ def verify_claims(world, claims, confirmation_key):
         reports.append({"id": claim["id"], "statement": claim["statement"], "scope": claim["scope"],
                         "evidence_ids": claim["evidence_ids"], "interval": [lower, upper], "mean_difference": mean,
                         "standard_error": se, "replicates": CONFIRMATION_REPLICATES, "interval_score": interval_score,
+                        "replicate_differences": [float(value) for value in differences],
+                        "replicate_arm_values": arm_values,
                         "score": score, "covered": covered, "duplicate": duplicate, "eligibility": eligibility,
                         "verified_nonzero_effect": bool(eligibility["eligible"] and not duplicate and covered and width <= .2*scale and nonzero),
                         "mechanism_certified": False})

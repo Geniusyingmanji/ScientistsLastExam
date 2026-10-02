@@ -329,8 +329,8 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
             if state != "failed":
                 state = "incomplete"
             return snapshot()
-        # All test specifications and outcomes are generated only after freeze.
-        # Private panel seeds are separately frozen in the operator manifest.
+        # Evaluate only after submission freeze on the precommitted private
+        # panels. Their seeds and spec hashes belong to the operator manifest.
         save_json(directory/"instance-private.json", instance)
         failure = False
         for kind in ("conditions", "interventions"):
@@ -344,11 +344,14 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
                     predicted = predict_fn(directory/"predictor.py", spec, min(limits["predictor_seconds_per_spec"], remaining))
                     metrics = prediction_metrics(predicted, truth, world.scales)
                     metrics["valid"] = True
+                    metrics["prediction_values"] = np.asarray(predicted, dtype=float).tolist()
                 except Exception as exc:
                     metrics = {"score": 0., "normalized_rmse": None, "valid": False, "error": sanitized_candidate_failure(exc)}
                     failure = True
                 panels[kind].append(dict(metrics, index=index, spec=spec, clean_truth=truth))
-                baseline_panels[kind].append(dict(prediction_metrics(baseline(records, spec), truth, world.scales), index=index))
+                baseline_prediction = baseline(records, spec)
+                baseline_panels[kind].append(dict(prediction_metrics(baseline_prediction, truth, world.scales),
+                                                  index=index, prediction_values=np.asarray(baseline_prediction, dtype=float).tolist()))
         claim_report = verify_claims(world, frozen["claims"], instance["confirmation_key"])
         state, stop = ("invalid_predictor", "predictor_verification_failed") if failure else ("completed", "verified")
         return snapshot()

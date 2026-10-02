@@ -182,6 +182,12 @@ def test_aggregation_weights_experiments_equally_and_fixed_claim_slots():
     first = reports["claims"][0]
     assert reports["score"] == pytest.approx(first["score"] / 3)
     assert first["verified_nonzero_effect"] and not first["mechanism_certified"]
+    differences = np.asarray(first["replicate_differences"])
+    arms = first["replicate_arm_values"]
+    assert len(differences) == 8
+    assert differences == pytest.approx(np.asarray(arms["treatment"]) - arms["control"])
+    assert first["mean_difference"] == pytest.approx(differences.mean())
+    assert first["standard_error"] == pytest.approx(differences.std(ddof=1) / math.sqrt(8))
     keys = [key for _, key in world.calls]
     assert len(keys) == len(set(keys)) == 16
     assert all(key.startswith("fresh:claim:") for key in keys)
@@ -224,6 +230,14 @@ def test_episode_freezes_before_holdouts_and_keeps_public_analysis_separate(tmp_
     assert len(set(confirmation)) == 16
     assert "episode-test:obs-0001" not in confirmation
     assert report["usage"]["total_tokens"] == 45
+    for kind, entries in report["panels"].items():
+        for entry, baseline in zip(entries, report["baseline_panels"][kind]):
+            for item in (entry, baseline):
+                reconstructed = prediction_metrics(item["prediction_values"], entry["clean_truth"], world.scales)
+                assert item["score"] == pytest.approx(reconstructed["score"])
+                assert item["normalized_rmse"] == pytest.approx(reconstructed["normalized_rmse"])
+    assert "prediction_values" not in public
+    assert "replicate_arm_values" not in public
 
 
 @pytest.mark.parametrize("reply", ["", "{broken", {"note": "no submission", "experiments": []}])
