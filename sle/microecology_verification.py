@@ -25,6 +25,8 @@ def claim_schema():
             "expected_difference": "[lower, upper] for treatment minus control biomass, mmol_C/L",
             "replicates": "integer 4..12; independent sensor noise only",
             "evidence_ids": "optional list of exploration observation IDs",
+            "forecast": {"optional": True, "coverage": "must be 0.9",
+                         "interval": "[lower, upper]: central 90% predictive interval for the MEAN treatment-control difference across the declared replicates, including sensor noise; frozen before confirmation"},
         },
         "scheduled_operation": {"at_h": "nondecreasing, 0..readout.time_h",
                                 "operation": ["feed", "deplete", "set_temperature"],
@@ -34,13 +36,18 @@ def claim_schema():
     }
 
 
+def interval_score(low, high, observed, alpha=0.1):
+    """Central predictive interval score (lower is better), in observable units."""
+    return float(high - low + 2 / alpha * max(low - observed, observed - high, 0))
+
+
 def validate_claims(claims, known_evidence=()):
     if not isinstance(claims, list) or not 1 <= len(claims) <= 6:
         raise InvalidAction("invalid_claim_count")
     identifiers = set()
     total_cost = 0
     for claim in claims:
-        keys(claim, ("id", "statement", "initial", "control", "treatment", "readout", "expected_difference", "replicates"), ("evidence_ids",))
+        keys(claim, ("id", "statement", "initial", "control", "treatment", "readout", "expected_difference", "replicates"), ("evidence_ids", "forecast"))
         cid = identifier(claim["id"])
         if cid in identifiers:
             raise InvalidAction("duplicate_claim_id")
@@ -58,6 +65,16 @@ def validate_claims(claims, known_evidence=()):
         low, high = [number(x, -100, 100, "prediction") for x in interval]
         if low >= high:
             raise InvalidAction("empty_prediction_interval")
+        if "forecast" in claim:
+            forecast = claim["forecast"]
+            keys(forecast, ("coverage", "interval"))
+            number(forecast["coverage"], 0.9, 0.9, "forecast_coverage")
+            bounds = forecast["interval"]
+            if not isinstance(bounds, list) or len(bounds) != 2:
+                raise InvalidAction("invalid_forecast_interval")
+            lower, upper = [number(x, -100, 100, "forecast_bound") for x in bounds]
+            if lower >= upper:
+                raise InvalidAction("empty_forecast_interval")
         n = claim["replicates"]
         if type(n) is not int or not 4 <= n <= 12:
             raise InvalidAction("invalid_replicates")
@@ -148,6 +165,15 @@ def verify_claims(lab, claims, log):
                   "alpha": alpha, "expected_difference": [low, high], "replicate_measurements": measurements,
                   "replication_scope": "new_preparations_identical_deterministic_dynamics_independent_sensor_noise",
                   "semantic_review": "unassessed", "discovery_depth": None}
+        result["effect_band_width"] = high - low
+        if "forecast" in claim:
+            lower, upper = claim["forecast"]["interval"]
+            result["forecast_evaluation"] = {
+                "target": "mean_treatment_minus_control_across_declared_sensor_replicates",
+                "coverage": 0.9, "interval": [lower, upper], "observed": mean,
+                "width": upper - lower, "covered": lower <= mean <= upper,
+                "interval_score": interval_score(lower, upper, mean), "lower_is_better": True,
+                "units": "mmol_C/L", "calibration": "not_established_by_one_confirmation_batch"}
         log.append("claim_verification", result)
         results.append(result)
     return {"results": results, "charged_units": spent, "answer_matching": False,

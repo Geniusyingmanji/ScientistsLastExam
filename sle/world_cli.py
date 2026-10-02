@@ -78,7 +78,8 @@ def command(args):
                 client = AuditedWorldClient(config, directory, max_attempts=args.max_model_calls,
                                             azure_api_version=args.azure_api_version)
                 agent = run_agent(session, client, directory, max_rounds=args.max_model_calls,
-                                  wall_seconds=args.wall_seconds, analysis=analysis)
+                                  wall_seconds=args.wall_seconds, analysis=analysis,
+                                  exploration_rounds=args.exploration_rounds, evaluation_profile=args.evaluation_profile)
             finally:
                 if analysis is not None:
                     analysis.close()
@@ -135,6 +136,8 @@ def add_parser(sub):
             source.add_argument("--llm-config", help="operator-only YAML/JSON model configuration; no automatic retries")
             parser.add_argument("--max-model-calls", type=int, default=32)
             parser.add_argument("--wall-seconds", type=float, default=1800)
+            parser.add_argument("--exploration-rounds", type=int, help="reserve subsequent model turns for commit and interpret")
+            parser.add_argument("--evaluation-profile", choices=["paired-effects-v2"], help="require 1..3 evidence-linked claims and 90%% interval forecasts")
             parser.add_argument("--analysis", action="store_true", help="enable isolated Python analysis; Linux sandbox required")
             parser.add_argument("--azure-api-version", help="append Azure deployment API version to requests")
             parser.add_argument("--azure-cli-auth", action="store_true", help="read an Azure CLI token into memory; never save credentials")

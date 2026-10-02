@@ -281,3 +281,37 @@ def test_output_directory_is_never_overwritten(tmp_path):
     with pytest.raises(ValueError, match="already exists"):
         command(Namespace(world_command="demo", output_dir=str(tmp_path)))
     assert sentinel.read_text() == "keep this"
+
+
+def test_forecast_interval_score_penalizes_width_and_misses():
+    from sle.microecology_verification import interval_score
+    assert interval_score(-.01, .01, 0) == pytest.approx(.02)
+    assert interval_score(-100, 100, 0) == 200
+    assert interval_score(-.01, .01, .1) == pytest.approx(1.82)
+
+
+def test_forecast_is_frozen_scored_and_replayable_separately_from_effect_band():
+    session = WorldSession(1234)
+    claim = simple_claim(expected_difference=[-100, 100],
+                         forecast={"coverage": 0.9, "interval": [-.01, .01]})
+    response = act(session, "commit", {"claims": [claim]})
+    assert response["ok"]
+    result = response["verification"]["results"][0]
+    assert result["status"] == "prediction_supported"  # Wide legacy band is not forecast quality.
+    assert result["effect_band_width"] == 200
+    forecast = result["forecast_evaluation"]
+    assert not forecast["covered"] and forecast["interval_score"] > forecast["width"]
+    assert forecast["target"] == "mean_treatment_minus_control_across_declared_sensor_replicates"
+    assert replay_report(session.report(private=True))["status"] == "exact_replay_passed"
+
+
+@pytest.mark.parametrize("forecast", [
+    {"coverage": .95, "interval": [0, 1]},
+    {"coverage": .9, "interval": [1, 0]},
+    {"coverage": .9, "interval": [0, float("nan")]},
+    {"coverage": .9, "interval": [0, 1], "extra": 1},
+])
+def test_invalid_forecast_is_rejected_before_commit(forecast):
+    session = WorldSession()
+    result = act(session, "commit", {"claims": [simple_claim(forecast=forecast)]})
+    assert not result["ok"] and session.state == "exploring"

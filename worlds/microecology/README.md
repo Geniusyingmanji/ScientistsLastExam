@@ -99,6 +99,49 @@ deployment API version. `--azure-cli-auth` uses the host's existing `az` login,
 keeps the token only in memory, and checks that it outlives the episode deadline.
 No credentials are written to the reports or model prompts.
 
+### Evaluation roadmap and first bounded comparison
+
+The next steps are, in order:
+
+1. Complete the exploration → frozen claims → fresh confirmation → interpretation
+   cycle, and record forecast precision separately from effect-band consistency.
+2. Add frozen executable predictions on unseen legal experimental conditions;
+   evaluate on a fixed test panel separately from adaptive counterexample search.
+3. Add mechanism-discrimination and temporal-response claims, then calibrate
+   domain-specific Discovery Depth evidence requirements with controlled baselines.
+4. Expand to unpublished mechanism structures and independent world families;
+   parameter changes alone do not establish resistance to memorization.
+
+Step 1 is implemented by `paired-effects-v2`: up to three primary claims, each
+with eight sensor-noise replicates per arm, cited exploration evidence and a
+central 90% predictive interval for the **mean** treatment-control measurement
+difference. `forecast` is separate from the legacy `expected_difference` effect
+band. The interval score is width plus 20 times the distance of the realized
+mean outside the interval, in mmol C/L; lower is better. Report width, coverage
+and score together. These descriptive scores concern agent-selected experiments;
+they are not an interchangeable common-task score across agents. Neither one
+confirmation batch nor three worlds establishes probabilistic calibration.
+
+```sh
+python -m sle world run --seed 1439 --budget 800 \
+  --llm-config /private/operator/model.json --analysis \
+  --max-model-calls 16 --exploration-rounds 10 \
+  --evaluation-profile paired-effects-v2 --wall-seconds 900 \
+  --output-dir /var/tmp/sle-microecology-eval
+
+PYTHONPATH=. python examples/microecology/evaluate_gpt.py \
+  --llm-config /private/operator/model.json \
+  --output-dir /var/tmp/sle-microecology-gpt56-campaign
+```
+
+The operator launcher predeclares three new instances and a total cap of 48 API
+attempts, including failures. Requests are sequential, with no automatic retries.
+After ten model turns, the driver admits only `commit` until it succeeds, then
+only `interpret`; it never fabricates claims. Each episode and its exact replay
+are saved, including incomplete episodes. The campaign directory cannot be reused.
+Mechanisms, novelty, unseen-condition generalization and Discovery Depth remain
+unassessed by this first profile.
+
 ## World and experimental semantics
 
 - Mechanism and parameters are fixed within an instance and all its confirmation

@@ -141,3 +141,40 @@ def test_http_failure_retains_status_but_never_provider_details(tmp_path):
     assert report["rounds"][0]["diagnostic"] == {"stage":"request", "exception_type":"HTTPError", "http_status":429}
     assert "PRIVATE-" not in json.dumps(report)
     assert "PRIVATE-" not in (tmp_path / "model-transport.jsonl").read_text()
+
+
+def test_closure_phase_blocks_more_experiments_without_fabricating_a_claim(tmp_path):
+    session = WorldSession()
+    client = ScriptedClient([
+        {"note": "prepare", "actions": [action("a", "create", INITIAL)]},
+        {"note": "late experiment", "actions": [action("b", "advance", {"hours": 12})]},
+        {"note": "late analysis", "analyze": {"code": "result = 1"}},
+    ])
+    report = run_agent(session, client, tmp_path, max_rounds=3, exploration_rounds=1)
+    assert session.lab.time_h == 0 and session.claims is None
+    assert json.loads(client.prompts[1])["driver_phase"] == "commit_required"
+    assert report["history"][1]["results"][0]["error"] == "commit_required_by_turn_contract"
+    assert report["stop_reason"] == "model_round_limit"
+
+
+def test_evaluation_profile_requires_forecasts_but_allows_candidate_to_repair_before_freeze(tmp_path):
+    session = WorldSession()
+    claim = {"id": "zero", "statement": "No operation contrast.", "initial": INITIAL,
+             "control": [], "treatment": [], "readout": {"species": "A", "time_h": 24},
+             "expected_difference": [-.02, .02], "replicates": 8, "evidence_ids": ["obs-000001"]}
+    client = ScriptedClient([
+        {"note": "measure", "actions": [action("a", "create", INITIAL),
+            action("b", "measure", {"vessel_id": "vessel-0001", "instrument": "counts"})]},
+        {"note": "missing forecast", "actions": [action("c", "commit", {"claims": [claim]})]},
+        {"note": "complete forecast", "actions": [action("d", "commit", {"claims": [
+            {**claim, "forecast": {"coverage": .9, "interval": [-.005, .005]}}]})]},
+        lambda: {"note": "scope", "actions": [action("e", "interpret", {
+            "claim_sha256": session.claim_hash, "text": "A numerical zero contrast is not a novel discovery."})]},
+    ])
+    report = run_agent(session, client, tmp_path, max_rounds=4, exploration_rounds=1,
+                       evaluation_profile="paired-effects-v2")
+    assert report["world_state"] == "completed"
+    assert not report["history"][1]["results"][0]["ok"]
+    assert "forecast_evaluation" in session.verification["results"][0]
+    assert session.report()["discovery_depth"] is None
+    assert replay_report(session.report(private=True))["status"] == "exact_replay_passed"

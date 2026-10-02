@@ -32,6 +32,8 @@ intervals and scope; fresh confirmation checks only those numerical predictions.
 Free-text explanations and Discovery Depth are not graded. Do not game interval
 width or assert that a passed numerical contrast proves an entire mechanism.
 Read the exact claim schema; do not add a 'kind' field to individual claims.
+An evaluation_contract or driver_phase in the public prompt takes precedence
+over the general claim count and turn guidance here. Respect its required fields.
 After confirmation, call interpret with the returned claim_sha256 and an honest
 scientific conclusion, including failures and remaining uncertainty.
 
@@ -146,11 +148,17 @@ def parse_turn(raw):
     return value
 
 
-def run_agent(session, client, directory, *, max_rounds=32, wall_seconds=1800, analysis=None):
+def run_agent(session, client, directory, *, max_rounds=32, wall_seconds=1800, analysis=None,
+              exploration_rounds=None, evaluation_profile=None):
     if type(max_rounds) is not int or not 2 <= max_rounds <= 32:
         raise ValueError("max_rounds must be 2..32")
     if not 1 <= wall_seconds <= 3600:
         raise ValueError("wall_seconds must be 1..3600")
+    if exploration_rounds is not None and (type(exploration_rounds) is not int
+                                          or not 1 <= exploration_rounds <= max_rounds - 2):
+        raise ValueError("exploration_rounds must reserve at least two closing turns")
+    if evaluation_profile not in (None, "paired-effects-v2"):
+        raise ValueError("unknown world evaluation profile")
     if not isinstance(client, PostTestLLMClient):
         raise ValueError("world agents require a transport with retries disabled")
     if client.transport_summary()["attempts"] != 0:
@@ -159,6 +167,17 @@ def run_agent(session, client, directory, *, max_rounds=32, wall_seconds=1800, a
     history, rounds, stop = [], [], "model_round_limit"
     start = time.monotonic()
     problem = session.describe()
+    if evaluation_profile:
+        problem["evaluation_contract"] = {
+            "profile": evaluation_profile, "max_primary_claims": 3, "replicates_per_arm": 8,
+            "required_claim_fields": ["forecast", "evidence_ids"],
+            "forecast": "Freeze a central 90% predictive interval for the mean of 8 treatment-control sensor-noise differences. Use forecast={coverage:0.9,interval:[lower,upper]} in each claim. The interval score penalizes width and misses; lower is better.",
+            "expected_difference": "Separately specify an effect-consistency band used for the legacy approximate t-interval check. This is not the forecast interval; it can be wider.",
+            "scope": "Replication and interval forecasting only. Mechanism, novelty, depth and unseen-condition generalization are unassessed.",
+            "evidence": "Each primary claim must cite at least one existing exploration observation ID. Prefer informative independent findings over duplicate claims."}
+    problem["driver_turn_contract"] = {
+        "exploration_rounds": exploration_rounds, "total_rounds": max_rounds,
+        "closure": "After exploration_rounds, only commit is permitted until success, then only interpret. No forced or operator-written claims. Finish earlier if ready."}
     reported_models = set()
 
     def report():
@@ -168,7 +187,9 @@ def run_agent(session, client, directory, *, max_rounds=32, wall_seconds=1800, a
                                ("wire", "stream", "max_output_tokens", "chat_max_tokens_field",
                                 "temperature", "reasoning_effort", "timeout_seconds")},
                   "limits": {"max_rounds": max_rounds, "wall_seconds": wall_seconds,
-                             "max_actions_per_round": 64, "max_prompt_characters": 240000},
+                             "max_actions_per_round": 64, "max_prompt_characters": 240000,
+                             "exploration_rounds": exploration_rounds},
+                  "evaluation_profile": evaluation_profile,
                   "analysis_enabled": analysis is not None, "world_state": session.state,
                   "azure_api_version": getattr(client, "azure_api_version", None),
                   "stop_reason": stop, "elapsed_seconds": time.monotonic() - start,
@@ -176,6 +197,9 @@ def run_agent(session, client, directory, *, max_rounds=32, wall_seconds=1800, a
                   "history": history, "rounds": rounds,
                   "public_report_sha256": session.report()["sha256"],
                   "driver_sha256": __import__("hashlib").sha256(Path(__file__).read_bytes()).hexdigest()}
+        result["known_response_usage_lower_bound"] = {
+            key: sum((row.get("usage") or {}).get(key) or 0 for row in rounds)
+            for key in ("input_tokens", "output_tokens", "total_tokens")}
         save_json(directory / "agent-report.json", result)
         save_json(directory / "public-report.json", session.report())
         save_json(directory / "operator-report.json", session.report(private=True))
@@ -187,10 +211,14 @@ def run_agent(session, client, directory, *, max_rounds=32, wall_seconds=1800, a
             if remaining <= 0:
                 stop = "wall_limit"
                 break
+            phase = ("interpret_required" if session.state == "interpreting" else
+                     "commit_required" if exploration_rounds is not None and number > exploration_rounds
+                     else "exploring")
             prompt = json.dumps({"problem": problem, "analysis_enabled": analysis is not None,
                                  "history": history, "state": session.state,
+                                 "driver_phase": phase,
                                  "turn": number, "turns_including_this": max_rounds - number + 1,
-                                 "seconds_remaining": round(remaining, 1)}, ensure_ascii=False)
+                                 "seconds_remaining": round(remaining, 1)}, ensure_ascii=False, separators=(",", ":"))
             if len(prompt) > 240000:
                 stop = "context_limit"
                 break
@@ -219,6 +247,12 @@ def run_agent(session, client, directory, *, max_rounds=32, wall_seconds=1800, a
                 continue
             entry = {"round": number, **turn, "results": []}
             history.append(entry)
+            if phase != "exploring":
+                required = "interpret" if phase == "interpret_required" else "commit"
+                if "analyze" in turn or any(a["operation"] != required for a in turn["actions"]):
+                    entry["results"].append({"ok": False, "error": required + "_required_by_turn_contract"})
+                    report()
+                    continue
             if "analyze" in turn:
                 if analysis is None:
                     entry["results"].append({"ok": False, "error": "analysis_unavailable"})
@@ -236,7 +270,14 @@ def run_agent(session, client, directory, *, max_rounds=32, wall_seconds=1800, a
                     if time.monotonic() - start >= wall_seconds:
                         stop = "wall_limit"
                         break
-                    response = session.step(request)
+                    profile_error = None
+                    if evaluation_profile and request["operation"] == "commit":
+                        candidates = request["arguments"].get("claims", []) if isinstance(request["arguments"], dict) else []
+                        if (not isinstance(candidates, list) or not 1 <= len(candidates) <= 3
+                                or any(not isinstance(c, dict) or "forecast" not in c
+                                       or c.get("replicates") != 8 or not c.get("evidence_ids") for c in candidates)):
+                            profile_error = "profile_requires_1_to_3_claims_with_forecast_evidence_ids_and_8_replicates"
+                    response = ({"ok": False, "error": profile_error} if profile_error else session.step(request))
                     entry["results"].append({"request_id": request["request_id"], **response})
                     if not response.get("ok") or session.state != "exploring":
                         break
