@@ -47,6 +47,9 @@ def _initial(name, spec, channels):
         return list(spec["initial_position"]) + list(spec["initial_velocity"])
     if name == "orbital_dynamics":
         return list(spec["position"]) + list(spec["velocity"])
+    if name == "population_drift":
+        from .population_drift.protocol import assigned_initial
+        return assigned_initial(spec)
     if name == "spin_echo":
         return list(spec["initial_magnetization"])
     if name == "pattern_formation":

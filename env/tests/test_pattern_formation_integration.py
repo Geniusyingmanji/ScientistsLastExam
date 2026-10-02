@@ -206,6 +206,7 @@ def test_previous_nine_world_scientific_schemas_noise_and_policy_are_unchanged()
     policy.pop("protocol")
     policy.pop("spin_echo_rule")
     policy["minimum_lag"].pop("spin_echo")
+    policy["minimum_lag"].pop("population_drift")
     assert set(policy.pop("frequency_rules")) == {"electrical_impedance"}
     policy["minimum_lag"].pop(NAME)
     assert canonical_hash(policy) == "eaddf457c8785075b69f46c7064e01da6e4d4d8529e3af1589d23f882123dc5e"
@@ -227,20 +228,22 @@ def test_metadata_revision_is_deliberate_and_old_score_scientific_contract_recon
                 "regime_transfer": "633db647625a3f3131635b5156ca54f023cb4769b4c7034ea3bcf985c2aa769c"}
     for name in previous:
         profile = get_task_profile(name)
-        assert profile["catalog_version"] == "scientific-task-profiles-0.1.6"
+        assert profile["catalog_version"] == "scientific-task-profiles-0.1.7"
         assert canonical_hash(profile) == presentation_profiles._TASK_HASHES[name]
         assert canonical_hash(profile) != previous[name]
         profile["catalog_version"] = "scientific-task-profiles-0.1.2"
         profile["applicable_environments"].remove(NAME)
         profile["applicable_environments"].remove("electrical_impedance")
         profile["applicable_environments"].remove("spin_echo")
+        profile["applicable_environments"].remove("population_drift")
         assert canonical_hash(profile) == previous[name]
     contract = score_contract()
-    assert contract["claim_eligibility"]["protocol"] == "public-claim-eligibility-0.9"
+    assert contract["claim_eligibility"]["protocol"] == "public-claim-eligibility-0.10"
     assert canonical_hash(contract) == presentation_profiles._SCORE_HASH
     contract["claim_eligibility"]["protocol"] = "public-claim-eligibility-0.6"
     contract["claim_eligibility"]["minimum_lag"].pop(NAME)
     contract["claim_eligibility"].pop("spin_echo_rule")
     contract["claim_eligibility"]["minimum_lag"].pop("spin_echo")
+    contract["claim_eligibility"]["minimum_lag"].pop("population_drift")
     assert set(contract["claim_eligibility"].pop("frequency_rules")) == {"electrical_impedance"}
     assert canonical_hash(contract) == "969e75b5a96947617af996535b8b8e5b854ff1190bea385d02db65dfd8ddc420"

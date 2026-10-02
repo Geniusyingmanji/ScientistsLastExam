@@ -22,6 +22,7 @@ _TIME_RULES = {
     "orbital_dynamics": ("times", 0.25, "T", "impulses", "time", 65),
     "pattern_formation": ("times", 0.25, "T", None, None, 33),
     "spin_echo": ("times_ms", 1.0, "ms", "pulses", "time_ms", 129),
+    "population_drift": ("times", 0.25, "replacement-clock units", None, None, 33),
 }
 _OSCILLATOR_NODES = ("A", "B", "C", "D")
 _SPIN_NODES = ("A", "B", "C", "D", "E", "F")
@@ -37,6 +38,7 @@ _CHANNELS = {
     "pattern_formation": tuple("probe_%02d" % index for index in range(16)),
     "electrical_impedance": ("voltage_real", "voltage_imag"),
     "spin_echo": ("magnetization_x", "magnetization_y", "magnetization_z"),
+    "population_drift": ("mean_A_frequency", "mean_mixedness", "boundary_A", "boundary_B"),
     "ising_spin": (tuple("m_" + node for node in _SPIN_NODES) +
                    tuple("c_" + left + "_" + right for index, left in enumerate(_SPIN_NODES)
                          for right in _SPIN_NODES[index + 1:])),
@@ -62,7 +64,7 @@ def _decision(eligible, reason):
 def policy_description():
     """Return detached JSON-safe public policy; no sampled instance data."""
     return {
-        "protocol": "public-claim-eligibility-0.9",
+        "protocol": "public-claim-eligibility-0.10",
         "input_contract": "Apply to canonical public specs after normal experiment/readout validation.",
         "matched_coordinate": "Time-dependent worlds must observe the same time in both arms at the selected readout row. Ising temperatures may differ because temperature itself is a controlled treatment.",
         "absolute_coordinate_tolerance": _COORDINATE_TOLERANCE,
@@ -152,6 +154,26 @@ def _spin_echo_known_readout(spec, coordinate, channel):
     return zero_state or (z_known if channel == "magnetization_z" else not transverse_hidden_dependency)
 
 
+def _population_public_spec(spec):
+    """Finite public controls only; boundary preparation remains eligible."""
+    if set(spec) != {"population_size", "initial_A", "times", "selection_bias", "newborn_flip_probability"}:
+        raise ValueError("invalid population public spec")
+    n, k = spec["population_size"], spec["initial_A"]
+    if (isinstance(n, bool) or not isinstance(n, numbers.Integral) or not 2 <= n <= 32 or
+            isinstance(k, bool) or not isinstance(k, numbers.Integral) or not 0 <= k <= n):
+        raise ValueError("invalid population preparation")
+    times = spec["times"]
+    if not isinstance(times, list) or not 1 <= len(times) <= 33:
+        raise ValueError("invalid population time axis")
+    times = [_number(value) for value in times]
+    if any(not 0 <= value <= 60 for value in times) or any(b <= a for a, b in zip(times, times[1:])):
+        raise ValueError("invalid population time axis")
+    if not -.5 <= _number(spec["selection_bias"]) <= .5:
+        raise ValueError("invalid reproductive control")
+    if not 0 <= _number(spec["newborn_flip_probability"]) <= .1:
+        raise ValueError("invalid newborn control")
+
+
 def claim_eligibility(world_name, control, treatment, readout, axis_field):
     """Reject direct assignment readouts using public semantics only.
 
@@ -210,6 +232,8 @@ def claim_eligibility(world_name, control, treatment, readout, axis_field):
             coordinates.append(coordinate)
             if world_name == "spin_echo":
                 spin_known.append(_spin_echo_known_readout(spec, coordinate, channel))
+            elif world_name == "population_drift":
+                _population_public_spec(spec)
         if world_name != "ising_spin" and not math.isclose(coordinates[0], coordinates[1], rel_tol=0.0,
                                                            abs_tol=_COORDINATE_TOLERANCE):
             return _decision(False, "unmatched_readout_coordinate")

@@ -127,6 +127,8 @@ SPECS = {
     "pattern_formation": {"length": N, "drive": N, "times": [N],
         "initial": {"mean": N, "modes": [{"mode": N, "amplitude": N, "phase": N}]}},
     "electrical_impedance": {"frequencies_hz": [N], "source_ohm": N, "load_ohm": N, "amplitude_v": N},
+    "population_drift": {"population_size": N, "initial_A": N, "times": [N],
+                         "selection_bias": N, "newborn_flip_probability": N},
     "spin_echo": {"initial_magnetization": [N], "detuning_hz": N, "times_ms": [N],
                   "pulses": [{"time_ms": N, "angle_rad": N, "phase_rad": N}]},
 }
@@ -138,6 +140,7 @@ AXIS = {
     "orbital_dynamics": "times", "pattern_formation": "times",
     "electrical_impedance": "frequencies_hz",
     "spin_echo": "times_ms",
+    "population_drift": "times",
 }
 # The research runner's inert numeric test fixture is an explicit parser schema,
 # not a registered scientific world and never a candidate performance result.

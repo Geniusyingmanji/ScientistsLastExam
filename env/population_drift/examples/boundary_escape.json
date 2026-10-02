@@ -1,0 +1,7 @@
+{
+  "population_size": 20,
+  "initial_A": 0,
+  "times": [0.0, 1.0, 5.0, 20.0, 60.0],
+  "selection_bias": -0.2,
+  "newborn_flip_probability": 0.02
+}

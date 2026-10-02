@@ -4,10 +4,13 @@
 `sle-single-model-domain-0.1`. It tests one saved point predictor on a fixed finite
 ordered family. It does not require a second rival, alter the existing research
 wire protocol, change a score, or automatically identify a continuous boundary.
-Implementation validation currently consists of pure/fixture tests only. Neither
-an actual candidate process, an actual World trajectory nor a model API has been
-validated through this new runner yet. Scientific acceptance remains
-**same-family provisional** pending independent code review and bounded execution.
+Independent code review, a native inert isolation gate and one bounded orbital
+author-reference execution are complete. The inert gate used six real candidate
+calls and eight synthetic observations; it checked normal prediction, shape
+failure and a timeout during the candidate call. The reference used 80 real World
+calls and twelve isolated predictions. No model API was called. Result review is
+**same-family provisional**; this is a standalone operator primitive, not yet a
+map action available to a live research agent.
 
 A complete map may have every point adequate, inadequate or inconclusive. These
 are legitimate outcomes. Execution completion is not scientific success, and
@@ -184,10 +187,11 @@ python -m env.domain_mapping_runner run --environment orbital_dynamics --seed 7 
   --source-history complete-source-history.json --output new-private-directory
 ```
 
-This command runs the actual candidate and World; it has **not** been run in the
-current implementation validation. Programmatic use is
-`DomainMappingTask(...).run(plan, snapshot, source_history)`. A new directory is
-required. CLI input bytes are archived in addition to canonical objects.
+This command runs the actual candidate and World. The bounded author reference
+used the programmatic `DomainMappingTask(...).run(plan, snapshot, source_history)`
+path through a separately frozen private driver; it was not a live agent run.
+A new directory is required. CLI input bytes are archived in addition to
+canonical objects.
 
 Keep the returned receipt head outside the output directory, under trusted
 operator control. Verification is read-only and never executes code or a World:
@@ -232,11 +236,11 @@ source-cutoff receipt and operator runtime paths. The private directory contains
 all raw receipts and source archives. Human-authored free text should itself
 avoid including secrets. No `apparatus_only` presentation is claimed here.
 
-## Author reference remains a separate unexecuted plan
+## Bounded author reference: completed finite map
 
-The approved proposed orbital example fits a local constant-acceleration vector
+The separately frozen orbital example fit a local constant-acceleration vector
 once by a predetermined weighted least-squares rule using eight public short-arc
-experiments at 0.25, 0.375 and 0.5 T. It then saves one predictor before testing
+experiments at 0.25, 0.375 and 0.5 T. It then saved one predictor before testing
 endpoint x at horizons 0.75, 1, 1.5, 2, 4 and 8 T, with 12 fresh repeats each.
 Seed 7 is a previously studied development seed. The functional form, fit rule,
 axis, horizons and precision target are human choices, not a hidden-force answer.
@@ -248,9 +252,38 @@ uncertainty is not inflated into observation noise. This is a useful local
 approximation tested over longer sampled horizons, not a correct model paired
 against a deliberately broken rival. No short-adequate/long-inadequate outcome
 is guaranteed. No seed, grid, tolerance, readout or model may be retuned to force
-that picture. The encompassing proposed budget is 80 World attempts, 12 candidate
+that picture. The enclosing budget was 80 World attempts, 12 candidate
 calls and 864 orbital experiment units, including source acquisition.
 
-The author source, exact plan and runtime still need their separate freeze,
-independent review and run authorization. No reference fitting, real trajectory,
-real candidate execution or GPT validation accompanies this implementation.
+The completed run used those exact 80/12/864 counts, with no replacement,
+refitting or API call. A distinct trusted job checked the source head captured by
+the operator and created an external cutoff anchor. Twelve predictions were
+sealed before all 72 mapping observations. The whole source-to-map operation,
+including waits between jobs, took 154.675 seconds under the 900-second cap. The
+fixed fit subprocess used 0.025821 child CPU seconds and 0.090102 wall seconds.
+Operator custody and clocks remain trusted assumptions, not independent temporal
+certification.
+
+| Horizon (T) | Absolute endpoint-x discrepancy interval (L) | Result at 0.03 L tolerance |
+| --- | --- | --- |
+| 0.75 | [0, 0.00555] | adequate |
+| 1.0 | [0.00146, 0.01095] | adequate |
+| 1.5 | [0.03473, 0.04423] | inadequate |
+| 2.0 | [0.12771, 0.13720] | inadequate |
+| 4.0 | [1.73303, 1.74253] | inadequate |
+| 8.0 | [14.14271, 14.15221] | inadequate |
+
+Table endpoints are rounded outward; decisions use the archived exact rational
+bounds. The common confidence event has at least 95% coverage under the declared
+noise assumptions. The fitted model is compatible with the precision target at
+two sampled horizons and fails it at four. Nothing is inferred about unmeasured
+times, a unique transition, the internal force law, autonomous discovery or GPT.
+
+Independent read-only review reproduced the interval classifications, fixed WLS
+normal-equation witnesses, source and map receipts, resource accounting and
+prediction-before-observation order. It executed no candidate, World or refit.
+The immutable source was commit `2f1b3841`; the native source/map evidence and
+externally retained heads stay in private operator artifacts. Earlier failed
+implementation checks and their repairs remain preserved. A future agent action
+still needs full transcript/source-cutoff and outer resource accounting; the
+current task orientation alone does not supply that integration.

@@ -82,7 +82,7 @@ def test_pilot_lag_excludes_assigned_and_short_lag_readouts_in_either_arm(channe
             assert decide(left, right, row, channel)["reason"] == "readout_too_soon_after_event"
         assert decide(left, right, 4, channel)["eligible"]
     policy = policy_description()
-    assert policy["protocol"] == "public-claim-eligibility-0.9"
+    assert policy["protocol"] == "public-claim-eligibility-0.10"
     assert policy["minimum_lag"][NAME] == {"value": .25, "unit": "T", "axis_field": "times",
                                             "event_field": "impulses", "event_time_field": "time"}
 
@@ -174,6 +174,7 @@ def test_registration_preserves_old_scientific_envelopes_and_task_content():
     policy.pop("protocol")
     policy.pop("spin_echo_rule")
     policy["minimum_lag"].pop("spin_echo")
+    policy["minimum_lag"].pop("population_drift")
     assert set(policy.pop("frequency_rules")) == {"electrical_impedance"}
     policy["minimum_lag"].pop(NAME)
     policy["minimum_lag"].pop("pattern_formation")

@@ -36,15 +36,15 @@ _DESCRIPTION_HASHES = {
     "ising_spin": "4101a4788fd43ae618092f02ac45a41fbbe01ff45a2e7dc446327f0cb4ed8572",
 }
 _TASK_HASHES = {
-    "open_discovery": "a1e2e994e05ca8d3c5486365b4184e129851ea49d65d48fb8a10125d137d630e",
-    "mechanism_discrimination": "6d397176213bb35c18f67d58a042a21ee3aa88d5fe1caa9e6144a6e49bb45844",
-    "regime_transfer": "dbd82544c11f75c8d991798eb6e3fee44d1b0c64c8d364583aac8ed445687372",
+    "open_discovery": "81cac5dc379d04ba8280998d13e0439506e66d0d82fe6271dddc0d640325e11d",
+    "mechanism_discrimination": "bc7c50f3850024c3c4aee63bd755ebd2c1ee1eac33b5e16301980145fa189b92",
+    "regime_transfer": "e8c92656f01dccadf926ccc95d1cc0ca693b314b66f0f4b16ec6a5b47378ce7b",
 }
 # The two new scientific tasks remain unaudited for apparatus_only. The original
-# three hash updates account only for catalog 0.1.6 and twelfth-world applicability.
-# Spin-echo policy additions are scoped out of the two apparatus projections;
+# three hash updates account only for catalog 0.1.7 and thirteenth-world applicability.
+# Population-drift and spin-echo policy additions are scoped out of the two apparatus projections;
 # old scientific content is identical after only catalog/policy version normalization.
-_SCORE_HASH = "a9d80c99e75cda6353741543844915b94284abbc59aaa1cbf2a975f0d07a9137"
+_SCORE_HASH = "3a6deca448c9ba5e64feeb190a75694cd0c205b9c1cb0154c2835d6773490fc9"
 _SYSTEM_HASH = "66b2af813e28055ecb137da97d7720f5c57de8d636ff6de8ab5edb00e21afa3e"
 _ATTACHMENTS = ("task_profile", "score_contract", "submission_contract")
 _SUBMISSION_CONTRACT = {

@@ -1,0 +1,69 @@
+{
+  "name": "population_drift",
+  "world_family": "PopulationDrift",
+  "version": "population_drift-0.1.0-experimental",
+  "api_version": "sle-batch-world-v0.2",
+  "status": "experimental",
+  "axis_field": "times",
+  "description": "Expectation readouts of a finite two-type population ensemble under calibrated reproduction and newborn-label controls.",
+  "trusted_implementation": {
+    "world": "env.population_drift.world:World",
+    "baseline": "env.population_drift.baseline:baseline"
+  },
+  "channels": [
+    "mean_A_frequency",
+    "mean_mixedness",
+    "boundary_A",
+    "boundary_B"
+  ],
+  "normalization_scales": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "measurement_noise_std": [
+    0.002,
+    0.002,
+    0.002,
+    0.002
+  ],
+  "measurement_noise": "independent_additive_Gaussian_unclipped_sensor_noise",
+  "latent_stochastic_dynamics": true,
+  "realized_path_sampling": false,
+  "finite_ensemble_sampling_noise": false,
+  "process_noise_in_readout": false,
+  "numerical_model": "finite_CTMC_matrix_exponential_float64_expectation_readout",
+  "operator_strata": [
+    "neutral_drift",
+    "constant_selection",
+    "frequency_dependence",
+    "symmetric_mutation"
+  ],
+  "public_model_family_menu": false,
+  "structural_holdout": false,
+  "contamination_resistance_proven": false,
+  "discovery_depth_scoring": false,
+  "difficulty_calibrated": false,
+  "holdout_kinds": [
+    "conditions",
+    "interventions"
+  ],
+  "agent_public_files": [],
+  "public_contract": "Only World.describe and budgeted noisy observations are candidate-facing. Parameters, seeds, source, manifest, strata, clean routes, references, panels and diagnostics remain operator-owned.",
+  "limits": {
+    "population_size": [
+      2,
+      32
+    ],
+    "times": [
+      0,
+      60
+    ],
+    "sample_rows": 33,
+    "states": 33,
+    "matrix_exponentials_per_trajectory": 33,
+    "maximum_experiment_cost": 179
+  },
+  "version_policy": "Explicit experimental selection only; outside historical GPT cohorts and the seven-world audited null bank. Public expectation readouts passed fixed independent checks; two strict full-distribution DOP853 comparisons remain unresolved. Registration does not certify numerical bounds, difficulty or discovery. Catalog 0.1.7; eligibility 0.10 uses a public administrative 0.25 replacement-clock-unit lag, matched selected times, and no private boundary filtering."
+}

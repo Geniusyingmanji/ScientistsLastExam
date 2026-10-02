@@ -61,8 +61,8 @@ def decide(control, treatment=None, row=-1, channel="magnetization_x", axis="tim
 
 
 def test_explicit_twelfth_registration_and_public_contract_invariant_across_strata():
-    assert ENVIRONMENTS == PREVIOUS + (NAME,)
-    assert EXPERIMENTAL_ENVIRONMENTS == ("microecology_causal", "orbital_dynamics",
+    assert ENVIRONMENTS[:len(PREVIOUS) + 1] == PREVIOUS + (NAME,)
+    assert EXPERIMENTAL_ENVIRONMENTS[:5] == ("microecology_causal", "orbital_dynamics",
                                         "pattern_formation", "electrical_impedance", NAME)
     worlds = [World(7, _operator_stratum=label) for label in World.operator_strata]
     for task in TASK_PROFILE_NAMES:
@@ -284,11 +284,11 @@ def test_explicit_manifest_freeze_and_all_profiles_without_world_execution(monke
     manifest = campaign.create_manifest("spin-integration", [NAME], instances=1, rounds=4, exploration_rounds=2)
     assert manifest["environments"] == [NAME]
     assert manifest["instances"][0]["world_seed"] == 100001
-    assert manifest["score_contract"]["claim_eligibility"]["protocol"] == "public-claim-eligibility-0.9"
+    assert manifest["score_contract"]["claim_eligibility"]["protocol"] == "public-claim-eligibility-0.10"
     for name in TASK_PROFILE_NAMES:
         current = research_runner.create_manifest("spin-profile", NAME, 7, profile=name)
         research_runner.validate_manifest(current)
-        assert current["profile"]["catalog_version"] == "scientific-task-profiles-0.1.6"
+        assert current["profile"]["catalog_version"] == "scientific-task-profiles-0.1.7"
         assert current["score"] is None and not current["automatic_depth_certification"]
 
 
@@ -309,6 +309,7 @@ def test_previous_eleven_contracts_and_seven_null_bank_are_unchanged():
     policy = contract["claim_eligibility"]
     assert policy["minimum_lag"].pop(NAME) == {"value": 1., "unit": "ms", "axis_field": "times_ms",
                                                "event_field": "pulses", "event_time_field": "time_ms"}
+    policy["minimum_lag"].pop("population_drift")
     rule = policy.pop("spin_echo_rule")
     assert "administrative" in rule["limits"] and "detectability" in rule["limits"]
     policy["protocol"] = "public-claim-eligibility-0.8"
@@ -318,7 +319,8 @@ def test_previous_eleven_contracts_and_seven_null_bank_are_unchanged():
                                "8462087167a37b31a593cf222c70e876b203593d74eb8509109e8e237e76c18e")):
         profiles = {n: accessor(n) for n in TASK_PROFILE_NAMES}
         for profile in profiles.values():
-            assert profile["catalog_version"] == "scientific-task-profiles-0.1.6"
+            assert profile["catalog_version"] == "scientific-task-profiles-0.1.7"
             profile["catalog_version"] = "scientific-task-profiles-0.1.5"
             profile["applicable_environments"].remove(NAME)
+            profile["applicable_environments"].remove("population_drift")
         assert canonical_hash(profiles) == expected

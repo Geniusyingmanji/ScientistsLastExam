@@ -18,6 +18,7 @@ laboratory or external simulator service is required.
 | `pattern_formation` (experimental) | Sixteen probes on a periodic scalar field | Initial modes, ring length and uniform drive | Mode growth, forcing, symmetry and partial observability |
 | `electrical_impedance` (experimental) | Quadrature voltage at a sealed linear one-port | Frequency, source resistance, parallel load and amplitude | Spectral response, resonance, relaxation and nonunique internal topology |
 | `spin_echo` (experimental) | Mean classical magnetization x/y/z | Initial vector, waiting times, ideal rotation pulses and detuning | Reversible dispersion, transverse loss, finite-ensemble response and limited identification |
+| `population_drift` (experimental) | Four expectation readouts of finite two-type population ensembles | Population size, preparation, reproductive bias and newborn-label controls | Drift, selection, mutation, current boundary occupancy and limited identification |
 
 These are synthetic, deliberately tractable scientific families. Hidden
 parameters and structures create new instances, but do not by themselves prove
@@ -71,6 +72,16 @@ known-coordinate exclusions are administrative guards, not detection or
 discovery guarantees. It is outside the frozen GPT cohorts and the audited
 seven-world null bank; prototype research and integration smoke tests are separate.
 
+The thirteenth world, [population_drift](population_drift/README.md), measures
+finite-ensemble expectations rather than individual random trajectories.
+Boundary channels are current occupancies, including escape when permitted;
+Gaussian sensor noise is distinct from the internally averaged drift. Fixed
+public-readout checks passed, while two strict independent full-distribution
+comparisons remain unresolved and are retained in its notes. Its public 0.25
+replacement-clock-unit lag is an administrative eligibility rule. Experimental
+registration and native engineering checks do not certify global numerical
+accuracy or scientific difficulty.
+
 ## Interfaces
 
 [CONTRACT.md](CONTRACT.md) defines the operator-only `World` API, observation
@@ -121,7 +132,7 @@ and the scoring rules remain visible. Family-informed baselines are not blind
 controls. `--balanced-strata hysteresis_material` uses its trusted operator strata
 to balance hidden mechanism classes before freezing; the private labels are never
 included in the agent's problem. The experimental `microecology_causal` and
-`orbital_dynamics`, `pattern_formation`, `electrical_impedance` and `spin_echo` worlds also support this option when explicitly selected. Multiple selected worlds may be
+`orbital_dynamics`, `pattern_formation`, `electrical_impedance`, `spin_echo` and `population_drift` worlds also support this option when explicitly selected. Multiple selected worlds may be
 comma-separated. Both settings are stored in the cohort manifest.
 
 Future cohorts may explicitly use `--analysis-protocol sle-analysis-snapshots-0.1`
@@ -139,8 +150,10 @@ scientific review, not automatic D3/D4 scores.
 executor for one frozen model on a finite ordered grid. It reports adequate,
 inadequate, inconclusive and incomplete points against a justified tolerance,
 without requiring a second rival or claiming a continuous boundary. Independent
-code review is complete; real isolation and author-reference execution remain
-separate validation gates. This is not yet an agent action in the research runner.
+code review, a native isolation gate and one bounded orbital author-reference
+execution are complete. Its finite map contains two adequate and four inadequate
+points under a fixed precision target; it is not yet an agent action in the
+research runner or a GPT evaluation.
 
 `report.json` and `manifest-private.json` contain private test material and full
 transcripts. Keep them outside Git and candidate access. `summary.json` is a

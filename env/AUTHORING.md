@@ -62,6 +62,21 @@ structures, private instance generation and prospective intervention tests make
 memorized descriptions less sufficient; contamination resistance still requires
 separate evidence. Public simulator code can itself become training material.
 
+Before freezing a future cohort, retain an explicit exposure inventory with
+source paths, hashes and the meaning of each seed. A measurement-noise key or
+panel seed is not a world seed. [SEED_EXCLUSIONS.md](SEED_EXCLUSIONS.md) supports
+an operator-supplied corpus bound into future manifests; it does not infer a
+complete exposure history. Label any inventory gaps. Structural holdout needs
+an additional generator split fixed before development; renaming or excluding
+previous numerical seeds alone cannot supply it.
+
+Distinguish a solver invocation from its public wrapper in calibration ledgers.
+A valid `World.run` often has one solver child; an invalid request may have none.
+Count direct reference evaluations, failed and timed-out attempts, and maximum
+legal positive-time rows as well. Record process CPU and wall time separately.
+Pure schema fixtures, interface smoke calls and scientific calibration are
+separate evidence. Passing the first category cannot substitute for the others.
+
 ## Current shared integration points
 
 The pilot uses explicit adapters. Register a world only when each applicable
@@ -113,6 +128,14 @@ from its entire parameterized family, fresh-readout uncertainty from parameter
 uncertainty, and finite-horizon behavior from an asymptotic law. An unaltered
 model predicting several new conditions demonstrates transfer; locating an
 empirical validity boundary requires additional evidence.
+
+For one-model studies, [DOMAIN_MAPPING.md](DOMAIN_MAPPING.md) provides a separate
+operator primitive: freeze the complete source history, model, finite readout
+grid, tolerance and error allocation before new observations. Report each point
+as adequate, inadequate, inconclusive or incomplete. Several adjacent labels do
+not locate a continuous boundary or identify a mechanism. This operator primitive
+is not yet an agent action in the research runner; task wording alone does not
+make an unsupported workflow executable.
 
 Use [DISCOVERY_EVIDENCE.md](DISCOVERY_EVIDENCE.md) for exact manual evidence anchors
 and six separate dimensions. Reference checks and recorded ordering are

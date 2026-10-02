@@ -46,15 +46,17 @@ def test_old_profile_and_research_scientific_content_changes_only_catalog_revisi
         for profile, expected in ((get_task_profile(name), batch[name]),
                                   (research_runner._research_profile(name, "pattern_formation"), research[name])):
             assert profile["version"] == name + "-0.1.0"
-            assert profile.pop("catalog_version") == "scientific-task-profiles-0.1.6"
+            assert profile.pop("catalog_version") == "scientific-task-profiles-0.1.7"
             # Only the explicit later-world applicability additions are normalized.
             profile["applicable_environments"].remove("electrical_impedance")
             profile["applicable_environments"].remove("spin_echo")
+            profile["applicable_environments"].remove("population_drift")
             assert canonical_hash(profile) == expected
     contract = score_contract()
-    assert contract["claim_eligibility"]["protocol"] == "public-claim-eligibility-0.9"
+    assert contract["claim_eligibility"]["protocol"] == "public-claim-eligibility-0.10"
     contract["claim_eligibility"].pop("spin_echo_rule")
     contract["claim_eligibility"]["minimum_lag"].pop("spin_echo")
+    contract["claim_eligibility"]["minimum_lag"].pop("population_drift")
     assert set(contract["claim_eligibility"].pop("frequency_rules")) == {"electrical_impedance"}
     contract["claim_eligibility"]["protocol"] = "public-claim-eligibility-0.7"
     assert canonical_hash(contract) == "665c0b8946b72e302e1ee250a671148677681a694f0c2fd3cda610d419c5adda"
