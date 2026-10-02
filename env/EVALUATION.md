@@ -142,6 +142,31 @@ the implementation is not required, and equally predictive mechanisms can remain
 unidentifiable. Human/agent reviews must report reviewer provenance and agreement
 limits; automated numerical checks never certify mechanism depth.
 
+The completed pilot audits exposed disagreements about these labels. Keep the
+original judgments and any correction as separate records; do not resolve them
+by averaging ordinal levels or counting a successful prediction as a boundary.
+For subsequent audits, [DISCOVERY_EVIDENCE.md](DISCOVERY_EVIDENCE.md) records six
+dimensions separately: quantitative model, prospective test, meaningful rival,
+changed-regime transfer, empirical boundary, and uncertainty/negative evidence.
+Each manual assessment cites exact public-trace anchors and distinguishes an
+agent's statement from public supplied knowledge or a reviewer inference.
+
+In particular, source compatibility and target discrimination answer different
+questions. Before a future mechanism-discrimination claim, establish what makes
+the rivals reasonable under the source data, including fitting failures and
+uncertainty. A new observation separating two frozen point programs does not
+alone reject an entire parameterized family. A source criterion devised after
+seeing earlier target outcomes must remain a post-hoc diagnostic, even if it is
+then fixed before new readings.
+
+Likewise, a fixed model can be accurate at a new point without its validity
+boundary having been investigated. A finite mapping should preserve its model,
+readout, tolerance, sampling family and inconclusive points; it cannot establish
+unmeasured intervals or a continuous threshold without additional assumptions.
+Numerical adequacy is conditional on the chosen scalar, tolerance and noise
+contract. These distinctions guide future evidence collection and do not add new
+requirements to the frozen model score.
+
 ## Frozen execution and accounting
 
 Default core limits are 16 model requests, 14 research turns, at most 32 experiments
