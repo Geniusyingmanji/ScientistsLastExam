@@ -642,8 +642,8 @@ def test_no_host_candidate_execution_and_python38_syntax():
 
 @skip_unless_sandbox("bwrap")
 def test_linux_real_analysis_snapshots_prospective_freeze_and_finish(tmp_path, fixture_environment):
-    manifest = fixture_environment(limits={"rounds": 4, "analysis_seconds": 60, "wall_seconds": 300},
-                                   science_limits={"wall_seconds": 300, "predictor_seconds_per_call": 30})
+    manifest = reference_manifest(limits={"rounds": 4, "analysis_seconds": 60, "wall_seconds": 300},
+                                  science_limits={"wall_seconds": 300, "predictor_seconds_per_call": 30})
     secret = tmp_path / "operator-secret.json"
     secret.write_text('"private-canary"')
     code = ('from pathlib import Path\n'
@@ -655,11 +655,15 @@ def test_linux_real_analysis_snapshots_prospective_freeze_and_finish(tmp_path, f
             'save_model("rival-0", "v1", {"slope": 1.0}, %r)\n' % PREDICTOR +
             'save_model("rival-1", "v1", {"slope": 2.0}, %r)\n' % PREDICTOR +
             'result = list_models()\n')
-    report, client = run(tmp_path, manifest, successful_steps(code), analysis=runner.IsolatedAnalysis)
+    client = ReferenceClient(manifest, successful_steps(code))
+    report = runner.run_research(manifest, tmp_path / "run", lambda _: client)
     assert report["status"] == "completed", report
     assert report["history"][1]["outcome"] == "analysis_ok"
     assert report["history"][2]["outcome"] == "both_candidates_refuted"
     assert report["history"][0]["note"] == "source evidence"
     assert report["history"][0]["observations"][0]["observation"]["values"][0][0] != 9999
-    assert len(client.prompts) == 4  # All served by FakeClient; zero model APIs.
+    assert len(client.prompts) == 4
+    assert report["requested_model"] is None and report["provider_reported_models"] == []
+    assert report["usage"]["model_request_attempts"] == 0
+    assert report["usage"]["reference_request_attempts"] == 4
     assert prospective.verify_directory(tmp_path / "run/science")["replayed_tests"] == 1
