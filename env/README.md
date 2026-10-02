@@ -25,7 +25,8 @@ calibrated organisms. Each environment documents its own limitations.
 
 The initial formal pilot uses the first four environments. Gene regulation and
 Ising and material history use a separate expansion cohort. Task orientation is separate from the world:
-`open_discovery`, `mechanism_discrimination`, and `regime_transfer`; see [TASKS.md](TASKS.md).
+`open_discovery`, `mechanism_discrimination`, `regime_transfer`, `model_revision`,
+and `boundary_mapping`; see [TASKS.md](TASKS.md).
 Material instances vary the hidden mechanism class under the same public
 instrument contract. This is an initial structural variation, not a tested
 out-of-family or contamination-resistant benchmark.
