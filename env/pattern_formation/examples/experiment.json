@@ -1,0 +1,6 @@
+{
+  "length": 24,
+  "drive": 0,
+  "initial": {"mean": 0, "modes": [{"mode": 3, "amplitude": 0.08, "phase": 0}, {"mode": 4, "amplitude": 0.06, "phase": 0.5}]},
+  "times": [0,0.25,1,2,4,8,16,30,60]
+}

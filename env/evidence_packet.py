@@ -124,13 +124,15 @@ SPECS = {
         "protocol": [{"time": N, "field": N}], "times": [N]},
     "orbital_dynamics": {"position": [N], "velocity": [N], "times": [N],
         "impulses": [{"time": N, "delta_v": [N]}]},
+    "pattern_formation": {"length": N, "drive": N, "times": [N],
+        "initial": {"mean": N, "modes": [{"mode": N, "amplitude": N, "phase": N}]}},
 }
 AXIS = {
     "microecology": "times_h", "microecology_causal": "times_h",
     "coupled_oscillators": "times", "heat_transport": "times",
     "reaction_kinetics": "times_s", "gene_regulation": "times_h",
     "ising_spin": "temperatures", "hysteresis_material": "times",
-    "orbital_dynamics": "times",
+    "orbital_dynamics": "times", "pattern_formation": "times",
 }
 # The research runner's inert numeric test fixture is an explicit parser schema,
 # not a registered scientific world and never a candidate performance result.

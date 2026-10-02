@@ -15,6 +15,7 @@ laboratory or external simulator service is required.
 | `hysteresis_material` | One response trajectory after a controlled history | Reset sign, preparation, field ramps, dwells and return loops | Distinguishing delayed response from persistent preparation memory |
 | `microecology_causal` (experimental) | Three strains and anonymous extracellular fractions | Inocula, nutrient, temperature, fraction depletion and feed pulses | Competing causal accounts, intervention responses and restricted identifiability |
 | `orbital_dynamics` (experimental) | Position and velocity of a body in a central field | Initial radius/velocity and timed impulses | Force-law ambiguity, dissipation and transfer beyond a circular trajectory |
+| `pattern_formation` (experimental) | Sixteen probes on a periodic scalar field | Initial modes, ring length and uniform drive | Mode growth, forcing, symmetry and partial observability |
 
 These are synthetic, deliberately tractable scientific families. Hidden
 parameters and structures create new instances, but do not by themselves prove
@@ -44,6 +45,13 @@ matched circular-orbit examples distinguish apparent agreement from identified
 force laws. Its private development calibration remains separate from GPT
 results. The public 0.25 T claim lag excludes assigned initial/event values;
 it is a pilot rule, not evidence of scientific discovery or detectability.
+
+The tenth world, [pattern_formation](pattern_formation/README.md), defines a
+64-site discrete laboratory observed through sixteen probes. Its finite-grid
+semantics and several symmetry and growth limits have been reviewed. Probe
+aliasing and exact-zero preparations can conceal internal dynamics. Numerical
+work can fail explicitly; registration does not certify the full internal
+parameter domain or promote its development scores to model results.
 
 ## Interfaces
 
@@ -95,7 +103,7 @@ and the scoring rules remain visible. Family-informed baselines are not blind
 controls. `--balanced-strata hysteresis_material` uses its trusted operator strata
 to balance hidden mechanism classes before freezing; the private labels are never
 included in the agent's problem. The experimental `microecology_causal` and
-`orbital_dynamics` worlds also support this option when explicitly selected. Multiple selected worlds may be
+`orbital_dynamics` and `pattern_formation` worlds also support this option when explicitly selected. Multiple selected worlds may be
 comma-separated. Both settings are stored in the cohort manifest.
 
 Future cohorts may explicitly use `--analysis-protocol sle-analysis-snapshots-0.1`

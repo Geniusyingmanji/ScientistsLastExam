@@ -19,6 +19,7 @@ _TIME_RULES = {
     "gene_regulation": ("times_h", 0.5, "h", "interventions", "time_h", 41),
     "hysteresis_material": ("times", 0.5, "s", None, None, 129),
     "orbital_dynamics": ("times", 0.25, "T", "impulses", "time", 65),
+    "pattern_formation": ("times", 0.25, "T", None, None, 33),
 }
 _OSCILLATOR_NODES = ("A", "B", "C", "D")
 _SPIN_NODES = ("A", "B", "C", "D", "E", "F")
@@ -31,6 +32,7 @@ _CHANNELS = {
     "gene_regulation": ("G1", "G2", "G3", "G4"),
     "hysteresis_material": ("response",),
     "orbital_dynamics": ("x", "y", "vx", "vy"),
+    "pattern_formation": tuple("probe_%02d" % index for index in range(16)),
     "ising_spin": (tuple("m_" + node for node in _SPIN_NODES) +
                    tuple("c_" + left + "_" + right for index, left in enumerate(_SPIN_NODES)
                          for right in _SPIN_NODES[index + 1:])),
@@ -56,7 +58,7 @@ def _decision(eligible, reason):
 def policy_description():
     """Return detached JSON-safe public policy; no sampled instance data."""
     return {
-        "protocol": "public-claim-eligibility-0.6",
+        "protocol": "public-claim-eligibility-0.7",
         "input_contract": "Apply to canonical public specs after normal experiment/readout validation.",
         "matched_coordinate": "Time-dependent worlds must observe the same time in both arms at the selected readout row. Ising temperatures may differ because temperature itself is a controlled treatment.",
         "absolute_coordinate_tolerance": _COORDINATE_TOLERANCE,

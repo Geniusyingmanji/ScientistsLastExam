@@ -8,13 +8,13 @@ this module never returns an automatic scientific-success verdict.
 from copy import deepcopy
 
 
-TASK_PROFILE_CATALOG_VERSION = "scientific-task-profiles-0.1.2"
+TASK_PROFILE_CATALOG_VERSION = "scientific-task-profiles-0.1.3"
 DEFAULT_TASK_PROFILE = "open_discovery"
 TASK_PROFILE_NAMES = ("open_discovery", "mechanism_discrimination", "regime_transfer")
 APPLICABLE_ENVIRONMENTS = (
     "microecology", "coupled_oscillators", "reaction_kinetics", "heat_transport",
     "gene_regulation", "ising_spin", "hysteresis_material", "microecology_causal",
-    "orbital_dynamics",
+    "orbital_dynamics", "pattern_formation",
 )
 
 

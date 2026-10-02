@@ -356,3 +356,4 @@ def test_experimental_registrations_preserve_prior_apparatus_scientific_content(
     assert canonical_hash(projected) == expected
     assert "microecology_causal" not in json.dumps(projected)
     assert "orbital_dynamics" not in json.dumps(projected)
+    assert "pattern_formation" not in json.dumps(projected)
