@@ -122,8 +122,16 @@ SPECS = {
         "clamp": {key: N for key in "ABCDEF"}, "suppress_bonds": [{"nodes": [T], "fraction": N}]},
     "hysteresis_material": {"reset": T, "preparation": [{"duration": N, "field": N}],
         "protocol": [{"time": N, "field": N}], "times": [N]},
+    "orbital_dynamics": {"position": [N], "velocity": [N], "times": [N],
+        "impulses": [{"time": N, "delta_v": [N]}]},
 }
-AXIS = dict(zip(SPECS, ("times_h", "times_h", "times", "times", "times_s", "times_h", "temperatures", "times")))
+AXIS = {
+    "microecology": "times_h", "microecology_causal": "times_h",
+    "coupled_oscillators": "times", "heat_transport": "times",
+    "reaction_kinetics": "times_s", "gene_regulation": "times_h",
+    "ising_spin": "temperatures", "hysteresis_material": "times",
+    "orbital_dynamics": "times",
+}
 # The research runner's inert numeric test fixture is an explicit parser schema,
 # not a registered scientific world and never a candidate performance result.
 SPECS["prospective_fixture"] = {"drive": N, "times": [N]}

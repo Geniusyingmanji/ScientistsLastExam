@@ -147,7 +147,7 @@ def _runtime_binding(world):
 
 def _observation_contract(world):
     additive = {"coupled_oscillators", "reaction_kinetics", "heat_transport", "gene_regulation",
-                "ising_spin", "hysteresis_material", "prospective_fixture"}
+                "ising_spin", "hysteresis_material", "orbital_dynamics", "prospective_fixture"}
     clipped = {"microecology", "microecology_causal"}
     if world.name not in additive | clipped:
         raise ValueError("public noise bias model has not been approved for this environment")

@@ -14,6 +14,7 @@ laboratory or external simulator service is required.
 | `ising_spin` | Six spin means and fifteen pair correlations | Temperature, fields, clamps and bond suppression | Collective equilibrium response, interactions and frustration |
 | `hysteresis_material` | One response trajectory after a controlled history | Reset sign, preparation, field ramps, dwells and return loops | Distinguishing delayed response from persistent preparation memory |
 | `microecology_causal` (experimental) | Three strains and anonymous extracellular fractions | Inocula, nutrient, temperature, fraction depletion and feed pulses | Competing causal accounts, intervention responses and restricted identifiability |
+| `orbital_dynamics` (experimental) | Position and velocity of a body in a central field | Initial radius/velocity and timed impulses | Force-law ambiguity, dissipation and transfer beyond a circular trajectory |
 
 These are synthetic, deliberately tractable scientific families. Hidden
 parameters and structures create new instances, but do not by themselves prove
@@ -36,6 +37,13 @@ certify difficulty or mechanistic discovery.
 It is outside the completed core/expansion cohorts and the existing seven-world
 null calibration. Its separate offline development evidence is documented in
 [operator notes](microecology_causal/SCIENTIFIC_NOTES.md).
+
+The ninth world, [orbital_dynamics](orbital_dynamics/README.md), is also available
+only for explicit experimental selection. Independent numerical checks and
+matched circular-orbit examples distinguish apparent agreement from identified
+force laws. Its private development calibration remains separate from GPT
+results. The public 0.25 T claim lag excludes assigned initial/event values;
+it is a pilot rule, not evidence of scientific discovery or detectability.
 
 ## Interfaces
 
@@ -86,8 +94,8 @@ equation-family hints; the default is `full_description`. Public action semantic
 and the scoring rules remain visible. Family-informed baselines are not blind
 controls. `--balanced-strata hysteresis_material` uses its trusted operator strata
 to balance hidden mechanism classes before freezing; the private labels are never
-included in the agent's problem. The experimental `microecology_causal` world also
-supports this option when explicitly selected. Multiple selected worlds may be
+included in the agent's problem. The experimental `microecology_causal` and
+`orbital_dynamics` worlds also support this option when explicitly selected. Multiple selected worlds may be
 comma-separated. Both settings are stored in the cohort manifest.
 
 Future cohorts may explicitly use `--analysis-protocol sle-analysis-snapshots-0.1`
@@ -121,6 +129,9 @@ supports source experiments, isolated fitting, model snapshots, frozen rival
 predictions, independent observations and revisions. Its prospective evidence
 has no automatic mechanism label or discovery-depth score. This new interface
 has not yet received a live GPT benchmark run.
+The [material reference example](hysteresis_material/RESEARCH_DEMO.md) exercises
+that interface with an explicitly authored zero-API policy and immutable rival
+snapshots. Its outcomes are reference-policy results, not model performance.
 
 [PAIRED_DESIGN.md](PAIRED_DESIGN.md) generates future single-factor comparison
 plans without launching requests. [PREDICTABILITY_DIAGNOSTICS.md](PREDICTABILITY_DIAGNOSTICS.md)
@@ -136,6 +147,9 @@ recorded public interactions. It preserves original public task context and
 candidate reasoning while excluding operator score/identity/target metadata.
 These packets document evidence gaps and do not themselves replay experiments,
 authenticate time, or assign a discovery depth.
+[DISCOVERY_EVIDENCE.md](DISCOVERY_EVIDENCE.md) adds manual, per-dimension judgments
+with exact packet anchors and recorded-order checks. It preserves disagreements
+without computing a depth grade or certifying the scientific interpretation.
 
 ## Evaluation and extension
 

@@ -52,7 +52,7 @@ def assert_no_private_labels(public, world):
 
 
 def test_registry_and_all_public_tasks_keep_the_structural_menu_private():
-    assert ENVIRONMENTS[-1] == NAME and len(ENVIRONMENTS) == 8
+    assert NAME in ENVIRONMENTS
     assert NAME in EXPERIMENTAL_ENVIRONMENTS
     worlds = [load_world(NAME, seed)[0] for seed in DEVELOPMENT_SEEDS]
     assert {world.operator_stratum() for world in worlds} == set(worlds[0].operator_strata)

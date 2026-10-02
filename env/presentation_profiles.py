@@ -36,13 +36,13 @@ _DESCRIPTION_HASHES = {
     "ising_spin": "4101a4788fd43ae618092f02ac45a41fbbe01ff45a2e7dc446327f0cb4ed8572",
 }
 _TASK_HASHES = {
-    "open_discovery": "62e810593e644181529576b01c9dc51d60fa92ff403a0a028bf9723fc8975cb1",
-    "mechanism_discrimination": "559b10fbd35099218e4e01ecb6754b9a519ab6c75fcb881def9bebfa583543e3",
-    "regime_transfer": "fcdbe95eb56191a7a615aaeacdfb564b391e3e307e473239a92dd4570c1dbb98",
+    "open_discovery": "73f62e5b9ab0d1fde2c8dee12e78d90f476f25998e8f755d0e25865da1aa696d",
+    "mechanism_discrimination": "4a3d009cb0978c0610eb2f1439362e0b0f6b42a157af1d5038707a21fce09b62",
+    "regime_transfer": "633db647625a3f3131635b5156ca54f023cb4769b4c7034ea3bcf985c2aa769c",
 }
-# Audited update: eighth-world applicability and matching public timing policy;
+# Registration update: ninth-world applicability and matching public timing policy;
 # existing apparatus projections retain their scientific content unchanged.
-_SCORE_HASH = "31b63c09398feef9f9fca624106569ec97e2dfe0dde602fba2f6fb1b522092e3"
+_SCORE_HASH = "969e75b5a96947617af996535b8b8e5b854ff1190bea385d02db65dfd8ddc420"
 _SYSTEM_HASH = "66b2af813e28055ecb137da97d7720f5c57de8d636ff6de8ab5edb00e21afa3e"
 _ATTACHMENTS = ("task_profile", "score_contract", "submission_contract")
 _SUBMISSION_CONTRACT = {

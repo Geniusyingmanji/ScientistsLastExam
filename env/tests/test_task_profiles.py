@@ -15,10 +15,11 @@ from env.task_profiles import (APPLICABLE_ENVIRONMENTS, DEFAULT_TASK_PROFILE,
 def test_task_profiles_stable_identity_default_and_applicability():
     assert DEFAULT_TASK_PROFILE == "open_discovery"
     assert TASK_PROFILE_NAMES == ("open_discovery", "mechanism_discrimination", "regime_transfer")
-    assert TASK_PROFILE_CATALOG_VERSION == "scientific-task-profiles-0.1.1"
+    assert TASK_PROFILE_CATALOG_VERSION == "scientific-task-profiles-0.1.2"
     assert APPLICABLE_ENVIRONMENTS == (
         "microecology", "coupled_oscillators", "reaction_kinetics", "heat_transport",
         "gene_regulation", "ising_spin", "hysteresis_material", "microecology_causal",
+        "orbital_dynamics",
     )
     assert get_task_profile() == get_task_profile("open_discovery")
     assert [p["name"] for p in list_task_profiles()] == list(TASK_PROFILE_NAMES)

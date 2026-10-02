@@ -45,6 +45,8 @@ def _initial(name, spec, channels):
         return list(spec["initial_mM"])
     if name == "coupled_oscillators":
         return list(spec["initial_position"]) + list(spec["initial_velocity"])
+    if name == "orbital_dynamics":
+        return list(spec["position"]) + list(spec["velocity"])
     if name == "gene_regulation":
         return list(spec["initial_expression"])
     if name == "ising_spin":

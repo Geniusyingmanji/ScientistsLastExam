@@ -87,6 +87,7 @@ def test_gene_drive_event_requires_half_hour_response():
     ("heat_transport", "times", "probe_1_temperature", 0.5),
     ("gene_regulation", "times_h", "G1", 0.5),
     ("hysteresis_material", "times", "response", 0.5),
+    ("orbital_dynamics", "times", "vx", 0.25),
 ])
 def test_all_declared_initial_state_resolution_boundaries(world_name, axis, channel, minimum):
     # Standalone semantics needs no world construction, parameter access or

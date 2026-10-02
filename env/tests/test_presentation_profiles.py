@@ -345,7 +345,7 @@ def test_no_api_smoke_builds_both_complete_prompt_envelopes_without_budget_chang
     ("ising_spin", "mechanism_discrimination", "bbbda8bee9c93cf642851b3cb086ad9a7c329e5a173a8f3fea952f0abfd90d39"),
     ("ising_spin", "regime_transfer", "6fcb14f1d991cd08c979c0567e3b81eec93da18cc87688d7a74720e808eda5c9"),
 ])
-def test_eighth_world_registration_preserves_prior_apparatus_scientific_content(environment, task, expected):
+def test_experimental_registrations_preserve_prior_apparatus_scientific_content(environment, task, expected):
     # Fingerprints captured BEFORE microecology_causal registration. Only the
     # catalog/policy revision strings are omitted; all scientific text, task
     # instructions, noise, controls, scales and projected scoring rules remain.
@@ -355,3 +355,4 @@ def test_eighth_world_registration_preserves_prior_apparatus_scientific_content(
     del projected["score_contract"]["claim_eligibility"]["protocol"]
     assert canonical_hash(projected) == expected
     assert "microecology_causal" not in json.dumps(projected)
+    assert "orbital_dynamics" not in json.dumps(projected)
