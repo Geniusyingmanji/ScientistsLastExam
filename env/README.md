@@ -126,6 +126,13 @@ and supports a new test after model revision. It uses the same Linux isolation
 boundary and makes no model API calls by itself. Its outputs are evidence for
 scientific review, not automatic D3/D4 scores.
 
+[DOMAIN_MAPPING.md](DOMAIN_MAPPING.md) adds a separate experimental operator
+executor for one frozen model on a finite ordered grid. It reports adequate,
+inadequate, inconclusive and incomplete points against a justified tolerance,
+without requiring a second rival or claiming a continuous boundary. Independent
+code review is complete; real isolation and author-reference execution remain
+separate validation gates. This is not yet an agent action in the research runner.
+
 `report.json` and `manifest-private.json` contain private test material and full
 transcripts. Keep them outside Git and candidate access. `summary.json` is a
 compact aggregate; inspect any export before publishing. `index.html` links to

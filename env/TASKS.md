@@ -173,8 +173,8 @@ by a real GPT run in this implementation.
 
 The research runner's scientific task name is distinct from the prospective
 request's wire `profile`, which remains only `mechanism_discrimination` or
-`regime_transfer`. There is no new prospective evaluator or boundary/revision
-score. Research projections retain the new scientific checklist and explain use
+`regime_transfer`. These wire profiles do not add a boundary/revision score.
+Research projections retain the new scientific checklist and explain use
 of the existing `experiments`, `analyze`, `preregister` and `finish` actions.
 Immutable snapshots pin model versions; preregistration still requires exactly
 two substantive rivals and the existing target, readout, tolerance and replication
@@ -184,6 +184,15 @@ counterexample data and a new target. A suspected limitation does not fabricate
 that lineage. For boundary mapping, retain the same primary model and criterion
 through meaningful comparison tests, and report the domain-level assessment in
 notes and explanation rather than treating one comparison as a boundary grade.
+
+The separate experimental operator executor in [DOMAIN_MAPPING.md](DOMAIN_MAPPING.md)
+can instead assess one frozen model on a fully registered finite grid, without
+inventing a second rival. It seals all predictions before new observations and
+retains adequate, inadequate, inconclusive and incomplete points at the original
+family error allocation. Its output does not certify a continuous boundary or
+discovery level. It is not wired into the existing research action protocol and
+has no GPT results; real isolation and author-reference execution are separate
+validation gates following the completed code review.
 
 Research `finish` still requires explanation, known evidence IDs and at least one
 completed test ID. An inconclusive completed test can support an honest finish.

@@ -91,3 +91,10 @@ seven-world audited null bank, score formulas, and older scientific task content
 remain unchanged. Existing apparatus projections normalize only deliberate task
 catalog and policy revision metadata. Neither integration nor the weak-baseline
 smoke run assigns a discovery depth or task-difficulty grade.
+
+[PORT_REFERENCE.md](PORT_REFERENCE.md) documents an additional public-record-only
+reference that removes the known source/load transformation, interpolates the
+inferred admittance and reconstructs terminal voltage. Its calibration separates
+same-frequency apparatus changes from new-frequency interpolation. The eight-row
+arm is a subset of one 65-row acquisition, so this is not an equal-budget study.
+It does not change the existing weak baseline or any model score.

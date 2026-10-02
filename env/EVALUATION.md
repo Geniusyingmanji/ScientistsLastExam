@@ -210,3 +210,10 @@ The separate prospective protocol in [PROSPECTIVE.md](PROSPECTIVE.md) seals
 executable rival predictions and a readout before collecting new measurements.
 It distinguishes numerical equivalence, rejection, separation and revision,
 without equating any of those checks to unique mechanism identification.
+
+[DOMAIN_MAPPING.md](DOMAIN_MAPPING.md) specifies a separate single-model finite
+grid protocol. Its simultaneous intervals address declared scalar readouts of
+one fixed predictor under explicit noise and independence assumptions. They do
+not cover unsampled points, continuous boundary locations, other channels or
+multiple later maps. The execution facility and scientific interpretation have
+separate validation requirements and do not change the historical pilot score.

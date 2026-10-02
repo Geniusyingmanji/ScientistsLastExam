@@ -19,7 +19,7 @@ NAMES = {"microecology": "微生态反馈", "coupled_oscillators": "耦合振子
          "gene_regulation": "基因调控", "ising_spin": "平衡自旋",
          "hysteresis_material": "材料滞回"}
 
-EVIDENCE_COLUMNS = (("quantitative_model", "数量模型"),
+EVIDENCE_COLUMNS = (("quantitative_model", "定量模型"),
                     ("prospective_test", "前瞻检验"),
                     ("meaningful_rival", "实质竞争解释"),
                     ("changed_regime_transfer", "跨条件迁移"),
