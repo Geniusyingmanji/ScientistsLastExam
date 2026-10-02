@@ -36,10 +36,12 @@ _DESCRIPTION_HASHES = {
     "ising_spin": "4101a4788fd43ae618092f02ac45a41fbbe01ff45a2e7dc446327f0cb4ed8572",
 }
 _TASK_HASHES = {
-    "open_discovery": "a47a395a0947d00c881ab87faa8279b30fbdb653184610cb05593116db6dd7af",
-    "mechanism_discrimination": "e0e388819147f9b735baf79f4ae9f55f211a4af5d2a70a92a26b079ad024912c",
-    "regime_transfer": "997040e7bc4b4eda86ad0ff94de8e9be32fa8120812dd35342e37bb1ba364b00",
+    "open_discovery": "2ef0f74d74a62a54c27ef4003bd06b404adb8fae84d57d31a184023ea1964d3c",
+    "mechanism_discrimination": "a0dd0ca42ed06e869464a7751067f61e04aa86faa4cde1c2a7a1051e85a0a67c",
+    "regime_transfer": "f2267d88ebab948e6e93f438314948ed320043cb163440f7a2c4393ce2e61738",
 }
+# The two new scientific tasks remain unaudited for apparatus_only. The original
+# three hash updates account only for catalog 0.1.4, not scientific text changes.
 # Registration update: tenth-world applicability and matching public timing policy;
 # existing apparatus projections retain their scientific content unchanged.
 _SCORE_HASH = "665c0b8946b72e302e1ee250a671148677681a694f0c2fd3cda610d419c5adda"
@@ -75,11 +77,21 @@ def _digest(value):
         raise ValueError("presentation input must be a bounded finite JSON object") from None
 
 
-def get_presentation_profile(name=DEFAULT_PRESENTATION_PROFILE, environment=None):
+def _audited_task(task):
+    name = task.get("name") if isinstance(task, dict) else None
+    if not isinstance(name, str) or name not in _TASK_HASHES:
+        raise ValueError("task profile is not audited for apparatus_only")
+    if _digest(task) != _TASK_HASHES[name]:
+        raise ValueError("task presentation changed; apparatus_only requires an audit")
+
+
+def get_presentation_profile(name=DEFAULT_PRESENTATION_PROFILE, environment=None, *, task_profile=None):
     """Return detached OPERATOR metadata; do not attach this catalog to a prompt."""
     name = _profile_name(name)
     if name == "apparatus_only" and environment is not None:
         _apparatus_environment(environment)
+    if name == "apparatus_only" and task_profile is not None:
+        _audited_task(task_profile)
     return {
         "name": name,
         "version": name + "-0.1.0",
@@ -256,9 +268,7 @@ def present_problem(public_info, profile=DEFAULT_PRESENTATION_PROFILE, *, enviro
     result = _mechanical_public(base) if environment == "coupled_oscillators" else _binary_public(base)
     if "task_profile" in public_info:
         task = public_info["task_profile"]
-        name = task.get("name") if isinstance(task, dict) else None
-        if not isinstance(name, str) or name not in _TASK_HASHES or _digest(task) != _TASK_HASHES[name]:
-            raise ValueError("task presentation changed; apparatus_only requires an audit")
+        _audited_task(task)
         result["task_profile"] = deepcopy(task)
         del result["task_profile"]["applicable_environments"]
     if "score_contract" in public_info:

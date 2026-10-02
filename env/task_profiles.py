@@ -8,9 +8,10 @@ this module never returns an automatic scientific-success verdict.
 from copy import deepcopy
 
 
-TASK_PROFILE_CATALOG_VERSION = "scientific-task-profiles-0.1.3"
+TASK_PROFILE_CATALOG_VERSION = "scientific-task-profiles-0.1.4"
 DEFAULT_TASK_PROFILE = "open_discovery"
-TASK_PROFILE_NAMES = ("open_discovery", "mechanism_discrimination", "regime_transfer")
+TASK_PROFILE_NAMES = ("open_discovery", "mechanism_discrimination", "regime_transfer",
+                      "model_revision", "boundary_mapping")
 APPLICABLE_ENVIRONMENTS = (
     "microecology", "coupled_oscillators", "reaction_kinetics", "heat_transport",
     "gene_regulation", "ising_spin", "hysteresis_material", "microecology_causal",
@@ -41,7 +42,7 @@ def _evidence(identifier, minimum_count, count_unit, description, sources,
 
 
 def _profile(name, prompt, primary_measure, does_not_establish, requirements,
-             positive_finding_requires, allowed_conclusions):
+             positive_finding_requires, allowed_conclusions, inconclusive_policy=None):
     return {
         "name": name, "version": name + "-0.1.0",
         "catalog_version": TASK_PROFILE_CATALOG_VERSION,
@@ -59,7 +60,7 @@ def _profile(name, prompt, primary_measure, does_not_establish, requirements,
             "process_complete_when": "A separate review finds every required evidence item traceable, scientifically adequate and temporally consistent with its stated requirement.",
             "positive_finding_requires": positive_finding_requires,
             "allowed_conclusions": list(allowed_conclusions),
-            "inconclusive_policy": "An adequate inconclusive or falsifying investigation can complete the evidence checklist; it does not count as a positive mechanism or transfer finding.",
+            "inconclusive_policy": inconclusive_policy or "An adequate inconclusive or falsifying investigation can complete the evidence checklist; it does not count as a positive mechanism or transfer finding.",
             "missing_evidence_status": "not_demonstrated",
             "prediction_score_effect": "none",
             "automatic_checklist_verdict": False,
@@ -74,6 +75,16 @@ def _profile(name, prompt, primary_measure, does_not_establish, requirements,
             "quantitative_claims": "optional; existing paired-contrast format and verifier unchanged",
         },
     }
+
+
+_LIMITED_EVIDENCE_POLICY = (
+    "An adequately documented negative, entirely inconclusive or budget-limited investigation is a valid "
+    "scientific conclusion and need not produce a revision success or boundary. State which observations "
+    "were obtained and which requirements remain not_demonstrated because the necessary test was not "
+    "performed. A valid limited conclusion does not declare an incomplete checklist complete. Preserve "
+    "failed predictions, ambiguous results and stopping reasons; do not expand the budget, manufacture "
+    "a failure or assert a positive result to satisfy the task."
+)
 
 
 _PROFILES = {
@@ -173,13 +184,104 @@ _PROFILES = {
         "A relation fitted without the selected target outcome makes an informative target prediction that meets a justified, nonvacuous prospective uncertainty or tolerance criterion, with the transfer domain and remaining failures explicitly bounded.",
         ("scoped_transfer_supported", "transfer_failed", "transfer_inconclusive"),
     ),
+    "model_revision": _profile(
+        "model_revision",
+        "Investigate whether a model can be usefully revised after an observed prediction failure or "
+        "demonstrated limitation. Start from a prediction and its model version recorded before the "
+        "corresponding result, and retain that original record and the actual observation with IDs. "
+        "Diagnose the discrepancy relative to measurement uncertainty and the original criterion; "
+        "a hypothetical failure or a model invented after its result is not this evidence. State "
+        "exactly what assumptions, parameters or scope you revise and why, and what remains fixed. "
+        "Before obtaining results in new legal conditions that were not used to formulate or fit the "
+        "revision, record the revised model version, predicted readouts and informative justified "
+        "uncertainty or tolerance. Test those predictions and assess them before further refitting. "
+        "When claiming improvement, compare the unchanged original and revised models on the same "
+        "new readouts with the comparison criterion fixed in advance. Do not overwrite failed "
+        "predictions, silently substitute a newer model or treat a better fit to revision data as "
+        "prospective success. A failed revision, no supported reason to revise, entirely inconclusive "
+        "observations or insufficient budget for a new test is a valid scoped conclusion; identify "
+        "the missing evidence rather than inventing a failure or claiming completion.",
+        "Traceable correction of a diagnosed predictive limitation, tested prospectively on conditions excluded from revision.",
+        ("improved fit to already used data proves predictive revision", "the revised model is the true mechanism",
+         "a hypothetical or retrospectively invented failure is observed evidence", "every revision must succeed"),
+        [
+            _evidence("original_prediction", 1, "prediction_recorded_before_its_result",
+                      "Identify the original model/version, conditions, predicted readouts and original uncertainty or criterion in a record that preceded the associated observation. Preserve the original record.",
+                      ("research_notes", "analysis_records"), "before_original_result"),
+            _evidence("observed_limitation_and_diagnosis", 1, "observed_prediction_limitation",
+                      "Cite the actual observation exposing the earlier prediction's failure or limitation, quantify the discrepancy and diagnose it against uncertainty. Distinguish noise, missing evidence and a model limitation; no unsupported failure may be manufactured.",
+                      ("experiment_records", "research_notes", "analysis_records", "explanation"), "before_revision"),
+            _evidence("documented_revision", 1, "explicit_model_revision",
+                      "Link the revised version to the unchanged original and failed/limiting evidence. State the changed assumptions, parameters or scope, rationale and retained components; list all data used for the revision.",
+                      ("research_notes", "analysis_records"), "before_revision_test_result"),
+            _evidence("fresh_revision_prediction", 1, "prospective_prediction_on_unused_conditions",
+                      "Before new outcomes are observed, freeze the revised version, legal test conditions not used to formulate or fit it, readouts and justified nonvacuous tolerance. For an improvement claim, also freeze the original model's predictions and the comparison criterion for these same readouts.",
+                      ("research_notes", "analysis_records"), "before_revision_test_result"),
+            _evidence("revision_test_and_assessment", 1, "observed_prospective_revision_test",
+                      "Cite the new observation, assess the recorded predictions before any further refit and preserve all unsuccessful comparisons. Separate surviving the fresh test from merely fitting the earlier counterexample.",
+                      ("experiment_records", "analysis_records", "explanation")),
+            _evidence("revision_scope_and_limits", 1, "bounded_revision_assessment",
+                      "Report whether revision helped, failed or remains unresolved; state uncertainty, untested conditions, remaining alternatives and budget/stopping limits. If no actual limitation or no fresh test was obtained, say which requirements are not demonstrated.",
+                      ("research_notes", "explanation")),
+        ],
+        "A revision linked to a documented earlier predictive limitation survives an informative prospective test in conditions excluded from its construction; any claimed improvement is supported by the prespecified comparison to the unchanged original on the same new readouts.",
+        ("scoped_revision_supported", "revision_failed", "revision_inconclusive",
+         "no_supported_limitation_to_revise", "revision_untested_budget_limited"),
+        inconclusive_policy=_LIMITED_EVIDENCE_POLICY,
+    ),
+    "boundary_mapping": _profile(
+        "boundary_mapping",
+        "Investigate the empirical domain of adequacy of a fixed quantitative model. Before the "
+        "mapping observations, record its version and source evidence, chosen readouts, and an "
+        "informative tolerance or adequacy criterion justified by measurement uncertainty and the "
+        "scientific size of error that matters. Fix a continuous or ordered legal control axis, or "
+        "an explicitly parameterized path, its concrete domain and the other controls held fixed. "
+        "Plan observations that seek both adequate and inadequate predictions across that domain, "
+        "and how to refine transitions or stop within the existing budget. Record predictions before "
+        "each new result using the same frozen model and criterion; do not refit the model or widen "
+        "the tolerance to redraw its boundary. Preserve adequate, failed and uncertainty-limited "
+        "results with observation IDs. A scoped empirical boundary needs evidence on both sides "
+        "and a supported transition bracket or region at stated sampling resolution. A successful "
+        "regime transfer or one failed point alone does not establish a complete empirical boundary. "
+        "Do not assume monotonicity or that unmeasured intervals behave like sampled points; disclose "
+        "any such assumptions and unresolved gaps. If the domain contains no detected transition, "
+        "all results are inconclusive or the budget is insufficient, report the tested bounds and "
+        "limits without forcing a boundary or treating its absence as universal adequacy.",
+        "Prospective empirical localization of where a fixed model meets or fails a prespecified adequacy criterion across a declared control domain.",
+        ("one successful transfer establishes an empirical boundary", "one failure locates a complete domain boundary",
+         "finite observations prove adequacy between or beyond sampled controls", "a boundary must exist or be found"),
+        [
+            _evidence("fixed_model_and_criterion", 1, "frozen_model_and_adequacy_criterion",
+                      "Record the model/version, source evidence, target readouts and scientific justification for the uncertainty-aware, nonvacuous tolerance or adequacy criterion. Freeze them before using mapping results.",
+                      ("research_notes", "analysis_records"), "before_boundary_observations"),
+            _evidence("ordered_control_domain", 1, "explicit_control_domain",
+                      "Specify a continuous or ordered legal control axis or parameterized path, concrete ranges/ordered values, held-fixed controls and the scope of inference. State possible nonmonotonicity rather than presuming a single threshold.",
+                      ("research_notes", "analysis_records"), "before_boundary_observations"),
+            _evidence("boundary_search_design", 1, "bounded_sampling_and_stopping_plan",
+                      "Plan how observations will seek both model adequacy and failure and refine any apparent transition, with resolution, uncertainty and stopping/budget rules. Adaptive point selection may use earlier observations while retaining the same frozen model and criterion.",
+                      ("research_notes", "analysis_records"), "before_boundary_observations"),
+            _evidence("prospective_mapping_predictions", 1, "prediction_recorded_before_mapping_result",
+                      "Record each queried condition and the frozen model's prediction before its observation. Keep all predictions and model/tolerance versions; revised models require a separate map and cannot replace the original evidence.",
+                      ("research_notes", "analysis_records"), "before_each_mapping_result"),
+            _evidence("mapping_observations", 1, "traceable_mapping_observation_set",
+                      "Cite the sampled control values and observations, errors and uncertainty; classify adequate, failed or unresolved points using the fixed criterion. A positive boundary claim additionally requires both adequate and failed evidence supporting a transition bracket or region, not just one failed point.",
+                      ("experiment_records", "analysis_records", "explanation")),
+            _evidence("boundary_extent_and_limits", 1, "bounded_domain_assessment",
+                      "Give supported brackets/regions and their resolution, unmeasured gaps and conditional assumptions, or report no boundary found within explicitly tested bounds. Preserve all-inconclusive and budget-limited outcomes; do not call isolated failure or ordinary successful transfer a complete boundary map.",
+                      ("research_notes", "analysis_records", "explanation")),
+        ],
+        "Prospective observations under one frozen model and informative criterion support both adequate and failed predictions and localize a transition bracket or region along the declared control domain, with uncertainty, sampling resolution and unmeasured gaps stated.",
+        ("scoped_empirical_boundary_supported", "boundary_not_found_within_tested_domain",
+         "boundary_inconclusive", "boundary_search_budget_limited"),
+        inconclusive_policy=_LIMITED_EVIDENCE_POLICY,
+    ),
 }
 
 
 def get_task_profile(name=DEFAULT_TASK_PROFILE, environment=None):
     """Return a JSON-safe public profile copy; optionally validate applicability."""
     if not isinstance(name, str) or name not in _PROFILES:
-        raise ValueError("unknown task profile; choose open_discovery, mechanism_discrimination or regime_transfer")
+        raise ValueError("unknown task profile; choose " + ", ".join(TASK_PROFILE_NAMES))
     if environment is not None:
         if not isinstance(environment, str) or environment not in _PROFILES[name]["applicable_environments"]:
             raise ValueError("task profile is not applicable to the requested environment")

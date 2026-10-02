@@ -17,7 +17,7 @@ from env.presentation_profiles import (
 from env.registry import ENVIRONMENTS, load_world
 from env.runner import DEFAULT_LIMITS, SYSTEM
 from env.scoring import canonical_hash, score_contract
-from env.task_profiles import get_task_profile
+from env.task_profiles import TASK_PROFILE_NAMES, get_task_profile
 
 
 def assembled_problem(world, task="open_discovery"):
@@ -54,7 +54,7 @@ def test_presentation_catalog_is_separate_opt_in_and_operator_only():
 
 
 @pytest.mark.parametrize("environment", ENVIRONMENTS)
-@pytest.mark.parametrize("task", ["open_discovery", "mechanism_discrimination", "regime_transfer"])
+@pytest.mark.parametrize("task", TASK_PROFILE_NAMES)
 def test_default_preserves_every_current_environment_and_task_exactly(environment, task):
     world, _ = load_world(environment, 17)
     original = assembled_problem(world, task)

@@ -178,7 +178,7 @@ def test_registration_preserves_old_scientific_envelopes_and_task_content():
     expected = {"open_discovery": "5a401bb7683e2684ea8ddc56d9b943f85ed36cb76f382f7dd30804fc4c6798fc",
                 "mechanism_discrimination": "dab1f8be65639dbdeb2b4c555e51cce52281adfb9bff5bf945e6a1291c143050",
                 "regime_transfer": "14f1a985e3a13595606ad58d13cf48a434faa0cfee10e2f56344dd5f580286e4"}
-    for name in TASK_PROFILE_NAMES:
+    for name in expected:
         profile = get_task_profile(name)
         profile.pop("catalog_version")
         profile.pop("applicable_environments")

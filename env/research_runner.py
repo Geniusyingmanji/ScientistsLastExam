@@ -120,6 +120,34 @@ def _research_profile(name, environment):
         "prediction-score panel or automatic depth grade is used.")
     profile["submission_contract"] = {"action": "finish", "fields": ["explanation", "evidence_ids", "test_ids"],
                                       "minimum_completed_prospective_tests": 1}
+    if name in ("model_revision", "boundary_mapping"):
+        profile["public_prompt"] += (
+            "\n\nThis scientific task name is not a new preregistration wire profile. Keep "
+            "preregister.profile as mechanism_discrimination or regime_transfer, with exactly "
+            "two substantive rival accounts and the existing target, tolerance and replication "
+            "rules. Immutable model snapshots can identify fixed versions. Put task-level "
+            "chronology, diagnosis or domain mapping in notes and the finish explanation; "
+            "individual test outcomes do not automatically certify the task. All-inconclusive "
+            "completed tests can support an honest finish. If budget exhaustion prevents any "
+            "completed prospective test, retain the notes and incomplete report: this valid "
+            "limited scientific conclusion does not bypass the existing finish requirement."
+        )
+        if name == "model_revision":
+            profile["public_prompt"] += (
+                " Use revision_of only under the existing revision rules: cite an earlier "
+                "completed test with a refuted rival, preserve that rival's original source, "
+                "cite the counterexample observation for the revision and select a new target. "
+                "A merely suspected limitation is not a refuted prior test; retain that "
+                "uncertainty instead of fabricating revision lineage."
+            )
+        else:
+            profile["public_prompt"] += (
+                " Retain the same primary model snapshot/version and criterion across the "
+                "mapping comparisons, with a scientifically meaningful comparison account. "
+                "Use notes to predeclare the ordered domain and stopping plan, then record "
+                "supported adequacy/failure brackets and unresolved gaps. A single comparison "
+                "result is not automatically an empirical boundary."
+            )
     profile["adapted_for"] = PROTOCOL
     return profile
 

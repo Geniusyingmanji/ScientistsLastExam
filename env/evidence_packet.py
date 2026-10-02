@@ -371,7 +371,8 @@ def build_packet(report, *, review_id="review-0001", report_sha256=None, science
         if not re.fullmatch(r"[0-9a-f]{64}", report_sha256):
             raise ValueError("invalid source hash")
         packet["source_report_sha256"] = report_sha256
-    if report.get("task_profile") in ("open_discovery", "mechanism_discrimination", "regime_transfer"):
+    if report.get("task_profile") in ("open_discovery", "mechanism_discrimination", "regime_transfer",
+                                      "model_revision", "boundary_mapping"):
         packet["task_profile"] = report["task_profile"]
 
     def gap(code, number=None):

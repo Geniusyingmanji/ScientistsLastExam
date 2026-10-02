@@ -222,9 +222,9 @@ def test_metadata_revision_is_deliberate_and_old_score_scientific_contract_recon
     previous = {"open_discovery": "73f62e5b9ab0d1fde2c8dee12e78d90f476f25998e8f755d0e25865da1aa696d",
                 "mechanism_discrimination": "4a3d009cb0978c0610eb2f1439362e0b0f6b42a157af1d5038707a21fce09b62",
                 "regime_transfer": "633db647625a3f3131635b5156ca54f023cb4769b4c7034ea3bcf985c2aa769c"}
-    for name in TASK_PROFILE_NAMES:
+    for name in previous:
         profile = get_task_profile(name)
-        assert profile["catalog_version"] == "scientific-task-profiles-0.1.3"
+        assert profile["catalog_version"] == "scientific-task-profiles-0.1.4"
         assert canonical_hash(profile) == presentation_profiles._TASK_HASHES[name]
         assert canonical_hash(profile) != previous[name]
         profile["catalog_version"] = "scientific-task-profiles-0.1.2"

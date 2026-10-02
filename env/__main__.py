@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 from .microecology.agent import save_json
+from .task_profiles import TASK_PROFILE_NAMES
 
 
 def main():
@@ -15,7 +16,7 @@ def main():
     freeze.add_argument("--instances", type=int, default=5)
     freeze.add_argument("--rounds", type=int, default=16)
     freeze.add_argument("--exploration-rounds", type=int, default=14)
-    freeze.add_argument("--task-profile", default="open_discovery", choices=("open_discovery", "mechanism_discrimination", "regime_transfer"))
+    freeze.add_argument("--task-profile", default="open_discovery", choices=TASK_PROFILE_NAMES)
     freeze.add_argument("--presentation-profile", default="full_description", choices=("full_description", "apparatus_only"))
     freeze.add_argument("--balanced-strata", default="", help="comma-separated selected environments with trusted operator strata")
     freeze.add_argument("--analysis-protocol", default="legacy", choices=("legacy", "sle-analysis-snapshots-0.1"),

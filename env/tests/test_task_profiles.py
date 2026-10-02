@@ -14,8 +14,9 @@ from env.task_profiles import (APPLICABLE_ENVIRONMENTS, DEFAULT_TASK_PROFILE,
 
 def test_task_profiles_stable_identity_default_and_applicability():
     assert DEFAULT_TASK_PROFILE == "open_discovery"
-    assert TASK_PROFILE_NAMES == ("open_discovery", "mechanism_discrimination", "regime_transfer")
-    assert TASK_PROFILE_CATALOG_VERSION == "scientific-task-profiles-0.1.3"
+    assert TASK_PROFILE_NAMES == ("open_discovery", "mechanism_discrimination", "regime_transfer",
+                                  "model_revision", "boundary_mapping")
+    assert TASK_PROFILE_CATALOG_VERSION == "scientific-task-profiles-0.1.4"
     assert APPLICABLE_ENVIRONMENTS == (
         "microecology", "coupled_oscillators", "reaction_kinetics", "heat_transport",
         "gene_regulation", "ising_spin", "hysteresis_material", "microecology_causal",
@@ -47,7 +48,9 @@ def test_task_profiles_are_json_safe_defensive_copies():
 
 def test_task_profiles_have_reviewable_evidence_without_scoring_changes():
     allowed_sources = {"research_notes", "explanation", "experiment_records", "analysis_records", "frozen_predictor"}
-    allowed_timings = {"by_final_submission", "before_discriminating_result", "before_transfer_result"}
+    allowed_timings = {"by_final_submission", "before_discriminating_result", "before_transfer_result",
+                       "before_original_result", "before_revision", "before_revision_test_result",
+                       "before_boundary_observations", "before_each_mapping_result"}
     for profile in list_task_profiles():
         ids = [item["id"] for item in profile["evidence_requirements"]]
         assert len(ids) == len(set(ids))
@@ -86,8 +89,8 @@ def test_task_profiles_require_distinct_scientific_workflows():
     assert "Independent fits" in transfer["public_prompt"]
     assert "identifiability" in discrimination["public_prompt"]
     assert all(item["timing"] == "by_final_submission" for item in open_profile["evidence_requirements"])
-    assert len({p["public_prompt"] for p in list_task_profiles()}) == 3
-    assert len({p["scientific_scope"]["primary_measure"] for p in list_task_profiles()}) == 3
+    assert len({p["public_prompt"] for p in list_task_profiles()}) == 5
+    assert len({p["scientific_scope"]["primary_measure"] for p in list_task_profiles()}) == 5
 
 
 @pytest.mark.parametrize("name", [None, True, 1, [], {}, "", "unknown", "OPEN_DISCOVERY"])
@@ -133,4 +136,4 @@ def test_task_profiles_have_no_private_imports_io_or_api_calls():
          patch("pathlib.Path.read_text", side_effect=AssertionError("unexpected file access")), \
          patch("socket.socket", side_effect=AssertionError("unexpected network access")):
         for environment in APPLICABLE_ENVIRONMENTS:
-            assert len(list_task_profiles(environment)) == 3
+            assert len(list_task_profiles(environment)) == 5

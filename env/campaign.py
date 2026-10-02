@@ -38,7 +38,7 @@ def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14
         raise ValueError("balanced strata must explicitly name distinct selected environments")
     limits = dict(DEFAULT_LIMITS, rounds=rounds, exploration_rounds=exploration_rounds)
     profile = get_task_profile(task_profile)
-    presentation = get_presentation_profile(presentation_profile)
+    presentation = get_presentation_profile(presentation_profile, task_profile=profile)
     for name in names:
         get_presentation_profile(presentation_profile, name)
     rows = []
