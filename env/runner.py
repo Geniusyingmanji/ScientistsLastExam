@@ -14,6 +14,7 @@ from .registry import ENVIRONMENTS, load_world
 from .scoring import (aggregate_episode, canonical_hash, prediction_metrics,
                       score_contract, validate_submission, verify_claims)
 from .task_profiles import get_task_profile
+from .presentation_profiles import present_problem, present_system
 
 
 DEFAULT_LIMITS = {
@@ -46,6 +47,12 @@ problem (public description), records (ALL observations as id/spec/observation/c
 and history (all previous public turns). Assign result to concise JSON; stdout
 also returns. You may fit scientific models from the public data. No network,
 simulator import, private file, oracle call, subprocess or future test outcomes.
+Each record's observation is a dictionary with axis, channels and values.
+For example: y = np.asarray(records[0]["observation"]["values"], dtype=float).
+The numeric matrix is observation["values"], not observation itself. Import numpy
+as np before this example. Convert NumPy arrays/scalars in result to JSON types
+with .tolist() / float() / int(). Analysis errors include a bounded message and
+the candidate's line number when available; use them to correct the next call.
 Analysis uses a total ACTIVE execution allowance; model idle time is excluded.
 The prompt contains an observation catalog and recent results; all older data
 remain accessible in records during analysis. Do not infer missing values.
@@ -141,6 +148,9 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
         problem["task_profile"] = task_profile
     problem["score_contract"] = score_contract()
     problem["submission_contract"] = {"entrypoint": "predict(spec)", "returns": "values array only; exact public channel order", "claim_count": "0..3", "claim_replicates_per_arm": 8}
+    presentation = instance.get("presentation_profile", "full_description")
+    problem = present_problem(problem, presentation, environment=world.name)
+    system = present_system(SYSTEM, presentation)
     result = {}
 
     def snapshot():
@@ -152,6 +162,8 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
         result.update({"episode_id": instance["episode_id"], "environment": world.name, "world_version": world.version,
                        "cohort": instance.get("cohort", "unspecified"), "requested_model": client.config.model,
                        "task_profile": instance.get("task_profile", "open_discovery"),
+                       "presentation_profile": presentation, "public_problem_sha256": canonical_hash(problem),
+                       "public_system_sha256": canonical_hash(system),
                        "decoding": {k: getattr(client.config, k, None) for k in ("wire", "stream", "max_output_tokens", "chat_max_tokens_field", "temperature", "reasoning_effort", "timeout_seconds")},
                        "provider_reported_models": sorted(models), "status": state, "stop_reason": stop,
                        "infrastructure_failure": infrastructure, "model_completed": complete,
@@ -198,10 +210,10 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
             if len(encoded) > 260000:
                 stop = "model_context_budget"
                 break
-            row = {"round": number, "prompt_sha256": canonical_hash(prompt), "system_sha256": canonical_hash(SYSTEM)}
+            row = {"round": number, "prompt_sha256": canonical_hash(prompt), "system_sha256": canonical_hash(system)}
             rounds.append(row)
             try:
-                raw = call_with_deadline(lambda: client.complete(encoded, system=SYSTEM), min(remaining, client.config.timeout_seconds+65))
+                raw = call_with_deadline(lambda: client.complete(encoded, system=system), min(remaining, client.config.timeout_seconds+65))
             except Exception as exc:
                 row.update(error=type(exc).__name__, usage=client.last_usage, diagnostic=client.last_transport_error)
                 # Empty/invalid/truncated model text is a model outcome; HTTP,

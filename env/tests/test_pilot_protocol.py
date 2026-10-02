@@ -462,6 +462,40 @@ def test_report_artifacts_preserve_denominators_and_escape_model_text(tmp_path):
     assert "episodes/good/report.json" in page and "summary.json" in page
 
 
+def test_report_renders_bootstrap_interval_after_multiple_instances(tmp_path):
+    rows = [_report("a1", "a", score=80), _report("a2", "a", score=60)]
+    _write_report_inputs(tmp_path, [{"episode_id": r["episode_id"], "environment": "a"} for r in rows], rows)
+    summary = render_report(tmp_path)
+    assert summary["macro_bootstrap_95"] is not None
+    assert "95% 区间" in (tmp_path / "index.html").read_text()
+
+
+def test_apparatus_presentation_reaches_model_and_analysis_with_real_world(tmp_path):
+    from env.coupled_oscillators.world import World
+    from env.presentation_profiles import present_system
+    from env.runner import SYSTEM
+    world = World(7)
+    analyzer = FakeAnalysis(2)
+    class CaptureClient(FakeClient):
+        def complete(self, prompt, system=None):
+            self.system = system
+            return super().complete(prompt, system)
+    client = CaptureClient([{"note": "Inspect instrument", "analyze": {"code": "result = problem['name']"}},
+                            {"note": "Freeze", "submit": {"predictor_code": "def predict(spec): return []", "claims": [], "explanation": "Fixture"}}])
+    instance = {"episode_id": "instrument-test", "environment": world.name, "world_seed": 7,
+                "panel_seed": 17, "confirmation_key": "private", "presentation_profile": "apparatus_only"}
+    limits = dict(DEFAULT_LIMITS, rounds=2, exploration_rounds=1, panel_count=1)
+    with patch("env.runner.load_world", return_value=(world, lambda records, query: world.run(query)["values"])):
+        report = run_episode(instance, limits, tmp_path, client, analysis_factory=lambda seconds: analyzer,
+                             predict_fn=lambda path, query, seconds: world.run(query)["values"])
+    assert report["model_completed"]
+    assert client.prompts[0]["problem"]["name"] == "apparatus"
+    assert analyzer.calls[0][1] == client.prompts[0]["problem"]
+    assert "coupled_oscillators" not in json.dumps(client.prompts[0]["problem"])
+    assert client.system == present_system(SYSTEM, "apparatus_only")
+    assert report["public_system_sha256"] == report["rounds"][0]["system_sha256"]
+
+
 @pytest.mark.parametrize("has_started_marker", [False, True])
 def test_worker_failure_does_not_disappear_or_remain_running_in_report(tmp_path, has_started_marker):
     instances = [{"episode_id": "good", "environment": "a"}, {"episode_id": "broken", "environment": "a"}]

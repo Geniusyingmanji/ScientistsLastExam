@@ -84,6 +84,7 @@ def test_gene_drive_event_requires_half_hour_response():
     ("reaction_kinetics", "times_s", "B", 1.0),
     ("heat_transport", "times", "probe_1_temperature", 0.5),
     ("gene_regulation", "times_h", "G1", 0.5),
+    ("hysteresis_material", "times", "response", 0.5),
 ])
 def test_all_declared_initial_state_resolution_boundaries(world_name, axis, channel, minimum):
     # Standalone semantics needs no world construction, parameter access or
@@ -93,6 +94,14 @@ def test_all_declared_initial_state_resolution_boundaries(world_name, axis, chan
     assert claim_eligibility(world_name, control, treatment, {"row": 0, "channel": channel}, axis)["reason"] == "readout_before_temporal_resolution"
     assert not claim_eligibility(world_name, control, treatment, {"row": 1, "channel": channel}, axis)["eligible"]
     assert claim_eligibility(world_name, control, treatment, {"row": 2, "channel": channel}, axis)["eligible"]
+
+
+def test_material_ramp_knot_does_not_assign_response_or_restart_lag():
+    world, _ = load_world("hysteresis_material", 7)
+    control = {"reset": "negative", "preparation": [], "protocol": [{"time": 0, "field": 0}], "times": [0, 0.5, 10]}
+    treatment = copy.deepcopy(control)
+    treatment["protocol"] = [{"time": 0, "field": 0}, {"time": 10, "field": 0.8}]
+    assert decide(world, control, treatment, "response", 2)["eligible"]
 
 
 def test_oscillator_clamped_readout_fails_in_either_arm_but_downstream_and_cuts_pass():

@@ -1,0 +1,6 @@
+{
+  "reset": "positive",
+  "preparation": [],
+  "protocol": [{"time": 0, "field": 0}],
+  "times": [0, 0.5, 2, 10, 30, 60, 120, 300]
+}

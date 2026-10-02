@@ -13,7 +13,7 @@ DEFAULT_TASK_PROFILE = "open_discovery"
 TASK_PROFILE_NAMES = ("open_discovery", "mechanism_discrimination", "regime_transfer")
 APPLICABLE_ENVIRONMENTS = (
     "microecology", "coupled_oscillators", "reaction_kinetics", "heat_transport",
-    "gene_regulation", "ising_spin",
+    "gene_regulation", "ising_spin", "hysteresis_material",
 )
 
 

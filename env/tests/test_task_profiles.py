@@ -18,7 +18,7 @@ def test_task_profiles_stable_identity_default_and_applicability():
     assert TASK_PROFILE_CATALOG_VERSION == "scientific-task-profiles-0.1.0"
     assert APPLICABLE_ENVIRONMENTS == (
         "microecology", "coupled_oscillators", "reaction_kinetics", "heat_transport",
-        "gene_regulation", "ising_spin",
+        "gene_regulation", "ising_spin", "hysteresis_material",
     )
     assert get_task_profile() == get_task_profile("open_discovery")
     assert [p["name"] for p in list_task_profiles()] == list(TASK_PROFILE_NAMES)

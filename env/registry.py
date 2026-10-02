@@ -2,7 +2,7 @@
 import importlib
 
 ENVIRONMENTS = ("microecology", "coupled_oscillators", "reaction_kinetics", "heat_transport",
-                "gene_regulation", "ising_spin")
+                "gene_regulation", "ising_spin", "hysteresis_material")
 
 
 def load_world(name, seed):

@@ -81,7 +81,7 @@ include = ["sle", "env", "env.*"]
 namespaces = false
 
 [tool.setuptools.package-data]
-"*" = ["world.json", "README.md", "VALIDATION.md", "CONTRACT.md", "EVALUATION.md", "TASKS.md", "examples/*.py", "examples/*.json"]
+"*" = ["world.json", "README.md", "VALIDATION.md", "SCIENTIFIC_NOTES.md", "CONTRACT.md", "EVALUATION.md", "TASKS.md", "PROSPECTIVE.md", "examples/*.py", "examples/*.json"]
 
 [tool.pytest.ini_options]
 # Repository modules are imported as `sle.*` and `scripts.*` from the repository root. This is not

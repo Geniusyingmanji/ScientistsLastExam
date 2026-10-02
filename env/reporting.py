@@ -9,6 +9,7 @@ import numpy as np
 
 from .microecology.agent import save_json
 from .scoring import WEIGHTS
+from .diagnostics import trace_diagnostics
 
 
 def _rate(numerator, denominator):
@@ -31,15 +32,26 @@ def summarize(reports, expected_environments):
         valid = [r for r in rows if r.get("model_completed")]
         scores = [float(r.get("score") or 0) for r in rows]
         baselines = {}
+        prediction_errors = {}
+        prediction_scores = {}
         for kind in ("conditions", "interventions"):
             values = [float(np.mean([p["score"] for p in r.get("baseline_panels", {}).get(kind, [])]))
                       for r in rows if r.get("baseline_panels", {}).get(kind)]
             baselines[kind] = float(np.mean(values)) if values else None
+            metrics = [p for r in rows for p in r.get("panels", {}).get(kind, [])]
+            valid_metrics = [p for p in metrics if p.get("valid") and p.get("normalized_rmse") is not None]
+            prediction_errors[kind] = {"mean": float(np.mean([p["normalized_rmse"] for p in valid_metrics])) if valid_metrics else None,
+                                      "valid_queries": len(valid_metrics), "recorded_queries": len(metrics)}
+            prediction_scores[kind] = float(np.mean([p["score"] for p in metrics])) if metrics else None
         by_environment[name] = {"healthy_runs": len(rows), "completed_runs": len(valid),
                                 "mean_score": float(np.mean(scores)) if scores else None,
                                 "scores": scores, "prediction_baseline_scores_on_verified_runs": baselines,
+                                "mean_subscores": {kind: float(np.mean([(r.get("subscores") or {}).get(kind, 0.0) for r in rows])) if rows else None
+                                                   for kind in WEIGHTS},
+                                "prediction_normalized_rmse": prediction_errors,
+                                "prediction_scores_on_recorded_queries": prediction_scores,
                                 "verified_nonzero_effects": sum(r.get("verified_nonzero_effects", 0) for r in rows),
-                                "completion": _rate(len(valid), len(rows))}
+                                "completion": _rate(len(valid), len(rows)), "trace_diagnostics": trace_diagnostics(rows)}
     full = all(v["scores"] for v in by_environment.values())
     macro = float(np.mean([v["mean_score"] for v in by_environment.values()])) if full else None
     interval = None
@@ -60,6 +72,7 @@ def summarize(reports, expected_environments):
             "by_environment": by_environment, "known_response_usage_lower_bound": usage,
             "cost_usd": None, "cost_note": "Provider billing not supplied; no guessed currency cost.",
             "weights": WEIGHTS, "depth_status": "requires separate trace/evidence review",
+            "trace_diagnostics": trace_diagnostics(reports),
             "notes": ["Bootstrap intervals describe this small sampled cohort, not the whole scientific capability of a model.",
                       "Verified effects are numerical replications, not automatic mechanism certificates.",
                       "Known-family simulation and hidden parameters do not by themselves establish contamination resistance."]}
@@ -101,7 +114,10 @@ def render_report(directory):
             indexed[name].update(status="failed", infrastructure_failure="worker_report_missing", score=None, model_completed=False)
     reports = list(indexed.values())
     summary = summarize(reports, manifest["environments"])
-    summary.update(cohort=manifest["cohort"], planned_runs=len(manifest["instances"]), source_sha256=manifest["source_sha256"])
+    summary.update(cohort=manifest["cohort"], planned_runs=len(manifest["instances"]), source_sha256=manifest["source_sha256"],
+                   score_protocol=(manifest.get("score_contract") or {}).get("protocol"),
+                   task_profile=(manifest.get("task_profile") or {}).get("name"),
+                   public_limits=manifest.get("limits"), decoding=manifest.get("decoding"))
     save_json(directory/"summary.json", summary)
     environment_rows = []
     for name, row in summary["by_environment"].items():
@@ -122,7 +138,7 @@ def render_report(directory):
                                 _fmt(claim["mean_difference"], 5), _fmt(claim["interval"][0], 5), _fmt(claim["interval"][1], 5),
                                 "非零效应复验通过" if claim["verified_nonzero_effect"] else "未满足非零效应复验条件", html.escape(claim["scope"])))
     interval = summary["macro_bootstrap_95"]
-    interval_text = "样本不足，暂不显示区间" if interval is None else "分层 bootstrap 95% 区间 [%s, %s]" % (_fmt(interval[0]), _fmt(interval[1]))
+    interval_text = "样本不足，暂不显示区间" if interval is None else "分层 bootstrap 95%% 区间 [%s, %s]" % (_fmt(interval[0]), _fmt(interval[1]))
     html_text = """<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SLE · 科学环境进度</title><style>
 :root{color-scheme:light;--ink:#183434;--muted:#5c7372;--accent:#087f72;--line:#d8e4de;--paper:#f5f7f3}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.65 system-ui,-apple-system,sans-serif}main{max-width:1180px;margin:auto;padding:42px 28px 80px}header{border-bottom:2px solid var(--ink);padding-bottom:24px;margin-bottom:26px}.eyebrow{letter-spacing:.15em;font-size:12px;color:var(--accent);font-weight:700}h1{font-size:38px;line-height:1.2;margin:12px 0}h2{font-size:22px;margin-top:36px}p{max-width:900px}.muted,small{color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{background:white;border:1px solid var(--line);border-radius:12px;padding:20px}.value{font-size:30px;font-weight:700;line-height:1.25;margin:10px 0}.card small{font-size:12px}table{border-collapse:collapse;width:100%%;background:white;font-size:14px}td,th{text-align:left;padding:13px;border-bottom:1px solid var(--line)}th{font-weight:600;background:#e8f0e9}a{color:var(--accent)}.scroll{overflow:auto}.claim{background:white;border-left:3px solid var(--accent);padding:15px 20px;margin:14px 0}.claim p{margin:8px 0}.tag{font-size:12px;font-weight:700;color:var(--accent)}.notice{padding:18px;background:#e9eee7;border-radius:10px}.meta{font-size:12px;overflow-wrap:anywhere}details{margin-top:20px}@media(max-width:800px){.cards{grid-template-columns:repeat(2,1fr)}h1{font-size:30px}main{padding:24px 16px}}@media(max-width:480px){.cards{grid-template-columns:1fr}}

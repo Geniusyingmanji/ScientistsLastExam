@@ -17,9 +17,10 @@ from .runner import DEFAULT_LIMITS, run_episode, source_digest
 from .scoring import canonical_hash, score_contract
 from .transport import CampaignClient
 from .task_profiles import get_task_profile
+from .presentation_profiles import get_presentation_profile
 
 
-def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14, task_profile="open_discovery"):
+def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14, task_profile="open_discovery", presentation_profile="full_description", balanced_strata=()):
     if not re.fullmatch(r"[a-z0-9][a-z0-9_-]{0,63}", cohort):
         raise ValueError("invalid cohort identifier")
     if not names or len(set(names)) != len(names) or any(n not in ENVIRONMENTS for n in names):
@@ -28,8 +29,15 @@ def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14
         raise ValueError("instances must be 1..30")
     if not 3 <= rounds <= 32 or not 1 <= exploration_rounds <= rounds-2:
         raise ValueError("rounds must leave at least 2 submission opportunities")
+    if (not isinstance(balanced_strata, (list, tuple)) or
+            any(not isinstance(name, str) or name not in names for name in balanced_strata) or
+            len(set(balanced_strata)) != len(balanced_strata)):
+        raise ValueError("balanced strata must explicitly name distinct selected environments")
     limits = dict(DEFAULT_LIMITS, rounds=rounds, exploration_rounds=exploration_rounds)
     profile = get_task_profile(task_profile)
+    presentation = get_presentation_profile(presentation_profile)
+    for name in names:
+        get_presentation_profile(presentation_profile, name)
     rows = []
     for index in range(instances):
         for name in names:
@@ -39,14 +47,35 @@ def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14
                 world_seed = secrets.randbelow(2**31)
             panel_seed = secrets.randbelow(2**31)
             world, _ = load_world(name, world_seed)
+            stratum = None
+            if name in balanced_strata:
+                labels = getattr(world, "operator_strata", ())
+                if not labels or not all(isinstance(label, str) for label in labels) or not callable(getattr(world, "operator_stratum", None)):
+                    raise ValueError("environment does not declare trusted operator strata")
+                stratum = labels[index % len(labels)]
+                for attempt in range(128):
+                    if world.operator_stratum() == stratum:
+                        break
+                    world_seed = secrets.randbelow(2**31)
+                    while world_seed in reserved:
+                        world_seed = secrets.randbelow(2**31)
+                    world, _ = load_world(name, world_seed)
+                else:
+                    raise ValueError("bounded stratum sampling exhausted before cohort freeze")
             row = {"episode_id": "%s-%s-%02d" % (cohort, name, index+1),
                    "cohort": cohort, "environment": name, "world_seed": world_seed,
-                   "panel_seed": panel_seed, "confirmation_key": secrets.token_hex(16), "task_profile": task_profile}
+                   "panel_seed": panel_seed, "confirmation_key": secrets.token_hex(16), "task_profile": task_profile,
+                   "presentation_profile": presentation_profile}
+            if stratum is not None:
+                row["operator_sampling_stratum"] = stratum
             row["panel_hashes"] = {kind: canonical_hash(world.panel(panel_seed, kind, limits["panel_count"]))
                                    for kind in ("conditions", "interventions")}
             rows.append(row)
     import numpy, scipy
-    return {"protocol": "sle-pilot-cohort-0.2", "cohort": cohort, "created_unix": time.time(),
+    return {"protocol": "sle-pilot-cohort-0.3", "cohort": cohort, "created_unix": time.time(),
+            "presentation_profile": presentation,
+            "sampling_policy": {"balanced_strata_environments": list(balanced_strata),
+                                "allocation": "Cycle declared operator strata in instance order; counts differ by at most one. Unlisted worlds use unrestricted random instances. Strata never enter the public problem."},
             "task_profile": profile, "runtime": {"python": sys.version, "numpy": numpy.__version__, "scipy": scipy.__version__},
             "source_sha256": source_digest(), "score_contract": score_contract(), "limits": limits,
             "reserved_development_world_seeds": [7, 46, 1439, 8743],

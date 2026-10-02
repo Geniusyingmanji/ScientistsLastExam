@@ -12,6 +12,7 @@ laboratory or external simulator service is required.
 | `heat_transport` | Three temperature probe trajectories | Heating, boundaries, flow, cooling and probe locations | Transport, loss and material heterogeneity |
 | `gene_regulation` | Four bounded expression trajectories | Regulatory drives and timed pulses | Nonlinear feedback, thresholds, adaptation and memory |
 | `ising_spin` | Six spin means and fifteen pair correlations | Temperature, fields, clamps and bond suppression | Collective equilibrium response, interactions and frustration |
+| `hysteresis_material` | One response trajectory after a controlled history | Reset sign, preparation, field ramps, dwells and return loops | Distinguishing delayed response from persistent preparation memory |
 
 These are synthetic, deliberately tractable scientific families. Hidden
 parameters and structures create new instances, but do not by themselves prove
@@ -20,8 +21,11 @@ Ising systems are not thermodynamic phase transitions; simulated microbes are no
 calibrated organisms. Each environment documents its own limitations.
 
 The initial formal pilot uses the first four environments. Gene regulation and
-Ising are separate expansion cohorts. Task orientation is separate from the world:
+Ising and material history use a separate expansion cohort. Task orientation is separate from the world:
 `open_discovery`, `mechanism_discrimination`, and `regime_transfer`; see [TASKS.md](TASKS.md).
+Material instances vary the hidden mechanism class under the same public
+instrument contract. This is an initial structural variation, not a tested
+out-of-family or contamination-resistant benchmark.
 
 ## Interfaces
 
@@ -67,16 +71,31 @@ uncertain timeouts. HTTP requests are never automatically retried. Existing
 cohort directories are not overwritten. A deliberate replacement run needs a new
 cohort ID, recorded reason and enough remaining budget; failures remain visible.
 
+`--presentation-profile apparatus_only` with oscillator/Ising environments reduces
+equation-family hints; the default is `full_description`. Public action semantics
+and the scoring rules remain visible. Family-informed baselines are not blind
+controls. `--balanced-strata hysteresis_material` uses its trusted operator strata
+to balance hidden mechanism classes before freezing; the private labels are never
+included in the agent's problem. Both settings are stored in the cohort manifest.
+
 `report.json` and `manifest-private.json` contain private test material and full
 transcripts. Keep them outside Git and candidate access. `summary.json` is a
 compact aggregate; inspect any export before publishing. `index.html` links to
 local raw records for operator review.
 
+`python -m env.progress_report --cohort formal=/private/campaign/core-a1
+--notes /private/curated-public-notes.json --output /public/progress` produces a
+self-contained HTML and allowlisted aggregate JSON without raw targets or seeds.
+Inspect curated notes before publishing. The normal per-cohort report remains
+an operator artifact because it links to raw reports.
+
 ## Evaluation and extension
 
 [EVALUATION.md](EVALUATION.md) specifies scores, denominators, evidence grades and
 limitations. Add an environment by implementing the contract, writing independent
-numerical checks, exposing a public-data-only baseline, then registering its name.
+numerical checks, exposing a public-data-only baseline, then registering its name
+and public claim-eligibility policy. Include it in task applicability and offline
+calibration, and verify privacy/shape/finite-output invariants before API trials.
 Run offline calibration on development seeds before freezing paid test cohorts.
 
 ```sh

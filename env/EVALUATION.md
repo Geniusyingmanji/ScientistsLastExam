@@ -1,4 +1,9 @@
-# Pilot evaluation protocol 0.3
+# Pilot evaluation protocol 0.4
+
+The frozen `core-c2` results used 0.3. Version 0.4 adds eligibility for the new
+material-history world; existing-world formulas, weights and scales are unchanged.
+The extension cohort also uses clearer analysis-schema/error feedback and a
+different request budget. It is reported separately, not pooled with `core-c2`.
 
 This pilot measures experimental investigation and frozen quantitative prediction
 in synthetic worlds. It does not match an agent's prose to a golden mechanism.
@@ -52,6 +57,9 @@ minimum evolution lag after preparation and every preceding event: microecology
 1 h, oscillator 0.25 s, reaction 1 s, heat 0.5 s and gene regulation 0.5 h. These
 are declared pilot eligibility resolutions, not estimated physical constants.
 Ising temperature is a control, so between-temperature contrasts remain legal.
+Material response claims require matched times at least 0.5 s after preparation.
+Its continuous field-ramp knots do not directly assign a response, so they do not
+restart this lag. Preparation/reset history occurs before the recorded timeline.
 The checks require no hidden mechanism and do not establish novelty; other
 analytically predetermined or semantically duplicate effects still need review.
 
@@ -138,3 +146,18 @@ still uses one qualitative mechanism family. Separate audits should test new
 structures, nuisance transformations, no-experiment controls, mechanism-class
 changes and prospective transfer before making broad contamination or discovery
 claims. Scaling experiments come after these measurement properties are stable.
+
+## Reduced presentation and prospective tasks
+
+An opt-in `apparatus_only` presentation is available for the mechanical and
+binary-ensemble apparatuses. It preserves operations, units, calibration, noise,
+budgets and scoring while withholding equations, parameter ranges and family
+labels. It is a prompt-information intervention, not a new hidden model family
+or proof against memorization. Existing baselines retain family knowledge.
+Both public problem and system text are projected and hashed before any request;
+the identical projected problem reaches isolated analysis.
+
+The separate prospective protocol in [PROSPECTIVE.md](PROSPECTIVE.md) seals
+executable rival predictions and a readout before collecting new measurements.
+It distinguishes numerical equivalence, rejection, separation and revision,
+without equating any of those checks to unique mechanism identification.

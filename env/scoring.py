@@ -6,7 +6,7 @@ import math
 import numpy as np
 from .claim_semantics import claim_eligibility, policy_description
 
-PROTOCOL = "sle-pilot-score-0.3"
+PROTOCOL = "sle-pilot-score-0.4"
 WEIGHTS = {"conditions": .5, "interventions": .3, "claims": .2}
 ERROR_SCALE = .1
 CLAIM_SLOTS = 3

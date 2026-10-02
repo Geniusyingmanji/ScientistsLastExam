@@ -48,6 +48,12 @@ manipulations. Do not expose test panels through `describe` or public experiment
 Different hidden seeds may change parameters and, where defensible, structures;
 neither alone is advertised as proven contamination resistance.
 
+Optional trusted-only `operator_strata` labels and `operator_stratum()` support
+explicit balanced sampling at cohort freeze. They must never appear in `describe`,
+observations, public errors or candidate context, and are not golden labels for
+scoring. Unstratified sampling remains the default; the private manifest records
+when a balanced sampling policy was selected.
+
 `baseline` receives records shaped as `{"spec": ..., "observation": ...}` and
 may only use that data and publicly documented ranges. An interpolation/nearest
 experiment baseline is acceptable initially; avoid any hidden recipe dependency.

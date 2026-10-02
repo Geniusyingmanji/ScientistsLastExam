@@ -16,6 +16,7 @@ _TIME_RULES = {
     "reaction_kinetics": ("times_s", 1.0, "s", "interventions", "time_s", 33),
     "heat_transport": ("times", 0.5, "s", None, None, 25),
     "gene_regulation": ("times_h", 0.5, "h", "interventions", "time_h", 41),
+    "hysteresis_material": ("times", 0.5, "s", None, None, 129),
 }
 _OSCILLATOR_NODES = ("A", "B", "C", "D")
 _SPIN_NODES = ("A", "B", "C", "D", "E", "F")
@@ -25,6 +26,7 @@ _CHANNELS = {
     "reaction_kinetics": ("A", "B", "C", "D"),
     "heat_transport": ("probe_1_temperature", "probe_2_temperature", "probe_3_temperature"),
     "gene_regulation": ("G1", "G2", "G3", "G4"),
+    "hysteresis_material": ("response",),
     "ising_spin": (tuple("m_" + node for node in _SPIN_NODES) +
                    tuple("c_" + left + "_" + right for index, left in enumerate(_SPIN_NODES)
                          for right in _SPIN_NODES[index + 1:])),
@@ -50,7 +52,7 @@ def _decision(eligible, reason):
 def policy_description():
     """Return detached JSON-safe public policy; no sampled instance data."""
     return {
-        "protocol": "public-claim-eligibility-0.3",
+        "protocol": "public-claim-eligibility-0.4",
         "input_contract": "Apply to canonical public specs after normal experiment/readout validation.",
         "matched_coordinate": "Time-dependent worlds must observe the same time in both arms at the selected readout row. Ising temperatures may differ because temperature itself is a controlled treatment.",
         "absolute_coordinate_tolerance": _COORDINATE_TOLERANCE,
@@ -60,6 +62,7 @@ def policy_description():
             for name, rule in _TIME_RULES.items()
         },
         "time_rule": "In each time-dependent arm, the readout must be at least the listed lag after t=0 and after every event at or before that readout. Future events do not affect eligibility. The boundary lag is inclusive, within the absolute coordinate tolerance.",
+        "continuous_protocol_rule": "Material field-ramp knots change the drive but do not assign the response. They do not restart the eligibility lag; readouts need matched times and at least 0.5 seconds after preparation.",
         "resolution_interpretation": "These fixed lags declare pilot temporal-resolution eligibility; they are not hidden time constants, fitted detection thresholds, or mechanism-depth certification.",
         "oscillator_rule": "Reject x_NODE or v_NODE if NODE is clamped in either arm. Other downstream unclamped nodes remain eligible subject to the time rule.",
         "ising_rule": "The axis is an equilibrium temperature, not time. Each arm requires a positive temperature, with no temporal lag or cross-arm temperature matching requirement. Temperature-dependence claims remain allowed. Reject m_NODE if NODE is clamped in either arm; reject c_LEFT_RIGHT if both endpoints are clamped in either arm. One-clamped-endpoint correlations and other unclamped observables remain eligible.",

@@ -49,6 +49,8 @@ def _initial(name, spec, channels):
         return list(spec["initial_expression"])
     if name == "ising_spin":
         return None  # Temperature sweeps have no public time-zero state.
+    if name == "hysteresis_material":
+        return None  # Preparation fixes a field history, not the response value.
     raise ValueError("no declared initial-value semantics for this environment")
 
 
@@ -135,12 +137,12 @@ def _summarize(instances, names):
 def calibrate(names, *, seeds=DEVELOPMENT_SEEDS, panel_count=4, max_seconds=120):
     """Compare five baselines on disjoint development panels, without API calls.
 
-    Work is bounded by <=6 selected families, <=16 seeds, <=8 queries per panel,
+    Work is bounded by the registered families, <=16 seeds, <=8 queries per panel,
     exactly 12 training calls per world and a wall-time stop checked between
     bounded kernel/baseline calls. No formal/test outcome is read or fitted.
     """
-    if not isinstance(names, (list, tuple)) or not names or len(names) > 6 or any(not isinstance(name, str) for name in names) or len(set(names)) != len(names) or any(name not in ENVIRONMENTS for name in names):
-        raise ValueError("select 1..6 distinct registered environment names explicitly")
+    if not isinstance(names, (list, tuple)) or not names or len(names) > len(ENVIRONMENTS) or any(not isinstance(name, str) for name in names) or len(set(names)) != len(names) or any(name not in ENVIRONMENTS for name in names):
+        raise ValueError("select distinct registered environment names explicitly")
     if not isinstance(seeds, (list, tuple)) or not 1 <= len(seeds) <= 16 or any(type(seed) is not int or not 0 <= seed < 2**63 for seed in seeds) or len(set(seeds)) != len(seeds):
         raise ValueError("seeds must contain 1..16 distinct integers in [0, 2**63)")
     if type(panel_count) is not int or not 1 <= panel_count <= 8:
