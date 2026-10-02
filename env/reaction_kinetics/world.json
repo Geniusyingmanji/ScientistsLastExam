@@ -1,0 +1,30 @@
+{
+  "name": "reaction_kinetics",
+  "world_family": "ReactionKinetics",
+  "version": "reaction_kinetics-0.2.0",
+  "api_version": "sle-batch-world-v0.2",
+  "status": "construction_prototype",
+  "description": "Hidden sparse reversible reaction networks with Arrhenius rates, temperature switches and concentration additions.",
+  "trusted_implementation": {
+    "world": "env.reaction_kinetics.world:World",
+    "baseline": "env.reaction_kinetics.world:baseline"
+  },
+  "channels": ["A", "B", "C", "D"],
+  "normalization_scales_mM": [1.0, 1.0, 1.0, 1.0],
+  "measurement_noise_std_mM": [0.002, 0.002, 0.002, 0.002],
+  "measurement_noise": "independent_additive_Gaussian_unclipped",
+  "process_noise": false,
+  "numerical_model": "piecewise_constant_linear_ODE_matrix_exponential",
+  "instance_variation": ["graph_topology", "kinetic_rates", "activation_energies", "equilibrium_composition"],
+  "structural_holdout": false,
+  "contamination_resistance_proven": false,
+  "discovery_depth_scoring": false,
+  "difficulty_calibrated": false,
+  "intended_identification_rounds": [12, 16],
+  "holdout_kinds": ["conditions", "interventions"],
+  "capabilities": ["fresh_batch_experiments", "fixed_full_observation", "initial_mixtures", "temperature_control", "concentration_additions", "material_conservation", "stable_noise_replay"],
+  "agent_public_files": [],
+  "public_contract": "World.describe() and observation responses only; source, instance data and panels are trusted operator material",
+  "limits": {"sample_rows": 33, "interventions": 4, "time_s": 120, "temperature_k": [285, 365], "total_concentration_mM": 6},
+  "version_policy": "Change the version before benchmark release when scientific dynamics, observation, interventions or verification semantics change."
+}

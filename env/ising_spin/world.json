@@ -1,0 +1,32 @@
+{
+  "name": "ising_spin",
+  "world_family": "Finite Ising equilibrium",
+  "version": "ising_spin-0.2.0",
+  "api_version": "sle-batch-world-v0.2",
+  "status": "construction_prototype",
+  "description": "Infer signed interactions and local fields in six spins using temperature, field, clamp and bond-suppression experiments.",
+  "trusted_implementation": {
+    "world": "env.ising_spin.world:World",
+    "baseline": "env.ising_spin.world:baseline"
+  },
+  "axis_field": "temperatures",
+  "axis_units": "k_B*T/epsilon",
+  "capabilities": ["independent_equilibrium_preparations", "temperature_sweeps", "local_external_fields", "signed_spin_clamps", "fractional_bond_suppression", "magnetizations", "raw_pair_correlations", "frozen_predictions", "paired_effects"],
+  "numerical_model": "exact_enumeration_of_64_states",
+  "process_noise": false,
+  "monte_carlo_noise": false,
+  "measurement_noise": "independent_additive_Gaussian_without_clipping",
+  "channels": ["m_A", "m_B", "m_C", "m_D", "m_E", "m_F", "c_A_B", "c_A_C", "c_A_D", "c_A_E", "c_A_F", "c_B_C", "c_B_D", "c_B_E", "c_B_F", "c_C_D", "c_C_E", "c_C_F", "c_D_E", "c_D_F", "c_E_F"],
+  "scales": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  "noise_std": [0.003, 0.003, 0.003, 0.003, 0.003, 0.003, 0.003, 0.003, 0.003, 0.003, 0.003, 0.003, 0.003, 0.003, 0.003, 0.003, 0.003, 0.003, 0.003, 0.003, 0.003],
+  "instance_variation": "connected_graph_topology_signed_couplings_and_local_fields",
+  "structural_holdout": false,
+  "contamination_resistance_established": false,
+  "difficulty_calibrated": false,
+  "discovery_depth_scoring": false,
+  "thermodynamic_phase_transition_claim": false,
+  "baseline": "bounded_public_moment_matching_in_the_documented_pairwise_family",
+  "public_contract": "World.describe() and public observations only; trusted operator source, seed and private panels are not candidate attachments",
+  "limits": {"spins": 6, "enumerated_states": 64, "channels": 21, "max_temperatures": 32, "temperature_range": [0.35, 6.0], "max_panel_count": 64, "max_baseline_records": 256, "max_baseline_fit_rows": 64, "cost_per_experiment": [2, 9]},
+  "version_policy": "Scientific dynamics, observation or intervention changes require a version change before benchmark release. This construction prototype is not a frozen benchmark release."
+}

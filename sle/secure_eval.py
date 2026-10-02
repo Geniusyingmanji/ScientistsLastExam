@@ -199,7 +199,15 @@ def _is_system_library_destination(path: Path) -> bool:
         library_directories.update({Path("/lib") / multiarch, Path("/usr/lib") / multiarch})
     if path.parent in library_directories:
         return True
-    return path.parent in {Path("/lib"), Path("/usr/lib")} and path.name.startswith("ld-")
+    # Non-multiarch distributions also place ordinary shared libraries directly
+    # in /lib or /usr/lib. Admit conventional library/loader filenames there,
+    # never arbitrary files or whole directories. Only dependencies discovered
+    # from trusted ELF objects are subsequently mounted, one file at a time.
+    return (
+        path.parent in {Path("/lib"), Path("/usr/lib")}
+        and re.fullmatch(r"(?:lib[A-Za-z0-9_+.-]+|ld-[A-Za-z0-9_+.-]+)\.so(?:\.[0-9]+)*", path.name)
+        is not None
+    )
 
 
 @functools.lru_cache(maxsize=16)
@@ -283,6 +291,11 @@ def _elf_dependency_mount_args(
             raise RuntimeError(
                 "candidate runtime dependency is outside trusted library directories"
             )
+        elif not _is_system_library_destination(source):
+            # /lib -> /usr/lib aliases are fine. A conventional system-library
+            # pathname must not turn a symlink to unrelated host data into a
+            # candidate-visible file.
+            raise RuntimeError("candidate system library escapes its trusted directory")
         pair = (source, destination)
         for mounted_source, mounted_destination in libraries:
             if mounted_destination == destination and mounted_source != source:

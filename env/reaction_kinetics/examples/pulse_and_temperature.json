@@ -1,0 +1,9 @@
+{
+  "temperature_k": 305,
+  "initial_mM": [0, 0.6, 0, 0.4],
+  "times_s": [0, 5, 15, 30, 45, 60, 90],
+  "interventions": [
+    {"time_s": 30, "kind": "temperature", "temperature_k": 345},
+    {"time_s": 45, "kind": "add", "amounts_mM": [0.25, 0, 0, 0]}
+  ]
+}

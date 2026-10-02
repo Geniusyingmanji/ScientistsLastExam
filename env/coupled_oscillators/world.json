@@ -1,0 +1,29 @@
+{
+  "name": "coupled_oscillators",
+  "world_family": "Coupled mechanical oscillators",
+  "version": "coupled_oscillators-0.2.0",
+  "api_version": "sle-batch-world-v0.2",
+  "status": "construction_prototype",
+  "description": "Identify a hidden passive spring network from noisy motion and controlled cuts, loading, drag, clamps and forcing.",
+  "trusted_implementation": {
+    "world": "env.coupled_oscillators.world:World",
+    "baseline": "env.coupled_oscillators.world:baseline"
+  },
+  "capabilities": ["fresh_batch_experiments", "time_series", "signed_position_and_velocity", "initial_state_control", "spring_cuts", "mass_loading", "added_ground_damping", "clamped_nodes", "harmonic_forcing", "frozen_predictions", "paired_effects"],
+  "numerical_model": "linear_second_order_mechanics_with_matrix_exponential",
+  "process_noise": false,
+  "measurement_noise": "independent_additive_Gaussian_without_clipping",
+  "channels": ["x_A", "x_B", "x_C", "x_D", "v_A", "v_B", "v_C", "v_D"],
+  "channel_units": ["m", "m", "m", "m", "m/s", "m/s", "m/s", "m/s"],
+  "scales": [1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 2.0],
+  "noise_std": [0.002, 0.002, 0.002, 0.002, 0.003, 0.003, 0.003, 0.003],
+  "instance_variation": "connected_graph_topology_and_physical_coefficients",
+  "structural_holdout": false,
+  "contamination_resistance_established": false,
+  "difficulty_calibrated": false,
+  "discovery_depth_scoring": false,
+  "baseline": "public_record_integral_force_balance_fit_with_bounded_coefficients",
+  "public_contract": "World.describe() and public observations only; trusted operator source, seed and private panels are not candidate attachments",
+  "limits": {"nodes": 4, "channels": 8, "max_samples": 241, "max_seconds": 24, "max_panel_count": 64, "max_baseline_records": 256, "cost_per_experiment": [2, 15]},
+  "version_policy": "Scientific dynamics, observations or intervention semantics require a version change before benchmark release. This is not a frozen benchmark release."
+}

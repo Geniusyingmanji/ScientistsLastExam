@@ -1,0 +1,10 @@
+{
+  "times": [0, 0.5, 1, 2, 4, 8, 16, 30],
+  "probes": [0.2, 0.5, 0.8],
+  "initial_temperature": 20,
+  "boundary_temperatures": [20, 20],
+  "ambient_temperature": 20,
+  "heaters": [{"position": 0.3, "power": 4, "width": 0.08}],
+  "flow": 0,
+  "cooling": 1
+}

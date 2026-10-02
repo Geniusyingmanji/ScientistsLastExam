@@ -1,0 +1,32 @@
+{
+  "name": "gene_regulation",
+  "world_family": "GeneRegulation",
+  "version": "gene_regulation-0.2.0",
+  "api_version": "sle-batch-world-v0.2",
+  "status": "construction_prototype",
+  "cohort": "expansion",
+  "axis_field": "times_h",
+  "description": "Hidden sparse signed four-gene networks with sigmoid synthesis, feedback and timed CRISPR-like drives.",
+  "trusted_implementation": {
+    "world": "env.gene_regulation.world:World",
+    "baseline": "env.gene_regulation.world:baseline"
+  },
+  "channels": ["G1", "G2", "G3", "G4"],
+  "normalization_scales": [1, 1, 1, 1],
+  "measurement_noise_std": [0.004, 0.004, 0.004, 0.004],
+  "measurement_noise": "independent_additive_Gaussian_unclipped",
+  "process_noise": false,
+  "numerical_model": "nonlinear_ODE_fixed_step_RK4_with_event_splitting",
+  "instance_variation": ["signed_graph_topology", "regulatory_strength", "bias", "decay_rate"],
+  "structural_holdout": false,
+  "contamination_resistance_proven": false,
+  "discovery_depth_scoring": false,
+  "difficulty_calibrated": false,
+  "intended_identification_rounds": [10, 16],
+  "holdout_kinds": ["conditions", "interventions"],
+  "capabilities": ["fresh_experiments", "full_expression_observation", "initial_state_preparation", "signed_gene_drives", "pulse_recovery", "nonlinear_saturation", "feedback", "stable_noise_replay"],
+  "agent_public_files": [],
+  "public_contract": "World.describe() and observation responses only; implementation, instance fields and panels are private operator material",
+  "limits": {"sample_rows": 41, "interventions": 4, "time_h": 24, "expression": [0, 1], "drive": [-3, 3], "simultaneous_targets": 2, "integration_steps_max": 644},
+  "version_policy": "Change the version before benchmark release when dynamics, observation, intervention or verification semantics change."
+}

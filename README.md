@@ -29,10 +29,12 @@
 ## 当前任务
 
 虚拟科学环境统一放在 [env/](env/README.md)，每个环境一个子文件夹。
-目前可运行的[微生态虚拟世界原型](env/microecology/README.md)提供三菌培养、持续演化的培养舱、
-匿名化学测量、采样与上清转移、组分去除，以及冻结后对自选数值主张执行新实验。
+目前包含微生态、耦合振子、反应动力学、热传输、基因调控和有限 Ising 自旋六个世界，
+共用冻结预测器、独立主张复验、请求账本和 HTML 报告。入口与扩展契约见 [环境文档](env/README.md)，
+评分、完成率分母及发现深度边界见 [评测协议](env/EVALUATION.md)。
+[微生态的持续培养舱接口](env/microecology/README.md)另保留采样、上清转移和组分去除。
 `python -m env.microecology demo --output-dir /var/tmp/sle-microecology-demo` 可生成实验图和证据报告，无需模型 API。
-它尚未进行难度、结构抗污染或 Discovery Depth 标定，不计入下方认证任务数量。
+这些环境处于 pilot 标定阶段，尚不构成结构抗污染或 Discovery Depth 认证，不计入下方认证任务数量。
 
 <!-- task-inventory:start -->
 
