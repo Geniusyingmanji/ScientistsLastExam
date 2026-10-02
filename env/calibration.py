@@ -34,7 +34,7 @@ def _initial(name, spec, channels):
     """Only public initial conditions; never a first held-out observation."""
     if name == "heat_transport":
         return [spec["initial_temperature"]] * len(channels)
-    if name == "microecology":
+    if name in ("microecology", "microecology_causal"):
         values = [spec["initial"][key] for key in ("A", "B", "C", "nutrient")] + [0.0] * 3
         # The public adapter applies time-zero feeds before measurement.
         for event in spec.get("events", []):

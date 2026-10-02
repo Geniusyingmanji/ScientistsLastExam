@@ -13,6 +13,7 @@ laboratory or external simulator service is required.
 | `gene_regulation` | Four bounded expression trajectories | Regulatory drives and timed pulses | Nonlinear feedback, thresholds, adaptation and memory |
 | `ising_spin` | Six spin means and fifteen pair correlations | Temperature, fields, clamps and bond suppression | Collective equilibrium response, interactions and frustration |
 | `hysteresis_material` | One response trajectory after a controlled history | Reset sign, preparation, field ramps, dwells and return loops | Distinguishing delayed response from persistent preparation memory |
+| `microecology_causal` (experimental) | Three strains and anonymous extracellular fractions | Inocula, nutrient, temperature, fraction depletion and feed pulses | Competing causal accounts, intervention responses and restricted identifiability |
 
 These are synthetic, deliberately tractable scientific families. Hidden
 parameters and structures create new instances, but do not by themselves prove
@@ -26,6 +27,14 @@ Ising and material history use a separate expansion cohort. Task orientation is 
 Material instances vary the hidden mechanism class under the same public
 instrument contract. This is an initial structural variation, not a tested
 out-of-family or contamination-resistant benchmark.
+
+The eighth world, [microecology_causal](microecology_causal/README.md), is registered
+for explicit experimental selection. Its hidden causal structures share one
+public batch instrument contract. Independent mechanism-design review remains
+pending; registration does not certify difficulty or mechanistic discovery.
+It is outside the completed core/expansion cohorts and the existing seven-world
+null calibration. Its separate offline development evidence is documented in
+[operator notes](microecology_causal/SCIENTIFIC_NOTES.md).
 
 ## Interfaces
 
@@ -76,7 +85,9 @@ equation-family hints; the default is `full_description`. Public action semantic
 and the scoring rules remain visible. Family-informed baselines are not blind
 controls. `--balanced-strata hysteresis_material` uses its trusted operator strata
 to balance hidden mechanism classes before freezing; the private labels are never
-included in the agent's problem. Both settings are stored in the cohort manifest.
+included in the agent's problem. The experimental `microecology_causal` world also
+supports this option when explicitly selected. Multiple selected worlds may be
+comma-separated. Both settings are stored in the cohort manifest.
 
 Future cohorts may explicitly use `--analysis-protocol sle-analysis-snapshots-0.1`
 to enable named immutable parameter/code snapshots; see [MODEL_SNAPSHOTS.md](MODEL_SNAPSHOTS.md).

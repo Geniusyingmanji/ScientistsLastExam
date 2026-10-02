@@ -12,6 +12,7 @@ import numbers
 _COORDINATE_TOLERANCE = 1e-12
 _TIME_RULES = {
     "microecology": ("times_h", 1.0, "h", "events", "time_h", 32),
+    "microecology_causal": ("times_h", 1.0, "h", "events", "time_h", 32),
     "coupled_oscillators": ("times", 0.25, "s", None, None, 241),
     "reaction_kinetics": ("times_s", 1.0, "s", "interventions", "time_s", 33),
     "heat_transport": ("times", 0.5, "s", None, None, 25),
@@ -22,6 +23,7 @@ _OSCILLATOR_NODES = ("A", "B", "C", "D")
 _SPIN_NODES = ("A", "B", "C", "D", "E", "F")
 _CHANNELS = {
     "microecology": ("A", "B", "C", "nutrient", "peak-01", "peak-02", "peak-03"),
+    "microecology_causal": ("A", "B", "C", "nutrient", "peak-01", "peak-02", "peak-03"),
     "coupled_oscillators": tuple(prefix + node for prefix in ("x_", "v_") for node in _OSCILLATOR_NODES),
     "reaction_kinetics": ("A", "B", "C", "D"),
     "heat_transport": ("probe_1_temperature", "probe_2_temperature", "probe_3_temperature"),
@@ -52,7 +54,7 @@ def _decision(eligible, reason):
 def policy_description():
     """Return detached JSON-safe public policy; no sampled instance data."""
     return {
-        "protocol": "public-claim-eligibility-0.4",
+        "protocol": "public-claim-eligibility-0.5",
         "input_contract": "Apply to canonical public specs after normal experiment/readout validation.",
         "matched_coordinate": "Time-dependent worlds must observe the same time in both arms at the selected readout row. Ising temperatures may differ because temperature itself is a controlled treatment.",
         "absolute_coordinate_tolerance": _COORDINATE_TOLERANCE,

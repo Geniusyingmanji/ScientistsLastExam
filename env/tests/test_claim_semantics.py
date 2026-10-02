@@ -56,8 +56,9 @@ def micro_spec(events=None):
             "temperature_c": 30, "times_h": [0, 12, 12.5, 13, 14], "events": events or []}
 
 
-def test_microdepletion_and_feed_require_one_hour_but_future_events_do_not():
-    world, _ = load_world("microecology", 1439)
+@pytest.mark.parametrize("name", ["microecology", "microecology_causal"])
+def test_microdepletion_and_feed_require_one_hour_but_future_events_do_not(name):
+    world, _ = load_world(name, 1439)
     control = micro_spec()
     treatment = micro_spec([{"time_h": 12, "deplete": {"channel": "peak-01", "fraction": 0.8}}])
     assert decide(world, control, treatment, "peak-01", 1)["reason"] == "readout_too_soon_after_event"
@@ -80,6 +81,7 @@ def test_gene_drive_event_requires_half_hour_response():
 
 @pytest.mark.parametrize("world_name,axis,channel,minimum", [
     ("microecology", "times_h", "A", 1.0),
+    ("microecology_causal", "times_h", "A", 1.0),
     ("coupled_oscillators", "times", "x_A", 0.25),
     ("reaction_kinetics", "times_s", "B", 1.0),
     ("heat_transport", "times", "probe_1_temperature", 0.5),

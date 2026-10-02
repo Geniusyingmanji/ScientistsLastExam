@@ -1,0 +1,6 @@
+{
+  "initial": {"A": 0.05, "B": 0.05, "C": 0.05, "nutrient": 5.0},
+  "temperature_c": 30,
+  "times_h": [0, 6, 12, 18, 24, 48, 72],
+  "events": [{"time_h": 12, "deplete": {"channel": "peak-01", "fraction": 0.8}}]
+}

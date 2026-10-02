@@ -2,7 +2,11 @@
 import importlib
 
 ENVIRONMENTS = ("microecology", "coupled_oscillators", "reaction_kinetics", "heat_transport",
-                "gene_regulation", "ising_spin", "hysteresis_material")
+                "gene_regulation", "ising_spin", "hysteresis_material", "microecology_causal")
+
+# Registration enables explicit selection; it does not promote a world into an
+# existing cohort or certify its scientific difficulty.
+EXPERIMENTAL_ENVIRONMENTS = ("microecology_causal",)
 
 
 def load_world(name, seed):

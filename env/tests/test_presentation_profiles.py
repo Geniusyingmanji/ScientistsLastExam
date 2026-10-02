@@ -16,7 +16,7 @@ from env.presentation_profiles import (
 )
 from env.registry import ENVIRONMENTS, load_world
 from env.runner import DEFAULT_LIMITS, SYSTEM
-from env.scoring import score_contract
+from env.scoring import canonical_hash, score_contract
 from env.task_profiles import get_task_profile
 
 
@@ -335,3 +335,23 @@ def test_no_api_smoke_builds_both_complete_prompt_envelopes_without_budget_chang
         assert "Ising" not in encoded + system
         # No API request or runner/campaign execution is made by this smoke test.
         # Actual wiring must send this projection to BOTH public consumers.
+
+
+@pytest.mark.parametrize("environment,task,expected", [
+    ("coupled_oscillators", "open_discovery", "631fa8859a85b21dc6614efaa2edc5f61471b3722db1620f9cf7aa0c6b8f2fdb"),
+    ("coupled_oscillators", "mechanism_discrimination", "6655146d68f03d6a6b493347af5ce35139ec20f15ef8b4ef2c6eac38f3bc6293"),
+    ("coupled_oscillators", "regime_transfer", "b870706743a4d827e5aec5fc1b70f9d1cb07bfe92a4ad65defef48ce3731e3cc"),
+    ("ising_spin", "open_discovery", "448f20035fc9d7643451010b729095248ec935ebceb372c053beec310984a178"),
+    ("ising_spin", "mechanism_discrimination", "bbbda8bee9c93cf642851b3cb086ad9a7c329e5a173a8f3fea952f0abfd90d39"),
+    ("ising_spin", "regime_transfer", "6fcb14f1d991cd08c979c0567e3b81eec93da18cc87688d7a74720e808eda5c9"),
+])
+def test_eighth_world_registration_preserves_prior_apparatus_scientific_content(environment, task, expected):
+    # Fingerprints captured BEFORE microecology_causal registration. Only the
+    # catalog/policy revision strings are omitted; all scientific text, task
+    # instructions, noise, controls, scales and projected scoring rules remain.
+    world, _ = load_world(environment, 7)
+    projected = present_problem(assembled_problem(world, task), "apparatus_only")
+    del projected["task_profile"]["catalog_version"]
+    del projected["score_contract"]["claim_eligibility"]["protocol"]
+    assert canonical_hash(projected) == expected
+    assert "microecology_causal" not in json.dumps(projected)

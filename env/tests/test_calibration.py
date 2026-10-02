@@ -104,6 +104,30 @@ def test_public_initial_reference_never_uses_ising_equilibrium_truth():
                                            "initial_velocity": [0, 0, 0, 0]}, range(8)) == [1, 0, 0, 0, 0, 0, 0, 0]
 
 
+def test_experimental_microecology_initial_adapter_uses_only_declared_preparation():
+    spec = {"initial": {"A": .1, "B": .2, "C": .3, "nutrient": 4},
+            "events": [{"time_h": 0, "feed": 2}, {"time_h": 0, "feed": 1},
+                       {"time_h": 0, "deplete": {"channel": "peak-01", "fraction": 1}},
+                       {"time_h": 3, "feed": 3}]}
+    expected = [.1, .2, .3, 7, 0, 0, 0]
+    assert _initial("microecology_causal", spec, range(7)) == expected
+    assert _initial("microecology", spec, range(7)) == expected
+    assert spec["initial"]["nutrient"] == 4
+
+
+def test_experimental_world_requires_explicit_selection_and_generic_calibration_runs():
+    from env.claim_calibration import NULL_ENVIRONMENTS
+    assert len(NULL_ENVIRONMENTS) == 7 and "microecology_causal" not in NULL_ENVIRONMENTS
+    result = calibrate(["microecology_causal"], seeds=(7,), panel_count=1, max_seconds=20)
+    assert result["status"] == "complete"
+    assert len(result["instances"]) == 1
+    assert set(result["summary"]) == {"microecology_causal"}
+    methods = result["summary"]["microecology_causal"]["methods"]
+    for method in ("zero", "initial", "public_0", "public_4", "public_12"):
+        assert methods[method]["valid_predictions"] == 2
+        assert methods[method]["invalid_predictions"] == 0
+
+
 def test_panel_seeds_are_stable_and_namespaced_by_purpose_world_and_family():
     assert _panel_seed("heat_transport", 7, "conditions") == _panel_seed("heat_transport", 7, "conditions")
     values = [_panel_seed(name, seed, kind) for name in ("heat_transport", "ising_spin")

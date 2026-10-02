@@ -140,9 +140,12 @@ def _runtime_binding(world):
 def _observation_contract(world):
     additive = {"coupled_oscillators", "reaction_kinetics", "heat_transport", "gene_regulation",
                 "ising_spin", "hysteresis_material", "prospective_fixture"}
-    if world.name not in additive | {"microecology"}:
+    clipped = {"microecology", "microecology_causal"}
+    if world.name not in additive | clipped:
         raise ValueError("public noise bias model has not been approved for this environment")
-    bias = [value / math.sqrt(2.0 * math.pi) if world.name == "microecology" else 0.0 for value in world.noise_std]
+    # For nonnegative latent x, E[max(x + N(0, sigma^2), 0)] - x is
+    # nonnegative and at most sigma/sqrt(2*pi), attained when x = 0.
+    bias = [value / math.sqrt(2.0 * math.pi) if world.name in clipped else 0.0 for value in world.noise_std]
     return {"environment": world.name, "world_version": world.version, "axis_field": world.axis_field,
             "channels": list(world.channels), "scales": list(world.scales),
             "noise_std": list(world.noise_std), "noise_mean_bias_bound": bias}
@@ -199,6 +202,7 @@ class ProspectiveTask:
 
     def describe(self):
         return {"problem": deepcopy(self._world.describe()), "protocol": RUNNER_PROTOCOL,
+                "observation_contract": deepcopy(self._contract),
                 "limits": deepcopy(self._limits), "runtime_id": self._runtime_id,
                 "mechanism_identified": False, "discovery_depth_certified": False}
 
@@ -420,6 +424,19 @@ class ProspectiveTask:
         except Exception as error:
             self._fail(error)
             raise
+
+    def close(self, reason="driver_stopped"):
+        """End an unfinished task without discarding evidence or allowing resume."""
+        reasons = {"driver_stopped", "model_budget", "model_transport_error",
+                   "analysis_unavailable", "invalid_action", "final_missing"}
+        if reason not in reasons:
+            raise ValueError("unknown task close reason")
+        if self._state != "active":
+            return self.public_report()
+        self._state, self._error = "incomplete", reason
+        self._journal.append("task_closed", {"reason": reason, "usage": self._usage})
+        self._checkpoint()
+        return self.public_report()
 
 
 def verify_directory(directory):

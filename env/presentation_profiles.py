@@ -36,11 +36,13 @@ _DESCRIPTION_HASHES = {
     "ising_spin": "4101a4788fd43ae618092f02ac45a41fbbe01ff45a2e7dc446327f0cb4ed8572",
 }
 _TASK_HASHES = {
-    "open_discovery": "1adcb1a7eac296f303610a5b2b2504f2365032053ace3d9845aabc9e11dc73d2",
-    "mechanism_discrimination": "0f35608eeef9310d5b56e49cdd2e1d6c39369444e1454e7c5c09050eff6b3ae1",
-    "regime_transfer": "7772ee4da91ba3a729430657e06c6d3dfdf377e84d9402eba06c108049ca4793",
+    "open_discovery": "62e810593e644181529576b01c9dc51d60fa92ff403a0a028bf9723fc8975cb1",
+    "mechanism_discrimination": "559b10fbd35099218e4e01ecb6754b9a519ab6c75fcb881def9bebfa583543e3",
+    "regime_transfer": "fcdbe95eb56191a7a615aaeacdfb564b391e3e307e473239a92dd4570c1dbb98",
 }
-_SCORE_HASH = "87b6ad223ac9c8ede953d2070acb8baeea0112c4b722cfa94796358328470747"
+# Audited update: eighth-world applicability and matching public timing policy;
+# existing apparatus projections retain their scientific content unchanged.
+_SCORE_HASH = "31b63c09398feef9f9fca624106569ec97e2dfe0dde602fba2f6fb1b522092e3"
 _SYSTEM_HASH = "66b2af813e28055ecb137da97d7720f5c57de8d636ff6de8ab5edb00e21afa3e"
 _ATTACHMENTS = ("task_profile", "score_contract", "submission_contract")
 _SUBMISSION_CONTRACT = {

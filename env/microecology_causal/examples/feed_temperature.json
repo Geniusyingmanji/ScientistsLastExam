@@ -1,0 +1,6 @@
+{
+  "initial": {"A": 0.1, "B": 0.04, "C": 0.08, "nutrient": 3.0},
+  "temperature_c": 28,
+  "times_h": [0, 4, 8, 12, 16, 24, 36, 48],
+  "events": [{"time_h": 16, "feed": 1}, {"time_h": 24, "temperature_c": 34}]
+}
