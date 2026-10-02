@@ -36,6 +36,26 @@ Readiness is assessed per world and task. Registration, numerical consistency,
 mechanism identifiability and model-evaluation readiness are different states.
 New experimental worlds should not automatically join a model-ranking aggregate.
 
+The thirteen registered worlds passed a complete Linux regression of 1,883 tests,
+with one optional repeated material smoke test skipped. A separate native check
+completed the source/snapshot/prediction/target chain for spin echo and population
+drift with 10 World attempts and 8 isolated predictor calls. These are engineering
+results. The [spin-echo reference](spin_echo/REFERENCE_RESULTS.md) provides a
+same-observation, author-informed comparison on six reused instances: 30
+pulse/late-echo improvements and six plain-interpolation ties. It does not supply
+a GPT result or an unseen-structure test.
+
+The next structural split should withhold a versioned generating construction,
+with changed state coupling or dynamical order, from method development. Candidate
+constructions include a combined RC/RLC circuit, finite-rate exchange between
+magnetic sites, or an added regulatory-memory state in the microbial system.
+These are design proposals, not implemented holdouts. Any changed physical
+promise must appear in a common, truthful public contract for all comparison
+arms. Numerical verification fixtures expose their construction to reviewers;
+they must remain distinct from confirmation instances. Classic scientific
+principles may already be familiar to a model, even when a generating
+construction is withheld from this development workflow.
+
 ## A staged future experiment
 
 First choose a small set of worlds with complementary scientific demands and

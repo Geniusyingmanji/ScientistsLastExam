@@ -71,6 +71,9 @@ not uniquely identify an internal ensemble. Its 1 ms public claim lag and
 known-coordinate exclusions are administrative guards, not detection or
 discovery guarantees. It is outside the frozen GPT cohorts and the audited
 seven-world null bank; prototype research and integration smoke tests are separate.
+The [fixed reference study](spin_echo/REFERENCE_RESULTS.md) checks public-data
+prediction with disclosed author priors and preserves plain-interpolation ties.
+It is separate from model performance and does not establish a noise floor.
 
 The thirteenth world, [population_drift](population_drift/README.md), measures
 finite-ensemble expectations rather than individual random trajectories.
