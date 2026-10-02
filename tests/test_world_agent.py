@@ -116,3 +116,17 @@ def test_transport_failure_stops_episode_without_retry_and_keeps_unknown_usage(t
     assert report["transport"]["attempts"] == 1
     assert report["transport"]["failed_attempts"] == 1
     assert "PRIVATE-URL-SECRET" not in json.dumps(report)
+
+
+def test_azure_deployment_route_uses_explicit_version_without_changing_model(tmp_path):
+    config = LLMConfig(base_url="https://example.openai.azure.com/openai/deployments/my-deployment",
+                       model="my-deployment", api_key="TRANSIENT-TOKEN")
+    client = AuditedWorldClient(config, tmp_path, 2, azure_api_version="2024-12-01-preview")
+    def request(req, **kwargs):
+        assert req.full_url == config.base_url + "/chat/completions?api-version=2024-12-01-preview"
+        assert json.loads(req.data)["model"] == "my-deployment"
+        assert req.get_header("Authorization") == "Bearer TRANSIENT-TOKEN"
+        return io.BytesIO(json.dumps({"model": "reported", "choices": [{"message": {"content": "{}"}}]}).encode())
+    with patch("urllib.request.urlopen", side_effect=request):
+        client.complete("public data")
+    assert "TRANSIENT-TOKEN" not in (tmp_path / "model-transport.jsonl").read_text()

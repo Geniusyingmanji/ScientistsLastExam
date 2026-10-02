@@ -51,13 +51,32 @@ def command(args):
             from .llm import LLMConfig
             from .world_agent import AuditedWorldClient, WorldAnalysis, run_agent
             config = LLMConfig.from_dict(yaml.safe_load(Path(args.llm_config).read_text()) or {})
+            if args.azure_cli_auth:
+                import subprocess
+                import time
+                from urllib.parse import urlsplit
+                endpoint = urlsplit(config.base_url)
+                if (endpoint.scheme != "https" or endpoint.username or endpoint.query
+                        or not (endpoint.hostname or "").endswith(".openai.azure.com")):
+                    raise ValueError("Azure CLI auth requires an HTTPS Azure OpenAI endpoint")
+                try:
+                    token = json.loads(subprocess.check_output(
+                        ["az", "account", "get-access-token", "--resource",
+                         "https://cognitiveservices.azure.com", "-o", "json"],
+                        stderr=subprocess.DEVNULL, timeout=30, text=True))
+                    if int(token["expires_on"]) < time.time() + args.wall_seconds + 60:
+                        raise ValueError("insufficient token lifetime")
+                    config.api_key = token["accessToken"]
+                except Exception:
+                    raise RuntimeError("Azure CLI token unavailable or expires before episode deadline") from None
             if not 1 <= config.max_output_tokens <= 8000:
                 raise ValueError("world pilot requires max_output_tokens in 1..8000")
             if not 1 <= config.timeout_seconds <= 600:
                 raise ValueError("world pilot requires timeout_seconds in 1..600")
             analysis = WorldAnalysis(timeout_s=20) if args.analysis else None
             try:
-                client = AuditedWorldClient(config, directory, max_attempts=args.max_model_calls)
+                client = AuditedWorldClient(config, directory, max_attempts=args.max_model_calls,
+                                            azure_api_version=args.azure_api_version)
                 agent = run_agent(session, client, directory, max_rounds=args.max_model_calls,
                                   wall_seconds=args.wall_seconds, analysis=analysis)
             finally:
@@ -117,6 +136,8 @@ def add_parser(sub):
             parser.add_argument("--max-model-calls", type=int, default=32)
             parser.add_argument("--wall-seconds", type=float, default=1800)
             parser.add_argument("--analysis", action="store_true", help="enable isolated Python analysis; Linux sandbox required")
+            parser.add_argument("--azure-api-version", help="append Azure deployment API version to requests")
+            parser.add_argument("--azure-cli-auth", action="store_true", help="read an Azure CLI token into memory; never save credentials")
             parser.add_argument("--timeout", type=float, default=300)
 
 

@@ -5,6 +5,7 @@ import json
 import os
 import time
 from pathlib import Path
+from urllib.parse import urlencode
 
 from .episode_deadline import call_with_deadline
 from .posttest_transport import PostTestLLMClient
@@ -57,12 +58,13 @@ def save_json(path, value):
 class AuditedWorldClient(PostTestLLMClient):
     """One new ledger per invocation; write a started attempt before any network I/O."""
 
-    def __init__(self, config, directory, max_attempts=32):
+    def __init__(self, config, directory, max_attempts=32, azure_api_version=None):
         super().__init__(config, max_attempts=max_attempts)
         self.ledger = Path(directory) / "model-transport.jsonl"
         fd = os.open(str(self.ledger), os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
         os.close(fd)
         self.last_response_metadata = {}
+        self.azure_api_version = azure_api_version
 
     def _append(self, record):
         with self.ledger.open("a", encoding="utf-8") as stream:
@@ -74,6 +76,8 @@ class AuditedWorldClient(PostTestLLMClient):
         if self._attempts >= self._max_attempts:
             raise RuntimeError("world transport attempt budget exhausted")
         attempt = self._attempts + 1
+        if self.azure_api_version:
+            url += "?" + urlencode({"api-version": self.azure_api_version})
         self.last_response_metadata = {}
         # Headers and endpoint are never copied into artifacts. The payload has
         # only public problem/history plus declared decoding parameters.
@@ -165,6 +169,7 @@ def run_agent(session, client, directory, *, max_rounds=32, wall_seconds=1800, a
                   "limits": {"max_rounds": max_rounds, "wall_seconds": wall_seconds,
                              "max_actions_per_round": 64, "max_prompt_characters": 240000},
                   "analysis_enabled": analysis is not None, "world_state": session.state,
+                  "azure_api_version": getattr(client, "azure_api_version", None),
                   "stop_reason": stop, "elapsed_seconds": time.monotonic() - start,
                   "transport": client.transport_summary(), "usage": clone(client.total_usage),
                   "history": history, "rounds": rounds,

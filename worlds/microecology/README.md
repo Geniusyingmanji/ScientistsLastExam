@@ -92,6 +92,13 @@ reasons and provider-reported model identifiers separately from the requested ID
 Missing usage and unknown pricing remain unknown. World reports are checkpointed
 after every turn; incomplete episodes are not labeled successful discoveries.
 
+For an existing Azure deployment, set the config's `base_url` to
+`https://<resource>.openai.azure.com/openai/deployments/<deployment>` and the
+`model` to that deployment name. `--azure-api-version <version>` preserves the
+deployment API version. `--azure-cli-auth` uses the host's existing `az` login,
+keeps the token only in memory, and checks that it outlives the episode deadline.
+No credentials are written to the reports or model prompts.
+
 ## World and experimental semantics
 
 - Mechanism and parameters are fixed within an instance and all its confirmation
