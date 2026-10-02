@@ -64,8 +64,10 @@ nutrient additions. It uses no ecological equations, hidden mechanism menu,
 instance parameters or private seed. It is a weak empirical reference; a poor
 baseline result alone is not evidence of scientific difficulty or novelty.
 
-This eighth registered world remains **experimental**, pending independent
-mechanism-design review. It must be selected explicitly for a new frozen cohort;
+This eighth registered world remains **experimental**. Independent development
+review checked conservation and causal-identification limits; a bounded
+[author-informed reference](STRONG_REFERENCE.md) was calibrated separately.
+Neither is a live agent evaluation. Select it explicitly for a new frozen cohort;
 it does not enter completed core/expansion cohorts or the existing seven-world
 null calibration. All three public task profiles apply without revealing a
 mechanism menu. `full_description` is the supported presentation;

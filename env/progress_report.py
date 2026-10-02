@@ -94,8 +94,12 @@ def build_report(cohorts, notes, output):
                                 "diagnostics": cohort["trace_diagnostics"]}, ensure_ascii=False, indent=2))))
         if cohort["role"] == "development":
             table_sections[-1] = '<details><summary>开发批次记录（独立协议，不计入正式成绩）</summary>' + table_sections[-1] + '</details>'
-    findings = "".join('<article class="finding"><span>%s</span><h3>%s</h3><p>%s</p><small>%s</small></article>' %
-                       tuple(escape(item.get(key, "")) for key in ("tag", "title", "body", "evidence")) for item in notes.get("findings", []))
+    finding_cards = ['<article class="finding"><span>%s</span><h3>%s</h3><p>%s</p><small>%s</small></article>' %
+                     tuple(escape(item.get(key, "")) for key in ("tag", "title", "body", "evidence"))
+                     for item in notes.get("findings", [])]
+    findings = "".join(finding_cards[:6])
+    extra_findings = ('<details><summary>更多过程与校准诊断（%d 项）</summary><div class="findings">%s</div></details>' %
+                      (len(finding_cards) - 6, "".join(finding_cards[6:]))) if len(finding_cards) > 6 else ""
     worlds = "".join('<tr><th>%s</th><td>%s</td><td>%s</td></tr>' % tuple(escape(item.get(key, "")) for key in ("name", "question", "status")) for item in notes.get("worlds", []))
     actions = "".join('<li><strong>%s</strong><p>%s</p></li>' % (escape(item["title"]), escape(item["body"])) for item in notes.get("next_steps", []))
     validation = "".join('<li>%s</li>' % escape(item) for item in notes.get("validation", []))
@@ -103,12 +107,12 @@ def build_report(cohorts, notes, output):
 :root{--ink:#173d3a;--muted:#5a706d;--accent:#087e70;--paper:#f6f6ef;--line:#d4dfd7;--gold:#ae6a22}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.65 system-ui,-apple-system,sans-serif}main{max-width:1250px;margin:auto;padding:42px 30px 80px}header{padding-bottom:28px;border-bottom:2px solid var(--ink);margin-bottom:28px}.eyebrow,.section-label{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}.status{display:inline-block;border:1px solid var(--line);border-radius:100px;padding:4px 12px;margin-top:16px;font-size:12px;background:white}h1{font-size:40px;line-height:1.25;max-width:930px;margin:13px 0}h2{font-size:25px;line-height:1.35;margin:10px 0 14px}h3{font-size:19px;margin:5px 0 9px}p{margin:8px 0}.lead{font-size:18px;max-width:1050px}.muted,small,.caption{color:var(--muted)}.caption{font-size:12px;margin-top:12px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.metric{background:white;border:1px solid var(--line);padding:18px;border-radius:10px}.metric label{font-size:13px}.metric strong{display:block;font-size:27px;margin:10px 0}.metric small{display:block;font-size:11px}.notice{border-left:3px solid var(--gold);padding:14px 18px;margin:24px 0;background:#f0eadb}.cohort{margin-top:34px}table{border-collapse:collapse;background:white;width:100%%;font-size:13px}th,td{padding:12px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}thead th{background:#e7eee6;font-size:12px}tbody th{white-space:nowrap;font-weight:600}.score{font-weight:700;font-size:18px}.table-wrap{overflow:auto}.findings{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.finding{padding:20px;background:white;border:1px solid var(--line);border-radius:10px}.finding span{font-size:11px;color:var(--accent);font-weight:700}.finding small{font-size:11px}.section{margin-top:40px}ol{padding-left:23px}li{padding-left:5px;margin:12px 0}li p{color:var(--muted)}details{margin-top:15px}summary{cursor:pointer;color:var(--accent);font-size:13px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#eaf0e9;padding:15px;font-size:11px}footer{border-top:1px solid var(--line);margin-top:36px;padding-top:18px;font-size:12px;color:var(--muted)}a{color:var(--accent)}@media(max-width:900px){.metrics{grid-template-columns:repeat(2,1fr)}h1{font-size:31px}main{padding:27px 18px}}@media(max-width:550px){.findings,.metrics{grid-template-columns:1fr}h1{font-size:27px}.metric strong{font-size:26px}}
 </style></head><body><main><header><div class="eyebrow">SCIENTISTS' LAST EXAM / COMPUTATIONAL SCIENCE WORLDS</div><h1>%s</h1><p class="lead">%s</p><div class="status">%s</div></header><div class="metrics">%s</div>
 <div class="notice">综合分 = 50%% 未见条件预测 + 30%% 未见干预预测 + 20%% 自选主张复验。它是当前任务集上的 pilot 指标；高预测分、有效数值效应和机制发现深度分别报告。</div>
-%s<section class="section"><div class="section-label">EVIDENCE & LIMITS</div><h2>发现了什么，证据到哪里</h2><div class="findings">%s</div><p class="caption">%s</p></section>
+%s<section class="section"><div class="section-label">EVIDENCE & LIMITS</div><h2>发现了什么，证据到哪里</h2><div class="findings">%s</div>%s<p class="caption">%s</p></section>
 <section class="section"><div class="section-label">ENVIRONMENT COVERAGE</div><h2>环境与任务扩展</h2><div class="table-wrap"><table><thead><tr><th>世界</th><th>可研究的问题</th><th>当前状态</th></tr></thead><tbody>%s</tbody></table></div><p class="muted">%s</p></section>
 <section class="section"><div class="section-label">BEFORE SCALING</div><h2>下一步优先修正什么</h2><ol>%s</ol></section><details><summary>验证与复现信息</summary><ul>%s</ul></details>
 <footer>更新时间 %s UTC · <a href="data.json">下载结构化公开汇总</a> · 费用未知；未使用公开标价估算真实账单。私有 seed、封存目标和原始轨迹保留在操作目录。</footer></main></body></html>''' %
            (escape(headline), escape(notes.get("summary", "")), escape(notes.get("status", "工作继续进行中")), card_html,
-            "".join(table_sections), findings, escape(notes.get("review_status", "发现深度尚待独立轨迹审核。")), worlds,
+            "".join(table_sections), findings, extra_findings, escape(notes.get("review_status", "发现深度尚待独立轨迹审核。")), worlds,
             escape(notes.get("task_summary", "")), actions, validation, escape(data["generated_at_utc"][:19].replace("T", " "))))
     (output / "index.html").write_text(text, encoding="utf-8")
     return data

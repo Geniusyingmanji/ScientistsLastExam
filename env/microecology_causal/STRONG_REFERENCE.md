@@ -115,10 +115,33 @@ job reports; undefined errors remain null. Mean error/score denominators are
 explicit, and failed jobs are never silently treated as completed calibration.
 
 The prewritten operator plan is stored under central
-`calibration/microecology-causal-strong-reference/analysis-plan.json`. Local work
-has run small numerical fixtures and a one-residual, one-seed subprocess plumbing
-smoke only. That deliberately incomplete fit is **not difficulty evidence**. The
-four-seed, two-budget accuracy/convergence result remains pending remote execution.
+`calibration/microecology-causal-strong-reference/analysis-plan.json`. A local
+one-residual plumbing smoke was kept separate from the full remote calibration.
+
+The frozen `5acae27b` source then completed all eight planned fits on Linux.
+Every fit used all 234 residual attempts and retained its best available model;
+**none met the optimizer convergence criterion**. There were no job failures or
+invalid held-out predictions. Actual fit CPU time ranged from 22.07 to 48.07
+seconds. No retry or larger search was added after seeing these outcomes.
+
+| Source records | Query type | Author reference mean NRMSE | Author reference mean prediction score | Empirical baseline mean score |
+|---|---|---:|---:|---:|
+| 8 | Conditions | 0.0005512 | 99.4508 | 14.4370 |
+| 8 | Interventions | 0.0004797 | 99.5218 | 9.0637 |
+| 16 | Conditions | 0.0004066 | 99.5947 | 14.4912 |
+| 16 | Interventions | 0.0004083 | 99.5929 | 9.0704 |
+
+Each row contains 16 queries from four reused development instances. These are
+prediction-only diagnostics, not the pilot's prediction-plus-claim composite or
+an independent estimate of agent ability. The 8/16 comparison is not a model
+scaling result. Accurate frozen predictions establish learnability for this
+small sample under the declared strong prior and fixed source design; optimizer
+nonconvergence and parameter uncertainty remain explicit limitations.
+
+The private result archive SHA-256 is
+`32ec667b3ad89e0e0784091f7decef59442317f44ae768df83e4fe97a91bab15`.
+It retains all fits, source observations, queries and failures without putting
+raw calibration records in the repository or public progress report.
 
 ```sh
 python -m pytest env/microecology_causal/tests/test_strong_baseline.py -q
