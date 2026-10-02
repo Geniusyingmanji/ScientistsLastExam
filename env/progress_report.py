@@ -19,6 +19,50 @@ NAMES = {"microecology": "微生态反馈", "coupled_oscillators": "耦合振子
          "gene_regulation": "基因调控", "ising_spin": "平衡自旋",
          "hysteresis_material": "材料滞回"}
 
+EVIDENCE_COLUMNS = (("quantitative_model", "数量模型"),
+                    ("prospective_test", "前瞻检验"),
+                    ("meaningful_rival", "实质竞争解释"),
+                    ("changed_regime_transfer", "跨条件迁移"),
+                    ("empirical_boundary", "经验适用边界"),
+                    ("uncertainty_and_negative_results", "不确定性与负结果"))
+EVIDENCE_LABELS = {"supported": "支持", "partial": "部分支持",
+                   "not_demonstrated": "未展示", "unassessable": "无法判断"}
+
+
+def _evidence_matrix(sample):
+    """Display curated manual assessments; never infer grades or pooled rates."""
+    if sample is None:
+        return ""
+    if (type(sample) is not dict or set(sample) != {"selection", "review_scope", "rows"}
+            or any(type(sample[key]) is not str or not sample[key].strip()
+                   for key in ("selection", "review_scope"))
+            or type(sample["rows"]) is not list or not 1 <= len(sample["rows"]) <= 30):
+        raise ValueError("invalid curated evidence sample")
+    escape = lambda value: html.escape(value, quote=True)
+    rows = []
+    for row in sample["rows"]:
+        if (type(row) is not dict or set(row) != {"case", "assessments", "limitation"}
+                or any(type(row[key]) is not str or not row[key].strip()
+                       for key in ("case", "limitation"))
+                or type(row["assessments"]) is not dict
+                or set(row["assessments"]) != {key for key, _ in EVIDENCE_COLUMNS}
+                or any(type(value) is not str or value not in EVIDENCE_LABELS
+                       for value in row["assessments"].values())):
+            raise ValueError("invalid curated manual evidence row")
+        cells = "".join('<td>%s</td>' % EVIDENCE_LABELS[row["assessments"][key]]
+                        for key, _ in EVIDENCE_COLUMNS)
+        rows.append('<tr><th>%s</th>%s<td>%s</td></tr>' %
+                    (escape(row["case"]), cells, escape(row["limitation"])))
+    header = "".join('<th>%s</th>' % label for _, label in EVIDENCE_COLUMNS)
+    return ('<details><summary>样例证据逐维复核（%d 例）</summary>'
+            '<p class="muted">%s</p><p class="caption">%s</p>'
+            '<div class="table-wrap"><table><thead><tr><th>样例</th>%s'
+            '<th>主要限制</th></tr></thead><tbody>%s</tbody></table></div>'
+            '<p class="caption">这些是人工证据判断；引用与顺序校验不认证科学结论。'
+            '未展示不等于现象不存在。各维度不相加，不生成深度等级或发现率。</p></details>' %
+            (len(rows), escape(sample["selection"]), escape(sample["review_scope"]),
+             header, "".join(rows)))
+
 
 def _number(value, digits=1):
     return "—" if value is None else ("%.*f" % (digits, value))
@@ -48,6 +92,7 @@ def export_summary(directory, role):
 
 def build_report(cohorts, notes, output):
     """notes is operator-curated public prose, not an unfiltered review trace."""
+    evidence_matrix = _evidence_matrix(notes.get("evidence_sample"))
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     data = {"schema": "sle-public-progress-0.1", "generated_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
@@ -107,12 +152,12 @@ def build_report(cohorts, notes, output):
 :root{--ink:#173d3a;--muted:#5a706d;--accent:#087e70;--paper:#f6f6ef;--line:#d4dfd7;--gold:#ae6a22}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.65 system-ui,-apple-system,sans-serif}main{max-width:1250px;margin:auto;padding:42px 30px 80px}header{padding-bottom:28px;border-bottom:2px solid var(--ink);margin-bottom:28px}.eyebrow,.section-label{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}.status{display:inline-block;border:1px solid var(--line);border-radius:100px;padding:4px 12px;margin-top:16px;font-size:12px;background:white}h1{font-size:40px;line-height:1.25;max-width:930px;margin:13px 0}h2{font-size:25px;line-height:1.35;margin:10px 0 14px}h3{font-size:19px;margin:5px 0 9px}p{margin:8px 0}.lead{font-size:18px;max-width:1050px}.muted,small,.caption{color:var(--muted)}.caption{font-size:12px;margin-top:12px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.metric{background:white;border:1px solid var(--line);padding:18px;border-radius:10px}.metric label{font-size:13px}.metric strong{display:block;font-size:27px;margin:10px 0}.metric small{display:block;font-size:11px}.notice{border-left:3px solid var(--gold);padding:14px 18px;margin:24px 0;background:#f0eadb}.cohort{margin-top:34px}table{border-collapse:collapse;background:white;width:100%%;font-size:13px}th,td{padding:12px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}thead th{background:#e7eee6;font-size:12px}tbody th{white-space:nowrap;font-weight:600}.score{font-weight:700;font-size:18px}.table-wrap{overflow:auto}.findings{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.finding{padding:20px;background:white;border:1px solid var(--line);border-radius:10px}.finding span{font-size:11px;color:var(--accent);font-weight:700}.finding small{font-size:11px}.section{margin-top:40px}ol{padding-left:23px}li{padding-left:5px;margin:12px 0}li p{color:var(--muted)}details{margin-top:15px}summary{cursor:pointer;color:var(--accent);font-size:13px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#eaf0e9;padding:15px;font-size:11px}footer{border-top:1px solid var(--line);margin-top:36px;padding-top:18px;font-size:12px;color:var(--muted)}a{color:var(--accent)}@media(max-width:900px){.metrics{grid-template-columns:repeat(2,1fr)}h1{font-size:31px}main{padding:27px 18px}}@media(max-width:550px){.findings,.metrics{grid-template-columns:1fr}h1{font-size:27px}.metric strong{font-size:26px}}
 </style></head><body><main><header><div class="eyebrow">SCIENTISTS' LAST EXAM / COMPUTATIONAL SCIENCE WORLDS</div><h1>%s</h1><p class="lead">%s</p><div class="status">%s</div></header><div class="metrics">%s</div>
 <div class="notice">综合分 = 50%% 未见条件预测 + 30%% 未见干预预测 + 20%% 自选主张复验。它是当前任务集上的 pilot 指标；高预测分、有效数值效应和机制发现深度分别报告。</div>
-%s<section class="section"><div class="section-label">EVIDENCE & LIMITS</div><h2>发现了什么，证据到哪里</h2><div class="findings">%s</div>%s<p class="caption">%s</p></section>
+%s<section class="section"><div class="section-label">EVIDENCE & LIMITS</div><h2>发现了什么，证据到哪里</h2><div class="findings">%s</div>%s<p class="caption">%s</p>%s</section>
 <section class="section"><div class="section-label">ENVIRONMENT COVERAGE</div><h2>环境与任务扩展</h2><div class="table-wrap"><table><thead><tr><th>世界</th><th>可研究的问题</th><th>当前状态</th></tr></thead><tbody>%s</tbody></table></div><p class="muted">%s</p></section>
 <section class="section"><div class="section-label">BEFORE SCALING</div><h2>下一步优先修正什么</h2><ol>%s</ol></section><details><summary>验证与复现信息</summary><ul>%s</ul></details>
 <footer>更新时间 %s UTC · <a href="data.json">下载结构化公开汇总</a> · 费用未知；未使用公开标价估算真实账单。私有 seed、封存目标和原始轨迹保留在操作目录。</footer></main></body></html>''' %
            (escape(headline), escape(notes.get("summary", "")), escape(notes.get("status", "工作继续进行中")), card_html,
-            "".join(table_sections), findings, extra_findings, escape(notes.get("review_status", "发现深度尚待独立轨迹审核。")), worlds,
+            "".join(table_sections), findings, extra_findings, escape(notes.get("review_status", "发现深度尚待独立轨迹审核。")), evidence_matrix, worlds,
             escape(notes.get("task_summary", "")), actions, validation, escape(data["generated_at_utc"][:19].replace("T", " "))))
     (output / "index.html").write_text(text, encoding="utf-8")
     return data
