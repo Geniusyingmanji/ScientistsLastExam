@@ -95,8 +95,8 @@ or policy revision fields.
 
 ## Task and evidence design
 
-The existing orientations are open discovery, mechanism discrimination and regime
-transfer. They use the same apparatus. A useful task can expose a question without
+The existing orientations are open discovery, mechanism discrimination, regime
+transfer, model revision and boundary mapping. They use the same apparatus. A useful task can expose a question without
 naming a phenomenon that the agent must report. For example, a circular orbit can
 fit several force laws; a history-dependent response can arise from slow dynamics
 or multiple stable states. Let the agent choose and justify an informative test.

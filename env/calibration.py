@@ -57,6 +57,8 @@ def _initial(name, spec, channels):
         return None  # Temperature sweeps have no public time-zero state.
     if name == "hysteresis_material":
         return None  # Preparation fixes a field history, not the response value.
+    if name == "electrical_impedance":
+        return None  # Every frequency is a steady state; no initial value is assigned.
     raise ValueError("no declared initial-value semantics for this environment")
 
 
@@ -242,7 +244,11 @@ def calibrate(names, *, seeds=DEVELOPMENT_SEEDS, panel_count=4, max_seconds=120)
         "protocol": PROTOCOL, "status": "budget_exhausted" if exhausted else "complete",
         "selected_environments": list(names), "development_seeds": list(seeds), "panel_count_per_kind": panel_count,
         "record_counts": list(RECORD_COUNTS), "methods": list(METHODS),
-        "initial_baseline_unavailable": {"ising_spin": "Equilibrium temperature sweeps have no public initial state."} if "ising_spin" in names else {},
+        "initial_baseline_unavailable": {
+            name: reason for name, reason in (
+                ("ising_spin", "Equilibrium temperature sweeps have no public initial state."),
+                ("electrical_impedance", "Independent frequency steady states have no assigned initial value."))
+            if name in names},
         "source_sha256_before": source_before, "source_sha256_after": source_digest(),
         "elapsed_seconds": time.monotonic() - start, "max_seconds": max_seconds,
         "completed_instances": len(instances), "planned_instances": len(names) * len(seeds),

@@ -33,6 +33,7 @@ _CHANNELS = {
     "hysteresis_material": ("response",),
     "orbital_dynamics": ("x", "y", "vx", "vy"),
     "pattern_formation": tuple("probe_%02d" % index for index in range(16)),
+    "electrical_impedance": ("voltage_real", "voltage_imag"),
     "ising_spin": (tuple("m_" + node for node in _SPIN_NODES) +
                    tuple("c_" + left + "_" + right for index, left in enumerate(_SPIN_NODES)
                          for right in _SPIN_NODES[index + 1:])),
@@ -58,7 +59,7 @@ def _decision(eligible, reason):
 def policy_description():
     """Return detached JSON-safe public policy; no sampled instance data."""
     return {
-        "protocol": "public-claim-eligibility-0.7",
+        "protocol": "public-claim-eligibility-0.8",
         "input_contract": "Apply to canonical public specs after normal experiment/readout validation.",
         "matched_coordinate": "Time-dependent worlds must observe the same time in both arms at the selected readout row. Ising temperatures may differ because temperature itself is a controlled treatment.",
         "absolute_coordinate_tolerance": _COORDINATE_TOLERANCE,
@@ -72,6 +73,14 @@ def policy_description():
         "resolution_interpretation": "These fixed lags declare pilot temporal-resolution eligibility; they are not hidden time constants, fitted detection thresholds, or mechanism-depth certification.",
         "oscillator_rule": "Reject x_NODE or v_NODE if NODE is clamped in either arm. Other downstream unclamped nodes remain eligible subject to the time rule.",
         "ising_rule": "The axis is an equilibrium temperature, not time. Each arm requires a positive temperature, with no temporal lag or cross-arm temperature matching requirement. Temperature-dependence claims remain allowed. Reject m_NODE if NODE is clamped in either arm; reject c_LEFT_RIGHT if both endpoints are clamped in either arm. One-clamped-endpoint correlations and other unclamped observables remain eligible.",
+        "frequency_rules": {
+            "electrical_impedance": {
+                "axis_field": "frequencies_hz", "unit": "Hz", "range": [2, 5000],
+                "length": [1, 65], "order": "strictly increasing", "minimum_lag": None,
+                "readout_rule": "Each row is an independent sinusoidal steady state. The same zero-based row and voltage_real or voltage_imag channel select the readout in each arm. Selected frequencies may differ: frequency is a controlled treatment, so spectral contrasts are allowed. Apparatus-only contrasts use the same frequency; if frequency and apparatus both differ the claim is a combined contrast, not an isolated load or source effect. Every requested frequency in both arms must satisfy the public range and ordering. There is no elapsed time, t=0 assignment, carried state or temporal lag.",
+                "limits": "Public amplitude linearity and known external divider transformations are instrument facts. Eligibility or numerical verification does not certify discovery of a device mechanism or unique internal topology.",
+            },
+        },
         "limits": "Eligibility does not certify causal isolation, evidential relevance, semantic independence, surprise, identifiable mechanism, or novelty. Other analytically predetermined effects require separate evidence review.",
         "reason_codes": {
             "eligible": "Passes these public-semantic eligibility checks only.",
@@ -95,7 +104,8 @@ def claim_eligibility(world_name, control, treatment, readout, axis_field):
     """
     if not isinstance(world_name, str) or world_name not in _CHANNELS:
         return _decision(False, "unsupported_world")
-    expected_axis = "temperatures" if world_name == "ising_spin" else _TIME_RULES[world_name][0]
+    expected_axis = ("frequencies_hz" if world_name == "electrical_impedance" else
+                     "temperatures" if world_name == "ising_spin" else _TIME_RULES[world_name][0])
     if not isinstance(axis_field, str) or axis_field != expected_axis:
         return _decision(False, "mismatched_axis_field")
     if (not isinstance(readout, dict) or set(readout) != {"row", "channel"} or
@@ -103,6 +113,28 @@ def claim_eligibility(world_name, control, treatment, readout, axis_field):
             not isinstance(readout["channel"], str) or readout["channel"] not in _CHANNELS[world_name]):
         return _decision(False, "invalid_readout")
     row, channel = readout["row"], readout["channel"]
+    if world_name == "electrical_impedance":
+        # This finite public control check has no world imports or temporal rule.
+        try:
+            for spec in (control, treatment):
+                if not isinstance(spec, dict) or set(spec) != {"frequencies_hz", "source_ohm", "load_ohm", "amplitude_v"}:
+                    raise ValueError("invalid public spec")
+                axis = spec["frequencies_hz"]
+                if not isinstance(axis, list) or not 1 <= len(axis) <= 65:
+                    raise ValueError("invalid frequency axis")
+                if row >= len(axis):
+                    return _decision(False, "invalid_readout")
+                coordinates = [_number(value) for value in axis]
+                if (any(not 2 <= value <= 5000 for value in coordinates) or
+                        any(right <= left for left, right in zip(coordinates, coordinates[1:]))):
+                    raise ValueError("invalid frequency range or order")
+                for key, low, high in (("source_ohm", 100, 2000), ("load_ohm", 200, 20000),
+                                       ("amplitude_v", .25, 2)):
+                    if not low <= _number(spec[key]) <= high:
+                        raise ValueError("invalid apparatus control")
+        except (KeyError, TypeError, ValueError, OverflowError):
+            return _decision(False, "invalid_public_spec")
+        return _decision(True, "eligible")
     arms = (control, treatment)
     coordinates = []
     try:

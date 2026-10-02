@@ -16,6 +16,7 @@ laboratory or external simulator service is required.
 | `microecology_causal` (experimental) | Three strains and anonymous extracellular fractions | Inocula, nutrient, temperature, fraction depletion and feed pulses | Competing causal accounts, intervention responses and restricted identifiability |
 | `orbital_dynamics` (experimental) | Position and velocity of a body in a central field | Initial radius/velocity and timed impulses | Force-law ambiguity, dissipation and transfer beyond a circular trajectory |
 | `pattern_formation` (experimental) | Sixteen probes on a periodic scalar field | Initial modes, ring length and uniform drive | Mode growth, forcing, symmetry and partial observability |
+| `electrical_impedance` (experimental) | Quadrature voltage at a sealed linear one-port | Frequency, source resistance, parallel load and amplitude | Spectral response, resonance, relaxation and nonunique internal topology |
 
 These are synthetic, deliberately tractable scientific families. Hidden
 parameters and structures create new instances, but do not by themselves prove
@@ -53,6 +54,13 @@ semantics and several symmetry and growth limits have been reviewed. Probe
 aliasing and exact-zero preparations can conceal internal dynamics. Numerical
 work can fail explicitly; registration does not certify the full internal
 parameter domain or promote its development scores to model results.
+
+The eleventh world, [electrical_impedance](electrical_impedance/README.md),
+measures independent sinusoidal steady states. Frequency is a control axis, not
+elapsed time; it has no assigned initial readout or temporal-lag rule. Finite
+passive circuits can share an identical port response, so accurate spectral
+prediction need not identify an internal topology. Its prototype checks and
+experimental registration are separate from the completed GPT cohorts.
 
 ## Interfaces
 
@@ -104,7 +112,7 @@ and the scoring rules remain visible. Family-informed baselines are not blind
 controls. `--balanced-strata hysteresis_material` uses its trusted operator strata
 to balance hidden mechanism classes before freezing; the private labels are never
 included in the agent's problem. The experimental `microecology_causal` and
-`orbital_dynamics` and `pattern_formation` worlds also support this option when explicitly selected. Multiple selected worlds may be
+`orbital_dynamics`, `pattern_formation` and `electrical_impedance` worlds also support this option when explicitly selected. Multiple selected worlds may be
 comma-separated. Both settings are stored in the cohort manifest.
 
 Future cohorts may explicitly use `--analysis-protocol sle-analysis-snapshots-0.1`
@@ -159,6 +167,12 @@ authenticate time, or assign a discovery depth.
 [DISCOVERY_EVIDENCE.md](DISCOVERY_EVIDENCE.md) adds manual, per-dimension judgments
 with exact packet anchors and recorded-order checks. It preserves disagreements
 without computing a depth grade or certifying the scientific interpretation.
+
+[Analysis failure replay](../ANALYSIS_REPLAY.md) reconstructs archived public
+analysis inputs in the Linux sandbox for a separately frozen diagnostic. It
+preserves original time limits and results. Matching error types and enhanced
+messages can narrow a diagnosis; replay does not prove the original cause or
+change the model score.
 
 ## Evaluation and extension
 

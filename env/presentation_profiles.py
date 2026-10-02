@@ -36,15 +36,15 @@ _DESCRIPTION_HASHES = {
     "ising_spin": "4101a4788fd43ae618092f02ac45a41fbbe01ff45a2e7dc446327f0cb4ed8572",
 }
 _TASK_HASHES = {
-    "open_discovery": "2ef0f74d74a62a54c27ef4003bd06b404adb8fae84d57d31a184023ea1964d3c",
-    "mechanism_discrimination": "a0dd0ca42ed06e869464a7751067f61e04aa86faa4cde1c2a7a1051e85a0a67c",
-    "regime_transfer": "f2267d88ebab948e6e93f438314948ed320043cb163440f7a2c4393ce2e61738",
+    "open_discovery": "1e8ecc2c561a2701eeaafc697d2c3ce0aed742b511d2fea296f86c6c25a8a46b",
+    "mechanism_discrimination": "4bf581a505285aedc7618f193c8f12439550d6a1143563c800ae77051f84212a",
+    "regime_transfer": "27bf325ff11b0aba16f48369698df078aa0f5f4b8faf618aa0dfc35699aae95b",
 }
 # The two new scientific tasks remain unaudited for apparatus_only. The original
-# three hash updates account only for catalog 0.1.4, not scientific text changes.
-# Registration update: tenth-world applicability and matching public timing policy;
+# three hash updates account only for catalog 0.1.5 and eleventh-world applicability.
+# Score metadata adds an explicit frequency policy; old time/temperature rules and
 # existing apparatus projections retain their scientific content unchanged.
-_SCORE_HASH = "665c0b8946b72e302e1ee250a671148677681a694f0c2fd3cda610d419c5adda"
+_SCORE_HASH = "300effda40142b4a45b3b0d879aacb0020e6e7c4a3aed6820533b64925c65e72"
 _SYSTEM_HASH = "66b2af813e28055ecb137da97d7720f5c57de8d636ff6de8ab5edb00e21afa3e"
 _ATTACHMENTS = ("task_profile", "score_contract", "submission_contract")
 _SUBMISSION_CONTRACT = {

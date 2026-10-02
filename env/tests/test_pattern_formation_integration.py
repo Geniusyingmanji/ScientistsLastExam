@@ -50,8 +50,8 @@ def submission(row):
 
 
 def test_tenth_experimental_registration_preserves_private_generation_layers():
-    assert ENVIRONMENTS == PREVIOUS + (NAME,)
-    assert EXPERIMENTAL_ENVIRONMENTS == ("microecology_causal", "orbital_dynamics", NAME)
+    assert ENVIRONMENTS == PREVIOUS + (NAME, "electrical_impedance")
+    assert EXPERIMENTAL_ENVIRONMENTS == ("microecology_causal", "orbital_dynamics", NAME, "electrical_impedance")
     worlds = [load_world(NAME, seed)[0] for seed in (7, 46, 1439, 8743)]
     # Preserve the actual unbalanced development cohort, never search for replacements.
     assert [w.operator_stratum() for w in worlds].count("anchored_forcing") == 3
@@ -204,6 +204,7 @@ def test_previous_nine_world_scientific_schemas_noise_and_policy_are_unchanged()
         "4c7c88909d3de294ad5dd6f5694a24dec76d2e428fc6d395e8a35285f496b6a9"
     policy = policy_description()
     policy.pop("protocol")
+    assert set(policy.pop("frequency_rules")) == {"electrical_impedance"}
     policy["minimum_lag"].pop(NAME)
     assert canonical_hash(policy) == "eaddf457c8785075b69f46c7064e01da6e4d4d8529e3af1589d23f882123dc5e"
     expected = ("2361d13d49b27e0cb0371e7f44aea1373c8c8d8ab37bde8a763c2f77e741842c",
@@ -224,15 +225,17 @@ def test_metadata_revision_is_deliberate_and_old_score_scientific_contract_recon
                 "regime_transfer": "633db647625a3f3131635b5156ca54f023cb4769b4c7034ea3bcf985c2aa769c"}
     for name in previous:
         profile = get_task_profile(name)
-        assert profile["catalog_version"] == "scientific-task-profiles-0.1.4"
+        assert profile["catalog_version"] == "scientific-task-profiles-0.1.5"
         assert canonical_hash(profile) == presentation_profiles._TASK_HASHES[name]
         assert canonical_hash(profile) != previous[name]
         profile["catalog_version"] = "scientific-task-profiles-0.1.2"
         profile["applicable_environments"].remove(NAME)
+        profile["applicable_environments"].remove("electrical_impedance")
         assert canonical_hash(profile) == previous[name]
     contract = score_contract()
-    assert contract["claim_eligibility"]["protocol"] == "public-claim-eligibility-0.7"
+    assert contract["claim_eligibility"]["protocol"] == "public-claim-eligibility-0.8"
     assert canonical_hash(contract) == presentation_profiles._SCORE_HASH
     contract["claim_eligibility"]["protocol"] = "public-claim-eligibility-0.6"
     contract["claim_eligibility"]["minimum_lag"].pop(NAME)
+    assert set(contract["claim_eligibility"].pop("frequency_rules")) == {"electrical_impedance"}
     assert canonical_hash(contract) == "969e75b5a96947617af996535b8b8e5b854ff1190bea385d02db65dfd8ddc420"

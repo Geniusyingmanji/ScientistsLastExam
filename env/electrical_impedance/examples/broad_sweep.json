@@ -1,0 +1,6 @@
+{
+  "frequencies_hz": [2, 10, 30, 100, 300, 1000, 3000, 5000],
+  "source_ohm": 500,
+  "load_ohm": 5000,
+  "amplitude_v": 1
+}
