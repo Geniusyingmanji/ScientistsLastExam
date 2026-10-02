@@ -61,10 +61,10 @@ def public_description():
         },
         "limits": {"vessels": MAX_VESSELS, "simulation_hours": MAX_HOURS, "advance_hours": 48},
         "tools": {
-            "create": {"arguments": {"biomass": "A/B/C each in [0,1] mmol_C/L", "nutrient": "[0,10] mmol_C/L", "volume_ml": "[1,100]", "temperature_c": "[20,40]", "label": "optional identifier"}, "cost": 10},
+            "create": {"arguments": {"biomass": "A/B/C each in [0,1] mmol_C/L", "nutrient": "[0,10] mmol_C/L", "volume_ml": "[1,100]", "temperature_c": "[20,40]", "label": "optional identifier: 1..100 letters/digits/-/./_; no spaces"}, "cost": 10},
             "advance": {"arguments": {"hours": "(0,48]"}, "cost": "max(1, number of vessels) * ceil(hours / 6)"},
             "measure": {"arguments": {"vessel_id": "existing handle", "instrument": ["counts", "chemistry", "nutrient"]}, "cost": "3 for chemistry; otherwise 2"},
-            "sample": {"arguments": {"vessel_id": "existing handle", "volume_ml": ">=0.05; leaves >=0.05 in donor", "cell_free": "boolean", "label": "optional identifier"}, "cost": 3},
+            "sample": {"arguments": {"vessel_id": "existing handle", "volume_ml": ">=0.05; leaves >=0.05 in donor", "cell_free": "boolean", "label": "optional identifier: 1..100 letters/digits/-/./_; no spaces"}, "cost": 3},
             "transfer": {"arguments": {"source_id": "existing handle", "target_id": "different handle", "volume_ml": ">=0.05; leaves >=0.05 in donor, <= receiver volume"}, "cost": 4},
             "feed": {"arguments": {"vessel_id": "existing handle", "amount_mmol": ">0; concentration increment <=5"}, "cost": 2},
             "deplete": {"arguments": {"vessel_id": "existing handle", "channel": list(CHANNELS), "fraction": "[0,1]"}, "cost": 3},

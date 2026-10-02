@@ -65,7 +65,69 @@ report and demonstration data are also retained with the generated result page.
 - JUnit was saved for the 117-test run. The separate 26-test run is recorded by
   its terminal result; this document does not imply an additional JUnit artifact.
 
-Remaining work includes real agent evaluation, richer causal/mechanistic claim
+Remaining work includes completed real-agent evaluation, richer causal/mechanistic claim
 verification, stochastic biological variability, alternative mechanism families,
 structural holdouts and calibrated Discovery Depth. Selective depletion and the
 synthetic kinetics are idealizations, not evidence about real microorganisms.
+
+## First GPT pilot on g450 — 2026-10-02
+
+One bounded model episode ran on g450 using source commit `c16815e5`. Both the
+requested model ID and the ID reported by the configured service were
+`gpt-5.6-sol`; this records the service response, not independent model-identity
+attestation. Configuration: chat wire, medium reasoning, nonstreaming,
+8,000 maximum completion tokens, 180-second request timeout, at most 32 started
+requests and 1,800 seconds overall. No automatic retries were permitted.
+
+The simulated world and the isolated Python analysis capability ran on g450
+(Python 3.8.10, NumPy 1.24.4, SciPy 1.10.1). The candidate-program smoke test
+completed, and a separate analysis preflight confirmed NumPy availability and
+the absence of the operator config and kernel file inside the sandbox. The
+model did not invoke Python analysis in its recorded episode. HTTPS traveled
+through an ephemeral loopback SSH forward to the operator's working HTTPS proxy;
+credentials stayed in the trusted g450 process. No model call used the stale
+Azure example endpoint discovered during preflight.
+
+The episode ended **incomplete** after the twelfth started model request failed.
+Eleven responses had returned; no `commit`, confirmation, or final `interpret`
+occurred. The recorded transport error is a sanitized `RuntimeError`; this run
+did not retain the underlying HTTP status, so its specific cause is unknown.
+No retry or second model episode was started. Later code now retains allowlisted
+failure stage/type/HTTP status, without URLs, headers or response error bodies.
+
+Recorded exploration: 32 cultures created, 81 measurements, 11 selective
+depletions, two temperature changes, and 133 broker requests, consuming 823 of
+1,200 exploration units. One label containing a space was rejected and one
+model response contained concatenated JSON objects. The model corrected both
+after public feedback. The label character constraints are now explicit in the
+public tool description. These interface changes were made **after** the run;
+the frozen run archive remains unchanged.
+
+The agent independently chose composition controls, channel-depletion tests,
+fresh-culture repetitions, temperature controls and repeated sensor readings.
+Three observed contrasts in its repetition panel were:
+
+| Exploratory intervention at culture age 12 h | Endpoint at 24 h | Control mean | Treatment mean | Relative change |
+| --- | --- | ---: | ---: | ---: |
+| AB: remove peak-03 | A biomass | 1.272423 | 1.760744 | +38.38% |
+| AC: remove peak-03 | C biomass | 0.582565 | 0.446751 | −23.31% |
+| ABC: remove peak-02 | C biomass | 0.170654 | 0.302321 | +77.15% |
+
+Biomass is mmol C/L. Each table mean is three independent sensor readings of
+**one** fresh vessel per arm. These are exploratory repeats, not preregistered
+confirmation or biological stochastic replicates. The contrasts motivate
+chemical-mediated interaction hypotheses; they do not establish the complete
+delayed feedback mechanism or a Discovery Depth score.
+
+The eleven returned responses report 139,285 input and 8,960 output tokens
+(148,245 known tokens). The failed request's usage is unknown, hence complete
+episode usage is unknown. No configured prices were available for a dollar cost.
+All 267 world-log events passed exact replay on the frozen g450 source/runtime.
+
+Raw evidence is retained at `/var/tmp/sle-microecology-gpt-20261002/` on g450,
+with a local operator copy and generated HTML/figures at
+`/private/tmp/sle-microecology-gpt-result-20261002/`. The frozen code archive
+SHA-256 is `49a904ee40bf89e0dd4b6c0f88a841709b0b401852a28c306500d462c2fa35da`.
+The world, new driver, transport, post-test episode and CLI regression selection
+passed 129 tests after the interface/diagnostic fixes. This is not a full-suite
+claim and does not replace the incomplete scientific episode.

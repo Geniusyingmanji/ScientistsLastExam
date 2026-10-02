@@ -87,7 +87,8 @@ class AuditedWorldClient(PostTestLLMClient):
             response = super()._request_once(url, payload, headers, stream=stream)
         except BaseException as exc:
             self._append({"event": "failed", "attempt": attempt,
-                          "exception_type": type(exc).__name__, "usage": None})
+                          "exception_type": type(exc).__name__, "usage": None,
+                          "diagnostic": clone(self.last_transport_error)})
             raise
         chunks = [response] if isinstance(response, dict) else [
             json.loads(line[5:].strip()) for line in response.splitlines()
@@ -199,7 +200,8 @@ def run_agent(session, client, directory, *, max_rounds=32, wall_seconds=1800, a
                 raw = call_with_deadline(lambda: client.complete(prompt, system=SYSTEM),
                                          min(remaining, client.config.timeout_seconds))
             except Exception as exc:
-                record.update(error=type(exc).__name__, usage=clone(client.last_usage))
+                record.update(error=type(exc).__name__, usage=clone(client.last_usage),
+                              diagnostic=clone(client.last_transport_error))
                 stop = "model_request_failed"
                 break
             record.update(response=raw, usage=clone(client.last_usage), stop_reason=client.last_stop_reason,

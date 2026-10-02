@@ -1,5 +1,6 @@
 import io
 import json
+import urllib.error
 from unittest.mock import patch
 
 import pytest
@@ -130,3 +131,13 @@ def test_azure_deployment_route_uses_explicit_version_without_changing_model(tmp
     with patch("urllib.request.urlopen", side_effect=request):
         client.complete("public data")
     assert "TRANSIENT-TOKEN" not in (tmp_path / "model-transport.jsonl").read_text()
+
+
+def test_http_failure_retains_status_but_never_provider_details(tmp_path):
+    client = AuditedWorldClient(LLMConfig(), tmp_path, 2)
+    failure = urllib.error.HTTPError("PRIVATE-URL", 429, "PRIVATE-MESSAGE", {"x-secret":"PRIVATE-HEADER"}, None)
+    with patch("urllib.request.urlopen", side_effect=failure):
+        report = run_agent(WorldSession(), client, tmp_path, max_rounds=2)
+    assert report["rounds"][0]["diagnostic"] == {"stage":"request", "exception_type":"HTTPError", "http_status":429}
+    assert "PRIVATE-" not in json.dumps(report)
+    assert "PRIVATE-" not in (tmp_path / "model-transport.jsonl").read_text()

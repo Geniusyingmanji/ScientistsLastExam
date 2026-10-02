@@ -8,6 +8,7 @@ The configured endpoint, model, wire and decoding parameters are unchanged.
 from __future__ import annotations
 
 import json
+import urllib.error
 import urllib.request
 
 from .llm import LLMClient
@@ -87,6 +88,7 @@ class PostTestLLMClient(LLMClient):
         self._max_attempts = max_attempts
         self._attempts = 0
         self._failed_attempts = 0
+        self.last_transport_error = None
 
     def complete(self, prompt, system=None):
         attempts, failures = self._attempts, self._failed_attempts
@@ -97,6 +99,8 @@ class PostTestLLMClient(LLMClient):
             # those failures too, without double-counting transport exceptions.
             if self._attempts > attempts and self._failed_attempts == failures:
                 self._failed_attempts += 1
+                self.last_transport_error = {"stage": "wire_decode", "exception_type": type(exc).__name__,
+                                             "http_status": None}
                 if "usage_available" not in self.last_usage:
                     self._unknown_usage()
             self.last_stop_reason = None
@@ -131,20 +135,29 @@ class PostTestLLMClient(LLMClient):
         self._attempts += 1
         self.last_usage = {}
         self.last_stop_reason = None
+        self.last_transport_error = None
+        stage, status = "request", None
         try:
             body = json.dumps(payload, allow_nan=False).encode("utf-8")
             request = urllib.request.Request(url, data=body, headers=headers, method="POST")
             with urllib.request.urlopen(request, timeout=self.config.timeout_seconds) as response:
+                status = getattr(response, "status", None)
                 text = response.read().decode("utf-8")
+            stage = "response_decode"
             if stream:
                 return _complete_sse(text, self.config.wire)
             value = _strict_json(text)
             if not isinstance(value, dict):
                 raise ValueError("response must be an object")
             if value.get("error") is not None:
+                stage = "provider_error"
                 raise ValueError("provider response error")
             return value
         except BaseException as exc:
+            if isinstance(exc, urllib.error.HTTPError):
+                status = exc.code
+            self.last_transport_error = {"stage": stage, "exception_type": type(exc).__name__,
+                                         "http_status": status if type(status) is int else None}
             self._failed_attempts += 1
             self._unknown_usage()
             # The deadline's BaseException must escape to its owning wrapper.
