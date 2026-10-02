@@ -131,3 +131,63 @@ SHA-256 is `49a904ee40bf89e0dd4b6c0f88a841709b0b401852a28c306500d462c2fa35da`.
 The world, new driver, transport, post-test episode and CLI regression selection
 passed 129 tests after the interface/diagnostic fixes. This is not a full-suite
 claim and does not replace the incomplete scientific episode.
+# GPT-5.6 paired-effects pilot, 2026-10-02
+
+Model requests and returned model identifiers were both `gpt-5.6-sol`, using the
+existing g450 service configuration. The paid runs used source commit `803341b9`;
+the later sandbox fix must not be attributed to those runs.
+
+The original protocol planned three seeds (1439, 2879, 4093), at most 16 requests
+per seed and 48 in total, with 10 exploration rounds and no automatic retries.
+Each frozen claim used eight fresh treatment/control preparations with independent
+sensor noise. Dynamics and mechanism parameters were identical across repeats.
+
+| Recorded run | Started requests | Outcome |
+| --- | ---: | --- |
+| Seed 1439 | 13 | Completed freeze, confirmation and interpretation; three numerical effect claims supported; all three 90% forecasts covered the confirmation mean |
+| Seed 2879 | 11 | Operator interrupted the in-flight eleventh request after identifying the shared infrastructure defect; ten responses returned, no frozen claims |
+| Seed 4093 | 0 | Not started |
+
+The first run is a **tool-degraded diagnostic**, not a clean benchmark result.
+Two attempted Python analyses timed out because the sandbox's absolute deadline
+included waiting for model replies. The second run encountered the same defect.
+The old interrupted report's default `model_round_limit` stop reason is inaccurate;
+an external operator annotation records the actual SIGINT without changing the
+original report. A later driver fix explicitly saves `operator_interrupted`.
+
+Under 30 C, initial nutrient 5 mmol C/L, each present strain at 0.05 mmol C/L,
+30 mL cultures and complete depletion at 12 h, the first run confirmed:
+
+| Agent-selected intervention and 24 h readout | Mean treatment minus control (mmol C/L) | Frozen 90% predictive interval |
+| --- | ---: | --- |
+| AB, remove peak-03, read B | -0.03882134 | [-0.0407, -0.0373] |
+| AC, remove peak-02, read C | -0.14368112 | [-0.1463, -0.1428] |
+| AB, remove peak-02, read B | +0.13509232 | [0.1321, 0.1356] |
+
+Mean forecast width and mean interval score were both 0.00346667 mmol C/L because
+all three confirmation means fell inside their forecasts. These are descriptive
+results on agent-selected experiments, not cross-model skill scores. The model
+explicitly noted that these effects do not establish direct molecular uptake or
+cross-feeding, and that timing/dose/environment generality remains unknown.
+No full delayed feedback mechanism or Discovery Depth was certified.
+
+Exact replay on the original g450 runtime passed for both recorded worlds:
+496 events for the completed run and 261 for the interrupted run. Of 24 started
+API requests, 23 returned responses, with a combined known lower bound of 378,109
+tokens (250,960 in the complete run and 127,149 in returned responses of the other).
+Usage of the interrupted request and total monetary cost remain unknown.
+
+The analysis repair was frozen as `e8b18e4f`. A real g450 regression configured a
+5-second active allowance, waited for 12 seconds between calls in total, and
+successfully performed both analyses while retaining variables and excluding the
+private configuration file. Remaining active allowance changed from 2.6855 to
+2.6834 seconds; sandbox startup consumed the other allowance. Local regression
+tests also check that repeated analysis calls share a cumulative budget rather
+than receive a fresh allowance each time.
+
+Two proposed repaired episodes have **not run**: creation of the API forwarding
+process returned exit 137 and the direct service check returned `URLError`.
+The original 48-request ceiling retains 24 unspent requests. See the README's
+amended launch command and milestone plan. Raw reports and operator annotations
+are retained outside Git under
+`/Users/yingmanji/.codex/artifacts/sle-gpt56-20261002/`.

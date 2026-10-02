@@ -207,3 +207,13 @@ def test_analysis_idle_time_does_not_consume_active_budget_or_reset_it(monkeypat
     with pytest.raises(TimeoutError):
         analysis("pass", {}, [])
     assert analysis.remaining_seconds == 0
+
+
+def test_operator_interrupt_is_preserved_in_report_instead_of_model_limit(tmp_path):
+    client = ScriptedClient([])
+    with patch.object(client, "complete", side_effect=KeyboardInterrupt):
+        with pytest.raises(KeyboardInterrupt):
+            run_agent(WorldSession(), client, tmp_path, max_rounds=2)
+    report = json.loads((tmp_path / "agent-report.json").read_text())
+    assert report["stop_reason"] == "operator_interrupted"
+    assert json.loads((tmp_path / "public-report.json").read_text())["state"] == "exploring"

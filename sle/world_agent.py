@@ -300,6 +300,9 @@ def run_agent(session, client, directory, *, max_rounds=32, wall_seconds=1800, a
                               "attempts": client.transport_summary()["attempts"]}, ensure_ascii=False), flush=True)
             if stop != "model_round_limit":
                 break
+    except KeyboardInterrupt:
+        stop = "operator_interrupted"
+        raise
     finally:
         result = report()
     return result

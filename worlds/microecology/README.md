@@ -142,6 +142,67 @@ are saved, including incomplete episodes. The campaign directory cannot be reuse
 Mechanisms, novelty, unseen-condition generalization and Discovery Depth remain
 unassessed by this first profile.
 
+### Next implementation milestones
+
+| Order | Deliverable | Acceptance evidence |
+| --- | --- | --- |
+| 0 | Finish a repaired GPT-5.6 development pilot | Frozen code/configuration, working analysis after model idle time, complete request ledger, fresh confirmation and exact replay; separate infrastructure failures from model outcomes |
+| 1 | Frozen executable predictor and a blind condition panel | The agent predicts quantitative outcomes for new inocula, nutrient levels, depletion doses and times without additional experiments; all agents receive the same panel and budget |
+| 2 | Mechanism and dynamic-response claim types | Claims specify competing explanations and experiments that distinguish them; verify mediator dependence, temporal ordering and recovery after perturbations on fresh preparations |
+| 3 | Calibrated discovery-depth evaluation | Controlled baselines distinguish endpoint fitting from mechanism-based extrapolation; the assessor cannot award a deeper claim solely for longer prose or more correlated findings |
+| 4 | Unpublished structures and a second world | Hold out mechanisms, not only parameter seeds; reuse the experiment, evidence, prediction and verification contracts in another computational domain |
+
+Milestone 0 first addresses the observed analysis deadline bug: the persistent
+sandbox must retain a cumulative **active execution** allowance while excluding
+model/network idle time. The 2026-10-02 pilot started 24 of 48 authorized requests
+before it was stopped. A proposed amendment allocates the remaining 24 requests
+to two fresh 12-round episodes (8 exploration rounds) on seeds 2879 and 4093.
+These are new agent contexts, without earlier discoveries in their prompts.
+The original completed but tool-degraded episode and interrupted episode stay in
+a separate diagnostic cohort. The amended runs had not started when the report
+was prepared because the API route was unavailable. Launch only once, after
+checking the saved ledgers and restoring connectivity:
+
+```sh
+PYTHONPATH=. python examples/microecology/evaluate_gpt.py \
+  --llm-config /private/operator/model.json \
+  --output-dir /var/tmp/sle-microecology-gpt56-repaired \
+  --prior-campaign /var/tmp/sle-microecology-gpt56-eval-20261002/campaign \
+  --seeds 2879 4093 --max-rounds 12 --exploration-rounds 8
+```
+
+The launcher counts every prior started request, including the interrupted call,
+before admitting the new allocation. It refuses an existing output directory and
+never retries an HTTP request automatically. Keep the prior campaign stopped.
+
+Milestone 1 separates open discovery from comparable forecasting. The agent may
+choose any supported claim and its scope, but a common blind test panel measures
+predictive performance independently of which easy claims it selected. Freeze
+the predictor, scope and uncertainty before revealing panel conditions. Report
+error, proper interval score and coverage against a fixed denominator; track
+abstentions and unsupported conditions explicitly. Score adaptive counterexample
+search separately because adaptively selected tests do not estimate average
+performance on the fixed panel. The test panel needs its own resource budget.
+
+Milestones 2–3 use an evidence dependency graph: observations support intervention
+effects; discriminating interventions support mechanism paths; time-resolved
+predictions and perturbation/recovery tests support a dynamic feedback explanation.
+For this world, a proposed feedback explanation must account for delays and
+predict how removing a participant or depleting an intermediate changes the
+response. Agreement on an endpoint or a correct narrative is insufficient.
+Experiments may leave several mechanisms equivalent; retain that equivalence
+class rather than requiring the author's internal equations. Do not turn path
+length into a depth score without checking the necessity and independence of
+each evidential link. Exact depth thresholds remain to be calibrated.
+
+Compare against a fixed screening policy, an endpoint predictor, a fitted dynamic
+model and an operator-only mechanism-aware reference under disclosed resources.
+Include intentionally wrong mechanisms, wide forecasts, duplicates and
+unsupported prose as evaluator controls. Report reliability, predictive validity,
+scope, supported explanatory depth and cost separately before considering any
+aggregate ranking. Evidence from three sensor-noise confirmations cannot establish
+model-level calibration, contamination resistance or frontier-model difficulty.
+
 ## World and experimental semantics
 
 - Mechanism and parameters are fixed within an instance and all its confirmation
