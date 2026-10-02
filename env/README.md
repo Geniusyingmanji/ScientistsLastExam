@@ -114,6 +114,22 @@ Public export is read-only on the source cohorts. A sanitized
 [pilot progress report](../docs/reports/sle-env-pilot-20261003/index.html) is included
 with separate core, expansion and development results.
 
+For executable research before a final answer, see
+[RESEARCH_RUNNER.md](RESEARCH_RUNNER.md): the experimental model interaction
+supports source experiments, isolated fitting, model snapshots, frozen rival
+predictions, independent observations and revisions. Its prospective evidence
+has no automatic mechanism label or discovery-depth score. This new interface
+has not yet received a live GPT benchmark run.
+
+[PAIRED_DESIGN.md](PAIRED_DESIGN.md) generates future single-factor comparison
+plans without launching requests. [PREDICTABILITY_DIAGNOSTICS.md](PREDICTABILITY_DIAGNOSTICS.md)
+compares existing paired candidate/baseline errors;
+[PREDICTION_DIAGNOSTICS.md](PREDICTION_DIAGNOSTICS.md) separates values assigned
+by public controls when complete prediction matrices exist.
+[CLAIM_PROTOCOL_FUTURE.md](CLAIM_PROTOCOL_FUTURE.md) keeps proposed interval-loss
+and effect-significance changes disabled while their assumptions are calibrated.
+None changes historical model scores.
+
 ## Evaluation and extension
 
 [EVALUATION.md](EVALUATION.md) specifies scores, denominators, evidence grades and

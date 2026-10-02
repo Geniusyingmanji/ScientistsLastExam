@@ -20,7 +20,7 @@ import numpy as np
 import scipy
 
 from sle.episode_deadline import call_with_deadline
-from sle.secure_eval import CandidateProxy, sanitized_candidate_failure
+from sle.secure_eval import CandidateError, CandidateProxy, sanitized_candidate_failure
 from .prospective import ProspectiveSession, _matrix, digest, recompute_result
 from .registry import ENVIRONMENTS, load_world
 
@@ -42,6 +42,14 @@ class TaskBudgetExceeded(RuntimeError):
 
 class CandidateExecutionFailed(RuntimeError):
     pass
+
+
+class PredictorInfrastructureFailed(RuntimeError):
+    """A trusted artifact, sandbox startup or cleanup operation failed."""
+
+
+class PredictorInitializationUnresolved(RuntimeError):
+    """Startup could have failed in candidate imports or sandbox initialization."""
 
 
 def _limits(changes):
@@ -245,30 +253,52 @@ class ProspectiveTask:
                                                              "code_sha256": code_hash, "spec_sha256": digest(spec),
                                                              "seconds_charged": allowance})
         start, proxy, succeeded = time.monotonic(), None, False
+        stage, cleanup_failed = "artifact", False
         try:
-            if path.exists():
-                if path.read_bytes() != code.encode("utf-8") or path.is_symlink():
-                    raise RuntimeError("frozen candidate artifact changed")
-            else:
-                # Only this nonsecret leaf is mounted. The parent/private files
-                # remain 0700/0600, while the sandbox UID can read the leaf.
-                _atomic_bytes(path, code.encode("utf-8"), mode=0o444)
-            proxy = CandidateProxy(path, "predict", timeout_s=allowance,
-                                   memory_mb=self._limits["predictor_memory_mb"], packages=())
-            values = _matrix(proxy(deepcopy(spec)), spec, self._contract)
+            try:
+                if path.exists() or path.is_symlink():
+                    if path.is_symlink() or path.read_bytes() != code.encode("utf-8"):
+                        raise RuntimeError("frozen candidate artifact changed")
+                else:
+                    # Only this nonsecret leaf is mounted; its parent stays private.
+                    _atomic_bytes(path, code.encode("utf-8"), mode=0o444)
+            except Exception:
+                raise PredictorInfrastructureFailed("predictor_artifact_failure") from None
+            stage = "sandbox_initialization"
+            try:
+                proxy = CandidateProxy(path, "predict", timeout_s=allowance,
+                                       memory_mb=self._limits["predictor_memory_mb"], packages=())
+            except TimeoutError:
+                raise CandidateExecutionFailed("candidate_timeout") from None
+            except CandidateError:
+                # The worker reports import failures and some sandbox failures
+                # through this same type. Do not invent a causal attribution.
+                raise PredictorInitializationUnresolved("predictor_initialization_unresolved") from None
+            except Exception:
+                raise PredictorInfrastructureFailed("predictor_sandbox_startup_failure") from None
+            stage = "candidate_call"
+            try:
+                values = _matrix(proxy(deepcopy(spec)), spec, self._contract)
+            except Exception as error:
+                category = sanitized_candidate_failure(error)["candidate_failure_kind"]
+                raise CandidateExecutionFailed(category) from None
             succeeded = True
+            stage = None
             return values
-        except Exception as error:
-            category = sanitized_candidate_failure(error)["candidate_failure_kind"]
-            raise CandidateExecutionFailed(category) from None
         finally:
             if proxy is not None:
-                proxy.close(kill=True)
+                try:
+                    proxy.close(kill=True)
+                except Exception:
+                    cleanup_failed, succeeded = True, False
             elapsed = time.monotonic() - start
             self._usage["predictor_seconds_actual"] += elapsed
             self._journal.append("prediction_attempt_finished", {"attempt": self._usage["predictor_attempts"],
-                                                                  "ok": succeeded, "elapsed_seconds": elapsed})
+                                                                  "ok": succeeded, "elapsed_seconds": elapsed,
+                                                                  "failure_stage": stage, "cleanup_failed": cleanup_failed})
             self._checkpoint()
+            if cleanup_failed:
+                raise PredictorInfrastructureFailed("predictor_cleanup_failure") from None
             if self._usage["predictor_seconds_actual"] > self._limits["predictor_seconds"] or self._remaining_wall() <= 0:
                 raise TaskBudgetExceeded("actual isolated prediction time budget exhausted")
 
@@ -404,7 +434,8 @@ class ProspectiveTask:
             return
         self._state = "failed"
         self._error = ("budget_exhausted" if isinstance(error, TaskBudgetExceeded) else
-                       str(error) if isinstance(error, CandidateExecutionFailed) else type(error).__name__)
+                       str(error) if isinstance(error, (CandidateExecutionFailed, PredictorInfrastructureFailed,
+                                                       PredictorInitializationUnresolved)) else type(error).__name__)
         try:
             self._journal.append("task_failed", {"error": self._error, "usage": self._usage})
             self._checkpoint()

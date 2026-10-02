@@ -441,7 +441,14 @@ The host should implement that one action in this order:
    Do not alter the prediction score, claim score, or automatic depth status.
 
 An isolated-code failure, storage failure or incomplete collection is an
-operational failure, not a scientific falsification. A scientifically negative
+operational failure, not a scientific falsification. The trusted host distinguishes
+candidate call/shape failures from candidate-file persistence, known sandbox
+startup and cleanup failures. A `CandidateError` during worker construction can
+originate in candidate imports or runtime initialization; it is explicitly
+`PredictorInitializationUnresolved`, rather than automatically attributed to the
+model or infrastructure. All attempts retain their charged allowance and bounded
+failure-stage record. Original exception text and private paths are not returned.
+A scientifically negative
 result is retained rather than retried with different seeds. Session restart
 after a process failure requires host-level auditing; this MVP does not provide
 an automatic recovery flow that could resample a partly seen test.

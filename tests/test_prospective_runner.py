@@ -144,6 +144,49 @@ def test_candidate_failure_is_charged_sanitized_and_terminal(tmp_path, monkeypat
     assert runner.verify_directory(directory)["replayed_tests"] == 0
 
 
+@pytest.mark.parametrize("kind,expected,error_code", [
+    ("artifact", runner.PredictorInfrastructureFailed, "predictor_artifact_failure"),
+    ("startup", runner.PredictorInfrastructureFailed, "predictor_sandbox_startup_failure"),
+    ("ambiguous_startup", runner.PredictorInitializationUnresolved, "predictor_initialization_unresolved"),
+    ("startup_timeout", runner.CandidateExecutionFailed, "candidate_timeout"),
+    ("cleanup", runner.PredictorInfrastructureFailed, "predictor_cleanup_failure"),
+])
+def test_predictor_failure_stage_does_not_invent_model_attribution(tmp_path, monkeypatch, kind, expected, error_code):
+    task = runner.ProspectiveTask("prospective_fixture", 7, tmp_path / kind)
+    source(task)
+    original_write = runner._atomic_bytes
+    def write(path, content, **kwargs):
+        if kind == "artifact" and Path(path).suffix == ".py":
+            raise OSError("CANARY private-artifact-path")
+        return original_write(path, content, **kwargs)
+    monkeypatch.setattr(runner, "_atomic_bytes", write)
+    class FailingProxy(NumericProxy):
+        def __init__(self, *args, **kwargs):
+            if kind == "startup":
+                raise RuntimeError("CANARY private-bwrap-path")
+            if kind == "ambiguous_startup":
+                raise runner.CandidateError("CANARY worker failed to initialize")
+            if kind == "startup_timeout":
+                raise TimeoutError("CANARY startup-timeout")
+            super().__init__(*args, **kwargs)
+        def close(self, **kwargs):
+            if kind == "cleanup":
+                raise OSError("CANARY private-cleanup-path")
+            return super().close(**kwargs)
+    monkeypatch.setattr(runner, "CandidateProxy", FailingProxy)
+    with pytest.raises(expected, match=error_code):
+        task.preregister(runner._fixture_request((1, 2), 1))
+    report = task.public_report()
+    assert report["error"] == error_code
+    assert report["usage"]["predictor_attempts"] == 1
+    assert report["usage"]["predictor_seconds_charged"] == 15
+    assert report["usage"]["experiment_attempts"] == 1
+    assert "CANARY" not in json.dumps(report)
+    finished = [entry for entry in entries(task.directory) if entry["kind"] == "prediction_attempt_finished"]
+    assert len(finished) == 1 and not finished[0]["payload"]["ok"]
+    assert runner.verify_directory(task.directory)["replayed_tests"] == 0
+
+
 def test_failed_partial_collection_is_retained_and_never_rerun(tmp_path, monkeypatch, numeric_proxy):
     task = runner.ProspectiveTask("prospective_fixture", 7, tmp_path / "partial")
     source(task)
