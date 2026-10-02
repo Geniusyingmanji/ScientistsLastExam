@@ -1,0 +1,13 @@
+# Optical diffraction — unregistered prototype
+
+This candidate world is not registered or scored. It represents fixed finite point scatterers in a fully coherent scalar single-scattering far-field model. It is not a full real-material optical simulator and does not promise unique position recovery.
+
+The public instrument scans 1–65 strictly increasing angles in [-0.4,0.4] rad, at one wavelength in [0.5,1.5] micrometres and one signed B amplitude contrast in [-1,1]. Negative contrast is calibrated attenuation with a pi phase inversion, not negative absorption. Relative positive site amplitudes sum to one. The reported dimensionless intensity is calibrated against a unit-amplitude reference scatterer at each angle and wavelength; it is not watts or integrated energy. Independent zero-bias additive Gaussian sensor noise has sigma 0.002, is unclipped, and is not shot noise.
+
+Production sums complex amplitudes and squares the resulting magnitude. A separate operator reference sums pairwise cosine contributions. Translation, reflection, equivalent absolute scattering vector q, forward intensity at c=1 and the quadratic dependence on contrast are announced model facts, not discoveries. Unknown q-dependent correlations and predictive contrast responses may be investigated. Angle zero is a valid detector coordinate; existing temporal t0 rules must be reviewed before any integration.
+
+Private source code includes generator families and operator clean access. An eventual agent service must expose only the public instrument and noisy observation routes under the existing isolation boundary. This unregistered prototype does not itself provide an agent service. The pure schema tests use inert data and do not execute the physical kernel.
+
+The record-only baseline averages every observation at a given contrast and |q| rounded to 12 decimal places, including symmetric angles and repeated scans. It interpolates linearly in |q| and holds the nearest endpoint outside support. With no records it predicts one. With one contrast it reuses that contrast; with all three contrasts -1,0,1 it applies the announced quadratic identity to estimated coefficients. A partial contrast set uses nearest contrast, ties toward the smaller contrast. Malformed records or nonfinite predictions fail rather than being replaced. Interpolation and extrapolation errors must be kept separately.
+
+A fixed author numerical batch and a separate high-precision check have completed. [STATUS.md](STATUS.md) records their limited conclusions and the remaining integration work. This prototype has no GPT evaluation or shared scoring route.

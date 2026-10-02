@@ -85,6 +85,12 @@ replacement-clock-unit lag is an administrative eligibility rule. Experimental
 registration and native engineering checks do not certify global numerical
 accuracy or scientific difficulty.
 
+An additional [optical diffraction prototype](optical_diffraction/STATUS.md)
+has bounded coherent-scattering calibration and an isolated public-coordinate
+policy. It remains **unregistered**, with no shared scoring route or GPT result.
+It is not included in the thirteen-world count above. The angle-axis scoring,
+equivalent-condition checks and actual agent service still require integration.
+
 ## Interfaces
 
 [CONTRACT.md](CONTRACT.md) defines the operator-only `World` API, observation

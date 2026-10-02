@@ -1,0 +1,1 @@
+{"name":"optical_diffraction","version":"optical_diffraction-0.1.0-private-prototype","status":"private_unregistered_prototype","registered":false,"axis":"angles_rad","channels":["normalized_intensity"],"noise_std":[0.002],"scientific_scope":"ideal coherent scalar single-scattering far-field intensity; no unique structure recovery claim"}
