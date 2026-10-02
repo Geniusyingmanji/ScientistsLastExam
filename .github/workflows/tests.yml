@@ -78,7 +78,7 @@ jobs:
         # integration branches must pass that same check before they reach main.
         env:
           SLE_REQUIRE_FROZEN_INVENTORY: ${{ (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && '1' || '0' }}
-        run: /usr/bin/python3 -m pytest tests/ -q -p no:cacheprovider --junitxml=/tmp/sle-tests.xml
+        run: /usr/bin/python3 -m pytest tests/ env/ -q -p no:cacheprovider --junitxml=/tmp/sle-tests.xml
       # Keep the fixed admission/isolation list separate from historical checks that need private runs.
       # Missing or skipped required tests fail coverage even if pytest otherwise exits successfully.
       - name: Report executed and unavailable checks

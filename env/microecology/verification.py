@@ -10,8 +10,8 @@ import math
 import numpy as np
 from scipy.stats import t as student_t
 
-from .microecology_lab import CHANNELS, SPECIES, validate_initial
-from .world_protocol import InvalidAction, clone, identifier, keys, number
+from .lab import CHANNELS, SPECIES, validate_initial
+from .protocol import InvalidAction, clone, identifier, keys, number
 
 
 def claim_schema():

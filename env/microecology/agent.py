@@ -7,9 +7,9 @@ import time
 from pathlib import Path
 from urllib.parse import urlencode
 
-from .episode_deadline import call_with_deadline
-from .posttest_transport import PostTestLLMClient
-from .world_protocol import clone, digest
+from sle.episode_deadline import call_with_deadline
+from sle.posttest_transport import PostTestLLMClient
+from .protocol import clone, digest
 
 
 SYSTEM = """You are a scientist investigating an unfamiliar simulated microcosm.
@@ -114,8 +114,9 @@ class AuditedWorldClient(PostTestLLMClient):
 
 class WorldAnalysis:
     def __init__(self, timeout_s=20):
-        from .secure_eval import CandidateProxy
-        self.worker = CandidateProxy(Path(__file__).with_name("episode_analysis_worker.py"),
+        from sle.secure_eval import CandidateProxy
+        from sle import episode_analysis_worker
+        self.worker = CandidateProxy(Path(episode_analysis_worker.__file__),
                                      "analyze", timeout_s=timeout_s)
         self.remaining_seconds = max(0.0, self.worker.deadline - time.monotonic())
 

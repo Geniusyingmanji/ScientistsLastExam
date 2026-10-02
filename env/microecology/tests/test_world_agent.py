@@ -7,8 +7,8 @@ import pytest
 
 from sle.llm import LLMConfig
 from sle.posttest_transport import PostTestLLMClient
-from sle.world_agent import AuditedWorldClient, parse_turn, run_agent
-from sle.world_session import WorldSession, replay_report
+from env.microecology.agent import AuditedWorldClient, parse_turn, run_agent
+from env.microecology.session import WorldSession, replay_report
 
 
 INITIAL = {"biomass": {"A": 0.06, "B": 0.04, "C": 0.06}, "nutrient": 4,
@@ -181,7 +181,7 @@ def test_evaluation_profile_requires_forecasts_but_allows_candidate_to_repair_be
 
 
 def test_analysis_idle_time_does_not_consume_active_budget_or_reset_it(monkeypatch):
-    from sle.world_agent import WorldAnalysis
+    from env.microecology.agent import WorldAnalysis
     clock = [100.0]
     class Worker:
         def __init__(self, *args, timeout_s, **kwargs):
@@ -194,7 +194,7 @@ def test_analysis_idle_time_does_not_consume_active_budget_or_reset_it(monkeypat
             return {"ok": True}
         def close(self):
             pass
-    monkeypatch.setattr("sle.world_agent.time.monotonic", lambda: clock[0])
+    monkeypatch.setattr("env.microecology.agent.time.monotonic", lambda: clock[0])
     monkeypatch.setattr("sle.secure_eval.CandidateProxy", Worker)
     analysis = WorldAnalysis(timeout_s=5)
     clock[0] += 100  # More model idle time than the entire analysis allowance.

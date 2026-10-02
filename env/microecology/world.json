@@ -5,10 +5,10 @@
   "status": "construction_prototype",
   "description": "Persistent synthetic microcosms with anonymous extracellular fractions, public interventions and fresh experimental verification.",
   "trusted_implementation": {
-    "kernel": "sle.microecology_kernel:MicroecologyKernel",
-    "lab": "sle.microecology_lab:MicroecologyLab",
-    "session": "sle.world_session:WorldSession",
-    "verification": "sle.microecology_verification:verify_claims"
+    "kernel": "env.microecology.kernel:MicroecologyKernel",
+    "lab": "env.microecology.lab:MicroecologyLab",
+    "session": "env.microecology.session:WorldSession",
+    "verification": "env.microecology.verification:verify_claims"
   },
   "capabilities": ["persistent_vessels", "explicit_global_clock", "material_accounting", "sampling", "supernatant_transfer", "anonymous_chemical_assays", "fraction_depletion", "nutrient_pulses", "temperature_control", "idempotent_requests", "frozen_paired_effect_claims", "fresh_confirmation", "read_only_interpretation", "exact_same_runtime_replay"],
   "numerical_model": "deterministic_ODE",

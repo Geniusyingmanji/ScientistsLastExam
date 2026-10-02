@@ -99,7 +99,7 @@ def main(argv=None) -> int:
     add_episode_parser(sub)
     from .episode_panel import add_parser as add_episode_panel_parser
     add_episode_panel_parser(sub)
-    from .world_cli import add_parser as add_world_parser
+    from env.microecology.cli import add_parser as add_world_parser
     add_world_parser(sub)
 
     pl = sub.add_parser("list"); pl.set_defaults(fn=_cmd_list)

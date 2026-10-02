@@ -14,8 +14,8 @@ import yaml
 
 from sle.llm import LLMConfig
 from sle.scientific_episode import prepare_output
-from sle.world_agent import AuditedWorldClient, WorldAnalysis, run_agent, save_json
-from sle.world_session import WorldSession, replay_report, source_binding
+from env.microecology.agent import AuditedWorldClient, WorldAnalysis, run_agent, save_json
+from env.microecology.session import WorldSession, replay_report, source_binding
 
 
 SEEDS = (1439, 2879, 4093)

@@ -4,7 +4,7 @@ This is an operator-written experiment, not evidence of an LLM's discovery skill
 """
 from __future__ import annotations
 
-from .world_protocol import clone
+from .protocol import clone
 
 
 INITIAL = {"biomass": {"A": 0.06, "B": 0.04, "C": 0.06},

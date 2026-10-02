@@ -7,8 +7,8 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from .microecology_kernel import A, B, C, S, X, Y, Z, Mechanism, MicroecologyKernel, VERSION, rng_for
-from .world_protocol import API_VERSION, InvalidAction, clone, digest, identifier, keys, number
+from .kernel import A, B, C, S, X, Y, Z, Mechanism, MicroecologyKernel, VERSION, rng_for
+from .protocol import API_VERSION, InvalidAction, clone, digest, identifier, keys, number
 
 
 SPECIES = {"A": A, "B": B, "C": C}

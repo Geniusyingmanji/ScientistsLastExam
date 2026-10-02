@@ -14,14 +14,14 @@ def _save(directory, name, value):
 
 
 def command(args):
-    from .world_session import WorldSession, replay_report
+    from .session import WorldSession, replay_report
     if args.world_command == "describe":
         print(json.dumps(WorldSession().describe(), ensure_ascii=False, indent=2))
         return 0
     if args.world_command == "replay":
         print(json.dumps(replay_report(json.loads(Path(args.report).read_text())), indent=2))
         return 0
-    from .scientific_episode import prepare_output, parse_json
+    from sle.scientific_episode import prepare_output, parse_json
     if Path(args.output_dir).exists():
         raise ValueError("world output directory already exists; choose a new directory")
     directory = prepare_output(args.output_dir)
@@ -30,7 +30,7 @@ def command(args):
     agent = None
     try:
         if args.world_command == "demo":
-            from .microecology_demo import run_demo, render_demo
+            from .demo import run_demo, render_demo
             demo = run_demo(session)
             _save(directory, "demo.json", demo)
             render_demo(demo, directory)
@@ -48,8 +48,8 @@ def command(args):
                     break
         elif args.llm_config:
             import yaml
-            from .llm import LLMConfig
-            from .world_agent import AuditedWorldClient, WorldAnalysis, run_agent
+            from sle.llm import LLMConfig
+            from .agent import AuditedWorldClient, WorldAnalysis, run_agent
             config = LLMConfig.from_dict(yaml.safe_load(Path(args.llm_config).read_text()) or {})
             if args.azure_cli_auth:
                 import subprocess
@@ -85,7 +85,7 @@ def command(args):
                     analysis.close()
         elif args.program:
             # The existing fail-closed Linux sandbox is the sole path for candidate code.
-            from .secure_eval import CandidateProxy
+            from sle.secure_eval import CandidateProxy
             worker = CandidateProxy(Path(args.program).resolve(), "solve", timeout_s=args.timeout)
             try:
                 worker(session.describe(), lambda request: session.step(request))
@@ -117,6 +117,10 @@ def command(args):
 
 def add_parser(sub):
     root = sub.add_parser("world", help="run the Microecology virtual-world prototype")
+    _add_commands(root)
+
+
+def _add_commands(root):
     commands = root.add_subparsers(dest="world_command", required=True)
     commands.add_parser("describe", help="show public tools and claim protocol").set_defaults(fn=command)
     replay = commands.add_parser("replay", help="replay a private operator report")
@@ -145,9 +149,8 @@ def add_parser(sub):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(prog="python -m sle.world_cli")
-    sub = parser.add_subparsers(dest="command", required=True)
-    add_parser(sub)
+    parser = argparse.ArgumentParser(prog="python -m env.microecology")
+    _add_commands(parser)
     args = parser.parse_args(argv)
     return args.fn(args)
 

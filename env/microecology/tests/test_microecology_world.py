@@ -7,12 +7,12 @@ from unittest.mock import patch
 import numpy as np
 import pytest
 
-from sle.microecology_demo import INITIAL, run_demo, schedules
-from sle.microecology_kernel import A, B, C, X, Y, Z, Mechanism, MicroecologyKernel
-from sle.microecology_lab import MicroecologyLab
-from sle.microecology_verification import validate_claims
-from sle.world_protocol import EventLog, InvalidAction, digest
-from sle.world_session import WorldSession, replay_report
+from env.microecology.demo import INITIAL, run_demo, schedules
+from env.microecology.kernel import A, B, C, X, Y, Z, Mechanism, MicroecologyKernel
+from env.microecology.lab import MicroecologyLab
+from env.microecology.verification import validate_claims
+from env.microecology.protocol import EventLog, InvalidAction, digest
+from env.microecology.session import WorldSession, replay_report
 
 
 def act(session, operation, arguments=None, request_id=None):
@@ -238,7 +238,7 @@ def test_evidence_replay_detects_tampering_and_source_changes():
     corrupt["events"][-1]["payload"]["observation"]["values"]["A"] += 1
     with pytest.raises(ValueError):
         replay_report(corrupt)
-    with patch("sle.world_session.source_binding", return_value={}):
+    with patch("env.microecology.session.source_binding", return_value={}):
         with pytest.raises(ValueError, match="source_and_runtime"):
             replay_report(report)
 
@@ -275,7 +275,7 @@ def test_dynamics_show_a_temporal_lag_not_an_instantaneous_population_jump(compl
 
 def test_output_directory_is_never_overwritten(tmp_path):
     from argparse import Namespace
-    from sle.world_cli import command
+    from env.microecology.cli import command
     sentinel = tmp_path / "public-report.json"
     sentinel.write_text("keep this")
     with pytest.raises(ValueError, match="already exists"):
@@ -284,7 +284,7 @@ def test_output_directory_is_never_overwritten(tmp_path):
 
 
 def test_forecast_interval_score_penalizes_width_and_misses():
-    from sle.microecology_verification import interval_score
+    from env.microecology.verification import interval_score
     assert interval_score(-.01, .01, 0) == pytest.approx(.02)
     assert interval_score(-100, 100, 0) == 200
     assert interval_score(-.01, .01, .1) == pytest.approx(1.82)

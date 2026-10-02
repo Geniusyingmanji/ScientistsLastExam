@@ -5,6 +5,10 @@ anonymous chemical assays, interventions, an evidence log, and fresh checks of
 agent-chosen numerical predictions. It does not require wet experiments or model
 API credentials. It is not yet a calibrated discovery benchmark.
 
+The implementation, examples and tests live together in `env/microecology/`.
+The canonical entry point is `python -m env.microecology`; the existing
+`python -m sle world` entry point remains available for the same environment.
+
 ## Try it
 
 From the repository root, use a Python environment with NumPy, SciPy, PyYAML,
@@ -16,9 +20,9 @@ For an isolated environment, `python -m pip install '.[world]'` installs these
 optional dependencies without changing the certified `host`/`oracle` extras.
 
 ```sh
-python -m sle world describe
-python -m sle world demo --seed 7 --output-dir /private/tmp/sle-microecology-demo
-python -m sle world replay /private/tmp/sle-microecology-demo/operator-report.json
+python -m env.microecology describe
+python -m env.microecology demo --seed 7 --output-dir /private/tmp/sle-microecology-demo
+python -m env.microecology replay /private/tmp/sle-microecology-demo/operator-report.json
 ```
 
 Use `/var/tmp/...` on Linux. Choose a **new** output directory outside Git
@@ -32,11 +36,11 @@ public trajectories and confirmation results. Output directories are never reuse
 ### Run your own experiments
 
 ```sh
-python -m sle world run --seed 7 \
-  --actions examples/microecology/explore.json \
+python -m env.microecology run --seed 7 \
+  --actions env/microecology/examples/explore.json \
   --output-dir /private/tmp/sle-microecology-explore
 
-python -m sle world run --seed 7 --interactive \
+python -m env.microecology run --seed 7 --interactive \
   --output-dir /private/tmp/sle-microecology-interactive
 ```
 
@@ -54,8 +58,8 @@ scientific evaluation. The last output object has `kind: session_summary`.
 On a host with the existing SLE **Linux CandidateProxy sandbox** configured:
 
 ```sh
-python -m sle world run --seed 7 \
-  --program examples/microecology/candidate.py \
+python -m env.microecology run --seed 7 \
+  --program env/microecology/examples/candidate.py \
   --output-dir /var/tmp/sle-microecology-candidate
 ```
 
@@ -69,7 +73,7 @@ untrusted agent code.
 ### Bounded model pilot
 
 ```sh
-python -m sle world run --seed 731 \
+python -m env.microecology run --seed 731 \
   --llm-config /private/operator/model.json --analysis \
   --max-model-calls 32 --wall-seconds 1800 \
   --output-dir /var/tmp/sle-microecology-model
@@ -123,13 +127,13 @@ they are not an interchangeable common-task score across agents. Neither one
 confirmation batch nor three worlds establishes probabilistic calibration.
 
 ```sh
-python -m sle world run --seed 1439 --budget 800 \
+python -m env.microecology run --seed 1439 --budget 800 \
   --llm-config /private/operator/model.json --analysis \
   --max-model-calls 16 --exploration-rounds 10 \
   --evaluation-profile paired-effects-v2 --wall-seconds 900 \
   --output-dir /var/tmp/sle-microecology-eval
 
-PYTHONPATH=. python examples/microecology/evaluate_gpt.py \
+PYTHONPATH=. python env/microecology/examples/evaluate_gpt.py \
   --llm-config /private/operator/model.json \
   --output-dir /var/tmp/sle-microecology-gpt56-campaign
 ```
@@ -164,7 +168,7 @@ was prepared because the API route was unavailable. Launch only once, after
 checking the saved ledgers and restoring connectivity:
 
 ```sh
-PYTHONPATH=. python examples/microecology/evaluate_gpt.py \
+PYTHONPATH=. python env/microecology/examples/evaluate_gpt.py \
   --llm-config /private/operator/model.json \
   --output-dir /var/tmp/sle-microecology-gpt56-repaired \
   --prior-campaign /var/tmp/sle-microecology-gpt56-eval-20261002/campaign \
@@ -284,13 +288,13 @@ scope includes both nutrient pulses. No sustained oscillation is promised.
 
 | Module | Responsibility |
 | --- | --- |
-| `sle/microecology_kernel.py` | Immutable mechanisms and conservative ODE evolution |
-| `sle/microecology_lab.py` | Vessels, samples, interventions, instruments and material ledger |
-| `sle/world_protocol.py` | Bounded JSON, public errors, event chain and identifiers |
-| `sle/world_session.py` | Budgets, idempotency, freeze/interpret states and replay |
-| `sle/microecology_verification.py` | Fresh checks of declared numerical contrasts |
-| `sle/microecology_demo.py` | Trusted public-action construction demo and plots |
-| `sle/world_cli.py` | JSONL, action files and existing sandbox adapter |
+| `env/microecology/kernel.py` | Immutable mechanisms and conservative ODE evolution |
+| `env/microecology/lab.py` | Vessels, samples, interventions, instruments and material ledger |
+| `env/microecology/protocol.py` | Bounded JSON, public errors, event chain and identifiers |
+| `env/microecology/session.py` | Budgets, idempotency, freeze/interpret states and replay |
+| `env/microecology/verification.py` | Fresh checks of declared numerical contrasts |
+| `env/microecology/demo.py` | Trusted public-action construction demo and plots |
+| `env/microecology/cli.py` | JSONL, action files and existing sandbox adapter |
 
 The CLI is registered as `sle world`; legacy episode modes and task registries
 are unchanged. `world.json` documents the package; it is not a dynamic code-loader
@@ -305,7 +309,7 @@ requiring bit equality; this prototype only exposes exact matching-runtime repla
 ## Validation and remaining work
 
 ```sh
-python -m pytest tests/test_microecology_world.py -q
+python -m pytest env/microecology/tests/test_microecology_world.py -q
 ```
 
 Tests cover independent Radau/DOP853 solver agreement, nonnegative conservative

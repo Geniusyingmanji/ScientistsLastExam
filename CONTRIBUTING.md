@@ -340,7 +340,7 @@ CI 其余部分对 PR 一视同仁:审计、卡片校验、沙箱测试全部要
 
 | 环境 | 能做什么 | 不能做什么 |
 |---|---|---|
-| 笔记本(macOS / Windows) | 改代码;`python -m pytest tests/ -q`(需要沙箱的测试自动 skip);写任务文档 | 跑 `sle eval / run`、标定、Δ 阶梯、任何要进仓库的证据 |
+| 笔记本(macOS / Windows) | 改代码;`python -m pytest tests/ env/ -q`(需要沙箱的测试自动 skip);写任务文档 | 跑 `sle eval / run`、标定、Δ 阶梯、任何要进仓库的证据 |
 | Linux 主机(bubblewrap + util-linux flock + 认证的 NumPy/SciPy) | 以上全部;`refresh_global_evidence.py`;恢复审计;`rebind_measurement_health_spec.py` | 在脏树上生成证据 |
 | CI(GitHub Actions,ubuntu-22.04 / ubuntu-24.04) | 全量测试 + 审计,合并前唯一算数的绿灯 | 生成证据(runner 不是可信来源) |
 
@@ -366,7 +366,7 @@ macOS 没有 bubblewrap,沙箱路径一律不可用。
 
 Python 版本下界是 3.8,记录在 `pyproject.toml` 的 `requires-python`。3.8 是完整 oracle 安装
 唯一认证的版本,也是这个下界的依据;上界不存在 —— `BASE_CANDIDATE_PINS` 有 `(3, 12)` 条目,
-CI 同时跑 3.10 与 3.12。下载依赖与测试命令本身不变:`pytest tests/ -q` 从仓库根运行,
+CI 同时跑 3.10 与 3.12。下载依赖与测试命令本身不变:`pytest tests/ env/ -q` 从仓库根运行,
 `pyproject.toml` 的 `pythonpath` 保证脚本入口与 `python -m pytest` 解析到同一个根。
 
 证据文档(`experiments/*.json`、`.research/*_spec_*.json`)都带 `source_provenance`:git 修订、

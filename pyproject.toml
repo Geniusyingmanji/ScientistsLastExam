@@ -74,12 +74,14 @@ oracle = [
     "six==1.17.0",
 ]
 
-[tool.setuptools]
-# Flat layout. Restricted to `sle` because automatic discovery finds more than one top-level
-# directory here - benchmarks/, scripts/, tests/ are all importable-looking - and refuses to build:
-# "Multiple top-level packages discovered in a flat-layout". Only `sle` is an importable
-# distribution; everything else is repository content that is read from the working tree.
-packages = ["sle"]
+[tool.setuptools.packages.find]
+# Shared SLE infrastructure and one regular package per computational environment.
+# Explicit discovery excludes benchmark, script, example and test namespace directories.
+include = ["sle", "env", "env.*"]
+namespaces = false
+
+[tool.setuptools.package-data]
+"*" = ["world.json", "README.md", "VALIDATION.md", "examples/*.py", "examples/*.json"]
 
 [tool.pytest.ini_options]
 # Repository modules are imported as `sle.*` and `scripts.*` from the repository root. This is not
@@ -87,3 +89,4 @@ packages = ["sle"]
 # path order, which is why scripts/__init__.py exists - but it makes the bare `pytest` entry point
 # and `python -m pytest` resolve the same root from any invocation directory.
 pythonpath = ["."]
+testpaths = ["tests", "env"]

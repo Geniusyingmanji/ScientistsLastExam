@@ -8,15 +8,14 @@ from pathlib import Path
 import numpy
 import scipy
 
-from .microecology_kernel import VERSION
-from .microecology_lab import MicroecologyLab, public_description
-from .microecology_verification import claim_schema, validate_claims, verify_claims
-from .world_protocol import API_VERSION, EventLog, InvalidAction, clone, digest, identifier, keys
+from .kernel import VERSION
+from .lab import MicroecologyLab, public_description
+from .verification import claim_schema, validate_claims, verify_claims
+from .protocol import API_VERSION, EventLog, InvalidAction, clone, digest, identifier, keys
 
 
 def source_binding():
-    paths = ("microecology_kernel.py", "microecology_lab.py", "microecology_verification.py",
-             "world_protocol.py", "world_session.py", "world_cli.py", "microecology_demo.py")
+    paths = ("kernel.py", "lab.py", "verification.py", "protocol.py", "session.py", "cli.py", "demo.py")
     return {"sources": {name: hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in paths},
             "runtime": {"python": platform.python_version(), "numpy": numpy.__version__, "scipy": scipy.__version__}}
 
