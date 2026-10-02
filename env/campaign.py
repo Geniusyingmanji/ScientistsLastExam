@@ -19,9 +19,11 @@ from .transport import CampaignClient
 from .task_profiles import get_task_profile
 from .presentation_profiles import get_presentation_profile
 from .analysis_api import PROTOCOL as SNAPSHOT_PROTOCOL, contract as snapshot_contract
+from .seed_exclusions import (COHORT_PROTOCOL, LEGACY_RESERVED, MAX_WORLD_SEED_DRAWS,
+                              exclusion_binding, strict_json_loads, validate_manifest_binding)
 
 
-def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14, task_profile="open_discovery", presentation_profile="full_description", balanced_strata=(), analysis_protocol="legacy"):
+def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14, task_profile="open_discovery", presentation_profile="full_description", balanced_strata=(), analysis_protocol="legacy", seed_exclusions=None):
     if not re.fullmatch(r"[a-z0-9][a-z0-9_-]{0,63}", cohort):
         raise ValueError("invalid cohort identifier")
     if not names or len(set(names)) != len(names) or any(n not in ENVIRONMENTS for n in names):
@@ -36,6 +38,8 @@ def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14
             any(not isinstance(name, str) or name not in names for name in balanced_strata) or
             len(set(balanced_strata)) != len(balanced_strata)):
         raise ValueError("balanced strata must explicitly name distinct selected environments")
+    binding = exclusion_binding(seed_exclusions)
+    excluded = binding.get("seed_exclusions", {}).get("environments", {})
     limits = dict(DEFAULT_LIMITS, rounds=rounds, exploration_rounds=exploration_rounds)
     profile = get_task_profile(task_profile)
     presentation = get_presentation_profile(presentation_profile, task_profile=profile)
@@ -44,10 +48,19 @@ def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14
     rows = []
     for index in range(instances):
         for name in names:
-            reserved = {7, 46, 1439, 8743} | {r["world_seed"] for r in rows}
-            world_seed = secrets.randbelow(2**31)
-            while world_seed in reserved:
-                world_seed = secrets.randbelow(2**31)
+            reserved = set(LEGACY_RESERVED) | set(excluded.get(name, [])) | {r["world_seed"] for r in rows}
+            remaining_draws = MAX_WORLD_SEED_DRAWS
+
+            def draw_world_seed():
+                nonlocal remaining_draws
+                while remaining_draws:
+                    remaining_draws -= 1
+                    seed = secrets.randbelow(2**31)
+                    if seed not in reserved:
+                        return seed
+                raise ValueError("bounded world-seed sampling exhausted before cohort freeze")
+
+            world_seed = draw_world_seed()
             panel_seed = secrets.randbelow(2**31)
             world, _ = load_world(name, world_seed)
             stratum = None
@@ -59,9 +72,7 @@ def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14
                 for attempt in range(128):
                     if world.operator_stratum() == stratum:
                         break
-                    world_seed = secrets.randbelow(2**31)
-                    while world_seed in reserved:
-                        world_seed = secrets.randbelow(2**31)
+                    world_seed = draw_world_seed()
                     world, _ = load_world(name, world_seed)
                 else:
                     raise ValueError("bounded stratum sampling exhausted before cohort freeze")
@@ -71,11 +82,13 @@ def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14
                    "presentation_profile": presentation_profile, "analysis_protocol": analysis_protocol}
             if stratum is not None:
                 row["operator_sampling_stratum"] = stratum
+            if binding:
+                row["seed_exclusions_sha256"] = binding["seed_exclusions_sha256"]
             row["panel_hashes"] = {kind: canonical_hash(world.panel(panel_seed, kind, limits["panel_count"]))
                                    for kind in ("conditions", "interventions")}
             rows.append(row)
     import numpy, scipy
-    return {"protocol": "sle-pilot-cohort-0.4", "cohort": cohort, "created_unix": time.time(),
+    manifest = {"protocol": COHORT_PROTOCOL if binding else "sle-pilot-cohort-0.4", "cohort": cohort, "created_unix": time.time(),
             "analysis_protocol": analysis_protocol,
             "analysis_contract": snapshot_contract() if analysis_protocol == SNAPSHOT_PROTOCOL else None,
             "presentation_profile": presentation,
@@ -83,13 +96,16 @@ def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14
                                 "allocation": "Cycle declared operator strata in instance order; counts differ by at most one. Unlisted worlds use unrestricted random instances. Strata never enter the public problem."},
             "task_profile": profile, "runtime": {"python": sys.version, "numpy": numpy.__version__, "scipy": scipy.__version__},
             "source_sha256": source_digest(), "score_contract": score_contract(), "limits": limits,
-            "reserved_development_world_seeds": [7, 46, 1439, 8743],
+            "reserved_development_world_seeds": list(LEGACY_RESERVED),
             "environments": names, "instances": rows, "planned_max_api_attempts": len(rows)*rounds,
             "requested_model": "gpt-5.6-sol", "decoding": {
                 "wire": "chat", "reasoning_effort": "medium", "max_output_tokens": 8000,
                 "chat_max_tokens_field": "max_completion_tokens", "temperature": None,
                 "stream": False, "timeout_seconds": 180},
             "discovery_depth": "separate evidence audit; no model-name or hidden-recipe rubric"}
+    manifest.update(binding)
+    validate_manifest_binding(manifest)
+    return manifest
 
 
 def _run_one(instance, limits, directory, config_path, ledger_path, workers, rpm, expected_source, expected_decoding):
@@ -114,7 +130,8 @@ def _run_one(instance, limits, directory, config_path, ledger_path, workers, rpm
 
 
 def run_cohort(manifest_path, config_path, campaign_root, *, workers=8, rpm=60):
-    manifest = json.loads(Path(manifest_path).read_text(encoding="utf-8"))
+    manifest = strict_json_loads(Path(manifest_path).read_text(encoding="utf-8"))
+    validate_manifest_binding(manifest)
     if not 1 <= workers <= 16 or not 1 <= rpm <= 120:
         raise ValueError("workers must be 1..16 and rpm 1..120")
     if manifest["source_sha256"] != source_digest():

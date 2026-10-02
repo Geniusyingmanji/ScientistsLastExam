@@ -17,6 +17,8 @@ import secrets
 from .analysis_api import PROTOCOL as SNAPSHOT_PROTOCOL, contract as snapshot_contract
 from .campaign import create_manifest
 from .runner import DEFAULT_LIMITS, source_digest
+from .seed_exclusions import (BINDING_FIELDS, load_exclusions, public_summary,
+                              validate_manifest_binding)
 
 
 PROTOCOL = "sle-prospective-paired-design-0.1"
@@ -25,6 +27,16 @@ _DESIGN_ID = re.compile(r"[a-z0-9][a-z0-9_-]{0,39}\Z")
 _SHARED_FIELDS = ("protocol", "created_unix", "source_sha256", "score_contract", "runtime",
                   "task_profile", "presentation_profile", "sampling_policy", "environments",
                   "requested_model", "decoding", "reserved_development_world_seeds", "discovery_depth")
+
+
+def _shared_contract(manifest):
+    fields = _SHARED_FIELDS + tuple(key for key in BINDING_FIELDS if key in manifest)
+    return {key: deepcopy(manifest[key]) for key in fields}
+
+
+def _exclusion_summary(manifest):
+    exclusions = validate_manifest_binding(manifest)
+    return {} if exclusions is None else {"seed_exclusions": public_summary(exclusions)}
 
 
 def _hash(value):
@@ -75,7 +87,7 @@ def _fresh_confirmation(used):
 def create_paired_design(design_id, names, *, factor, values, instances=5, rounds=None,
                          closing_opportunities=2, analysis_protocol=None,
                          task_profile="open_discovery", presentation_profile="full_description",
-                         balanced_strata=()):
+                         balanced_strata=(), seed_exclusions=None):
     """Return private manifests/index and a counts-only public summary.
 
     ``factor='rounds'`` uses values such as [8,16]; shared analysis_protocol may
@@ -90,7 +102,8 @@ def create_paired_design(design_id, names, *, factor, values, instances=5, round
     template = create_manifest(design_id + "-sampling", names, instances=instances,
         rounds=settings[0]["rounds"], exploration_rounds=settings[0]["rounds"] - closing_opportunities,
         task_profile=task_profile, presentation_profile=presentation_profile,
-        balanced_strata=balanced_strata, analysis_protocol=settings[0]["analysis_protocol"])
+        balanced_strata=balanced_strata, analysis_protocol=settings[0]["analysis_protocol"],
+        seed_exclusions=seed_exclusions)
     used_keys = {row["confirmation_key"] for row in template["instances"]}
     manifests, arm_rows = {}, []
     for index, setting in enumerate(settings):
@@ -125,9 +138,10 @@ def create_paired_design(design_id, names, *, factor, values, instances=5, round
               "planned_arms": len(manifests), "planned_episodes": len(pairs) * len(manifests),
               "planned_max_api_attempts": sum(m["planned_max_api_attempts"] for m in manifests.values()),
               "ledger_modified": False}
+    public.update(_exclusion_summary(template))
     result = {"protocol": PROTOCOL, "design_id": design_id, "factor": factor, "values": list(values),
               "closing_opportunities": closing_opportunities, "arms": arm_rows,
-              "shared_contract": {key: deepcopy(template[key]) for key in _SHARED_FIELDS},
+              "shared_contract": _shared_contract(template),
               "pair_index": pairs, "manifests": manifests, "public_summary": public,
               "interpretation": {
                   "prospective_only": "Fresh sampling before execution; historical cohorts cannot be retroactively treated as paired.",
@@ -173,15 +187,17 @@ def validate_design(design):
     if list(manifests) != expected_ids or [arm["arm"] for arm in arms] != expected_ids:
         raise ValueError("invalid arm identity/order")
     first = manifests[expected_ids[0]]
+    validate_manifest_binding(first)
     settings = _settings(factor, values,
                          first["limits"]["rounds"] if factor == "analysis_protocol" else None,
                          design["closing_opportunities"], first["analysis_protocol"] if factor == "rounds" else None)
     reference = _normalize(first, factor)
-    if {key: first[key] for key in _SHARED_FIELDS} != design["shared_contract"]:
+    if _shared_contract(first) != design["shared_contract"]:
         raise ValueError("shared frozen contract changed")
     episode_ids, confirmation_keys = set(), set()
     for arm_index, (arm, setting) in enumerate(zip(arms, settings)):
         manifest = manifests[arm["arm"]]
+        validate_manifest_binding(manifest)
         if _normalize(manifest, factor) != reference:
             raise ValueError("non-factor arm difference detected")
         if manifest["cohort"] != design["design_id"] + "-" + arm["arm"] or arm["cohort"] != manifest["cohort"] or arm["value"] != values[arm_index]:
@@ -219,6 +235,7 @@ def validate_design(design):
                 raise ValueError("pair membership mismatch")
     public = {"protocol": PROTOCOL, "plan_only": True, "planned_pairs": len(pairs), "planned_arms": len(arms),
               "planned_episodes": len(episode_ids), "planned_max_api_attempts": sum(m["planned_max_api_attempts"] for m in manifests.values()), "ledger_modified": False}
+    public.update(_exclusion_summary(first))
     if design["public_summary"] != public:
         raise ValueError("public counts or allowlist mismatch")
     json.dumps(design, allow_nan=False)
@@ -257,13 +274,16 @@ def main():
     parser.add_argument("--task-profile", default="open_discovery")
     parser.add_argument("--presentation-profile", default="full_description")
     parser.add_argument("--balanced-strata", default="")
+    parser.add_argument("--seed-exclusions-file", help="explicit operator-only JSON world-seed exclusion list")
     parser.add_argument("--output", required=True, help="New plan directory; existing directories are never overwritten")
     args = parser.parse_args()
+    exclusions = load_exclusions(args.seed_exclusions_file) if args.seed_exclusions_file else None
     values = [int(value) for value in args.values.split(",")] if args.factor == "rounds" else args.values.split(",")
     design = create_paired_design(args.design_id, args.environments.split(","), factor=args.factor, values=values,
         instances=args.instances, rounds=args.rounds, closing_opportunities=args.closing_opportunities,
         analysis_protocol=args.analysis_protocol, task_profile=args.task_profile,
-        presentation_profile=args.presentation_profile, balanced_strata=args.balanced_strata.split(",") if args.balanced_strata else ())
+        presentation_profile=args.presentation_profile, balanced_strata=args.balanced_strata.split(",") if args.balanced_strata else (),
+        seed_exclusions=exclusions)
     print(json.dumps(write_design(design, args.output), sort_keys=True))
 
 

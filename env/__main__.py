@@ -21,6 +21,7 @@ def main():
     freeze.add_argument("--balanced-strata", default="", help="comma-separated selected environments with trusted operator strata")
     freeze.add_argument("--analysis-protocol", default="legacy", choices=("legacy", "sle-analysis-snapshots-0.1"),
                         help="explicit candidate model-snapshot API version; legacy keeps the original interface")
+    freeze.add_argument("--seed-exclusions-file", help="explicit operator-only JSON world-seed exclusion list")
     freeze.add_argument("--output", required=True)
     run = commands.add_parser("run")
     run.add_argument("--manifest", required=True)
@@ -33,14 +34,19 @@ def main():
     args = parser.parse_args()
     if args.command == "freeze":
         from .campaign import create_manifest
+        from .seed_exclusions import load_exclusions, public_summary
+        exclusions = load_exclusions(args.seed_exclusions_file) if args.seed_exclusions_file else None
         output = Path(args.output)
         if output.exists():
             raise ValueError("manifest already exists; do not overwrite a frozen cohort")
+        manifest = create_manifest(args.cohort, args.environments.split(","), args.instances, args.rounds, args.exploration_rounds, args.task_profile, args.presentation_profile, args.balanced_strata.split(",") if args.balanced_strata else (), args.analysis_protocol, seed_exclusions=exclusions)
         output.parent.mkdir(parents=True, exist_ok=True)
-        manifest = create_manifest(args.cohort, args.environments.split(","), args.instances, args.rounds, args.exploration_rounds, args.task_profile, args.presentation_profile, args.balanced_strata.split(",") if args.balanced_strata else (), args.analysis_protocol)
         save_json(output, manifest)
-        print(json.dumps({"cohort": manifest["cohort"], "episodes": len(manifest["instances"]),
-                          "source_sha256": manifest["source_sha256"], "max_api_attempts": manifest["planned_max_api_attempts"]}))
+        summary = {"cohort": manifest["cohort"], "episodes": len(manifest["instances"]),
+                   "source_sha256": manifest["source_sha256"], "max_api_attempts": manifest["planned_max_api_attempts"]}
+        if exclusions is not None:
+            summary["seed_exclusions"] = public_summary(exclusions)
+        print(json.dumps(summary))
     elif args.command == "run":
         from .campaign import run_cohort
         run_cohort(args.manifest, args.config, args.campaign_root, workers=args.workers, rpm=args.rpm)
