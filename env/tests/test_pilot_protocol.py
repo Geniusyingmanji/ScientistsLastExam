@@ -22,6 +22,19 @@ from env.campaign import _run_one
 from sle.llm import LLMConfig
 
 
+@pytest.fixture(autouse=True)
+def synthetic_world_claim_policy(monkeypatch):
+    """Keep the transparent scoring fixture out of production world policy."""
+    from env.claim_semantics import claim_eligibility as real_eligibility
+
+    def eligibility(world_name, control, treatment, readout, axis_field):
+        if world_name == "linear-test":
+            return {"eligible": True, "reason": "synthetic_test_world"}
+        return real_eligibility(world_name, control, treatment, readout, axis_field)
+
+    monkeypatch.setattr("env.scoring.claim_eligibility", eligibility)
+
+
 class LinearWorld:
     name, version = "linear-test", "linear-test-1"
     axis_field = "times"

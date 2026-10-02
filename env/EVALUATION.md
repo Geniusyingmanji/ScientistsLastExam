@@ -1,4 +1,4 @@
-# Pilot evaluation protocol 0.2
+# Pilot evaluation protocol 0.3
 
 This pilot measures experimental investigation and frozen quantitative prediction
 in synthetic worlds. It does not match an agent's prose to a golden mechanism.
@@ -45,6 +45,20 @@ pairs and equivalent readouts with padded time grids are duplicates. More genera
 semantic duplication, relevance of evidence citations and scientific novelty
 require review. Wide uninformative intervals are penalized rather than passed
 as discoveries.
+
+Public-only eligibility excludes immediate additions/removals and directly
+clamped observables. Time-dependent paired readouts use a matched time and a
+minimum evolution lag after preparation and every preceding event: microecology
+1 h, oscillator 0.25 s, reaction 1 s, heat 0.5 s and gene regulation 0.5 h. These
+are declared pilot eligibility resolutions, not estimated physical constants.
+Ising temperature is a control, so between-temperature contrasts remain legal.
+The checks require no hidden mechanism and do not establish novelty; other
+analytically predetermined or semantically duplicate effects still need review.
+
+This amendment was motivated by development-a1, before any formal requests:
+three reaction claims repeated the advertised instantaneous addition rule.
+Development-a1 retains its original protocol-0.2 scores and is not pooled with
+the amended formal cohort. Prediction formulas, weights and scales did not change.
 
 For an operational *verified nonzero effect*, the fresh mean must lie in the
 submitted interval, its absolute value must exceed three estimated standard

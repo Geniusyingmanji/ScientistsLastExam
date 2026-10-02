@@ -62,6 +62,11 @@ Claims are optional, up to 3. Each is exactly:
 "interval":[lower,upper], "evidence_ids":["obs-0001"], "scope":"conditions and caveats"}.
 Row is zero-based and must be after t=0. The interval is a central 90% predictive
 interval for the mean of eight fresh noisy treatment-minus-control differences.
+The public claim_eligibility rules exclude immediate assignment/addition readouts
+and directly clamped observables. Use the declared minimum evolution time after
+preparation/events, and matched times in dynamical worlds. Temperature contrasts
+in equilibrium spin systems are permitted. Prefer effects requiring learned
+behavior rather than facts already given by the tool contract.
 Read the full score contract. Verification of an effect does not prove a complete
 mechanism. Avoid duplicate claims; every omitted claim slot scores zero.
 """

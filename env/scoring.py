@@ -4,8 +4,9 @@ import json
 import math
 
 import numpy as np
+from .claim_semantics import claim_eligibility, policy_description
 
-PROTOCOL = "sle-pilot-score-0.2"
+PROTOCOL = "sle-pilot-score-0.3"
 WEIGHTS = {"conditions": .5, "interventions": .3, "claims": .2}
 ERROR_SCALE = .1
 CLAIM_SLOTS = 3
@@ -19,6 +20,7 @@ def canonical_hash(value):
 def score_contract():
     return {
         "protocol": PROTOCOL, "weights": WEIGHTS,
+        "claim_eligibility": policy_description(),
         "prediction": "For each held-out experiment compute RMSE after dividing channels by public scales. Exclude t=0 when there are other times. Score = 100*exp(-RMSE/0.1); average experiments equally, then apply weights.",
         "claims": "Up to 3 agent-chosen paired quantitative effects. Freeze a central 90% interval for the mean of 8 independent noisy treatment-control differences. Interval score = width + 20*distance outside interval. Slot score = 100*exp(-interval_score/(0.1*channel_scale)). Missing or duplicated slots score zero; average over exactly 3 slots.",
         "claim_evidence": "Cite prior observation IDs and describe scope. Citation presence is checked automatically; its scientific relevance and any mechanism explanation require evidence review.",
@@ -66,6 +68,9 @@ def validate_submission(value, world, records):
             axis = spec[world.axis_field]
             if readout["row"] >= len(axis) or axis[readout["row"]] == 0:
                 raise ValueError("claim row must be a valid post-initial observation")
+        eligibility = claim_eligibility(world.name, control, treatment, readout, world.axis_field)
+        if not eligibility["eligible"]:
+            raise ValueError("claim is ineligible: " + eligibility["reason"])
         interval = claim["interval"]
         endpoint_limit = 1e6 * world.scales[world.channels.index(readout["channel"])]
         if not isinstance(interval, list) or len(interval) != 2 or any(isinstance(x, bool) or not isinstance(x, (int, float)) or not -endpoint_limit <= x <= endpoint_limit or not math.isfinite(x) for x in interval) or interval[0] > interval[1]:
@@ -95,6 +100,7 @@ def prediction_metrics(predicted, observed, scales):
 def verify_claims(world, claims, confirmation_key):
     reports, seen = [], set()
     for index, claim in enumerate(claims):
+        eligibility = claim_eligibility(world.name, claim["control"], claim["treatment"], claim["readout"], world.axis_field)
         arms = []
         for arm in ("control", "treatment"):
             spec = world.validate(claim[arm])
@@ -118,14 +124,14 @@ def verify_claims(world, claims, confirmation_key):
         width = upper - lower
         interval_score = width + 20 * max(lower-mean, mean-upper, 0)
         scale = world.scales[channel]
-        score = 0. if duplicate else 100 * math.exp(-interval_score / (ERROR_SCALE * scale))
+        score = 0. if duplicate or not eligibility["eligible"] else 100 * math.exp(-interval_score / (ERROR_SCALE * scale))
         covered = lower <= mean <= upper
         nonzero = abs(mean) > max(3*se, 1e-12)
         reports.append({"id": claim["id"], "statement": claim["statement"], "scope": claim["scope"],
                         "evidence_ids": claim["evidence_ids"], "interval": [lower, upper], "mean_difference": mean,
                         "standard_error": se, "replicates": CONFIRMATION_REPLICATES, "interval_score": interval_score,
-                        "score": score, "covered": covered, "duplicate": duplicate,
-                        "verified_nonzero_effect": bool(not duplicate and covered and width <= .2*scale and nonzero),
+                        "score": score, "covered": covered, "duplicate": duplicate, "eligibility": eligibility,
+                        "verified_nonzero_effect": bool(eligibility["eligible"] and not duplicate and covered and width <= .2*scale and nonzero),
                         "mechanism_certified": False})
     return {"score": sum(r["score"] for r in reports) / CLAIM_SLOTS,
             "verified_nonzero_effects": sum(r["verified_nonzero_effect"] for r in reports), "claims": reports}
