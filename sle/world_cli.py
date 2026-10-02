@@ -1,4 +1,4 @@
-"""Run a first virtual world without model credentials or paid API calls."""
+"""Run a virtual world from public actions, a sandboxed program, or a bounded model."""
 from __future__ import annotations
 
 import argparse
@@ -27,6 +27,7 @@ def command(args):
     directory = prepare_output(args.output_dir)
     session = WorldSession(args.seed, budget=args.budget)
     demo = None
+    agent = None
     try:
         if args.world_command == "demo":
             from .microecology_demo import run_demo, render_demo
@@ -45,6 +46,23 @@ def command(args):
                 print(json.dumps(response, ensure_ascii=False), flush=True)
                 if session.state in ("completed", "infrastructure_error", "budget_exhausted"):
                     break
+        elif args.llm_config:
+            import yaml
+            from .llm import LLMConfig
+            from .world_agent import AuditedWorldClient, WorldAnalysis, run_agent
+            config = LLMConfig.from_dict(yaml.safe_load(Path(args.llm_config).read_text()) or {})
+            if not 1 <= config.max_output_tokens <= 8000:
+                raise ValueError("world pilot requires max_output_tokens in 1..8000")
+            if not 1 <= config.timeout_seconds <= 600:
+                raise ValueError("world pilot requires timeout_seconds in 1..600")
+            analysis = WorldAnalysis(timeout_s=20) if args.analysis else None
+            try:
+                client = AuditedWorldClient(config, directory, max_attempts=args.max_model_calls)
+                agent = run_agent(session, client, directory, max_rounds=args.max_model_calls,
+                                  wall_seconds=args.wall_seconds, analysis=analysis)
+            finally:
+                if analysis is not None:
+                    analysis.close()
         elif args.program:
             # The existing fail-closed Linux sandbox is the sole path for candidate code.
             from .secure_eval import CandidateProxy
@@ -65,13 +83,16 @@ def command(args):
         _save(directory, "public-report.json", session.report())
         _save(directory, "operator-report.json", session.report(private=True))
     summary = {"world": "Microecology", "state": session.state, "output_dir": str(directory),
-               "resources": session.report()["resources"], "model_api_calls": 0}
+               "resources": session.report()["resources"],
+               "model_api_calls": agent["transport"]["attempts"] if agent else 0}
+    if agent:
+        summary.update(model=agent["requested_model"], stop_reason=agent["stop_reason"], usage=agent["usage"])
     if demo:
         summary["selected_channel"] = demo["selected_channel"]
         summary["results"] = [{k: r[k] for k in ("claim_id", "status", "mean_difference")} for r in demo["verification"]["results"]]
     summary["kind"] = "session_summary"
     print(json.dumps(summary, ensure_ascii=False, indent=None if getattr(args, "interactive", False) else 2))
-    return 1 if session.state in ("infrastructure_error", "budget_exhausted") else 0
+    return 1 if session.state in ("infrastructure_error", "budget_exhausted") or (agent and session.state != "completed") else 0
 
 
 def add_parser(sub):
@@ -92,6 +113,10 @@ def add_parser(sub):
             source.add_argument("--interactive", action="store_true", help="JSONL stdin/stdout")
             source.add_argument("--actions", help="JSON array of public actions")
             source.add_argument("--program", help="solve(description, act); Linux sandbox required")
+            source.add_argument("--llm-config", help="operator-only YAML/JSON model configuration; no automatic retries")
+            parser.add_argument("--max-model-calls", type=int, default=32)
+            parser.add_argument("--wall-seconds", type=float, default=1800)
+            parser.add_argument("--analysis", action="store_true", help="enable isolated Python analysis; Linux sandbox required")
             parser.add_argument("--timeout", type=float, default=300)
 
 

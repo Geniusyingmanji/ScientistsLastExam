@@ -66,6 +66,32 @@ operator-written policy; its success is not a model result. The Python
 `WorldSession` object owns private state and must never be passed directly to
 untrusted agent code.
 
+### Bounded model pilot
+
+```sh
+python -m sle world run --seed 731 \
+  --llm-config /private/operator/model.json --analysis \
+  --max-model-calls 32 --wall-seconds 1800 \
+  --output-dir /var/tmp/sle-microecology-model
+```
+
+The model receives only the public tool description and its own experiment history.
+Each response supplies a brief research note and up to 64 sequential JSON actions,
+or isolated Python analysis. Batches stop at the first error. `--analysis` requires
+the existing Linux sandbox and never falls back to host execution. A model turn
+can freeze predictions; another turn can interpret fresh confirmation results.
+The model is not given the demonstration policy, recipe, or expected discoveries.
+
+The pilot allows 2–32 model requests, at most 8,000 output tokens per request, a
+bounded wall time and prompt size, and **no automatic transport retries**. The
+config supplies the existing endpoint/model/decoding choices. A fsynced JSONL
+ledger records each started request before network I/O; its path cannot be reused.
+The ledger never records authentication headers or endpoint URLs. `agent-report.json`
+records visible replies, research notes, public actions, reported usage, stop
+reasons and provider-reported model identifiers separately from the requested ID.
+Missing usage and unknown pricing remain unknown. World reports are checkpointed
+after every turn; incomplete episodes are not labeled successful discoveries.
+
 ## World and experimental semantics
 
 - Mechanism and parameters are fixed within an instance and all its confirmation
