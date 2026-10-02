@@ -38,4 +38,3 @@ def generate(seed, structure):
     frequencies = center + locations*(spread / np.sqrt(variance))
     rate = 0.0 if structure == "static_frequency_spread" else float(rng.uniform(3, 12))
     return Parameters(tuple(frequencies.tolist()), tuple(weights.tolist()), rate)
-

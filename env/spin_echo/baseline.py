@@ -69,4 +69,3 @@ def baseline(records, spec):
     if not np.isfinite(result).all():
         raise ValueError("baseline prediction became nonfinite")
     return result.tolist()
-

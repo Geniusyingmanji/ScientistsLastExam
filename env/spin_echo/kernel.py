@@ -91,4 +91,3 @@ class Kernel:
             rows.append(mean)
         return np.asarray(rows), {"free_propagations": free_calls, "rotations": rotations,
                                   "subensembles": len(weights)}
-
