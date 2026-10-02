@@ -33,7 +33,11 @@ def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14
     rows = []
     for index in range(instances):
         for name in names:
-            world_seed, panel_seed = secrets.randbelow(2**31), secrets.randbelow(2**31)
+            reserved = {7, 46, 1439, 8743} | {r["world_seed"] for r in rows}
+            world_seed = secrets.randbelow(2**31)
+            while world_seed in reserved:
+                world_seed = secrets.randbelow(2**31)
+            panel_seed = secrets.randbelow(2**31)
             world, _ = load_world(name, world_seed)
             row = {"episode_id": "%s-%s-%02d" % (cohort, name, index+1),
                    "cohort": cohort, "environment": name, "world_seed": world_seed,
@@ -45,6 +49,7 @@ def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14
     return {"protocol": "sle-pilot-cohort-0.2", "cohort": cohort, "created_unix": time.time(),
             "task_profile": profile, "runtime": {"python": sys.version, "numpy": numpy.__version__, "scipy": scipy.__version__},
             "source_sha256": source_digest(), "score_contract": score_contract(), "limits": limits,
+            "reserved_development_world_seeds": [7, 46, 1439, 8743],
             "environments": names, "instances": rows, "planned_max_api_attempts": len(rows)*rounds,
             "requested_model": "gpt-5.6-sol", "decoding": {
                 "wire": "chat", "reasoning_effort": "medium", "max_output_tokens": 8000,
