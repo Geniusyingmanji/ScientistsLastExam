@@ -178,3 +178,32 @@ def test_evaluation_profile_requires_forecasts_but_allows_candidate_to_repair_be
     assert "forecast_evaluation" in session.verification["results"][0]
     assert session.report()["discovery_depth"] is None
     assert replay_report(session.report(private=True))["status"] == "exact_replay_passed"
+
+
+def test_analysis_idle_time_does_not_consume_active_budget_or_reset_it(monkeypatch):
+    from sle.world_agent import WorldAnalysis
+    clock = [100.0]
+    class Worker:
+        def __init__(self, *args, timeout_s, **kwargs):
+            self.deadline = clock[0] + timeout_s
+        def __call__(self, payload):
+            available = self.deadline - clock[0]
+            clock[0] += min(2.0, available)
+            if available < 2:
+                raise TimeoutError("active budget exhausted")
+            return {"ok": True}
+        def close(self):
+            pass
+    monkeypatch.setattr("sle.world_agent.time.monotonic", lambda: clock[0])
+    monkeypatch.setattr("sle.secure_eval.CandidateProxy", Worker)
+    analysis = WorldAnalysis(timeout_s=5)
+    clock[0] += 100  # More model idle time than the entire analysis allowance.
+    assert analysis("pass", {}, [])["ok"]
+    assert analysis.remaining_seconds == 3
+    clock[0] += 100
+    assert analysis("pass", {}, [])["ok"]
+    assert analysis.remaining_seconds == 1
+    clock[0] += 100
+    with pytest.raises(TimeoutError):
+        analysis("pass", {}, [])
+    assert analysis.remaining_seconds == 0

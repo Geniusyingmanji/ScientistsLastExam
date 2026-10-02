@@ -41,6 +41,8 @@ If analysis is enabled, isolated Python provides numpy/scipy and persistent
 variables problem (public description), history (all prior public turns), and
 public_files (empty). Assign result to a JSON value; stdout is also returned.
 Analysis has no experiment callback, network, source files, or private world state.
+Python analysis has 20 seconds of total active execution time per episode;
+time waiting for model replies does not consume that analysis budget.
 Use batches efficiently. Reserve the penultimate available model turn for commit
 and the last for interpretation. You may finish earlier when evidence suffices.
 """
@@ -115,9 +117,18 @@ class WorldAnalysis:
         from .secure_eval import CandidateProxy
         self.worker = CandidateProxy(Path(__file__).with_name("episode_analysis_worker.py"),
                                      "analyze", timeout_s=timeout_s)
+        self.remaining_seconds = max(0.0, self.worker.deadline - time.monotonic())
 
     def __call__(self, code, problem, history):
-        return self.worker({"code": code, "problem": problem, "history": history, "public_files": {}})
+        # CandidateProxy's default deadline is a whole-program wall deadline.
+        # In an interactive session, model/network idle time must not consume the
+        # analysis allowance. Carry the remaining ACTIVE time across calls; do
+        # not grant a fresh budget per call. The worker's CPU limit stays intact.
+        self.worker.deadline = time.monotonic() + self.remaining_seconds
+        try:
+            return self.worker({"code": code, "problem": problem, "history": history, "public_files": {}})
+        finally:
+            self.remaining_seconds = max(0.0, self.worker.deadline - time.monotonic())
 
     def close(self):
         self.worker.close()
