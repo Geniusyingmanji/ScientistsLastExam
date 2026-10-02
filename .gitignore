@@ -38,6 +38,9 @@ docs/reports/*
 docs/reports/sle-env-pilot-20261003/*
 !docs/reports/sle-env-pilot-20261003/index.html
 !docs/reports/sle-env-pilot-20261003/data.json
+!docs/reports/sle-env-pilot-20261003/domain-map.png
+!docs/reports/sle-env-pilot-20261003/domain-map.svg
+!docs/reports/sle-env-pilot-20261003/domain-map-data.json
 .venv-sle/
 
 # per-run locks held by scripts/run_cohort.sh

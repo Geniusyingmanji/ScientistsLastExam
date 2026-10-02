@@ -1,0 +1,62 @@
+{
+  "scope": "Author reference; one reused development instance; fixed constant-acceleration point model; finite endpoint-x map; not GPT performance or continuous boundary",
+  "tolerance_L": 0.03,
+  "family_alpha": 0.05,
+  "replicates_per_point": 12,
+  "rows": [
+    {
+      "horizon_T": 0.75,
+      "classification": "adequate",
+      "abs_mean_discrepancy_L": 0.0007981754600385194,
+      "discrepancy_interval_L": [
+        0.0,
+        0.005541591950291089
+      ]
+    },
+    {
+      "horizon_T": 1.0,
+      "classification": "adequate",
+      "abs_mean_discrepancy_L": 0.006205173626269646,
+      "discrepancy_interval_L": [
+        0.001461757136017077,
+        0.010948590116522217
+      ]
+    },
+    {
+      "horizon_T": 1.5,
+      "classification": "inadequate",
+      "abs_mean_discrepancy_L": 0.039478111352837776,
+      "discrepancy_interval_L": [
+        0.03473469486258521,
+        0.04422152784309035
+      ]
+    },
+    {
+      "horizon_T": 2.0,
+      "classification": "inadequate",
+      "abs_mean_discrepancy_L": 0.1324554561763514,
+      "discrepancy_interval_L": [
+        0.12771203968609882,
+        0.137198872666604
+      ]
+    },
+    {
+      "horizon_T": 4.0,
+      "classification": "inadequate",
+      "abs_mean_discrepancy_L": 1.7377811585089908,
+      "discrepancy_interval_L": [
+        1.7330377420187382,
+        1.7425245749992435
+      ]
+    },
+    {
+      "horizon_T": 8.0,
+      "classification": "inadequate",
+      "abs_mean_discrepancy_L": 14.147458709513534,
+      "discrepancy_interval_L": [
+        14.14271529302328,
+        14.152202126003788
+      ]
+    }
+  ]
+}
