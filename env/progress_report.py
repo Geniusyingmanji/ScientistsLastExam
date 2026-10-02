@@ -11,7 +11,7 @@ import html
 import json
 from pathlib import Path
 
-from .reporting import render_report
+from .reporting import collect_report
 
 
 NAMES = {"microecology": "微生态反馈", "coupled_oscillators": "耦合振子",
@@ -36,13 +36,13 @@ def _interval(value):
 
 def export_summary(directory, role):
     """Allowlist aggregate evidence; no raw/private content is exported."""
-    summary = render_report(Path(directory))
+    summary, _ = collect_report(Path(directory))
     keys = ("cohort", "planned_runs", "started_runs", "settled_runs", "running_runs",
             "healthy_runs", "infrastructure_failures", "macro_score", "macro_bootstrap_95",
             "score_status", "model_completion", "verified_effect_rate", "end_to_end_completion",
             "by_environment", "known_response_usage_lower_bound", "cost_usd", "cost_note",
             "weights", "depth_status", "source_sha256", "score_protocol", "task_profile",
-            "public_limits", "decoding", "trace_diagnostics")
+            "public_limits", "decoding", "trace_diagnostics", "analysis_protocol", "presentation_profile")
     return dict({key: summary.get(key) for key in keys}, role=role)
 
 
@@ -88,6 +88,7 @@ def build_report(cohorts, notes, output):
              limit.get("rounds", "—"), limit.get("experiments", "—"), limit.get("analysis_active_seconds", "—"), escape(warning),
              "".join(rows), cohort["infrastructure_failures"], format(cohort["known_response_usage_lower_bound"]["total_tokens"], ","),
              escape(json.dumps({"source_sha256": cohort["source_sha256"], "decoding": cohort["decoding"],
+                                "analysis_protocol": cohort["analysis_protocol"], "presentation_profile": cohort["presentation_profile"],
                                 "model_completion_wilson_95": cohort["model_completion"]["wilson_95"],
                                 "verified_effect_rate_wilson_95": cohort["verified_effect_rate"]["wilson_95"],
                                 "diagnostics": cohort["trace_diagnostics"]}, ensure_ascii=False, indent=2))))

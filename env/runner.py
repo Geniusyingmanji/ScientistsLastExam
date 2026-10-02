@@ -15,6 +15,7 @@ from .scoring import (aggregate_episode, canonical_hash, prediction_metrics,
                       score_contract, validate_submission, verify_claims)
 from .task_profiles import get_task_profile
 from .presentation_profiles import present_problem, present_system
+from .analysis_api import ModelSnapshots, PROTOCOL as SNAPSHOT_PROTOCOL, contract as snapshot_contract
 
 
 DEFAULT_LIMITS = {
@@ -78,17 +79,43 @@ Read the full score contract. Verification of an effect does not prove a complet
 mechanism. Avoid duplicate claims; every omitted claim slot scores zero.
 """
 
+SNAPSHOT_SYSTEM = """
+This episode enables the versioned candidate-owned model snapshot API. During
+analysis, call save_model(name, version, parameters, predictor_code=None),
+read_model(name, version), or list_models(). Parameters must be a finite plain
+JSON object; convert NumPy arrays with tolist(). Save returns an immutable receipt
+with name, version and sha256. Saving persists immediately even if later analysis
+code fails. A changed fit needs a new version; there is no overwrite/latest alias.
+The model_snapshot_contract gives exact storage and callback limits.
+
+A saved predictor can read its fitted parameters from the global MODEL. To freeze
+it, submit {"model_snapshot":{"name":"fit","version":"v1","sha256":"receipt digest"},
+"claims":[...],"explanation":"..."}. If only parameters were saved, add
+predictor_code to that submission. The runner binds exactly that snapshot's JSON
+to MODEL in a self-contained predictor, executed only in the usual fresh sandbox.
+Your saved-model catalog appears each round. No hidden world, seed, target or
+filesystem is exposed by this API. The original predictor_code-only form remains
+available. A successful save validates storage/syntax, not scientific correctness.
+"""
+
 
 class IsolatedAnalysis:
     def __init__(self, seconds):
         from . import analysis_worker
         self.worker = CandidateProxy(Path(analysis_worker.__file__), "analyze", timeout_s=seconds)
         self.remaining = max(0., self.worker.deadline-time.monotonic())
+        self.model_snapshots = None
+
+    def bind_model_snapshots(self, store):
+        self.model_snapshots = store
 
     def run(self, code, problem, records, history):
         self.worker.deadline = time.monotonic() + self.remaining
         try:
-            return self.worker({"code": code, "problem": problem, "records": records, "history": history})
+            payload = {"code": code, "problem": problem, "records": records, "history": history}
+            if self.model_snapshots is not None:
+                payload["model_api"] = self.model_snapshots.callbacks()
+            return self.worker(payload)
         finally:
             self.remaining = max(0., self.worker.deadline-time.monotonic())
 
@@ -141,6 +168,8 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
     records, history, rounds, models = [], [], [], set()
     state, stop, infrastructure = "exploring", "model_round_limit", None
     spent, frozen, analysis = 0, None, None
+    model_snapshots, frozen_model_snapshot = None, None
+    analysis_protocol = instance.get("analysis_protocol", "legacy")
     panels, baseline_panels, claim_report = {}, {}, None
     problem = world.describe()
     task_profile = get_task_profile(instance.get("task_profile", "open_discovery"), world.name) if world.name in ENVIRONMENTS else None
@@ -151,6 +180,9 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
     presentation = instance.get("presentation_profile", "full_description")
     problem = present_problem(problem, presentation, environment=world.name)
     system = present_system(SYSTEM, presentation)
+    if analysis_protocol == SNAPSHOT_PROTOCOL:
+        problem["model_snapshot_contract"] = snapshot_contract()
+        system += SNAPSHOT_SYSTEM
     result = {}
 
     def snapshot():
@@ -176,16 +208,26 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
                        "panels": panels, "baseline_panels": baseline_panels, "claim_verification": claim_report,
                        "discovery_depth": {"status": "requires_evidence_review", "automatic_mechanism_certification": False},
                        "source_sha256": source_digest(), "submission_sha256": canonical_hash(frozen) if frozen else None,
+                       "analysis_protocol": analysis_protocol,
+                       "model_snapshots": model_snapshots.catalog() if model_snapshots else [],
+                       "frozen_model_snapshot": frozen_model_snapshot,
                        "rounds": rounds, "history": history, "records": records})
         save_json(directory/"report.json", result)
         return result
 
     try:
+        if analysis_protocol not in ("legacy", SNAPSHOT_PROTOCOL):
+            raise ValueError("unsupported analysis protocol")
         for kind, expected in instance.get("panel_hashes", {}).items():
             if canonical_hash(world.panel(instance["panel_seed"], kind, limits["panel_count"])) != expected:
                 raise ValueError("precommitted panel hash mismatch")
         try:
+            if analysis_protocol == SNAPSHOT_PROTOCOL:
+                directory.mkdir(parents=True, exist_ok=True)
+                model_snapshots = ModelSnapshots(directory / "model-snapshots")
             analysis = analysis_factory(limits["analysis_active_seconds"])
+            if model_snapshots is not None:
+                analysis.bind_model_snapshots(model_snapshots)
         except Exception as exc:
             infrastructure, stop, state = "analysis_sandbox_initialization", type(exc).__name__, "failed"
             return snapshot()
@@ -206,6 +248,8 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
                       "observation_catalog": catalog,
                       "research_notes": [{"round": r["round"], "note": r.get("note", ""), "outcome": r.get("outcome", "")} for r in history],
                       "recent_results": [_compact_result(r) for r in history[-2:]]}
+            if model_snapshots is not None:
+                prompt["model_snapshots"] = model_snapshots.catalog()
             encoded = json.dumps(prompt, ensure_ascii=False, separators=(",", ":"), allow_nan=False)
             if len(encoded) > 260000:
                 stop = "model_context_budget"
@@ -263,10 +307,15 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
                         turn["analysis"] = {"ok": False, "error": sanitized_candidate_failure(exc)}
                     turn["outcome"] = "analysis_ok" if turn["analysis"].get("ok") else "analysis_failed"
                 else:
-                    frozen = validate_submission(value["submit"], world, records)
+                    proposal, binding = (model_snapshots.resolve_submission(value["submit"])
+                                         if model_snapshots else (value["submit"], None))
+                    frozen = validate_submission(proposal, world, records)
                     save_json(directory/"submission.json", frozen)
                     code_path = directory/"predictor.py"
                     code_path.write_text(frozen["predictor_code"], encoding="utf-8")
+                    frozen_model_snapshot = binding
+                    if model_snapshots is not None:
+                        model_snapshots.seal()
                     state, stop = "frozen", "submitted"
                     turn["outcome"] = "submission_frozen"
             except (ValueError, TypeError, KeyError, OverflowError) as exc:

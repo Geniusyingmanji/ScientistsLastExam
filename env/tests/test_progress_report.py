@@ -19,6 +19,11 @@ def test_public_export_includes_failures_but_excludes_private_targets(tmp_path):
                   "operator_private": "OPERATOR_SECRET_SENTINEL", "panels": {}, "history": []}
         (directory / "started.json").write_text(json.dumps({"episode_id": identifier, "environment": "microecology"}))
         (directory / "report.json").write_text(json.dumps(report))
+    # Public export must not rewrite frozen operator summaries or reports.
+    (private / "summary.json").write_text('{"frozen": true}\n')
+    (private / "index.html").write_text("frozen operator report\n")
+    before = {path.relative_to(private): path.read_bytes()
+              for path in private.rglob("*") if path.is_file()}
     output = tmp_path / "public"
     data = build_report([("formal", private)], {"summary": "<script>unsafe()</script>"}, output)
     assert data["cohorts"][0]["macro_score"] == 40
@@ -29,3 +34,6 @@ def test_public_export_includes_failures_but_excludes_private_targets(tmp_path):
     page = (output / "index.html").read_text()
     assert "<script>unsafe()" not in page and "&lt;script&gt;unsafe()" in page
     assert "data.json" in page
+    after = {path.relative_to(private): path.read_bytes()
+             for path in private.rglob("*") if path.is_file()}
+    assert before == after

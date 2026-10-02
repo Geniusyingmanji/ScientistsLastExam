@@ -32,6 +32,12 @@ docs/*
 !docs/frontier_families.md
 !docs/scientific_environments.md
 !docs/discovery_eligibility.md
+!docs/reports/
+docs/reports/*
+!docs/reports/sle-env-pilot-20261003/
+docs/reports/sle-env-pilot-20261003/*
+!docs/reports/sle-env-pilot-20261003/index.html
+!docs/reports/sle-env-pilot-20261003/data.json
 .venv-sle/
 
 # per-run locks held by scripts/run_cohort.sh

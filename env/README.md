@@ -78,6 +78,17 @@ controls. `--balanced-strata hysteresis_material` uses its trusted operator stra
 to balance hidden mechanism classes before freezing; the private labels are never
 included in the agent's problem. Both settings are stored in the cohort manifest.
 
+Future cohorts may explicitly use `--analysis-protocol sle-analysis-snapshots-0.1`
+to enable named immutable parameter/code snapshots; see [MODEL_SNAPSHOTS.md](MODEL_SNAPSHOTS.md).
+The default remains `legacy`. The exact snapshot contract and instance selection
+are frozen in the manifest; old cohorts do not acquire this capability.
+
+[PROSPECTIVE.md](PROSPECTIVE.md) describes a separate task executor that seals
+competing predictions before obtaining new measurements, retains counterexamples,
+and supports a new test after model revision. It uses the same Linux isolation
+boundary and makes no model API calls by itself. Its outputs are evidence for
+scientific review, not automatic D3/D4 scores.
+
 `report.json` and `manifest-private.json` contain private test material and full
 transcripts. Keep them outside Git and candidate access. `summary.json` is a
 compact aggregate; inspect any export before publishing. `index.html` links to
@@ -88,6 +99,9 @@ local raw records for operator review.
 self-contained HTML and allowlisted aggregate JSON without raw targets or seeds.
 Inspect curated notes before publishing. The normal per-cohort report remains
 an operator artifact because it links to raw reports.
+Public export is read-only on the source cohorts. A sanitized
+[pilot progress report](../docs/reports/sle-env-pilot-20261003/index.html) is included
+with separate core, expansion and development results.
 
 ## Evaluation and extension
 

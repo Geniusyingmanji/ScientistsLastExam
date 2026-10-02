@@ -1,0 +1,193 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SLE · 科学环境进度与结论</title><style>
+:root{--ink:#173d3a;--muted:#5a706d;--accent:#087e70;--paper:#f6f6ef;--line:#d4dfd7;--gold:#ae6a22}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.65 system-ui,-apple-system,sans-serif}main{max-width:1250px;margin:auto;padding:42px 30px 80px}header{padding-bottom:28px;border-bottom:2px solid var(--ink);margin-bottom:28px}.eyebrow,.section-label{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}.status{display:inline-block;border:1px solid var(--line);border-radius:100px;padding:4px 12px;margin-top:16px;font-size:12px;background:white}h1{font-size:40px;line-height:1.25;max-width:930px;margin:13px 0}h2{font-size:25px;line-height:1.35;margin:10px 0 14px}h3{font-size:19px;margin:5px 0 9px}p{margin:8px 0}.lead{font-size:18px;max-width:1050px}.muted,small,.caption{color:var(--muted)}.caption{font-size:12px;margin-top:12px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.metric{background:white;border:1px solid var(--line);padding:18px;border-radius:10px}.metric label{font-size:13px}.metric strong{display:block;font-size:27px;margin:10px 0}.metric small{display:block;font-size:11px}.notice{border-left:3px solid var(--gold);padding:14px 18px;margin:24px 0;background:#f0eadb}.cohort{margin-top:34px}table{border-collapse:collapse;background:white;width:100%;font-size:13px}th,td{padding:12px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}thead th{background:#e7eee6;font-size:12px}tbody th{white-space:nowrap;font-weight:600}.score{font-weight:700;font-size:18px}.table-wrap{overflow:auto}.findings{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.finding{padding:20px;background:white;border:1px solid var(--line);border-radius:10px}.finding span{font-size:11px;color:var(--accent);font-weight:700}.finding small{font-size:11px}.section{margin-top:40px}ol{padding-left:23px}li{padding-left:5px;margin:12px 0}li p{color:var(--muted)}details{margin-top:15px}summary{cursor:pointer;color:var(--accent);font-size:13px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#eaf0e9;padding:15px;font-size:11px}footer{border-top:1px solid var(--line);margin-top:36px;padding-top:18px;font-size:12px;color:var(--muted)}a{color:var(--accent)}@media(max-width:900px){.metrics{grid-template-columns:repeat(2,1fr)}h1{font-size:31px}main{padding:27px 18px}}@media(max-width:550px){.findings,.metrics{grid-template-columns:1fr}h1{font-size:27px}.metric strong{font-size:26px}}
+</style></head><body><main><header><div class="eyebrow">SCIENTISTS' LAST EXAM / COMPUTATIONAL SCIENCE WORLDS</div><h1>GPT-5.6 首轮科学环境评测</h1><p class="lead">20 个正式实例得到 56.7 分的 pilot 综合成绩。预测能力随环境和运行明显波动；局部数值效应、可迁移的模型和有证据的机制发现需要分开看。</p><div class="status">正式与扩展批次完成 · 7 个世界 · 协议与任务继续开发至 2026-10-03 09:05（北京时间）</div></header><div class="metrics"><article class="metric"><label>GPT-5.6 · SLE-Pilot</label><strong>56.7 / 100</strong><small>4 环境等权；95% bootstrap [44.0, 68.3]</small></article><article class="metric"><label>模型完成率</label><strong>18/19 · 94.7%</strong><small>有效预测器 / 基础设施健康的已结束运行</small></article><article class="metric"><label>主张复验通过率</label><strong>18/19 · 94.7%</strong><small>至少一个符合数值复验条件的非零效应；不是机制发现率</small></article><article class="metric"><label>端到端完成率</label><strong>18/20 · 90.0%</strong><small>包含基础设施失败和正在运行的实例</small></article></div>
+<div class="notice">综合分 = 50% 未见条件预测 + 30% 未见干预预测 + 20% 自选主张复验。它是当前任务集上的 pilot 指标；高预测分、有效数值效应和机制发现深度分别报告。</div>
+<section class="cohort"><div class="section-label">正式批次 · core-c2</div><h2>20 个运行已结束，0 个仍在运行</h2>
+<p class="muted">协议 sle-pilot-score-0.3 · 每个实例最多 16 次请求 / 32 次实验 / 60 秒主动分析。不同协议、预算或任务的批次分别报告。</p>
+<div class="table-wrap"><table><thead><tr><th>环境</th><th>综合分</th><th>完成率</th><th>条件 / 干预 / 主张</th><th>NRMSE 条件 / 干预</th><th>逐实例得分</th></tr></thead><tbody><tr><th>微生态反馈</th><td class="score">12.0</td><td>5/5 · 100.0%</td><td>7.8 / 7.3 / 29.5</td><td>0.3243 / 0.3556</td><td>9.0 · 27.8 · 5.8 · 1.8 · 15.6</td></tr><tr><th>耦合振子</th><td class="score">64.5</td><td>5/5 · 100.0%</td><td>60.6 / 61.3 / 78.8</td><td>0.0754 / 0.0774</td><td>99.1 · 24.6 · 97.7 · 35.4 · 65.5</td></tr><tr><th>反应动力学</th><td class="score">80.3</td><td>5/5 · 100.0%</td><td>81.6 / 75.7 / 83.9</td><td>0.0255 / 0.0428</td><td>74.1 · 99.1 · 49.7 · 97.3 · 81.4</td></tr><tr><th>热输运</th><td class="score">70.2</td><td>3/4 · 75.0%</td><td>71.5 / 70.2 / 66.9</td><td>0.0050 / 0.0069</td><td>89.8 · 0.0 · 97.1 · 93.8</td></tr></tbody></table></div>
+<p class="caption">NRMSE 仅汇总产生有效数值的查询；失败仍在综合分中计 0。各分项同样包含健康失败。基础设施失败 1；已知响应 token 下界 3,869,923。</p>
+<details><summary>协议与执行诊断</summary><pre>{
+  &quot;source_sha256&quot;: &quot;2f6aa4b475d7d778a54f1331b220aafeae034a67e394f34d3a285f7dc5fad6ca&quot;,
+  &quot;decoding&quot;: {
+    &quot;wire&quot;: &quot;chat&quot;,
+    &quot;reasoning_effort&quot;: &quot;medium&quot;,
+    &quot;max_output_tokens&quot;: 8000,
+    &quot;chat_max_tokens_field&quot;: &quot;max_completion_tokens&quot;,
+    &quot;temperature&quot;: null,
+    &quot;stream&quot;: false,
+    &quot;timeout_seconds&quot;: 180
+  },
+  &quot;model_completion_wilson_95&quot;: [
+    0.753612688331012,
+    0.9906480059376995
+  ],
+  &quot;verified_effect_rate_wilson_95&quot;: [
+    0.753612688331012,
+    0.9906480059376995
+  ],
+  &quot;diagnostics&quot;: {
+    &quot;reports&quot;: 20,
+    &quot;model_requests_started&quot;: 270,
+    &quot;recorded_model_rounds&quot;: 270,
+    &quot;successful_experiments&quot;: 593,
+    &quot;action_outcomes&quot;: {
+      &quot;observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008&quot;: 17,
+      &quot;observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016&quot;: 14,
+      &quot;analysis_failed&quot;: 46,
+      &quot;analysis_ok&quot;: 78,
+      &quot;observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021&quot;: 1,
+      &quot;invalid_action&quot;: 45,
+      &quot;observed obs-0022, obs-0023, obs-0024, obs-0025, obs-0026, obs-0027, obs-0028, obs-0029&quot;: 1,
+      &quot;submission_frozen&quot;: 19,
+      &quot;observed obs-0001, obs-0002, obs-0003, obs-0004&quot;: 3,
+      &quot;observed obs-0005, obs-0006, obs-0007, obs-0008, obs-0009, obs-0010, obs-0011, obs-0012&quot;: 3,
+      &quot;observed obs-0013, obs-0014, obs-0015, obs-0016, obs-0017, obs-0018&quot;: 2,
+      &quot;observed obs-0026, obs-0027, obs-0028, obs-0029, obs-0030, obs-0031&quot;: 1,
+      &quot;observed obs-0032&quot;: 2,
+      &quot;observed obs-0013, obs-0014, obs-0015, obs-0016, obs-0017, obs-0018, obs-0019, obs-0020&quot;: 1,
+      &quot;observed obs-0021, obs-0022, obs-0023, obs-0024, obs-0025, obs-0026, obs-0027, obs-0028&quot;: 2,
+      &quot;observed obs-0029, obs-0030, obs-0031, obs-0032&quot;: 3,
+      &quot;observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024&quot;: 11,
+      &quot;observed obs-0025, obs-0026, obs-0027, obs-0028, obs-0029, obs-0030, obs-0031, obs-0032&quot;: 12,
+      &quot;observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022&quot;: 1,
+      &quot;observed obs-0023, obs-0024, obs-0025, obs-0026, obs-0027, obs-0028&quot;: 1,
+      &quot;observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015&quot;: 1,
+      &quot;observed obs-0016, obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023&quot;: 1,
+      &quot;observed obs-0024, obs-0025, obs-0026, obs-0027, obs-0028, obs-0029, obs-0030, obs-0031&quot;: 1,
+      &quot;observed obs-0009, obs-0010, obs-0011, obs-0012&quot;: 1,
+      &quot;observed obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024&quot;: 1,
+      &quot;observed obs-0017, obs-0018, obs-0019, obs-0020&quot;: 1
+    },
+    &quot;invalid_action_categories&quot;: {
+      &quot;json_parse_error&quot;: 8,
+      &quot;public_spec_or_submission_validation&quot;: 15,
+      &quot;action_schema_error&quot;: 16,
+      &quot;experiment_budget_exhausted&quot;: 6
+    },
+    &quot;analysis_error_types&quot;: {
+      &quot;TypeError&quot;: 29,
+      &quot;IndexError&quot;: 1,
+      &quot;candidate_timeout&quot;: 9,
+      &quot;SyntaxError&quot;: 5,
+      &quot;result_too_large&quot;: 1,
+      &quot;ValueError&quot;: 1
+    },
+    &quot;stop_reasons&quot;: {
+      &quot;verified&quot;: 18,
+      &quot;predictor_verification_failed&quot;: 1,
+      &quot;api_request_failed&quot;: 1
+    },
+    &quot;runs_with_invalid_actions&quot;: 15,
+    &quot;runs_with_analysis_errors&quot;: 19,
+    &quot;runs_with_exhausted_analysis_allowance&quot;: 7,
+    &quot;interpretation&quot;: &quot;Recorded process events; not a causal attribution or discovery-depth score.&quot;
+  }
+}</pre></details></section><section class="cohort"><div class="section-label">扩展批次 · expansion-e1</div><h2>6 个运行已结束，0 个仍在运行</h2>
+<p class="muted">协议 sle-pilot-score-0.4 · 每个实例最多 10 次请求 / 32 次实验 / 60 秒主动分析。不同协议、预算或任务的批次分别报告。</p>
+<div class="table-wrap"><table><thead><tr><th>环境</th><th>综合分</th><th>完成率</th><th>条件 / 干预 / 主张</th><th>NRMSE 条件 / 干预</th><th>逐实例得分</th></tr></thead><tbody><tr><th>基因调控</th><td class="score">54.7</td><td>2/2 · 100.0%</td><td>60.1 / 57.6 / 36.9</td><td>0.0845 / 0.0970</td><td>15.2 · 94.3</td></tr><tr><th>平衡自旋</th><td class="score">95.9</td><td>2/2 · 100.0%</td><td>99.9 / 99.9 / 80.0</td><td>0.0001 / 0.0001</td><td>98.8 · 93.0</td></tr><tr><th>材料滞回</th><td class="score">80.9</td><td>2/2 · 100.0%</td><td>90.6 / 76.6 / 63.1</td><td>0.0118 / 0.1377</td><td>94.1 · 67.7</td></tr></tbody></table></div>
+<p class="caption">NRMSE 仅汇总产生有效数值的查询；失败仍在综合分中计 0。各分项同样包含健康失败。基础设施失败 0；已知响应 token 下界 930,944。</p>
+<details><summary>协议与执行诊断</summary><pre>{
+  &quot;source_sha256&quot;: &quot;347b808e44696e9b9386c3aeab7a1c1b125bb371aca72fc85a01e20acf984591&quot;,
+  &quot;decoding&quot;: {
+    &quot;wire&quot;: &quot;chat&quot;,
+    &quot;reasoning_effort&quot;: &quot;medium&quot;,
+    &quot;max_output_tokens&quot;: 8000,
+    &quot;chat_max_tokens_field&quot;: &quot;max_completion_tokens&quot;,
+    &quot;temperature&quot;: null,
+    &quot;stream&quot;: false,
+    &quot;timeout_seconds&quot;: 180
+  },
+  &quot;model_completion_wilson_95&quot;: [
+    0.6096657120978346,
+    1.0
+  ],
+  &quot;verified_effect_rate_wilson_95&quot;: [
+    0.43649717781352987,
+    0.9699466302516935
+  ],
+  &quot;diagnostics&quot;: {
+    &quot;reports&quot;: 6,
+    &quot;model_requests_started&quot;: 54,
+    &quot;recorded_model_rounds&quot;: 54,
+    &quot;successful_experiments&quot;: 189,
+    &quot;action_outcomes&quot;: {
+      &quot;observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008&quot;: 5,
+      &quot;analysis_ok&quot;: 19,
+      &quot;observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016&quot;: 5,
+      &quot;observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024&quot;: 5,
+      &quot;observed obs-0025, obs-0026, obs-0027, obs-0028, obs-0029, obs-0030, obs-0031, obs-0032&quot;: 5,
+      &quot;submission_frozen&quot;: 6,
+      &quot;invalid_action&quot;: 3,
+      &quot;analysis_failed&quot;: 2,
+      &quot;observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005&quot;: 1,
+      &quot;observed obs-0006, obs-0007, obs-0008, obs-0009, obs-0010, obs-0011, obs-0012, obs-0013&quot;: 1,
+      &quot;observed obs-0014, obs-0015, obs-0016, obs-0017, obs-0018, obs-0019, obs-0020, obs-0021&quot;: 1,
+      &quot;observed obs-0022, obs-0023, obs-0024, obs-0025, obs-0026, obs-0027, obs-0028, obs-0029&quot;: 1
+    },
+    &quot;invalid_action_categories&quot;: {
+      &quot;action_schema_error&quot;: 3
+    },
+    &quot;analysis_error_types&quot;: {
+      &quot;candidate_timeout&quot;: 1,
+      &quot;KeyError&quot;: 1
+    },
+    &quot;stop_reasons&quot;: {
+      &quot;verified&quot;: 6
+    },
+    &quot;runs_with_invalid_actions&quot;: 2,
+    &quot;runs_with_analysis_errors&quot;: 2,
+    &quot;runs_with_exhausted_analysis_allowance&quot;: 1,
+    &quot;interpretation&quot;: &quot;Recorded process events; not a causal attribution or discovery-depth score.&quot;
+  }
+}</pre></details></section><details><summary>开发批次记录（独立协议，不计入正式成绩）</summary><section class="cohort"><div class="section-label">开发批次 · development-a1</div><h2>4 个运行已结束，0 个仍在运行</h2>
+<p class="muted">协议 sle-pilot-score-0.2 · 每个实例最多 6 次请求 / 32 次实验 / 60 秒主动分析。开发批次使用旧主张规则，不与正式成绩合并。</p>
+<div class="table-wrap"><table><thead><tr><th>环境</th><th>综合分</th><th>完成率</th><th>条件 / 干预 / 主张</th><th>NRMSE 条件 / 干预</th><th>逐实例得分</th></tr></thead><tbody><tr><th>微生态反馈</th><td class="score">26.5</td><td>1/1 · 100.0%</td><td>14.0 / 9.6 / 83.0</td><td>0.2719 / 0.2923</td><td>26.5</td></tr><tr><th>耦合振子</th><td class="score">97.6</td><td>1/1 · 100.0%</td><td>99.9 / 100.0 / 88.4</td><td>0.0001 / 0.0000</td><td>97.6</td></tr><tr><th>反应动力学</th><td class="score">99.3</td><td>1/1 · 100.0%</td><td>99.9 / 99.9 / 96.8</td><td>0.0001 / 0.0001</td><td>99.3</td></tr><tr><th>热输运</th><td class="score">86.1</td><td>1/1 · 100.0%</td><td>86.4 / 84.1 / 88.5</td><td>0.0155 / 0.0175</td><td>86.1</td></tr></tbody></table></div>
+<p class="caption">NRMSE 仅汇总产生有效数值的查询；失败仍在综合分中计 0。各分项同样包含健康失败。基础设施失败 0；已知响应 token 下界 305,087。</p>
+<details><summary>协议与执行诊断</summary><pre>{
+  &quot;source_sha256&quot;: &quot;ce546db57a80c6e112d990e21341455e851fb8b2a7af056513bd188e8bbac513&quot;,
+  &quot;decoding&quot;: {
+    &quot;wire&quot;: &quot;chat&quot;,
+    &quot;reasoning_effort&quot;: &quot;medium&quot;,
+    &quot;max_output_tokens&quot;: 8000,
+    &quot;chat_max_tokens_field&quot;: &quot;max_completion_tokens&quot;,
+    &quot;temperature&quot;: null,
+    &quot;stream&quot;: false,
+    &quot;timeout_seconds&quot;: 180
+  },
+  &quot;model_completion_wilson_95&quot;: [
+    0.5101091635454027,
+    1.0
+  ],
+  &quot;verified_effect_rate_wilson_95&quot;: [
+    0.5101091635454027,
+    1.0
+  ],
+  &quot;diagnostics&quot;: {
+    &quot;reports&quot;: 4,
+    &quot;model_requests_started&quot;: 20,
+    &quot;recorded_model_rounds&quot;: 20,
+    &quot;successful_experiments&quot;: 88,
+    &quot;action_outcomes&quot;: {
+      &quot;observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008&quot;: 4,
+      &quot;observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016&quot;: 4,
+      &quot;analysis_ok&quot;: 4,
+      &quot;observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024&quot;: 3,
+      &quot;submission_frozen&quot;: 4,
+      &quot;analysis_failed&quot;: 1
+    },
+    &quot;invalid_action_categories&quot;: {},
+    &quot;analysis_error_types&quot;: {
+      &quot;candidate_timeout&quot;: 1
+    },
+    &quot;stop_reasons&quot;: {
+      &quot;verified&quot;: 4
+    },
+    &quot;runs_with_invalid_actions&quot;: 0,
+    &quot;runs_with_analysis_errors&quot;: 1,
+    &quot;runs_with_exhausted_analysis_allowance&quot;: 1,
+    &quot;interpretation&quot;: &quot;Recorded process events; not a causal attribution or discovery-depth score.&quot;
+  }
+}</pre></details></section></details><section class="section"><div class="section-label">EVIDENCE & LIMITS</div><h2>发现了什么，证据到哪里</h2><div class="findings"><article class="finding"><span>FORMAL / MICROECOLOGY</span><h3>局部数值效应不等于掌握整个反馈系统</h3><p>微生态 5 次都提交了可运行预测器，7 项数值对照通过非零效应复验；综合均分仅 12.0，未见条件与干预预测仍弱。现阶段不能据此声称已完整发现时间延迟反馈环。</p><small>core-c2：microecology 5 个实例；固定计分协议 0.3。</small></article><article class="finding"><span>TRACE AUDIT / LOCAL D3</span><h3>确实出现了前瞻性的局部发现</h3><p>微生态的一次运行先提出共同温度时钟，再用等效时间轨迹检验；振子的一次运行先拟合稀疏星形连接，再切断边验证；反应的一次运行用早期动力学区分是否存在直接传递通路。三个案例均有时间顺序证据，但结论限于所测条件和候选机制。</p><small>core-c2：microecology-01、coupled_oscillators-05、reaction_kinetics-02；独立轨迹复核，same-family provisional。</small></article><article class="finding"><span>FORMAL / RELIABILITY</span><h3>必须保留低分和工程失败</h3><p>振子逐实例得分约 24.6–99.1；热输运有一次预测器失败，计 0 分，以及一次 API 断连，单列基础设施失败。完整交付预测器与准确预测是不同指标。</p><small>模型完成 18/19；端到端完成 18/20。</small></article><article class="finding"><span>CALIBRATION / PUBLIC PRIOR</span><h3>更强基线暴露了任务的先验优势</h3><p>在 4 个独立开发实例中，公开 PDE 基线使用 4 条观测后，热输运平均预测分约 99.5；原插值基线约 9.6。基线已知公开方程族与参数范围，不能把它解释成无先验的科学发现。</p><small>heat-strong-baseline-comparison-v1；开发种子与正式批次隔离。</small></article><article class="finding"><span>HARNESS / NEXT VERSION</span><h3>先降低接口噪声，再解释 scaling</h3><p>正式轨迹记录了 46 次分析失败、45 次非法动作。已核实部分代码把观测字典直接转成矩阵。后续版本补充明确字段示例和带行号的分析错误；正式成绩保持原样。</p><small>core-c2 共 270 次请求、593 个成功实验；错误计数是过程诊断，不是因果归因。</small></article><article class="finding"><span>TRACE AUDIT / FINAL ARTIFACT</span><h3>探索中的有效模型没有总能进入最终交付</h3><p>部分最终预测器换用了不同于已验证版本的系数；另有运行把包含目标观测的重新拟合误差称为迁移验证。正在增加候选者模型快照与前瞻记录，将参数版本、预测时间和新观测绑定。</p><small>核心轨迹与最终 predictor 的逐项比对；新接口只用于未来批次。</small></article></div><p class="caption">核心批次 20 条完整轨迹已逐条复核：最高局部证据为 17 个 D2、3 个 D3、0 个 D4。D3 仅指限定范围内的解释与区分，不能直接视为模型发现率；审核为同系列模型，结论 provisional。扩展批次另行审核。 D2 指有对照支持的局部效应；D3 要求定量解释通过区分竞争机制的前瞻检验；D4 还要求在明显改变的条件下迁移，并刻画失效边界。</p></section>
+<section class="section"><div class="section-label">ENVIRONMENT COVERAGE</div><h2>环境与任务扩展</h2><div class="table-wrap"><table><thead><tr><th>世界</th><th>可研究的问题</th><th>当前状态</th></tr></thead><tbody><tr><th>微生态反馈</th><td>营养、群落和匿名分子的反馈与时间尺度</td><td>正式 5 实例；均分 12.0</td></tr><tr><th>耦合振子</th><td>结构、阻尼和干预后的动力学</td><td>正式 5 实例；均分 64.5</td></tr><tr><th>反应动力学</th><td>反应网络、温度依赖与混合实验</td><td>正式 5 实例；均分 80.3</td></tr><tr><th>热输运</th><td>扩散、流动与散热的可识别性</td><td>正式 5 次启动，4 次基础设施健康；均分 70.2</td></tr><tr><th>基因调控</th><td>调控符号、脉冲响应与内部适应</td><td>扩展 2/2 完成；均分 54.7；待深度审核</td></tr><tr><th>平衡自旋</th><td>相互作用、相关性与受控扰动</td><td>扩展 2/2 完成；均分 95.9；待深度审核</td></tr><tr><th>材料滞回</th><td>慢弛豫回线与双稳态记忆的区分</td><td>扩展 2/2 完成；均分 80.9；待深度审核</td></tr></tbody></table></div><p class="muted">任务层包括开放研究、竞争机制区分、跨条件迁移。已实现 apparatus-only 展示和前瞻验证协议；正在接入隔离执行器、模型快照，以及保留反例的模型修正流程。</p></section>
+<section class="section"><div class="section-label">BEFORE SCALING</div><h2>下一步优先修正什么</h2><ol><li><strong>把前瞻性变成可核验的执行记录</strong><p>核心轨迹复核已完成。接下来让模型代码、竞争预测、实验设计、阈值在观测之前封存，并保留反例和修正版本；避免把重新拟合当作迁移。</p></li><li><strong>扩展结果单列，继续检查发现内容</strong><p>新增 3 个世界各 2 实例、每实例最多 10 次调用，6/6 完成。实际使用 54 次 API 请求；它们与核心 16 次预算及旧计分协议分开报告，不混算分数。</p></li><li><strong>增强机制类别变化</strong><p>用不同生成机制和有诊断力的实验检验模型选择；随机参数、通道重命名和删去方程名称本身都不能证明抗污染。</p></li><li><strong>最后再开展预算 scaling</strong><p>先完成强基线、前瞻检验、接口稳定性与失败归因。开发与正式批次既有规则差异，又有实例差异，不能当作 scaling 曲线。</p></li></ol></section><details><summary>验证与复现信息</summary><ul><li>正式源码 d5ed0ae4；冻结后未改评分公式、权重、实例或目标。</li><li>正式共 270 次请求；269 返回、1 断连；无自动重试。已知响应 token 下界 3,869,923。</li><li>正式 HTML 渲染曾因百分号格式化失败；数值汇总与原始 episode 已保存，现仅修复展示并重新生成。</li><li>最新冻结扩展源码在 Linux 通过 643 项测试，覆盖七个世界与真实隔离执行；公开报告导出另有只读回归验证。</li><li>完整原始轨迹、世界 seed 与封存预测目标留在私有操作目录，不进入此公开汇总。</li></ul></details>
+<footer>更新时间 2026-10-02 18:47:39 UTC · <a href="data.json">下载结构化公开汇总</a> · 费用未知；未使用公开标价估算真实账单。私有 seed、封存目标和原始轨迹保留在操作目录。</footer></main></body></html>

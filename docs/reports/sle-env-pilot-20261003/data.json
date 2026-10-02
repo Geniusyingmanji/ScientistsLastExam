@@ -1,0 +1,1289 @@
+{
+  "schema": "sle-public-progress-0.1",
+  "generated_at_utc": "2026-10-02T18:47:39.536325+00:00",
+  "cohorts": [
+    {
+      "cohort": "core-c2",
+      "planned_runs": 20,
+      "started_runs": 20,
+      "settled_runs": 20,
+      "running_runs": 0,
+      "healthy_runs": 19,
+      "infrastructure_failures": 1,
+      "macro_score": 56.73986595903511,
+      "macro_bootstrap_95": [
+        43.988575158074184,
+        68.29267608067217
+      ],
+      "score_status": "pilot_estimate",
+      "model_completion": {
+        "numerator": 18,
+        "denominator": 19,
+        "rate": 0.9473684210526315,
+        "wilson_95": [
+          0.753612688331012,
+          0.9906480059376995
+        ]
+      },
+      "verified_effect_rate": {
+        "numerator": 18,
+        "denominator": 19,
+        "rate": 0.9473684210526315,
+        "wilson_95": [
+          0.753612688331012,
+          0.9906480059376995
+        ]
+      },
+      "end_to_end_completion": {
+        "numerator": 18,
+        "denominator": 20,
+        "rate": 0.9,
+        "wilson_95": [
+          0.6989663547715128,
+          0.9721335187862319
+        ]
+      },
+      "by_environment": {
+        "microecology": {
+          "healthy_runs": 5,
+          "completed_runs": 5,
+          "mean_score": 12.00984691288296,
+          "scores": [
+            9.043750403642209,
+            27.82825808254993,
+            5.803404659662959,
+            1.812625611226954,
+            15.561195807332748
+          ],
+          "prediction_baseline_scores_on_verified_runs": {
+            "conditions": 14.81061892133521,
+            "interventions": 16.065126607991044
+          },
+          "mean_subscores": {
+            "conditions": 7.838188721626636,
+            "interventions": 7.314340829909403,
+            "claims": 29.482251515484098
+          },
+          "prediction_normalized_rmse": {
+            "conditions": {
+              "mean": 0.32427974632035617,
+              "valid_queries": 40,
+              "recorded_queries": 40
+            },
+            "interventions": {
+              "mean": 0.35560198747945304,
+              "valid_queries": 40,
+              "recorded_queries": 40
+            }
+          },
+          "prediction_scores_on_recorded_queries": {
+            "conditions": 7.838188721626638,
+            "interventions": 7.314340829909403
+          },
+          "verified_nonzero_effects": 7,
+          "completion": {
+            "numerator": 5,
+            "denominator": 5,
+            "rate": 1.0,
+            "wilson_95": [
+              0.5655175352168251,
+              1.0
+            ]
+          },
+          "trace_diagnostics": {
+            "reports": 5,
+            "model_requests_started": 75,
+            "recorded_model_rounds": 75,
+            "successful_experiments": 160,
+            "action_outcomes": {
+              "observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008": 5,
+              "observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016": 5,
+              "observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024": 4,
+              "analysis_ok": 19,
+              "invalid_action": 14,
+              "observed obs-0025, obs-0026, obs-0027, obs-0028, obs-0029, obs-0030, obs-0031, obs-0032": 4,
+              "analysis_failed": 16,
+              "submission_frozen": 5,
+              "observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022": 1,
+              "observed obs-0023, obs-0024, obs-0025, obs-0026, obs-0027, obs-0028": 1,
+              "observed obs-0029, obs-0030, obs-0031, obs-0032": 1
+            },
+            "invalid_action_categories": {
+              "json_parse_error": 3,
+              "action_schema_error": 5,
+              "public_spec_or_submission_validation": 5,
+              "experiment_budget_exhausted": 1
+            },
+            "analysis_error_types": {
+              "SyntaxError": 3,
+              "TypeError": 12,
+              "candidate_timeout": 1
+            },
+            "stop_reasons": {
+              "verified": 5
+            },
+            "runs_with_invalid_actions": 4,
+            "runs_with_analysis_errors": 5,
+            "runs_with_exhausted_analysis_allowance": 1,
+            "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
+          }
+        },
+        "coupled_oscillators": {
+          "healthy_runs": 5,
+          "completed_runs": 5,
+          "mean_score": 64.45249360028409,
+          "scores": [
+            99.09413279972011,
+            24.5913298429953,
+            97.73101305267062,
+            35.37579625718482,
+            65.47019604884954
+          ],
+          "prediction_baseline_scores_on_verified_runs": {
+            "conditions": 99.34087865715745,
+            "interventions": 99.36917250884883
+          },
+          "mean_subscores": {
+            "conditions": 60.610062077811065,
+            "interventions": 61.29522990444286,
+            "claims": 78.79446795022845
+          },
+          "prediction_normalized_rmse": {
+            "conditions": {
+              "mean": 0.07535104958035356,
+              "valid_queries": 40,
+              "recorded_queries": 40
+            },
+            "interventions": {
+              "mean": 0.07742829882896615,
+              "valid_queries": 40,
+              "recorded_queries": 40
+            }
+          },
+          "prediction_scores_on_recorded_queries": {
+            "conditions": 60.610062077811065,
+            "interventions": 61.29522990444285
+          },
+          "verified_nonzero_effects": 15,
+          "completion": {
+            "numerator": 5,
+            "denominator": 5,
+            "rate": 1.0,
+            "wilson_95": [
+              0.5655175352168251,
+              1.0
+            ]
+          },
+          "trace_diagnostics": {
+            "reports": 5,
+            "model_requests_started": 66,
+            "recorded_model_rounds": 66,
+            "successful_experiments": 113,
+            "action_outcomes": {
+              "observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008": 2,
+              "observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016": 1,
+              "analysis_failed": 16,
+              "analysis_ok": 19,
+              "observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021": 1,
+              "invalid_action": 9,
+              "observed obs-0022, obs-0023, obs-0024, obs-0025, obs-0026, obs-0027, obs-0028, obs-0029": 1,
+              "submission_frozen": 5,
+              "observed obs-0001, obs-0002, obs-0003, obs-0004": 3,
+              "observed obs-0005, obs-0006, obs-0007, obs-0008, obs-0009, obs-0010, obs-0011, obs-0012": 3,
+              "observed obs-0013, obs-0014, obs-0015, obs-0016, obs-0017, obs-0018": 1,
+              "observed obs-0026, obs-0027, obs-0028, obs-0029, obs-0030, obs-0031": 1,
+              "observed obs-0032": 1,
+              "observed obs-0013, obs-0014, obs-0015, obs-0016, obs-0017, obs-0018, obs-0019, obs-0020": 1,
+              "observed obs-0021, obs-0022, obs-0023, obs-0024, obs-0025, obs-0026, obs-0027, obs-0028": 1,
+              "observed obs-0029, obs-0030, obs-0031, obs-0032": 1
+            },
+            "invalid_action_categories": {
+              "json_parse_error": 4,
+              "public_spec_or_submission_validation": 2,
+              "action_schema_error": 2,
+              "experiment_budget_exhausted": 1
+            },
+            "analysis_error_types": {
+              "TypeError": 10,
+              "IndexError": 1,
+              "candidate_timeout": 2,
+              "SyntaxError": 2,
+              "result_too_large": 1
+            },
+            "stop_reasons": {
+              "verified": 5
+            },
+            "runs_with_invalid_actions": 4,
+            "runs_with_analysis_errors": 5,
+            "runs_with_exhausted_analysis_allowance": 2,
+            "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
+          }
+        },
+        "reaction_kinetics": {
+          "healthy_runs": 5,
+          "completed_runs": 5,
+          "mean_score": 80.31831811174969,
+          "scores": [
+            74.06902303606758,
+            99.094276480644,
+            49.737090984146434,
+            97.33700421944178,
+            81.35419583844869
+          ],
+          "prediction_baseline_scores_on_verified_runs": {
+            "conditions": 87.00000520448964,
+            "interventions": 86.26428686726204
+          },
+          "mean_subscores": {
+            "conditions": 81.64474459656728,
+            "interventions": 75.74869924531417,
+            "claims": 83.85668019935905
+          },
+          "prediction_normalized_rmse": {
+            "conditions": {
+              "mean": 0.02545307471463424,
+              "valid_queries": 40,
+              "recorded_queries": 40
+            },
+            "interventions": {
+              "mean": 0.04283819858210343,
+              "valid_queries": 40,
+              "recorded_queries": 40
+            }
+          },
+          "prediction_scores_on_recorded_queries": {
+            "conditions": 81.64474459656728,
+            "interventions": 75.74869924531417
+          },
+          "verified_nonzero_effects": 15,
+          "completion": {
+            "numerator": 5,
+            "denominator": 5,
+            "rate": 1.0,
+            "wilson_95": [
+              0.5655175352168251,
+              1.0
+            ]
+          },
+          "trace_diagnostics": {
+            "reports": 5,
+            "model_requests_started": 74,
+            "recorded_model_rounds": 74,
+            "successful_experiments": 160,
+            "action_outcomes": {
+              "observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008": 5,
+              "observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015": 1,
+              "analysis_ok": 32,
+              "observed obs-0016, obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023": 1,
+              "observed obs-0024, obs-0025, obs-0026, obs-0027, obs-0028, obs-0029, obs-0030, obs-0031": 1,
+              "observed obs-0032": 1,
+              "analysis_failed": 8,
+              "invalid_action": 6,
+              "submission_frozen": 5,
+              "observed obs-0009, obs-0010, obs-0011, obs-0012": 1,
+              "observed obs-0013, obs-0014, obs-0015, obs-0016, obs-0017, obs-0018": 1,
+              "observed obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024": 1,
+              "observed obs-0025, obs-0026, obs-0027, obs-0028, obs-0029, obs-0030, obs-0031, obs-0032": 3,
+              "observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016": 3,
+              "observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024": 2,
+              "observed obs-0017, obs-0018, obs-0019, obs-0020": 1,
+              "observed obs-0021, obs-0022, obs-0023, obs-0024, obs-0025, obs-0026, obs-0027, obs-0028": 1,
+              "observed obs-0029, obs-0030, obs-0031, obs-0032": 1
+            },
+            "invalid_action_categories": {
+              "action_schema_error": 5,
+              "json_parse_error": 1
+            },
+            "analysis_error_types": {
+              "TypeError": 7,
+              "ValueError": 1
+            },
+            "stop_reasons": {
+              "verified": 5
+            },
+            "runs_with_invalid_actions": 4,
+            "runs_with_analysis_errors": 5,
+            "runs_with_exhausted_analysis_allowance": 0,
+            "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
+          }
+        },
+        "heat_transport": {
+          "healthy_runs": 4,
+          "completed_runs": 3,
+          "mean_score": 70.1788052112237,
+          "scores": [
+            89.78303516508905,
+            0.0,
+            97.10997018749927,
+            93.82221549230653
+          ],
+          "prediction_baseline_scores_on_verified_runs": {
+            "conditions": 5.498757098225916,
+            "interventions": 9.686450865127654
+          },
+          "mean_subscores": {
+            "conditions": 71.47291061105238,
+            "interventions": 70.18096538746762,
+            "claims": 66.94030144728615
+          },
+          "prediction_normalized_rmse": {
+            "conditions": {
+              "mean": 0.004973927759647626,
+              "valid_queries": 24,
+              "recorded_queries": 32
+            },
+            "interventions": {
+              "mean": 0.006886365692082566,
+              "valid_queries": 24,
+              "recorded_queries": 32
+            }
+          },
+          "prediction_scores_on_recorded_queries": {
+            "conditions": 71.47291061105238,
+            "interventions": 70.18096538746761
+          },
+          "verified_nonzero_effects": 12,
+          "completion": {
+            "numerator": 3,
+            "denominator": 4,
+            "rate": 0.75,
+            "wilson_95": [
+              0.30064184258240184,
+              0.9544127391902995
+            ]
+          },
+          "trace_diagnostics": {
+            "reports": 4,
+            "model_requests_started": 44,
+            "recorded_model_rounds": 44,
+            "successful_experiments": 128,
+            "action_outcomes": {
+              "observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008": 4,
+              "observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016": 4,
+              "analysis_failed": 4,
+              "observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024": 4,
+              "observed obs-0025, obs-0026, obs-0027, obs-0028, obs-0029, obs-0030, obs-0031, obs-0032": 4,
+              "submission_frozen": 4,
+              "analysis_ok": 7,
+              "invalid_action": 13
+            },
+            "invalid_action_categories": {
+              "action_schema_error": 2,
+              "experiment_budget_exhausted": 4,
+              "public_spec_or_submission_validation": 7
+            },
+            "analysis_error_types": {
+              "candidate_timeout": 4
+            },
+            "stop_reasons": {
+              "verified": 3,
+              "predictor_verification_failed": 1
+            },
+            "runs_with_invalid_actions": 2,
+            "runs_with_analysis_errors": 3,
+            "runs_with_exhausted_analysis_allowance": 3,
+            "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
+          }
+        }
+      },
+      "known_response_usage_lower_bound": {
+        "input_tokens": 3506360,
+        "output_tokens": 363563,
+        "total_tokens": 3869923
+      },
+      "cost_usd": null,
+      "cost_note": "Provider billing not supplied; no guessed currency cost.",
+      "weights": {
+        "conditions": 0.5,
+        "interventions": 0.3,
+        "claims": 0.2
+      },
+      "depth_status": "requires separate trace/evidence review",
+      "source_sha256": "2f6aa4b475d7d778a54f1331b220aafeae034a67e394f34d3a285f7dc5fad6ca",
+      "score_protocol": "sle-pilot-score-0.3",
+      "task_profile": "open_discovery",
+      "public_limits": {
+        "rounds": 16,
+        "exploration_rounds": 14,
+        "experiments": 32,
+        "experiment_units": 800,
+        "analysis_active_seconds": 60,
+        "predictor_seconds_per_spec": 15,
+        "wall_seconds": 900,
+        "panel_count": 8,
+        "max_experiments_per_turn": 8,
+        "verification_reserve_seconds": 90
+      },
+      "decoding": {
+        "wire": "chat",
+        "reasoning_effort": "medium",
+        "max_output_tokens": 8000,
+        "chat_max_tokens_field": "max_completion_tokens",
+        "temperature": null,
+        "stream": false,
+        "timeout_seconds": 180
+      },
+      "trace_diagnostics": {
+        "reports": 20,
+        "model_requests_started": 270,
+        "recorded_model_rounds": 270,
+        "successful_experiments": 593,
+        "action_outcomes": {
+          "observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008": 17,
+          "observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016": 14,
+          "analysis_failed": 46,
+          "analysis_ok": 78,
+          "observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021": 1,
+          "invalid_action": 45,
+          "observed obs-0022, obs-0023, obs-0024, obs-0025, obs-0026, obs-0027, obs-0028, obs-0029": 1,
+          "submission_frozen": 19,
+          "observed obs-0001, obs-0002, obs-0003, obs-0004": 3,
+          "observed obs-0005, obs-0006, obs-0007, obs-0008, obs-0009, obs-0010, obs-0011, obs-0012": 3,
+          "observed obs-0013, obs-0014, obs-0015, obs-0016, obs-0017, obs-0018": 2,
+          "observed obs-0026, obs-0027, obs-0028, obs-0029, obs-0030, obs-0031": 1,
+          "observed obs-0032": 2,
+          "observed obs-0013, obs-0014, obs-0015, obs-0016, obs-0017, obs-0018, obs-0019, obs-0020": 1,
+          "observed obs-0021, obs-0022, obs-0023, obs-0024, obs-0025, obs-0026, obs-0027, obs-0028": 2,
+          "observed obs-0029, obs-0030, obs-0031, obs-0032": 3,
+          "observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024": 11,
+          "observed obs-0025, obs-0026, obs-0027, obs-0028, obs-0029, obs-0030, obs-0031, obs-0032": 12,
+          "observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022": 1,
+          "observed obs-0023, obs-0024, obs-0025, obs-0026, obs-0027, obs-0028": 1,
+          "observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015": 1,
+          "observed obs-0016, obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023": 1,
+          "observed obs-0024, obs-0025, obs-0026, obs-0027, obs-0028, obs-0029, obs-0030, obs-0031": 1,
+          "observed obs-0009, obs-0010, obs-0011, obs-0012": 1,
+          "observed obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024": 1,
+          "observed obs-0017, obs-0018, obs-0019, obs-0020": 1
+        },
+        "invalid_action_categories": {
+          "json_parse_error": 8,
+          "public_spec_or_submission_validation": 15,
+          "action_schema_error": 16,
+          "experiment_budget_exhausted": 6
+        },
+        "analysis_error_types": {
+          "TypeError": 29,
+          "IndexError": 1,
+          "candidate_timeout": 9,
+          "SyntaxError": 5,
+          "result_too_large": 1,
+          "ValueError": 1
+        },
+        "stop_reasons": {
+          "verified": 18,
+          "predictor_verification_failed": 1,
+          "api_request_failed": 1
+        },
+        "runs_with_invalid_actions": 15,
+        "runs_with_analysis_errors": 19,
+        "runs_with_exhausted_analysis_allowance": 7,
+        "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
+      },
+      "role": "formal"
+    },
+    {
+      "cohort": "expansion-e1",
+      "planned_runs": 6,
+      "started_runs": 6,
+      "settled_runs": 6,
+      "running_runs": 0,
+      "healthy_runs": 6,
+      "infrastructure_failures": 0,
+      "macro_score": 77.16569728142181,
+      "macro_bootstrap_95": [
+        59.570465179382495,
+        94.76092938346113
+      ],
+      "score_status": "pilot_estimate",
+      "model_completion": {
+        "numerator": 6,
+        "denominator": 6,
+        "rate": 1.0,
+        "wilson_95": [
+          0.6096657120978346,
+          1.0
+        ]
+      },
+      "verified_effect_rate": {
+        "numerator": 5,
+        "denominator": 6,
+        "rate": 0.8333333333333334,
+        "wilson_95": [
+          0.43649717781352987,
+          0.9699466302516935
+        ]
+      },
+      "end_to_end_completion": {
+        "numerator": 6,
+        "denominator": 6,
+        "rate": 1.0,
+        "wilson_95": [
+          0.6096657120978346,
+          1.0
+        ]
+      },
+      "by_environment": {
+        "gene_regulation": {
+          "healthy_runs": 2,
+          "completed_runs": 2,
+          "mean_score": 54.70376569182116,
+          "scores": [
+            15.15509454051082,
+            94.2524368431315
+          ],
+          "prediction_baseline_scores_on_verified_runs": {
+            "conditions": 37.821142372796075,
+            "interventions": 48.13115859206042
+          },
+          "mean_subscores": {
+            "conditions": 60.05203999430924,
+            "interventions": 57.645476478510965,
+            "claims": 36.92051375556625
+          },
+          "prediction_normalized_rmse": {
+            "conditions": {
+              "mean": 0.08445897908423973,
+              "valid_queries": 16,
+              "recorded_queries": 16
+            },
+            "interventions": {
+              "mean": 0.09704614474331898,
+              "valid_queries": 16,
+              "recorded_queries": 16
+            }
+          },
+          "prediction_scores_on_recorded_queries": {
+            "conditions": 60.05203999430924,
+            "interventions": 57.645476478510965
+          },
+          "verified_nonzero_effects": 3,
+          "completion": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0,
+            "wilson_95": [
+              0.34238022750665303,
+              1.0
+            ]
+          },
+          "trace_diagnostics": {
+            "reports": 2,
+            "model_requests_started": 18,
+            "recorded_model_rounds": 18,
+            "successful_experiments": 64,
+            "action_outcomes": {
+              "observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008": 2,
+              "analysis_ok": 8,
+              "observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016": 2,
+              "observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024": 2,
+              "observed obs-0025, obs-0026, obs-0027, obs-0028, obs-0029, obs-0030, obs-0031, obs-0032": 2,
+              "submission_frozen": 2
+            },
+            "invalid_action_categories": {},
+            "analysis_error_types": {},
+            "stop_reasons": {
+              "verified": 2
+            },
+            "runs_with_invalid_actions": 0,
+            "runs_with_analysis_errors": 0,
+            "runs_with_exhausted_analysis_allowance": 0,
+            "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
+          }
+        },
+        "ising_spin": {
+          "healthy_runs": 2,
+          "completed_runs": 2,
+          "mean_score": 95.89568858258053,
+          "scores": [
+            98.83564953020003,
+            92.95572763496102
+          ],
+          "prediction_baseline_scores_on_verified_runs": {
+            "conditions": 99.55499898614144,
+            "interventions": 99.4238810553212
+          },
+          "mean_subscores": {
+            "conditions": 99.89005501173301,
+            "interventions": 99.86884196948861,
+            "claims": 79.9500424293372
+          },
+          "prediction_normalized_rmse": {
+            "conditions": {
+              "mean": 0.00011000974507345515,
+              "valid_queries": 16,
+              "recorded_queries": 16
+            },
+            "interventions": {
+              "mean": 0.00013125076841219218,
+              "valid_queries": 16,
+              "recorded_queries": 16
+            }
+          },
+          "prediction_scores_on_recorded_queries": {
+            "conditions": 99.89005501173301,
+            "interventions": 99.86884196948861
+          },
+          "verified_nonzero_effects": 5,
+          "completion": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0,
+            "wilson_95": [
+              0.34238022750665303,
+              1.0
+            ]
+          },
+          "trace_diagnostics": {
+            "reports": 2,
+            "model_requests_started": 18,
+            "recorded_model_rounds": 18,
+            "successful_experiments": 61,
+            "action_outcomes": {
+              "observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008": 1,
+              "analysis_ok": 7,
+              "observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016": 1,
+              "observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024": 1,
+              "observed obs-0025, obs-0026, obs-0027, obs-0028, obs-0029, obs-0030, obs-0031, obs-0032": 1,
+              "submission_frozen": 2,
+              "observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005": 1,
+              "observed obs-0006, obs-0007, obs-0008, obs-0009, obs-0010, obs-0011, obs-0012, obs-0013": 1,
+              "analysis_failed": 1,
+              "observed obs-0014, obs-0015, obs-0016, obs-0017, obs-0018, obs-0019, obs-0020, obs-0021": 1,
+              "observed obs-0022, obs-0023, obs-0024, obs-0025, obs-0026, obs-0027, obs-0028, obs-0029": 1
+            },
+            "invalid_action_categories": {},
+            "analysis_error_types": {
+              "KeyError": 1
+            },
+            "stop_reasons": {
+              "verified": 2
+            },
+            "runs_with_invalid_actions": 0,
+            "runs_with_analysis_errors": 1,
+            "runs_with_exhausted_analysis_allowance": 0,
+            "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
+          }
+        },
+        "hysteresis_material": {
+          "healthy_runs": 2,
+          "completed_runs": 2,
+          "mean_score": 80.89763756986375,
+          "scores": [
+            94.13466272467134,
+            67.66061241505615
+          ],
+          "prediction_baseline_scores_on_verified_runs": {
+            "conditions": 13.158969555152035,
+            "interventions": 3.021340743573413
+          },
+          "mean_subscores": {
+            "conditions": 90.59654386572551,
+            "interventions": 76.58778891203258,
+            "claims": 63.11514481695609
+          },
+          "prediction_normalized_rmse": {
+            "conditions": {
+              "mean": 0.011801658487147771,
+              "valid_queries": 16,
+              "recorded_queries": 16
+            },
+            "interventions": {
+              "mean": 0.1376969990425685,
+              "valid_queries": 16,
+              "recorded_queries": 16
+            }
+          },
+          "prediction_scores_on_recorded_queries": {
+            "conditions": 90.59654386572551,
+            "interventions": 76.58778891203258
+          },
+          "verified_nonzero_effects": 6,
+          "completion": {
+            "numerator": 2,
+            "denominator": 2,
+            "rate": 1.0,
+            "wilson_95": [
+              0.34238022750665303,
+              1.0
+            ]
+          },
+          "trace_diagnostics": {
+            "reports": 2,
+            "model_requests_started": 18,
+            "recorded_model_rounds": 18,
+            "successful_experiments": 64,
+            "action_outcomes": {
+              "observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008": 2,
+              "observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016": 2,
+              "observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024": 2,
+              "observed obs-0025, obs-0026, obs-0027, obs-0028, obs-0029, obs-0030, obs-0031, obs-0032": 2,
+              "analysis_ok": 4,
+              "invalid_action": 3,
+              "analysis_failed": 1,
+              "submission_frozen": 2
+            },
+            "invalid_action_categories": {
+              "action_schema_error": 3
+            },
+            "analysis_error_types": {
+              "candidate_timeout": 1
+            },
+            "stop_reasons": {
+              "verified": 2
+            },
+            "runs_with_invalid_actions": 2,
+            "runs_with_analysis_errors": 1,
+            "runs_with_exhausted_analysis_allowance": 1,
+            "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
+          }
+        }
+      },
+      "known_response_usage_lower_bound": {
+        "input_tokens": 848981,
+        "output_tokens": 81963,
+        "total_tokens": 930944
+      },
+      "cost_usd": null,
+      "cost_note": "Provider billing not supplied; no guessed currency cost.",
+      "weights": {
+        "conditions": 0.5,
+        "interventions": 0.3,
+        "claims": 0.2
+      },
+      "depth_status": "requires separate trace/evidence review",
+      "source_sha256": "347b808e44696e9b9386c3aeab7a1c1b125bb371aca72fc85a01e20acf984591",
+      "score_protocol": "sle-pilot-score-0.4",
+      "task_profile": "open_discovery",
+      "public_limits": {
+        "rounds": 10,
+        "exploration_rounds": 8,
+        "experiments": 32,
+        "experiment_units": 800,
+        "analysis_active_seconds": 60,
+        "predictor_seconds_per_spec": 15,
+        "wall_seconds": 900,
+        "panel_count": 8,
+        "max_experiments_per_turn": 8,
+        "verification_reserve_seconds": 90
+      },
+      "decoding": {
+        "wire": "chat",
+        "reasoning_effort": "medium",
+        "max_output_tokens": 8000,
+        "chat_max_tokens_field": "max_completion_tokens",
+        "temperature": null,
+        "stream": false,
+        "timeout_seconds": 180
+      },
+      "trace_diagnostics": {
+        "reports": 6,
+        "model_requests_started": 54,
+        "recorded_model_rounds": 54,
+        "successful_experiments": 189,
+        "action_outcomes": {
+          "observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008": 5,
+          "analysis_ok": 19,
+          "observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016": 5,
+          "observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024": 5,
+          "observed obs-0025, obs-0026, obs-0027, obs-0028, obs-0029, obs-0030, obs-0031, obs-0032": 5,
+          "submission_frozen": 6,
+          "invalid_action": 3,
+          "analysis_failed": 2,
+          "observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005": 1,
+          "observed obs-0006, obs-0007, obs-0008, obs-0009, obs-0010, obs-0011, obs-0012, obs-0013": 1,
+          "observed obs-0014, obs-0015, obs-0016, obs-0017, obs-0018, obs-0019, obs-0020, obs-0021": 1,
+          "observed obs-0022, obs-0023, obs-0024, obs-0025, obs-0026, obs-0027, obs-0028, obs-0029": 1
+        },
+        "invalid_action_categories": {
+          "action_schema_error": 3
+        },
+        "analysis_error_types": {
+          "candidate_timeout": 1,
+          "KeyError": 1
+        },
+        "stop_reasons": {
+          "verified": 6
+        },
+        "runs_with_invalid_actions": 2,
+        "runs_with_analysis_errors": 2,
+        "runs_with_exhausted_analysis_allowance": 1,
+        "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
+      },
+      "role": "expansion"
+    },
+    {
+      "cohort": "development-a1",
+      "planned_runs": 4,
+      "started_runs": 4,
+      "settled_runs": 4,
+      "running_runs": 0,
+      "healthy_runs": 4,
+      "infrastructure_failures": 0,
+      "macro_score": 77.38480949526965,
+      "macro_bootstrap_95": null,
+      "score_status": "pilot_estimate",
+      "model_completion": {
+        "numerator": 4,
+        "denominator": 4,
+        "rate": 1.0,
+        "wilson_95": [
+          0.5101091635454027,
+          1.0
+        ]
+      },
+      "verified_effect_rate": {
+        "numerator": 4,
+        "denominator": 4,
+        "rate": 1.0,
+        "wilson_95": [
+          0.5101091635454027,
+          1.0
+        ]
+      },
+      "end_to_end_completion": {
+        "numerator": 4,
+        "denominator": 4,
+        "rate": 1.0,
+        "wilson_95": [
+          0.5101091635454027,
+          1.0
+        ]
+      },
+      "by_environment": {
+        "microecology": {
+          "healthy_runs": 1,
+          "completed_runs": 1,
+          "mean_score": 26.49528302915968,
+          "scores": [
+            26.49528302915968
+          ],
+          "prediction_baseline_scores_on_verified_runs": {
+            "conditions": 19.339542704087567,
+            "interventions": 7.082554269871736
+          },
+          "mean_subscores": {
+            "conditions": 14.02383013213203,
+            "interventions": 9.619997763152773,
+            "claims": 82.98684317073916
+          },
+          "prediction_normalized_rmse": {
+            "conditions": {
+              "mean": 0.2719412780921111,
+              "valid_queries": 8,
+              "recorded_queries": 8
+            },
+            "interventions": {
+              "mean": 0.29230526381753064,
+              "valid_queries": 8,
+              "recorded_queries": 8
+            }
+          },
+          "prediction_scores_on_recorded_queries": {
+            "conditions": 14.02383013213203,
+            "interventions": 9.619997763152773
+          },
+          "verified_nonzero_effects": 3,
+          "completion": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0,
+            "wilson_95": [
+              0.20654931437723745,
+              1.0
+            ]
+          },
+          "trace_diagnostics": {
+            "reports": 1,
+            "model_requests_started": 5,
+            "recorded_model_rounds": 5,
+            "successful_experiments": 24,
+            "action_outcomes": {
+              "observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008": 1,
+              "observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016": 1,
+              "observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024": 1,
+              "analysis_ok": 1,
+              "submission_frozen": 1
+            },
+            "invalid_action_categories": {},
+            "analysis_error_types": {},
+            "stop_reasons": {
+              "verified": 1
+            },
+            "runs_with_invalid_actions": 0,
+            "runs_with_analysis_errors": 0,
+            "runs_with_exhausted_analysis_allowance": 0,
+            "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
+          }
+        },
+        "coupled_oscillators": {
+          "healthy_runs": 1,
+          "completed_runs": 1,
+          "mean_score": 97.63851473123599,
+          "scores": [
+            97.63851473123599
+          ],
+          "prediction_baseline_scores_on_verified_runs": {
+            "conditions": 98.95089437081373,
+            "interventions": 99.05542937919714
+          },
+          "mean_subscores": {
+            "conditions": 99.94530398402839,
+            "interventions": 99.95429125618651,
+            "claims": 88.39787681182919
+          },
+          "prediction_normalized_rmse": {
+            "conditions": {
+              "mean": 5.4711758070009955e-05,
+              "valid_queries": 8,
+              "recorded_queries": 8
+            },
+            "interventions": {
+              "mean": 4.572153172523013e-05,
+              "valid_queries": 8,
+              "recorded_queries": 8
+            }
+          },
+          "prediction_scores_on_recorded_queries": {
+            "conditions": 99.94530398402839,
+            "interventions": 99.95429125618651
+          },
+          "verified_nonzero_effects": 3,
+          "completion": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0,
+            "wilson_95": [
+              0.20654931437723745,
+              1.0
+            ]
+          },
+          "trace_diagnostics": {
+            "reports": 1,
+            "model_requests_started": 5,
+            "recorded_model_rounds": 5,
+            "successful_experiments": 24,
+            "action_outcomes": {
+              "observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008": 1,
+              "observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016": 1,
+              "analysis_ok": 1,
+              "observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024": 1,
+              "submission_frozen": 1
+            },
+            "invalid_action_categories": {},
+            "analysis_error_types": {},
+            "stop_reasons": {
+              "verified": 1
+            },
+            "runs_with_invalid_actions": 0,
+            "runs_with_analysis_errors": 0,
+            "runs_with_exhausted_analysis_allowance": 0,
+            "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
+          }
+        },
+        "reaction_kinetics": {
+          "healthy_runs": 1,
+          "completed_runs": 1,
+          "mean_score": 99.27212719845029,
+          "scores": [
+            99.27212719845029
+          ],
+          "prediction_baseline_scores_on_verified_runs": {
+            "conditions": 88.07249997970052,
+            "interventions": 89.60790453819357
+          },
+          "mean_subscores": {
+            "conditions": 99.8974204443418,
+            "interventions": 99.90881928166246,
+            "claims": 96.75385595890323
+          },
+          "prediction_normalized_rmse": {
+            "conditions": {
+              "mean": 0.00010265540012490619,
+              "valid_queries": 8,
+              "recorded_queries": 8
+            },
+            "interventions": {
+              "mean": 9.122776052293793e-05,
+              "valid_queries": 8,
+              "recorded_queries": 8
+            }
+          },
+          "prediction_scores_on_recorded_queries": {
+            "conditions": 99.8974204443418,
+            "interventions": 99.90881928166246
+          },
+          "verified_nonzero_effects": 3,
+          "completion": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0,
+            "wilson_95": [
+              0.20654931437723745,
+              1.0
+            ]
+          },
+          "trace_diagnostics": {
+            "reports": 1,
+            "model_requests_started": 5,
+            "recorded_model_rounds": 5,
+            "successful_experiments": 16,
+            "action_outcomes": {
+              "observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008": 1,
+              "analysis_ok": 2,
+              "observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016": 1,
+              "submission_frozen": 1
+            },
+            "invalid_action_categories": {},
+            "analysis_error_types": {},
+            "stop_reasons": {
+              "verified": 1
+            },
+            "runs_with_invalid_actions": 0,
+            "runs_with_analysis_errors": 0,
+            "runs_with_exhausted_analysis_allowance": 0,
+            "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
+          }
+        },
+        "heat_transport": {
+          "healthy_runs": 1,
+          "completed_runs": 1,
+          "mean_score": 86.13331302223267,
+          "scores": [
+            86.13331302223267
+          ],
+          "prediction_baseline_scores_on_verified_runs": {
+            "conditions": 8.990040398430326,
+            "interventions": 16.51008126818079
+          },
+          "mean_subscores": {
+            "conditions": 86.39224165802901,
+            "interventions": 84.0932626097372,
+            "claims": 88.54606705148501
+          },
+          "prediction_normalized_rmse": {
+            "conditions": {
+              "mean": 0.015452901036085041,
+              "valid_queries": 8,
+              "recorded_queries": 8
+            },
+            "interventions": {
+              "mean": 0.017476790309955567,
+              "valid_queries": 8,
+              "recorded_queries": 8
+            }
+          },
+          "prediction_scores_on_recorded_queries": {
+            "conditions": 86.39224165802901,
+            "interventions": 84.0932626097372
+          },
+          "verified_nonzero_effects": 3,
+          "completion": {
+            "numerator": 1,
+            "denominator": 1,
+            "rate": 1.0,
+            "wilson_95": [
+              0.20654931437723745,
+              1.0
+            ]
+          },
+          "trace_diagnostics": {
+            "reports": 1,
+            "model_requests_started": 5,
+            "recorded_model_rounds": 5,
+            "successful_experiments": 24,
+            "action_outcomes": {
+              "observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008": 1,
+              "observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016": 1,
+              "observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024": 1,
+              "analysis_failed": 1,
+              "submission_frozen": 1
+            },
+            "invalid_action_categories": {},
+            "analysis_error_types": {
+              "candidate_timeout": 1
+            },
+            "stop_reasons": {
+              "verified": 1
+            },
+            "runs_with_invalid_actions": 0,
+            "runs_with_analysis_errors": 1,
+            "runs_with_exhausted_analysis_allowance": 1,
+            "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
+          }
+        }
+      },
+      "known_response_usage_lower_bound": {
+        "input_tokens": 259661,
+        "output_tokens": 45426,
+        "total_tokens": 305087
+      },
+      "cost_usd": null,
+      "cost_note": "Provider billing not supplied; no guessed currency cost.",
+      "weights": {
+        "conditions": 0.5,
+        "interventions": 0.3,
+        "claims": 0.2
+      },
+      "depth_status": "requires separate trace/evidence review",
+      "source_sha256": "ce546db57a80c6e112d990e21341455e851fb8b2a7af056513bd188e8bbac513",
+      "score_protocol": "sle-pilot-score-0.2",
+      "task_profile": null,
+      "public_limits": {
+        "rounds": 6,
+        "exploration_rounds": 4,
+        "experiments": 32,
+        "experiment_units": 800,
+        "analysis_active_seconds": 60,
+        "predictor_seconds_per_spec": 15,
+        "wall_seconds": 900,
+        "panel_count": 8,
+        "max_experiments_per_turn": 8,
+        "verification_reserve_seconds": 90
+      },
+      "decoding": {
+        "wire": "chat",
+        "reasoning_effort": "medium",
+        "max_output_tokens": 8000,
+        "chat_max_tokens_field": "max_completion_tokens",
+        "temperature": null,
+        "stream": false,
+        "timeout_seconds": 180
+      },
+      "trace_diagnostics": {
+        "reports": 4,
+        "model_requests_started": 20,
+        "recorded_model_rounds": 20,
+        "successful_experiments": 88,
+        "action_outcomes": {
+          "observed obs-0001, obs-0002, obs-0003, obs-0004, obs-0005, obs-0006, obs-0007, obs-0008": 4,
+          "observed obs-0009, obs-0010, obs-0011, obs-0012, obs-0013, obs-0014, obs-0015, obs-0016": 4,
+          "analysis_ok": 4,
+          "observed obs-0017, obs-0018, obs-0019, obs-0020, obs-0021, obs-0022, obs-0023, obs-0024": 3,
+          "submission_frozen": 4,
+          "analysis_failed": 1
+        },
+        "invalid_action_categories": {},
+        "analysis_error_types": {
+          "candidate_timeout": 1
+        },
+        "stop_reasons": {
+          "verified": 4
+        },
+        "runs_with_invalid_actions": 0,
+        "runs_with_analysis_errors": 1,
+        "runs_with_exhausted_analysis_allowance": 1,
+        "interpretation": "Recorded process events; not a causal attribution or discovery-depth score."
+      },
+      "role": "development"
+    }
+  ],
+  "notes": {
+    "headline": "GPT-5.6 首轮科学环境评测",
+    "summary": "20 个正式实例得到 56.7 分的 pilot 综合成绩。预测能力随环境和运行明显波动；局部数值效应、可迁移的模型和有证据的机制发现需要分开看。",
+    "status": "正式与扩展批次完成 · 7 个世界 · 协议与任务继续开发至 2026-10-03 09:05（北京时间）",
+    "review_status": "核心批次 20 条完整轨迹已逐条复核：最高局部证据为 17 个 D2、3 个 D3、0 个 D4。D3 仅指限定范围内的解释与区分，不能直接视为模型发现率；审核为同系列模型，结论 provisional。扩展批次另行审核。 D2 指有对照支持的局部效应；D3 要求定量解释通过区分竞争机制的前瞻检验；D4 还要求在明显改变的条件下迁移，并刻画失效边界。",
+    "findings": [
+      {
+        "tag": "FORMAL / MICROECOLOGY",
+        "title": "局部数值效应不等于掌握整个反馈系统",
+        "body": "微生态 5 次都提交了可运行预测器，7 项数值对照通过非零效应复验；综合均分仅 12.0，未见条件与干预预测仍弱。现阶段不能据此声称已完整发现时间延迟反馈环。",
+        "evidence": "core-c2：microecology 5 个实例；固定计分协议 0.3。"
+      },
+      {
+        "tag": "TRACE AUDIT / LOCAL D3",
+        "title": "确实出现了前瞻性的局部发现",
+        "body": "微生态的一次运行先提出共同温度时钟，再用等效时间轨迹检验；振子的一次运行先拟合稀疏星形连接，再切断边验证；反应的一次运行用早期动力学区分是否存在直接传递通路。三个案例均有时间顺序证据，但结论限于所测条件和候选机制。",
+        "evidence": "core-c2：microecology-01、coupled_oscillators-05、reaction_kinetics-02；独立轨迹复核，same-family provisional。"
+      },
+      {
+        "tag": "FORMAL / RELIABILITY",
+        "title": "必须保留低分和工程失败",
+        "body": "振子逐实例得分约 24.6–99.1；热输运有一次预测器失败，计 0 分，以及一次 API 断连，单列基础设施失败。完整交付预测器与准确预测是不同指标。",
+        "evidence": "模型完成 18/19；端到端完成 18/20。"
+      },
+      {
+        "tag": "CALIBRATION / PUBLIC PRIOR",
+        "title": "更强基线暴露了任务的先验优势",
+        "body": "在 4 个独立开发实例中，公开 PDE 基线使用 4 条观测后，热输运平均预测分约 99.5；原插值基线约 9.6。基线已知公开方程族与参数范围，不能把它解释成无先验的科学发现。",
+        "evidence": "heat-strong-baseline-comparison-v1；开发种子与正式批次隔离。"
+      },
+      {
+        "tag": "HARNESS / NEXT VERSION",
+        "title": "先降低接口噪声，再解释 scaling",
+        "body": "正式轨迹记录了 46 次分析失败、45 次非法动作。已核实部分代码把观测字典直接转成矩阵。后续版本补充明确字段示例和带行号的分析错误；正式成绩保持原样。",
+        "evidence": "core-c2 共 270 次请求、593 个成功实验；错误计数是过程诊断，不是因果归因。"
+      },
+      {
+        "tag": "TRACE AUDIT / FINAL ARTIFACT",
+        "title": "探索中的有效模型没有总能进入最终交付",
+        "body": "部分最终预测器换用了不同于已验证版本的系数；另有运行把包含目标观测的重新拟合误差称为迁移验证。正在增加候选者模型快照与前瞻记录，将参数版本、预测时间和新观测绑定。",
+        "evidence": "核心轨迹与最终 predictor 的逐项比对；新接口只用于未来批次。"
+      }
+    ],
+    "worlds": [
+      {
+        "name": "微生态反馈",
+        "question": "营养、群落和匿名分子的反馈与时间尺度",
+        "status": "正式 5 实例；均分 12.0"
+      },
+      {
+        "name": "耦合振子",
+        "question": "结构、阻尼和干预后的动力学",
+        "status": "正式 5 实例；均分 64.5"
+      },
+      {
+        "name": "反应动力学",
+        "question": "反应网络、温度依赖与混合实验",
+        "status": "正式 5 实例；均分 80.3"
+      },
+      {
+        "name": "热输运",
+        "question": "扩散、流动与散热的可识别性",
+        "status": "正式 5 次启动，4 次基础设施健康；均分 70.2"
+      },
+      {
+        "name": "基因调控",
+        "question": "调控符号、脉冲响应与内部适应",
+        "status": "扩展 2/2 完成；均分 54.7；待深度审核"
+      },
+      {
+        "name": "平衡自旋",
+        "question": "相互作用、相关性与受控扰动",
+        "status": "扩展 2/2 完成；均分 95.9；待深度审核"
+      },
+      {
+        "name": "材料滞回",
+        "question": "慢弛豫回线与双稳态记忆的区分",
+        "status": "扩展 2/2 完成；均分 80.9；待深度审核"
+      }
+    ],
+    "task_summary": "任务层包括开放研究、竞争机制区分、跨条件迁移。已实现 apparatus-only 展示和前瞻验证协议；正在接入隔离执行器、模型快照，以及保留反例的模型修正流程。",
+    "next_steps": [
+      {
+        "title": "把前瞻性变成可核验的执行记录",
+        "body": "核心轨迹复核已完成。接下来让模型代码、竞争预测、实验设计、阈值在观测之前封存，并保留反例和修正版本；避免把重新拟合当作迁移。"
+      },
+      {
+        "title": "扩展结果单列，继续检查发现内容",
+        "body": "新增 3 个世界各 2 实例、每实例最多 10 次调用，6/6 完成。实际使用 54 次 API 请求；它们与核心 16 次预算及旧计分协议分开报告，不混算分数。"
+      },
+      {
+        "title": "增强机制类别变化",
+        "body": "用不同生成机制和有诊断力的实验检验模型选择；随机参数、通道重命名和删去方程名称本身都不能证明抗污染。"
+      },
+      {
+        "title": "最后再开展预算 scaling",
+        "body": "先完成强基线、前瞻检验、接口稳定性与失败归因。开发与正式批次既有规则差异，又有实例差异，不能当作 scaling 曲线。"
+      }
+    ],
+    "validation": [
+      "正式源码 d5ed0ae4；冻结后未改评分公式、权重、实例或目标。",
+      "正式共 270 次请求；269 返回、1 断连；无自动重试。已知响应 token 下界 3,869,923。",
+      "正式 HTML 渲染曾因百分号格式化失败；数值汇总与原始 episode 已保存，现仅修复展示并重新生成。",
+      "最新冻结扩展源码在 Linux 通过 643 项测试，覆盖七个世界与真实隔离执行；公开报告导出另有只读回归验证。",
+      "完整原始轨迹、世界 seed 与封存预测目标留在私有操作目录，不进入此公开汇总。"
+    ]
+  },
+  "privacy": "Aggregate metrics and explicitly curated notes only; private seeds, targets and raw traces are excluded."
+}

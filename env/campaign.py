@@ -18,9 +18,10 @@ from .scoring import canonical_hash, score_contract
 from .transport import CampaignClient
 from .task_profiles import get_task_profile
 from .presentation_profiles import get_presentation_profile
+from .analysis_api import PROTOCOL as SNAPSHOT_PROTOCOL, contract as snapshot_contract
 
 
-def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14, task_profile="open_discovery", presentation_profile="full_description", balanced_strata=()):
+def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14, task_profile="open_discovery", presentation_profile="full_description", balanced_strata=(), analysis_protocol="legacy"):
     if not re.fullmatch(r"[a-z0-9][a-z0-9_-]{0,63}", cohort):
         raise ValueError("invalid cohort identifier")
     if not names or len(set(names)) != len(names) or any(n not in ENVIRONMENTS for n in names):
@@ -29,6 +30,8 @@ def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14
         raise ValueError("instances must be 1..30")
     if not 3 <= rounds <= 32 or not 1 <= exploration_rounds <= rounds-2:
         raise ValueError("rounds must leave at least 2 submission opportunities")
+    if analysis_protocol not in ("legacy", SNAPSHOT_PROTOCOL):
+        raise ValueError("unsupported analysis protocol")
     if (not isinstance(balanced_strata, (list, tuple)) or
             any(not isinstance(name, str) or name not in names for name in balanced_strata) or
             len(set(balanced_strata)) != len(balanced_strata)):
@@ -65,14 +68,16 @@ def create_manifest(cohort, names, instances=5, rounds=16, exploration_rounds=14
             row = {"episode_id": "%s-%s-%02d" % (cohort, name, index+1),
                    "cohort": cohort, "environment": name, "world_seed": world_seed,
                    "panel_seed": panel_seed, "confirmation_key": secrets.token_hex(16), "task_profile": task_profile,
-                   "presentation_profile": presentation_profile}
+                   "presentation_profile": presentation_profile, "analysis_protocol": analysis_protocol}
             if stratum is not None:
                 row["operator_sampling_stratum"] = stratum
             row["panel_hashes"] = {kind: canonical_hash(world.panel(panel_seed, kind, limits["panel_count"]))
                                    for kind in ("conditions", "interventions")}
             rows.append(row)
     import numpy, scipy
-    return {"protocol": "sle-pilot-cohort-0.3", "cohort": cohort, "created_unix": time.time(),
+    return {"protocol": "sle-pilot-cohort-0.4", "cohort": cohort, "created_unix": time.time(),
+            "analysis_protocol": analysis_protocol,
+            "analysis_contract": snapshot_contract() if analysis_protocol == SNAPSHOT_PROTOCOL else None,
             "presentation_profile": presentation,
             "sampling_policy": {"balanced_strata_environments": list(balanced_strata),
                                 "allocation": "Cycle declared operator strata in instance order; counts differ by at most one. Unlisted worlds use unrestricted random instances. Strata never enter the public problem."},
@@ -116,6 +121,14 @@ def run_cohort(manifest_path, config_path, campaign_root, *, workers=8, rpm=60):
         raise ValueError("source changed after cohort manifest freeze")
     if manifest["score_contract"] != score_contract():
         raise ValueError("scoring contract changed after manifest freeze")
+    analysis_protocol = manifest.get("analysis_protocol", "legacy")
+    if analysis_protocol not in ("legacy", SNAPSHOT_PROTOCOL):
+        raise ValueError("unsupported frozen analysis protocol")
+    expected_analysis = snapshot_contract() if analysis_protocol == SNAPSHOT_PROTOCOL else None
+    if manifest.get("analysis_contract") != expected_analysis:
+        raise ValueError("analysis contract changed after manifest freeze")
+    if any(row.get("analysis_protocol", "legacy") != analysis_protocol for row in manifest["instances"]):
+        raise ValueError("instance analysis protocol differs from frozen cohort")
     root = Path(campaign_root)
     ledger = CampaignLedger(root/"campaign-ledger.sqlite")
     directory = root/manifest["cohort"]

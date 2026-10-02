@@ -18,6 +18,8 @@ def main():
     freeze.add_argument("--task-profile", default="open_discovery", choices=("open_discovery", "mechanism_discrimination", "regime_transfer"))
     freeze.add_argument("--presentation-profile", default="full_description", choices=("full_description", "apparatus_only"))
     freeze.add_argument("--balanced-strata", default="", help="comma-separated selected environments with trusted operator strata")
+    freeze.add_argument("--analysis-protocol", default="legacy", choices=("legacy", "sle-analysis-snapshots-0.1"),
+                        help="explicit candidate model-snapshot API version; legacy keeps the original interface")
     freeze.add_argument("--output", required=True)
     run = commands.add_parser("run")
     run.add_argument("--manifest", required=True)
@@ -34,7 +36,7 @@ def main():
         if output.exists():
             raise ValueError("manifest already exists; do not overwrite a frozen cohort")
         output.parent.mkdir(parents=True, exist_ok=True)
-        manifest = create_manifest(args.cohort, args.environments.split(","), args.instances, args.rounds, args.exploration_rounds, args.task_profile, args.presentation_profile, args.balanced_strata.split(",") if args.balanced_strata else ())
+        manifest = create_manifest(args.cohort, args.environments.split(","), args.instances, args.rounds, args.exploration_rounds, args.task_profile, args.presentation_profile, args.balanced_strata.split(",") if args.balanced_strata else (), args.analysis_protocol)
         save_json(output, manifest)
         print(json.dumps({"cohort": manifest["cohort"], "episodes": len(manifest["instances"]),
                           "source_sha256": manifest["source_sha256"], "max_api_attempts": manifest["planned_max_api_attempts"]}))

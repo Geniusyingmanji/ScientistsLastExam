@@ -1,7 +1,9 @@
 # Prospective evidence packages
 
-`env/prospective.py` is an independent prototype for turning two task-profile
-requirements into replayable evidence: rival predictions recorded before a
+`env/prospective.py` provides the evidence protocol, and the standalone
+`env/prospective_runner.py` executes it through the existing `CandidateProxy`
+sandbox. Together they turn two task-profile requirements into replayable
+evidence: rival predictions recorded before a
 discriminating experiment, and source-derived predictions tested in another
 regime. Its protocol is `sle-prospective-evidence-0.1`. It does not modify the
 runner, campaign, scoring, task-profile catalog or frozen core pilot.
@@ -150,7 +152,31 @@ changed. Source citations must exist in that history. A target readout at a
 previously observed coordinate under the same canonical controls is rejected,
 even if the agent changes other sampling points. Known controls can be used as
 an explicit reference. Initial-coordinate-zero readouts are excluded in this
-six-environment pilot.
+environment interface.
+
+## Material-world reference policy
+
+`env/hysteresis_material/prospective_demo.py` supplies an authored investigator
+for calibration of the real material interface. It obtains eight noisy,
+same-sign high-field source trajectories, fits a saturating first-order account
+and a cubic-drift account to identical public records, and freezes their
+opposite-reset contrast after a new 300-second zero-field hold. The target is
+then measured with 16 independent replicates per arm. The complete task uses
+40 experiments and eight fresh sandbox prediction calls, with no model API.
+
+```sh
+python -m env.hysteresis_material.prospective_demo \
+  --seed 7 --output /private/material-reference-new
+```
+
+This command requires the same Linux/Bubblewrap boundary as the prospective
+runner. Fitting sees only public `id/spec/observation` records; it cannot read
+the hidden mechanism class or parameters. Both source residuals are saved,
+including when a rival is already a poor explanation of the source data. Some
+instances may yield indistinguishable target predictions or refute both fitted
+accounts; these outcomes are retained. The two scientific priors and the
+high-field design are authored, so this is a task calibration, not a GPT score,
+autonomous model selection result, or automatic discovery-depth certificate.
 
 For `regime_transfer`, target controls must also differ from previously observed
 controls; changing the sampling axis alone does not count. These comparisons use
@@ -245,10 +271,130 @@ Reading both expected hashes from an untrusted rewritten bundle authenticates
 nothing. Replay also requires the same execution runtime for byte-identical
 numeric outputs. Neither replay function calls a simulator or model API.
 
-## Minimal future runner connection
+## Executable standalone task
 
-No connection is implemented in this change. A later, separately frozen cohort
-could add one action alongside existing actions:
+The operator API accepts experiment specs and predictor source; it never accepts
+submitted observations, measurement keys, timestamps, or an arbitrary executor.
+Every candidate prediction uses a fresh `CandidateProxy` with a bounded deadline
+and memory limit. The sandbox mounts the frozen candidate **file**, the minimal
+worker files, and approved numerical runtime. It does not mount the operator
+directory, any World source, repository, prior results or host environment. There
+is no in-process execution fallback when Bubblewrap is unavailable.
+
+```python
+from env.prospective_runner import ProspectiveTask, verify_directory
+
+task = ProspectiveTask("hysteresis_material", operator_seed, new_private_directory,
+                       limits={"predictor_seconds_per_call": 30.0})
+problem = task.describe()  # public schema; never includes the seed or kernel
+record = task.observe_source(public_spec)
+# Fit candidate programs only from record["spec"] and record["observation"].
+# Cite record["id"] in the request's rival evidence_ids.
+answer = task.preregister(request)  # seals, then immediately collects once
+report = task.finish()
+checked = verify_directory(new_private_directory)
+```
+
+`preregister` returns `test_id`, `seal_sha256`, the structured `result`, and fresh
+`observation_ids`. Later revisions use that test ID and cite the new observation
+IDs; they must satisfy the protocol's retained-rival and new-target rules. The
+caller can obtain full observed trajectories with `task.public_records()` and
+execute another source experiment between tests. Scientific negative
+results complete normally; operational failures close the entire task.
+
+The instance seed is an operator-only constructor/CLI input. All source and fresh
+observations pass through the same budgeted World call with an operator-generated
+noise key. The key is never passed into the predictor's `predict(spec)` RPC.
+Candidate parameters must be embedded in the frozen source; files alongside that
+source are not available inside its sandbox.
+
+Defaults are 32 actions, 3 prospective tests, 96 experiment attempts, 10,000
+experiment cost units, 24 isolated prediction calls, 360 seconds of prediction
+allowance, 15 seconds per prediction, 2,048 MiB per predictor, 300 seconds of
+simulation, 30 seconds per simulation, and 900 seconds for the whole task. The
+family alpha is 0.05. Operator overrides are fixed at task creation and included
+in the private metadata and receipts.
+
+Before starting each test, the operator checks that the **entire** fixed
+replication plan and four prediction calls per experiment fit the remaining
+budgets. Each candidate attempt is charged its full per-call allowance before
+startup, including rejected, crashed or timed-out executions; actual elapsed
+prediction time is recorded as well. Both charged and actual time constrain
+further calls. Every dispatched World call consumes one attempt and its public
+cost before simulation, including failed calls. Actual simulation time is
+bounded per call and cumulatively. Invalid actions consume action budget and
+close the task. An accepted plan is never shortened to fit remaining resources.
+Unused capacity after failure is not counted as an executed experiment, and
+failed tasks cannot resume or retry.
+
+The output directory must not already exist (including a symlink). Private
+directories use mode 0700, metadata, checkpoints and receipt files use 0600, and
+the nonsecret candidate leaf uses 0444 so the sandbox UID can read its one bind
+mount. Every receipt is a separately fsynced, atomically published, no-overwrite
+file. An atomic head links its sequence and SHA-256 to the previous receipt.
+The complete sealed registration is persisted before any confirmation call.
+Valid partial observations and failed attempts remain in the private bundle and
+raw receipt log. A filesystem failure leaves its artifacts for audit; it never
+triggers implicit repair, resampling or automatic rerun.
+
+`verify_directory` checks both receipt chains, operator metadata, input-plan and
+candidate source integrity, then independently recomputes each completed numeric
+verdict from its frozen full arrays and recorded observations. It also checks
+that a confirmation's original observer response occurred after collection was
+authorized. It does not execute candidates, call a World, or use a model API.
+The log must remain in trusted operator custody: an attacker able to replace the
+whole directory and anchor can manufacture a new chain. Hashes and permissions
+are not a digital signature or a remote attestation protocol.
+
+### CLI and offline example
+
+On the Linux evaluation host with the existing numerical runtime and Bubblewrap:
+
+```sh
+python -m env.prospective_runner demo --directory /private/new-prospective-demo
+python -m env.prospective_runner verify --directory /private/new-prospective-demo
+python -m env.prospective_runner run --environment hysteresis_material \
+  --seed 7 --plan /operator/plan.json --directory /private/new-material-task
+```
+
+The `demo` command uses a deliberately simple private synthetic instance. It
+first observes a zero-drive source, seals two candidate coefficients, obtains a
+counterexample that refutes both, fits a revision **only from the public observed
+readout**, and compares that revision with a retained refuted predictor at a new
+drive. Candidate execution is real sandbox execution even in this demonstration.
+The fixture is not part of the registered scientific environments and does not
+establish scientific novelty or mechanism identification. Changing the seed
+changes its private coefficient; noise is fresh for each task. There is no
+forced success, retry or seed selection if an operational or numerical test
+fails. This demo makes zero model API calls.
+
+`run` takes this JSON envelope. Each item in `tests` is the full request from the
+minimal protocol above, including the embedded predictor sources:
+
+```json
+{
+  "protocol": "sle-prospective-plan-0.1",
+  "source_experiments": [{"...": "one legal public experiment spec"}],
+  "tests": [{"...": "one complete preregistration request"}]
+}
+```
+
+Source record IDs are `obs-source-0001`, `obs-source-0002`, and so on. A later
+planned revision can use `"revision_of": "$previous_test"` and an evidence ID
+such as `"$previous_fresh:0"`; the operator resolves these to the immediately
+preceding completed test's real IDs. These aliases do not let a static JSON plan
+fit a predictor to future data. An adaptive fitter uses the programmatic API
+between completed tests and submits new code before its next fresh experiment.
+The CLI exits nonzero on failure and keeps all partial artifacts. `--limits`
+accepts an operator JSON file of limit overrides. The public CLI output omits
+private seed, kernel, paths and arbitrary candidate exception text; the output
+directory itself remains private and must not be attached wholesale to an agent.
+
+## Minimal future episode-runner connection
+
+The standalone task is executable now. The existing episode runner and its
+SYSTEM prompt are unchanged. A later, separately frozen cohort could add one
+action alongside existing actions:
 
 ```json
 {"note": "Rival assumptions and the planned test.", "preregister": {"...": "the request fields above"}}
@@ -284,13 +430,19 @@ checkout's source digest and must not be copied into the frozen runtime.
 
 ## Verification
 
-Tests use local numerical fixtures, include a fixed-program fresh-process replay,
-and make no paid API calls. They cover sealing before observation, full-output
+Protocol tests use local numerical fixtures and fixed-program replay. Standalone
+operator tests exercise receipts, budgets and failure paths with a numeric
+stand-in that only parses fixture literals and never executes source. Two
+additional tests run real CandidateProxy sandboxes: the full revision demo and
+probes for private files, host environment, network, forbidden process creation,
+read-only candidate mounts, and fresh process state. These skip only on a
+non-Linux platform lacking Bubblewrap; Linux without Bubblewrap fails. All tests
+make zero model API calls. They cover sealing before observation, full-output
 replay, tampering, equivalence versus nonrejection, both-rivals-failed cases,
 noise/bias/correlation bounds, tolerance limits, novelty and sampling aliases,
 refinement lineage, fixed replication and alpha budgets, deterministic code,
 durable-write failures and nonretryable partial collection.
 
 ```sh
-python -m pytest env/tests/test_prospective.py -q
+python -m pytest env/tests/test_prospective.py tests/test_prospective_runner.py -q
 ```

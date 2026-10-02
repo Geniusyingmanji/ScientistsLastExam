@@ -88,7 +88,8 @@ def _rate_text(value):
     return "%d / %d · %.1f%%" % (value["numerator"], value["denominator"], 100*value["rate"])
 
 
-def render_report(directory):
+def collect_report(directory):
+    """Recompute aggregate evidence without changing the source cohort directory."""
     directory = Path(directory)
     manifest = json.loads((directory/"manifest-private.json").read_text(encoding="utf-8"))
     status_path = directory/"campaign-status.json"
@@ -117,7 +118,15 @@ def render_report(directory):
     summary.update(cohort=manifest["cohort"], planned_runs=len(manifest["instances"]), source_sha256=manifest["source_sha256"],
                    score_protocol=(manifest.get("score_contract") or {}).get("protocol"),
                    task_profile=(manifest.get("task_profile") or {}).get("name"),
+                   presentation_profile=(manifest.get("presentation_profile") or {}).get("name", "full_description"),
+                   analysis_protocol=manifest.get("analysis_protocol", "legacy"),
                    public_limits=manifest.get("limits"), decoding=manifest.get("decoding"))
+    return summary, reports
+
+
+def render_report(directory):
+    directory = Path(directory)
+    summary, reports = collect_report(directory)
     save_json(directory/"summary.json", summary)
     environment_rows = []
     for name, row in summary["by_environment"].items():
@@ -152,8 +161,8 @@ def render_report(directory):
 <p>基础设施失败：%d；已知响应 token 合计下界：%s。计费信息未提供，不推算实际费用。</p>
 <details><summary>评测边界与后续判断</summary><ul><li>先稳定不同环境的完成率、预测误差和可复验发现，再进行预算 scaling。</li><li>对比基线可识别任务过易、数据利用不足和预测器实现失败；深度审核需检查对照、机制区分、反例和适用范围。</li><li>隐藏参数和重命名不足以证明抗污染；需要隐藏结构、分布变化与全新组合的单独验证。</li><li>样本少时区间只描述当前 cohort；开发批次与正式批次分别报告。</li></ul></details>
 <p class="meta muted">source SHA-256: %s · <a href="summary.json">结构化汇总</a></p></main></html>""" % (
-        html.escape(manifest["cohort"]), summary["started_runs"], len(manifest["instances"]), summary["settled_runs"], summary["running_runs"],
+        html.escape(summary["cohort"]), summary["started_runs"], summary["planned_runs"], summary["settled_runs"], summary["running_runs"],
         _fmt(summary["macro_score"]), interval_text, _rate_text(summary["model_completion"]), _rate_text(summary["verified_effect_rate"]), _rate_text(summary["end_to_end_completion"]),
-        "".join(environment_rows), "".join(discoveries) or '<p class="muted">尚无完成的独立复验结果。</p>', "".join(episode_rows), summary["infrastructure_failures"], format(summary["known_response_usage_lower_bound"]["total_tokens"], ","), manifest["source_sha256"])
+        "".join(environment_rows), "".join(discoveries) or '<p class="muted">尚无完成的独立复验结果。</p>', "".join(episode_rows), summary["infrastructure_failures"], format(summary["known_response_usage_lower_bound"]["total_tokens"], ","), summary["source_sha256"])
     (directory/"index.html").write_text(html_text, encoding="utf-8")
     return summary

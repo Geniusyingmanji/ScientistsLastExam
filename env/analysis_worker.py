@@ -14,6 +14,13 @@ class _BoundedText(io.StringIO):
 
 def analyze(payload):
     _namespace.update({k: payload[k] for k in ("problem", "records", "history")})
+    # Optional RPC capabilities refer only to this episode's candidate-owned
+    # snapshot store. They carry no filesystem or simulator authority.
+    model_api = payload.get("model_api", {})
+    for name in ("save_model", "read_model", "list_models"):
+        _namespace.pop(name, None)
+        if name in model_api:
+            _namespace[name] = model_api[name]
     _namespace["result"] = None
     out = _BoundedText()
     phase = "execution"
