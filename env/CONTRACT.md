@@ -37,9 +37,12 @@ non-null string selects reproducible independent measurement noise via a stable
 hash of world seed and noise key. Avoid Python's randomized built-in hash.
 
 `describe` provides units, experiment schema with concrete valid examples,
-parameter ranges, public channel names, noise and normalization scales. It must
+legal control ranges, public channel names, noise and normalization scales. It must
 not disclose the sampled mechanism or private implementation. Input errors must
 be clear, bounded and public-safe; invalid requests do not change an instance.
+Equation-family priors are a separately documented presentation choice. A world
+does not need to disclose its hidden mechanism menu or parameter bounds to make
+its apparatus usable.
 
 `panel` is operator-only. Kinds are `development`, `conditions`, `interventions`.
 It returns valid experiment specs, deterministically using `panel_seed`. Conditions

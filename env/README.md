@@ -153,6 +153,10 @@ without computing a depth grade or certifying the scientific interpretation.
 
 ## Evaluation and extension
 
+[AUTHORING.md](AUTHORING.md) gives the current package layout, integration points,
+bounded development procedure and distinction between prototype, experimental
+registration and frozen model evaluation.
+
 [EVALUATION.md](EVALUATION.md) specifies scores, denominators, evidence grades and
 limitations. Add an environment by implementing the contract, writing independent
 numerical checks, exposing a public-data-only baseline, then registering its name

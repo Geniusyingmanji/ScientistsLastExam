@@ -5,13 +5,14 @@ environment. They provide public prompts, machine-readable evidence checklists
 and the scope of a scientific conclusion. They add no simulator access, scoring
 weights, hidden answers, submission fields or model calls.
 
-The catalog version is `scientific-task-profiles-0.1.0`. Stable profile names are
+The catalog version is `scientific-task-profiles-0.1.2`. Stable profile names are
 `open_discovery`, `mechanism_discrimination` and `regime_transfer`; each profile
 also has its own `<name>-0.1.0` version. `open_discovery` is the default.
 
 All three apply to the four core environments (`microecology`,
 `coupled_oscillators`, `reaction_kinetics`, `heat_transport`) and to the expansion
-environments (`gene_regulation`, `ising_spin`). Applicability is a statement about
+environments (`gene_regulation`, `ising_spin`, `hysteresis_material`) and the
+experimental worlds (`microecology_causal`, `orbital_dynamics`). Applicability is a statement about
 the scientific interface; it does not register an environment, select a cohort
 or schedule an experiment.
 
@@ -107,14 +108,21 @@ checklist cannot change later calls. Names and optional environment arguments ar
 validated. The module imports only the standard-library copying helper and has
 no file, network, environment, model-client or scoring dependency.
 
-Runner and campaign integration is intentionally separate. A future integration
-should freeze the selected profile name, version and public contents alongside
-the cohort protocol, expose them in the public prompt, and retain them in the
-episode report. It should preserve the existing experiment limits, submission
-format and numerical scoring unless a separately versioned protocol changes
-them. Comparisons between profiles should identify the different scientific
+The batch campaign and research runners now freeze the selected profile name,
+version and public contents in their manifests and expose them in the public
+prompt. Profiles preserve the existing experiment limits, submission format and
+numerical scoring. The experimental research runner separately supports immutable
+models and prospective comparisons; see [RESEARCH_RUNNER.md](RESEARCH_RUNNER.md).
+Comparisons between profiles should identify the different scientific
 instructions and keep budgets and other conditions explicit; they should not
 pool evidence-review outcomes under a single unqualified discovery rate.
+
+[DISCOVERY_EVIDENCE.md](DISCOVERY_EVIDENCE.md) records six manual evidence
+dimensions with precise packet anchors. Successful predictions, meaningful rival
+discrimination, transfer and empirical boundary investigations remain separate
+judgments. The mechanical validator checks references and recorded order; it
+does not assign a discovery level or decide whether a rival is scientifically
+adequate.
 
 ## Why the existing core-four pilot remains unchanged
 
