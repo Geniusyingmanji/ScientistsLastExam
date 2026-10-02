@@ -29,9 +29,13 @@
 ## 当前任务
 
 虚拟科学环境统一放在 [env/](env/README.md)，每个环境一个子文件夹。
-目前包含微生态、耦合振子、反应动力学、热传输、基因调控、有限 Ising 自旋和材料滞回七个世界，
-共用冻结预测器、独立主张复验、请求账本和 HTML 报告。入口与扩展契约见 [环境文档](env/README.md)，
+目前注册 13 个世界。微生态、耦合振子、反应动力学、热传输、基因调控、有限 Ising 自旋和材料滞回
+已有 GPT pilot 评测；因果微生态、轨道动力学、图样形成、电阻抗、自旋回波和种群漂变六个环境
+标为 experimental，尚未进行 GPT 评测。它们共用冻结预测器、独立主张复验、请求账本和 HTML 报告。
+入口与扩展契约见 [环境文档](env/README.md)，
 评分、完成率分母及发现深度边界见 [评测协议](env/EVALUATION.md)。
+[本轮进度与结论](docs/reports/sle-env-pilot-20261003/index.html)分别报告正式与扩展 cohort；
+后续实验的准入条件见 [Scaling 准备清单](env/SCALING_READINESS.md)。
 [微生态的持续培养舱接口](env/microecology/README.md)另保留采样、上清转移和组分去除。
 `python -m env.microecology demo --output-dir /var/tmp/sle-microecology-demo` 可生成实验图和证据报告，无需模型 API。
 这些环境处于 pilot 标定阶段，尚不构成结构抗污染或 Discovery Depth 认证，不计入下方认证任务数量。

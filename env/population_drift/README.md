@@ -35,7 +35,7 @@ For x=k/N, the four clean channels are:
 
 Mixedness refers to two independent label draws **with replacement within a
 replicate**, then averaged over replicates. It differs from
-2E[x](1−E[x]); the latter misses between-replicate variation. The boundary
+`2E[x](1−E[x])`; the latter misses between-replicate variation. The boundary
 channels are **current occupancies**. They are not first-passage probabilities,
 permanent fixation or absorption probabilities when mutation permits boundary
 exit. With no label mutation the endpoints are absorbing in this model, but that
