@@ -11,6 +11,9 @@ This is a construction prototype, not a calibrated scientific-discovery
 benchmark. Prediction, quantitative contrast verification and expert assessment
 of a proposed mechanism remain separate.
 
+The [five-episode evidence review](PILOT_EVIDENCE.md) distinguishes prospective
+tests of fitted versions from later refits and changed final predictor parameters.
+
 ## Public experiments
 
 Call `World.describe()` for the complete public contract. A valid experiment is:

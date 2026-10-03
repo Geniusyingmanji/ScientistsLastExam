@@ -13,6 +13,9 @@ establish a new physical law, a mechanism discovery score, contamination
 resistance, or calibrated difficulty. Neither sampled parameters nor graph
 generation details belong in the agent interface.
 
+The [five-episode evidence review](PILOT_EVIDENCE.md) records local findings,
+prospective tests and differences between fitted and finally submitted models.
+
 ## Use
 
 From the repository root, with Python 3.8 or later, NumPy and SciPy installed:

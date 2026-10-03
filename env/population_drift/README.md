@@ -8,6 +8,10 @@ This source tree and manifest are operator-owned; `World.describe()` is the
 public instrument contract. Native isolation and integration verification are
 recorded separately from the frozen scientific checks.
 
+The [separate precision diagnostic](NUMERICAL_DIAGNOSTIC.md) investigates two
+retained reference discrepancies. Its narrow result leaves the original
+failures and partial numerical verdict intact.
+
 The intended scientific exercise is to use population size, initial composition
 and calibrated controls to distinguish accounts of ensemble evolution. Mean
 frequency alone may omit informative finite-population variation. An accurate

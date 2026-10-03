@@ -25,6 +25,8 @@ parameters and structures create new instances, but do not by themselves prove
 resistance to contamination or discovery of new scientific principles. Finite
 Ising systems are not thermodynamic phase transitions; simulated microbes are not
 calibrated organisms. Each environment documents its own limitations.
+The [public-prior inventory](PUBLIC_PRIORS.md) records which governing families
+were explicitly supplied in the completed GPT cohorts.
 
 The initial formal pilot uses the first four environments. Gene regulation and
 Ising and material history use a separate expansion cohort. Task orientation is separate from the world:

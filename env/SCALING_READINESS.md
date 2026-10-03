@@ -12,6 +12,11 @@ end-to-end completion was 18/20. The separate three-world expansion obtained
 77.2/100 from six episodes with a different request budget and source version.
 Their difference is not a scaling result.
 
+The [public-prior inventory](PUBLIC_PRIORS.md) also matters: five of the seven
+evaluated worlds supplied the governing model family. Their results primarily
+test identification and transfer within that family. Open question selection
+does not mean the task withheld its physical theory.
+
 Prediction and scientific evidence must be reported separately. The audits found
 some unchanged-model predictions before later observations, meaningful local
 interventions, and known-family quantitative models. They did not establish a
@@ -25,6 +30,15 @@ A candidate also proposed a coupled inhibitory network, but its fit timed out an
 the final model lost those terms. Persistent evidence access, model-version
 continuity and reconciliation of failed predictions need their own interface
 trial before treating low scores as a clean measure of scientific reasoning.
+
+The all-five [oscillator](coupled_oscillators/PILOT_EVIDENCE.md) and
+[reaction](reaction_kinetics/PILOT_EVIDENCE.md) reviews expose a related problem:
+some final predictors replace parameters supported by earlier fits or tests.
+They also preserve real prospective successes, attached to their exact earlier
+versions. Snapshot continuity and final-artifact provenance should be checked
+before interpreting a larger inference budget as deeper discovery.
+The [bounded evidence-ledger plan](EVIDENCE_LEDGER_PLAN.md) specifies a candidate-
+selected projection and a small future interface comparison; it remains a design.
 
 ## Readiness gates
 
@@ -43,14 +57,23 @@ Readiness is assessed per world and task. Registration, numerical consistency,
 mechanism identifiability and model-evaluation readiness are different states.
 New experimental worlds should not automatically join a model-ranking aggregate.
 
-The thirteen registered worlds passed a complete Linux regression of 1,883 tests,
-with one optional repeated material smoke test skipped. A separate native check
+The final runtime source `e8094c0c` passed a complete Linux regression of 1,990
+tests in 1,607.05 seconds. Four tests were explicitly skipped: one optional
+repeated material smoke and three legacy-scorer cases outside the unregistered
+optical prototype's scope. This supersedes the earlier 1,883-pass integration
+snapshot; it does not register optical as a fourteenth world. A separate native check
 completed the source/snapshot/prediction/target chain for spin echo and population
 drift with 10 World attempts and 8 isolated predictor calls. These are engineering
 results. The [spin-echo reference](spin_echo/REFERENCE_RESULTS.md) provides a
 same-observation, author-informed comparison on six reused instances: 30
 pulse/late-echo improvements and six plain-interpolation ties. It does not supply
 a GPT result or an unseen-structure test.
+
+The [population precision diagnostic](population_drift/NUMERICAL_DIAGNOSTIC.md)
+preserves two failed reference comparisons. Higher-precision results agree with
+the saved production arrays on those selected cases, supporting a limitation in
+the saved reference outputs; the original numerical verdict remains partial.
+Engineering passes do not erase scientific validation limits.
 
 The next structural split should withhold a versioned generating construction,
 with changed state coupling or dynamical order, from method development. Candidate
