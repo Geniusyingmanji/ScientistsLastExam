@@ -19,7 +19,7 @@ from .prospective import digest
 from .prospective_runner import (ProspectiveTask, PrivateJournal, _atomic_json,
                                  _limits as task_limits, TaskBudgetExceeded, CandidateExecutionFailed,
                                  PredictorInfrastructureFailed, PredictorInitializationUnresolved)
-from .registry import ENVIRONMENTS, load_world
+from .registry import ENVIRONMENTS, FRONTIER_ENVIRONMENTS, load_world
 from .runner import IsolatedAnalysis, source_digest, _compact_result
 from .task_profiles import get_task_profile
 
@@ -89,6 +89,35 @@ Fresh observations and test results appear in public history and records.
 '''
 
 
+FRONTIER_PROTOCOL = "sle-research-agent-0.2"
+FRONTIER_SYSTEM = SYSTEM.replace(
+    "Choose your scientific question. Develop competing quantitative explanations,",
+    "Choose your scientific question. Develop quantitative explanations,").replace(
+    "Preregistration supplies exactly two rivals, each a scientific account with id,",
+    "Preregistration supplies a rivals list of ONE predictive account or TWO competing accounts, each with id,").replace(
+    "profile (mechanism_discrimination or regime_transfer)",
+    "profile (predictive_validation, mechanism_discrimination or regime_transfer)").replace(
+    "Observe at positive coordinates.",
+    "Use the apparatus axis; a zero configuration index or zero habitat covariate is a legal measured coordinate.").replace(
+    "The host seals both full predictions", "The host seals all full predictions").replace(
+    "For revision, cite the prior test in revision_of and explain the change. Keep\none refuted rival's original source unchanged, cite its new counterexample data\nfor the revised account, and select a new target. The old failure remains.",
+    "For revision, cite a prior test with a refuted account in revision_of, explain the change, cite its counterexample observations for a new predictor version, and select a new target. You need not resubmit the old predictor; its sealed failure remains in the record.") + '''
+For one account, use predictive_validation (or regime_transfer for new controls).
+Do not invent a second account. A completed test reports scoped_predictive_adequacy,
+candidate_refuted, or inconclusive, based on the declared readout and tolerance.
+Adequacy is scoped to that readout; it is not a discovery score or full-trajectory
+validation. Always report tolerance, uncertainty and untested conditions. Two-account
+mechanism_discrimination retains comparison semantics. First establish source data,
+fit a self-contained model, then preregister unseen informative conditions. Reserve
+turns for preregistration and finish; a complicated predictor is not required.
+The public noise_std is a proven SD upper bound; field ecology uses replicated
+population detection fractions, not additive Gaussian noise. Dependence within
+an experiment is allowed; independent fresh preparations underpin replication.
+Scientific review excludes known apparatus identities, blank-only trivialities,
+and single selected easy readouts as evidence of deep mechanism identification.
+'''
+
+
 def _driver_limits(changes=None):
     if changes is not None and (type(changes) is not dict or set(changes) - set(DEFAULT_LIMITS)):
         raise ValueError("unknown research limit")
@@ -153,7 +182,11 @@ def _research_profile(name, environment):
 
 
 def create_manifest(episode_id, environment, seed, *, profile="open_discovery",
-                    limits=None, science_limits=None):
+                    limits=None, science_limits=None, workflow="comparison"):
+    if workflow not in ("comparison", "frontier"):
+        raise ValueError("unknown research workflow")
+    if workflow == "frontier" and environment not in FRONTIER_ENVIRONMENTS:
+        raise ValueError("frontier workflow requires an audited apparatus")
     if not isinstance(episode_id, str) or not re.fullmatch(r"[a-z0-9][a-z0-9_-]{0,79}", episode_id):
         raise ValueError("invalid research identifier")
     if environment not in ENVIRONMENTS or type(seed) is not int or not 0 <= seed < 2**63:
@@ -164,7 +197,7 @@ def create_manifest(episode_id, environment, seed, *, profile="open_discovery",
         raise ValueError("science wall allowance exceeds research allowance")
     world, _ = load_world(environment, seed)
     manifest = {"protocol": PROTOCOL, "episode_id": episode_id, "environment": environment,
-                "private_world_seed": seed, "profile": _research_profile(profile, environment),
+                "private_world_seed": seed, "profile": _research_profile(profile, None if workflow == "frontier" else environment),
                 "limits": configured, "science_limits": science,
                 "source_sha256": source_digest(), "system_sha256": digest(SYSTEM),
                 "public_description_sha256": digest(world.describe()),
@@ -173,13 +206,21 @@ def create_manifest(episode_id, environment, seed, *, profile="open_discovery",
                              "chat_max_tokens_field": "max_completion_tokens", "temperature": None,
                              "stream": False, "timeout_seconds": 180},
                 "score": None, "automatic_depth_certification": False}
+    if workflow == "frontier":
+        manifest["protocol"] = FRONTIER_PROTOCOL
+        manifest["system_sha256"] = digest(FRONTIER_SYSTEM)
+        manifest["profile"]["adapted_for"] = FRONTIER_PROTOCOL
+        manifest["profile"]["applicable_environments"] = list(FRONTIER_ENVIRONMENTS)
+        manifest["profile"]["catalog_version"] = "frontier-research-profiles-0.1"
+        if profile != "open_discovery":
+            raise ValueError("frontier pilot uses open_discovery")
     manifest["sha256"] = digest(manifest)
     return manifest
 
 
 def create_reference_manifest(episode_id, environment, seed, *, reference_id,
                               reference_source_sha256, profile="open_discovery",
-                              limits=None, science_limits=None, call_timeout_seconds=10.0):
+                              limits=None, science_limits=None, call_timeout_seconds=10.0, workflow="comparison"):
     """Freeze a trusted, non-API authored policy without a model identity.
 
     This Python-only path shares scientific execution, not the API CLI. The
@@ -195,7 +236,7 @@ def create_reference_manifest(episode_id, environment, seed, *, reference_id,
             not 0 < call_timeout_seconds <= 30):
         raise ValueError("reference call timeout must be finite and within 30 seconds")
     manifest = create_manifest(episode_id, environment, seed, profile=profile,
-                               limits=limits, science_limits=science_limits)
+                               limits=limits, science_limits=science_limits, workflow=workflow)
     manifest.pop("sha256")
     manifest.update(client_kind="scripted_reference", requested_model=None, decoding={},
                     reference={"id": reference_id, "source_sha256": reference_source_sha256,
@@ -209,7 +250,8 @@ def validate_manifest(manifest):
         raise ValueError("invalid research manifest")
     try:
         arguments = {"profile": manifest["profile"]["name"], "limits": manifest["limits"],
-                     "science_limits": manifest["science_limits"]}
+                     "science_limits": manifest["science_limits"],
+                     "workflow": "frontier" if manifest.get("protocol") == FRONTIER_PROTOCOL else "comparison"}
         factory = create_manifest
         if manifest.get("client_kind") == "scripted_reference":
             factory = create_reference_manifest
@@ -335,6 +377,8 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
     """
     validate_manifest(manifest)
     manifest = deepcopy(manifest)
+    frontier = manifest["protocol"] == FRONTIER_PROTOCOL
+    system = FRONTIER_SYSTEM if frontier else SYSTEM
     directory = Path(directory).absolute()
     directory.mkdir(mode=0o700, parents=False)  # Existing paths fail before clients.
     limits, started = manifest["limits"], time.monotonic()
@@ -374,7 +418,7 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
         journal = PrivateJournal(directory / "driver-receipts")
         append("research_created", {"manifest_sha256": manifest["sha256"]})
         task = _DeadlineTask(manifest["environment"], manifest["private_world_seed"], directory / "science",
-                             limits=manifest["science_limits"], research_deadline=deadline)
+                             limits=manifest["science_limits"], research_deadline=deadline, frontier=frontier)
         snapshots = _ResearchSnapshots(directory / "models")
         problem = task.describe()
         problem.update(research_profile=manifest["profile"], model_snapshot_contract=snapshot_contract())
@@ -422,14 +466,14 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
             if len(encoded.encode("utf-8")) > 260000:
                 stop = "context_capacity"
                 break
-            row = {"round": number, "prompt_sha256": digest(prompt), "system_sha256": digest(SYSTEM)}
+            row = {"round": number, "prompt_sha256": digest(prompt), "system_sha256": digest(system)}
             rounds.append(row)
             usage["reference_request_attempts" if reference_run else "model_request_attempts"] += 1
             append("reference_request_started" if reference_run else "model_request_started", dict(row, prompt=prompt))
             # A failed later call must not inherit the previous call's token use.
             client.last_usage, client.last_response_metadata, client.last_stop_reason = None, {}, None
             try:
-                raw = call_with_deadline(lambda: client.complete(encoded, system=SYSTEM),
+                raw = call_with_deadline(lambda: client.complete(encoded, system=system),
                                          min(remaining(), request_timeout))
             except Exception as error:
                 row.update(error=type(error).__name__, usage=deepcopy(getattr(client, "last_usage", None)))
@@ -623,7 +667,7 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
             catalog = []
             cleanup_errors.append("snapshot_catalog")
             infrastructure_failed("cleanup_failed")
-        report = {"protocol": PROTOCOL, "episode_id": manifest["episode_id"], "environment": manifest["environment"],
+        report = {"protocol": manifest["protocol"], "episode_id": manifest["episode_id"], "environment": manifest["environment"],
                   "status": state, "stop_reason": stop, "infrastructure_failure": infrastructure,
                   "failure_attribution": "infrastructure" if infrastructure else "unresolved" if state == "initialization_unresolved" else "model" if state == "invalid_action" else None,
                   "requested_model": manifest["requested_model"], "provider_reported_models": sorted(models),
@@ -660,6 +704,7 @@ def _main(argv=None):
     freeze.add_argument("--environment", choices=ENVIRONMENTS, required=True)
     freeze.add_argument("--seed", type=int, required=True)
     freeze.add_argument("--profile", default="open_discovery")
+    freeze.add_argument("--workflow", choices=("comparison", "frontier"), default="comparison")
     freeze.add_argument("--limits", help="JSON object containing driver and/or science overrides")
     freeze.add_argument("--output", required=True)
     run = sub.add_parser("run")
@@ -671,7 +716,7 @@ def _main(argv=None):
         if set(changes) - {"driver", "science"}:
             raise ValueError("unknown manifest limit section")
         manifest = create_manifest(args.episode, args.environment, args.seed, profile=args.profile,
-                                   limits=changes.get("driver"), science_limits=changes.get("science"))
+                                   limits=changes.get("driver"), science_limits=changes.get("science"), workflow=args.workflow)
         _atomic_json(Path(args.output), manifest)
         print(json.dumps({"status": "frozen", "manifest_sha256": manifest["sha256"], "model_requests": 0}))
         return 0

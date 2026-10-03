@@ -1,0 +1,83 @@
+{
+  "name": "molecular_forces",
+  "world_family": "ConstrainedThreeParticleForces",
+  "version": "molecular_forces-0.1.0",
+  "api_version": "sle-batch-world-v0.2",
+  "status": "prototype",
+  "axis_field": "configuration_ids",
+  "trusted_implementation": {
+    "world": "env.molecular_forces.world:World",
+    "baseline": "env.molecular_forces.baseline:baseline"
+  },
+  "channels": [
+    "energy_ev",
+    "f1x_ev_per_a",
+    "f1y_ev_per_a",
+    "f1z_ev_per_a",
+    "f2x_ev_per_a",
+    "f2y_ev_per_a",
+    "f2z_ev_per_a",
+    "f3x_ev_per_a",
+    "f3y_ev_per_a",
+    "f3z_ev_per_a"
+  ],
+  "normalization_scales": [
+    0.3,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "measurement_noise_std": [
+    0.00035,
+    0.0007,
+    0.0007,
+    0.0007,
+    0.0007,
+    0.0007,
+    0.0007,
+    0.0007,
+    0.0007,
+    0.0007
+  ],
+  "measurement_noise": "independent_additive_Gaussian_unclipped",
+  "process_noise": false,
+  "numerical_model": "static_effective_potential_with_complex_step_conservative_gradient",
+  "public_model_family_menu": false,
+  "operator_strata": [
+    "pair",
+    "three_body",
+    "temperature_dependent"
+  ],
+  "assigned_output_cells": false,
+  "structural_holdout": false,
+  "contamination_resistance_proven": false,
+  "discovery_depth_scoring": false,
+  "difficulty_calibrated": false,
+  "agent_public_files": [],
+  "public_contract": "World.describe and returned observations only; source/manifest/notes are private operator material",
+  "cost": "one unit per configuration",
+  "limits": {
+    "configurations_per_request": 8,
+    "coordinate_a": [
+      -5.5,
+      5.5
+    ],
+    "all_pair_distance_a": [
+      2.2,
+      5.4
+    ],
+    "temperature_k": [
+      180,
+      900
+    ],
+    "kernel_energy_evaluations_per_request": 80
+  },
+  "suggested_claim_minimum_lag": null,
+  "version_policy": "Freeze after review; changes to dynamics, distribution, controls or noise require version change."
+}

@@ -100,8 +100,8 @@ def decide(control, treatment=None, row=-1, channel="mean_A_frequency", axis="ti
 
 
 def test_registration_public_contract_and_private_boundary():
-    assert ENVIRONMENTS == PREVIOUS + (NAME,)
-    assert EXPERIMENTAL_ENVIRONMENTS == PREVIOUS[7:] + (NAME,)
+    assert ENVIRONMENTS[:len(PREVIOUS) + 1] == PREVIOUS + (NAME,)
+    assert EXPERIMENTAL_ENVIRONMENTS[:len(PREVIOUS[7:]) + 1] == PREVIOUS[7:] + (NAME,)
     worlds = [World(7, _operator_stratum=label) for label in World.operator_strata]
     for profile in TASK_PROFILE_NAMES:
         public = [present_problem(dict(w.describe(), task_profile=get_task_profile(profile, NAME),

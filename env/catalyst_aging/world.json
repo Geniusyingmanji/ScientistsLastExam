@@ -1,0 +1,58 @@
+{
+  "name": "catalyst_aging",
+  "world_family": "WholeHistoryCatalystLaboratory",
+  "version": "catalyst_aging-0.1.0",
+  "api_version": "sle-batch-world-v0.2",
+  "status": "prototype",
+  "axis_field": "event_indices",
+  "trusted_implementation": {
+    "world": "env.catalyst_aging.world:World",
+    "baseline": "env.catalyst_aging.baseline:baseline"
+  },
+  "channels": [
+    "measured_signal"
+  ],
+  "normalization_scales": [
+    1.5
+  ],
+  "measurement_noise_std": [
+    0.003
+  ],
+  "measurement_noise": "independent_additive_Gaussian_unclipped",
+  "process_noise": false,
+  "numerical_model": "exact_constant_condition_activity_and_product_integral",
+  "operator_strata": [
+    "single_site",
+    "instrument_jump",
+    "two_site"
+  ],
+  "public_model_family_menu": false,
+  "assigned_output_cells": false,
+  "structural_holdout": false,
+  "contamination_resistance_proven": false,
+  "discovery_depth_scoring": false,
+  "difficulty_calibrated": false,
+  "agent_public_files": [],
+  "state_semantics": "fresh entire lab each call; ordered within-query irreversible coupon use and event-index instrument drift",
+  "cost": "all scheduled events including unobserved preparation",
+  "limits": {
+    "events": 24,
+    "coupons": 4,
+    "reactions_per_coupon": 6,
+    "temperature_k": [
+      440,
+      560
+    ],
+    "feed_concentration": [
+      0.1,
+      1.2
+    ],
+    "duration_min": [
+      2,
+      15
+    ],
+    "closed_form_site_updates_per_request": 48
+  },
+  "public_contract": "World.describe and returned observations only; source/manifest/notes are private operator material",
+  "version_policy": "Freeze after review; change version for dynamics, distribution, protocol or noise changes."
+}

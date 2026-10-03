@@ -19,6 +19,16 @@ laboratory or external simulator service is required.
 | `electrical_impedance` (experimental) | Quadrature voltage at a sealed linear one-port | Frequency, source resistance, parallel load and amplitude | Spectral response, resonance, relaxation and nonunique internal topology |
 | `spin_echo` (experimental) | Mean classical magnetization x/y/z | Initial vector, waiting times, ideal rotation pulses and detuning | Reversible dispersion, transverse loss, finite-ensemble response and limited identification |
 | `population_drift` (experimental) | Four expectation readouts of finite two-type population ensembles | Population size, preparation, reproductive bias and newborn-label controls | Drift, selection, mutation, current boundary occupancy and limited identification |
+| `molecular_forces` (experimental) | Energy and Cartesian forces for three particles | Geometry and temperature | Pairwise versus collective dependence, geometric transfer |
+| `climate_response` (experimental) | Surface temperature and energy imbalance | Annual forcing histories | Fast/slow response, hidden storage and feedback limits |
+| `catalyst_aging` (experimental) | Instrument signal along a full ordered laboratory schedule | Coupon reuse, reaction conditions, blanks and standards | Irreversible aging versus instrument drift |
+| `field_ecology` (experimental) | Detection fractions from replicated ecological panels | Habitat strata and repeated survey methods | Occupancy versus missed detection |
+| `phase_equilibria` (experimental) | Diffraction intensity from prepared binary mixtures | Composition, preparation, finite hold, loading and scan angles | Mixture structure versus finite preparation history |
+
+These five additions use the [new prospective research workflow](FRONTIER_RESEARCH.md):
+one or two frozen predictive accounts, fresh observations and explicit uncertainty.
+They are exploratory prototypes, with numerical checks but no strong-baseline
+difficulty calibration. Their new GPT cohort is separate from historical scores.
 
 These are synthetic, deliberately tractable scientific families. Hidden
 parameters and structures create new instances, but do not by themselves prove

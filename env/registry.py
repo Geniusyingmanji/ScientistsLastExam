@@ -1,14 +1,16 @@
 """Explicit environment registry; never exposed to candidate code."""
 import importlib
 
+FRONTIER_ENVIRONMENTS = ("molecular_forces", "climate_response", "catalyst_aging", "field_ecology", "phase_equilibria")
+
 ENVIRONMENTS = ("microecology", "coupled_oscillators", "reaction_kinetics", "heat_transport",
                 "gene_regulation", "ising_spin", "hysteresis_material", "microecology_causal",
-                "orbital_dynamics", "pattern_formation", "electrical_impedance", "spin_echo", "population_drift")
+                "orbital_dynamics", "pattern_formation", "electrical_impedance", "spin_echo", "population_drift") + FRONTIER_ENVIRONMENTS
 
 # Registration enables explicit selection; it does not promote a world into an
 # existing cohort or certify its scientific difficulty.
 EXPERIMENTAL_ENVIRONMENTS = ("microecology_causal", "orbital_dynamics", "pattern_formation",
-                            "electrical_impedance", "spin_echo", "population_drift")
+                            "electrical_impedance", "spin_echo", "population_drift") + FRONTIER_ENVIRONMENTS
 
 
 def load_world(name, seed):

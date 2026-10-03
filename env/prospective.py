@@ -17,6 +17,7 @@ import numpy as np
 
 
 PROTOCOL = "sle-prospective-evidence-0.1"
+FRONTIER_PROTOCOL = "sle-prospective-evidence-0.2"
 MAX_TOLERANCE_PER_SCALE = 0.2
 DISCRIMINATION_TOLERANCE_PER_SCALE = 0.05
 
@@ -144,6 +145,11 @@ def _design(registration):
     target_registration = dict(registration, readout=[t for t in registration["readout"] if t["experiment_id"] in targets])
     target_predictions = [_quantity(rival["predictions"], target_registration) for rival in rivals]
     tolerances = [rival["tolerance"] for rival in rivals]
+    if len(rivals) == 1:
+        return {"predicted_readouts": predictions, "variance_bound_per_replicate": variance,
+                "mean_bias_bound": bias, "confidence_radius": radius,
+                "planned_separation": False, "hard_tolerance_max": MAX_TOLERANCE_PER_SCALE * weight_mass,
+                "wide_tolerance": [tolerances[0] > DISCRIMINATION_TOLERANCE_PER_SCALE * weight_mass]}
     gap = abs(predictions[1] - predictions[0]) - sum(tolerances)
     target_gap = abs(target_predictions[1] - target_predictions[0]) - sum(tolerances)
     return {"predicted_readouts": predictions, "variance_bound_per_replicate": variance,
@@ -160,7 +166,7 @@ def _check_seal(registration, expected_seal):
     if not isinstance(expected_seal, str) or len(expected_seal) != 64:
         raise ValueError("trusted expected seal is required")
     payload = {key: value for key, value in registration.items() if key != "seal_sha256"}
-    if registration.get("protocol") != PROTOCOL or registration.get("seal_sha256") != expected_seal or digest(payload) != expected_seal:
+    if registration.get("protocol") not in (PROTOCOL, FRONTIER_PROTOCOL) or registration.get("seal_sha256") != expected_seal or digest(payload) != expected_seal:
         raise ValueError("registration seal mismatch")
     for rival in registration["rivals"]:
         if _code_hash(rival["predictor_code"]) != rival["code_sha256"] or digest(rival["predictions"]) != rival["predictions_sha256"]:
@@ -214,7 +220,10 @@ def recompute_result(registration, observations, *, expected_seal, expected_obse
                      and len(supported) == 1 and len(rejected) == 1)
     outcome = ("scoped_predictive_discrimination" if discriminated else
                "both_candidates_refuted" if len(rejected) == 2 else "inconclusive")
-    return {"protocol": PROTOCOL, "test_id": registration["test_id"], "scope": registration["scope"],
+    if len(evaluations) == 1:
+        outcome = ("scoped_predictive_adequacy" if supported else
+                   "candidate_refuted" if rejected else "inconclusive")
+    return {"protocol": registration["protocol"], "test_id": registration["test_id"], "scope": registration["scope"],
             "design": design, "mean_readout": mean, "confidence_interval": interval,
             "alpha": registration["alpha"], "replicate_readouts": quantities,
             "candidates": evaluations, "outcome": outcome,
@@ -248,7 +257,11 @@ class ProspectiveSession:
     """
 
     def __init__(self, public, *, validate_spec, predict, observe, persist, runtime_id,
-                 max_tests=3, family_alpha=0.05):
+                 max_tests=3, family_alpha=0.05, frontier=False):
+        if type(frontier) is not bool:
+            raise ValueError("invalid prospective mode")
+        self._frontier = frontier
+        self._protocol = FRONTIER_PROTOCOL if frontier else PROTOCOL
         self._public = _public_contract(public)
         self._max_tests = _integer(max_tests, "max_tests", 1, 8)
         self._family_alpha = _number(family_alpha, "family_alpha", 0.000001, 0.05)
@@ -260,7 +273,7 @@ class ProspectiveSession:
         self._tests, self._events, self._known = [], [], {}
 
     def _emit(self, kind, payload):
-        event = {"protocol": PROTOCOL, "session_id": self._session_id,
+        event = {"protocol": self._protocol, "session_id": self._session_id,
                  "sequence": len(self._events) + 1, "kind": kind,
                  "previous_event_sha256": self._events[-1]["event_sha256"] if self._events else None,
                  "payload": deepcopy(payload)}
@@ -301,7 +314,7 @@ class ProspectiveSession:
     def _request(self, request):
         fields = ("profile", "scope", "rivals", "experiments", "readout", "replicates", "revision_of", "change_note")
         _keys(request, fields, "request")
-        if request["profile"] not in ("mechanism_discrimination", "regime_transfer"):
+        if request["profile"] not in (("predictive_validation", "mechanism_discrimination", "regime_transfer") if self._frontier else ("mechanism_discrimination", "regime_transfer")):
             raise ValueError("unsupported prospective profile")
         result = {"profile": request["profile"], "scope": _text(request["scope"], "scope"),
                   "replicates": _integer(request["replicates"], "replicates", 4, 16)}
@@ -328,6 +341,13 @@ class ProspectiveSession:
             raise ValueError("readout requires one to four terms")
         readout, used, target_novel = [], set(), False
         known_controls = {digest(_controls(r["spec"], self._public)) for r in self._known.values()}
+        known_readouts = set()
+        if self._frontier:
+            from .frontier_semantics import readout_key, eligible_target
+            for prior in self._known.values():
+                for prior_row in range(len(_axis(prior["spec"], self._public))):
+                    for prior_channel in self._public["channels"]:
+                        known_readouts.add(digest(readout_key(self._public["environment"], prior["spec"], prior_row, prior_channel)))
         for term in terms:
             _keys(term, ("experiment_id", "row", "channel", "weight"), "readout term")
             item = next((e for e in canonical if e["id"] == term["experiment_id"]), None)
@@ -335,7 +355,7 @@ class ProspectiveSession:
                 raise ValueError("unknown readout experiment or channel")
             axis = _axis(item["spec"], self._public)
             row = _integer(term["row"], "readout row", 0, len(axis) - 1)
-            if axis[row] == 0:
+            if axis[row] == 0 and not self._frontier:
                 raise ValueError("initial-coordinate readouts are not eligible in this pilot")
             weight = _number(term["weight"], "readout weight", -1.0, 1.0)
             identity = (item["id"], row, term["channel"])
@@ -345,19 +365,25 @@ class ProspectiveSession:
             controls_hash = digest(_controls(item["spec"], self._public))
             seen_coordinate = any(controls_hash == digest(_controls(r["spec"], self._public))
                                   and axis[row] in _axis(r["spec"], self._public) for r in self._known.values())
+            if self._frontier:
+                if item["role"] == "target" and not eligible_target(self._public["environment"], item["spec"], row, term["channel"]):
+                    raise ValueError("empty apparatus controls are reference measurements, not frontier targets")
+                seen_coordinate = digest(readout_key(self._public["environment"], item["spec"], row, term["channel"])) in known_readouts
             if item["role"] == "target" and seen_coordinate:
                 raise ValueError("target requires previously unobserved readouts; use reference role for known conditions")
             if item["role"] == "target" and not seen_coordinate:
                 target_novel = True
-            if item["role"] == "target" and request["profile"] == "regime_transfer" and controls_hash in known_controls:
+            if (item["role"] == "target" and request["profile"] == "regime_transfer" and controls_hash in known_controls
+                    and not (self._frontier and self._public["environment"] == "field_ecology")):
                 raise ValueError("transfer target must change previously observed controls, not just sampling")
             readout.append({"experiment_id": item["id"], "row": row, "channel": term["channel"], "weight": weight})
         if not target_novel or {term["experiment_id"] for term in readout} != ids:
             raise ValueError("require a previously unobserved target readout and use every experiment")
         result["readout"] = readout
         rivals = request["rivals"]
-        if not isinstance(rivals, list) or len(rivals) != 2:
-            raise ValueError("exactly two rival predictors are required")
+        allowed_counts = (1, 2) if self._frontier and request["profile"] != "mechanism_discrimination" else (2,)
+        if not isinstance(rivals, list) or len(rivals) not in allowed_counts:
+            raise ValueError("invalid predictor count for prospective profile")
         result["rivals"] = []
         tolerance_max = MAX_TOLERANCE_PER_SCALE * sum(abs(t["weight"]) for t in readout)
         for rival in rivals:
@@ -375,7 +401,7 @@ class ProspectiveSession:
             result["rivals"].append({"id": _text(rival["id"], "rival id", 40), "predictor_code": code,
                                      "code_sha256": _code_hash(code), "rationale": _text(rival["rationale"], "rationale"),
                                      "evidence_ids": list(evidence), "tolerance": _number(rival["tolerance"], "tolerance", 0.0, tolerance_max)})
-        if len({r["id"] for r in result["rivals"]}) != 2 or len({r["code_sha256"] for r in result["rivals"]}) != 2:
+        if len({r["id"] for r in result["rivals"]}) != len(rivals) or len({r["code_sha256"] for r in result["rivals"]}) != len(rivals):
             raise ValueError("rivals need distinct identities and code")
         parent = request["revision_of"]
         result.update(revision_of=parent, change_note=request["change_note"])
@@ -392,7 +418,9 @@ class ProspectiveSession:
             rejected_hashes = {r["code_sha256"] for r in parent_test["registration"]["rivals"] if r["id"] in rejected}
             current_hashes = {r["code_sha256"] for r in result["rivals"]}
             parent_ids = {record["id"] for record in parent_test["observations"]}
-            if not (current_hashes & rejected_hashes) or not (current_hashes - old_hashes) or not any(parent_ids & set(r["evidence_ids"]) for r in result["rivals"] if r["code_sha256"] not in old_hashes):
+            if ((not self._frontier and not (current_hashes & rejected_hashes)) or
+                    (self._frontier and not rejected_hashes) or not (current_hashes - old_hashes) or
+                    not any(parent_ids & set(r["evidence_ids"]) for r in result["rivals"] if r["code_sha256"] not in old_hashes)):
                 raise ValueError("refinement must retain a refuted rival and test a new code revision citing the counterexample")
         return result
 
@@ -406,7 +434,7 @@ class ProspectiveSession:
         test = {"test_id": test_id, "status": "preparing", "observations": []}
         self._tests.append(test)
         try:
-            registration = dict(canonical, protocol=PROTOCOL, test_id=test_id,
+            registration = dict(canonical, protocol=self._protocol, test_id=test_id,
                                 session_id=self._session_id, execution_runtime=self._runtime_id,
                                 public=deepcopy(self._public), max_tests=self._max_tests,
                                 family_alpha=self._family_alpha, alpha=self._family_alpha / self._max_tests,
@@ -468,7 +496,7 @@ class ProspectiveSession:
 
     def snapshot(self):
         """Export all attempts, including pending and failed tests, without reruns."""
-        return deepcopy({"protocol": PROTOCOL, "session_id": self._session_id,
+        return deepcopy({"protocol": self._protocol, "session_id": self._session_id,
                          "max_tests": self._max_tests, "family_alpha": self._family_alpha,
                          "alpha_reserved": len(self._tests) * self._family_alpha / self._max_tests,
                          "tests": self._tests, "events": self._events,

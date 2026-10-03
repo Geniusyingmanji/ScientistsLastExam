@@ -1,0 +1,54 @@
+{
+  "events": [
+    {
+      "kind": "blank"
+    },
+    {
+      "kind": "standard"
+    },
+    {
+      "kind": "reaction",
+      "coupon_id": "A",
+      "temperature_k": 500.0,
+      "feed_concentration": 0.6,
+      "duration_min": 8.0
+    },
+    {
+      "kind": "reaction",
+      "coupon_id": "A",
+      "temperature_k": 500.0,
+      "feed_concentration": 0.6,
+      "duration_min": 8.0
+    },
+    {
+      "kind": "blank"
+    },
+    {
+      "kind": "standard"
+    },
+    {
+      "kind": "reaction",
+      "coupon_id": "B",
+      "temperature_k": 500.0,
+      "feed_concentration": 0.6,
+      "duration_min": 8.0
+    },
+    {
+      "kind": "reaction",
+      "coupon_id": "A",
+      "temperature_k": 500.0,
+      "feed_concentration": 0.6,
+      "duration_min": 8.0
+    }
+  ],
+  "event_indices": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ]
+}

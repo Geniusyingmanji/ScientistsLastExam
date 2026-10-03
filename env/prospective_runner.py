@@ -134,7 +134,8 @@ class PrivateJournal:
 
 def _runtime_binding(world):
     import sle.secure_eval as secure
-    files = [Path(__file__), Path(__file__).with_name("prospective.py")]
+    files = [Path(__file__), Path(__file__).with_name("prospective.py"),
+             Path(__file__).with_name("frontier_semantics.py")]
     files += [Path(secure.__file__).with_name(name) for name in
               ("secure_eval.py", "candidate_worker.py", "rpc_codec.py", "contract_lint.py")]
     directory = Path(__file__).parent / world.name
@@ -148,9 +149,13 @@ def _runtime_binding(world):
 def _observation_contract(world):
     additive = {"coupled_oscillators", "reaction_kinetics", "heat_transport", "gene_regulation",
                 "ising_spin", "hysteresis_material", "orbital_dynamics", "pattern_formation",
-                "electrical_impedance", "spin_echo", "population_drift", "prospective_fixture"}
+                "electrical_impedance", "spin_echo", "population_drift", "prospective_fixture",
+                "molecular_forces", "climate_response", "catalyst_aging", "phase_equilibria"}
+    # Each fraction averages 64 independent ecological sites. Its marginal SD
+    # is <= 1/(2*sqrt(64)); shared occupancy correlates visits, allowed by _design.
+    unbiased_bounded = {"field_ecology"}
     clipped = {"microecology", "microecology_causal"}
-    if world.name not in additive | clipped:
+    if world.name not in additive | clipped | unbiased_bounded:
         raise ValueError("public noise bias model has not been approved for this environment")
     # For nonnegative latent x, E[max(x + N(0, sigma^2), 0)] - x is
     # nonnegative and at most sigma/sqrt(2*pi), attained when x = 0.
@@ -163,7 +168,10 @@ def _observation_contract(world):
 class ProspectiveTask:
     """Trusted operator API. Only public specs enter candidate RPC calls."""
 
-    def __init__(self, environment, seed, directory, *, limits=None):
+    def __init__(self, environment, seed, directory, *, limits=None, frontier=False):
+        if frontier and environment not in {"molecular_forces", "climate_response", "catalyst_aging", "field_ecology", "phase_equilibria"}:
+            raise ValueError("frontier readout eligibility is not audited for this environment")
+        self._frontier = frontier
         self._limits = _limits(limits)
         if environment not in ENVIRONMENTS + ("prospective_fixture",):
             raise ValueError("unknown environment")
@@ -193,13 +201,16 @@ class ProspectiveTask:
             metadata = {"protocol": RUNNER_PROTOCOL, "environment": environment, "private_world_seed": seed,
                         "world_version": self._world.version, "limits": self._limits,
                         "runtime_binding": binding, "runtime_id": self._runtime_id}
+            if self._frontier:
+                metadata["scientific_workflow"] = "single_or_two_predictors_frontier_v0.2"
             _atomic_json(self.directory / "operator-private.json", metadata)
             self._journal.append("task_created", {"operator_metadata_sha256": digest(metadata),
                                                   "public_contract": self._contract, "limits": self._limits})
             self._session = ProspectiveSession(self._contract, validate_spec=self._world.validate,
                                                 predict=self._predict, observe=self._observe,
                                                 persist=self._persist_event, runtime_id=self._runtime_id,
-                                                max_tests=self._limits["max_tests"], family_alpha=self._limits["family_alpha"])
+                                                max_tests=self._limits["max_tests"], family_alpha=self._limits["family_alpha"],
+                                                frontier=self._frontier)
             self._checkpoint()
         except Exception as error:
             self._fail(error)
@@ -370,7 +381,9 @@ class ProspectiveTask:
         if not 1 <= len(experiments) <= 2 or type(repeats) is not int or not 4 <= repeats <= 16:
             raise ValueError("invalid preregistration replication plan")
         units = sum(self._world.cost(self._world.validate(deepcopy(item["spec"]))) for item in experiments) * repeats
-        count, calls = len(experiments) * repeats, len(experiments) * 4
+        count, calls = len(experiments) * repeats, len(experiments) * 2 * len(request.get("rivals", []))
+        if len(request.get("rivals", [])) not in ((1, 2) if self._frontier else (2,)):
+            raise ValueError("invalid prospective predictor count")
         seconds = calls * self._limits["predictor_seconds_per_call"]
         if (self._usage["experiment_attempts"] + count > self._limits["experiments"]
                 or self._usage["experiment_units"] + units > self._limits["experiment_units"]
