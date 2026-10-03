@@ -99,3 +99,41 @@ Report API completion, scientific test outcomes, and reviewed findings
 separately. Preserve incomplete, invalid and infrastructure-failed episodes in
 the denominator. Any depth assessment is a qualified evidence review, never a
 simulator-family label match or a claim of contamination-proof novelty.
+
+## Engineering checks for the frozen first run
+
+The run freezes commit `5e59b3ebc9526a34030ffc6d556abf430a38d42d`.
+Local checks passed 1,830 tests and 42 subtests, with six platform-dependent
+skips. On g450/Python 3.8, the frozen five-world, research-runner and affected
+compatibility suite passed all 358 tests, including the real isolated
+single-predictor workflow. An earlier native security/integration pass completed
+251 tests without failures.
+
+A broader native historical-world sweep stopped at 747 passes and three errors:
+two optical semantics tests and one orbital strong-reference test require
+`math.nextafter`, absent from Python 3.8. Those test files are unchanged from
+the prior commit. This is retained as a historical test-runtime limitation,
+not presented as a complete native full-suite pass or a new-world failure.
+
+
+## Separate interface-repair cohort (v0.3)
+
+The original 30 episodes closed after 138 requests: six completed, 18 terminated
+on invalid actions and six failed on transport. They remain immutable and retain
+their original denominator. The public instructions omitted the eight-spec batch
+cap; phase and other valid scientific plans consequently stopped before sampling.
+An opt-in `--workflow frontier_repair` (`sle-research-agent-0.3`) makes driver
+limits, action templates and the existing uncertainty calculation explicit. It
+validates whole experiment batches and preregistration schemas before dispatch.
+Schema-only errors return bounded public feedback and consume an ordinary model
+turn. Once a predictor or measurement is dispatched, failures remain terminal.
+The statistical rules, noise models, tolerances and per-episode alpha are unchanged.
+
+Before any v0.3 call, freeze 30 new episodes (five worlds × three new instances ×
+two repeats), each capped at 19 requests: at most 570 more requests. They use the
+same global 720-request ledger, with 138 already spent and at least 12 reserved
+unused; no automatic replacement or retries. New instance seeds exclude all
+original and development instances. This is a separately sampled exploratory
+cohort, not a controlled estimate of improvement over v0.2: prompts, schema
+recovery and request cap changed. Original and repaired results must be reported
+separately. No selected successful episode replaces an original failure.

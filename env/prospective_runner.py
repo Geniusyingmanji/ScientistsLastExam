@@ -5,7 +5,8 @@ the historical episode runner and never executes candidate code in-process.
 """
 
 import argparse
-from copy import deepcopy
+from copy import copy, deepcopy
+from importlib import import_module
 import hashlib
 import json
 import math
@@ -42,6 +43,28 @@ class TaskBudgetExceeded(RuntimeError):
 
 class CandidateExecutionFailed(RuntimeError):
     pass
+
+
+class PublicSchemaRejected(ValueError):
+    """Audited public-only validation error before any scientific dispatch."""
+
+
+def _public_schema_exception(error, functions):
+    """Allow text only from named, audited validators, never arbitrary errors.
+
+    Their messages describe public schema/controls and never interpolate private
+    parameters, filenames, observations or candidate program text. Provenance
+    checks keep an unexpected operator ValueError out of recoverable feedback.
+    """
+    origin = error.__traceback__
+    while origin is not None and origin.tb_next is not None:
+        origin = origin.tb_next
+    codes = {function.__code__ for function in functions}
+    if type(error) is ValueError and origin is not None and origin.tb_frame.f_code in codes:
+        message = str(error)
+        if 1 <= len(message) <= 500 and all(ord(ch) >= 32 for ch in message):
+            return PublicSchemaRejected(message)
+    raise PredictorInfrastructureFailed("public_schema_preview_operator_failure") from None
 
 
 class PredictorInfrastructureFailed(RuntimeError):
@@ -373,6 +396,64 @@ class ProspectiveTask:
         except Exception as error:
             self._fail(error)
             raise
+
+    def _preview_validate(self, spec):
+        if not self._frontier:
+            raise RuntimeError("schema preview requires the frontier apparatus contract")
+        module = import_module("env." + self._world.name + ".protocol")
+        validators = [getattr(module, name) for name in ("validate_spec", "number", "integer")]
+        try:
+            return self._world.validate(deepcopy(spec))
+        except ValueError as error:
+            raise _public_schema_exception(error, validators) from None
+
+    def preview_experiments(self, specs, maximum):
+        """Validate the entire batch without an oracle, action or state mutation.
+
+        Opt-in research v0.3 calls this before dispatch. The historical source
+        observation action remains fail-closed and keeps its original behavior.
+        """
+        self._guard()
+        if type(maximum) is not int or not 1 <= maximum <= 8:
+            raise RuntimeError("invalid operator batch preview limit")
+        if type(specs) is not list or not 1 <= len(specs) <= maximum:
+            raise PublicSchemaRejected("experiments must contain 1..%d specs; split larger batches across turns" % maximum)
+        return [self._preview_validate(spec) for spec in specs]
+
+    def preview_preregistration(self, request):
+        """Read-only schema/evidence preview: no predictor, alpha, or observation.
+
+        The copied session receives the complete trusted history. Its validator
+        is public-only, and _request only canonicalizes the request. Ingestion
+        failures indicate corrupted operator history and are never model errors.
+        Actual admission, registration, prediction and collection happen later.
+        """
+        self._guard()
+        if not self._frontier:
+            raise RuntimeError("schema preview requires frontier mode")
+        from . import prospective as semantics
+        preview = copy(self._session)
+        preview._known = deepcopy(self._session._known)
+        preview._tests = deepcopy(self._session._tests)
+        preview._events = deepcopy(self._session._events)
+        try:
+            preview._ingest(deepcopy(self._records))
+        except Exception:
+            raise PredictorInfrastructureFailed("source_history_preview_failure") from None
+        preview._validate = self._preview_validate
+        try:
+            preview._request(deepcopy(request))
+        except PublicSchemaRejected:
+            raise
+        except ValueError as error:
+            functions = [semantics._text, semantics._number, semantics._integer,
+                         semantics._keys, semantics.ProspectiveSession._request]
+            raise _public_schema_exception(error, functions) from None
+        except (TypeError, KeyError, UnicodeError, RecursionError):
+            # JSON has already been bounded by the research driver. Remaining
+            # exceptions here are not audited public validation messages.
+            raise PredictorInfrastructureFailed("preregistration_preview_operator_failure") from None
+        return deepcopy(request)
 
     def _admit(self, request):
         if not isinstance(request, dict) or not isinstance(request.get("experiments"), list):

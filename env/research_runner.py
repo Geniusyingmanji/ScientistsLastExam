@@ -18,7 +18,8 @@ from .analysis_api import ModelSnapshots, contract as snapshot_contract
 from .prospective import digest
 from .prospective_runner import (ProspectiveTask, PrivateJournal, _atomic_json,
                                  _limits as task_limits, TaskBudgetExceeded, CandidateExecutionFailed,
-                                 PredictorInfrastructureFailed, PredictorInitializationUnresolved)
+                                 PredictorInfrastructureFailed, PredictorInitializationUnresolved,
+                                 PublicSchemaRejected, _public_schema_exception)
 from .registry import ENVIRONMENTS, FRONTIER_ENVIRONMENTS, load_world
 from .runner import IsolatedAnalysis, source_digest, _compact_result
 from .task_profiles import get_task_profile
@@ -118,6 +119,51 @@ and single selected easy readouts as evidence of deep mechanism identification.
 '''
 
 
+REPAIR_PROTOCOL = "sle-research-agent-0.3"
+REPAIR_SYSTEM = FRONTIER_SYSTEM.replace(
+    "A malformed experimental\nor preregistration action closes the scientific task. Pure JSON/analysis errors\nconsume a model turn.",
+    "Before any scientific dispatch, the entire experiment batch and the public\npreregistration schema are checked. A pure schema rejection consumes this model\nturn and returns public feedback; you may correct it on a later turn. No oracle\ncall, predictor call or test-alpha allocation occurs for that rejection. Once\nprediction or measurement has started, failure is terminal and is never retried.\nPure JSON/analysis errors consume a model turn.") + r'''
+RESEARCH INTERFACE v0.3: problem.research_limits contains your frozen limits.
+An experiments action contains at most 8 specs, or the smaller configured
+research_limits.max_experiments_per_turn. Split larger batches across turns.
+There is no extra schema-repair turn allowance: corrections consume the same
+model-request budget. The last turn still permits finish only. Public validator
+feedback is about the interface and carries no hidden model information.
+
+Exact experiments action shape (replace SPEC with an apparatus-schema object):
+{"note":"purpose","experiments":[SPEC]}
+Exact single-account preregistration shape (replace SPEC, CHANNEL, OBS_ID and
+predictor code with your own; row is ZERO-BASED within the chosen spec):
+{"note":"fresh predictive test","preregister":{"profile":"predictive_validation","scope":"state the measured quantity and conditions","rivals":[{"id":"model-v1","rationale":"account fitted from source observations","evidence_ids":["OBS_ID"],"tolerance":0.03,"predictor_code":"def predict(spec):\n    return FULL_VALUES_MATRIX\n"}],"experiments":[{"id":"target","role":"target","spec":SPEC}],"readout":[{"experiment_id":"target","row":0,"channel":"CHANNEL","weight":1.0}],"replicates":8,"revision_of":null,"change_note":""}}
+The template tolerance is illustrative, not a required or changed scientific
+threshold. Choose and justify it in normalized channel units under the existing
+0.2*sum(abs(weights)) maximum; noise and replication determine precision.
+A snapshot binding replaces predictor_code with model_snapshot containing exactly
+name, version, sha256 from its saved receipt (optional replacement code allowed).
+Each prospective request uses 1..2 experiments, 1..4 readout terms, 4..16
+replicates and 1..2 predictors; mechanism_discrimination requires two. A reference
+experiment must contribute a readout term too. Names, fields and units come from
+the public apparatus; do not place a bare spec directly under preregister.
+
+The EXISTING conservative planning rule is public. For terms j with weight w_j,
+channel scale s_j, noise SD bound sigma_j and mean-bias bound b_j, the measured
+readout is q=sum_j(w_j*value_j/s_j). Define B=sum_j(abs(w_j)*b_j/s_j), and
+V=sum_over_experiments((sum_terms_in_that_experiment abs(w_j)*sigma_j/s_j)^2).
+The bounds are in problem.observation_contract. Let
+alpha=problem.limits.family_alpha/problem.limits.max_tests and n=replicates.
+The fixed confidence radius is R=B+sqrt(V/(n*alpha)); the data interval is
+[mean(q)-R,mean(q)+R]. Adequacy requires this WHOLE interval within
+[predicted_q-tolerance,predicted_q+tolerance]. A tolerance below R cannot show
+adequacy, even if the measured mean exactly matches the prediction. Check this
+before choosing a design. Max tolerance is 0.2*sum(abs(weights)); above
+0.05*sum(abs(weights)) is wide for the two-account discrimination endpoint.
+Neither a wider tolerance nor an inconclusive test certifies a scientific law.
+These formulas permit within-experiment correlation and require independent
+fresh experimental replicates. They apply to bounded field fractions too;
+noise_std there is an upper bound rather than a Gaussian-noise assumption.
+'''
+
+
 def _driver_limits(changes=None):
     if changes is not None and (type(changes) is not dict or set(changes) - set(DEFAULT_LIMITS)):
         raise ValueError("unknown research limit")
@@ -183,9 +229,9 @@ def _research_profile(name, environment):
 
 def create_manifest(episode_id, environment, seed, *, profile="open_discovery",
                     limits=None, science_limits=None, workflow="comparison"):
-    if workflow not in ("comparison", "frontier"):
+    if workflow not in ("comparison", "frontier", "frontier_repair"):
         raise ValueError("unknown research workflow")
-    if workflow == "frontier" and environment not in FRONTIER_ENVIRONMENTS:
+    if workflow in ("frontier", "frontier_repair") and environment not in FRONTIER_ENVIRONMENTS:
         raise ValueError("frontier workflow requires an audited apparatus")
     if not isinstance(episode_id, str) or not re.fullmatch(r"[a-z0-9][a-z0-9_-]{0,79}", episode_id):
         raise ValueError("invalid research identifier")
@@ -197,7 +243,7 @@ def create_manifest(episode_id, environment, seed, *, profile="open_discovery",
         raise ValueError("science wall allowance exceeds research allowance")
     world, _ = load_world(environment, seed)
     manifest = {"protocol": PROTOCOL, "episode_id": episode_id, "environment": environment,
-                "private_world_seed": seed, "profile": _research_profile(profile, None if workflow == "frontier" else environment),
+                "private_world_seed": seed, "profile": _research_profile(profile, None if workflow in ("frontier", "frontier_repair") else environment),
                 "limits": configured, "science_limits": science,
                 "source_sha256": source_digest(), "system_sha256": digest(SYSTEM),
                 "public_description_sha256": digest(world.describe()),
@@ -206,7 +252,7 @@ def create_manifest(episode_id, environment, seed, *, profile="open_discovery",
                              "chat_max_tokens_field": "max_completion_tokens", "temperature": None,
                              "stream": False, "timeout_seconds": 180},
                 "score": None, "automatic_depth_certification": False}
-    if workflow == "frontier":
+    if workflow in ("frontier", "frontier_repair"):
         manifest["protocol"] = FRONTIER_PROTOCOL
         manifest["system_sha256"] = digest(FRONTIER_SYSTEM)
         manifest["profile"]["adapted_for"] = FRONTIER_PROTOCOL
@@ -214,6 +260,10 @@ def create_manifest(episode_id, environment, seed, *, profile="open_discovery",
         manifest["profile"]["catalog_version"] = "frontier-research-profiles-0.1"
         if profile != "open_discovery":
             raise ValueError("frontier pilot uses open_discovery")
+    if workflow == "frontier_repair":
+        manifest["protocol"] = REPAIR_PROTOCOL
+        manifest["system_sha256"] = digest(REPAIR_SYSTEM)
+        manifest["profile"]["adapted_for"] = REPAIR_PROTOCOL
     manifest["sha256"] = digest(manifest)
     return manifest
 
@@ -251,7 +301,8 @@ def validate_manifest(manifest):
     try:
         arguments = {"profile": manifest["profile"]["name"], "limits": manifest["limits"],
                      "science_limits": manifest["science_limits"],
-                     "workflow": "frontier" if manifest.get("protocol") == FRONTIER_PROTOCOL else "comparison"}
+                     "workflow": ("frontier_repair" if manifest.get("protocol") == REPAIR_PROTOCOL else
+                                  "frontier" if manifest.get("protocol") == FRONTIER_PROTOCOL else "comparison")}
         factory = create_manifest
         if manifest.get("client_kind") == "scripted_reference":
             factory = create_reference_manifest
@@ -377,8 +428,9 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
     """
     validate_manifest(manifest)
     manifest = deepcopy(manifest)
-    frontier = manifest["protocol"] == FRONTIER_PROTOCOL
-    system = FRONTIER_SYSTEM if frontier else SYSTEM
+    repair = manifest["protocol"] == REPAIR_PROTOCOL
+    frontier = manifest["protocol"] in (FRONTIER_PROTOCOL, REPAIR_PROTOCOL)
+    system = REPAIR_SYSTEM if repair else FRONTIER_SYSTEM if frontier else SYSTEM
     directory = Path(directory).absolute()
     directory.mkdir(mode=0o700, parents=False)  # Existing paths fail before clients.
     limits, started = manifest["limits"], time.monotonic()
@@ -422,6 +474,8 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
         snapshots = _ResearchSnapshots(directory / "models")
         problem = task.describe()
         problem.update(research_profile=manifest["profile"], model_snapshot_contract=snapshot_contract())
+        if repair:
+            problem["research_limits"] = deepcopy(limits)
         if remaining() <= 0:
             raise TaskBudgetExceeded("wall budget exhausted before analysis setup")
         analysis_start = time.monotonic()
@@ -505,6 +559,7 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
                 break
             turn, action = {"round": number}, None
             terminal, scientific_attempt_before = False, None
+            scientific_dispatched = False
             try:
                 if remaining() <= 0:
                     raise TaskBudgetExceeded("wall budget exhausted after model response")
@@ -524,6 +579,8 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
                         action = None
                     elif action == "experiments":
                         specs = value["experiments"]
+                        if repair:
+                            specs = task.preview_experiments(specs, limits["max_experiments_per_turn"])
                         if type(specs) is not list or not 1 <= len(specs) <= limits["max_experiments_per_turn"]:
                             raise ValueError("invalid experiment batch")
                         turn["observations"] = []
@@ -531,6 +588,7 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
                             if remaining() <= 0:
                                 raise TaskBudgetExceeded("wall budget exhausted in experiment batch")
                             scientific_attempt_before = task.public_report()["usage"]["experiment_attempts"]
+                            scientific_dispatched = True
                             turn["observations"].append(task.observe_source(spec))
                         turn["outcome"] = "observed"
                     elif action == "analyze":
@@ -567,9 +625,21 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
                             turn["analysis"] = {"ok": False, "error": "invalid_analysis_output"}
                         turn["outcome"] = "analysis_ok" if turn["analysis"]["ok"] else "analysis_failed"
                     elif action == "preregister":
-                        request, bindings = _resolve_rivals(value["preregister"], snapshots)
+                        if repair:
+                            try:
+                                request, bindings = _resolve_rivals(value["preregister"], snapshots)
+                            except ValueError as error:
+                                from . import analysis_api
+                                functions = [_resolve_rivals, analysis_api._identifier, analysis_api._code,
+                                             analysis_api.bind_parameters, ModelSnapshots._read,
+                                             ModelSnapshots.resolve_submission]
+                                raise _public_schema_exception(error, functions) from None
+                            task.preview_preregistration(request)
+                        else:
+                            request, bindings = _resolve_rivals(value["preregister"], snapshots)
                         append("resolved_preregistration", {"request": request, "snapshot_bindings": bindings})
                         scientific_attempt_before = task.public_report()["usage"]["experiment_attempts"]
+                        scientific_dispatched = True
                         turn["prospective"] = task.preregister(request)
                         turn["observations"] = [r for r in task.public_records() if r["id"] in turn["prospective"]["observation_ids"]]
                         turn["outcome"] = turn["prospective"]["result"]["outcome"]
@@ -588,6 +658,16 @@ def run_research(manifest, directory, client_factory, *, analysis_factory=Isolat
                         write(directory / "final.json", proposal)
                         final, state, stop = proposal, "completed", "finished"
                         turn["outcome"] = "research_finished"
+            except PublicSchemaRejected as error:
+                if not repair:
+                    raise
+                if scientific_dispatched:
+                    infrastructure_failed("scientific_operator_error")
+                    terminal = True
+                    turn.update(outcome="operator_failure", error="scientific_operator_error")
+                else:
+                    turn.update(outcome="schema_rejected", error="public_schema_rejection",
+                                feedback=str(error), scientific_dispatch=False)
             except TaskBudgetExceeded:
                 state, stop, terminal = "incomplete", "science_or_wall_budget", True
                 turn.update(outcome="budget_exhausted", error="science_or_wall_budget")
@@ -704,7 +784,7 @@ def _main(argv=None):
     freeze.add_argument("--environment", choices=ENVIRONMENTS, required=True)
     freeze.add_argument("--seed", type=int, required=True)
     freeze.add_argument("--profile", default="open_discovery")
-    freeze.add_argument("--workflow", choices=("comparison", "frontier"), default="comparison")
+    freeze.add_argument("--workflow", choices=("comparison", "frontier", "frontier_repair"), default="comparison")
     freeze.add_argument("--limits", help="JSON object containing driver and/or science overrides")
     freeze.add_argument("--output", required=True)
     run = sub.add_parser("run")
