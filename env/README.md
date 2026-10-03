@@ -28,7 +28,7 @@ laboratory or external simulator service is required.
 These five additions use the [new prospective research workflow](FRONTIER_RESEARCH.md):
 one or two frozen predictive accounts, fresh observations and explicit uncertainty.
 They are exploratory prototypes, with numerical checks but no strong-baseline
-difficulty calibration. Their new GPT cohort is separate from historical scores.
+difficulty calibration. Their new GPT cohort is separate from historical scores. The [self-contained HTML report](../docs/reports/sle-new-frontier-20261003/index.html) presents the repaired workflow; the [original workflow report](../docs/reports/sle-new-frontier-20261003/original.html) preserves its failures and evidence separately.
 
 These are synthetic, deliberately tractable scientific families. Hidden
 parameters and structures create new instances, but do not by themselves prove
@@ -100,7 +100,7 @@ accuracy or scientific difficulty.
 An additional [optical diffraction prototype](optical_diffraction/STATUS.md)
 has bounded coherent-scattering calibration and an isolated public-coordinate
 policy. It remains **unregistered**, with no shared scoring route or GPT result.
-It is not included in the thirteen-world count above. The angle-axis scoring,
+It is not included in the eighteen registered worlds above. The angle-axis scoring,
 equivalent-condition checks and actual agent service still require integration.
 
 ## Interfaces

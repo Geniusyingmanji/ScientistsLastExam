@@ -1,0 +1,162 @@
+{
+  "model": "gpt-5.6-sol",
+  "reasoning": "medium",
+  "global_request_limit": 720,
+  "global_requests_started": 539,
+  "unused_requests": 181,
+  "automatic_retries": 0,
+  "separate_cohorts": true,
+  "causal_comparison": false,
+  "original": {
+    "protocol": "sle-research-agent-0.2",
+    "source_commit": "5e59b3ebc9526a34030ffc6d556abf430a38d42d",
+    "episodes": 30,
+    "instances_per_environment": 3,
+    "repeats_per_instance": 2,
+    "max_rounds": 24,
+    "requests": 138,
+    "completed": 6,
+    "invalid_action": 18,
+    "transport_failed": 6,
+    "completed_tests": 20
+  },
+  "repair": {
+    "episodes": 30,
+    "statuses": {
+      "completed": 29,
+      "invalid_action": 1
+    },
+    "requests": 401,
+    "completed_tests": 70,
+    "test_outcomes": {
+      "scoped_predictive_adequacy": 50,
+      "both_candidates_refuted": 3,
+      "candidate_refuted": 6,
+      "scoped_predictive_discrimination": 4,
+      "inconclusive": 7
+    },
+    "candidate_refutations": 18,
+    "tests_with_counterexamples": 15,
+    "schema_rejections": 22,
+    "by_environment": {
+      "catalyst_aging": {
+        "episodes": 6,
+        "statuses": {
+          "completed": 5,
+          "invalid_action": 1
+        },
+        "requests": 82,
+        "completed_tests": 11,
+        "test_outcomes": {
+          "scoped_predictive_adequacy": 7,
+          "candidate_refuted": 1,
+          "scoped_predictive_discrimination": 2,
+          "inconclusive": 1
+        },
+        "candidate_refutations": 4,
+        "tests_with_counterexamples": 4,
+        "schema_rejections": 4
+      },
+      "climate_response": {
+        "episodes": 6,
+        "statuses": {
+          "completed": 6
+        },
+        "requests": 68,
+        "completed_tests": 11,
+        "test_outcomes": {
+          "scoped_predictive_adequacy": 9,
+          "inconclusive": 1,
+          "scoped_predictive_discrimination": 1
+        },
+        "candidate_refutations": 1,
+        "tests_with_counterexamples": 1,
+        "schema_rejections": 13
+      },
+      "field_ecology": {
+        "episodes": 6,
+        "statuses": {
+          "completed": 6
+        },
+        "requests": 65,
+        "completed_tests": 14,
+        "test_outcomes": {
+          "scoped_predictive_adequacy": 13,
+          "inconclusive": 1
+        },
+        "candidate_refutations": 1,
+        "tests_with_counterexamples": 1,
+        "schema_rejections": 2
+      },
+      "molecular_forces": {
+        "episodes": 6,
+        "statuses": {
+          "completed": 6
+        },
+        "requests": 97,
+        "completed_tests": 17,
+        "test_outcomes": {
+          "scoped_predictive_adequacy": 10,
+          "both_candidates_refuted": 1,
+          "candidate_refuted": 5,
+          "scoped_predictive_discrimination": 1
+        },
+        "candidate_refutations": 8,
+        "tests_with_counterexamples": 7,
+        "schema_rejections": 2
+      },
+      "phase_equilibria": {
+        "episodes": 6,
+        "statuses": {
+          "completed": 6
+        },
+        "requests": 89,
+        "completed_tests": 17,
+        "test_outcomes": {
+          "inconclusive": 4,
+          "scoped_predictive_adequacy": 11,
+          "both_candidates_refuted": 2
+        },
+        "candidate_refutations": 4,
+        "tests_with_counterexamples": 2,
+        "schema_rejections": 1
+      }
+    },
+    "global_ledger": {
+      "attempt_limit": 720,
+      "started_attempts": 539,
+      "remaining_attempts": 181,
+      "status_counts": {
+        "interrupted": 6,
+        "returned": 533
+      }
+    },
+    "protocol": "sle-research-agent-0.3",
+    "source_commit": "7d1b750a25686362352ce3018b9067df03f0d415",
+    "instances_per_environment": 3,
+    "repeats_per_instance": 2,
+    "max_rounds": 19
+  },
+  "meaning": "Completion means a submitted research report; predictive adequacy/discrimination concern only preregistered scalar readouts. No automatic discovery score.",
+  "verification": {
+    "original_episode_chains": 30,
+    "original_tests_replayed": 20,
+    "repair_episode_chains": 30,
+    "repair_tests_replayed": 70,
+    "repair_unique_observation_keys": 1878,
+    "new_forecasts_or_simulations_during_replay": 0,
+    "receipt_verification_sha256": "3baec8c5c7a3f1f72909a1bd16e87edd416c3f015d6745dde048b17c15da82dd",
+    "requested_model": "gpt-5.6-sol",
+    "provider_model_confirming_episodes": 54,
+    "transport_failed_episodes_without_model_response": 6
+  },
+  "claim_review": {
+    "claim_supported": "yes",
+    "scope": "Narrow claim: open questions, sealed new-condition tests, scoped evidence/counterexamples and some counterexample-driven revisions.",
+    "review_independence": "same-family",
+    "acceptance_status": "provisional",
+    "external_review": "pending",
+    "integrity_status": "unavailable",
+    "route": "CONFIRM_NARROW_CLAIM_ONLY"
+  }
+}

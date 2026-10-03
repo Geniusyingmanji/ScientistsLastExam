@@ -8,6 +8,20 @@ Their README files distinguish synthetic mechanisms, public apparatus facts,
 legacy-task adaptations and remaining limitations. Numerical correctness is not
 difficulty calibration: strong inverse-model baselines remain future work.
 
+## Task-to-apparatus conversion
+
+| Historical discovery task | New package | What changes |
+|---|---|---|
+| ForceFieldCalibration | `molecular_forces` | Measure energy and forces in chosen geometries; discover quantitative accounts rather than recover a prescribed formula. |
+| EnergyBalanceModel | `climate_response` | Select heating histories; reservoir equations/family menu are hidden and alternate predictive accounts are allowed. |
+| CatalystDeactivationLab | `catalyst_aging` | Schedule complete fresh laboratories with coupons and calibration controls; history effects and instrument drift can be investigated. |
+| OccupancyDetectionDesign | `field_ecology` | Replace a fixed 48-site realization with fresh 64-site panels; investigate habitat and survey mechanisms through repeated sampling. |
+| PhaseDiagramDiscovery | `phase_equilibria` | Measure continuous spectra under chosen compositions/preparations/hold times; no exact phase-set answer matching. |
+
+These are reimplementations with documented changes in preparation/noise semantics,
+not interchangeable rescoring of old tasks. The new evaluation never checks a
+candidate's explanation against a hidden family label or exact golden answer.
+
 ## Design frozen before model calls
 
 The authorized design is three fresh hidden instances per environment, with two
@@ -137,3 +151,24 @@ original and development instances. This is a separately sampled exploratory
 cohort, not a controlled estimate of improvement over v0.2: prompts, schema
 recovery and request cap changed. Original and repaired results must be reported
 separately. No selected successful episode replaces an original failure.
+
+
+## Closed execution totals
+
+The repaired cohort used 401 requests: 29/30 episodes submitted research reports,
+and one stopped after a revised candidate program failed during prediction.
+There were 22 pre-dispatch schema rejections; their requests remained charged.
+Seventy completed prospective tests yielded 50 scoped adequacy, four scoped
+candidate discrimination, six single-candidate refutations, three both-candidate
+refutations and seven inconclusive results. Fifteen tests supplied counterexamples
+to 18 candidate instances. These are descriptive counts of selected tests, not
+independent discoveries or a scientific-success rate.
+
+Both cohorts together used 539 of 720 requests, including six transport failures;
+181 requests remain unused. No failed episode was replaced. The final repaired
+cohort's 29/30 submission rate must not be interpreted as a causal improvement
+from the original 6/30: instances, instructions and turn limits changed.
+
+The v0.3 focused local suite passed 129 tests (four platform skips); the same
+native Linux suite passed all 133 tests, including real isolation checks. These
+are engineering evidence; they do not calibrate scientific difficulty.

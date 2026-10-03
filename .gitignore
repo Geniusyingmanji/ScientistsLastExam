@@ -45,3 +45,6 @@ docs/reports/sle-env-pilot-20261003/*
 
 # per-run locks held by scripts/run_cohort.sh
 .locks/
+
+# Local review traces contain operator artifacts.
+/.aris/
