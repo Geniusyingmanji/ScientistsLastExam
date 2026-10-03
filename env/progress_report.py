@@ -118,7 +118,7 @@ def export_summary(directory, role):
     return dict({key: summary.get(key) for key in keys}, role=role)
 
 
-def _environment_catalog(catalog, cohorts):
+def _environment_catalog(catalog, cohorts, discovery_ids=()):
     """Explain curated world designs without exporting instance secrets."""
     if not catalog:
         return ""
@@ -139,6 +139,8 @@ def _environment_catalog(catalog, cohorts):
             badge = "%s · GPT %s / 100" % (
                 "正式批次" if role == "formal" else "扩展批次", _number(row["mean_score"]))
             completion = '<p class="caption">有效预测器完成率 %s；各批次协议分别报告。</p>' % escape(_rate(row["completion"]))
+            if item["id"] in discovery_ids:
+                completion += '<p><a href="#discovery-%s">查看 GPT 的具体实验过程 →</a></p>' % escape(item["id"])
         else:
             badge = "未注册原型 · 未评测 GPT" if item["id"] == "optical_diffraction" else "实验环境 · 未评测 GPT"
             completion = ""
@@ -166,6 +168,60 @@ def _environment_catalog(catalog, cohorts):
              interfaces, "".join(groups["evaluated"]), "".join(groups["experimental"])))
 
 
+def _discovery_dossier(dossier, cohorts):
+    """Render selected public experimental actions, outcomes and claim limits."""
+    if not dossier:
+        return ""
+    escape = lambda value: html.escape(str(value), quote=True)
+    formal = next((c for c in cohorts if c["role"] == "formal"), {})
+    diagnostic = formal.get("trace_diagnostics") or {}
+    outcomes = diagnostic.get("action_outcomes") or {}
+    failed = outcomes.get("analysis_failed", 0)
+    analyses = failed + outcomes.get("analysis_ok", 0)
+    diagnostic_cards = (("分析调用失败", "%s / %s" % (failed, analyses), "核心20次启动；失败包含超时和代码错误"),
+                        ("无效动作", str(outcomes.get("invalid_action", 0)), "事件数；不等于失败实验数或运行数"),
+                        ("出现分析错误的运行", "%s / %s" % (diagnostic.get("runs_with_analysis_errors", 0), diagnostic.get("reports", 0)), "流程困难不能直接归为科学推理能力不足"))
+    metrics = "".join('<article class="process-metric"><label>%s</label><strong>%s</strong><small>%s</small></article>' %
+                      tuple(escape(x) for x in row) for row in diagnostic_cards)
+    navigation = "".join('<a href="#discovery-%s">%s</a>' %
+                         (escape(world["id"]), escape(NAMES.get(world["id"], world["title"]))) for world in dossier["worlds"])
+    navigation += '<a href="#model-shortcomings">共性不足与下一步</a>'
+    sections = []
+    for world in dossier["worlds"]:
+        stories = []
+        for story_index, story in enumerate(world["stories"]):
+            steps = "".join('<li><span class="step-round">%s</span><strong>%s</strong><p>%s</p></li>' %
+                            (escape(step["round"]), escape(step["stage"]), escape(step["body"]))
+                            for step in story["steps"])
+            verdicts = "".join('<div><strong>%s</strong><p>%s</p></div>' % (label, escape(story[key]))
+                               for key, label in (("supported", "这条证据支持什么"),
+                                                  ("not_supported", "还没有支持什么"),
+                                                  ("final_artifact", "最后提交了什么")))
+            stories.append('<details class="discovery-case"%s><summary><span class="case-kind">%s</span> %s</summary>'
+                           '<p class="caption">案例 %s · %s</p><ol class="discovery-timeline">%s</ol>'
+                           '<div class="case-verdicts">%s</div></details>' %
+                           (' open' if story_index == 0 else '', escape(story["kind"]), escape(story["title"]), escape(story["case_id"]),
+                            escape(story["question"]), steps, verdicts))
+        limitations = "".join('<li><strong>%s</strong><p>%s</p><p><b>影响：</b>%s</p><p><b>可检验的改进：</b>%s</p></li>' %
+                              tuple(escape(item[key]) for key in ("title", "observed", "consequence", "improvement"))
+                              for item in world["shortcomings"])
+        sections.append('<article class="discovery-world" id="discovery-%s"><h3>%s</h3><p>%s</p>%s'
+                        '<details class="world-limitations"><summary>这个环境暴露的不足与改进</summary><ul>%s</ul></details></article>' %
+                        (escape(world["id"]), escape(world["title"]), escape(world["overall"]),
+                         "".join(stories), limitations))
+    patterns = "".join('<article class="failure-pattern"><span>%s</span><h3>%s</h3><p>%s</p>'
+                       '<p><b>后果：</b>%s</p><p><b>下一步如何检验：</b>%s</p></article>' %
+                       tuple(escape(item[key]) for key in ("scope", "title", "observed", "consequence", "improvement"))
+                       for item in dossier["failure_patterns"])
+    return ('<section class="section discovery-section" id="model-discovery"><div class="section-label">MODEL DISCOVERY / 实验过程</div>'
+            '<h2>GPT 到底怎样发现现象，又在哪里停住？</h2><p class="lead">%s</p>'
+            '<p class="caption">%s</p><nav class="discovery-nav" aria-label="按环境查看模型实验">%s</nav>'
+            '%s<h2 class="failure-heading" id="model-shortcomings">这些轨迹暴露了哪些共同不足？</h2><div class="process-metrics">%s</div>'
+            '<p class="caption">%s</p><div class="failure-grid">%s</div></section>' %
+            (escape(dossier["summary"]), escape(dossier["selection_scope"]), navigation,
+             "".join(sections), metrics, escape(dossier["diagnostic_scope"]), patterns))
+
+
 def build_report(cohorts, notes, output):
     """notes is operator-curated public prose, not an unfiltered review trace."""
     evidence_matrix = _evidence_matrix(notes.get("evidence_sample"))
@@ -176,7 +232,13 @@ def build_report(cohorts, notes, output):
             "cohorts": [export_summary(path, role) for role, path in cohorts], "notes": notes,
             "privacy": "Aggregate metrics and explicitly curated notes only; private seeds, targets and raw traces are excluded."}
     (output / "data.json").write_text(json.dumps(data, ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
-    environment_catalog = _environment_catalog(notes.get("environment_catalog"), data["cohorts"])
+    dossier = notes.get("discovery_dossier")
+    discovery_dossier = _discovery_dossier(dossier, data["cohorts"])
+    environment_catalog = _environment_catalog(notes.get("environment_catalog"), data["cohorts"],
+                                               [world["id"] for world in dossier["worlds"]] if dossier else ())
+    report_navigation = ('<nav class="report-nav"><a href="#world-guide-title">环境设计</a>'
+                         '<a href="#model-discovery">GPT 的发现过程 ↓</a>'
+                         '<a href="#model-shortcomings">GPT 的不足与改进 ↓</a></nav>') if dossier else ""
     escape = lambda value: html.escape(str(value), quote=True)
     formal = next((item for item in data["cohorts"] if item["role"] == "formal"), None)
     headline = notes.get("headline", "先验证评测是否测到了科学发现")
@@ -229,14 +291,15 @@ def build_report(cohorts, notes, output):
     text = ('''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SLE · 科学环境进度与结论</title><style>
 :root{--ink:#173d3a;--muted:#5a706d;--accent:#087e70;--paper:#f6f6ef;--line:#d4dfd7;--gold:#ae6a22}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.65 system-ui,-apple-system,sans-serif}main{max-width:1250px;margin:auto;padding:42px 30px 80px}header{padding-bottom:28px;border-bottom:2px solid var(--ink);margin-bottom:28px}.eyebrow,.section-label{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}.status{display:inline-block;border:1px solid var(--line);border-radius:100px;padding:4px 12px;margin-top:16px;font-size:12px;background:white}h1{font-size:40px;line-height:1.25;max-width:930px;margin:13px 0}h2{font-size:25px;line-height:1.35;margin:10px 0 14px}h3{font-size:19px;margin:5px 0 9px}p{margin:8px 0}.lead{font-size:18px;max-width:1050px}.muted,small,.caption{color:var(--muted)}.caption{font-size:12px;margin-top:12px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.metric{background:white;border:1px solid var(--line);padding:18px;border-radius:10px}.metric label{font-size:13px}.metric strong{display:block;font-size:27px;margin:10px 0}.metric small{display:block;font-size:11px}.notice{border-left:3px solid var(--gold);padding:14px 18px;margin:24px 0;background:#f0eadb}.cohort{margin-top:34px}table{border-collapse:collapse;background:white;width:100%%;font-size:13px}th,td{padding:12px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}thead th{background:#e7eee6;font-size:12px}tbody th{white-space:nowrap;font-weight:600}.score{font-weight:700;font-size:18px}.table-wrap{overflow:auto}.evidence-table{min-width:1120px}.evidence-table th,.evidence-table td{white-space:nowrap}.evidence-table th:last-child,.evidence-table td:last-child{white-space:normal;min-width:330px}.findings{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.finding{padding:20px;background:white;border:1px solid var(--line);border-radius:10px}.finding span{font-size:11px;color:var(--accent);font-weight:700}.finding small{font-size:11px}.section{margin-top:40px}ol{padding-left:23px}li{padding-left:5px;margin:12px 0}li p{color:var(--muted)}details{margin-top:15px}summary{cursor:pointer;color:var(--accent);font-size:13px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#eaf0e9;padding:15px;font-size:11px}footer{border-top:1px solid var(--line);margin-top:36px;padding-top:18px;font-size:12px;color:var(--muted)}a{color:var(--accent)}@media(max-width:900px){.metrics{grid-template-columns:repeat(2,1fr)}h1{font-size:31px}main{padding:27px 18px}}@media(max-width:550px){.findings,.metrics{grid-template-columns:1fr}h1{font-size:27px}.metric strong{font-size:26px}}
 .environment-intro{margin:12px 0 38px;padding-bottom:32px;border-bottom:2px solid var(--line)}.world-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}.world-card{background:white;border:1px solid var(--line);border-radius:10px;padding:19px;min-width:0}.world-card h3{margin-top:8px}.world-badge{font-size:12px;color:var(--accent);font-weight:700}.world-card p{font-size:14px}.world-card details{margin-top:10px}.world-card dl{margin:14px 0 0}.world-card dl div{margin-top:12px}.world-card dt{font-size:12px;font-weight:700;color:var(--accent)}.world-card dd{margin:3px 0 0;font-size:13px;overflow-wrap:anywhere}.world-group-title{margin-top:24px}.interface-guide{background:#eaf0e9;padding:13px 17px;border-radius:8px}.experimental-worlds>summary{font-weight:600}.world-card summary{font-size:12px}@media(max-width:700px){.world-grid{grid-template-columns:1fr}}
-</style></head><body><main><header><div class="eyebrow">SCIENTISTS' LAST EXAM / COMPUTATIONAL SCIENCE WORLDS</div><h1>%s</h1><p class="lead">%s</p><div class="status">%s</div></header>%s<div class="metrics">%s</div>
+.report-nav,.discovery-nav{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0}.report-nav a,.discovery-nav a{display:inline-block;border:1px solid var(--line);background:white;padding:6px 11px;border-radius:6px;font-size:13px;text-decoration:none}.discovery-world{background:white;border:1px solid var(--line);border-radius:10px;padding:22px;margin:20px 0;scroll-margin-top:20px}.discovery-world>h3{font-size:23px}.discovery-world>p{color:var(--muted)}.discovery-case{border-top:1px solid var(--line);padding-top:15px}.discovery-case>summary{font-size:16px;font-weight:650;line-height:1.6}.case-kind{font-size:11px;background:#e7eee6;border-radius:4px;padding:3px 6px;margin-right:4px;display:inline-block}.discovery-timeline{list-style:none;padding:0;margin:22px 0}.discovery-timeline li{border-left:3px solid var(--accent);margin:0;padding:0 0 22px 18px}.discovery-timeline li:last-child{padding-bottom:4px}.discovery-timeline strong{display:block;font-size:16px}.discovery-timeline p{font-size:14px;color:var(--ink)}.step-round{display:block;font-size:11px;letter-spacing:.03em;color:var(--muted);margin-bottom:4px}.case-verdicts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}.case-verdicts>div{background:#edf3ee;border-radius:6px;padding:14px}.case-verdicts>div:nth-child(2){background:#f4eee2}.case-verdicts strong{font-size:12px}.case-verdicts p{font-size:13px}.world-limitations{border-top:1px dashed var(--line);padding-top:12px}.world-limitations li{margin:16px 0}.world-limitations p{font-size:13px}.failure-heading{margin-top:36px}.process-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.process-metric{padding:16px;background:white;border:1px solid var(--line);border-radius:8px}.process-metric label{font-size:13px}.process-metric strong{display:block;font-size:28px;margin:8px 0}.process-metric small{display:block;font-size:11px}.failure-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:20px}.failure-pattern{padding:19px;background:white;border:1px solid var(--line);border-radius:8px}.failure-pattern>span{font-size:11px;color:var(--accent)}.failure-pattern p{font-size:14px}@media(max-width:700px){.case-verdicts,.process-metrics,.failure-grid{grid-template-columns:1fr}.discovery-world{padding:17px}.discovery-case>summary{font-size:15px}}
+</style></head><body><main><header><div class="eyebrow">SCIENTISTS' LAST EXAM / COMPUTATIONAL SCIENCE WORLDS</div><h1>%s</h1><p class="lead">%s</p><div class="status">%s</div>%s</header>%s<div class="metrics">%s</div>
 <div class="notice">综合分 = 50%% 未见条件预测 + 30%% 未见干预预测 + 20%% 自选主张复验。它是当前任务集上的 pilot 指标；高预测分、有效数值效应和机制发现深度分别报告。</div>
-%s<section class="section"><div class="section-label">EVIDENCE & LIMITS</div><h2>发现了什么，证据到哪里</h2><div class="findings">%s</div>%s<p class="caption">%s</p>%s%s</section>
+%s%s<section class="section"><div class="section-label">EVIDENCE & LIMITS</div><h2>发现了什么，证据到哪里</h2><div class="findings">%s</div>%s<p class="caption">%s</p>%s%s</section>
 <section class="section"><div class="section-label">ENVIRONMENT COVERAGE</div><h2>环境与任务扩展</h2><div class="table-wrap"><table><thead><tr><th>世界</th><th>可研究的问题</th><th>当前状态</th></tr></thead><tbody>%s</tbody></table></div><p class="muted">%s</p></section>
 <section class="section"><div class="section-label">BEFORE SCALING</div><h2>下一步优先修正什么</h2><ol>%s</ol></section><details><summary>验证与复现信息</summary><ul>%s</ul></details>
 <footer>更新时间 %s UTC · <a href="data.json">下载结构化公开汇总</a> · 费用未知；未使用公开标价估算真实账单。私有 seed、封存目标和原始轨迹保留在操作目录。</footer></main></body></html>''' %
-           (escape(headline), escape(notes.get("summary", "")), escape(notes.get("status", "工作继续进行中")), environment_catalog, card_html,
-            "".join(table_sections), findings, extra_findings, escape(notes.get("review_status", "发现深度尚待独立轨迹审核。")), evidence_matrix, scientific_figure, worlds,
+           (escape(headline), escape(notes.get("summary", "")), escape(notes.get("status", "工作继续进行中")), report_navigation, environment_catalog, card_html,
+            discovery_dossier, "".join(table_sections), findings, extra_findings, escape(notes.get("review_status", "发现深度尚待独立轨迹审核。")), evidence_matrix, scientific_figure, worlds,
             escape(notes.get("task_summary", "")), actions, validation, escape(data["generated_at_utc"][:19].replace("T", " "))))
     (output / "index.html").write_text(text, encoding="utf-8")
     return data
