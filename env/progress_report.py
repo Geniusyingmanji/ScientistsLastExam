@@ -136,8 +136,7 @@ def _environment_catalog(catalog, cohorts, discovery_ids=()):
         metric = metrics.get(item["id"])
         if metric:
             role, row = metric
-            badge = "%s · GPT %s / 100" % (
-                "正式批次" if role == "formal" else "扩展批次", _number(row["mean_score"]))
+            badge = "GPT %s / 100" % _number(row["mean_score"])
             completion = '<p class="caption">有效预测器完成率 %s；各批次协议分别报告。</p>' % escape(_rate(row["completion"]))
             if item["id"] in discovery_ids:
                 completion += '<p><a href="#discovery-%s">查看 GPT 的具体实验过程 →</a></p>' % escape(item["id"])
@@ -250,7 +249,6 @@ def build_report(cohorts, notes, output):
                  ("端到端完成率", _rate(formal["end_to_end_completion"]), "包含基础设施失败和正在运行的实例")]
     card_html = "".join('<article class="metric"><label>%s</label><strong>%s</strong><small>%s</small></article>' % tuple(escape(x) for x in card) for card in cards)
     table_sections = []
-    role_names = {"formal": "正式批次", "development": "开发批次", "expansion": "扩展批次"}
     for cohort in data["cohorts"]:
         rows = []
         for name, row in cohort["by_environment"].items():
@@ -262,14 +260,14 @@ def build_report(cohorts, notes, output):
                          " / ".join(_number(components.get(kind)) for kind in ("conditions", "interventions", "claims")),
                          error_text, " · ".join(_number(score) for score in row["scores"])))
         limit = cohort.get("public_limits") or {}
-        label = role_names.get(cohort["role"], cohort["role"])
+        label = '<div class="section-label">开发批次</div>' if cohort["role"] == "development" else ""
         warning = "开发批次使用旧主张规则，不与正式成绩合并。" if cohort["role"] == "development" else "不同协议、预算或任务的批次分别报告。"
-        table_sections.append('''<section class="cohort"><div class="section-label">%s · %s</div><h2>%s 个运行已结束，%s 个仍在运行</h2>
+        table_sections.append('''<section class="cohort">%s<h2>%s 个运行已结束，%s 个仍在运行</h2>
 <p class="muted">协议 %s · 每个实例最多 %s 次请求 / %s 次实验 / %s 秒主动分析。%s</p>
 <div class="table-wrap"><table><thead><tr><th>环境</th><th>综合分</th><th>完成率</th><th>条件 / 干预 / 主张</th><th>NRMSE 条件 / 干预</th><th>逐实例得分</th></tr></thead><tbody>%s</tbody></table></div>
 <p class="caption">NRMSE 仅汇总产生有效数值的查询；失败仍在综合分中计 0。各分项同样包含健康失败。基础设施失败 %s；已知响应 token 下界 %s。</p>
 <details><summary>协议与执行诊断</summary><pre>%s</pre></details></section>''' %
-            (escape(label), escape(cohort["cohort"]), cohort["settled_runs"], cohort["running_runs"], escape(cohort["score_protocol"]),
+            (label, cohort["settled_runs"], cohort["running_runs"], escape(cohort["score_protocol"]),
              limit.get("rounds", "—"), limit.get("experiments", "—"), limit.get("analysis_active_seconds", "—"), escape(warning),
              "".join(rows), cohort["infrastructure_failures"], format(cohort["known_response_usage_lower_bound"]["total_tokens"], ","),
              escape(json.dumps({"source_sha256": cohort["source_sha256"], "decoding": cohort["decoding"],
