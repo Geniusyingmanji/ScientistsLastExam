@@ -129,7 +129,7 @@ def _environment_catalog(catalog, cohorts, discovery_ids=()):
             for name, row in cohort["by_environment"].items():
                 metrics[name] = (cohort["role"], row)
     groups = {"evaluated": [], "experimental": []}
-    fields = (("mechanism", "预埋规律"), ("hidden", "公开与隐藏"),
+    fields = (("mechanism_detail", "计算模型"), ("hidden", "公开与隐藏"),
               ("confounds", "干扰与辨识困难"), ("actions", "实验接口与观测"),
               ("result", "目前结果与不足"))
     for item in catalog["worlds"]:
@@ -144,7 +144,7 @@ def _environment_catalog(catalog, cohorts, discovery_ids=()):
             badge = "未注册原型 · 未评测 GPT" if item["id"] == "optical_diffraction" else "实验环境 · 未评测 GPT"
             completion = ""
         body = "".join('<div><dt>%s</dt><dd>%s</dd></div>' %
-                       (label, escape(item[key])) for key, label in fields if key != "mechanism")
+                       (label, escape(item[key])) for key, label in fields if key in item)
         card = ('<article class="world-card" id="world-%s"><span class="world-badge">%s</span>'
                 '<h3>%s</h3><p>%s</p><p><strong>预埋规律：</strong>%s</p>'
                 '<details><summary>隐藏方式、干扰、接口与结果</summary>'
