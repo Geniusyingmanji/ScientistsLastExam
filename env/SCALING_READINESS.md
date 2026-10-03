@@ -19,6 +19,13 @@ stable D4 result or full recovery of the original microbial delayed-feedback
 loop. Seven structured examples are descriptive; disagreements on two gene-case
 dimensions remain unresolved. They cannot estimate a population discovery rate.
 
+A later [all-five microbial evidence audit](microecology/PILOT_EVIDENCE.md)
+confirms local intervention findings and one prospective temperature relation.
+A candidate also proposed a coupled inhibitory network, but its fit timed out and
+the final model lost those terms. Persistent evidence access, model-version
+continuity and reconciliation of failed predictions need their own interface
+trial before treating low scores as a clean measure of scientific reasoning.
+
 ## Readiness gates
 
 | Gate | Required record | Pilot implication |

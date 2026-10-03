@@ -17,6 +17,27 @@ experimental worlds (`microecology_causal`, `orbital_dynamics`, `pattern_formati
 the scientific interface; it does not register an environment, select a cohort
 or schedule an experiment.
 
+## Current execution and model evidence
+
+All five names select instructions and evidence requirements. They do not imply
+five independently evaluated Agent workflows. The shared batch runner exposes
+`experiments`, `analyze` and `submit`; the experimental research runner exposes
+`experiments`, `analyze`, `preregister` and `finish`.
+
+| Direction | Current executable support | GPT evidence in this pilot |
+|---|---|---|
+| Open discovery | Budgeted batch exploration and frozen prediction/claim verification; experimental research entry also exists. | Core and expansion cohorts use this profile. No GPT benchmark of the experimental research runner. |
+| Mechanism discrimination | Research preregistration and isolated execution of exactly two frozen rivals; authored material examples include refutation and inconclusive outcomes. | No separately frozen cohort for this profile. |
+| Regime transfer | Source/target instructions and the existing two-rival prospective executor. | Some local transfer evidence inside open-discovery traces; no dedicated cohort. |
+| Model revision | Existing `revision_of` lineage after an eligible refuted parent, with a new target; authored material revision examples. | No live GPT validation of this workflow. |
+| Boundary mapping | Task instructions for comparing fixed models; a separate operator-only single-model finite-grid executor. There is no Agent `map` action. | No GPT mapping result. |
+
+Research `finish` requires at least one completed two-rival prospective test,
+even under open discovery or boundary mapping. This current execution constraint
+is narrower than the scientific task definitions below. A single-model map is
+not yet an alternative finish path. Native scripted-policy checks and author
+references establish execution behavior, not autonomous scientific performance.
+
 ## What the tasks measure
 
 | Profile | Distinct scientific work | Required evidence | Limit of a positive conclusion |
@@ -191,8 +212,8 @@ inventing a second rival. It seals all predictions before new observations and
 retains adequate, inadequate, inconclusive and incomplete points at the original
 family error allocation. Its output does not certify a continuous boundary or
 discovery level. It is not wired into the existing research action protocol and
-has no GPT results; real isolation and author-reference execution are separate
-validation gates following the completed code review.
+has no GPT results. Native isolation and one bounded orbital author-reference
+execution are complete and remain separate from agent evaluation.
 
 Research `finish` still requires explanation, known evidence IDs and at least one
 completed test ID. An inconclusive completed test can support an honest finish.

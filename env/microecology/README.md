@@ -9,6 +9,10 @@ The implementation, examples and tests live together in `env/microecology/`.
 The canonical entry point is `python -m env.microecology`; the existing
 `python -m sle world` entry point remains available for the same environment.
 
+The later shared batch runner's five GPT-5.6 pilot episodes are audited in
+[PILOT_EVIDENCE.md](PILOT_EVIDENCE.md), separating observed effects, proposed
+feedback mechanisms, prospective validation and evidence-retention failures.
+
 ## Try it
 
 From the repository root, use a Python environment with NumPy, SciPy, PyYAML,
