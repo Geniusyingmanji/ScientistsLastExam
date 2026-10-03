@@ -7,6 +7,9 @@ diffusivity regions, an unknown flow calibration, and unknown heat loss. The
 scientific task is to separate these effects using interventions and predict
 responses at new conditions.
 
+The [five-episode evidence review](PILOT_EVIDENCE.md) separates fixed-coefficient
+checks, post-refit residuals, numerical implementation changes and missing output.
+
 Only `World.describe()` and experiment responses are agent-facing. This source
 directory, private instance fields, test panels and operator metadata are not
 agent attachments. No old benchmark evaluator is imported.

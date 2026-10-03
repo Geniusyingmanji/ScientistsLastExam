@@ -39,6 +39,11 @@ versions. Snapshot continuity and final-artifact provenance should be checked
 before interpreting a larger inference budget as deeper discovery.
 The [bounded evidence-ledger plan](EVIDENCE_LEDGER_PLAN.md) specifies a candidate-
 selected projection and a small future interface comparison; it remains a design.
+The [heat review](heat_transport/PILOT_EVIDENCE.md) adds two further controls:
+label target-inclusive refit residuals honestly, and bind a model's numerical
+implementation as well as its coefficient vector. All twenty formal public
+packets now have descriptive per-episode review, with export gaps preserved;
+this is not a complete new ordinal grading or an estimated discovery rate.
 
 ## Readiness gates
 
