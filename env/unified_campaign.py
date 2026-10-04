@@ -115,7 +115,7 @@ def load_manifest(root):
     return value
 
 
-def freeze_paired(root, reference_root, reference_source, config, commit):
+def freeze_paired(root, reference_root, reference_source, config, commit, transport_pilot=None):
     """Replay a completed GPT reference design with a separately frozen model.
 
     No scientific file may change. Episode identifiers also remain fixed: this
@@ -144,9 +144,23 @@ def freeze_paired(root, reference_root, reference_source, config, commit):
     if cfg.model not in ("deepseek-v4-pro", "deepseek-v4-pro-0813"):
         raise ValueError("this paired campaign requires the requested DeepSeek V4 Pro")
     decoding = dict(reference["decoding"], model=cfg.model, reasoning_effort="high",
-                    chat_max_tokens_field="max_tokens", temperature=None, chat_reasoning_fallback=False)
+                    chat_max_tokens_field="max_tokens", temperature=None, chat_reasoning_fallback=False,
+                    stream=cfg.stream)
     if {k: getattr(cfg, k) for k in decoding} != decoding:
         raise ValueError("paired configuration differs from the declared adapter")
+    pilot = None
+    if cfg.stream:
+        if transport_pilot is None:
+            raise ValueError("streaming comparison must bind its failed nonstream transport pilot")
+        pilot_path = Path(transport_pilot) / "public-progress.json"
+        prior = json.loads(pilot_path.read_text())
+        if prior["status"] != "stopped_infrastructure" or prior["model"] != cfg.model:
+            raise ValueError("invalid transport pilot")
+        pilot = {"public_sha256": hashlib.sha256(pilot_path.read_bytes()).hexdigest(),
+                 "status": prior["status"], "settled": prior["settled_episodes"],
+                 "calls": prior["ledger"]["started_attempts"],
+                 "infrastructure_failures": sum(bool(e["infrastructure_failure"]) for e in prior["episodes"]),
+                 "policy": "preserved separately; never merged with or repaired by this new streaming campaign"}
     root = Path(root)
     root.mkdir(mode=0o700, parents=True, exist_ok=False)
     manifest = copy.deepcopy(reference)
@@ -159,7 +173,10 @@ def freeze_paired(root, reference_root, reference_source, config, commit):
                                 "changed_source_files": changed,
                                 "paired_on": "world, panels, episode observation-index noise, claim confirmation keys, limits, order",
                                 "decoding_difference": "GPT medium/max_completion_tokens vs DeepSeek high/max_tokens; both 8000 cap, native effort not equivalent",
+                                "transport": {"reference_stream": reference["decoding"]["stream"], "candidate_stream": cfg.stream},
                                 "interpretation": "paired end-to-end comparison; three independent instances per environment, not six; service/model/workflow effects are not causally separated"})
+    if pilot is not None:
+        manifest["comparison"]["transport_pilot"] = pilot
     manifest.pop("manifest_sha256")
     manifest["manifest_sha256"] = canonical_hash(manifest)
     write(root / "manifest-private.json", manifest, new=True)
@@ -289,6 +306,7 @@ def main():
     parser.add_argument("--config", type=Path)
     parser.add_argument("--reference-root", type=Path)
     parser.add_argument("--reference-source", type=Path)
+    parser.add_argument("--transport-pilot", type=Path)
     args = parser.parse_args()
     if args.action == "freeze":
         if not args.exclusions or not args.commit:
@@ -297,7 +315,7 @@ def main():
     elif args.action == "freeze-paired":
         if not all((args.reference_root, args.reference_source, args.config, args.commit)):
             parser.error("freeze-paired requires --reference-root, --reference-source, --config and --commit")
-        print(json.dumps(freeze_paired(args.root, args.reference_root, args.reference_source, args.config, args.commit)))
+        print(json.dumps(freeze_paired(args.root, args.reference_root, args.reference_source, args.config, args.commit, args.transport_pilot)))
     elif args.action == "run":
         if not args.config:
             parser.error("run requires --config")

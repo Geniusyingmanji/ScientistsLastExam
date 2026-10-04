@@ -82,3 +82,20 @@ def test_run_rejects_model_change_after_freeze_before_any_attempt(reference, tmp
         campaign.run(target, config)
     assert CampaignLedger(target / 'attempts.sqlite').summary()['started_attempts'] == 0
     assert not (target / 'started.json').exists()
+
+
+def test_streaming_requires_preserved_failed_pilot(reference, tmp_path):
+    root, config, source=reference
+    cfg=json.loads(config.read_text());cfg['stream']=True;config.write_text(json.dumps(cfg))
+    with pytest.raises(ValueError,match='bind its failed nonstream'):
+        campaign.freeze_paired(tmp_path/'stream',root,source,config,'new')
+    pilot=tmp_path/'pilot';pilot.mkdir()
+    prior=json.loads((root/'public-progress.json').read_text())
+    prior.update(status='stopped_infrastructure',model=cfg['model'],settled_episodes=12)
+    prior['ledger']['started_attempts']=24
+    campaign.write(pilot/'public-progress.json',prior)
+    campaign.freeze_paired(tmp_path/'stream',root,source,config,'new',pilot)
+    frozen=campaign.load_manifest(tmp_path/'stream')
+    assert frozen['decoding']['stream'] is True
+    assert frozen['comparison']['transport_pilot']['calls']==24
+    assert frozen['instances']==campaign.load_manifest(root)['instances']

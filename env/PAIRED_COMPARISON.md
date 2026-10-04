@@ -56,3 +56,20 @@ Provider reliability, hidden implementation differences and native reasoning
 settings can affect the gap. A single comparator can demonstrate sample-level
 separation or saturation; it cannot establish broad benchmark discrimination,
 causal model ability, calibrated Discovery Depth or contamination immunity.
+
+## Transport amendment, before the streaming comparison
+
+The nonstream pilot reached its frozen infrastructure stop rule: all twelve
+first-wave runs failed with `RemoteDisconnected` after 24 total requests
+(12 returned, 12 failed). No scientific completion or 72-run macro was obtained.
+A single separately logged replay of a failed request with streaming returned
+in 120.01 seconds, reaching the same 8,000-token cap (`finish_reason=length`).
+It is a transport diagnostic, not a repaired episode or scored result.
+
+A new **streaming** campaign is therefore frozen against the same GPT design.
+It preserves the output/request/experiment/analysis/wall budgets, native effort,
+no-retry policy and first-wave stop rule. Streaming is its only change from the
+nonstream DeepSeek configuration. Its manifest binds the failed pilot's public
+artifact hash and counts. The failed pilot, trivial connectivity call and stream
+diagnostic remain separately disclosed and are never merged into the new scores.
+GPT used nonstream transport, so service/transport effects remain a limitation.
