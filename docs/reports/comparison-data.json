@@ -4272,5 +4272,20 @@
   "source_sha256": {
     "reference": "a3d3633e166fe36a68b2c67b90a06ccacc4ed99781a1372fddd6ec28f945790c",
     "candidate": "97b0bc029d0d28ef5c1a51d277d742542c6ba437f99747848579fbdaefa02551"
+  },
+  "monitor_status": {
+    "checked_at": "2026-10-04T09:02:58+00:00",
+    "status": "stopped_infrastructure",
+    "evidence": "Remote Python read of public-progress.json via verified SSH; complete file transfer failed after connection dropped again",
+    "remote_closed": 12,
+    "remote_calls": 94,
+    "returned": 84,
+    "interrupted": 10,
+    "failed_episodes": 10,
+    "incomplete_episodes": 2,
+    "undispatched": 60,
+    "raw_report_audit": "pending retrieval",
+    "new_model_requests_by_monitor": 0,
+    "manifest_sha256": "4067ba920df218bc9574090b1fc6b51045bd67f9394e5fc3deeb05e962a723a9"
   }
 }

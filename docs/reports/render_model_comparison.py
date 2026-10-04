@@ -170,7 +170,11 @@ def render(d,review=None):
     client_pilot=d['design'].get('client_pilot')
     if client_pilot:
         conclusion+='<h3>客户端分类修复前的试跑</h3><p>另一次流式试跑结束 %d 次运行、调用 %d 次。旧客户端把没有可见答案的完整回复误标为传输错误，触发停止。这批记录单独保留，不作为科学分数。本次空答案与 GPT 非流式路径一致：消耗一轮无效动作，保留 token 用量，不重试、不使用思考文本作为答案。</p>'%(client_pilot['settled'],client_pilot['calls'])
+    monitor=d.get('monitor_status')
+    if monitor:
+        conclusion='<p><strong>最新远端查询：首轮 12 次后已停止。</strong>查询到 94 次请求，其中 84 次返回、10 次中断；10 次运行失败、2 次未完成，后续 60 次未派发。连接再次中断，完整文件尚未同步，逐例原因和原始报告哈希待核验。以下数据为上一次成功同步的旧快照，不代表当前进度。</p>'+conclusion
     status=('全部 72 次已结束' if d['ready'] else '基础设施故障达到阈值，已停止后续派发' if d['candidate_status']=='stopped_infrastructure' else '进行中 · '+d['candidate_status'])
+    if monitor:status='远端已停止；下方计数为旧快照，原始结果待同步核验'
     return '''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SLE · GPT-5.6 与 DeepSeek V4 配对评测</title><style>
 *{box-sizing:border-box}body{background:#f4f5ef;color:#173d3a;font:16px/1.75 system-ui,sans-serif;margin:0}main{max-width:1180px;margin:auto;padding:36px 24px 70px}h1{font-size:clamp(28px,4vw,42px);line-height:1.3}h2{font-size:23px}h3{font-size:18px}a{color:#07776b}small,.muted{font-size:13px;color:#647570}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.metric,article,.panel{background:#fff;border:1px solid #d9e2d8;border-radius:14px;padding:24px;margin:18px 0}.metric strong{display:block;font-size:32px}.notice{background:#e9eee5;padding:20px;border-left:4px solid #56836c}.scroll{overflow:auto}table{width:100%;min-width:720px;border-collapse:collapse;background:#fff;font-size:14px}td,th{text-align:left;padding:12px;border-bottom:1px solid #d9e2d8;vertical-align:top}th{background:#e7eee4}.bar{display:block;height:6px;margin-top:7px;border-radius:3px}details{margin-top:10px}summary{cursor:pointer;font-weight:600}li{margin:8px 0}nav{display:flex;flex-wrap:wrap;gap:18px}@media(max-width:700px){main{padding:20px 14px}.metrics{grid-template-columns:1fr}.metric{margin:0}.metric,article,.panel{padding:18px}}
 </style><main><small>SCIENTISTS’ LAST EXAM · PAIRED MODEL COMPARISON</small><h1>同一批科学世界<br>GPT-5.6 × DeepSeek V4 Pro</h1><p>12 环境 × 3 隐藏实例 × 2 次运行。同样的世界、面板、提示、评分与预算，两模型独立选择实验和提交预测。</p>
@@ -189,6 +193,13 @@ def main():
         raise ValueError('Reference bytes differ from paired freeze')
     d=compare(ref,cand);review=json.loads(a.review.read_text()) if a.review else None
     d['source_sha256']={'reference':hashlib.sha256(a.reference.read_bytes()).hexdigest(),'candidate':hashlib.sha256(a.candidate.read_bytes()).hexdigest()}
+    monitor_path=a.candidate.parent/'monitor-status.json'
+    if monitor_path.exists():
+        monitor=json.loads(monitor_path.read_text())
+        if monitor.get('manifest_sha256')!=cand['manifest_sha256']:
+            raise ValueError('Monitor status belongs to another campaign')
+        if cand['settled_episodes']<monitor['remote_closed']:
+            d['monitor_status']=monitor
     if review:
         if review.get('source_sha256') != d['source_sha256']:
             raise ValueError('Review does not bind these exact public results')

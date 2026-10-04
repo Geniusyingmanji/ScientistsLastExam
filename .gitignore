@@ -73,3 +73,5 @@ docs/reports/sle-env-pilot-20261003/*
 !docs/reports/sle-deepseek-v4-stream-v2-20261004/data.json
 !docs/reports/sle-deepseek-v4-stream-v2-20261004/README.md
 !docs/reports/sle-deepseek-v4-stream-v2-20261004/review.json
+
+!docs/reports/sle-deepseek-v4-stream-v2-20261004/monitor-status.json
