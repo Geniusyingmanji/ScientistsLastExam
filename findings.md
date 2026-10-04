@@ -72,3 +72,44 @@ and 15 fresh instance clusters without original-instance overlap. This remains
 same-family/provisional, pending external review; integrity audit status is
 unavailable. The final trace is the second review in the local result-to-claim
 run; private reviewer paths and unredacted artifacts are not published.
+
+### 2026-10-04 unified twelve-world evaluation
+
+The fixed campaign completed all 72 planned GPT-5.6 runs: twelve worlds,
+three fresh instances per world, two runs per instance. Frozen scientific
+source: `445b95fe85663969b52e7f7a52d94ff4ca20dd1d`.
+The 50/30/20 common prediction, control-shift and quantitative-effect protocol
+yielded a world-equal mean of **64.314108 / 100**. Valid completion was
+**62/72 (86.1%)**. Five API failures, four invalid prediction programs and one
+unfinished submission remain zero in the main result. Excluding only API
+failures within worlds yields **68.441583 / 100**, an auxiliary descriptive
+score, not a causal estimate of fault-free performance. Actual API attempts:
+1,052 of 1,152 allowed; no replacement runs or automatic retries.
+
+All 72 raw-report hashes and scoring arithmetic were checked, including
+prediction normalization/masks and 192 quantitative effects with new paired
+observations. Of those effects, 161 met the frozen verification endpoint.
+They are not 161 independent discoveries. Scientific review covers all 72
+runs and remains same-family/provisional; the integrity helper was unavailable.
+Arithmetic agreement does not establish scientific validity by itself.
+
+The supported claim is narrower than calibrated discovery depth: some runs
+produce transferable predictive models and experimentally supported local
+relations, while identifiable failures occur in fitting, validation, model
+export and interval submission. Microecology provides several links compatible
+with delayed feedback, but lacks mediator fixing, blocking/rescue and competing
+pathway tests establishing the full chain. Known equation families, agent-data
+conditional reference predictors, three independent instances per world and
+runner context/closing constraints limit broader comparisons.
+
+Next work should preserve analysis/model state, check the final program and
+claim consistency on already observed data, explicitly track fit/holdout use,
+and stratify future instances by mechanism family before observing outcomes.
+Mechanism-discriminating interventions and controlled context/budget comparisons
+should precede broad scaling claims. This campaign is retained without repair
+or retrospective rescoring.
+
+Public results and all scoped episode conclusions are in
+[the unified report](docs/reports/overview.html) and
+[its evaluation archive](docs/reports/sle-unified12-20261004/README.md).
+Private traces and validation targets are not published.

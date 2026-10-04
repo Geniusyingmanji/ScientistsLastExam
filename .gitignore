@@ -37,6 +37,11 @@ docs/reports/*
 !docs/reports/overview.html
 !docs/reports/overview-data.json
 !docs/reports/render_overview.py
+!docs/reports/sle-unified12-20261004/
+docs/reports/sle-unified12-20261004/*
+!docs/reports/sle-unified12-20261004/data.json
+!docs/reports/sle-unified12-20261004/README.md
+!docs/reports/sle-unified12-20261004/review.json
 !docs/reports/sle-env-pilot-20261003/
 docs/reports/sle-env-pilot-20261003/*
 !docs/reports/sle-env-pilot-20261003/index.html

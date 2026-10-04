@@ -1,6 +1,6 @@
 {
   "schema": "sle-unified-report-1",
-  "generated_at_utc": "2026-10-04T03:00:52.212599+00:00",
+  "generated_at_utc": "2026-10-04T04:14:34.111199+00:00",
   "source_sha256": {
     "sle-env-pilot-20261003/data.json": "9ec302ce9bea0f11ed1f74c8ea122ec5721d7a70ad026a8b71d313721911f04e",
     "sle-new-frontier-20261003/data.json": "dd386a2237c3520246db6a02c889d1b597f2dff0c533db5acea1d53056cfb7fb",
@@ -11,14 +11,2067 @@
     "schema": "sle-unified-public-1",
     "protocol": "sle-unified-score-1.0",
     "model": "gpt-5.6-sol",
-    "status": "已选择统一协议并补跑；尚无已发布的补测结果",
+    "source_commit": "445b95fe85663969b52e7f7a52d94ff4ca20dd1d",
+    "source_sha256": "f853438dea1443121e9edd95d09d568ec7f9aaa4b63c798de3102cd5ed4b58e1",
+    "manifest_sha256": "acb76ea79dbe3e72940e3c6f64038bbfd23c2b0c589b82c7c379e4cb5fff6136",
+    "updated_at": "2026-10-04T04:07:50.491899+00:00",
+    "status": "completed",
     "planned_episodes": 72,
+    "settled_episodes": 72,
     "call_cap_per_episode": 16,
-    "by_environment": {},
-    "updated_at": null
+    "ledger": {
+      "attempt_limit": 1152,
+      "started_attempts": 1052,
+      "remaining_attempts": 100,
+      "status_counts": {
+        "failed": 5,
+        "returned": 1047
+      }
+    },
+    "by_environment": {
+      "microecology": {
+        "planned": 6,
+        "started": 6,
+        "settled": 6,
+        "completed": 3,
+        "failed": 3,
+        "infrastructure_failures": 2,
+        "scored_runs": 6,
+        "discoveries": [],
+        "model_only_score_mean": 19.578197939439377,
+        "condition_score": 10.804769961201542,
+        "intervention_score": 10.938552698205545,
+        "claim_score": 21.84090584781909,
+        "score_mean": 13.052131959626252
+      },
+      "coupled_oscillators": {
+        "planned": 6,
+        "started": 6,
+        "settled": 6,
+        "completed": 6,
+        "failed": 0,
+        "infrastructure_failures": 0,
+        "scored_runs": 6,
+        "discoveries": [],
+        "model_only_score_mean": 86.23076486317946,
+        "condition_score": 84.54773731805867,
+        "intervention_score": 83.12333286173231,
+        "claim_score": 95.09948172815218,
+        "score_mean": 86.23076486317946
+      },
+      "reaction_kinetics": {
+        "planned": 6,
+        "started": 6,
+        "settled": 6,
+        "completed": 6,
+        "failed": 0,
+        "infrastructure_failures": 0,
+        "scored_runs": 6,
+        "discoveries": [],
+        "model_only_score_mean": 99.2121578094844,
+        "condition_score": 99.94092771272406,
+        "intervention_score": 99.90878222613588,
+        "claim_score": 96.345296426408,
+        "score_mean": 99.2121578094844
+      },
+      "heat_transport": {
+        "planned": 6,
+        "started": 6,
+        "settled": 6,
+        "completed": 6,
+        "failed": 0,
+        "infrastructure_failures": 0,
+        "scored_runs": 6,
+        "discoveries": [],
+        "model_only_score_mean": 71.37099444504382,
+        "condition_score": 67.52411584578032,
+        "intervention_score": 70.016287547097,
+        "claim_score": 83.02025129012281,
+        "score_mean": 71.37099444504382
+      },
+      "gene_regulation": {
+        "planned": 6,
+        "started": 6,
+        "settled": 6,
+        "completed": 5,
+        "failed": 1,
+        "infrastructure_failures": 1,
+        "scored_runs": 6,
+        "discoveries": [],
+        "model_only_score_mean": 91.26136345312666,
+        "condition_score": 80.17096846397692,
+        "intervention_score": 79.1216367560694,
+        "claim_score": 61.14580476064801,
+        "score_mean": 76.05113621093889
+      },
+      "ising_spin": {
+        "planned": 6,
+        "started": 6,
+        "settled": 6,
+        "completed": 3,
+        "failed": 3,
+        "infrastructure_failures": 0,
+        "scored_runs": 6,
+        "discoveries": [],
+        "model_only_score_mean": 48.86994850998969,
+        "condition_score": 49.962830992814425,
+        "intervention_score": 49.953219239900996,
+        "claim_score": 44.512836208060904,
+        "score_mean": 48.86994850998969
+      },
+      "hysteresis_material": {
+        "planned": 6,
+        "started": 6,
+        "settled": 6,
+        "completed": 5,
+        "failed": 1,
+        "infrastructure_failures": 0,
+        "scored_runs": 6,
+        "discoveries": [],
+        "model_only_score_mean": 48.37596632897063,
+        "condition_score": 50.77291261189952,
+        "intervention_score": 45.62442918688729,
+        "claim_score": 46.5109063347734,
+        "score_mean": 48.37596632897063
+      },
+      "molecular_forces": {
+        "planned": 6,
+        "started": 6,
+        "settled": 6,
+        "completed": 5,
+        "failed": 1,
+        "infrastructure_failures": 1,
+        "scored_runs": 6,
+        "discoveries": [],
+        "model_only_score_mean": 98.64060633852158,
+        "condition_score": 83.11358990437611,
+        "intervention_score": 83.08031544050709,
+        "claim_score": 78.59807848880565,
+        "score_mean": 82.20050528210132
+      },
+      "climate_response": {
+        "planned": 6,
+        "started": 6,
+        "settled": 6,
+        "completed": 6,
+        "failed": 0,
+        "infrastructure_failures": 0,
+        "scored_runs": 6,
+        "discoveries": [],
+        "model_only_score_mean": 91.97180563873691,
+        "condition_score": 95.44001281069706,
+        "intervention_score": 95.93769435862919,
+        "claim_score": 77.35245462899813,
+        "score_mean": 91.97180563873691
+      },
+      "catalyst_aging": {
+        "planned": 6,
+        "started": 6,
+        "settled": 6,
+        "completed": 5,
+        "failed": 1,
+        "infrastructure_failures": 1,
+        "scored_runs": 6,
+        "discoveries": [],
+        "model_only_score_mean": 68.11977256152952,
+        "condition_score": 62.878669620139064,
+        "intervention_score": 53.871852794322535,
+        "claim_score": 45.827932431208176,
+        "score_mean": 56.766477134607925
+      },
+      "field_ecology": {
+        "planned": 6,
+        "started": 6,
+        "settled": 6,
+        "completed": 6,
+        "failed": 0,
+        "infrastructure_failures": 0,
+        "scored_runs": 6,
+        "discoveries": [],
+        "model_only_score_mean": 43.93076523428175,
+        "condition_score": 46.179731894200174,
+        "intervention_score": 43.89682124002578,
+        "claim_score": 38.35926457586966,
+        "score_mean": 43.93076523428175
+      },
+      "phase_equilibria": {
+        "planned": 6,
+        "started": 6,
+        "settled": 6,
+        "completed": 6,
+        "failed": 0,
+        "infrastructure_failures": 0,
+        "scored_runs": 6,
+        "discoveries": [],
+        "model_only_score_mean": 53.73664769044498,
+        "condition_score": 49.3631299521381,
+        "intervention_score": 63.24011018429828,
+        "claim_score": 50.41524829543223,
+        "score_mean": 53.73664769044498
+      }
+    },
+    "episodes": [
+      {
+        "episode_id": "unified-microecology-i1-r1",
+        "environment": "microecology",
+        "instance_index": 1,
+        "repeat_index": 1,
+        "status": "failed",
+        "settled": true,
+        "completed": false,
+        "infrastructure_failure": "api_transport_or_provider",
+        "score": 0.0,
+        "condition_score": 0.0,
+        "intervention_score": 0.0,
+        "claim_score": 0.0,
+        "requests": 3,
+        "observations": 16,
+        "stop_reason": "api_request_failed",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 0,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "b16e1162dc6219ba9aedd78f8dff6364770ca51f5ba86b055ee8486987ca712b"
+      },
+      {
+        "episode_id": "unified-coupled_oscillators-i1-r1",
+        "environment": "coupled_oscillators",
+        "instance_index": 1,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 99.35512710024365,
+        "condition_score": 99.96371118457799,
+        "intervention_score": 99.95663607972014,
+        "claim_score": 96.93140342019306,
+        "requests": 15,
+        "observations": 44,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "1ef01ef11944336599918de81cd51ae15baabfbafd8bed86c7c3a17c4808de33"
+      },
+      {
+        "episode_id": "unified-reaction_kinetics-i1-r1",
+        "environment": "reaction_kinetics",
+        "instance_index": 1,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 98.9635107989026,
+        "condition_score": 99.93577666459038,
+        "intervention_score": 99.9034465886438,
+        "claim_score": 95.12294245007142,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "78e776ebcff07e4baabc9167c419e9a7b330661dfa5f941451efba4d1cee86f3"
+      },
+      {
+        "episode_id": "unified-heat_transport-i1-r1",
+        "environment": "heat_transport",
+        "instance_index": 1,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 30.472432550500343,
+        "condition_score": 19.322864810123285,
+        "intervention_score": 10.830305090091581,
+        "claim_score": 87.80954309205613,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "1cccac0d072a338d5c5ad83c8b2a098b0420da49cf8609839c995df4ff84e9bc"
+      },
+      {
+        "episode_id": "unified-gene_regulation-i1-r1",
+        "environment": "gene_regulation",
+        "instance_index": 1,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 98.11822284181031,
+        "condition_score": 99.81250357827628,
+        "intervention_score": 99.77579351571116,
+        "claim_score": 91.3961649897941,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "8bc53cfe6637d74ae3b75d527f1067e224da80e000a0092a50e4ca35299f8a37"
+      },
+      {
+        "episode_id": "unified-ising_spin-i1-r1",
+        "environment": "ising_spin",
+        "instance_index": 1,
+        "repeat_index": 1,
+        "status": "invalid_predictor",
+        "settled": true,
+        "completed": false,
+        "infrastructure_failure": null,
+        "score": 0.0,
+        "condition_score": 0.0,
+        "intervention_score": 0.0,
+        "claim_score": 0.0,
+        "requests": 15,
+        "observations": 43,
+        "stop_reason": "predictor_verification_failed",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "2609b08463cc8c44d62bdf1fb4473c1946f15e57897be27929511cc2d795e636"
+      },
+      {
+        "episode_id": "unified-hysteresis_material-i1-r1",
+        "environment": "hysteresis_material",
+        "instance_index": 1,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 71.69667201407252,
+        "condition_score": 79.09713553014998,
+        "intervention_score": 62.43509666607781,
+        "claim_score": 67.0878762458709,
+        "requests": 15,
+        "observations": 44,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "9ddbed640cda18b45ac5447adeea96b6c76343cd1bf18ee20b91a5f250d6ba5b"
+      },
+      {
+        "episode_id": "unified-molecular_forces-i1-r1",
+        "environment": "molecular_forces",
+        "instance_index": 1,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 98.98412583000163,
+        "condition_score": 99.94555924648046,
+        "intervention_score": 99.94112470948329,
+        "claim_score": 95.14504396958209,
+        "requests": 15,
+        "observations": 17,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "1696f5fc4c8eff7b4e793ab91aeb834ea8799b2de8e4b23df4d4c746fb96d337"
+      },
+      {
+        "episode_id": "unified-climate_response-i1-r1",
+        "environment": "climate_response",
+        "instance_index": 1,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 95.24345256956315,
+        "condition_score": 99.52303034801689,
+        "intervention_score": 99.67558853949902,
+        "claim_score": 77.89630416852503,
+        "requests": 15,
+        "observations": 14,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "75c60e01edd83137e910ceaa70da1e77e943fc1de7b598a04083ce89391c0d00"
+      },
+      {
+        "episode_id": "unified-catalyst_aging-i1-r1",
+        "environment": "catalyst_aging",
+        "instance_index": 1,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 84.54388206217205,
+        "condition_score": 87.85109977288892,
+        "intervention_score": 85.1099776723834,
+        "claim_score": 75.42669437006288,
+        "requests": 15,
+        "observations": 42,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "a49e4b25bdde31381dfaa0fea55ff646cdeaba11e27b442f484e01ceb8104045"
+      },
+      {
+        "episode_id": "unified-field_ecology-i1-r1",
+        "environment": "field_ecology",
+        "instance_index": 1,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 88.60338466319664,
+        "condition_score": 92.68167315595636,
+        "intervention_score": 94.38708605354064,
+        "claim_score": 69.73211134578126,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "24893188fb0a34e328d6c6674bc24eba3d8c683c8dfb8f4aa6536956a2477edd"
+      },
+      {
+        "episode_id": "unified-phase_equilibria-i1-r1",
+        "environment": "phase_equilibria",
+        "instance_index": 1,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 26.7620853650608,
+        "condition_score": 21.871031788704038,
+        "intervention_score": 43.77170015450645,
+        "claim_score": 13.475297121784216,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "9e66cd31c64db683c1004f78ca167f3474fae457ba708bfffa326a175eed37c6"
+      },
+      {
+        "episode_id": "unified-microecology-i1-r2",
+        "environment": "microecology",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 6.827136280340172,
+        "condition_score": 4.063584874214196,
+        "intervention_score": 7.809380784744841,
+        "claim_score": 12.26264803904811,
+        "requests": 16,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 1,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "de5a908ffb28425c1a1b198152cacd7c63b205bfc6d76535f93fc4df0f15f12b"
+      },
+      {
+        "episode_id": "unified-coupled_oscillators-i1-r2",
+        "environment": "coupled_oscillators",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 99.65533410548748,
+        "condition_score": 99.9256341624266,
+        "intervention_score": 99.88258669776354,
+        "claim_score": 98.63870507472564,
+        "requests": 13,
+        "observations": 24,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "6f0382e6a37314bebf62ad3acebb20da8aa7a51797516df3940acf249d4272a7"
+      },
+      {
+        "episode_id": "unified-reaction_kinetics-i1-r2",
+        "environment": "reaction_kinetics",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 99.46911012587036,
+        "condition_score": 99.94887794688478,
+        "intervention_score": 99.89652319089929,
+        "claim_score": 97.62857097579092,
+        "requests": 15,
+        "observations": 34,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "8c5b2505d1464f1bbb0624835dc86f019777bd37f2c7b01e7ff4b33c07acc7ae"
+      },
+      {
+        "episode_id": "unified-heat_transport-i1-r2",
+        "environment": "heat_transport",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 83.91043604055429,
+        "condition_score": 79.7102575495851,
+        "intervention_score": 86.52852968347517,
+        "claim_score": 90.48374180359595,
+        "requests": 13,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "1e1ee6116c52ff9a0a4741f80f95053a9b3260b7f49c5cffd5bd0f6edf0ea695"
+      },
+      {
+        "episode_id": "unified-gene_regulation-i1-r2",
+        "environment": "gene_regulation",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 78.9180594477665,
+        "condition_score": 81.87160967861644,
+        "intervention_score": 75.71554907240403,
+        "claim_score": 76.33794943368535,
+        "requests": 15,
+        "observations": 42,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "3a27c38d01e905f36bf6a440c72005ad80cb0220224ebc8fedcabfb275432562"
+      },
+      {
+        "episode_id": "unified-ising_spin-i1-r2",
+        "environment": "ising_spin",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 98.20301856135166,
+        "condition_score": 99.9096086839634,
+        "intervention_score": 99.89863504648461,
+        "claim_score": 91.39311852712281,
+        "requests": 16,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "cb3b6ac70e699e67c26a9798241fdfaac239f5a110502337739dc652997505d1"
+      },
+      {
+        "episode_id": "unified-hysteresis_material-i1-r2",
+        "environment": "hysteresis_material",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 95.72848666671905,
+        "condition_score": 99.73693715314553,
+        "intervention_score": 99.68349924245008,
+        "claim_score": 79.7748415870563,
+        "requests": 15,
+        "observations": 46,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "03774d6cd32e432e83ba220f6e76a202d05ffdf1ea92847829ea9b7c611878b6"
+      },
+      {
+        "episode_id": "unified-molecular_forces-i1-r2",
+        "environment": "molecular_forces",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 97.20356196840639,
+        "condition_score": 99.04814798130586,
+        "intervention_score": 98.89660297947546,
+        "claim_score": 90.05253541955409,
+        "requests": 15,
+        "observations": 6,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "989a23addd43ea0feba82aff3574a027d36542b71392127225836a7f8d0b6e9b"
+      },
+      {
+        "episode_id": "unified-climate_response-i1-r2",
+        "environment": "climate_response",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 95.15546992116518,
+        "condition_score": 99.40855054492681,
+        "intervention_score": 99.57311271665588,
+        "claim_score": 77.89630416852502,
+        "requests": 15,
+        "observations": 11,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "e9a5cde5402e59b9a72598f509a87d1f0ad0af1f346f87185405585c7c46cfee"
+      },
+      {
+        "episode_id": "unified-catalyst_aging-i1-r2",
+        "environment": "catalyst_aging",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 36.32668193538572,
+        "condition_score": 42.826959774583,
+        "intervention_score": 29.736779460944977,
+        "claim_score": 29.960841049053627,
+        "requests": 16,
+        "observations": 40,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 1,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "df8543d9e955c27ef65f385bfaec6c2697107dee3b765d7ad58e5e7267542c8f"
+      },
+      {
+        "episode_id": "unified-field_ecology-i1-r2",
+        "environment": "field_ecology",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 11.485030338442689,
+        "condition_score": 13.202717043788429,
+        "intervention_score": 7.217158593976523,
+        "claim_score": 13.592621191777594,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 0,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "6309a5bc51b2988bb32597f0b35e3bbc8163881bf9774b124b0573ece6424eaf"
+      },
+      {
+        "episode_id": "unified-phase_equilibria-i1-r2",
+        "environment": "phase_equilibria",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 85.93412008272423,
+        "condition_score": 90.2709357255749,
+        "intervention_score": 94.40672954011065,
+        "claim_score": 62.38316678951795,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "e1f337c88e17e8ae619bab325341517fb7e14f277c4d6b502f25ea168eb59175"
+      },
+      {
+        "episode_id": "unified-microecology-i2-r1",
+        "environment": "microecology",
+        "instance_index": 2,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 10.636631653977428,
+        "condition_score": 5.538335786020783,
+        "intervention_score": 5.148929889074154,
+        "claim_score": 31.613923971223954,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "b988b624a3c9412f7b982cec24fdc141b96bec003a4386aae3bfe01f5e9661cd"
+      },
+      {
+        "episode_id": "unified-coupled_oscillators-i2-r1",
+        "environment": "coupled_oscillators",
+        "instance_index": 2,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 25.81204767483247,
+        "condition_score": 8.946167471695482,
+        "intervention_score": 12.296752957642722,
+        "claim_score": 88.24969025845955,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "24fc59d349a0e19fcc82a0c1173363f1086517c0eda44e2d9a8762319ef3bf06"
+      },
+      {
+        "episode_id": "unified-reaction_kinetics-i2-r1",
+        "environment": "reaction_kinetics",
+        "instance_index": 2,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 99.48505426159666,
+        "condition_score": 99.92197087831474,
+        "intervention_score": 99.86638749654958,
+        "claim_score": 97.8207628673721,
+        "requests": 15,
+        "observations": 40,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "8b22304c40a6090fe16f404c72f7eba86979023ddadee43f6f2c497b665b2739"
+      },
+      {
+        "episode_id": "unified-heat_transport-i2-r1",
+        "environment": "heat_transport",
+        "instance_index": 2,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 42.5197308471558,
+        "condition_score": 42.18762774660042,
+        "intervention_score": 39.02864688375098,
+        "claim_score": 48.58661454365147,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "75c5f88423b28bf7a35a0973c383b1bfeab60885c135b1594e4c3b02d641dd5a"
+      },
+      {
+        "episode_id": "unified-gene_regulation-i2-r1",
+        "environment": "gene_regulation",
+        "instance_index": 2,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 99.05822155992715,
+        "condition_score": 99.82269074651347,
+        "intervention_score": 99.77029134541317,
+        "claim_score": 96.0789439152323,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "4441e2a5a3305f762470a910b7db0b604367fefc5e1a2c538938a94b2034a10e"
+      },
+      {
+        "episode_id": "unified-ising_spin-i2-r1",
+        "environment": "ising_spin",
+        "instance_index": 2,
+        "repeat_index": 1,
+        "status": "invalid_predictor",
+        "settled": true,
+        "completed": false,
+        "infrastructure_failure": null,
+        "score": 0.0,
+        "condition_score": 0.0,
+        "intervention_score": 0.0,
+        "claim_score": 0.0,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "predictor_verification_failed",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 0,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "23013af1f676bb391a61c34fd84c96dfd3a4a068c61434f584f0b81e44809249"
+      },
+      {
+        "episode_id": "unified-hysteresis_material-i2-r1",
+        "environment": "hysteresis_material",
+        "instance_index": 2,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 11.453404123358983,
+        "condition_score": 18.03501570909068,
+        "intervention_score": 8.119654229378451,
+        "claim_score": 5.410340984348348e-13,
+        "requests": 16,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 0,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "5368edb1c0852be5296f1e10ffa0a98b402eab9284d8da533de671648d805233"
+      },
+      {
+        "episode_id": "unified-molecular_forces-i2-r1",
+        "environment": "molecular_forces",
+        "instance_index": 2,
+        "repeat_index": 1,
+        "status": "failed",
+        "settled": true,
+        "completed": false,
+        "infrastructure_failure": "api_transport_or_provider",
+        "score": 0.0,
+        "condition_score": 0.0,
+        "intervention_score": 0.0,
+        "claim_score": 0.0,
+        "requests": 12,
+        "observations": 16,
+        "stop_reason": "api_request_failed",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 0,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "d42b0f69862e8be43e4213289a7aa37b5eeb732fe99b02e12eef7a9e1c80e91b"
+      },
+      {
+        "episode_id": "unified-climate_response-i2-r1",
+        "environment": "climate_response",
+        "instance_index": 2,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 96.77957501488142,
+        "condition_score": 99.76906485942584,
+        "intervention_score": 99.79753455613445,
+        "claim_score": 84.77891109164085,
+        "requests": 15,
+        "observations": 28,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "f917c08de762de3f315c13ba729433d626a610076e28a535caaf7303eb3f63d3"
+      },
+      {
+        "episode_id": "unified-catalyst_aging-i2-r1",
+        "environment": "catalyst_aging",
+        "instance_index": 2,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 75.04300710586251,
+        "condition_score": 93.43548911728601,
+        "intervention_score": 89.53715255374196,
+        "claim_score": 7.320583905484611,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 1,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "e859ae832675638531d0edbd5b3f268dbbeb0d59508262158541526c075efc56"
+      },
+      {
+        "episode_id": "unified-field_ecology-i2-r1",
+        "environment": "field_ecology",
+        "instance_index": 2,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 14.595853688041121,
+        "condition_score": 18.920322252256,
+        "intervention_score": 17.118975206377073,
+        "claim_score": 0.0,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 0,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "8563a78bab2dc97e6525cea19302d4b8cecaf302dd2e5924eb70c2af41f0a2c8"
+      },
+      {
+        "episode_id": "unified-phase_equilibria-i2-r1",
+        "environment": "phase_equilibria",
+        "instance_index": 2,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 29.9565887373583,
+        "condition_score": 26.764729014946035,
+        "intervention_score": 47.891831221037194,
+        "claim_score": 11.033374317870626,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "971bb65b9edf764c053ae2c3c1c4e5d4269d35a3f317072b19a9f88f3dddd4cb"
+      },
+      {
+        "episode_id": "unified-microecology-i2-r2",
+        "environment": "microecology",
+        "instance_index": 2,
+        "repeat_index": 2,
+        "status": "failed",
+        "settled": true,
+        "completed": false,
+        "infrastructure_failure": "api_transport_or_provider",
+        "score": 0.0,
+        "condition_score": 0.0,
+        "intervention_score": 0.0,
+        "claim_score": 0.0,
+        "requests": 8,
+        "observations": 48,
+        "stop_reason": "api_request_failed",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 0,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "ebf59776190c9e6d8c9d63dfadcff14eaab33d8a673e7d203d2ac70c088549e9"
+      },
+      {
+        "episode_id": "unified-coupled_oscillators-i2-r2",
+        "environment": "coupled_oscillators",
+        "instance_index": 2,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 98.01827146056296,
+        "condition_score": 98.60238940065055,
+        "intervention_score": 98.77109264775842,
+        "claim_score": 95.4287448295508,
+        "requests": 15,
+        "observations": 46,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "ef1323b43b9bbffb5d5f2a0d0632272a730b8989b433ec7201f630c82c8e5fb6"
+      },
+      {
+        "episode_id": "unified-reaction_kinetics-i2-r2",
+        "environment": "reaction_kinetics",
+        "instance_index": 2,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 99.3515261943422,
+        "condition_score": 99.9348253019557,
+        "intervention_score": 99.91734290798061,
+        "claim_score": 97.04455335485083,
+        "requests": 15,
+        "observations": 36,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "07692a719a8de19d5072a415ac0bca978484f10a2d7aa1bb65698432e730b55e"
+      },
+      {
+        "episode_id": "unified-heat_transport-i2-r2",
+        "environment": "heat_transport",
+        "instance_index": 2,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 77.32900416318421,
+        "condition_score": 68.36277770514006,
+        "intervention_score": 85.12686986043941,
+        "claim_score": 88.04777176241181,
+        "requests": 15,
+        "observations": 37,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "1771b2425a6fe877f964cc88a8aa2ce9ad3e9ca03bbd56a310af2fd3b9091faf"
+      },
+      {
+        "episode_id": "unified-gene_regulation-i2-r2",
+        "environment": "gene_regulation",
+        "instance_index": 2,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 98.1609328550747,
+        "condition_score": 99.69954176398932,
+        "intervention_score": 99.6961491474103,
+        "claim_score": 92.01158614428478,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "78a0642f1db5ae6db62e127131a124ce4d8964d010f908a3025366dd8e2d5a03"
+      },
+      {
+        "episode_id": "unified-ising_spin-i2-r2",
+        "environment": "ising_spin",
+        "instance_index": 2,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 97.09302360269126,
+        "condition_score": 99.93588214926078,
+        "intervention_score": 99.89339194206228,
+        "claim_score": 85.78532472721092,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "d73a676a20f17f399289522bbbcc86f3011c8325b674a8d753ae39b0ee794c98"
+      },
+      {
+        "episode_id": "unified-hysteresis_material-i2-r2",
+        "environment": "hysteresis_material",
+        "instance_index": 2,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 34.33773642859314,
+        "condition_score": 27.482096007284518,
+        "intervention_score": 23.064867469012484,
+        "claim_score": 68.38614092123566,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "52b56107f2506efad834b76c1d7904c3784cdc272b0b9a615defe22b274b77f9"
+      },
+      {
+        "episode_id": "unified-molecular_forces-i2-r2",
+        "environment": "molecular_forces",
+        "instance_index": 2,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 99.31682634337616,
+        "condition_score": 99.93020589534129,
+        "intervention_score": 99.9227432391688,
+        "claim_score": 96.87450211977442,
+        "requests": 15,
+        "observations": 20,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "7cf185576ffd8286e18c9b221366e0f0e0121f80edf07c7b5ef110d81efffa9d"
+      },
+      {
+        "episode_id": "unified-climate_response-i2-r2",
+        "environment": "climate_response",
+        "instance_index": 2,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 97.00328037191221,
+        "condition_score": 99.69934580851728,
+        "intervention_score": 99.68899826369373,
+        "claim_score": 86.23453994272722,
+        "requests": 15,
+        "observations": 27,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "5109cad4f040891b5261de863e94842010fcda19f06b4bf58aa04c89b63d71a5"
+      },
+      {
+        "episode_id": "unified-catalyst_aging-i2-r2",
+        "environment": "catalyst_aging",
+        "instance_index": 2,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 65.55832037859851,
+        "condition_score": 73.64835971253177,
+        "intervention_score": 42.47282721459018,
+        "claim_score": 79.96146178977787,
+        "requests": 15,
+        "observations": 38,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "122c5a79fad7231bed4af4e7f6280a5d4efba3d8bccb0e54d40146101a214f04"
+      },
+      {
+        "episode_id": "unified-field_ecology-i2-r2",
+        "environment": "field_ecology",
+        "instance_index": 2,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 26.23258235254388,
+        "condition_score": 23.37106732897565,
+        "intervention_score": 19.337486131537382,
+        "claim_score": 43.729014242974195,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "693a61ba565d132a2d001bded2268b9fa12f36b0d890e0071b6d42f056635695"
+      },
+      {
+        "episode_id": "unified-phase_equilibria-i2-r2",
+        "environment": "phase_equilibria",
+        "instance_index": 2,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 36.45459562021498,
+        "condition_score": 22.644369962928586,
+        "intervention_score": 47.38666428794248,
+        "claim_score": 54.58205676183973,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "e0fcc04633e2a715f19d73b888001a931c1a0508eabef9ef230da9c1d0d38576"
+      },
+      {
+        "episode_id": "unified-microecology-i3-r1",
+        "environment": "microecology",
+        "instance_index": 3,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 60.84902382343991,
+        "condition_score": 55.22669910697427,
+        "intervention_score": 52.673005515414275,
+        "claim_score": 87.16886307664248,
+        "requests": 15,
+        "observations": 40,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "1c9fe09bd145c04f64a7feb18aad2f5295ec0a7a6bdacbd64d94d3ce09030fe6"
+      },
+      {
+        "episode_id": "unified-coupled_oscillators-i3-r1",
+        "environment": "coupled_oscillators",
+        "instance_index": 3,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 99.02661940976847,
+        "condition_score": 99.91425112429366,
+        "intervention_score": 99.92406700624838,
+        "claim_score": 95.46136872873565,
+        "requests": 15,
+        "observations": 22,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "7ea8b880b3a9521a4c6a90b02fe1fd2cdc7c012be65f92628455c6d5b5837c0b"
+      },
+      {
+        "episode_id": "unified-reaction_kinetics-i3-r1",
+        "environment": "reaction_kinetics",
+        "instance_index": 3,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 99.41706028541357,
+        "condition_score": 99.93598427430445,
+        "intervention_score": 99.9177933752286,
+        "claim_score": 97.36865067846388,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "a8c329789774f231fd78bc08874504adf1f97873666b3db4e75296e74d05f605"
+      },
+      {
+        "episode_id": "unified-heat_transport-i3-r1",
+        "environment": "heat_transport",
+        "instance_index": 3,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 97.76899954680012,
+        "condition_score": 99.86771821005969,
+        "intervention_score": 99.91964338537562,
+        "claim_score": 89.2962371307879,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "87024c216567db033539762c1439ddc9ceb8903587b3634371decf398372e446"
+      },
+      {
+        "episode_id": "unified-gene_regulation-i3-r1",
+        "environment": "gene_regulation",
+        "instance_index": 3,
+        "repeat_index": 1,
+        "status": "failed",
+        "settled": true,
+        "completed": false,
+        "infrastructure_failure": "api_transport_or_provider",
+        "score": 0.0,
+        "condition_score": 0.0,
+        "intervention_score": 0.0,
+        "claim_score": 0.0,
+        "requests": 5,
+        "observations": 24,
+        "stop_reason": "api_request_failed",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 0,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "5634ff85996cd1ac6cda40d761de40ad103fb1370842a678ae7b0141687f2e19"
+      },
+      {
+        "episode_id": "unified-ising_spin-i3-r1",
+        "environment": "ising_spin",
+        "instance_index": 3,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 97.92364889589524,
+        "condition_score": 99.93149512366236,
+        "intervention_score": 99.92728845085907,
+        "claim_score": 89.89857399403168,
+        "requests": 16,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "9e44b61c98204808970fab7945535f70fa0a82301ddea255be8b4de65f04913c"
+      },
+      {
+        "episode_id": "unified-hysteresis_material-i3-r1",
+        "environment": "hysteresis_material",
+        "instance_index": 3,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 77.03949874108007,
+        "condition_score": 80.28629127172641,
+        "intervention_score": 80.4434575144049,
+        "claim_score": 63.816579254476984,
+        "requests": 16,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "adb349efcd5b9698269b51e1e6338e02bc54d337c6885f414b554ccf249b4d83"
+      },
+      {
+        "episode_id": "unified-molecular_forces-i3-r1",
+        "environment": "molecular_forces",
+        "instance_index": 3,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 98.99492763871557,
+        "condition_score": 99.96662528434248,
+        "intervention_score": 99.95675502176682,
+        "claim_score": 95.12294245007138,
+        "requests": 15,
+        "observations": 15,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "2246263cd7858f694cdb1382578e1b72119d7797d713061fc4d454215e6fdda7"
+      },
+      {
+        "episode_id": "unified-climate_response-i3-r1",
+        "environment": "climate_response",
+        "instance_index": 3,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 79.66701268302951,
+        "condition_score": 82.29855303467228,
+        "intervention_score": 83.66720305506396,
+        "claim_score": 67.08787624587086,
+        "requests": 15,
+        "observations": 23,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "4b3a10874732a37dcc818d16189a389bad862c70e2bea20f21495d7695e534a8"
+      },
+      {
+        "episode_id": "unified-catalyst_aging-i3-r1",
+        "environment": "catalyst_aging",
+        "instance_index": 3,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 79.12697132562876,
+        "condition_score": 79.51010934354468,
+        "intervention_score": 76.37437986427469,
+        "claim_score": 82.29801347287008,
+        "requests": 15,
+        "observations": 42,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "cc5277e9873a9c6543e76e0a5f04b3a3d1368af5be78bd19dfc7be2f99847353"
+      },
+      {
+        "episode_id": "unified-field_ecology-i3-r1",
+        "environment": "field_ecology",
+        "instance_index": 3,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 31.48312928738181,
+        "condition_score": 31.474011834285324,
+        "intervention_score": 27.952965825238692,
+        "claim_score": 36.8011681133377,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "1f3c5cad6d9c081382baa82cf18338bc2faa7fd275fcffe9d4772bac752396a6"
+      },
+      {
+        "episode_id": "unified-phase_equilibria-i3-r1",
+        "environment": "phase_equilibria",
+        "instance_index": 3,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 93.22055761647316,
+        "condition_score": 97.60299752332213,
+        "intervention_score": 97.52805225940051,
+        "claim_score": 75.80321588495967,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "0b7eece0d1101e0b6f67e91de99615dbae3a508e0082c0fdbbaa2b64fd1d25bf"
+      },
+      {
+        "episode_id": "unified-microecology-i3-r2",
+        "environment": "microecology",
+        "instance_index": 3,
+        "repeat_index": 2,
+        "status": "invalid_predictor",
+        "settled": true,
+        "completed": false,
+        "infrastructure_failure": null,
+        "score": 0.0,
+        "condition_score": 0.0,
+        "intervention_score": 0.0,
+        "claim_score": 0.0,
+        "requests": 16,
+        "observations": 48,
+        "stop_reason": "predictor_verification_failed",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 1,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "d76061a6f02327411a9277778e24149667996f9959223a1bee5635956cc10dcf"
+      },
+      {
+        "episode_id": "unified-coupled_oscillators-i3-r2",
+        "environment": "coupled_oscillators",
+        "instance_index": 3,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 95.51718942818174,
+        "condition_score": 99.93427056470773,
+        "intervention_score": 87.90886178126064,
+        "claim_score": 95.88697805724843,
+        "requests": 15,
+        "observations": 24,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "c2faf88aad42ad043cd3aa5d74ea12238432cf9e39a798c509b2dbdbb3c23afc"
+      },
+      {
+        "episode_id": "unified-reaction_kinetics-i3-r2",
+        "environment": "reaction_kinetics",
+        "instance_index": 3,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 98.58668519078097,
+        "condition_score": 99.9681312102943,
+        "intervention_score": 99.95119979751345,
+        "claim_score": 93.08629823189888,
+        "requests": 15,
+        "observations": 38,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "4189071a9a171d2eb3267d5c9535ef934b247ed46ec12e9a4d5f5f1bb1bf4fc2"
+      },
+      {
+        "episode_id": "unified-heat_transport-i3-r2",
+        "environment": "heat_transport",
+        "instance_index": 3,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 96.22536352206816,
+        "condition_score": 95.69344905317335,
+        "intervention_score": 98.66373037944919,
+        "claim_score": 93.89759940823366,
+        "requests": 15,
+        "observations": 24,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "bcf666d836ec6616599eb18851a20d9138ddceab697ff5d9e056e3bbde6a653b"
+      },
+      {
+        "episode_id": "unified-gene_regulation-i3-r2",
+        "environment": "gene_regulation",
+        "instance_index": 3,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 82.05138056105466,
+        "condition_score": 99.819465016466,
+        "intervention_score": 99.7720374554778,
+        "claim_score": 11.05018408089155,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "262f1d7266afb8f476324f1498423a83941fd4cbbe064a34b86c0f4f5f63cb11"
+      },
+      {
+        "episode_id": "unified-ising_spin-i3-r2",
+        "environment": "ising_spin",
+        "instance_index": 3,
+        "repeat_index": 2,
+        "status": "incomplete",
+        "settled": true,
+        "completed": false,
+        "infrastructure_failure": null,
+        "score": 0.0,
+        "condition_score": 0.0,
+        "intervention_score": 0.0,
+        "claim_score": 0.0,
+        "requests": 16,
+        "observations": 48,
+        "stop_reason": "model_round_limit",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 0,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "3d00e71c691d48cacaad7d5feaf202bc304db859852c379c2360d34f09204fb0"
+      },
+      {
+        "episode_id": "unified-hysteresis_material-i3-r2",
+        "environment": "hysteresis_material",
+        "instance_index": 3,
+        "repeat_index": 2,
+        "status": "invalid_predictor",
+        "settled": true,
+        "completed": false,
+        "infrastructure_failure": null,
+        "score": 0.0,
+        "condition_score": 0.0,
+        "intervention_score": 0.0,
+        "claim_score": 0.0,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "predictor_verification_failed",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 0,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "3b0aa19c9d509f26f5941582a73c82d585560b1a41a476c7f1f638a18c5e54b3"
+      },
+      {
+        "episode_id": "unified-molecular_forces-i3-r2",
+        "environment": "molecular_forces",
+        "instance_index": 3,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 98.70358991210811,
+        "condition_score": 99.79100101878657,
+        "intervention_score": 99.76466669314814,
+        "claim_score": 94.39344697385195,
+        "requests": 15,
+        "observations": 14,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "961cade9eb97fae3a31ec5d629432fb08c6b1d68c533316f1b33bfdebed92e03"
+      },
+      {
+        "episode_id": "unified-climate_response-i3-r2",
+        "environment": "climate_response",
+        "instance_index": 3,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 87.98204327187001,
+        "condition_score": 91.94153226862328,
+        "intervention_score": 93.22372902072803,
+        "claim_score": 70.22079215669983,
+        "requests": 15,
+        "observations": 10,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "cd0f2ac46b2e72066cc3a3ac921bb3e3b411470c4cac164c8a0649d2cf769da3"
+      },
+      {
+        "episode_id": "unified-catalyst_aging-i3-r2",
+        "environment": "catalyst_aging",
+        "instance_index": 3,
+        "repeat_index": 2,
+        "status": "failed",
+        "settled": true,
+        "completed": false,
+        "infrastructure_failure": "api_transport_or_provider",
+        "score": 0.0,
+        "condition_score": 0.0,
+        "intervention_score": 0.0,
+        "claim_score": 0.0,
+        "requests": 15,
+        "observations": 42,
+        "stop_reason": "api_request_failed",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 0,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "fd7fd279b6decb78c02f9f1d547a2eb7269a8a163ed19d67851af54e781ad59e"
+      },
+      {
+        "episode_id": "unified-field_ecology-i3-r2",
+        "environment": "field_ecology",
+        "instance_index": 3,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 91.18461107608438,
+        "condition_score": 97.42859974993927,
+        "intervention_score": 97.36725562948435,
+        "claim_score": 66.3006725613472,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "d4f990cdde20d15e0553b1aff3e4eba935ab1131366799770738941383726fb4"
+      },
+      {
+        "episode_id": "unified-phase_equilibria-i3-r2",
+        "environment": "phase_equilibria",
+        "instance_index": 3,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 50.091938720838414,
+        "condition_score": 37.024715697352924,
+        "intervention_score": 48.45568364279242,
+        "claim_score": 85.21437889662116,
+        "requests": 15,
+        "observations": 48,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "gpt-5.6-sol"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "36058351f0cab3bf414539257e52a7b852f6032ee9a68e9f3bbcbd57bab05bab"
+      }
+    ],
+    "score_policy": {
+      "protocol": "sle-unified-score-1.0",
+      "weights": {
+        "conditions": 0.5,
+        "interventions": 0.3,
+        "claims": 0.2
+      },
+      "prediction": "Host-selected, precommitted new-condition and intervention/control-shift panels are evaluated only after predictor freeze against noiseless expected responses. Compute normalized RMSE over all retained cells per experiment; score=100*exp(-RMSE/0.1), then average experiments equally. Do not discard a row merely because its axis is zero.",
+      "prediction_cell_exclusions": {
+        "protocol": "sle-unified-panels-1.0",
+        "known_environments": [
+          "microecology",
+          "coupled_oscillators",
+          "reaction_kinetics",
+          "heat_transport",
+          "gene_regulation",
+          "ising_spin",
+          "hysteresis_material",
+          "molecular_forces",
+          "climate_response",
+          "catalyst_aging",
+          "field_ecology",
+          "phase_equilibria"
+        ],
+        "initial_state_exclusions": [
+          "coupled_oscillators",
+          "gene_regulation",
+          "heat_transport",
+          "microecology",
+          "reaction_kinetics"
+        ],
+        "rules": {
+          "microecology": "Exclude t=0; zero-inoculum strain columns at all times; fully depleted fraction at the exact event time.",
+          "coupled_oscillators": "Exclude t=0 and both position/velocity columns of each clamped node.",
+          "reaction_kinetics": "Exclude t=0 only.",
+          "heat_transport": "Exclude t=0 only; legal probes are interior.",
+          "gene_regulation": "Exclude t=0 only.",
+          "ising_spin": "Exclude clamped means, both-clamped pair constants, and one-clamped pair moments redundant with a retained free mean.",
+          "field_ecology": "With one visit retain first-visit fraction; any/all fractions duplicate it. Retain all three channels with multiple visits.",
+          "remaining_worlds": "Retain all cells. Catalyst blanks/standards, hysteresis t=0, and static coordinate/index 0 are not prescribed numerical responses.",
+          "unsupported": "Retain all cells; no environment-specific semantic certification."
+        },
+        "outcome_blind": true,
+        "interpretation": "Exclusions remove certified public constants and selected exact redundancies; remaining cells are not certified independent or mechanism-identifying."
+      },
+      "claims": "Up to 3 agent-chosen paired quantitative effects. Freeze a central 90% predictive interval for the sample mean of 32 independent noisy treatment-control pairs. Raw interval loss=width+20*distance outside interval; index=100*exp(-loss/(0.1*channel_scale)). Missing or duplicate slots score zero; average exactly 3 slots. The raw interval loss is a proper interval scoring rule; its exponential index is not a proper scoring rule. This is a numerical performance index, not discovery depth.",
+      "claim_eligibility": {
+        "legacy_worlds": {
+          "protocol": "public-claim-eligibility-0.10",
+          "input_contract": "Apply to canonical public specs after normal experiment/readout validation.",
+          "matched_coordinate": "Time-dependent worlds must observe the same time in both arms at the selected readout row. Ising temperatures may differ because temperature itself is a controlled treatment.",
+          "absolute_coordinate_tolerance": 1e-12,
+          "minimum_lag": {
+            "microecology": {
+              "value": 1.0,
+              "unit": "h",
+              "axis_field": "times_h",
+              "event_field": "events",
+              "event_time_field": "time_h"
+            },
+            "microecology_causal": {
+              "value": 1.0,
+              "unit": "h",
+              "axis_field": "times_h",
+              "event_field": "events",
+              "event_time_field": "time_h"
+            },
+            "coupled_oscillators": {
+              "value": 0.25,
+              "unit": "s",
+              "axis_field": "times",
+              "event_field": null,
+              "event_time_field": null
+            },
+            "reaction_kinetics": {
+              "value": 1.0,
+              "unit": "s",
+              "axis_field": "times_s",
+              "event_field": "interventions",
+              "event_time_field": "time_s"
+            },
+            "heat_transport": {
+              "value": 0.5,
+              "unit": "s",
+              "axis_field": "times",
+              "event_field": null,
+              "event_time_field": null
+            },
+            "gene_regulation": {
+              "value": 0.5,
+              "unit": "h",
+              "axis_field": "times_h",
+              "event_field": "interventions",
+              "event_time_field": "time_h"
+            },
+            "hysteresis_material": {
+              "value": 0.5,
+              "unit": "s",
+              "axis_field": "times",
+              "event_field": null,
+              "event_time_field": null
+            },
+            "orbital_dynamics": {
+              "value": 0.25,
+              "unit": "T",
+              "axis_field": "times",
+              "event_field": "impulses",
+              "event_time_field": "time"
+            },
+            "pattern_formation": {
+              "value": 0.25,
+              "unit": "T",
+              "axis_field": "times",
+              "event_field": null,
+              "event_time_field": null
+            },
+            "spin_echo": {
+              "value": 1.0,
+              "unit": "ms",
+              "axis_field": "times_ms",
+              "event_field": "pulses",
+              "event_time_field": "time_ms"
+            },
+            "population_drift": {
+              "value": 0.25,
+              "unit": "replacement-clock units",
+              "axis_field": "times",
+              "event_field": null,
+              "event_time_field": null
+            }
+          },
+          "time_rule": "In each time-dependent arm, the readout must be at least the listed lag after t=0 and after every event at or before that readout. Future events do not affect eligibility. The boundary lag is inclusive, within the absolute coordinate tolerance.",
+          "continuous_protocol_rule": "Material field-ramp knots change the drive but do not assign the response. They do not restart the eligibility lag; readouts need matched times and at least 0.5 seconds after preparation.",
+          "resolution_interpretation": "These fixed lags declare pilot temporal-resolution eligibility; they are not hidden time constants, fitted detection thresholds, or mechanism-depth certification.",
+          "oscillator_rule": "Reject x_NODE or v_NODE if NODE is clamped in either arm. Other downstream unclamped nodes remain eligible subject to the time rule.",
+          "ising_rule": "The axis is an equilibrium temperature, not time. Each arm requires a positive temperature, with no temporal lag or cross-arm temperature matching requirement. Temperature-dependence claims remain allowed. Reject m_NODE if NODE is clamped in either arm; reject c_LEFT_RIGHT if both endpoints are clamped in either arm. One-clamped-endpoint correlations and other unclamped observables remain eligible.",
+          "frequency_rules": {
+            "electrical_impedance": {
+              "axis_field": "frequencies_hz",
+              "unit": "Hz",
+              "range": [
+                2,
+                5000
+              ],
+              "length": [
+                1,
+                65
+              ],
+              "order": "strictly increasing",
+              "minimum_lag": null,
+              "readout_rule": "Each row is an independent sinusoidal steady state. The same zero-based row and voltage_real or voltage_imag channel select the readout in each arm. Selected frequencies may differ: frequency is a controlled treatment, so spectral contrasts are allowed. Apparatus-only contrasts use the same frequency; if frequency and apparatus both differ the claim is a combined contrast, not an isolated load or source effect. Every requested frequency in both arms must satisfy the public range and ordering. There is no elapsed time, t=0 assignment, carried state or temporal lag.",
+              "limits": "Public amplitude linearity and known external divider transformations are instrument facts. Eligibility or numerical verification does not certify discovery of a device mechanism or unique internal topology."
+            }
+          },
+          "spin_echo_rule": {
+            "maximum_pulses": 12,
+            "integer_pi_angle_tolerance_rad": 1e-12,
+            "readout_rule": "Match readout times in both arms. Exclude t=0 and pulse timestamps; require at least 1 ms after preparation and every pulse at or before the readout. Future pulses do not affect earlier eligibility. Reject all channels for a zero initial vector. Integer-pi pulses preserve known z up to sign flips. A non-pi pulse can introduce hidden dependence into z only when transverse response already depends on hidden waiting dynamics. Thus a pure-z preparation retains known z through its first non-pi pulse; a later non-pi pulse can mix the intervening unknown transverse evolution into z. Reject channels still fixed by these public dependencies in either arm.",
+            "reason_codes": {
+              "public_preparation_assigns_readout": "The initial vector and declared ideal rotations already fix the selected readout in at least one arm."
+            },
+            "limits": "These public dependency guards are conservative exclusions, not an algebraically complete test or a detectability guarantee. The 1 ms lag is an administrative pilot resolution, not a fitted physical time constant. The integer-pi angular tolerance is a floating-point policy convention, not exact mathematical equivalence. Known detuning and rotation transformations still require separate scientific evidence review; passing eligibility does not certify discovery. Once a non-pi pulse mixes hidden transverse dependence into z, subsequent waiting does not restore known z."
+          },
+          "limits": "Eligibility does not certify causal isolation, evidential relevance, semantic independence, surprise, identifiable mechanism, or novelty. Other analytically predetermined effects require separate evidence review.",
+          "reason_codes": {
+            "eligible": "Passes these public-semantic eligibility checks only.",
+            "unsupported_world": "No public eligibility policy is declared for this world.",
+            "mismatched_axis_field": "The supplied axis field differs from the declared public axis.",
+            "invalid_readout": "The row/channel does not match the declared public readout schema.",
+            "invalid_public_spec": "A required public coordinate, event or clamp has malformed data.",
+            "unmatched_readout_coordinate": "The two arms of a time-dependent world observe different times.",
+            "readout_before_temporal_resolution": "Readout is too close to the prescribed initial state.",
+            "readout_too_soon_after_event": "Readout is too close to an event in at least one arm.",
+            "public_clamp_assigns_readout": "At least one arm directly fixes this observable through a public clamp."
+          }
+        },
+        "unified_alias_guards": "Ignore future events after a dynamical readout; keep only the selected heat probe; retain hysteresis knots through the first at or after readout; catalyst reactions key on event counter and the selected identical coupon history without coupon labels. Both publicly assigned arms are ineligible. These explicit aliases are not an exhaustive equivalence solver.",
+        "frontier_worlds": "Canonical frontier physical readout keys must differ. At least one arm must be an eligible target (nonblank catalyst event/nonempty phase sample); the other may be a reference. Index zero and habitat zero are permitted. Molecular rows identify prepared geometries; climate uses forcing prefix through endpoint; catalyst uses event history; ecology uses habitat and relevant visits; phase uses angle and preparation. No hidden mechanism is inspected."
+      },
+      "claim_evidence": "Prior observation IDs and a scope statement are required; scientific relevance requires evidence review.",
+      "verified_effect": "A nonduplicate eligible claim whose fresh sample mean is inside its interval, interval width<=0.2*channel_scale, and absolute mean>max(3 estimated standard errors,1e-12). This is a descriptive replicated-effect endpoint, not a multiplicity-adjusted hypothesis test or mechanism certificate.",
+      "baseline": "Truth-blind environment-specific baselines receive the same public exploration data and are evaluated using identical panels and masks.",
+      "failure": "Healthy runs without a valid frozen predictor score zero. Infrastructure failures are excluded from model-only scores and retained in end-to-end accounting.",
+      "aggregation": "Average runs within each environment, then average environments equally; uncertainty must cluster repeated runs by independent world instance. Environment difficulty and physical experimental cost are not made equal by score normalization."
+    },
+    "total_score": 64.31410842561716,
+    "denominator_policy": "Each closed episode contributes its score or zero on failure; six episodes per environment; 12 environments equal. Also report model-only means excluding infrastructure failures.",
+    "limits": {
+      "rounds": 16,
+      "exploration_rounds": 14,
+      "experiments": 48,
+      "experiment_units": 30000,
+      "analysis_active_seconds": 180,
+      "predictor_seconds_per_spec": 15,
+      "wall_seconds": 3600,
+      "panel_count": 8,
+      "max_experiments_per_turn": 8,
+      "verification_reserve_seconds": 300
+    },
+    "repeated_instance_policy": "Two runs share the same hidden world and private prediction panels; independent exploration and claim measurement keys. Three independent clusters per environment.",
+    "scope": "Unified functional prediction/effect verification pilot; not a calibrated discovery-depth score or contamination-resistance proof."
   },
-  "total_score": null,
-  "total_score_ready": false,
+  "total_score": 64.31410842561716,
+  "total_score_ready": true,
   "worlds": [
     {
       "id": "microecology",
@@ -3485,7 +5538,1288 @@
       "evidence_updated": "2026-10-03T11:09:02.889173+00:00"
     }
   ],
+  "model_only_macro_score": 68.44158256772906,
+  "completion": {
+    "valid": 62,
+    "planned": 72,
+    "settled": 72,
+    "infrastructure_failures": 5
+  },
   "score_formula": "0.50 * condition_score + 0.30 * intervention_score + 0.20 * claim_score",
   "score_unit": "0–100; all six planned episodes per environment; failed/no-submission/API-failed episodes contribute zero at closure; equal environment weighting after all 72 settle",
-  "historical_evidence_notice": "All catalog discoveries without an explicit unified campaign label are historical."
+  "historical_evidence_notice": "All catalog discoveries without an explicit unified campaign label are historical.",
+  "campaign_source_sha256": "a3d3633e166fe36a68b2c67b90a06ccacc4ed99781a1372fddd6ec28f945790c",
+  "review": {
+    "schema": "sle-unified-review-1",
+    "protocol": "sle-unified-score-1.0",
+    "updated_at": "2026-10-04T04:13:44.350704+00:00",
+    "review_scope": "覆盖本批全部72次关闭运行；每条审阅绑定原始报告SHA-256，历史结果另行保留。",
+    "review_independence": "same-family",
+    "acceptance_status": "provisional",
+    "integrity_status": "unavailable",
+    "claim_supported": "yes",
+    "episodes": [
+      {
+        "episode_id": "unified-microecology-i1-r1",
+        "report_sha256": "b16e1162dc6219ba9aedd78f8dff6364770ca51f5ba86b055ee8486987ca712b",
+        "summary": "微生态完成了单培养、共培养及两项去除扰动，数据已出现依赖共培养的生长差异；第三次模型请求因传输/提供方故障中止，尚未形成冻结模型或确认主张。端到端零分记录的是未交付。",
+        "supported": [
+          "相同培养条件下，A单培养增长，B/C单培养接近衰减；与A共培养时B或C明显增长，支持这些准备中的群落依赖。",
+          "两项分馏去除改变了相应胞外读数，但已测菌株生长轨迹差异较小；它们未建立被去除组分促进生长的因果链。"
+        ],
+        "limits": [
+          "基础设施中断，不能把零分或零个verified效应解释为科学假说被否定或模型科学能力不足。",
+          "共培养同时引入伙伴及其代谢环境，不能单靠增长相关性确定交叉营养分子或唯一机制。",
+          "第二轮部分温度、营养和接种量联合改变；尚无独立效应确认或冻结预测性能。"
+        ]
+      },
+      {
+        "episode_id": "unified-coupled_oscillators-i1-r1",
+        "report_sha256": "1ef01ef11944336599918de81cd51ae15baabfbafd8bed86c7c3a17c4808de33",
+        "summary": "振子样本完成了多初态、单项控制到新组合条件的预测检验。稳定的弹簧—质量—阻尼表征在冻结面板上表现很好，三个切边、加载和阻尼对比独立复验成立；一次劣质重拟合后，最终恢复了较早稳定模型。",
+        "supported": [
+          "共同机械表征预测了未参与早期拟合的控制组合，支持本实例和规定条件域内的动态迁移。",
+          "切边、增加质量、增加阻尼产生三个可重复的特定时间速度差；阻尼效应正号是相位相关结果。",
+          "最终代码保留稳定拟合，后续匹配观测及host面板与之相符。"
+        ],
+        "limits": [
+          "机械家族含公开物理先验，成功拟合不是从无先验发现力学，也不唯一识别家族外机制。",
+          "模型内参数标准误不含模型选择不确定性，特定时刻速度差不能推广为普遍单调效应。",
+          "同数据机械基线也取得很高预测分；接近满分不标定科学发现深度。"
+        ]
+      },
+      {
+        "episode_id": "unified-reaction_kinetics-i1-r1",
+        "report_sha256": "78e776ebcff07e4baabc9167c419e9a7b330661dfa5f941451efba4d1cee86f3",
+        "summary": "反应动力学从多温度基态响应建立保守Arrhenius转移模型，再预测未用于最终拟合的混合物及切温/加料轨迹。冻结面板与三个加料后的定量效应获得支持；精确零边与唯一稀疏拓扑仍未证明。",
+        "supported": [
+          "多温度基态数据支持有效的守恒转移与温度依赖表征，独立混合物及干预轨迹预测仍准确。",
+          "三个加料十秒后的响应经过动态传播而非即时公开赋值，并在新噪声复验中覆盖冻结区间。",
+          "所拟合家族中A与B直接转移远弱于其他候选边，间接传递提供有效解释。"
+        ],
+        "limits": [
+          "近零/边界拟合率不证明某边严格不存在，也未排除所有替代网络。",
+          "三个确认对比共享同一叠加解释，不能计为三个独立反应机制。",
+          "早期主张证据来自其他温度和组成，是模型依据；准确匹配的主张准备在最终确认阶段检验。"
+        ]
+      },
+      {
+        "episode_id": "unified-heat_transport-i1-r1",
+        "report_sha256": "1cccac0d072a338d5c5ad83c8b2a098b0420da49cf8609839c995df4ff84e9bc",
+        "summary": "匹配流向、冷却和热源位置实验获得可复验的空间温度效应，也曾建立能预测新增条件的两区域表征。最终代码未保留拟合参数，冻结预测分较低；局部科学证据与交付失误需分开报告。",
+        "supported": [
+          "流向反转改变温度空间分布；增强冷却降低中间温度，移动热源造成左右相反方向响应。",
+          "早期模型在新增探针/混合条件上误差较小，最终三个特定时空效应均独立确认。"
+        ],
+        "limits": [
+          "拟合与最终硬编码参数不同，早期误差不能归给最终预测器；各差异对分数的独立贡献尚未隔离。",
+          "两个热源移动主张是同一操作不同探针，不是两个独立机制。",
+          "未正式鉴别均匀/连续介质等替代模型，不能唯一识别界面或全域热机制。"
+        ]
+      },
+      {
+        "episode_id": "unified-gene_regulation-i1-r1",
+        "report_sha256": "8bc53cfe6637d74ae3b75d527f1067e224da80e000a0092a50e4ca35299f8a37",
+        "summary": "正负脉冲、组合干预和新初态支持一个稀疏符号网络的有效轨迹表征，冻结面板预测很好，三个直接脉冲效应复验成立。日志中部分“留出验证”是在合并数据重拟合后计算，需更正其验证身份。",
+        "supported": [
+          "五条强符号作用构成能预测所测轨迹的简洁候选；正负及组合脉冲检验响应方向和非线性。",
+          "相同初态下驱动G1、G3、G4的自身表达效应有匹配观测及独立确认。",
+          "冻结host面板提供独立预测证据；审阅者用较早参数重放后来观测，也得到较小误差。"
+        ],
+        "limits": [
+          "第6、11轮先用全部记录拟合，再报告新增记录的validation误差；这些不能称原回合严格留出误差。",
+          "脉冲响应不单独识别直接与间接边；G2下游作用弱不等于严格无作用。",
+          "最终主张针对直接驱动自身表达，未直接确认完整五边拓扑或排除等效非线性模型。",
+          "最终程序在不采样干预边界的合法稀疏查询中有状态推进问题；规定host面板包含边界，高分只支持该查询域。"
+        ]
+      },
+      {
+        "episode_id": "unified-ising_spin-i1-r1",
+        "report_sha256": "2609b08463cc8c44d62bdf1fb4473c1946f15e57897be27929511cc2d795e636",
+        "summary": "探索模型通过先拟合后干预挑战，并有区分边际相关与直接键作用的证据；三个温度效应独立复验成立。最终快照参数键名错配导致所有预测面板失败，端到端分数为零。",
+        "supported": [
+          "有限态表征在新增场、夹持和键抑制下预测良好；某些强相关在对应键抑制后几乎不变，不能直接当作强直接作用。",
+          "另一些键抑制稳定降低相关但保留残余，支持网络传递；最终三个温度效应均确认。"
+        ],
+        "limits": [
+          "最终读取参数失败属模型交付问题，不是基础设施故障；不得事后用修复程序替换原分。",
+          "探索拟合误差不是不可执行最终程序的host成绩，零分也不抹除独立效应。",
+          "近零键未正式做等效性确认，温度对比未确认全图唯一性或热力学相变；一次区间覆盖不保证校准。"
+        ]
+      },
+      {
+        "episode_id": "unified-hysteresis_material-i1-r1",
+        "report_sha256": "9ddbed640cda18b45ac5447adeea96b6c76343cd1bf18ee20b91a5f250d6ba5b",
+        "summary": "磁滞材料显示扫速、reset和制备历史依赖，三个局部效应复验成立。候选一状态模型只在子集拟合较好，最终多项式基底又错配；证据支持有限时程记忆，未识别唯一内部机制。",
+        "supported": [
+          "相同瞬时场下响应随扫速和历史改变，排除了无状态的单值静态响应。",
+          "零场reset分支差与准备后的早期响应差复验成立；部分强后续协议会使已测响应趋同。"
+        ],
+        "limits": [
+          "早期小误差来自六条恒场释放子集，不能写成所有主/次回线的统一验证。",
+          "最终代码改变拟合基底，不能继承原误差；实现和表征不足尚未完全拆分。",
+          "有限等待分支不证明永久记忆、准静态磁滞或唯一多稳态机制；相近准备主张也非独立机制。"
+        ]
+      },
+      {
+        "episode_id": "unified-molecular_forces-i1-r1",
+        "report_sha256": "1696f5fc4c8eff7b4e793ab91aeb834ea8799b2de8e4b23df4d4c746fb96d337",
+        "summary": "几何、温度和中心力候选比较以及新不等边形状检验，支持规定域内近似温度不敏感的Morse式成对表征。能量、力和几何效应均有预测证据；“非共面三角形”应改为三维取向三角形。",
+        "supported": [
+          "共同中心成对模型联合解释能量与笛卡尔力，并对新增不等边几何和温度保持较小误差。",
+          "具体Morse拟合优于该次Lennard-Jones及指数加色散候选拟合；冻结面板支持限定域内预测。",
+          "三个几何变化的能量或定向力差独立复验成立，力分量须结合实验室方向解释。"
+        ],
+        "limits": [
+          "三点总共面，非零z坐标只检验空间取向，不是非共面三体几何。",
+          "候选比较不能穷尽其他势函数或排除噪声下的多体项，不能唯一识别微观作用。",
+          "未显著检测到温度项不证明精确温度不变；最终小斜率不是物理常数发现。",
+          "第10轮note中的参数没有对应成功分析输出，不能引用为已验证结果；第14轮输出及最终代码才是有效定量来源。"
+        ]
+      },
+      {
+        "episode_id": "unified-climate_response-i1-r1",
+        "report_sha256": "75c60e01edd83137e910ceaa70da1e77e943fc1de7b598a04083ce89391c0d00",
+        "summary": "气候响应支持一个有限时间窗的双时间尺度卷积表征，脉冲后残余升温及forcing切换效应可复验。探索最长仅81年，多次160年请求无效；冻结host面板另检验到160年。唯一热库结构与长期平衡敏感度未被识别。",
+        "supported": [
+          "不同幅度和阶跃、脉冲、振荡、反转历史可由共同线性核解释，按完整历史留一仍有较小误差。",
+          "forcing停止后的残余升温支持所测脉冲/恢复时程的记忆，年度TOA切换响应也复验成立。",
+          "增加第三/第四模态未改善已做的留历史检验，额外慢模态未被现有数据有效区分。"
+        ],
+        "limits": [
+          "探索中的160年实验请求均未成功，不能把note计划写成完成验证。",
+          "更慢模态能近似解释当前观测，不能推断唯一物理储库数、热容或无限时间平衡响应。",
+          "TOA回归用带测量误差的温度，回归残差不等于最终程序误差；年度读数不能单独证明瞬时温度连续性。",
+          "结论仅关乎人工环境，不是对真实地球气候的发现。"
+        ]
+      },
+      {
+        "episode_id": "unified-catalyst_aging-i1-r1",
+        "report_sha256": "a49e4b25bdde31381dfaa0fea55ff646cdeaba11e27b442f484e01ceb8104045",
+        "summary": "催化剂通过空白/标准品及相同事件位置的历史对照，分离出仪器漂移与既往反应条件影响；三个数值对比复验成立。最终代码的特征归一化和排列偏离成功拟合，较低拟合误差不能直接归给冻结预测器。",
+        "supported": [
+          "相同诊断反应在不同既往暴露后响应不同，支持样券自身历史的作用。",
+          "同事件位置和诊断条件下，较严苛的先前处理伴随更低输出，作用依赖此前温度、进料和持续时间组合。",
+          "乘法活动度表征有部分预测能力，当前条件与过去损伤需要分开解释。"
+        ],
+        "limits": [
+          "导出代码的进料归一化和损伤基底次序与拟合不同；原分应保留，不能直接继承拟合残差。",
+          "第二个确认对比同时改变过去和当前条件；第三个跨事件位置且含仪器漂移，均不隔离唯一老化机制。",
+          "有限序列中的持久损失不证明永不可恢复，乘法/Logistic活动度未唯一识别毒化或重排。",
+          "新增记录参与最终拟合，相关残差不是独立留出；独立预测证据来自冻结host面板。"
+        ]
+      },
+      {
+        "episode_id": "unified-field_ecology-i1-r1",
+        "report_sha256": "24893188fb0a34e328d6c6674bc24eba3d8c683c8dfb8f4aa6536956a2477edd",
+        "summary": "单次、重复及混合调查支持公开条件独立假设下的有效占据—检出表征，intensive提高检出，habitat关联可复验。冻结模型预测较好；组合公式和顺序对称性属于公开语义，habitat关联不是因果效应。",
+        "supported": [
+          "不同方法和访次共同约束占据与检出表征；intensive在所测范围检出更高。",
+          "按整次调查划分交叉验证，简单线性logit预测不劣于所比较高次候选；冻结host面板提供独立证据。",
+          "habitat关联、单次方法和重复方法三个对比均在新样点/检出噪声下确认。"
+        ],
+        "limits": [
+          "habitat未随机操控，不能将其关联解释成因果占据效应。",
+          "占据/检出分离依赖公开的固定占据和条件独立访次，聚合比例未排除异质性或等价机制。",
+          "first/any/all关系和部分访次顺序对称由公开语义给定，不能算新科学定律；通道并非统计独立。",
+          "检测率小斜率不证明真实habitat依赖，高阶候选CV差很小，不确立真实函数阶数。"
+        ]
+      },
+      {
+        "episode_id": "unified-phase_equilibria-i1-r1",
+        "report_sha256": "9e66cd31c64db683c1004f78ca167f3474fae457ba708bfffa326a175eed37c6",
+        "summary": "匹配全谱扫描显示制备路径差随保持时间减小，同时存在强峰增长与低维谱变化。最终程序仅保留粗略背景/宽峰，预测覆盖有限。三个加载主张中两个通过区间确认，另一个是正信号但区间失覆盖。",
+        "supported": [
+          "多个成分的匹配准备显示谱差随等待明显缩小，有真实实验—比较—收敛趋势证据。",
+          "部分峰随时间增长、部分宽谱响应减弱，不能只用整体强度缩放解释。",
+          "两个角度的样品散射对比复验通过；未通过角度仍有明确正信号，只是未落入冻结区间。"
+        ],
+        "limits": [
+          "有限时间趋近不等于热力学平衡、严格制备无关或完全失忆；PCA维数不是相数。",
+          "最终程序未保存候选低秩/插值结构，也未表达强峰增长，候选CV不是最终程序成绩。",
+          "候选CV先用全部光谱拟合PCA再留一，同组CV还选超参数，不能称严格独立验证。",
+          "三个主张是同一加载操作的三个角度且加载语义公开；半加载检查缺匹配满加载记录并依赖插值。",
+          "控制变化面板含空holder与较低loading，分数较高不能证明干预建模更强。"
+        ]
+      },
+      {
+        "episode_id": "unified-microecology-i1-r2",
+        "report_sha256": "de5a908ffb28425c1a1b198152cacd7c63b205bfc6d76535f93fc4df0f15f12b",
+        "summary": "48 条轨迹显示 B、C 单培养不能利用所给营养维持增长，但与 A 共培养后能够增长；最终程序却把三者都设为可直接利用营养，连单培养也未复现。记录中多次“已拟合并保存”的分析实际上只返回状态文字。三个短延迟主张中仅补料主张通过原定数值区间复核，不能据此称为识别了完整生态反馈。",
+        "supported": [
+          "单培养与成对共培养提供清楚的组成依赖：72 小时 B、C 单培养约为 0.021、0.023，而与 A 共培养时相应读数约为 0.459、0.344；单培养营养仍接近初值。",
+          "匹配的 peak-01 去除实验不仅改变被去除读数，后续 C 生物量也下降；这是该条件下的延迟响应线索，需要与即时去除量区分。",
+          "补料后一小时的营养增加在新的配对复核中得到支持；两个去除实验也具有明确负向效应，但申报幅度明显偏小。"
+        ],
+        "limits": [
+          "第 11–14 轮没有执行所声称的 RBF 拟合、save_model 或输出验证；第 14 轮模型目录为空，不能描述为“拟合成功后换模型”。",
+          "最终程序将 B、C 单培养的 72 小时生物量预测为约 3.22、3.24，实际约为 0.021、0.023，并错误预测营养耗尽。低分反映实际提交的严重结构失配。",
+          "三个主张都读取事件后一小时的被直接补入或去除的通道；探索轨迹未在 25 小时直接取样，数值幅度依赖插值或推断。",
+          "共培养优势和部分去除后响应尚不能确定全部交换路径、唯一物质功能或完整反馈闭环；本例只通过 1/3 个申报区间。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-coupled_oscillators-i1-r2",
+        "report_sha256": "6f0382e6a37314bebf62ad3acebb20da8aa7a51797516df3940acf249d4272a7",
+        "summary": "八个独立位置/速度激发加上切边、加载、阻尼和约束实验，支持能迁移到组合干预的线性力平衡模型。最初拟合失败后，矩阵对数初始化帮助恢复了低残差参数；最终提交与真实保存的模型一致。组合干预的准确性经审阅者复算确认，但不能把未执行的验证或最初“已保存”状态文字算成模型实际完成的步骤。",
+        "supported": [
+          "从独立基响应估计状态转移，再在基础和单项干预上拟合，可在未参与拟合的驱动和组合干预轨迹上达到约 0.00255 的合并残差。",
+          "三个相同初态下的切边、加质量和加阻尼对比，均通过新配对数值复核；效应涉及其他节点，具有系统响应信息。",
+          "第 10 轮确实调用 save_model 并获得回执，最终程序使用这些已拟合参数，保存与提交链最终闭合。"
+        ],
+        "limits": [
+          "第 2 轮 success=true 伴随远高于噪声的残差，并不是成功辨识；第 4/6 轮才恢复有效模型。",
+          "第 6 轮优化使用前 14 条，所报大部分残差是训练残差；第 9 轮只查询目录和历史，没有实际计算第 17–24 条的误差。组合干预指标为审阅者事后复算，不应归为模型已经执行的验证。",
+          "第 7 轮只有“saved”文字，目录随后为空；真实保存直到第 10 轮才发生。",
+          "特定时刻的加载/阻尼效应受相位影响，不能推广成质量或阻尼普遍增加某节点运动；所给力学候选族内拟合不等价于任意机制空间中的唯一结构。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-reaction_kinetics-i1-r2",
+        "report_sha256": "8c5b2505d1464f1bbb0624835dc86f019777bd37f2c7b01e7ff4b33c07acc7ae",
+        "summary": "跨五个温度的纯组分响应支持稀疏可逆 Arrhenius 候选模型，并成功预测未拟合的混合初态、加料及温度切换。一次错误的边顺序映射造成大残差，模型回查后修正并保留了原拟合参数。三个预先计算、随后直接测量的对比均得到复核，是较完整的实验到预测链条。",
+        "supported": [
+          "先用纯组分轨迹拟合、再在混合和事件轨迹上验证，真实留出残差约 0.00193；详细平衡约束与这些观测相容。",
+          "修正传播实现的边映射后，四条后续干预轨迹的审阅复算残差约 0.00195，无需重新拟合参数。",
+          "第 13 轮先计算三项数值对比并真实保存，第 14 轮测量对应六个实验臂；温度变化、加 C 后的保留量和温度切换效应均通过新的配对复核。"
+        ],
+        "limits": [
+          "第 8 轮误把原参数映射到不同的边列表和方向，产生约 0.171 的合并误差；这反映分析实现错误，并非世界突然偏离原模型。",
+          "第 10 轮记录的 0.001949 合并了三条旧验证与四条新验证，不能精确表述为仅四条新记录的指标；单独四条复算约 0.001950。",
+          "第 11 轮只有“已保存”文字，实际保存发生于第 13 轮。",
+          "近噪声预测和详细平衡约束相容性不证明独特反应拓扑，未检出的边也不能凭点估计断言绝对为零。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-heat_transport-i1-r2",
+        "report_sha256": "1e1ee6116c52ff9a0a4741f80f95053a9b3260b7f49c5cffd5bd0f6edf0ea695",
+        "summary": "48次实验支持左右不均匀的扩散、环境冷却及受流动影响的热传输；运行实际完成了分段与均匀扩散模型的数值比较。但最终程序改写了成功拟合的参数状态，未完整保留拟合成果，预测仍有明显误差；三项局部温度效应通过了独立复验。",
+        "supported": [
+          "先测量边界阶跃、局部热源、正负流动和冷却，再扩展到不同初始/边界/环境温度及双热源，共48次有效实验。第三轮实际拟合使用618个非零时刻读数：分段扩散模型RMSE为0.0430 °C，均匀扩散对照为0.7564 °C，支持在所测条件下使用空间非均匀输运模型。",
+          "最终程序仍实现分段扩散、平流、环境热损失和局部热源的数值传播。冻结后主机新条件分数79.7103、控制变化分数86.5285；这证明该近似模型有跨条件预测价值，也显示其精度尚未达到探索拟合所暗示的水平。",
+          "32对独立处理/对照复验分别确认：冷却对中心探针的温度效应约−2.355 °C，局部加热效应约+4.758 °C，有流动时改变左边界温度的效应约+6.101 °C；三项均落入冻结区间。"
+        ],
+        "limits": [
+          "第三轮成功拟合的界面位置及系数组没有原样进入最终程序；最终也改变了空间离散方式。第八轮对重构求解器的验证超时，没有证据将最终程序称为已验证拟合模型的无损导出。",
+          "0.0430与0.7564是探索数据上的拟合残差，不是冻结主机留出误差；后来若干“验证”回合实际只采集了数据，没有返回相应预测残差。",
+          "热方程家族和可调控制的物理语义已由公开合同给出；本例支持该家族内的识别与实验区分，不能包装成自主发现热方程。",
+          "第三项正式效应在两臂中保持流动相同、改变边界温度，因此不能单独证明流动的因果效应。局部效应通过不等于精确定位界面、唯一识别扩散剖面或证明域外泛化。"
+        ]
+      },
+      {
+        "episode_id": "unified-gene_regulation-i1-r2",
+        "report_sha256": "3a27c38d01e905f36bf6a440c72005ad80cb0220224ebc8fedcabfb275432562",
+        "summary": "通过多初态和正负驱动脉冲，模型实际拟合出了能在两组留出轨迹上达到测量噪声量级的五边候选网络。最终提交却显著改变了已拟合参数，探索数据上的误差约增大十倍。三个准备条件对比得到复核，但它们同时改变多个初始分量，不能当作三条单独调控边的因果证明。",
+        "supported": [
+          "先拟合八条试验、再预测八条新脉冲轨迹，残差约 0.00393；后续再以 16 条拟合、8 条留出得到约 0.00405，均接近公开测量噪声。",
+          "审阅者用第 9 轮已拟合参数预测之后新增的 18 条轨迹，误差仍约 0.00404，支持该候选动力学在这些正负和组合驱动条件下的迁移。",
+          "三个在 3.5 小时读取的准备条件差异通过新配对复核，最终文字本身正确限定为联合初态对比。"
+        ],
+        "limits": [
+          "最终程序改变了偏置、时间常数和多条边强度，却没有后续拟合或验证记录支持；全部 42 条探索轨迹的残差由约 0.00401 增至 0.03978。",
+          "第 12 轮只恢复历史而未完成自述中的新验证，第 14 轮无效；最后一轮称这些对比“已重复”也没有探索阶段独立重复相同制备的记录支持。新的评分复核与探索重复需区分。",
+          "三个 claim 中两个使用同一对准备条件的不同输出，且各准备同时改变多个基因初态；结果不唯一定位调控路径。",
+          "稀疏候选模型预测成功仍不构成独特拓扑辨识，也不能将本例后验诊断参数替换为实际冻结成绩。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-ising_spin-i1-r2",
+        "report_sha256": "cb3b6ac70e699e67c26a9798241fdfaac239f5a110502337739dc652997505d1",
+        "summary": "运行通过温度曲线、局部场、钳制和分级断键实验，校准并保留了可组合使用的64状态成对平衡模型。较早快照对后来8个组合实验的复核误差接近噪声，主机预测也很准；但三项正式效应均是高温局部场的自响应，不能将其数量解释成三项深层机制发现。",
+        "supported": [
+          "48次有效实验除局部场和单点钳制外，还包括全断键、分级抑制、单条键干预、拟合近零键的负对照，以及组合场/钳制/断键测试。分析实际拟合局部场和有符号成对作用，并保存了4个可执行版本。",
+          "最终v4在13,944个探索读数上的RMSE为0.003001。为区分重新拟合后的残差与真正顺序留出，本次评审用较早保存的v3仅复算后来obs-0041至obs-0048的公开观测，RMSE为0.002965，与公开噪声0.003相当。",
+          "最终程序完整保留成对平衡模型，对全部允许自旋状态求和，并按输入应用外场、钳制及部分键抑制。冻结后主机新条件与控制变化分数分别为99.9096、99.8986，支持在公开家族和采样域中的定量迁移。",
+          "独立复验确认温度6.0时给A、C、F分别增加局部场的自身磁化效应约为+0.08383、+0.08417、+0.08283；三项均落入冻结区间。"
+        ],
+        "limits": [
+          "成对Boltzmann平衡律、可见节点和控制语义已公开给出；本例是该已知家族内的系统识别和预测，不能声称从未知物理中发现了成对平衡定律。",
+          "运行将最终8项实验纳入v4重新拟合后才报告“压力测试”误差，该原始数字不是v4的独立留出成绩；本次评审的v3顺序留出与最终主机验证提供了更合适的支撑。",
+          "三项正式效应分属不同节点且符合评分去重规则，但都是同一类高温正自响应，受二值平衡系统的涨落响应关系约束，无法单独识别网络拓扑或证明相变。",
+          "同一数据上的公开物理基线新条件/控制变化分数已为99.4899/99.2578。高绝对分数说明预测准确，但模型相对强基线的评分优势有限，不能据此称为独有能力或更高发现深度。",
+          "基线是使用该agent已经采集的同一公开观测拟合的物理参考预测器，不是独立采样的端到端科学agent；与其比较只能衡量给定数据后的预测器差异，不能否定本运行的采样与实验设计贡献。"
+        ]
+      },
+      {
+        "episode_id": "unified-hysteresis_material-i1-r2",
+        "report_sha256": "03774d6cd32e432e83ba220f6e76a202d05ffdf1ea92847829ea9b7c611878b6",
+        "summary": "快慢扫描、停留、反向预处理和重置对照支持有限时长的历史依赖及速率依赖。运行将初次较差的拟合改进为可传播预历史的单状态三次动力学模型，在追加数据重新拟合前已得到接近噪声的样本外误差，并把该科学模型保留到最终快照。",
+        "supported": [
+          "46次有效实验覆盖正负重置、快慢主回线、次回线、停留和相反方向预处理；这些已执行的轨迹为历史依赖和速率依赖提供证据，不仅是实验计划。",
+          "初次动力学拟合整体RMSE约0.313；改进后前24条轨迹的平均逐实验RMSE约0.00612。第九轮在重新拟合之前，用旧参数预测新收集的obs-0025至obs-0032，合并RMSE为0.006021，与公开测量噪声0.006相当。",
+          "最终保留cubic_relaxation/v1快照，将重置状态经过恒场预处理，再按分段线性外场积分三次非线性响应律。冻结后主机新条件与控制变化分数分别为99.7369、99.6835，支持该低维模型在主机采样域的预测充分性。",
+          "独立32对复验覆盖全部三项冻结区间：匹配预处理和读出时刻的正负重置差约1.942响应单位；额外正向预处理的短时效应约1.217；完整符号镜像历史的端点差约0.460。"
+        ],
+        "limits": [
+          "第九轮报告的0.006009是将这8条新轨迹也纳入重新拟合后的残差；真正样本外数字应使用重新拟合前的0.006021。",
+          "最终对obs-0039至obs-0046的误差汇总因函数签名错误而失败；模型快照在错误前已保存并被最终提交使用，不能把这一分析回合说成成功完成了最终留出误差审计。",
+          "一个单状态三次模型能够预测数据，不证明材料只有一个真实内部变量，也不唯一识别微观机制。两状态等替代机制没有完成系统比较。",
+          "重置差证明所测有限时长中的历史依赖，不证明永久记忆；第三项正式效应同时改变重置、预处理和外场方向，应描述为完整历史的复合对比。"
+        ]
+      },
+      {
+        "episode_id": "unified-molecular_forces-i1-r2",
+        "report_sha256": "989a23addd43ea0feba82aff3574a027d36542b71392127225836a7f8d0b6e9b",
+        "summary": "仅6次有效调用提供了48个几何测量，支持短程排斥、吸引区间及测量分辨率内的温度不敏感性。解析势拟合失败后，最终程序改用从能量和力共同构造的径向Hermite插值，并将其成对相加；这一经验物理模型在新几何和变化温度的主机面板上保持了高预测精度。",
+        "supported": [
+          "有效记录包括等边三角形的距离扫描，以及相同8种异形几何在200、450、800 K的测量。相邻温度对比的能量差RMS约0.00045–0.00055 eV、力差RMS约0.00086–0.00099 eV/Å，与独立读出差的噪声量级相当，支持“当前分辨率下未检出温度影响”。",
+          "最终程序并未丢弃物理结构：从等边数据提取径向能量及导数，用Hermite插值保持能量与力的一致关系，再对三条边求和生成总能量和矢量力。评审仅对公开观测复算，异形几何的能量RMSE约0.000284–0.000449 eV、力RMSE约0.000633–0.000845 eV/Å，接近相应测量噪声。",
+          "冻结后主机新几何分数99.0481、含温度变化的控制面板分数98.8966，支持该成对径向模型在所采样距离与温度范围中的实用迁移能力。",
+          "32对独立复验确认：短距离压缩使总能量增加约5.90130 eV；指定方向下的距离改变产生约−3.75563 eV/Å的x向力差；吸引区间内改变距离使能量下降约0.21930 eV。三项均进入冻结区间。"
+        ],
+        "limits": [
+          "多次后续几何实验因距离越界或形状无效而未执行；真正证据只有6条有效记录，不能把计划中的多轮异形验证当成已完成实验。",
+          "第十二轮命名解析势拟合给出的能量/力RMSE约0.196/0.336，远大于读出噪声，不能作为成功识别该解析势的依据；最终的成功来自经验径向插值。",
+          "异形测量早于最终插值构造，且被作者查看，因此评审复算是对公开数据的结构一致性检查，不是完全盲的独立留出；冻结主机面板才是最终模型的独立预测验证。",
+          "少量异形几何和三档温度无法排除分辨率以下的多体或温度项，也不证明全范围严格温度无关、唯一微观势、动态结合或未测距离的外推。"
+        ]
+      },
+      {
+        "episode_id": "unified-climate_response-i1-r2",
+        "report_sha256": "e9a5cde5402e59b9a72598f509a87d1f0ad0af1f346f87185405585c7c46cfee",
+        "summary": "常值幅度、负向强迫、脉冲、斜坡和振荡实验支持带快慢记忆的近似线性响应。实际比较显示双模态优于单模态，最终双模态快照被完整保留；冻结后条件/控制变化预测为99.41/99.57，三项数量效应均复现。证据支持有效响应模型，未唯一识别热储层。",
+        "supported": [
+          "11条实际实验记录覆盖多种强迫历史，最长119年；单模态温度拟合RMSE约0.0827 K，双模态约0.0577 K，增加更多模态仅小幅降低残差。该判断来自分析返回值，而非仅来自代理note。",
+          "按原冻结代码回放已观察数据，温度/能量收支RMSE为0.05867 K和0.14374 W m^-2，与最终拟合返回值一致；model snapshot与最终预测程序共同保留两个记忆状态和当前强迫项。",
+          "主办方预先冻结且在提交后评估的新条件和控制变化面板支持域内泛化；总分95.15546992116518按原报告保留。",
+          "独立32对确认分别得到十年温升约2.3476 K、首年净吸收增加约3.9209 W m^-2、持续强迫后切零相对继续强迫减少约5.8159 W m^-2，均落入冻结区间，3/3达到协议复现端点。"
+        ],
+        "limits": [
+          "从一模态到二模态的比较和近噪声残差不唯一识别物理储层；更高阶模型可给相近有限时域预测。",
+          "多次请求更长实验因数组长度或采样年不匹配被拒绝；不能把note中的160年实验计划计为已观察。实际最长119年，慢模态和更远期响应仍弱约束。",
+          "三个自选效应主要检验强迫幅度及切换的数量响应；首年和切换端点混合直接强迫响应与热调整，不单独证明慢记忆机制。",
+          "拟合残差、交叉验证和冻结后面板是不同层次的证据；高分不证明唯一机制、发现深度或污染抵抗。"
+        ]
+      },
+      {
+        "episode_id": "unified-catalyst_aging-i1-r2",
+        "report_sha256": "df8543d9e955c27ef65f385bfaec6c2697107dee3b765d7ad58e5e7267542c8f",
+        "summary": "空白/标准与同券重复、交叉历史实验实际分离了仪器漂移和使用后衰减，但最终代码改变了多项式特征项序而直接沿用拟合系数，未保留已拟合函数。条件/控制变化预测仅42.83/29.74；仅匹配事件计数的一次使用衰减效应复现，另两项数量主张失败。",
+        "supported": [
+          "空白及标准序列提供事件计数相关校准，早期校准残差约0.0026—0.0030；同券高条件重复使用的校准产量由约2.008递减至0.060，且共同探针交叉历史确实执行。",
+          "round 6 对387个反应读数拟合新鲜产量与累计损伤，测量空间RMSE约0.00363；round 10 另一次模型对obs-0025—0032进行实际留出诊断，RMSE约0.01795。这些是中间模型的分析证据。",
+          "最终代码仍包含仪器偏移/增益和同券累计损伤结构，但其p3/p2项序与round 14生成系数的feats函数不一致。按未改动最终代码回放已观察信号，RMSE为1.53156，不能将中间拟合精度归给冻结模型。",
+          "匹配事件计数和当前条件的一次同券使用效应独立均值为−0.02152，落入[−0.036,−0.020]，是1/3被确认的数量效应；总分36.32668193538572保持原值。"
+        ],
+        "limits": [
+          "round 14所报近期log-RMSE 0.0743是在全数据拟合之后选近期子集计算，不是独立留出验证；且这些残差属于正确训练项序，不能代表最终错误项序的程序。",
+          "没有保存模型快照；round 15试图恢复特征构造却因收尾阶段必须提交而被拒绝，最终手工转写造成可定位的模型保留失败。",
+          "联合升高温度、进料和时长的主张预期增加1.02—1.10，独立均值约1.9031，数量失败；固定温度时长提高进料的主张预期下降，独立均值却增加约0.50446，方向也失败。",
+          "实际老化比较和校准证据不能因低最终分而抹去，也不能由中间拟合推定唯一失活机制；最终低分按原报告保留，不修复或补评分。"
+        ]
+      },
+      {
+        "episode_id": "unified-field_ecology-i1-r2",
+        "report_sha256": "6309a5bc51b2988bb32597f0b35e3bbc8163881bf9774b124b0573ece6424eaf",
+        "summary": "48组单次、重复访问及反向顺序调查完成，但全部分析失败且预算耗尽；最终提交未有成功拟合记录支持的手写曲线，其检测随栖息地梯度变化方向与观测相反。条件/控制变化预测13.20/7.22；三项效应方向为正，但冻结数量区间全部未覆盖独立均值。",
+        "supported": [
+          "实验覆盖密集与偏移栖息地网格、两种方法、重复访问和访问顺序互换，能够为占据/探测分离提供数据；采集设计本身不等于已完成分离。",
+          "同一网格的6次单快速访问观测，栖息地两端的平均检测率约由0.302降至0.0208；4次单密集访问约由0.602降至0.0469。最终模型的曲线方向未保留这一观测趋势。",
+          "独立确认的三项调查设计效应均值约为+0.11426、+0.08643、+0.13281，支持这些具体条件下增加检测的方向；它们分别低于冻结区间下界，故协议确认数为0/3。",
+          "最终程序实现占据概率乘条件探测概率的结构以及first/any/all关系，但没有成功的参数拟合、模型阶数比较或留出分析输出；总分11.485030338442689保持原值。"
+        ],
+        "limits": [
+          "round 6拟合/交叉验证请求超时，后续3次分析也均超时，剩余分析预算为0；不能将代理note中的“支持平滑模型”或“检验独立性”计为完成的分析结果。",
+          "没有模型快照；最终手写参数与实际观测不合，冻结模型在既有数据回放中first/any/all RMSE约为0.261/0.375/0.174。",
+          "协议已给出稳定占据、无假阳性及条件独立探测假设；实现相应公式不等于发现或验证这些假设，更不能证明唯一生态机制。",
+          "栖息地对比是关联而非随机因果干预；0项冻结区间确认不意味着效应为零，而是本次数量预测/区间校准失败。"
+        ]
+      },
+      {
+        "episode_id": "unified-phase_equilibria-i1-r2",
+        "report_sha256": "e1f337c88e17e8ae619bab325341517fb7e14f277c4d6b502f25ea168eb59175",
+        "summary": "空载、端元、组成/保温时间及两种制备历史实验得到低维光谱预测模型，且通过快照保留到最终提交；条件/控制变化预测90.27/94.41，两项大效应复现。第三项微小制备差异在从分析转为提交时反转了处理/对照方向，其负区间既不符原观测方向也未获独立确认。",
+        "supported": [
+          "48条光谱覆盖空载及47条满载样本，实际进行了组成、保温和制备比较；中间组成两种制备的整谱RMSE由初始约0.1373降至120时刻约0.00532，支持有限时间内制备差异缩小。",
+          "低秩表示与多种时间变换、插值设置有实际数值比较；最终保存并提交五分量核插值模型，保留空载背景与公开的载量缩放关系。",
+          "冻结后的主办方面板支持此域内光谱预测，总分85.93412008272423；这比依靠代理解释或训练残差提供了更独立的预测证据。",
+          "老化光强增加和端元替换减少两项效应独立均值约+1.24358和−0.90708，均落入各自冻结区间；第三项powder−quenched均值约+0.00274，不在负区间，确认2/3。"
+        ],
+        "limits": [
+          "round 14从全部光谱先计算均值和PCA基，再对核回归逐条件留出，并在同一CV上筛选超参数；0.02160平均CV误差不是包含表示学习及调参的完全独立验证，不能替代冻结后主办方检验。",
+          "第三项选择了两条长时光谱中绝对差最大的角度；分析计算quenched−powder为−0.01345，而最终声明及规格改成powder−quenched却仍使用负区间。实际原观测powder−quenched为+0.01345，原冻结模型给约+0.00372，故负主张存在明确臂方向错误与单点选择不确定性。",
+          "准备差异缩小不证明已达平衡、相同无限时极限或唯一相机制；本次没有温度变化，也没有超过120保温时间的观测。",
+          "除空载外探索仅满载；载量线性是公开装置语义被程序正确采用，不能算新发现。低维光谱表示也不唯一等同于物相数或隐藏相组成。"
+        ]
+      },
+      {
+        "episode_id": "unified-microecology-i2-r1",
+        "report_sha256": "b988b624a3c9412f7b982cec24fdc141b96bec003a4386aae3bfe01f5e9661cd",
+        "summary": "单培养、共培养和选择性去除提供了有意义的生态响应线索，包括去除同一分泌峰后 C 的早期与晚期效应方向不同；但本次没有完成记录可核查的参数拟合，最终程序错误预测 B、C 可单独消耗营养大量增长。三个最终主张均围绕补料后一小时的营养余量，其中两个通过，尚不足以确认完整互养机制。",
+        "supported": [
+          "B/C 单培养和不含 A 的混合培养衰减且几乎不消耗营养，而加入 A 后 B/C 增长，支持条件依赖的群落关系。",
+          "匹配对照中，12 小时去除 peak-01 后 C 到 60 小时降低；在另一制备背景中也观察到相同方向。",
+          "去除 peak-02 后 C 在 24 小时增多、60 小时反而减少，说明干预效果具有时间依赖，单一终点不足以概括。",
+          "三项短延迟补料效应方向均为正，两个申报数值区间通过新配对复核。"
+        ],
+        "limits": [
+          "第 10 轮只导入 RBFInterpolator 并汇总记录，第 11 轮只导入优化工具并抄出数据，第 14 轮模型目录为空；这些动作不能支持“已完成拟合、交叉验证并冻结”的自述。",
+          "最终程序对 B/C 单培养的 60 小时生物量预测约为 2.30、2.52，实际约为 0.039、0.040，并错误预测营养耗尽。",
+          "去除实验的生物量差异来自少量探索对照，尚未排除替代机制；最终三个 claim 没有确认这些延迟生物量路径。",
+          "三个 claim 是同类近即时补料响应，且探索网格未直接测量其 9、13、19 小时读数；第三个区间低估了残留营养增加，不能把 2/3 通过解释为三个独立机制发现。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-coupled_oscillators-i2-r1",
+        "report_sha256": "24fc59d349a0e19fcc82a0c1173363f1086517c0eda44e2d9a8762319ef3bf06",
+        "summary": "独立基响应和切边、加载、约束、驱动实验确实支持了一个低误差六边力学候选模型，但最终提交改成了未经验证的四边中间值模型，探索误差扩大约 130 倍。三个最终主张转向从静止施恒力后极短时的同节点速度，均通过复核；这保留了局部效应证据，却不能证明最终网络结构正确。",
+        "supported": [
+          "第 4 轮从八个基响应估计的生成元已经能预测不同控制，第 11 轮进一步拟合后，基础与未拟合控制轨迹的误差达到测量噪声量级。",
+          "切断 A–D 和 B–C 相比相同制备的完整网络产生明显变化，支持这两条控制在本实例中的作用；最终程序却把两者省去。",
+          "审阅者以第 11 轮参数预测后来八条长时间组合条件，残差约 0.00265，说明有效模型确已在最终提交前得到。",
+          "三项短时恒力响应通过新的配对复核，可作为限定时刻的效应证据。"
+        ],
+        "limits": [
+          "最终提交改用统一的节点参数及四边中间值，既未沿用第 11 轮六边拟合结果，也未给出支持该替换的分析。全部 48 条探索轨迹的误差由约 0.00256 增至 0.33267。",
+          "第 5 轮真实保存尝试因数据格式错误失败；第 14 轮只有“已保存”的状态文字，模型目录实际为空。不能把完成文字当成快照回执。",
+          "探索中没有恒力试验；最终主张用不同频率、初态或约束的驱动记录作背景证据，再由新实验复核。0.25 秒同节点速度主要受公开单位质量与施力设定约束，不能计作三个网络机制发现。",
+          "第 13 轮无效，第 14 轮未计算最后八条的验证误差；这些后续指标来自审阅者复算。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-reaction_kinetics-i2-r1",
+        "report_sha256": "8b22304c40a6090fe16f404c72f7eba86979023ddadee43f6f2c497b665b2739",
+        "summary": "跨温度、浓度尺度和干预的轨迹支持一个能准确预测的五边可逆动力学候选模型，最终程序确实保留了已拟合参数。加 A 或 D 后经过 40 秒的物质再分布有重复探索对照和新的效应复核。不过记录中的“不可变快照已保存”没有实际回执，部分所谓留出指标也在重拟合之后才计算。",
+        "supported": [
+          "全局拟合能描述基础、加料、温度切换和浓度尺度变化，40 条探索轨迹残差约 0.00201。",
+          "审阅者用前 24 条拟合时的参数预测随后八条极端条件轨迹，残差约 0.00199，支持这些已测范围中的预测迁移。",
+          "控制臂三次、加 A 臂三次、加 D 臂两次的探索重复显示延迟再分布；三个最终读数对比均通过新配对数值复核。"
+        ],
+        "limits": [
+          "第 6 轮将全部 32 条用于拟合，随后才报告后八条的 stress 残差；记录中的该数字不是严格留出结果。重拟合前的独立复算属于审阅证据。",
+          "第 8 轮目录为空，第 11/14 轮只返回“快照已保存”的状态文字，第 12/13 轮目录仍为空；最终是直接提交代码，不能声称保存链已完成。",
+          "前两个 claim 使用同一次加 A 干预的两个输出，共享控制和治疗轨迹；不是三个独立干预机制。",
+          "候选图中缺少 A–C 边及局部参数标准误都依赖所选模型，未提供足够的替代拓扑比较以证明唯一性。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-heat_transport-i2-r1",
+        "report_sha256": "75c5f88423b28bf7a35a0973c383b1bfeab60885c135b1594e4c3b02d641dd5a",
+        "summary": "两区扩散模型曾对初始无流动、无冷却数据拟合到接近噪声，但联合拟合失败，成功状态没有进入最终程序。最终以暂定系数提交热方程求解器，主机预测仅有有限准确度；三项较宽区间覆盖了早期温度保持、冷却和加热效应。",
+        "supported": [
+          "实际执行48次实验，覆盖空间探针、源项、流动反转、冷却、边界与初始条件变化。第三轮在前6条无流动、无冷却曲线的324个读数上完成两区扩散拟合，噪声归一化均方误差为1.0738，表明该初始子问题能被数值模型近噪声描述。",
+          "最终可执行程序保留了分区扩散、平流、环境损失和Gaussian热源结构，但使用暂定系数。冻结后主机新条件与控制变化分数分别为42.1876、39.0286，支持有限预测能力，不能支持高精度跨条件模型。",
+          "独立32对复验确认三项0.5 s早期效应均进入预先冻结的宽区间：初始温度升高的中心读数效应约+9.804 °C，冷却效应约−0.869 °C，局部热源效应约+1.138 °C。"
+        ],
+        "limits": [
+          "初始扩散拟合不包含联合平流/损失校准；第十一轮联合拟合因矩阵维度不匹配失败。第十三轮“candidate fit prepared”仅返回文字和空快照列表，第十四轮明确fit_available=false，不能将这些回合算作成功拟合。",
+          "最终程序改动了初始成功拟合的系数并且没有快照或最终残差检验，科学分析成果只保留了部分结构，未完整保留参数及验证链。",
+          "三项区间宽度分别为1.3、1.9、1.2 °C，覆盖成功不代表精确效应估计；首项主要确认较短时间内初始温度差的保持，符合公开规则但对输运机制区分的信息量有限。",
+          "方程家族已公开；已完成的拟合没有系统排除均匀或平滑剖面替代解释，也不能依靠实验覆盖范围本身声称所有拟定的叠加、界面或流动假说已被定量验证。"
+        ]
+      },
+      {
+        "episode_id": "unified-gene_regulation-i2-r1",
+        "report_sha256": "4441e2a5a3305f762470a910b7db0b604367fefc5e1a2c538938a94b2034a10e",
+        "summary": "多初态、正负脉冲和组合驱动支持一个四边非线性候选网络，最终拟合、真实保存和提交程序一致。共同对照显示直接驱动之外的下游响应，第 12 轮也实际记录了重拟合前的新轨迹预测。三个最终主张均是受驱基因自身的响应并通过复核，能够支持数值预测，但不单独验证全部网络结构。",
+        "supported": [
+          "稠密模型与四边稀疏模型在已测轨迹上的拟合误差接近，稀疏候选可解释多种初态和脉冲响应。",
+          "共同制备下，正向驱动 G1 伴随 G4/G3 降低，驱动 G2 伴随 G1/G4/G3 增加；这些非受驱通道变化提供下游传播的实验线索。",
+          "第 12 轮在重拟合前预测新八条的残差约 0.00395，接近测量噪声；审阅者逐批使用先前参数预测后来八条，也得到约 0.00387–0.00422。",
+          "第 14 轮真实保存的模型与最终程序一致，48 条轨迹误差约 0.00400；三个最终脉冲效应的申报区间均通过新配对复核。"
+        ],
+        "limits": [
+          "第 4、6、8 轮的部分 validation/new-record 指标是在将新数据加入拟合后计算，不能一概称为严格留出；第 12 轮才显式区分前后参数的新记录误差。",
+          "稀疏与稠密训练误差相近只支持较简约的候选，不能证明四边图唯一；所有结构判断受给定 sigmoid ODE 候选族约束。",
+          "三个最终 claim 读取受驱基因自身，且共享一个探索控制；通过这些读数不等于独立验证所有下游调控边。",
+          "最终误差接近已知噪声并不说明真实生物机制已恢复或可推广到模拟边界之外。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-ising_spin-i2-r1",
+        "report_sha256": "23013af1f676bb391a61c34fd84c96dfd3a4a068c61434f584f0b81e44809249",
+        "summary": "温度、钳制、断键与组合干预支持了近噪声的探索拟合，但最终快照把节点名称当作数值数组索引，16个主机预测实验全部运行失败。没有提交效应主张，因此最终0分应归于模型导出/执行失败，同时保留此前系统识别的实际进展。",
+        "supported": [
+          "48次有效实验覆盖局部场、钳制、部分和完整断键，以及多种组合控制。第二轮对早期观测的成对平衡拟合RMSE为0.002967，第四轮扩大数据后的RMSE为0.002945，表明探索阶段实际形成了可解释公开观测的有效参数模型。",
+          "第十二轮使用全部48条记录重新拟合，返回success=true，探索RMSE为0.002997；这支持拟合数值确实存在，但它是包含最后8条实验的重新拟合残差。",
+          "原始冻结主机报告将8个新条件和8个控制变化预测全部标为candidate_runtime_error。提交没有效应主张，三个效应槽位均为空，最终主表分数为0。"
+        ],
+        "limits": [
+          "最终快照中的pairs保存为节点名称字符串对，predictor却直接将其用于S[:, i]数组索引，并用数值索引对查找该列表。静态代码已显示序列化语义不一致；保存了快照并不意味着保存了可执行模型。",
+          "中间拟合函数与导出predictor是不同实现。不能把中间低残差当作最终程序的预测成绩，也不能在评审中修复后替换原始零分。",
+          "第六轮优化success=false，虽已有低残差并保存v1，不能称所有优化阶段均成功；第十、十四轮仅检查快照内容，未完成所宣称的预测或区间校准。",
+          "没有独立主机预测通过，也没有效应复验。公开已给定成对平衡家族，探索拟合尚不支持家族外唯一机制或拓扑结论；最终回合文字中的边标签与保存参数的索引还不一致，应避免发布其具体网络解读。"
+        ]
+      },
+      {
+        "episode_id": "unified-hysteresis_material-i2-r1",
+        "report_sha256": "5368edb1c0852be5296f1e10ffa0a98b402eab9284d8da533de671648d805233",
+        "summary": "48条轨迹实际显示有限时长的重置和预历史依赖，以及扫描速率和场强对切换的影响；但中间三次动力学拟合仍有明显残差。第一版提交被协议检查拒绝后，最后提交换成未保留拟合状态的通用对称模型，主机预测较差；三项效应方向正确，却全部落在冻结区间外。",
+        "supported": [
+          "实验实际覆盖正负重置、零场长停留、恒场切换、快慢主回线、反转、停留和相反预处理。obs-0041/0042在零场1200 s的响应差约2.232，早期独立零场轨迹至3600 s仍保留约2.229的差，支持所测时间窗内的重置历史依赖。",
+          "运行先对导数做回归，再直接拟合轨迹。第八轮使用1,003个读数的轨迹RMSE为0.08416；第十轮调整实验权重及鲁棒损失后，全部观测的原始RMSE改善到0.05084，说明实际尝试了模型改进，但尚未达到公开噪声0.006。",
+          "冻结后的最终程序能够运行，主机新条件/控制变化分数为18.0350/8.1197，表明其定量预测不足。三项独立32对复验的均值分别约2.22708、2.28263、2.23005，均为正且远大于均值标准误。",
+          "三项冻结区间分别为[1.94,2.06]、[1.88,2.08]、[1.90,2.08]，全部未覆盖复验均值。正式verified_nonzero_effects=0准确表示本评分规则下的定量区间确认失败，不能解释为未观测到非零历史或场强效应。"
+        ],
+        "limits": [
+          "第十轮拟合保留了偏置、独立的场与响应系数、以及重置初态；最终程序却替换成通用对称三次模型并自行传播重置，未保留成功返回的拟合参数状态。无模型快照，也没有最终残差校验。",
+          "第十五轮第一版提交因一项主张的协议末结点晚于最后读数被拒；第十六轮不仅修正主张规格，还更换了预测器和数值区间。被拒的版本不能计入最终成绩，也不应在评审中恢复替换原始版本。",
+          "中间最好的轨迹拟合仍有显著系统误差，尤其某条近阈值恒场轨迹RMSE约0.371；第十一轮继续辨识的尝试超时。不能把拟合成功标志等同于充分的动力学解释，也没有完成所提出的额外慢变量等替代模型比较。",
+          "第三项最终主张改成恒定零场读出，但其引用的obs-0047/0048在观察期间含外场斜坡；这两条证据不是最终处理/对照的精确匹配版本。主机独立复验仍能直接判断最终主张，而且它的区间未通过。",
+          "历史差持续到已测时间点不证明无限时间记忆；效应方向与较好的局部描述也不能弥补最终预测器、区间校准和模型导出链条的失败。"
+        ]
+      },
+      {
+        "episode_id": "unified-molecular_forces-i2-r1",
+        "report_sha256": "d42b0f69862e8be43e4213289a7aa37b5eeb732fe99b02e12eef7a9e1c80e91b",
+        "summary": "运行在API中断前取得了实质性模型改进：加入对称角度项后，能量和力预测明显优于实际比较过的纯成对候选，并能预测后来采集的新构型。第12次请求远端连接中断，未形成最终提交或主机验证，端到端0分保留；这些中间结果不等于证明了三体作用。",
+        "supported": [
+          "中断前已执行16次有效实验、得到128个构型读数，包含等边与异形几何、多档温度、刚体变换/重标记，以及之后的新形状测试；科学进展不是仅有文字计划。",
+          "第七轮在前80个构型上实际比较了相同数据及噪声权重下的成对逆幂候选与加入对称角度项的候选。前者能量/力RMSE约0.014027 eV / 0.023018 eV/Å，后者降至0.000372 eV / 0.000679 eV/Å，接近公开读出噪声。",
+          "本次评审不重新拟合，直接固定第七轮已报告系数及已检查的纯数学特征函数，对随后收集的48个构型做公开观测复核，能量/力RMSE为0.000332 eV / 0.000752 eV/Å。按边长四舍五入至0.001 Å合并，这批包含40种先前数据中没有的几何形状；该结果支持加入角度项后对后来新构型的预测。",
+          "失败记录明确是第12次API请求的RemoteDisconnected，归为api_transport_or_provider；此前实验和分析已完成，最终提交、预测器和效应复验不存在。"
+        ],
+        "limits": [
+          "结果只表明加入角度项的模型优于实际比较过的成对逆幂候选，不足以排除整个两体函数家族或证明唯一三体作用。灵活径向形式、其他几何修正与数值条件等替代解释尚未完整区分。",
+          "第七轮按observation ID做留一检验时，部分相同几何仍在其他温度记录中，不能将其全部解释为独立几何留出；本次对后来记录的固定系数复核具有不同且更明确的顺序留出范围。",
+          "后来48个构型的误差是评审对公开探索数据的诊断，不是原始运行返回的最终评测，更不是主机私有冻结面板成绩。没有重新拟合、没有访问模拟器，也没有替换原始分数。",
+          "API中断前未保存可提交快照，没有最终predictor/submission，也没有任何独立效应复验。中间模型改进不能上调端到端成绩；反过来，基础设施零分也不能抹去已有科学证据。"
+        ]
+      },
+      {
+        "episode_id": "unified-climate_response-i2-r1",
+        "report_sha256": "f917c08de762de3f315c13ba729433d626a610076e28a535caaf7303eb3f63d3",
+        "summary": "28条多幅度、多历史实验及先拟合后新增实验检验支持双状态线性记忆模型。中途诊断曾写错能量通道公式，最终提交保留了已验证快照的正确函数；条件/控制变化预测99.77/99.80。三项温度效应中两项区间覆盖，另一项独立均值略超上界，按原规则确认2/3。",
+        "supported": [
+          "实际记录含常值、负强迫、脉冲、周期、斜坡与路径反转，最长160年；一状态/两状态联合拟合的温度RMSE约0.301/0.0594 K，能量通道约1.050/0.1407 W m^-2，支持该候选集合中增加记忆状态。",
+          "用前12条拟合后预测新采集的obs-0013—0018，温度/能量RMSE约0.05996/0.13446；保存模型后对新80年实验的温度RMSE约0.0434和0.0532，属于有时间先后顺序的实验验证。",
+          "原最终代码回放全部已观察数据的温度/能量RMSE约0.05994/0.14180，与正确保存快照在所有记录上的预测差为0；虽然最终提交未用快照绑定元数据，函数实际保留成功。",
+          "冻结后的主办方面板给出总分96.77957501488142；独立32对确认的三个温度效应均值约1.97722、3.47734、3.08771 K，第一和第三覆盖冻结区间，第二不覆盖，官方确认2/3。"
+        ],
+        "limits": [
+          "round 13的手写诊断额外减去状态间交换项，造成能量残差异常；保存快照本身原已使用正确通道，最终代码也正确。不能把该错误诊断当成装置规律或正确最终模型的误差。",
+          "round 9把新增8条纳入重新拟合后的new_8残差不是独立验证；可引用的真正先后检验是round 6的前12条拟合预测13—18和round 12的保存模型预测27—28。",
+          "第二项独立均值比冻结上界高约0.00134 K，幅度很小但仍依原规则未覆盖；这不是效应方向被推翻，也不能重分为成功。",
+          "两个常值幅度效应与一个延迟阶跃主要检验同一温度响应规律，数量复现不等同于三种独立机制；两状态参数和有限时域高分不唯一识别真实热储层，也不排除弱或更慢模态、建立更长期外推或真实地球适用性。"
+        ]
+      },
+      {
+        "episode_id": "unified-catalyst_aging-i2-r1",
+        "report_sha256": "e859ae832675638531d0edbd5b3f268dbbeb0d59508262158541526c075efc56",
+        "summary": "48组空白/标准、同券重复及重排历史实验支持区分仪器变化和使用历史；最终校准历史模型经快照保留，条件/控制变化预测93.44/89.54。效应提交却有明显不一致：自身模型预测温度效应约1.628，提交区间仅0.25—0.54，独立均值1.656；三项仅进料区间覆盖。",
+        "supported": [
+          "确实采集了跨事件位置的空白/标准、匹配探针、固定条件重复及重排历史；校准分析识别事件序列中的明显仪器变化，最终模型分别保留按事件位置的偏移/增益和同券累计历史项。",
+          "round 11、13完成按整组实验划分的六折模型选择，v2快照与最终提交代码一致；冻结后主办方新条件与控制变化表现支持协议采样域内的历史依赖预测，总分75.04300710586251保持原值。",
+          "v1交叉验证RMSE约0.04235是实测信号尺度，v2约0.21016是校准产量的对数尺度；它们各自是实际分析结果，不能作为同尺度优劣比较。",
+          "独立确认三个新鲜试片效应均值为温度+1.65632、进料+0.42930、时长+0.47493；仅进料落入冻结区间，确认1/3。"
+        ],
+        "limits": [
+          "原冻结预测器对同一温度对比给约+1.62758，远高于提交区间[0.25,0.54]；时长预测约+0.51660也超过提交上界0.47。低效应分不能全部归为模型未知性，存在提交区间与自身模型不一致。",
+          "前三项自选效应全部来自新鲜试片，不直接确认累计老化、仪器突变或历史重排机制；进料区间宽0.29，覆盖虽合规但数量精度有限。",
+          "前七轮实验均在首次成功数值拟合前完成，note所称holdout不可直接算先冻结后挑战；实际证据是后续分组交叉验证与最终主办方面板。校准曲线先用全部记录拟合，也未完全嵌套在交叉验证内。",
+          "最终历史项是同券既往条件特征的求和并加当前条件×使用次数，给定当前条件和既往条件集合时不表达顺序本身。重排实验的存在不等于已证明顺序无关，更不能唯一识别失活机制。"
+        ]
+      },
+      {
+        "episode_id": "unified-field_ecology-i2-r1",
+        "report_sha256": "8563a78bab2dc97e6525cea19302d4b8cecaf302dd2e5924eb70c2af41f0a2c8",
+        "summary": "已完成占据/探测曲线拟合和逐调查留出比较，随后重拟合超时耗尽预算，最终未保留已有参数而提交方向相反的默认曲线。主办方条件/控制变化预测为18.92/17.12；代理未提交数量效应，效应分按三个空槽记0。中间科学分析不能等同于最终交付成功。",
+        "supported": [
+          "48组调查包含两种方法、重复访问、访问顺序互换和偏移栖息地网格；round 2、4、6均有实际成功分析，不能归类为全程没有拟合。",
+          "前16组及24组数据的逐调查留出比较分别报告约0.05375和0.05314 RMSE；这些中间模型将随栖息地降低的占据与缓慢变化的方法探测率分开表示，并报告不同访问序列的残差。",
+          "5组单快速访问在栖息地两端的实测平均检测率约0.3063→0.1313，5组单密集访问约0.5969→0.2031；最终程序却分别给0.0188→0.2465和0.0479→0.4694，明确丢失观测方向。",
+          "最终未改程序回放所有观测的first/any/all RMSE约0.2496/0.3454/0.1657；原总分14.595853688041121，未提交claims，确认数0而非发生了三次效应反驳。"
+        ],
+        "limits": [
+          "round 9和13分析超时，剩余分析时间为0；未保存模型快照。最终说明承认使用未校准fallback，与先前成功拟合参数没有一致性，属于模型保留失败。",
+          "逐调查留出在已有调查设计内选取模型复杂度，不能视为最终默认模型的验证；round 6把单次访问的重复通道也纳入，误差口径不等同于主办方去重评分。",
+          "占据与探测的结构依赖公开条件独立、稳定占据及无假阳性假设，拟合好坏不证明这些假设或唯一生态机制。",
+          "栖息地关系为关联，不能作因果干预解释；未提交数量效应保留了其不确定性，但也意味着本回合没有独立效应区间确认。"
+        ]
+      },
+      {
+        "episode_id": "unified-phase_equilibria-i2-r1",
+        "report_sha256": "971bb65b9edf764c053ae2c3c1c4e5d4269d35a3f317072b19a9f88f3dddd4cb",
+        "summary": "实测老化、初始粉末混合和长时制备差异缩小，并完成候选插值比较；但最后按制备拆分拟合时矩阵维度不匹配，未保存模型。最终平滑fallback漏掉窄峰，条件/控制变化预测26.76/47.89；三个自选同一载量对比中两个宽区间覆盖，不足以支持物相识别或平衡结论。",
+        "supported": [
+          "48条光谱覆盖空载、端元、两种制备、多个组成和保温时间，并有一个部分载量实验；实际计算了老化变化、端元混合关系、制备对照及低秩结构。",
+          "原始未平滑的匹配制备整谱RMSE在三个组成下由30时刻约0.0177/0.0208/0.0164，降至120时刻约0.00417/0.00438/0.00439，支持有限时域制备差异缩小；这保留了低分之外的有效实验信息。",
+          "固定组成五个时间点的单/双指数训练RMSE约0.00307/0.00186，候选插值也对后来采集的8条记录有实际预测比较；这些是候选分析结果，并未进入最终程序。",
+          "最终原程序观测回放RMSE约0.13376；总分29.9565887373583保持原值。35度和50度载入样本相对空载的独立均值约0.16692/0.15054落入[0.005,0.185]，42度均值约0.21508超过上界，确认2/3。"
+        ],
+        "limits": [
+          "round 13按制备筛选输入坐标后未对应筛选响应矩阵，最小二乘报Incompatible dimensions；当时分析时间仍余约179秒，失败并非时间额度耗尽。没有模型快照，最终手写平滑曲线未保留先前测得的窄峰。",
+          "round 12在同一组8条后采集光谱上比较大量设置并选择最小误差，约0.0340为候选选择集误差，不能称为调参后完全独立测试，更不能归给最终fallback。",
+          "三项自选效应只是在三个角度重复同一初始样本载入/空载对比，数值上合规且有非零信号，但高度相关、区间宽0.18；不检验老化机制、平衡或物相区分。",
+          "单/双指数比较只有五个时间点并为每个角度各拟合幅度，较低训练残差不足以识别双过程；120时刻制备接近及低维光谱也不证明达到平衡、共有无限时极限或唯一物相。",
+          "部分载量实验没有同组成同时间同制备的满载匹配对照，不能把代理note中的载量线性检验视为已独立建立；模型使用的线性载量关系来自公开语义。"
+        ]
+      },
+      {
+        "episode_id": "unified-microecology-i2-r2",
+        "report_sha256": "ebf59776190c9e6d8c9d63dfadcff14eaab33d8a673e7d203d2ac70c088549e9",
+        "summary": "本例在取得 48 条探索轨迹后，第八次请求发生传输断开，尚未提交预测器或可复核主张。已有单培养、共培养和匹配去除记录仍支持条件依赖的生长及延迟响应；应保留这些探索证据，同时把本次未完成明确归因于基础设施中断。",
+        "supported": [
+          "B、C 单培养到 72 小时降低且营养基本未消耗；与 A 共培养后相应生物量明显增加。",
+          "相同制备下，8 小时完全去除 peak-01 后 C 到 60 小时降低；去除 peak-03 后 B 降低，提供了超出即时去除读数的延迟响应线索。",
+          "第 5 轮实际汇总了观测与部分对照差异，说明中断前已有探索分析；这些证据不因最终未提交而消失。"
+        ],
+        "limits": [
+          "没有冻结程序、快照或最终 claim，无法声称完成了预测、机制辨识或新配对效应确认。原报告成绩为空；统一协议的失败记零是端到端记分规则，不是已测科学效应为零。",
+          "第八次请求的 RemoteDisconnected 属传输/提供方失败，不能归因为模型放弃、拒绝或科学判断失败。",
+          "第 5 轮只汇总数据而未调用拟合；其中一个名为 matched_effects 的比较改变了初态与温度，不能解释成孤立干预效应。",
+          "所谓干预前重复性统计包含 8 小时已经发生补料或去除后的读数，不能直接用作测量噪声估计；已有去除生物量差异仍需专门重复确认。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-coupled_oscillators-i2-r2",
+        "report_sha256": "ef1323b43b9bbffb5d5f2a0d0632272a730b8989b433ec7201f630c82c8e5fb6",
+        "summary": "从八组独立基响应的平滑速度导数回归得到六边力学模型，随后通过切边、加载、阻尼、约束及驱动检验，并真实保存原参数。三项四秒时刻的效应有重复探索对照和新配对复核；模型整体迁移良好，但部分新组合条件的残差仍高于测量噪声。",
+        "supported": [
+          "物理参数只从前八条基响应估计，后续控制轨迹没有被用于重新拟合，因此跨干预预测具有实际验证价值。",
+          "真实保存的模型能够预测后续新制备与组合控制；切断 C–D、给 C 加质量、给 A 加阻尼的三个四秒读数有直接重复对照，并均通过最终数值复核。",
+          "保存快照、最终参数和程序一致，未见此前另一重复中出现的模型导出替换。"
+        ],
+        "limits": [
+          "导数回归存在平滑与测量误差，最终新压力条件的残差约 0.00422，不能将所有轨迹都称为恰好达到噪声下限；记录中最差单条误差约 0.00515。",
+          "第 10 轮仅读取快照键，未执行其 note 中所说的新轨迹误差检验；实际完整诊断在第 12 轮进行。",
+          "阻尼导致某一时刻有符号速度增加是相位与制备特定的对比，不是阻尼普遍提高速度；三项对比不能证明唯一网络机制。",
+          "原 overall_rmse 是各轨迹等权汇总，不等同于全部数据单元合并；对不同记录长度和约束通道应保持口径一致。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-reaction_kinetics-i2-r2",
+        "report_sha256": "07692a719a8de19d5072a415ac0bca978484f10a2d7aa1bb65698432e730b55e",
+        "summary": "纯组分跨温度观测用于拟合，混合温度切换和加料轨迹保留作验证，随后又直接测量三组新对照；稀疏动力学在两批未拟合记录上均达到约 0.002 的误差。最终真实保存并提交同一模型，三个温度、准备条件和延迟加料效应通过复核，但仍不能把有效预测等同于唯一反应拓扑。",
+        "supported": [
+          "先估计各温度生成元、再拟合共享 Arrhenius 参数，六条混合事件轨迹未进入参数拟合，残差约 0.00203。",
+          "冻结模型后新采集六条 claim 臂并实际复算，残差约 0.00207，形成有效的前瞻预测检验。",
+          "升温后 C 增加、等总量初态替换后的 C 差异、加 C 后经过 20 秒 B 的增加，均有匹配探索观测和新的配对数值复核。",
+          "第 11 轮实际保存的快照与最终程序一致；本例没有拟合参数到最终提交的明显漂移。"
+        ],
+        "limits": [
+          "第 9 轮“已保存”只是一段状态文字且目录为空；真正的保存直到第 11 轮才发生。",
+          "稀疏边选择使用了公开允许速率尺度和阈值，弱边不显著不等价于证明绝对没有该反应；拟合族内成功也不构成唯一机制证据。",
+          "温度、准备条件和加料后组分变化可以由多条直接或间接路径产生，三个 claim 本身没有单独定位反应边。",
+          "最后六条的原“pooled”指标实际为各轨迹等权的误差平方平均；按所有数据单元合并的复算接近但略不同，应注明指标口径。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-heat_transport-i2-r2",
+        "report_sha256": "1771b2425a6fe877f964cc88a8aa2ce9ad3e9ca03bbd56a310af2fd3b9091faf",
+        "summary": "37次实验支持有流动、冷却和局部热源时的空间非均匀输运近似。运行实际比较了离散方案并保留最佳试验的拟合系数，但最终更改求解网格、未完成重新验证；报告还将约0.271 °C的平均绝对误差误称为RMSE，原代码中的RMSE约0.468 °C。两项加热效应通过复验，冷却区间略偏。",
+        "supported": [
+          "实际采集37条瞬态曲线，覆盖热源镜像、正负流动、冷却剂量、不同热源宽度、边界强迫和界面邻近探针。第四轮完成联合拟合，第九与十二轮实际比较网格及扩散面取值方案，而不是仅提出比较计划。",
+          "第十二轮在1,554个非初始观测单元上得到最佳探索拟合：RMSE为0.467506 °C，MAE为0.270766 °C。最终代码保留该试验的输运系数组并实现扩散、平流、环境损失与源项传播，冻结后主机新条件/控制变化分数为68.3628/85.1269。",
+          "独立32对复验中，热源从远侧移至近侧的早期温度差约+1.19929 °C、探针中心打开热源的效应约+1.95308 °C，均落入冻结区间；冷却效应约−0.83038 °C，略低于所报区间下限−0.81 °C，因此只有2项通过定量确认。"
+        ],
+        "limits": [
+          "最优拟合使用51节点网格，最终程序改成101节点；第十三轮额外离散诊断失败，第十四轮只检索历史且模型列表为空。因此系数虽保留，仍不能称为已验证拟合求解器的原样导出。",
+          "提交说明将0.27 °C写为RMSE；原分析代码按(RMSE, MAE, …)保存结果，所以0.27实际上是MAE，RMSE应为约0.468 °C。此修正只纠正科学表述，不修改冻结评分。",
+          "探索拟合残差仍明显大于公开0.04 °C噪声；没有成功的最终网格留出误差分析，后续历史检查不能作为完成验证的证据。",
+          "公开合同已给出输运方程家族。局部加热效应可重复并不唯一识别扩散界面或物理机制；第三项效应与第二项同属早期局部热源响应，分属评分槽位不等于不同深层发现。"
+        ]
+      },
+      {
+        "episode_id": "unified-gene_regulation-i2-r2",
+        "report_sha256": "78a0642f1db5ae6db62e127131a124ce4d8964d010f908a3025366dd8e2d5a03",
+        "summary": "该运行实际完成稀疏网络拟合、两轮重拟合前验证和真实快照保存，并保留最后八条边界试验作为最终未拟合检查。冻结模型的整条轨迹误差接近测量噪声，三个短延迟脉冲响应也通过复核；这些结果支持候选动力学的预测价值，未唯一确定全部调控关系。",
+        "supported": [
+          "从 24 条轨迹得到四边候选后，在新八条上的重拟合前误差约 0.00432；随后下一批的重拟合前误差约 0.00397，实际区分了验证与更新。",
+          "最终沿用 40 条拟合的快照，没有用最后八条边界记录重新拟合；这些新记录误差约 0.00389。",
+          "全 48 条轨迹除初始读数后的合并误差约 0.00401，真实保存与最终程序一致；三个受驱基因在脉冲开始半小时后的自身响应通过新配对复核。"
+        ],
+        "limits": [
+          "第 11 轮只加载快照和记录数，第 14 轮只读回参数/程序，没有执行 note 中计划的额外拟合或对比计算。最后实际拟合的是第 9 轮 40 条版本。",
+          "第 4 轮稠密拟合指标排除初始读数，第 5 轮稀疏指标包含初始读数，二者数值不能直接用来宣称稀疏模型更优。",
+          "最终三个 claim 都是最短允许延迟附近的受驱通道响应，验证了局部剂量效应，不能替代对下游传播或所有边的独立检验。",
+          "弱遗漏边和补偿参数仍可能在噪声内产生近似预测，四边候选的高分不证明独特拓扑。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-ising_spin-i2-r2",
+        "report_sha256": "d73a676a20f17f399289522bbbcc86f3011c8325b674a8d753ae39b0ee794c98",
+        "summary": "运行保留了拟合后的64状态平衡模型，并在追加数据重新拟合前完成多轮局部场、钳制、断键与组合控制的留出验证，误差接近噪声。主机预测准确，三项正式效应也通过复验；但它们分别将外场、钳制或断键与温度变化组合，不能解释为温度匹配的单控制效应。",
+        "supported": [
+          "48次有效实验从基线温度曲线和局部场响应推进到针对拟合相互作用的完全/部分断键、近零键负对照、不同钳制方向以及组合干预。分析实际估计参数及其局部线性不确定性，并保存3个可执行快照。",
+          "第六轮用前16条数据的旧参数预测新8条记录，RMSE为0.002986；第九轮用v1预测接下来8条记录为0.002928；第十二轮用v2预测第三批8条记录的逐实验均方误差汇总约0.003045。这些是重新拟合前的验证，接近公开噪声0.003。",
+          "最终predictor保留ising_exact/v3快照的参数与正确的数值索引语义，对64状态精确求和并应用外场、钳制和键抑制。主机新条件/控制变化分数为99.9359/99.8934，支持公开成对平衡家族内的跨条件定量预测。",
+          "独立32对复验覆盖全部三个冻结区间：外场与温度组合对D磁化的效应约+0.98121，钳制与温度组合对未钳制B磁化的效应约+0.33553，断键与温度组合对B–E相关的效应约+0.29275。"
+        ],
+        "limits": [
+          "三项正式处理/对照都使用不同温度，虽已在提交中说明且可进行数值复验，仍不能把这些幅度归因于单独的外场、钳制或断键。",
+          "最后obs-0041至obs-0048确已采集，但第十四轮只读取快照键和引用，没有计算所声称的最终压力测试误差或重新拟合。因此不能依据该回合宣称最后8条记录已经完成误差审计；此前三轮留出和最终主机验证是更可靠的证据。",
+          "成对平衡定律及全部可见节点已公开给出；结果支持这一既定家族内的辨识，不是从未知物理中发现定律。局部线性标准误不构成家族外唯一网络证明，也不支持热力学相变。",
+          "两次运行共享同一隐藏实例与主机面板，不能将同实例重复当作新的独立世界或用单个高分推断广泛科学发现能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-hysteresis_material-i2-r2",
+        "report_sha256": "52b56107f2506efad834b76c1d7904c3784cdc272b0b9a615defe22b274b77f9",
+        "summary": "48次实验与三项独立复验支持相同后续外场下的有限时间历史依赖。运行确实拟合过非线性动态模型，但最终导出把线性、立方和外场项的系数对应关系改错，未保留该拟合模型；因此低预测分不能等同于没有获得记忆效应的科学证据。",
+        "supported": [
+          "实际轨迹覆盖正负重置、不同准备历史、恒场、斜坡、停留与反转。第六轮对前40条记录的958个观测单元进行成功的非线性轨迹拟合，RMSE为0.040457，逐实验RMSE中位数为0.027546。",
+          "最后8条记录包含三个匹配历史对比；第九轮实际计算20秒读数差，得到零场正负重置差约2.22417、另一恒场重置差约1.83786、预处理历史差约2.12714，远大于读出噪声。",
+          "冻结后的32对独立复验给出约2.22901、1.83491、2.13000的同向历史效应，全部落入所报区间，支持这些指定时点和历史下可重复的记忆现象。",
+          "最终程序实际接受了主机验证，新条件/控制变化分数为27.4821/23.0649。这评价的是发生系数错位后的程序；拟合阶段的科学分析与最终程序表现必须分开记录。"
+        ],
+        "limits": [
+          "第六轮源码以(c1, c3, h1)依次表示线性、立方和外场项，方程为c1*y+c3*y^3+h1*H；最终把同一顺序直接赋给(A, B, C)，却计算A*H−B*y−C*y^3，改变了三个系数的含义和符号位置。因此不能称为成功保留已拟合模型。",
+          "0.040457是前40条数据的拟合残差，不是独立验证误差，且大于公开噪声；其中复杂轨迹的误差更高。早期备注虽提到验证，但在第六轮实际拟合前均仍在采样。",
+          "未成功保存任何模型快照；最后的历史检索没有给出最终程序残差或重新验证。仅凭静态错位能够确定导出不等价，不能量化它在全部预测损失中占多少。",
+          "三个确认都属于有限时间历史依赖，其中两个改变重置、一个改变完整准备历史；不证明永久记忆、唯一微观机制或三种互相独立的机制。"
+        ]
+      },
+      {
+        "episode_id": "unified-molecular_forces-i2-r2",
+        "report_sha256": "7cf185576ffd8286e18c9b221366e0f0e0121f80edf07c7b5ef110d81efffa9d",
+        "summary": "20次实验测量142个构型，实际比较多种纯成对候选后，加入角度项使能量和力的拟合误差降至噪声量级；包含该项的冻结程序在主机新构型上预测准确，三项几何效应也通过复验。证据支持角度模型优于实际比较过的候选，不能据此宣称已证明唯一三体机制。",
+        "supported": [
+          "实验从距离、形状和配对温度扫描推进到密集等边距离扫描、旋转/平移/反射/粒子重排以及追加的新形状，实际测得142个构型。分析比较了多组逆幂成对基、温度项以及角度项，而不只是陈述备选假设。",
+          "第九轮在94个构型上，简约纯成对候选的能量/力RMSE约0.01408/0.02247；加入角度项后约0.000320/0.000718，接近公开噪声。扩展过的纯成对逆幂基仍保留明显残差，按观测记录分组的留一验证也支持加入角度项。",
+          "第十一轮加入空间变换和温度极端的观测后确实再拟合110个构型，能量/力RMSE约0.000356/0.000719，并计算局部参数不确定性；已测范围内线性能量温度项区间包含零，未检出稳定温度趋势。",
+          "最终程序保留较早拟合的成对能量、角度项及由能量梯度求力的主要结构。冻结主机新条件/控制变化分数为99.9302/99.9227，支持包含角度项模型在后来新构型的定量预测。",
+          "独立32对复验覆盖全部三个冻结区间：两项几何能量差约+2.65741 eV与+2.09502 eV，一项指定粒子x方向力差约−14.79351 eV/Å。这些是对应构型变化的总效应。"
+        ],
+        "limits": [
+          "最终系数组来自第九轮，未采用第十一轮再拟合版本；此外线性温度特征的归一化分母改变，未随之调整系数。因此主要科学结构得到保留，但不是任一已分析程序的完全等价导出。该小项的变化没有阻止实际主机高精度预测，仍应如实记录。",
+          "模型比较只排除了实际测试过的有限候选；有限观测与有限基函数不足以排除所有纯成对函数或证明唯一三体物理机制。几何效应复验同时改变多个距离与角度，也没有单独隔离角度项。",
+          "按观测ID留一可能在训练集保留同一形状的其他温度或变换版本，不能统称为完全独立的新几何验证。第十一轮的110构型误差包含重拟合，最后32个构型之后仅检索历史而未输出新的冻结误差审计；主机冻结验证提供了更明确的独立预测证据。",
+          "温度项不显著只限定于已测温度、构型和噪声分辨率，不等于证明严格温度无关。高分与三个确认槽位本身也不衡量机制唯一性。"
+        ]
+      },
+      {
+        "episode_id": "unified-climate_response-i2-r2",
+        "report_sha256": "5109cad4f040891b5261de863e94842010fcda19f06b4bf58aa04c89b63d71a5",
+        "summary": "常值、脉冲、交替及不规则历史实验支持双时间尺度近似线性响应，先拟合模型对后续针对性实验有实际预测检验；最终快照完整保留，条件/控制变化预测均约99.69。温升及强迫撤除后一年的负能量收支效应复现，首年脉冲效应均值略低于区间下界，确认2/3。",
+        "supported": [
+          "27条记录覆盖幅度、符号、频率、基线、脉冲和不规则路径，最长158年；模型阶数比较的双极点加权残差平方和约2296.5，单极点约12597.9，支持该候选集合中额外记忆状态。",
+          "前16条拟合预测随后3条不规则历史，两状态温度/能量RMSE约0.06146/0.15551，单状态约0.38116/0.76850；之后用探针前拟合预测8条新基线、幅度与脉冲实验，标准化RMSE约1.036，均为实际计算的先后检验。",
+          "最终绑定的双状态快照保留了正确状态转移及能量通道；总分97.00328037191221。区间构造明确结合已知32对读数噪声与所选模型的局部参数不确定性。",
+          "温升独立均值约+1.96660 K在冻结区间内；当两组当前强迫均为0时，既往脉冲组下一年的能量收支独立均值约低0.46089 W m^-2并被区间覆盖，支持该具体时间尺度的历史效应。"
+        ],
+        "limits": [
+          "首年脉冲效应独立均值约6.91910，低于冻结下界约0.00129 W m^-2；仍按原规则未覆盖，不能因差距很小改成3/3，也不宜称其方向被推翻。",
+          "单极点被相对较好预测排除不唯一识别两个真实热储层；有限年采样难以排除弱模态、不同状态空间表示或更长期差异。",
+          "残差二次强迫项与切换项较小是有限数据下的残差诊断，未穷尽非线性候选，也不能证明精确线性或全域叠加。",
+          "局部参数误差依赖当前双状态模型，不含全部结构不确定性；撤除后一年效应确认短期记忆，不单独确认较慢模态或平衡敏感度。"
+        ]
+      },
+      {
+        "episode_id": "unified-catalyst_aging-i2-r2",
+        "report_sha256": "122c5a79fad7231bed4af4e7f6280a5d4efba3d8bccb0e54d40146101a214f04",
+        "summary": "空白/标准校准和匹配事件序号的旧券—新券比较支持仪器漂移之外的券自身历史效应；三个定点效应全部独立复现。但最终程序改变多项式特征顺序而照搬拟合系数，未保留中间高精度模型，总分65.55832037859851。",
+        "supported": [
+          "38条序列记录中实际测量了分事件空白与标准、条件变化、重复使用及重新排列的历史；中间比较中仅按使用次数建模的RMSE约0.259，条件相关损伤模型约0.029，后续三次多项式模型的反应读数训练RMSE为0.007074。",
+          "第14轮确实将新增8条布局逐条留出并重新拟合：三次模型RMSE为0.008020，二次模型为0.009687；这支持已测布局上的局部经验拟合能力。",
+          "在相同事件序号和当前高输出反应条件下，仅改变被测券是否先经历一次同类反应的对照，独立效应约−1.22257，落在冻结区间内；因此仅靠全局仪器漂移不能解释这一具体差异。",
+          "联合提高温度、进料及历时的独立效应约+2.98408，低进料短历时下升温效应约+0.20018，均被冻结区间覆盖；与历史效应合计确认3/3。"
+        ],
+        "limits": [
+          "第14轮特征次序为[1,t,f,d,t²,f²,d²,tf,td,fd,…]，最终改为[1,t,f,d,t²,tf,td,f²,fd,d²,…]且三次项也重排，却原样复制全部系数。原提交在已有反应读数上的RMSE为0.31630，不能把0.007074的中间拟合精度归给最终模型。",
+          "最终程序对第三个升温效应预测约+0.68636，明显不在其自行提交的[0.19,0.212]内；该区间虽被独立实验确认，却与冻结预测器不一致。条件/控制变化原评分约73.65/42.47，保持不变。",
+          "留一布局拟合使用全体数据估计的仪器校准和全数据拟合的暖启动，并在同组8条记录上比较模型复杂度；它不是完全隔离的预冻结新实验检验。",
+          "首个效应同时改变三个条件，只支持联合改变；当前历史干预没有恢复或长时休息对照，不能证明不可逆损伤。乘法活性模型及所选多项式并未唯一识别失活机制，三个定点效应也不能替代广泛历史外推。"
+        ]
+      },
+      {
+        "episode_id": "unified-field_ecology-i2-r2",
+        "report_sha256": "693a61ba565d132a2d001bded2268b9fa12f36b0d890e0071b6d42f056635695",
+        "summary": "重复调查支持强化方法和增加访次提高检出率，第4轮成功拟合出随生境指标下降的出现率并完成留面板检验。后续分析超时，最终却提交相反趋势的未保留模型；总分26.23258235254388，零生境处两个调查效应复测覆盖、第三个区间未覆盖。",
+        "supported": [
+          "48条调查覆盖两种方法、单次/重复/混合顺序及密集和偏移生境网格；第2轮实际比较线性至四次logit，第4轮在16面板上逐一留出，选中线性模型，留面板RMSE约0.053818。",
+          "第4轮已拟合的出现率从低端到高端下降；直接观测的两份同网格单次快速调查端点均值为0.32813→0.13281，强化调查为0.59375→0.32031，支持该范围内检出率下降的描述。",
+          "零生境处，强化首访相对快速首访的独立均值约+0.20410，三次快速调查相对一次的至少检出一次比例增量约+0.22217，均被冻结区间覆盖，确认2/3。"
+        ],
+        "limits": [
+          "第8、12、14轮分析均超时，未保存模型快照。最终出现率采用与已拟合参数不符的上升趋势，单次快速端点预测为0.02326→0.27458；原提交在已有记录上的first/any/all RMSE约0.22613/0.32688/0.13276，不能把早期0.0538误差归给最终模型。",
+          "第三个效应要求三次均检出，相对一次快速检出的独立差异约−0.22070，落在冻结区间[−0.216,−0.156]之外；方向仍为负，失败的是冻结区间覆盖。",
+          "三个自选效应都局限生境零点的调查设计；第三个方向部分由更严格的all定义决定。方法不改变出现状态、条件独立和同方法计数下any/all顺序不变是公开语义，不能作为新发现。",
+          "早期留面板比较是真实计算，但单次调查三个相同通道被重复计入拟合与CV；不同通道也有共同二元历史相关性。未进行唯一生态机制识别，生境分层关联不是个体生境因果干预。"
+        ]
+      },
+      {
+        "episode_id": "unified-phase_equilibria-i2-r2",
+        "report_sha256": "e0fcc04633e2a715f19d73b888001a931c1a0508eabef9ef230da9c1d0d38576",
+        "summary": "48条衍射扫描及实际分析显示初始制备差异随保温显著缩小，晚时谱不能由初始两端粉末简单混合概括。保存模型因插值接口错误失败，最终近似峰模型未保留实测谱；总分36.45459562021498，两个纯A峰效应复现，半组分制备效应被低估。",
+        "supported": [
+          "同为组分0.5时，粉末与淬冷两制备的原始全谱RMS差在时间0、20、120依次为0.17432、0.03441、0.00396；这是实际匹配制备比较，支持有限观察窗内的谱收敛。",
+          "第2、4、6、8轮实际比较初始线性粉末混合、时间路径和晚时组分插值；初始半组分粉末相对两端混合的RMSE约0.00396，而三个中间组分晚时谱相对该初始混合的误差约0.153–0.182，支持组分和时间依赖的谱变化。",
+          "第12轮完成低秩控制坐标插值的逐条留出比较，第13轮完成初态—晚态连线投影；这些是实际分析输出，不只是研究笔记中提出的意图。",
+          "纯A加载相对空载在18.5°的独立效应约+1.33411，纯A淬冷由时间0保温到120的效应约+1.33501，均在冻结区间内，确认2/3。"
+        ],
+        "limits": [
+          "第14轮在保存快照之前因CubicSpline的natural参数错误中断，仍剩约178.9秒分析预算。最终手填峰模型并非已拟合插值器：例如纯B初始实测28.5°强度约0.94217，最终仅0.02463；全记录原提交RMSE约0.13974。",
+          "第13轮约0.00212的中位路径残差来自平滑后的已测谱，并逐谱用自身数据估计投影系数、用已测晚谱作端点；不能称为独立预测误差。第12轮约0.01899的CV也在全数据均值和SVD基底上进行、以同一CV调参，且比较对象经角度平滑。",
+          "半组分初始粉末−淬冷在18.5°的已测差为+0.77518，独立复测约+0.77421，但提交区间只有[0.64,0.70]；最终近似模型自身约+0.65231，显示其低估已经存在直接观测依据。第二个效应的程序预测约+1.30639也不在自身区间内，虽该实验区间复测覆盖。",
+          "三个自选效应集中于同一纯A相关角度，不能验证整个相图或相界。有限保温下谱接近不证明热力学平衡或唯一相身份；公共加载仿射关系不是发现，唯一部分加载测量缺少同制备、同组分、同时间的满载配对来独立检验其比例关系。"
+        ]
+      },
+      {
+        "episode_id": "unified-microecology-i3-r1",
+        "report_sha256": "1c9fe09bd145c04f64a7feb18aad2f5295ec0a7a6bdacbd64d94d3ce09030fe6",
+        "summary": "该运行实际拟合了全部 40 条轨迹，并在最终程序中保留拟合方程和参数；预测误差仍明显高于测量噪声。分泌物去除引发的数小时后种群变化和补料后的营养残留均通过复核，支持有范围限制的生态效应，未唯一识别直接抑制或完整反馈机制。",
+        "supported": [
+          "单培养、混合培养及配对去除试验支持 A 依赖营养生长、其他种群依赖共培养，以及分泌物去除改变后续种群动态的规律。",
+          "12 小时去除 peak-01 后，18 小时 A 增量约 0.237；去除 peak-03 后，24 小时 C 增量约 0.318。部分与完全去除的原始记录也提供了剂量依赖线索。",
+          "第 7 轮真实执行 23 参数七状态 ODE 拟合，全部 40 条的原拟合归一化误差 0.04484 可复算；最终程序保留这些参数与方程。",
+          "补料后 12 小时的营养残留效应和上述两项种群效应均通过新的配对复核，已超出干预刚施加时的通道赋值效应。"
+        ],
+        "limits": [
+          "全部探索记录参与拟合，没有留出观测用于模型选择或独立验证。最终原样程序合并 RMSE 约 0.066，A 通道约 0.083、营养约 0.131，说明该方程仍有明显失配。",
+          "直接抑制、间接交叉供养与营养重新分配没有被竞争模型或中介隔离试验唯一地区分；拟合的结构是假设，不能直接列为已证明机制。",
+          "多种培养组合和局部去除效应与延迟反馈解释相容，但尚未用中介固定、阻断或救援建立整条 A→组分→B→C受抑→组分累积→A受抑的路径；匿名组分也不能据此命名为已识别的废物。",
+          "第 8 至 14 轮主要回读旧结果或检查命名空间，第 10 轮因返回过大失败；没有完成 note 所称的新增验证或快照保存。最终仍能直接提交有效程序。",
+          "补料 claim 引用的部分辅助记录改变了初始营养、接种量或补料时点，只能作为范围补充；精确配对依据是 obs-0009/0019，不能把全部引用都称作同条件重复。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-coupled_oscillators-i3-r1",
+        "report_sha256": "7ea8b880b3a9521a4c6a90b02fe1fd2cdc7c012be65f92628455c6d5b5837c0b",
+        "summary": "从八组基态响应拟合候选机械系统后，该运行用未参与拟合的切边、加质量、加阻尼、夹持与驱动试验验证了参数迁移，再采集针对三个所选效应的确认数据。最终预测接近测量噪声，三个效应通过复核；星形耦合结构仍是给定机械族下的候选解释。",
+        "supported": [
+          "第 2 轮用八组独立位置/速度基态拟合参数，第 4 轮直接预测随后八类干预，没有先重拟合；独立复算这些干预记录的合并误差约 0.00250。",
+          "实际保存的模型保留最初拟合参数；在随后选定的六条确认记录上误差约 0.00219，全部 22 条约 0.00255，与位置/速度噪声尺度相符。",
+          "先用已拟合模型选取读数时刻与准备态，再采集各一对控制/处理数据；切 A–D 边、给 A 加质量、给 C 加阻尼的三个有限时刻效应均通过新的配对复核。"
+        ],
+        "limits": [
+          "三条接近零的耦合参数及切边迁移结果支持候选星形结构，但没有正式结构不确定性或替代模型检验，不能宣称唯一拓扑。",
+          "后六条实验是每项一对控制/处理，不是每臂多次探索重复；模型预测搜索选出的强效应不代表所有状态或时点。",
+          "申报区间加入固定 0.0015 的失配余量，并未完整传播参数或模型选择不确定性；第三项探索单次差值偏差还略大于申报半宽。新配对均值通过不能反过来证明区间在所有探索观测上都覆盖。",
+          "部分轮次只读取快照或因变量/序列化问题失败，但关键拟合、未重拟合验证与保存都有实际执行记录。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-reaction_kinetics-i3-r1",
+        "report_sha256": "a8c329789774f231fd78bc08874504adf1f97873666b3db4e75296e74d05f605",
+        "summary": "该运行用多温度纯组分响应拟合可逆链，并真实完成一次重拟合前的混合初态与干预验证。最终 48 条拟合和保存程序接近测量噪声，三个补加效应通过复核；后期所称“最终验证集”实际参与重拟合，不能作为独立验证。",
+        "supported": [
+          "前 16 条纯组分多温度试验支持 A↔B↔D↔C 候选链；第 5 轮先用已有参数预测新八条混合初态/温度切换/补加试验，误差约 0.00202，随后才重拟合。",
+          "第 14 轮真实拟合全部 48 条并保存第二版快照，原样最终程序排除初始读数后的误差约 0.001965，与执行记录一致。",
+          "审阅时重放第 8 轮旧参数，后 16 条尚未拟合的记录误差约 0.00204，为旧候选的迁移预测提供事后核查证据。",
+          "B、C、D 补加一秒后的自身通道残留增量均通过新的配对复核，三个均值与标准误可从原始观测重复计算。"
+        ],
+        "limits": [
+          "第 8 轮的 validation/new 分组是在全部 32 条重拟合之后计算；第 14 轮 final8 也包含在 48 条拟合中。不能把这些标签当作未见数据验证。",
+          "第 7 轮变量未定义，第 10/13 轮读取不存在快照失败；第 11 轮只读取第一版。第 14 轮最终完成修复，但其注释中的 contrast 函数没有被实际调用。",
+          "申报三项效应都是最短允许延迟附近的直接补加通道，支持局部短时残留；它们不独立证明整条反应路径、长时再分配或唯一拓扑。",
+          "稀疏链主要依据早期出现时序提出，没有与全部其他拓扑做正式竞争拟合或结构不确定性评估；公开线性传播和补加规则也不是新发现。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-heat_transport-i3-r1",
+        "report_sha256": "87024c216567db033539762c1439ddc9ceb8903587b3634371decf398372e446",
+        "summary": "48次实验逐步约束扩散、正负流动与冷却响应，实际完成留出误差检查和数值离散诊断；最终保留噪声量级拟合的两区输运求解器，并在主机新条件上预测准确。冷却与热源位置效应通过区间复验；流向效应方向也复现，但其均值略超所报区间，严格通过数为2。",
+        "supported": [
+          "实际采集48条瞬态轨迹，从空间探针与镜像热源扫描、热初态冷却和流向配对，推进到界面邻近探针、极端边界、多热源及混合控制。第三轮真实扫描候选界面位置并拟合输运参数，后续根据残差与网格诊断继续采样。",
+          "第五轮用旧参数对新8条轨迹进行重新拟合前评估，RMSE为0.043675 °C，但同时换过数值离散方案；第十轮用前24条数据得到的参数预测随后8条压力测试，逐实验RMSE为0.0440–0.0631 °C，并比较两种网格分辨率。这些有实际误差输出，区别于仅声明验证。",
+          "第十三轮对前40条轨迹全部非初始观测单元拟合，RMSE为0.040777 °C，接近公开读出噪声0.04 °C。最终通过fit/v1快照绑定保留参数、谐和面扩散、中心平流与矩阵指数传播，主机新条件/控制变化分数为99.8677/99.9196。",
+          "独立32对复验中，增加冷却和移走近侧热源的温度差约−0.55633 °C和−2.90219 °C，均在冻结区间内；流向反转的温度差约−1.16928 °C，方向稳定，但略高于冻结区间上限−1.1733 °C，因此该项未计入严格确认数。"
+        ],
+        "limits": [
+          "第十三轮报告的8条针对性轨迹误差已经包含在40条联合拟合中，不能称作最终模型的独立留出；最后8条轨迹采集后直接提交，未输出针对该批数据的冻结残差审计。最终泛化结论主要由主机新条件评分以及较早的真实顺序验证支持。",
+          "第八轮虽然备注称重新拟合32条数据，实际代码只检查已有对象并发生类型错误；第九轮也仅检查工作区。成功的最终再拟合和快照保存是在第十三轮，不应把这些备注补写成已完成分析。",
+          "流向对比未覆盖所报区间是小幅定量失准，不能表述成没有流向效应；另外两项也只适用于指定背景、位置和时间，不是全局恒定效应。",
+          "公开合同已提供输运方程家族。离散界面扫描与高准确度支持该家族内的有效辨识，但缺少足以排除其他非均匀输运描述的模型对照；网格中的界面参数也不能被解释成无限精度的物理边界或唯一微观机制。"
+        ]
+      },
+      {
+        "episode_id": "unified-gene_regulation-i3-r1",
+        "report_sha256": "5634ff85996cd1ac6cda40d761de40ad103fb1370842a678ae7b0141687f2e19",
+        "summary": "该运行在完成 24 条实验后因第 5 次 API 请求断连中止，未提交最终模型或 claim。但中止前已真实拟合前 16 条轨迹；审阅时将其既有参数重放到后来八条未拟合记录，误差仍接近噪声，说明中间科学进展不能被基础设施失败抹去。",
+        "supported": [
+          "有实际执行的全耦合 ODE 拟合，前 16 条排除初始读数后的误差约 0.003993，得到四条较大候选调控作用及若干近零作用。",
+          "同初态正负脉冲对照显示基因特异的下游响应：G3 正脉冲相对负脉冲伴随 G1/G2 上升，G4 正脉冲相对负脉冲伴随 G3 下降，支持候选调控方向的实验线索。",
+          "审阅者仅重放已记录的拟合函数和参数，未重新优化；后来八条多初态、异时脉冲和联合驱动记录的误差约 0.003895，为已有候选的范围迁移提供事后证据。"
+        ],
+        "limits": [
+          "原报告 status=failed、score=null，失败诊断为第 5 次请求阶段 RemoteDisconnected。无最终程序、已保存快照或申报效应的完整复核；协议中的基础设施零分不等于科学效应为零。",
+          "第 3 轮 note 声称比较全模型与稀疏模型，实际只拟合全耦合参数后查看大小，没有独立执行稀疏重拟合或竞争模型比较。",
+          "后八条验证是审阅者对已有资料的复算；模型因传输失败未亲自完成验证、保存与闭环提交，不能补记为已完成端到端任务。",
+          "正负驱动对照包含全部直接和间接传播，没有隔离中介；大系数、近零残余和噪声级预测都不唯一证明四边网络。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-ising_spin-i3-r1",
+        "report_sha256": "9e44b61c98204808970fab7945535f70fa0a82301ddea255be8b4de65f04913c",
+        "summary": "48次实验支持一个稀疏有符号平衡模型：实际比较完整与稀疏候选，并通过外场、钳制、断键和组合控制检验预测。最终保留40条数据拟合的可执行快照，主机预测准确；正式三项确认均改成高温下的本节点外场响应，信息量比探索阶段的传播与断键对照更有限。",
+        "supported": [
+          "运行实际拟合完整成对模型，随后比较稀疏候选，并针对显著拟合键、近零键、钳制与组合干预采样。完整模型的额外键仅带来很小残差改善，支持在当前噪声分辨率下使用较简约的有符号近似。",
+          "第七轮明确用先前16条记录的参数预测新增8条，RMSE为0.003025，接近公开噪声0.003；同轮重新拟合后的新8条误差是另一个值，不能混同。",
+          "探索阶段直接采集了温度匹配的三组处理/对照，观察到A外场响应约+0.48705、钳制C对未钳制A的响应约+0.43896、删除E–F键的相关变化约−0.75335。这些实际观测体现了比最终三个本节点场效应更丰富的实验设计，但不是最终正式复验的三个主张。",
+          "最终绑定ising_sparse/v2_all40，保留稀疏系数、正确数值索引、64状态求和和控制处理。主机新条件/控制变化分数为99.9315/99.9273。",
+          "最终三项高温单节点外场效应全部落入32对独立复验区间，幅度约+0.09984、−0.15783、+0.14678，支持这些具体同温度场响应。"
+        ],
+        "limits": [
+          "第十轮的rmse_holdout25_32和第十二轮的rmse_validation33_40都在对包含对应数据的全集重新拟合之后计算，不能称为独立留出。",
+          "第十四轮代码只有“已保存全数据快照”的注释，没有计算或保存；结果为null，快照列表也没有v3_all48。提交声称最后8条记录已独立验证、RMSE约0.0030，没有本次分析输出支持；实际可确认的最终模型仍来自前40条。",
+          "第十五轮较多样的正式对比因外场向量格式错误被拒；最终改成三个高温本节点场响应。三个通过槽位不等于三类不同机制，不能替代网络传播或断键主张的独立冻结确认。",
+          "公开合同已给定有限成对平衡家族。稀疏拟合、局部标准误和近零额外键并不证明所有省略键严格为零或网络机制唯一，也不构成热力学相变证据。"
+        ]
+      },
+      {
+        "episode_id": "unified-hysteresis_material-i3-r1",
+        "report_sha256": "adb349efcd5b9698269b51e1e6338e02bc54d337c6885f414b554ccf249b4d83",
+        "summary": "相反重置在相同恒场下的响应差随等待缩小，真实拟合支持单值平衡曲线加动态滞后，不能把回线直接视为永久分支记忆。运行曾得到接近噪声的动态模型，但最终改存另一套与初始化完全相同的样条参数，未保留此前拟合；三项有限时间历史效应方向复现，其中两项区间通过。",
+        "supported": [
+          "48条实验覆盖不同扫速的主回线、小回线、反转、阶梯、恒场和准备历史。四组相反重置的恒场实验中，初始差约2.02–2.04，600秒末差仅约0.0022–0.0074，直接支持所测条件下历史差衰减。",
+          "第四轮真实拟合各恒场指数松弛，第八轮进一步拟合带平衡偏置、平滑饱和曲线和场依赖时间尺度的单状态动态模型；36条记录905个单元的RMSE为0.006054，接近公开噪声。动态滞后是解释这些回线的实际拟合候选，不是仅有文字猜测。",
+          "第十四轮另建全48条数据的样条模型并保存快照，报告RMSE为0.023599；最终程序绑定该快照，主机新条件/控制变化分数为80.2863/80.4435，显示这个替代程序仍有一定跨条件预测能力。",
+          "32对独立复验中，短停留与长停留的响应差约+0.06681、零场停留后的正负预历史差约+0.05149，均在冻结区间内；另一准备历史差约+0.16800也为正，但超过所报上限0.161，故严格确认数为2。"
+        ],
+        "limits": [
+          "静态核对发现第十四轮输出的全部24个参数与该轮显式初始化逐项完全相同，尽管success为true。较早第八轮拟合的平衡偏置和时间尺度参数没有进入最终程序。因此不能称为保留了此前近噪声模型，也不能仅凭成功标志断言样条参数得到有效优化；为何停在初值，现有记录不足以确定。",
+          "最终快照保存的拟合代码与预测代码仅在积分最大步长上有小差别；更主要的版本变化发生在从第八轮参数化模型转为第十四轮样条初值。两轮使用数据数量也不同，不能把其残差比直接解释成同一测试集上的性能下降倍数。",
+          "标作后续验证的记录最终全部纳入第十四轮拟合，没有成功的旧模型冻结误差分析。第九、十轮检索历史，第十二轮只打印轨迹端点，不是新的拟合或验证。",
+          "恒场收敛和有限时点历史效应支持动态滞后的简约解释，但有限观测不能证明严格无持久分支、无额外慢变量或唯一机制；第一项区间失准不等于无准备历史效应。"
+        ]
+      },
+      {
+        "episode_id": "unified-molecular_forces-i3-r1",
+        "report_sha256": "2246263cd7858f694cdb1382578e1b72119d7797d713061fc4d454215e6fdda7",
+        "summary": "初始Lennard–Jones候选误差明显，运行改用等边扫描拟合Morse形状的成对势，并真实检验其向未参与拟合的不等边构型及后来新形状迁移，能量和力误差接近噪声。最终保留联合拟合快照，主机预测和三项几何效应均通过；这支持成对表示的预测充分性，非唯一微观势证明。",
+        "supported": [
+          "15次实验获得120个构型读数，包含距离扫描、不等边、近退化形状、空间变换和配对温度。第三轮实际分解中心力并检验初始Lennard–Jones候选，其能量/力RMSE约0.0570/0.0347，推动后续改用另一径向形式。",
+          "第五轮只用36个等边构型拟合Morse形状成对势；第七轮将其用于未参与该拟合的12个不等边构型，能量/力RMSE约0.000272/0.000775。这些不等边数据先前已采集，因此是按形状保留的验证，不能称作后采新实验。",
+          "第十三轮明确用先前v1参数预测后来采集的最后24个新形状/温度读数，能量/力RMSE为0.000284/0.000709；同时另外报告全120构型再拟合残差0.000303/0.000728。前者是真正没有用新增数据重拟合的检验。",
+          "最终morse_pair/v2保留成对能量和解析力、共同能量偏置及小线性温度项，绑定源码SHA一致。主机新条件/控制变化分数为99.9666/99.9568。拟合温度项约为其局部标准误的1.15倍，没有稳健证据需要强温度依赖。",
+          "32对独立复验覆盖三个冻结力对比，幅度约−1.26310、−0.51134、−0.80354 eV/Å，分别对应指定等边、不等边和钝角构型变化；都是给定坐标与粒子标号下的总几何效应。"
+        ],
+        "limits": [
+          "Morse形状优于实际比较的初始候选且预测充分，不等于排除了全部其他成对或多体函数。噪声以下的多体贡献仍可能存在；三项几何总效应没有单独认证成对可加性。",
+          "部分形状在多个温度重复，120个读数不等于120个独立几何；空间旋转或平移也不是新的内禀形状。三个粒子总能共面，不应将三维坐标的旋转称作真正非平面三角形。",
+          "温度项不显著只约束所测范围与精度，不能证明严格温度无关；最终预测器实际仍保留了小线性温度修正。",
+          "全部拟合残差与最后24条再拟合后误差不属于独立验证，只有明确使用旧v1参数的验证和冻结主机测试承担相应证据。"
+        ]
+      },
+      {
+        "episode_id": "unified-climate_response-i3-r1",
+        "report_sha256": "4b3a10874732a37dcc818d16189a389bad862c70e2bea20f21495d7695e534a8",
+        "summary": "幅度、脉冲与变号实验支持有限时间的热记忆，三个升温效应均独立复现。实际分析比较的是线性两/三状态模型；最终改用未经数值比较的二次损失模型，不能将“非线性最佳”当作已完成的模型选择。总分79.66701268302951。",
+        "supported": [
+          "23条实际记录覆盖常值、单年及持续脉冲、斜坡、交替和变号强迫，最长80年。末批40年常值2、5、8强迫的温度读数约0.7080、1.7845、2.4688 K，提供幅度依赖的直接观测线索。",
+          "第2轮确实拟合线性两状态与三状态模型，二者噪声标准化RMSE都约1.20038，三状态未改善拟合而增加参数；第10、12轮另完成线性连续状态和双指数记忆拟合。",
+          "冻结后的新条件/控制变化原评分约82.30/83.67。十年持续加热相对零强迫、较高相对较低强迫的独立温升均值约1.49453和0.88025 K，均被区间覆盖。",
+          "两组当前强迫均为零时，先加热13年再撤除一年的组温度仍高约1.54241 K，落在冻结区间内；这独立确认了该具体历史的残余响应，合计3/3。"
+        ],
+        "limits": [
+          "所有成功分析均为线性模型，没有执行所提交二次损失项的拟合或对照评估；最终“更好解释曲率”的笔记不能提升为已完成的非线性模型比较。最终参数也不同于先前拟合，未绑定模型快照。",
+          "原提交在已有记录上的温度/能量RMSE约0.09038/0.26351；不能沿用早期线性拟合约0.07644/0.15447的精度作为最终程序表现，这些数值也来自不同覆盖集合。",
+          "第12轮双指数模型的慢模态落在近乎不衰减的边界，有限数据不能可靠确定慢平衡时间。多次160年请求被长度校验拒绝，不能当作长期实验或平衡验证。",
+          "后续80年观测虽实际采集，第12轮将其一起重新拟合，未报告固定早期模型的前瞻误差。三个自选效应都是温度读数，不能确认能量通道、慢状态数量或唯一热储层机制。"
+        ]
+      },
+      {
+        "episode_id": "unified-catalyst_aging-i3-r1",
+        "report_sha256": "cc5277e9873a9c6543e76e0a5f04b3a3d1368af5be78bd19dfc7be2f99847353",
+        "summary": "校准后不同反应历史的损失差异及实际模型比较支持条件相关老化，优于仅按使用次数解释。最终联合拟合因读取错列失败，提交近似重建模型；三个新券产出对空白的效应全部复现，但并未独立确认老化机制。总分79.12697132562876。",
+        "supported": [
+          "42条序列包含互补空白/标准、同条件重复使用、不同预历史后共同探针及混合券序列；实际校准与历史建模将仪器事件计数效应和券自身使用史分开考虑。",
+          "第6轮在290个校准后反应读数上比较使用次数、累计新券产出、条件相关损伤及混合模型：训练RMSE约0.16342、0.01425、0.004553、0.004537；条件相关损伤的逐记录留出RMSE约0.005753，低于累计新券产出的0.015271。",
+          "三个自选新券反应相对同事件空白的独立均值约+0.04504、+0.94381、+4.19624，均被冻结区间覆盖，确认3/3；它们确认所述三个条件下的产出幅度。",
+          "最终程序保留了事件校准、条件响应及券独立累积历史的基本结构，冻结后条件/控制变化评分约79.51/76.37；已有反应读数上的原程序RMSE约0.05109。"
+        ],
+        "limits": [
+          "第14轮拟合把记录ID字符串当成测量值做减法而失败，未保存快照，尚余约165.8秒分析预算。最终校准数组、Hill进料响应和产出比例损伤是近似重建，不能称为成功导出的最优拟合。",
+          "最终采用累计新券产出的损伤形式，而早期实际比较更支持另一种条件相关损伤；不同轮次的校准、数据量和误差尺度也不同，不能直接把其训练误差作统一排名。",
+          "第二个效应的最终程序预测约+0.89200，不在自身[0.933,0.963]区间；第三个约+4.21743也略高于上界。实验区间全部复现，不意味着它们全部与冻结程序一致。",
+          "逐记录留出沿用了全数据校准及全数据拟合暖启动，后续某些分析还用全数据构造严重度特征。三个提交效应均为新券产出而非历史干预，不能独立确认老化规律、不可逆性或唯一微观机制。"
+        ]
+      },
+      {
+        "episode_id": "unified-field_ecology-i3-r1",
+        "report_sha256": "1f3c5cad6d9c081382baa82cf18338bc2faa7fd275fcffe9d4772bac752396a6",
+        "summary": "两批完整重复访次面板支持出现率随生境指标上升、方法检出可靠性下降的联合解释，并实际完成重复批次交叉验证。后续超时导致拟合未保留，最终改交单峰出现率近似模型；两个零生境调查效应复现，第三个被高估，总分31.48312928738181。",
+        "supported": [
+          "48条调查覆盖重复、混合顺序、单次与偏移网格；前16条为两套完整多访次协议循环，第4轮分别用一套拟合另一套预测，线性logit模型跨重复批次RMSE约0.044008，略优于更高阶候选。",
+          "第2、4轮实际拟合一致显示：出现率随生境指标上升，而两种方法的条件检出概率下降，强化方法较高。该分解依赖公开的固定出现状态与条件独立语义，避免把边际检出形状直接当作出现率形状。",
+          "零生境处强化首访相对快速首访的独立增量约+0.13672；三次相对两次快速调查的至少检出一次增量约+0.07178，二者均被冻结区间覆盖，确认2/3。"
+        ],
+        "limits": [
+          "第6、11轮分析超时，未保存快照。最终把已拟合的单调上升出现率换成未经拟合的单峰形式，并弱化检出率随生境的下降；说明中的“单峰出现率”不是实际早期拟合结论。",
+          "原程序在已有记录上的first/any/all RMSE约0.13546/0.17637/0.08388，明显不能继承早期跨批次0.0440的精度。四份同网格快速单访次在高端的实测均值约0.05469，最终预测约0.13964。",
+          "三次强化相对三次快速调查的全部访次检出比例独立增量约+0.09277，小于冻结下界0.10；效应方向为正，但量化区间未覆盖。",
+          "自选效应全部集中生境零点，未验证整条生境曲线。公开给定的条件独立和调查不改变出现状态不属于发现；总体关联与有效概率分解也不能识别唯一生物机制或生境因果效应。"
+        ]
+      },
+      {
+        "episode_id": "unified-phase_equilibria-i3-r1",
+        "report_sha256": "0b7eece0d1101e0b6f67e91de99615dbae3a508e0082c0fdbbaa2b64fd1d25bf",
+        "summary": "组分与保温扫描支持淬冷谱逐步接近相应粉末加和谱，新增匹配加载实验也与公开仿射读数关系一致。最终光谱与速率快照完整保留，条件/控制变化预测约97.60/97.53；总分93.22055761647316。三个定点效应中两个覆盖，纯A加载效应区间略低。",
+        "supported": [
+          "48条扫描中，组分0.5淬冷谱相对相应初始粉末混合谱的RMS距离在时间0、20、120约为0.12814、0.03169、0.00359；同组分粉末时间0与120的差约0.00456，支持该观察窗内粉末近似不变及淬冷谱趋近。",
+          "实际比较了组分样条留点预测、对称与非对称速率近似以及时间路径，随后补充新组分—时间对。最终绑定的phasefit/v1保留了实测谱模板、组分插值和速率代码，原提交在已有扫描上的RMSE约0.003509；冻结后主机测试提供独立预测支持。",
+          "后续满载观测与先前部分加载观测形成两组同制备、同组分、同时间的直接配对：扣除测得空载后，加载0.30与0.65的仿射残差RMS约0.00353和0.00366，与公开读数噪声预期约0.00377和0.00373相当。",
+          "63°处纯B替代纯A的独立强度差约−0.89807，半组分淬冷在78°处时间120相对0的增量约+0.56202，均在冻结区间内，确认2/3。"
+        ],
+        "limits": [
+          "第10、12轮所谓validation误差并非全部样本外：新采集满载淬冷轨迹参与速率重拟合，部分粉末记录也参与谱拟合；应称内部拟合检查，不能重复计为独立前瞻验证。",
+          "纯A加载效应独立均值约+0.89934，高于冻结上界0.89733约0.00201；保留原未覆盖结果。区间虽比32对噪声标准差更宽，仍不足以保证覆盖模板估计误差。",
+          "加载仿射关系是公开语义，匹配观测验证的是测量与实现一致性。前两个自选效应集中同一角度的初始样品差异，第三个为有限时间谱变化，均不唯一识别晶相或微观机制。",
+          "加和粉末端点加单指数松弛得到较好预测，不排除在有限窗口内相似的多阶段动力学；0.5°网格间峰形、120之后行为和热力学平衡没有被这些结果确定。"
+        ]
+      },
+      {
+        "episode_id": "unified-microecology-i3-r2",
+        "report_sha256": "d76061a6f02327411a9277778e24149667996f9959223a1bee5635956cc10dcf",
+        "summary": "48 条观测包含共培养依赖和组分去除后的延迟种群变化，但多轮“拟合/保存”说明只对应描述统计或字面状态，真正的 RBF 拟合随后失败。最终手写 ODE 因导数维度错误完全无法运行；补料效应通过复核，两项去除效应方向正确但数量区间错误。",
+        "supported": [
+          "单培养与混合培养记录支持 A 生长与组分产生、B/C 对共培养的依赖，并显示不同组分去除引发不同后续响应。",
+          "配对去除 peak-01 后 6 小时 A 上升约 0.317；配对去除 peak-03 后 24 小时 C 上升约 0.363，保留了远离瞬时操作的生态响应证据。",
+          "补料一小时后营养残留增加的宽区间通过新配对复核；另两项组分去除的真实差值仍为负，失败在所报数量区间，而不是效应方向不存在。"
+        ],
+        "limits": [
+          "最终营养导数误写为三维向量，与其他一维导数组装时触发 ValueError；所有主机预测失败，主成绩按协议为零。该零分不等于 48 条探索观测没有科学价值。",
+          "第 7/10 轮只做轨迹摘要与分组统计；第 12 轮“model_saved”仅是字面 result，第 13 轮实际目录为空。第 14 轮 RBF 求解奇异矩阵失败，第 15 轮在只能提交的 closing 阶段请求分析而被拒绝，没有成功拟合或保存可继承的模型。",
+          "两项去除 claim 的复核差值约 -0.589 和 -0.342，均不在所报 [-0.20,-0.04] 区间内。唯一通过的是补料后短延迟的自身通道残留，不证明交叉供养结构。",
+          "描述统计中的温度处理与某些对照改变了接种量/初始营养，不能全部称作只变温度的匹配对比。培养组合与局部去除结果也没有通过中介阻断或救援建立完整反馈链。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-coupled_oscillators-i3-r2",
+        "report_sha256": "c2faf88aad42ad043cd3aa5d74ea12238432cf9e39a798c509b2dbdbb3c23afc",
+        "summary": "该运行真实完成基态拟合和两批干预迁移验证，保留了准确的无驱动机械模型与三个复现效应。但最终保存时把驱动增广状态的索引写错，周期驱动预测明显劣化；高总分并不表示全部干预实现都正确。",
+        "supported": [
+          "只用前八组基态拟合后，对随后切边、质量、阻尼、夹持和驱动试验真实执行迁移验证；再新增的八条长期混合状态试验同样没有参与拟合。",
+          "旧分析函数对全部 24 条排除初态/夹持通道的合并误差约 0.00256，后八条约 0.00251，支持参数在这些控制改变中的迁移。",
+          "最终参数保留正确，无驱动预测仍准确；B 加质量、B 加阻尼和切 C–D 边在 2 秒的位置效应均通过新配对复核。"
+        ],
+        "limits": [
+          "第 12 轮用旧分析函数计算验证误差，却保存另一份存在驱动索引错误的代码；先前约 0.00255 的验证指标不能直接归到该最终程序。原样最终程序在两条探索驱动记录的误差升至约 0.222/0.265。",
+          "最终程序其余条件预测良好，但驱动类别存在明确缺陷；三个正式 claim 均不含驱动，因而没有检测这项错误。",
+          "第 10 轮“已保存”说明实际只执行 result，第 11 轮目录仍为空；真正保存发生在第 12 轮。第 2 轮输出耦合字典的键相撞导致展示遗漏，第 4 轮恢复完整表示，但不能说早期拟合从未包含该耦合。",
+          "近零耦合与切边迁移支持星形候选，未做正式拓扑竞争或结构置信区间，不能证明唯一拓扑。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-reaction_kinetics-i3-r2",
+        "report_sha256": "4189071a9a171d2eb3267d5c9535ef934b247ed46ec12e9a4d5f5f1bb1bf4fc2",
+        "summary": "该运行完成稀疏可逆链的真实干预验证，并用重复配对实验支持三个延迟效应。最后一次诊断把边方向反读，错误地认为模型存在较大失配；最终程序仍保留正确方向，预测接近测量噪声，三个效应均通过复核。",
+        "supported": [
+          "两温度全连接候选拟合后收缩到六条主要有向速率，再用四温度纯组分数据拟合；第 7 轮对八条未参与拟合的混合/干预轨迹误差约 0.00195。",
+          "第 11 轮实际拟合 30 条并保存快照，随后八条重复确认记录没有再用于拟合；审阅重放这些新记录的误差约 0.00199。",
+          "温度改变后的 A 响应、补 A 后的残留和共同降温背景下补 D 的残留，分别有三对、两对、两对探索重复；申报读数距相关操作 15–26 秒，三项新配对复核全部通过。"
+        ],
+        "limits": [
+          "第 14 轮临时重建时将快照的 source/destination 反读，约 0.227 的平均逐轨迹误差属于错误诊断程序。最终正确程序的合并误差约 0.00197，不能把最后 explanation 中的高温失配判断当作已证实科学结论。",
+          "第 2 轮近零边的活化能估计不稳定，随后稀疏化有数据支持，但未给弱边的等效性界限或正式结构不确定性；链拓扑仍非唯一识别。",
+          "探索重复样本只有每项两至三对，区间覆盖和正式新配对确认支持这些具体效应，不足以证明整体区间校准或所有条件下的机制解释。",
+          "线性叠加和事件处理方式部分来自公开装置规则，预测成功不能把这些先验重新记作新发现。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-heat_transport-i3-r2",
+        "report_sha256": "bcf666d836ec6616599eb18851a20d9138ddceab697ff5d9e056e3bbde6a653b",
+        "summary": "24条瞬态实验支持可用的非均匀输运近似；实际拟合了前16条，并在新8条条件上检查残差、比较平流离散和多种网格。最终保留拟合系数并采用已检查的较细网格，主机预测准确，三个早期局部加热、冷却和热源宽度效应通过复验；没有其备注所称的全24条再拟合。",
+        "supported": [
+          "实验包括被动扩散、不对称边界、局部与镜像热源、正负流动、冷却和热源宽度变化。第四轮真实拟合前16条记录，逐实验非初始单元RMSE中位数0.043467 °C，最大0.061513 °C。",
+          "新增8条数据后，第九轮确实用旧系数比较中心与迎风平流，第十一轮比较五种网格；最终采用的121节点方案在24条记录上逐实验RMSE中位数0.044449 °C，最大0.156653 °C。较大残差集中于两个新边界/环境条件，揭示已有模型的局部局限。",
+          "最终程序保留第四轮系数组和方程结构，网格从61改为121节点；该网格及相同面扩散处理已在第十一轮评估。主机新条件/控制变化分数为95.6934/98.6637，支持冻结程序的受限跨条件预测。",
+          "三个0.5秒早期对比均由32对独立复验覆盖区间：同位置加热约+1.79512 °C，热样品冷却约−0.53926 °C，加宽同峰值功率热源约+0.37974 °C。"
+        ],
+        "limits": [
+          "第六轮和第十二轮备注声称对24条重新拟合，但代码分别检索历史与列出工作区，没有优化。后续读取的仍是第四轮前16条拟合；不能将三次文字计划视为完成了三次联合拟合。",
+          "最终程序没有快照绑定，虽经静态核对保留系数并使用已评估网格，仍不能说原样导出最初61节点拟合器。提交的约0.152最大误差来自另一离散诊断，最终121节点对应非初始单元最大误差约0.15665。",
+          "网格加密并未单调消除两个边界条件的残差，有限网格诊断不能证明残差全由离散误差引起；离散界面参数也不具有无限精度物理定位意义。",
+          "正式确认集中于早期局部源项响应，没有独立确认空间界面或流向机制。公开输运家族内的准确预测不排除平滑非均匀材料或其他近似解释。"
+        ]
+      },
+      {
+        "episode_id": "unified-gene_regulation-i3-r2",
+        "report_sha256": "262f1d7266afb8f476324f1498423a83941fd4cbbe064a34b86c0f4f5f63cb11",
+        "summary": "该运行实际比较稠密与四边候选、执行重拟合前验证，并保留最后四条作为冻结模型的独立检查；最终轨迹预测接近噪声。三个下游效应方向都有观测支持，但最终一个区间排除了自身先前计算和新复核的效应值，另外两个通过的区间也较宽。",
+        "supported": [
+          "第 8 轮先用旧四边参数预测新八条，误差约 0.00398，随后才重拟合并保存；第 14 轮对最终四条真实保持冻结验证，误差约 0.00391。",
+          "最终保留第 12 轮 44 条拟合的参数与方程，全 48 条排除初始读数的误差约 0.00398，主机新条件预测同样准确。",
+          "同背景重复脉冲显示 G3 驱动后 G2 上升、G4 驱动后 G3 下降、G2 驱动后 G4 上升，读数在脉冲开始 5.5 小时后，属于下游动态响应而非直接赋值。",
+          "三项新配对均值方向与探索观测一致；其中两项冻结区间通过，保留了明确的局部效应证据。"
+        ],
+        "limits": [
+          "第 12 轮已算出 G4→G3 对比约 -0.172，模型约 -0.174；最终区间却为 [-0.38,-0.20]，排除了自身预测，新复核约 -0.174 也未覆盖。问题是数量区间提交失配，不能说该负向响应不存在。",
+          "三项最终区间宽度均为 0.18，前期有重复数据也没有转化为精确区间；宽度惩罚加上第二项失配使效应分仅约 11.05，不能把两个 verified 端点等同于高精度效应估计。",
+          "第 5 轮稠密误差排除初始读数，第 6 轮稀疏误差包含初始读数。审阅改用同一口径后两者仍均接近噪声，但原两个数不宜直接当作模型选择指标。",
+          "候选边方向与下游总效应相容，仍未隔离间接路径、检验所有弱边或建立唯一调控网络。",
+          "这些结果评估模型与当前 runner 的上下文、读取预算和最终提交工作流的共同表现；仅最近两轮结果自动呈现，旧数据虽可在分析中读取，closing 阶段却只能提交，不能把执行或导出失误全部归为模型内在科学能力。"
+        ]
+      },
+      {
+        "episode_id": "unified-ising_spin-i3-r2",
+        "report_sha256": "3d00e71c691d48cacaad7d5feaf202bc304db859852c379c2360d34f09204fb0",
+        "summary": "0分来自最后两轮提交格式失败、未完成冻结，而非没有科学进展。48次实验已支持有限成对平衡模型，保存了4个含代码快照；第十三轮真实用旧模型预测新增8条干预数据，RMSE约0.002963、接近噪声。但没有有效最终提交、主机预测评分或正式效应复验。",
+        "supported": [
+          "从基线温度扫描推进到有符号外场、两种钳制方向、完全与分数断键、近零键对照和组合控制，实际完成48次实验。多轮21参数精确64状态拟合在已观测数据上的残差接近公开噪声。",
+          "第十三轮明确用此前39条数据的v3参数预测新8条记录，RMSE为0.002963；对前47条再拟合后的整体RMSE为0.002999，新增批次再拟合误差0.002957。代码分别保留旧参数与再拟合计算，支持真实顺序泛化而非仅贴“留出”标签。",
+          "四个版本快照均有预测代码，最后v4参数与第十三轮报告一致，文件SHA与快照引用匹配；静态程序正确实现字段、钳制和分数抑制语义。它是已保存的科学成果，但没有变成有效冻结提交。",
+          "最后一条实验确实同时改变所有键、施加多个外场并钳制一个节点，构成组合控制的强挑战；该观测已获得，但之后没有成功输出其预测残差。"
+        ],
+        "limits": [
+          "第十五轮主张规格中的外场向量只有5个数而被拒；第十六轮把模型和claims放在顶层、缺少submit包装，触及轮次上限。原始状态为incomplete/model_round_limit，无基础设施错误，端到端原分保持0。",
+          "失败提交还存在效应语义错位：第十三轮计算的钳制效应是温度1.0的E读数，提交却写成温度1.4的F；断键效应计算于温度0.7，提交写成0.5。因此即使格式修复，也不能直接宣称这三个区间有效；本审阅不修复或重评。",
+          "较早几轮的新批次RMSE在包含它们的联合拟合后计算，不全是独立验证；第二轮备注声称已有基线拟合，却只有实验行动，不能追认一个未执行的分析。",
+          "没有冻结主机面板或32对效应复验；参数不确定性和近零键不能证明严格稀疏或唯一机制。最后全键挑战的“吻合”在提交解释中没有对应误差输出。"
+        ]
+      },
+      {
+        "episode_id": "unified-hysteresis_material-i3-r2",
+        "report_sha256": "3b0aa19c9d509f26f5941582a73c82d585560b1a41a476c7f1f638a18c5e54b3",
+        "summary": "实验和真实拟合支持非线性单状态松弛与逐渐衰减的历史差，但最终程序把保存的饱和曲线参数当成四次多项式数据读取，全部预测面板运行失败，原分为0。正式复验还发现强场差区间偏低、两个长等待后的记忆对比接近零，因此既有模型交付失败，也有实质性效应主张失准。",
+        "supported": [
+          "48条实验涵盖相反重置的恒场、不同扫速回线、准备、停留和反转。三个同场重置配对的初始响应差约2.02–2.04，长等待末差降至约−0.0157至+0.0078，支持这些条件下的历史衰减。",
+          "第五轮实际逐条拟合指数步响应；第八轮对前32条记录552个单元比较常时间尺度饱和曲线模型和更灵活模型，RMSE分别为0.005896与0.005887，接近公开噪声。增加场依赖等自由度仅小幅改善拟合，支持简单动态滞后解释的可行性。",
+          "拟合参数曾单独保存为fit/v1，但没有一起保存预测代码。其后确实又采集了16条回线与配对历史实验，属于真实追加数据；不能把最终0分解释为没有做实验或没有拟合进展。",
+          "主机仍独立复验了三个效应。正负强场差约+1.98798，确认了大幅场响应的方向与存在；两个共同等待后的历史对比均值约+0.00038和−0.00084，相对于各自标准误没有可分辨非零效应，未支持申报的可测持久差异。"
+        ],
+        "limits": [
+          "最终predictor读取MODEL[\"coef\"]和MODEL[\"reset\"]，而绑定参数只包含饱和曲线的offset/amplitude/slope/center及分开的重置值；缺失键会先触发运行错误。更深一层，原拟合使用tanh平衡曲线，最终改成四次多项式，并把原log时间尺度直接当时间尺度。拟合科学模型未被正确导出。",
+          "16个主机预测面板全部为candidate_runtime_error；原始状态为invalid_predictor/predictor_verification_failed，模型未完成，0分保持不变。参数快照与最终源码SHA绑定只能证明来源，不能证明参数接口或方程语义一致。",
+          "三个冻结区间均未覆盖复验均值：强场差的[1.75,1.79]明显偏低，另外两项所报非零记忆区间与接近零的复验不符。这不是只有格式问题；也不能将后两项写成已确认记忆效应。",
+          "后16条追加数据没有成功的旧模型误差输出；第九轮只检索历史，部分回合格式无效。提交所称已拟合四次目标曲线、后续验证支持其预测，没有实际分析依据。",
+          "近噪声探索拟合和长等待收敛并不证明单一微观机制，也不证明所有时间尺度上的记忆都严格消失；它们只约束已测条件与精度。"
+        ]
+      },
+      {
+        "episode_id": "unified-molecular_forces-i3-r2",
+        "report_sha256": "961cade9eb97fae3a31ec5d629432fb08c6b1d68c533316f1b33bfdebed92e03",
+        "summary": "14次实验测得112个构型/温度读数，简单逆幂候选失配后，较灵活的保守径向成对模型达到噪声量级。运行实际用新形状和分组交叉验证选择样条，最终保留主要拟合结构，主机预测与三个等边收缩效应均通过；证据支持该表示的预测充分性，不是唯一势或无多体项证明。",
+        "supported": [
+          "实验包括初始空间变换与形状比较、同一组8个构型在8个温度的重复测量，以及新增不等边与近退化形状。第三轮比较简单双逆幂候选，最佳能量/力RMSE约0.010264/0.013009；第七轮扩展径向基后拟合残差降至噪声量级。",
+          "第九轮把新增24个构型读数留作测试，实际比较样条结点与正则化；第十一轮进一步按平移归一坐标分为55组，在六折中比较候选，所选模型的折间误差汇总约为能量0.000318 eV、力0.000720 eV/Å。分组防止了相同坐标形状的跨温度重复直接跨折。",
+          "最终保留26基函数径向样条及其解析导数求力，能量与力关系和成对反作用在模型内一致。系数仅有小幅舍入，主机新条件/控制变化分数为99.7910/99.7647，提供模型选择完成后的独立预测证据。",
+          "相同形状跨温度的读数和回归分析没有显示大幅稳定温度效应；最终仅保留小能量温度修正。三个450 K等边收缩效应通过32对复验：能量差约−0.28631与−0.08153 eV，指定方向力差约−1.10826 eV/Å。"
+        ],
+        "limits": [
+          "最终温度中心从拟合时450 K改为540 K，但常量偏置未同步调整；因此虽保留样条主结构，仍不是完全等价导出。此处产生很小的统一能量偏移，主机高精度结果仍成立，不能据此改分。",
+          "所报分组交叉验证也用于选择基函数数目和正则化，不是完全未触及的最终测试。其分组未统一旋转或粒子重标号；按边长不变量静态核对，至少一组等价形状仍跨折。不能把全部112个读数或全部交叉验证折当成完全独立内禀形状。",
+          "三个正式效应均为等边三角形收缩的能量/力变化，没有单独确认不等边迁移或排除多体机制。能量梯度与成对反作用的一致性部分是模型构造本身，不应全部表述成从数据独立发现的守恒律。",
+          "若干紧凑函数形式的拟合失败没有充分优化稳定性检查，不能据此排除整个函数族。噪声量级残差及弱温度趋势也不证明唯一径向势、严格温度无关或完全无多体贡献。"
+        ]
+      },
+      {
+        "episode_id": "unified-climate_response-i3-r2",
+        "report_sha256": "cd0f2ac46b2e72066cc3a3ac921bb3e3b411470c4cac164c8a0649d2cf769da3",
+        "summary": "常值、脉冲和变动强迫记录支持有限时间的响应记忆，最终两模态线性快照完整保留，独立条件/控制变化预测约91.94/93.22。三个定点效应均复测覆盖，总分87.98204327187001；中间二次强迫模型拟合更好，极慢模态也未被可靠识别。",
+        "supported": [
+          "实际10条记录包含40/80年常值与20年脉冲、变号和多水平历史，以及一条120年宽频强迫。两个脉冲实验撤除强迫一年后的温度读数约1.188和1.215 K，能量收支约−2.380和−2.345 W m^-2，提供输入撤除后残余响应的直接观测。",
+          "第7轮实际比较1至4模态及是否含二次强迫项，第11轮另比较纯线性模态数；该候选集合中两模态在简约性与拟合之间较有利，不能将第3轮仅完成的能量回归误称为完整状态模型比较。",
+          "第14轮以全部10记录拟合并保存双模态卷积，最终快照参数和代码一致；噪声标准化残差均方约1.57495，冻结后的主机条件/控制变化评分约91.94/93.22，支持范围内有用但不完美的近似预测。",
+          "40年持续加热相对零强迫的独立温升和能量收支差约+1.46074 K、+0.84125 W m^-2；同样前20年加热后，继续一年相对撤除的能量收支差约+3.36063 W m^-2，三个均在冻结区间内。"
+        ],
+        "limits": [
+          "第7轮两模态带二次强迫项的加权残差平方和约721.42，纯线性为839.18，AIC-like也偏向前者；最终线性快照并不是此次比较中最优形式。只能主张有效近似，不能据此确认精确线性或排除非线性。",
+          "最终慢保留因子极接近1，并伴随较大的输出系数，有限时间数据难以分开其增益与时间尺度；这不识别真实慢热储层或平衡敏感度。多次160年请求无效，实际最长为120年。",
+          "新增120年记录被第14轮纳入重新拟合，没有给出冻结早期模型预测该记录的误差；真实独立证据来自最终主机测试，不能把采集笔记中的generalization意图当作完成的前瞻验证。",
+          "前两个自选效应来自同一持续加热对照的不同通道；第三个同时改变当前强迫并允许一年状态响应，不是两组当前输入相同的纯记忆对照，也不是瞬时切换测量。3/3区间覆盖不证明模型唯一性或区间长期校准。"
+        ]
+      },
+      {
+        "episode_id": "unified-catalyst_aging-i3-r2",
+        "report_sha256": "fd7fd279b6decb78c02f9f1d547a2eb7269a8a163ed19d67851af54e781ad59e",
+        "summary": "42条实验已显示仪器校准变化及条件相关的重复使用衰减，并完成结构模型拟合和记录级交叉验证；第15次请求发生API传输故障，未冻结模型或效应声明。端到端成绩按原协议保留0，不能据此抹去中间实验进展。",
+        "supported": [
+          "空白和标准样覆盖事件索引，实际分析分离了偏置、增益变化与反应读数；第4至5事件的标准样均值约从1.629降至1.440，显示平滑仪器漂移模型不足以概括全部变化。",
+          "校准后的重复使用汇总呈条件相关衰减：在550 K、进料1.1、持续14的条件下，第1至4次平均产物约3.078、2.234、1.619、1.172；450 K、进料0.2、持续3时约0.01696降至0.01451。实验支持先前使用条件影响后续产出，而不只是统一的使用次数效应。",
+          "第11轮实际拟合了当前反应响应与累计暴露损失相乘的结构模型，校准产物训练RMSE约0.01292；第14轮实际比较了当前条件与累计历史多项式，记录级留一误差在指定子集约0.08045、全体约0.11418。两种分析均有执行结果，超出了笔记中的建模意图。"
+        ],
+        "limits": [
+          "原报告score/subscores为null，未有submission.json、predictor.py或保存快照；公开结算将API失败记为0分。没有冻结后的独立主机预测或效应确认，不能用中间拟合替代最终成绩，也不能将0个已确认效应解释为三个声明被否定。",
+          "第11轮0.01292是校准产物空间的训练误差，另一多项式的0.09518是对数空间误差，两者不可直接排名；结构模型未报告独立留出误差。第14轮校准使用全体记录，候选按指定子集CV选优且未嵌套重选，并对小产物取下限，其数值不是完全独立的原始读数预测误差。",
+          "第3、6、7和13轮的一些笔记承诺模型比较或留出验证，但实际输出主要为校准与汇总；第12轮因语法错误未产生结果。不能把这些意图算作完成的机制区分。",
+          "条件相关衰减和累计历史拟合不唯一识别微观失活机制、不可逆性或顺序不变性；尚缺冻结模型保留和独立检验。"
+        ]
+      },
+      {
+        "episode_id": "unified-field_ecology-i3-r2",
+        "report_sha256": "d4f990cdde20d15e0553b1aff3e4eba935ab1131366799770738941383726fb4",
+        "summary": "48个面板上的联合出现率—检出模型完整保存并进入最终程序，支持出现率上升而两种方法可靠性下降的有效解释；独立条件/控制变化预测约97.43/97.37，三个调查设计效应全部复现，总分91.18461107608438。",
+        "supported": [
+          "实际采集单次、同方法重复及全部混合三访次顺序，并在四套交错生境网格重复；第4、6、8轮逐面板留出和第10轮逐网格整块留出均实际执行，简单线性logit模型的网格留出RMSE约0.044482，二次约0.044485、三次约0.044566。",
+          "第8轮实际完成300次面板bootstrap检查参数稳定性；第13轮以全部48面板拟合，得到出现率随生境上升、快速和强化方法可靠性下降的有效分解，整体观测拟合RMSE为0.044214。",
+          "最终绑定的field_ecology_fit/v1参数及代码与保存快照一致，保留了拟合曲线；冻结后的独立主机条件/控制变化评分约97.43/97.37，支持该范围内新的调查设计预测。",
+          "零生境处强化首访相对快速首访、三次相对一次快速访次的独立增量约+0.13574和+0.16064；生境−1处三次强化相对一次快速的增量约+0.09033，三个均在冻结区间内。"
+        ],
+        "limits": [
+          "第12轮宣称48面板网格验证约0.0441的笔记没有对应计算：执行代码只有result，返回null。可以使用实际第10轮40面板CV和第13轮48面板拟合，不能把笔记数值当成额外验证。",
+          "三个最终区间使用拟合均值代入独立64站点、32对面板的二项抽样方差；虽早期做了参数bootstrap，最终区间未并入该参数不确定性或模型结构不确定性。3/3覆盖不等于已校准全部90%区间。",
+          "CV对单次访次三个相同通道重复计权，也未用完整相关似然；线性与高阶模型的误差差距极小，只支持简约选择，不能认定真实logit严格线性。",
+          "访次条件独立、固定出现状态及同方法计数下any/all顺序不变是公开语义，残差诊断不是对这些规律的发现。第三个效应同时改变方法和次数；生境分层关联及有效概率分解不确立唯一生态机制或生境因果效应。"
+        ]
+      },
+      {
+        "episode_id": "unified-phase_equilibria-i3-r2",
+        "report_sha256": "36058351f0cab3bf414539257e52a7b852f6032ee9a68e9f3bbcbd57bab05bab",
+        "summary": "48条谱图支持淬火样品随保温接近粉末混合谱，以及近似仿射组成关系。中间低秩模型拟合良好却未保存，最终手写峰形模型遗漏重要观测峰；三个局部效应均获独立确认，但整体条件/控制变化预测仅约37.02/48.46，总分50.091938720838414。",
+        "supported": [
+          "在组成0.5，淬火谱与初始粉末混合谱的RMS差随保温0、10、40、120从约0.12823降至0.05965、0.01250、0.00451。另有三种组成的粉末样本时间比较；12条粉末谱用共同仿射组成模型拟合的RMSE约0.00277，支持所测范围内近似混合与时间稳定性。",
+          "第6轮实际比较了仿射与一/二折点的长时组成插值，第14轮实际比较低秩组成—时间候选并得到训练RMSE约0.00279、留一平均RMSE约0.00332；这些是已执行的中间分析。单条部分装载谱相对所拟全装载模型和空载背景的误差约0.00373，提供有限装载关系证据。",
+          "最终程序确为提交中声明的手写重建，未保留低秩系数或谱基。只读重放已有观测的RMSE约0.11027；例如纯组分样在63度读数约0.90417，最终模型仅约0.02559，说明中间拟合能力未延续至冻结程序。",
+          "两个组成下保温0至120的定点强度差分别约+0.67137、+0.49972，以及组成0.5初始淬火相对粉末的差约−0.56356，均在冻结区间内；最终程序在这三个专门挑选点上的预测也落在相应区间。"
+        ],
+        "limits": [
+          "第14轮先用全部淬火谱估计均值与PCA谱基，再做系数留一验证，且候选选择未嵌套；0.00332不能等同于完全独立的泛化误差。第9轮两条新组成—时间谱未用于构造其预测，误差约0.00579/0.00717，但模型是在同批新数据采集后构造，不能称为预先冻结的前瞻测试。",
+          "中间最优模型从未save_model；最终手写峰位、背景和动力学没有对应全谱拟合证据。自选三个强效应确认支持局部差值，并不补足冻结程序对其余谱形和控制范围的预测。",
+          "单条部分装载实验没有同条件的全装载配对，比较依赖插值模型。长时接近、粉末谱稳定及训练拟合中折点改善，不证明热力学平衡、唯一相身份或特定相界；最长保温仍为120。"
+        ]
+      }
+    ],
+    "overview": {
+      "summary": "冻结的 72 次运行已完成，统一主分为 64.31/100，62 次形成有效最终结果。部分运行通过实验建立了可迁移的预测模型，也出现可定位的拟合、验证、程序导出和区间提交失误。分数评估本次模型与 runner 工作流的共同表现；逐例证据支持有限条件下的科学结论。",
+      "findings": [
+        "确有实验驱动的进展：振子和反应体系有先拟合、再预测新控制条件的记录；分子作用力中角度项优于实际比较过的纯成对候选；气候、催化和相图实验分别提供有限时长记忆、使用历史作用和制备相关光谱变化的证据。这些进展均有各自的适用范围。",
+        "微生态已得到多个与延迟反馈解释相容的环节：单/双/三培养中组分与增长的变化，加上组分去除后数小时的种群响应。尚未用中介固定、阻断或救援排除其他通路，不能认定整条反馈链已建立，也不能把匿名组分直接命名为已识别的废物。",
+        "中间成果与最终交付在多例中分离：成功拟合后丢失参数、改变特征顺序、写错索引或输出不相容参数；准确模型也可能提交与已有结果矛盾的区间。另有临时诊断脚本出错而最终程序正确的反例。保存回执、计划文字和模型自述都不能替代执行核查。",
+        "真正的未拟合数据检验、重新拟合后的残差和审阅者事后复算已分别标注。有些所谓验证使用了已经参加联合拟合的数据；另一些运行确实保留了后续新实验或在重拟合前计算预测误差。",
+        "192 项具有新配对观测的申报效应中，161 项达到协议的 verified 端点，其中也有来自最终程序无效运行的效应。这个数量不是独立发现数；效应方向存在、区间通过和区间估计精度是不同问题。",
+        "自选效应中既有延迟下游响应，也有补加后自身残留、早期局部源项或单点响应。通过 eligibility 或获得高效应分，不自动意味着该实验区分了机制或提供了大量科学信息。"
+      ],
+      "limits": [
+        "共同公式、权重和公开归一化尺度不等于共同难度、先验或物理实验成本。部分环境公开了方程族，成功可能包含参数辨识；这些分数不是 Discovery Depth 或普适科学能力认证。",
+        "每环境只有 3 个独立实例，各重复 2 次；同实例重复共享隐藏世界与主机面板，不能当成 6 个独立世界。随机实例没有按机制家族分层，例如未覆盖分子温度依赖与催化双位点家族。不能据此给出稳定模型排名、完整家族覆盖或抗记忆污染保证。",
+        "参考预测器使用了该 agent 已采集的观测，属于有条件的数据建模参考，不是独立完成实验设计与提交的科学 agent。其高分不能直接否定实验设计贡献或比较总体科学能力。",
+        "主分保留全部计划运行：5 次 API 故障、4 次无效程序、1 次未完成提交均按零分计。排除基础设施故障的环境等权均分 68.44 只是辅助口径，不能解释为消除故障后的因果性能估计。",
+        "runner 自动呈现最近两轮结果，过大结果还会截减；旧数据和分析输出需主动读取，history 不保留旧 analyze 源码。进入 closing 后只能提交。现有记录不能量化上下文、预算与交付支持的因果贡献，也不能把全部失败归为内在科学推理缺陷。",
+        "新配对复验支持指定准备、时刻和处理条件下的数量关系，不证明机制唯一性、科学重要性或 90% 区间的整体校准。部分效应共享控制或物理对比；野外生态的生境关联也不自动构成生境因果效应。",
+        "原始报告哈希和计分算术已独立重算，但完整性 helper 不可用，科学审阅仍是同模型家族的暂定判断。历史旧七环境/新增五环境的旧结果未被改名或并入本批新成绩。"
+      ],
+      "next_steps": [
+        "在下一版协议中保留可读取的分析源码和模型状态，提供受相同预算约束的最终程序自检，核对参数、特征顺序、输出形状及 claim 区间与已有估计的一致性；私有主机目标继续隔离。",
+        "明确记录哪些数据参与拟合、选择模型或设置区间，分别报告预先固定参数后的新实验检验、模型选择用交叉验证和最终独立测试。",
+        "若提升机制声明，预注册竞争解释及有区分力的干预；微生态优先补中介固定、阻断与救援以及同一扰动逐段传播的证据。把有用反证和可测效应消失也纳入科学评价。",
+        "扩大独立实例并在见结果前按机制家族分层，另行对照上下文支持、提交支持和推理/实验预算。重复运行按实例聚类，重新评估区间校准；本批 72 次保留所有失败，不替换样本或追溯修分。"
+      ]
+    },
+    "reviewed_episodes": 72,
+    "source_review_sha256": {
+      "semantic-review-stage1.json": "48a684e34bcec5ccdf54657401e7b12d7c754107555ba3d7cc43fc407225d050",
+      "review-core-new.json": "8a1e352cb08edfdedaf0e1618a9bf3b6204fedcde4ed33a3927e8eb4661852f4",
+      "review-physical-new.json": "d4458886cdb7248a5b595aa0f3cde35534e273d04c3fe25c8fc4f3eb8d5c6609",
+      "review-frontier-new.json": "6cbe92ae8b796f3e2c16b8b870c82d6df63d1decca2bb93e32d76e1f0f6cf441"
+    },
+    "numerical_checks": {
+      "closed_raw_count": 72,
+      "public_hash_matches": 72,
+      "claims_submitted_with_raw_arms": 192,
+      "verified_effects": 161,
+      "requests_recomputed_from_reports": {
+        "attempts": 1052,
+        "failed": 5,
+        "returned": 1047,
+        "pending": 0
+      },
+      "macro_mean": 64.31410842561716,
+      "noninfra_macro_mean": 68.44158256772906,
+      "issues": []
+    },
+    "final_overview_sha256": "5110d669ed1bfd0489f6d9bc751ffa647f5bceda021a1ca61b6eb6d35c6f98bf",
+    "claim_scope": "仅支持本批冻结协议下的端到端表现及逐例限定条件的科学结论，不认证Discovery Depth、唯一机制或普适科学能力。"
+  },
+  "review_source_sha256": "cc5308ad95fa41050b83e2c5648c55896bc7e540d65986d35980646234b5ecc9"
 }
