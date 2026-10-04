@@ -235,7 +235,7 @@ def build_report(cohorts, notes, output):
     discovery_dossier = _discovery_dossier(dossier, data["cohorts"])
     environment_catalog = _environment_catalog(notes.get("environment_catalog"), data["cohorts"],
                                                [world["id"] for world in dossier["worlds"]] if dossier else ())
-    report_navigation = ('<nav class="report-nav"><a href="#world-guide-title">环境设计</a>'
+    report_navigation = ('<nav class="report-nav"><a href="../overview.html">12 个环境 · 成绩总览 ↗</a><a href="#world-guide-title">环境设计</a>'
                          '<a href="#model-discovery">GPT 的发现过程 ↓</a>'
                          '<a href="#model-shortcomings">GPT 的不足与改进 ↓</a></nav>') if dossier else ""
     escape = lambda value: html.escape(str(value), quote=True)

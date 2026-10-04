@@ -34,6 +34,9 @@ docs/*
 !docs/discovery_eligibility.md
 !docs/reports/
 docs/reports/*
+!docs/reports/overview.html
+!docs/reports/overview-data.json
+!docs/reports/render_overview.py
 !docs/reports/sle-env-pilot-20261003/
 docs/reports/sle-env-pilot-20261003/*
 !docs/reports/sle-env-pilot-20261003/index.html

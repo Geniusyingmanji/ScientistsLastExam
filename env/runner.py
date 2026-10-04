@@ -171,15 +171,54 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
     model_snapshots, frozen_model_snapshot = None, None
     analysis_protocol = instance.get("analysis_protocol", "legacy")
     panels, baseline_panels, claim_report = {}, {}, None
+    # Explicit opt-in preserves historical prompts, scorers and panel behavior.
+    scoring_protocol = instance.get("scoring_protocol", "legacy")
+    unified = None
+    if scoring_protocol != "legacy":
+        from . import unified_scoring
+        if scoring_protocol != unified_scoring.PROTOCOL:
+            raise ValueError("unsupported scoring protocol")
+        unified = unified_scoring
+    contract_fn = unified.score_contract if unified else score_contract
+    validate_fn = unified.validate_submission if unified else validate_submission
+    verify_fn = unified.verify_claims if unified else verify_claims
+    aggregate_fn = unified.aggregate_episode if unified else aggregate_episode
+
+    def metric_fn(predicted, observed, spec):
+        if unified:
+            return unified.prediction_metrics(predicted, observed, world.scales, world=world, spec=spec)
+        return prediction_metrics(predicted, observed, world.scales)
+
+    def panel_fn(seed, kind, count):
+        if unified:
+            from .unified_panels import generate_panel
+            return generate_panel(world, seed, kind, count)
+        return world.panel(seed, kind, count)
     problem = world.describe()
-    task_profile = get_task_profile(instance.get("task_profile", "open_discovery"), world.name) if world.name in ENVIRONMENTS else None
+    if unified:
+        # The unified cohort uses the same domain-independent open question.
+        # Legacy profile applicability lists predate the frontier worlds.
+        if instance.get("task_profile", "open_discovery") != "open_discovery":
+            raise ValueError("unified scoring currently requires open_discovery")
+        task_profile = {"name": "open_discovery", "version": "unified-open-discovery-1.0",
+                        "public_prompt": "Choose scientific questions, test quantitative regularities and competing explanations, cite observations and state limits. No mechanism or positive discovery is required. Freeze an executable predictor and up to three quantitative contrasts under the unified score contract.",
+                        "automatic_depth_certification": False}
+    else:
+        task_profile = get_task_profile(instance.get("task_profile", "open_discovery"), world.name) if world.name in ENVIRONMENTS else None
     if task_profile:
         problem["task_profile"] = task_profile
-    problem["score_contract"] = score_contract()
-    problem["submission_contract"] = {"entrypoint": "predict(spec)", "returns": "values array only; exact public channel order", "claim_count": "0..3", "claim_replicates_per_arm": 8}
+    problem["score_contract"] = contract_fn()
+    problem["submission_contract"] = {"entrypoint": "predict(spec)", "returns": "values array only; exact public channel order", "claim_count": "0..3", "claim_replicates_per_arm": unified.CONFIRMATION_REPLICATES if unified else 8}
     presentation = instance.get("presentation_profile", "full_description")
     problem = present_problem(problem, presentation, environment=world.name)
-    system = present_system(SYSTEM, presentation)
+    base_system = SYSTEM
+    if unified:
+        begin = SYSTEM.index("Row is zero-based and must be after t=0.")
+        end = SYSTEM.index("Read the full score contract.", begin)
+        base_system = SYSTEM[:begin] + unified.CLAIM_SYSTEM + SYSTEM[end:]
+        from .unified_panels import public_panel_domain
+        problem["evaluation_domain"] = public_panel_domain(world.name)
+    system = present_system(base_system, presentation)
     if analysis_protocol == SNAPSHOT_PROTOCOL:
         problem["model_snapshot_contract"] = snapshot_contract()
         system += SNAPSHOT_SYSTEM
@@ -190,7 +229,7 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
         known_usage = {key: sum((r.get("usage") or {}).get(key) or 0 for r in rounds) for key in usage_keys}
         complete = state == "completed"
         numerical_claims = claim_report["verified_nonzero_effects"] if claim_report else 0
-        scored = aggregate_episode(panels, claim_report) if complete else {"score": None if infrastructure else 0., "subscores": None}
+        scored = aggregate_fn(panels, claim_report) if complete else {"score": None if infrastructure else 0., "subscores": None}
         result.update({"episode_id": instance["episode_id"], "environment": world.name, "world_version": world.version,
                        "cohort": instance.get("cohort", "unspecified"), "requested_model": client.config.model,
                        "task_profile": instance.get("task_profile", "open_discovery"),
@@ -212,6 +251,9 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
                        "model_snapshots": model_snapshots.catalog() if model_snapshots else [],
                        "frozen_model_snapshot": frozen_model_snapshot,
                        "rounds": rounds, "history": history, "records": records})
+        if unified:
+            result["scoring_protocol"] = unified.PROTOCOL
+            result["score_contract"] = unified.score_contract()
         save_json(directory/"report.json", result)
         return result
 
@@ -219,7 +261,7 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
         if analysis_protocol not in ("legacy", SNAPSHOT_PROTOCOL):
             raise ValueError("unsupported analysis protocol")
         for kind, expected in instance.get("panel_hashes", {}).items():
-            if canonical_hash(world.panel(instance["panel_seed"], kind, limits["panel_count"])) != expected:
+            if canonical_hash(panel_fn(instance["panel_seed"], kind, limits["panel_count"])) != expected:
                 raise ValueError("precommitted panel hash mismatch")
         try:
             if analysis_protocol == SNAPSHOT_PROTOCOL:
@@ -281,6 +323,14 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
                     specs = value["experiments"]
                     if not isinstance(specs, list) or not 1 <= len(specs) <= limits["max_experiments_per_turn"]:
                         raise ValueError("experiments_requires_1_to_8_specs")
+                    if unified:
+                        # Validate the whole batch before spending observation
+                        # budget. Schema repair must not partially collect data.
+                        specs = [world.validate(spec) for spec in specs]
+                        if len(records) + len(specs) > limits["experiments"]:
+                            raise ValueError("experiment_count_exhausted")
+                        if spent + sum(world.cost(spec) for spec in specs) > limits["experiment_units"]:
+                            raise ValueError("experiment_units_exhausted")
                     turn["observations"] = []
                     for spec in specs:
                         if len(records) >= limits["experiments"]:
@@ -309,7 +359,7 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
                 else:
                     proposal, binding = (model_snapshots.resolve_submission(value["submit"])
                                          if model_snapshots else (value["submit"], None))
-                    frozen = validate_submission(proposal, world, records)
+                    frozen = validate_fn(proposal, world, records)
                     save_json(directory/"submission.json", frozen)
                     code_path = directory/"predictor.py"
                     code_path.write_text(frozen["predictor_code"], encoding="utf-8")
@@ -335,14 +385,14 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
         failure = False
         for kind in ("conditions", "interventions"):
             panels[kind], baseline_panels[kind] = [], []
-            for index, spec in enumerate(world.panel(instance["panel_seed"], kind, limits["panel_count"])):
+            for index, spec in enumerate(panel_fn(instance["panel_seed"], kind, limits["panel_count"])):
                 truth = world.run(spec)
                 try:
                     remaining = limits["wall_seconds"]-(time.monotonic()-start)
                     if remaining <= 0:
                         raise TimeoutError("episode verification time exhausted")
                     predicted = predict_fn(directory/"predictor.py", spec, min(limits["predictor_seconds_per_spec"], remaining))
-                    metrics = prediction_metrics(predicted, truth, world.scales)
+                    metrics = metric_fn(predicted, truth, spec)
                     metrics["valid"] = True
                     metrics["prediction_values"] = np.asarray(predicted, dtype=float).tolist()
                 except Exception as exc:
@@ -350,9 +400,9 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
                     failure = True
                 panels[kind].append(dict(metrics, index=index, spec=spec, clean_truth=truth))
                 baseline_prediction = baseline(records, spec)
-                baseline_panels[kind].append(dict(prediction_metrics(baseline_prediction, truth, world.scales),
+                baseline_panels[kind].append(dict(metric_fn(baseline_prediction, truth, spec),
                                                   index=index, prediction_values=np.asarray(baseline_prediction, dtype=float).tolist()))
-        claim_report = verify_claims(world, frozen["claims"], instance["confirmation_key"])
+        claim_report = verify_fn(world, frozen["claims"], instance["confirmation_key"])
         state, stop = ("invalid_predictor", "predictor_verification_failed") if failure else ("completed", "verified")
         return snapshot()
     except KeyboardInterrupt:
