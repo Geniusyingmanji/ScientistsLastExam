@@ -4,6 +4,7 @@ This is a new campaign, never a rescore or retry of the historical cohorts.
 Private manifests, model configurations and episode artifacts stay off the site.
 """
 import argparse
+import copy
 import concurrent.futures
 from datetime import datetime, timezone
 import hashlib
@@ -114,6 +115,61 @@ def load_manifest(root):
     return value
 
 
+def freeze_paired(root, reference_root, reference_source, config, commit):
+    """Replay a completed GPT reference design with a separately frozen model.
+
+    No scientific file may change. Episode identifiers also remain fixed: this
+    pairs observation-index noise and claim confirmation randomness across models.
+    All outputs and ledgers live in a new directory, never in the reference.
+    """
+    from sle.llm import LLMConfig
+    reference_root, reference_source = Path(reference_root), Path(reference_source)
+    reference = load_manifest(reference_root)
+    public = json.loads((reference_root / "public-progress.json").read_text())
+    if reference["model"] != "gpt-5.6-sol" or public["status"] != "completed" or public["settled_episodes"] != 72:
+        raise ValueError("paired reference must be the complete 72-run GPT campaign")
+    if source_digest(reference_source) != reference["source_sha256"]:
+        raise ValueError("reference source does not match its frozen digest")
+    current = Path(__file__).resolve().parents[1]
+    allowed = {"env/campaign.py", "env/unified_campaign.py"}
+    def files(base):
+        return {str(p.relative_to(base)): p.read_bytes() for pkg in ("env", "sle")
+                for p in (base / pkg).rglob("*.py")}
+    before, after = files(reference_source), files(current)
+    changed = sorted(k for k in before.keys() | after.keys() if before.get(k) != after.get(k))
+    if set(changed) - allowed:
+        raise ValueError("paired comparison changed scientific source: " + str(changed))
+    raw = json.loads(Path(config).read_text())
+    cfg = LLMConfig.from_dict(raw.get("llm", raw))
+    if cfg.model not in ("deepseek-v4-pro", "deepseek-v4-pro-0813"):
+        raise ValueError("this paired campaign requires the requested DeepSeek V4 Pro")
+    decoding = dict(reference["decoding"], model=cfg.model, reasoning_effort="high",
+                    chat_max_tokens_field="max_tokens", temperature=None, chat_reasoning_fallback=False)
+    if {k: getattr(cfg, k) for k in decoding} != decoding:
+        raise ValueError("paired configuration differs from the declared adapter")
+    root = Path(root)
+    root.mkdir(mode=0o700, parents=True, exist_ok=False)
+    manifest = copy.deepcopy(reference)
+    manifest.update(created_at=utc(), model=cfg.model, decoding=decoding,
+                    source_commit=commit, source_sha256=source_digest(),
+                    comparison={"reference_model": reference["model"],
+                                "reference_manifest_sha256": reference["manifest_sha256"],
+                                "reference_source_commit": reference["source_commit"],
+                                "reference_public_sha256": hashlib.sha256((reference_root / "public-progress.json").read_bytes()).hexdigest(),
+                                "changed_source_files": changed,
+                                "paired_on": "world, panels, episode observation-index noise, claim confirmation keys, limits, order",
+                                "decoding_difference": "GPT medium/max_completion_tokens vs DeepSeek high/max_tokens; both 8000 cap, native effort not equivalent",
+                                "interpretation": "paired end-to-end comparison; three independent instances per environment, not six; service/model/workflow effects are not causally separated"})
+    manifest.pop("manifest_sha256")
+    manifest["manifest_sha256"] = canonical_hash(manifest)
+    write(root / "manifest-private.json", manifest, new=True)
+    (root / "episodes").mkdir(mode=0o700)
+    CampaignLedger(root / "attempts.sqlite", limit=manifest["planned_max_api_attempts"])
+    export(root)
+    return {"episodes": len(manifest["instances"]), "model": cfg.model,
+            "manifest_sha256": manifest["manifest_sha256"]}
+
+
 def export(root):
     root = Path(root)
     manifest = load_manifest(root)
@@ -167,6 +223,9 @@ def export(root):
                   total_score=mean(v["score_mean"] for v in groups.values()) if closed_count==72 else None,
                   denominator_policy=manifest["aggregation"], limits=manifest["limits"],
                   repeated_instance_policy=manifest["repeated_instance_policy"], scope=manifest["scope"])
+    if "comparison" in manifest:
+        result["comparison"] = manifest["comparison"]
+        result["decoding"] = manifest["decoding"]
     write(root/"public-progress.json", result)
     return result
 
@@ -182,7 +241,7 @@ def run(root, config):
         raise ValueError("score changed after freeze")
     raw = json.loads(Path(config).read_text())
     cfg = LLMConfig.from_dict(raw.get("llm", raw))
-    if cfg.model != "gpt-5.6-sol" or {k:getattr(cfg,k) for k in DECODING} != DECODING:
+    if cfg.model != manifest["model"] or {k:getattr(cfg,k) for k in manifest["decoding"]} != manifest["decoding"]:
         raise ValueError("model/decoding differs from frozen protocol")
     if CampaignLedger(root/"attempts.sqlite").summary()["started_attempts"] != 0 or any((root/"episodes").iterdir()):
         raise ValueError("no implicit replacement/resume")
@@ -223,16 +282,22 @@ def run(root, config):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=("freeze", "run", "export"))
+    parser.add_argument("action", choices=("freeze", "freeze-paired", "run", "export"))
     parser.add_argument("--root", type=Path, required=True)
     parser.add_argument("--exclusions", type=Path)
     parser.add_argument("--commit")
     parser.add_argument("--config", type=Path)
+    parser.add_argument("--reference-root", type=Path)
+    parser.add_argument("--reference-source", type=Path)
     args = parser.parse_args()
     if args.action == "freeze":
         if not args.exclusions or not args.commit:
             parser.error("freeze requires --exclusions and --commit")
         print(json.dumps(freeze(args.root,args.exclusions,args.commit)))
+    elif args.action == "freeze-paired":
+        if not all((args.reference_root, args.reference_source, args.config, args.commit)):
+            parser.error("freeze-paired requires --reference-root, --reference-source, --config and --commit")
+        print(json.dumps(freeze_paired(args.root, args.reference_root, args.reference_source, args.config, args.commit)))
     elif args.action == "run":
         if not args.config:
             parser.error("run requires --config")

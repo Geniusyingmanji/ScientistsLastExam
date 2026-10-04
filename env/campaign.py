@@ -119,8 +119,8 @@ def _run_one(instance, limits, directory, config_path, ledger_path, workers, rpm
         raise ValueError("source changed after cohort freeze")
     raw = json.loads(Path(config_path).read_text(encoding="utf-8"))
     config = LLMConfig.from_dict(raw.get("llm", raw))
-    if config.model != "gpt-5.6-sol":
-        raise ValueError("campaign requires the explicitly requested gpt-5.6-sol model")
+    if config.model != expected_decoding.get("model", "gpt-5.6-sol"):
+        raise ValueError("campaign model differs from frozen configuration")
     if {k: getattr(config, k) for k in expected_decoding} != expected_decoding:
         raise ValueError("actual decoding differs from frozen protocol")
     client = CampaignClient(config, directory, CampaignLedger(ledger_path), instance["episode_id"],
