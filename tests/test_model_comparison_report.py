@@ -1,0 +1,61 @@
+import copy
+import importlib.util
+import json
+from pathlib import Path
+import pytest
+
+path=Path(__file__).resolve().parents[1]/'docs/reports/render_model_comparison.py'
+spec=importlib.util.spec_from_file_location('comparison_report',path)
+report=importlib.util.module_from_spec(spec);spec.loader.exec_module(report)
+
+
+def fixtures():
+    a=json.loads((path.parent/'sle-unified12-20261004/data.json').read_text())
+    for e in a['episodes']:
+        e.update(score=50.,condition_score=50.,intervention_score=50.,claim_score=50.,
+                 status='completed',completed=True,infrastructure_failure=None,settled=True)
+    b=copy.deepcopy(a);b['model']='deepseek-v4-pro-0813'
+    b['comparison']={'reference_manifest_sha256':a['manifest_sha256']}
+    for e in b['episodes']:
+        e.update(score=60.,condition_score=60.,intervention_score=60.,claim_score=60.)
+    return a,b
+
+
+def test_constant_cluster_difference_has_exact_interval_and_all_pairs():
+    a,b=fixtures();d=report.compare(a,b)
+    assert d['ready'] and d['delta']==10
+    assert d['paired_cluster_bootstrap_95']==[10,10]
+    assert len(d['worlds'])==12
+    assert all(w['cluster_deltas']==[10,10,10] for w in d['worlds'])
+    assert all(w['wins_ties_losses']==[6,0,0] for w in d['worlds'])
+    assert d['matched_noinfra_delta']==10
+    assert '同一批科学世界' in report.render(d)
+
+
+def test_pending_is_not_zero_and_macro_waits_for_all_runs():
+    a,b=fixtures();e=b['episodes'][0]
+    e.update(settled=False,completed=False,status='running',score=None,
+             condition_score=None,intervention_score=None,claim_score=None)
+    d=report.compare(a,b)
+    assert not d['ready'] and d['delta'] is None and d['paired_cluster_bootstrap_95'] is None
+    assert d['candidate']['score'] is None and d['candidate']['settled']==71
+    assert d['worlds'][0]['delta'] is None
+
+
+def test_infra_pair_remains_zero_primary_but_is_removed_only_from_sensitivity():
+    a,b=fixtures();e=b['episodes'][0]
+    e.update(completed=False,status='failed',score=0.,condition_score=0.,intervention_score=0.,claim_score=0.,infrastructure_failure='api')
+    d=report.compare(a,b)
+    assert d['delta']==pytest.approx(10-60/72)
+    assert d['matched_noinfra_delta']==10
+    assert d['candidate']['infrastructure_failures']==1
+
+
+@pytest.mark.parametrize('change',['budget','binding','slots','noise_id'])
+def test_unpaired_comparisons_rejected(change):
+    a,b=fixtures()
+    if change=='budget':b['limits']['rounds']=32
+    elif change=='binding':b['comparison']['reference_manifest_sha256']='different'
+    elif change=='slots':b['episodes'][0]=copy.deepcopy(b['episodes'][1])
+    else:b['episodes'][0]['episode_id']='new-noise-key'
+    with pytest.raises(ValueError):report.compare(a,b)
