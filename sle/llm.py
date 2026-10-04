@@ -88,6 +88,10 @@ class LLMConfig:
     # recorded. Turn this on in a git-ignored local.yaml to debug a task whose
     # prompt is long enough that thinking never yields a content token.
     chat_reasoning_fallback: bool = False
+    # Opt-in parity with nonstream chat: an empty visible answer is a model
+    # output, not a transport error. Preserve usage/finish_reason for the caller.
+    # Thinking content is never substituted unless the separate fallback is on.
+    chat_empty_response_as_text: bool = False
 
     @classmethod
     def from_dict(cls, d: dict) -> "LLMConfig":
@@ -155,6 +159,8 @@ class LLMClient:
                 return text
             if self.config.chat_reasoning_fallback and (reasoning or "").strip():
                 return reasoning
+            if self.config.chat_empty_response_as_text:
+                return text or ""
             thinking = _chat_thinking_tokens(usage)
             output = usage.get("completion_tokens", usage.get("output_tokens", 0)) or 0
             if thinking or output:

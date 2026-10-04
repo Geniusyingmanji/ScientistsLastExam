@@ -279,3 +279,29 @@ def test_default_budget_is_32_and_summary_cannot_mutate_client():
     assert summary["max_attempts"] == 32 and summary["attempts"] == 0
     summary["max_attempts"] = 999
     assert model.transport_summary()["max_attempts"] == 32
+
+
+def test_empty_visible_stream_is_charged_model_output_when_parity_enabled(monkeypatch):
+    raw = 'data: {"choices":[{"delta":{"reasoning_content":"private reasoning"},"finish_reason":"length"}],"usage":{"prompt_tokens":4,"completion_tokens":8000}}\n\ndata: [DONE]\n\n'
+    good = 'data: {"choices":[{"delta":{"content":"{}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":4,"completion_tokens":2}}\n\ndata: [DONE]\n\n'
+    request = Mock(side_effect=[Response(raw.encode()), Response(good.encode())])
+    monkeypatch.setattr("sle.posttest_transport.urllib.request.urlopen", request)
+    model = client(stream=True, chat_empty_response_as_text=True)
+    assert model.complete("first") == ""
+    assert model.last_stop_reason == "length"
+    assert model.last_usage["output_tokens"] == 8000
+    assert model.last_transport_error is None
+    assert model.transport_summary()["failed_attempts"] == 0
+    assert model.complete("second") == "{}"
+    assert request.call_count == model.transport_summary()["attempts"] == 2
+    assert model.total_usage["output_tokens"] == 8002
+
+
+def test_empty_output_parity_does_not_hide_network_failure(monkeypatch):
+    request = Mock(side_effect=TimeoutError("fixture"))
+    monkeypatch.setattr("sle.posttest_transport.urllib.request.urlopen", request)
+    model = client(stream=True, chat_empty_response_as_text=True)
+    with pytest.raises(TimeoutError):
+        model.complete("fixture")
+    assert request.call_count == 1
+    assert model.transport_summary()["failed_attempts"] == 1

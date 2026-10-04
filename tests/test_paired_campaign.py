@@ -86,7 +86,7 @@ def test_run_rejects_model_change_after_freeze_before_any_attempt(reference, tmp
 
 def test_streaming_requires_preserved_failed_pilot(reference, tmp_path):
     root, config, source=reference
-    cfg=json.loads(config.read_text());cfg['stream']=True;config.write_text(json.dumps(cfg))
+    cfg=json.loads(config.read_text());cfg['stream']=True;cfg['chat_empty_response_as_text']=True;config.write_text(json.dumps(cfg))
     with pytest.raises(ValueError,match='bind its failed nonstream'):
         campaign.freeze_paired(tmp_path/'stream',root,source,config,'new')
     pilot=tmp_path/'pilot';pilot.mkdir()

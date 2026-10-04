@@ -17,7 +17,8 @@ The first twelve runs retain the reference infrastructure stop rule.
 `freeze-paired` reads the private reference manifest and validates its hash and
 source archive. World generators, prompts, runner, sandbox, panel generator,
 scoring, masks and claim verification must be byte-identical to the reference.
-Only the two campaign orchestration modules may differ. A new private directory
+Only the two campaign orchestration modules and the opt-in chat empty-output
+adapter in `sle/llm.py` may differ. A new private directory
 and ledger are mandatory. No reference artifacts are overwritten.
 
 Episode definitions, including world/panel seeds, panel hashes, episode IDs and
@@ -73,3 +74,15 @@ nonstream DeepSeek configuration. Its manifest binds the failed pilot's public
 artifact hash and counts. The failed pilot, trivial connectivity call and stream
 diagnostic remain separately disclosed and are never merged into the new scores.
 GPT used nonstream transport, so service/transport effects remain a limitation.
+
+
+## Empty visible output amendment
+
+The first streaming pilot exposed a client inconsistency: a complete response
+containing only reasoning was raised as a transport error, whereas nonstream
+chat returns an empty string. The corrected prospective campaign enables
+`chat_empty_response_as_text`: completed empty answers consume an invalid-action
+turn, preserving usage and stop reason. It never substitutes reasoning content,
+retries requests, or increases any budget. Real transport errors still fail.
+Both earlier pilots remain separate and their public hashes are bound in the
+corrected manifest. No previously scored episode is repaired or pooled.
