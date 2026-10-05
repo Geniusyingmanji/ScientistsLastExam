@@ -29,18 +29,18 @@
     "ceiling_count": 29
   },
   "candidate": {
-    "settled": 12,
-    "valid": 11,
+    "settled": 18,
+    "valid": 17,
     "infrastructure_failures": 1,
     "statuses": {
-      "completed": 11,
+      "completed": 17,
       "failed": 1
     },
-    "calls": 211,
+    "calls": 285,
     "provider_models": [
       "deepseek-v4-pro-0813"
     ],
-    "effects": 20,
+    "effects": 35,
     "score": null,
     "components": {
       "condition_score": null,
@@ -78,17 +78,17 @@
         "ceiling_count": 0
       },
       "candidate": {
-        "settled": 1,
-        "valid": 1,
+        "settled": 2,
+        "valid": 2,
         "infrastructure_failures": 0,
         "statuses": {
-          "completed": 1
+          "completed": 2
         },
-        "calls": 23,
+        "calls": 33,
         "provider_models": [
           "deepseek-v4-pro-0813"
         ],
-        "effects": 3,
+        "effects": 6,
         "score": null,
         "components": {
           "condition_score": null,
@@ -183,25 +183,25 @@
             "environment": "microecology",
             "instance_index": 1,
             "repeat_index": 2,
-            "status": "exploring",
-            "settled": false,
-            "completed": false,
+            "status": "completed",
+            "settled": true,
+            "completed": true,
             "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 8,
-            "observations": 28,
-            "stop_reason": "model_round_limit",
+            "score": 34.437783329553454,
+            "condition_score": 30.198793939131484,
+            "intervention_score": 38.12600238973447,
+            "claim_score": 39.502928215336865,
+            "requests": 15,
+            "observations": 36,
+            "stop_reason": "verified",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
             ],
-            "verified_nonzero_effects": 0,
+            "verified_nonzero_effects": 3,
             "score_protocol": "sle-unified-score-1.0",
-            "report_sha256": null
+            "report_sha256": "b16f4fbed383c27199f105a721ae9a3d1805afe6e9a6cbc8ec6fc88f9d6d247b"
           },
-          "delta": null
+          "delta": 27.610647049213284
         },
         {
           "environment": "microecology",
@@ -235,7 +235,7 @@
             "environment": "microecology",
             "instance_index": 2,
             "repeat_index": 1,
-            "status": "pending",
+            "status": "exploring",
             "settled": false,
             "completed": false,
             "infrastructure_failure": null,
@@ -243,12 +243,14 @@
             "condition_score": null,
             "intervention_score": null,
             "claim_score": null,
-            "requests": 0,
-            "observations": 0,
-            "stop_reason": null,
-            "provider_reported_models": [],
+            "requests": 3,
+            "observations": 16,
+            "stop_reason": "model_round_limit",
+            "provider_reported_models": [
+              "deepseek-v4-pro-0813"
+            ],
             "verified_nonzero_effects": 0,
-            "score_protocol": null,
+            "score_protocol": "sle-unified-score-1.0",
             "report_sha256": null
           },
           "delta": null
@@ -432,17 +434,17 @@
         "ceiling_count": 5
       },
       "candidate": {
-        "settled": 1,
-        "valid": 1,
+        "settled": 2,
+        "valid": 2,
         "infrastructure_failures": 0,
         "statuses": {
-          "completed": 1
+          "completed": 2
         },
-        "calls": 21,
+        "calls": 30,
         "provider_models": [
           "deepseek-v4-pro-0813"
         ],
-        "effects": 3,
+        "effects": 5,
         "score": null,
         "components": {
           "condition_score": null,
@@ -537,25 +539,25 @@
             "environment": "coupled_oscillators",
             "instance_index": 1,
             "repeat_index": 2,
-            "status": "exploring",
-            "settled": false,
-            "completed": false,
+            "status": "completed",
+            "settled": true,
+            "completed": true,
             "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 6,
-            "observations": 16,
-            "stop_reason": "model_round_limit",
+            "score": 91.8067667854228,
+            "condition_score": 99.96808172033496,
+            "intervention_score": 99.94278867958964,
+            "claim_score": 59.1994466068921,
+            "requests": 15,
+            "observations": 20,
+            "stop_reason": "verified",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
             ],
-            "verified_nonzero_effects": 0,
+            "verified_nonzero_effects": 2,
             "score_protocol": "sle-unified-score-1.0",
-            "report_sha256": null
+            "report_sha256": "c4b28a3cf82f753d49b173bbdb414ff5d8a20592f68f51c6b36ef678ce1067ba"
           },
-          "delta": null
+          "delta": -7.848567320064689
         },
         {
           "environment": "coupled_oscillators",
@@ -589,7 +591,7 @@
             "environment": "coupled_oscillators",
             "instance_index": 2,
             "repeat_index": 1,
-            "status": "pending",
+            "status": "running",
             "settled": false,
             "completed": false,
             "infrastructure_failure": null,
@@ -786,17 +788,18 @@
         "ceiling_count": 6
       },
       "candidate": {
-        "settled": 1,
-        "valid": 0,
+        "settled": 2,
+        "valid": 1,
         "infrastructure_failures": 1,
         "statuses": {
-          "failed": 1
+          "failed": 1,
+          "completed": 1
         },
-        "calls": 14,
+        "calls": 21,
         "provider_models": [
           "deepseek-v4-pro-0813"
         ],
-        "effects": 0,
+        "effects": 3,
         "score": null,
         "components": {
           "condition_score": null,
@@ -891,25 +894,25 @@
             "environment": "reaction_kinetics",
             "instance_index": 1,
             "repeat_index": 2,
-            "status": "exploring",
-            "settled": false,
-            "completed": false,
+            "status": "completed",
+            "settled": true,
+            "completed": true,
             "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 7,
-            "observations": 24,
-            "stop_reason": "model_round_limit",
+            "score": 85.04034023268493,
+            "condition_score": 99.80666847484747,
+            "intervention_score": 99.75969630344085,
+            "claim_score": 26.045485521144716,
+            "requests": 14,
+            "observations": 32,
+            "stop_reason": "verified",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
             ],
-            "verified_nonzero_effects": 0,
+            "verified_nonzero_effects": 3,
             "score_protocol": "sle-unified-score-1.0",
-            "report_sha256": null
+            "report_sha256": "fe0e7f56ece31138fc51d30b688ee54b522af1671b2b2f0a5eed1a1cb031863e"
           },
-          "delta": null
+          "delta": -14.428769893185432
         },
         {
           "environment": "reaction_kinetics",
@@ -1140,17 +1143,17 @@
         "ceiling_count": 2
       },
       "candidate": {
-        "settled": 1,
-        "valid": 1,
+        "settled": 2,
+        "valid": 2,
         "infrastructure_failures": 0,
         "statuses": {
-          "completed": 1
+          "completed": 2
         },
-        "calls": 16,
+        "calls": 24,
         "provider_models": [
           "deepseek-v4-pro-0813"
         ],
-        "effects": 2,
+        "effects": 4,
         "score": null,
         "components": {
           "condition_score": null,
@@ -1245,25 +1248,25 @@
             "environment": "heat_transport",
             "instance_index": 1,
             "repeat_index": 2,
-            "status": "exploring",
-            "settled": false,
-            "completed": false,
+            "status": "completed",
+            "settled": true,
+            "completed": true,
             "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 7,
-            "observations": 8,
-            "stop_reason": "model_round_limit",
+            "score": 90.67502729467057,
+            "condition_score": 99.70323613969057,
+            "intervention_score": 99.68999727346552,
+            "claim_score": 54.58205021392812,
+            "requests": 15,
+            "observations": 24,
+            "stop_reason": "verified",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
             ],
-            "verified_nonzero_effects": 0,
+            "verified_nonzero_effects": 2,
             "score_protocol": "sle-unified-score-1.0",
-            "report_sha256": null
+            "report_sha256": "a04483aabe7abcf3ca3465f57c106d6f0bd711da97ff7a10282dfd5e11d3a857"
           },
-          "delta": null
+          "delta": 6.764591254116283
         },
         {
           "environment": "heat_transport",
@@ -1501,7 +1504,7 @@
         "statuses": {
           "completed": 1
         },
-        "calls": 22,
+        "calls": 29,
         "provider_models": [
           "deepseek-v4-pro-0813"
         ],
@@ -1608,8 +1611,8 @@
             "condition_score": null,
             "intervention_score": null,
             "claim_score": null,
-            "requests": 7,
-            "observations": 24,
+            "requests": 14,
+            "observations": 40,
             "stop_reason": "model_round_limit",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
@@ -1851,17 +1854,17 @@
         "ceiling_count": 3
       },
       "candidate": {
-        "settled": 1,
-        "valid": 1,
+        "settled": 2,
+        "valid": 2,
         "infrastructure_failures": 0,
         "statuses": {
-          "completed": 1
+          "completed": 2
         },
-        "calls": 12,
+        "calls": 20,
         "provider_models": [
           "deepseek-v4-pro-0813"
         ],
-        "effects": 0,
+        "effects": 2,
         "score": null,
         "components": {
           "condition_score": null,
@@ -1956,25 +1959,25 @@
             "environment": "ising_spin",
             "instance_index": 1,
             "repeat_index": 2,
-            "status": "exploring",
-            "settled": false,
-            "completed": false,
+            "status": "completed",
+            "settled": true,
+            "completed": true,
             "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 7,
+            "score": 92.9018817221459,
+            "condition_score": 99.89254350023195,
+            "intervention_score": 99.85537734154056,
+            "claim_score": 64.99498384783874,
+            "requests": 15,
             "observations": 24,
-            "stop_reason": "model_round_limit",
+            "stop_reason": "verified",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
             ],
-            "verified_nonzero_effects": 0,
+            "verified_nonzero_effects": 2,
             "score_protocol": "sle-unified-score-1.0",
-            "report_sha256": null
+            "report_sha256": "3fc87f02f40277e04e7bc13efb8338546da7201b9c0207047ecfa4187c209958"
           },
-          "delta": null
+          "delta": -5.301136839205753
         },
         {
           "environment": "ising_spin",
@@ -2206,17 +2209,17 @@
         "ceiling_count": 1
       },
       "candidate": {
-        "settled": 1,
-        "valid": 1,
+        "settled": 2,
+        "valid": 2,
         "infrastructure_failures": 0,
         "statuses": {
-          "completed": 1
+          "completed": 2
         },
-        "calls": 20,
+        "calls": 25,
         "provider_models": [
           "deepseek-v4-pro-0813"
         ],
-        "effects": 1,
+        "effects": 4,
         "score": null,
         "components": {
           "condition_score": null,
@@ -2311,25 +2314,25 @@
             "environment": "hysteresis_material",
             "instance_index": 1,
             "repeat_index": 2,
-            "status": "exploring",
-            "settled": false,
-            "completed": false,
+            "status": "completed",
+            "settled": true,
+            "completed": true,
             "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 5,
-            "observations": 16,
-            "stop_reason": "model_round_limit",
+            "score": 40.709239590907266,
+            "condition_score": 50.44531456010211,
+            "intervention_score": 24.557823498905783,
+            "claim_score": 40.59617630592239,
+            "requests": 10,
+            "observations": 48,
+            "stop_reason": "verified",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
             ],
-            "verified_nonzero_effects": 0,
+            "verified_nonzero_effects": 3,
             "score_protocol": "sle-unified-score-1.0",
-            "report_sha256": null
+            "report_sha256": "4b06037b996a1014d8f35a0c5e8a7d944a5165b49f952d7ec7a0c126f22f7692"
           },
-          "delta": null
+          "delta": -55.01924707581178
         },
         {
           "environment": "hysteresis_material",
@@ -2567,7 +2570,7 @@
         "statuses": {
           "completed": 1
         },
-        "calls": 23,
+        "calls": 30,
         "provider_models": [
           "deepseek-v4-pro-0813"
         ],
@@ -2674,8 +2677,8 @@
             "condition_score": null,
             "intervention_score": null,
             "claim_score": null,
-            "requests": 8,
-            "observations": 10,
+            "requests": 15,
+            "observations": 15,
             "stop_reason": "model_round_limit",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
@@ -2921,7 +2924,7 @@
         "statuses": {
           "completed": 1
         },
-        "calls": 15,
+        "calls": 19,
         "provider_models": [
           "deepseek-v4-pro-0813"
         ],
@@ -3020,7 +3023,7 @@
             "environment": "climate_response",
             "instance_index": 1,
             "repeat_index": 2,
-            "status": "pending",
+            "status": "exploring",
             "settled": false,
             "completed": false,
             "infrastructure_failure": null,
@@ -3028,12 +3031,14 @@
             "condition_score": null,
             "intervention_score": null,
             "claim_score": null,
-            "requests": 0,
-            "observations": 0,
-            "stop_reason": null,
-            "provider_reported_models": [],
+            "requests": 4,
+            "observations": 8,
+            "stop_reason": "model_round_limit",
+            "provider_reported_models": [
+              "deepseek-v4-pro-0813"
+            ],
             "verified_nonzero_effects": 0,
-            "score_protocol": null,
+            "score_protocol": "sle-unified-score-1.0",
             "report_sha256": null
           },
           "delta": null
@@ -3274,7 +3279,7 @@
         "statuses": {
           "completed": 1
         },
-        "calls": 15,
+        "calls": 19,
         "provider_models": [
           "deepseek-v4-pro-0813"
         ],
@@ -3373,7 +3378,7 @@
             "environment": "catalyst_aging",
             "instance_index": 1,
             "repeat_index": 2,
-            "status": "pending",
+            "status": "exploring",
             "settled": false,
             "completed": false,
             "infrastructure_failure": null,
@@ -3381,12 +3386,14 @@
             "condition_score": null,
             "intervention_score": null,
             "claim_score": null,
-            "requests": 0,
-            "observations": 0,
-            "stop_reason": null,
-            "provider_reported_models": [],
+            "requests": 4,
+            "observations": 8,
+            "stop_reason": "model_round_limit",
+            "provider_reported_models": [
+              "deepseek-v4-pro-0813"
+            ],
             "verified_nonzero_effects": 0,
-            "score_protocol": null,
+            "score_protocol": "sle-unified-score-1.0",
             "report_sha256": null
           },
           "delta": null
@@ -3626,7 +3633,7 @@
         "statuses": {
           "completed": 1
         },
-        "calls": 15,
+        "calls": 17,
         "provider_models": [
           "deepseek-v4-pro-0813"
         ],
@@ -3725,7 +3732,7 @@
             "environment": "field_ecology",
             "instance_index": 1,
             "repeat_index": 2,
-            "status": "pending",
+            "status": "exploring",
             "settled": false,
             "completed": false,
             "infrastructure_failure": null,
@@ -3733,12 +3740,14 @@
             "condition_score": null,
             "intervention_score": null,
             "claim_score": null,
-            "requests": 0,
-            "observations": 0,
-            "stop_reason": null,
-            "provider_reported_models": [],
+            "requests": 2,
+            "observations": 8,
+            "stop_reason": "model_round_limit",
+            "provider_reported_models": [
+              "deepseek-v4-pro-0813"
+            ],
             "verified_nonzero_effects": 0,
-            "score_protocol": null,
+            "score_protocol": "sle-unified-score-1.0",
             "report_sha256": null
           },
           "delta": null
@@ -3978,7 +3987,7 @@
         "statuses": {
           "completed": 1
         },
-        "calls": 15,
+        "calls": 18,
         "provider_models": [
           "deepseek-v4-pro-0813"
         ],
@@ -4077,7 +4086,7 @@
             "environment": "phase_equilibria",
             "instance_index": 1,
             "repeat_index": 2,
-            "status": "pending",
+            "status": "exploring",
             "settled": false,
             "completed": false,
             "infrastructure_failure": null,
@@ -4085,12 +4094,14 @@
             "condition_score": null,
             "intervention_score": null,
             "claim_score": null,
-            "requests": 0,
-            "observations": 0,
-            "stop_reason": null,
-            "provider_reported_models": [],
+            "requests": 3,
+            "observations": 8,
+            "stop_reason": "model_round_limit",
+            "provider_reported_models": [
+              "deepseek-v4-pro-0813"
+            ],
             "verified_nonzero_effects": 0,
-            "score_protocol": null,
+            "score_protocol": "sle-unified-score-1.0",
             "report_sha256": null
           },
           "delta": null
@@ -4374,18 +4385,18 @@
   },
   "candidate_ledger": {
     "attempt_limit": 1152,
-    "started_attempts": 211,
-    "remaining_attempts": 941,
+    "started_attempts": 285,
+    "remaining_attempts": 867,
     "status_counts": {
       "failed": 1,
-      "returned": 202,
-      "started": 8
+      "returned": 278,
+      "started": 6
     }
   },
   "candidate_status": "running",
   "equal_budget": false,
   "source_sha256": {
     "reference": "a3d3633e166fe36a68b2c67b90a06ccacc4ed99781a1372fddd6ec28f945790c",
-    "candidate": "feae25711644b9c993343cbe341c205175a2e1a1e9aa9cac27d495254f4883db"
+    "candidate": "1fe601a5dade100785115b9a4e25498baa04de73631becd69477d1190a5da156"
   }
 }
