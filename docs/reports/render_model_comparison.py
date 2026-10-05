@@ -185,6 +185,9 @@ def render(d,review=None, data_href='comparison-data.json'):
     client_pilot=d['design'].get('client_pilot')
     if client_pilot:
         conclusion+='<h3>客户端分类修复前的试跑</h3><p>另一次流式试跑结束 %d 次运行、调用 %d 次。旧客户端把没有可见答案的完整回复误标为传输错误，触发停止。这批记录单独保留，不作为科学分数。本次空答案与 GPT 非流式路径一致：消耗一轮无效动作，保留 token 用量，不重试、不使用思考文本作为答案。</p>'%(client_pilot['settled'],client_pilot['calls'])
+    previous = d['design'].get('previous_stopped_campaign')
+    if previous:
+        conclusion += '<h3>修正客户端后的原预算批次与本次准备</h3><p>原预算批次结束 %d 次运行、使用 %d 次请求后停止，保持原样。此后另有 3 次长响应诊断、6 次短连通性检查及 3 次 token 上限对照，全部独立记录、不计科学成绩。<a href="deepseek-continuation.html">查看 8k / 16k / 32k 的实际用量和完整性证据</a>。</p>' % (previous['settled'], previous['calls'])
     monitor=d.get('monitor_status')
     if monitor:
         conclusion=conclusion.replace('评测进行中；尚未计算总分差和区间。已完成环境可先查看六次运行，未结束项保持空缺。','完整结果尚未取回，暂不计算总分差和区间；未派发的运行保持空缺。')

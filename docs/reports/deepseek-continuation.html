@@ -7,10 +7,11 @@
 <main><small>SCIENTISTS’ LAST EXAM · 2026-10-05</small>
 <h1>DeepSeek 接续诊断<br>先确认能交付答案，再谈科学得分</h1>
 <nav><a href="overview.html">12 环境总览</a><a href="comparison.html">原预算对照与科学轨迹</a><a href="deepseek-continuation-data.json">本次公开诊断数据</a></nav>
-<p class="notice"><strong>新正式批次尚未启动。</strong>已准备扩大输出和时间预算的配置，但严格的响应完整性检查未通过。本次只有 3 个独立诊断请求，均不计分；原来的 GPT 基线和 DeepSeek 停止批次保持不变。</p>
-<div class="metrics"><div class="metric">新增正式运行<strong>0 / 72</strong><small>没有新的模型总分或配对分差。</small></div><div class="metric">最后一次诊断<strong>399.7 秒</strong><small>流式连接中断，客户端截止原为 965 秒。</small></div><div class="metric">最后一次可见答案<strong>0 字符</strong><small>收到思考字段，但它不能作为提交答案。</small></div></div>
-<section class="panel"><h2>这次实际做了什么</h2>
-<p>三个请求均重放先前热输运运行中的同一个请求，隔离记录，不修补该运行的分数。它们是接入诊断，不是三个新的科学案例，也不能估计跨环境的服务成功率。</p>
+<p class="notice"><strong>32k 正式批次已启动。</strong>8k / 16k / 32k 对照已结束：前两组用尽思考预算且答案为空，32k 组正常返回合法分析动作。<a href="deepseek-extended.html">查看十二环境正式评测进度</a>。原 GPT 基线和此前停止批次保持不变。</p>
+<div class="metrics"><div class="metric">正式评测<strong>进行中</strong><small>最多 72 次运行，8 并发；实时计数见进度页。</small></div><div class="metric">采用输出上限<strong>32,000 token</strong><small>不是每次实际消耗；本次诊断实际用量 17,721。</small></div><div class="metric">诊断可见答案<strong>5,977 字符</strong><small>正常 stop；通过科学任务动作解析。</small></div></div>
+<section class="panel"><h2>固定科学请求的 token 上限对照</h2><p>同一个请求、同一 high 思考档位、900 秒读取超时、965 秒截止；每档只请求一次，无重试。全部通过 SSE 完整性校验。</p><div class="scroll"><table><tr><th>上限</th><th>实际输出 token</th><th>其中思考 token</th><th>可见字符</th><th>结束原因</th><th>耗时</th></tr><tr><td>8k</td><td>8,000</td><td>8,000</td><td>0</td><td>length</td><td>127.532 秒</td></tr><tr><td>16k</td><td>16,000</td><td>16,000</td><td>0</td><td>length</td><td>238.441 秒</td></tr><tr><td>32k</td><td>17,721</td><td>15,319</td><td>5,977</td><td>stop</td><td>246.736 秒</td></tr></table></div><p>32k 组在 225.951 秒首次出现可见答案。输出为合法 analyze 动作，未计科学成绩。这证明两次小预算请求耗尽了输出额度；每档仅一次，不能估计稳定的因果效应或保证后续可靠性。</p></section>
+<section class="panel"><h2>此前三次诊断（保留记录）</h2>
+<p>下列三个历史请求均重放先前热输运运行中的同一个请求，隔离记录，不修补该运行的分数。它们是接入诊断，不是三个新的科学案例，也不能估计跨环境的服务成功率。</p>
 <div class="scroll"><table><tr><th>诊断</th><th>输出上限 / 截止</th><th>实际耗时</th><th>观察</th><th>能否作为启动依据</th></tr>
 <tr><td>原预算耗时</td><td>8,000 token / 245 秒</td><td>245.031 秒</td><td>2.204 秒收到首字节；持续接收数据，直到本地截止。没有到达 HTTP EOF。</td><td>不能：完整响应未取得。早期标记检测还存在格式假设。</td></tr>
 <tr><td>扩大预算耗时</td><td>16,000 token / 965 秒</td><td>297.524 秒</td><td>到达 HTTP EOF，但诊断器假定 data: 后存在空格，未解析出终止标记和用量。</td><td>不能：原始流未保留，无法追认它是否为有效完整答案。</td></tr>
@@ -18,14 +19,14 @@
 </table></div>
 <p>第三次原始响应已私下保存并核验 SHA-256。完整帧中有 39,707 个思考字段字符，不能转换为 token 数、可见答案或科学发现。三个诊断均未取得可靠的最终用量统计，费用和 token 消耗不能按零计。</p>
 </section>
-<section class="panel"><h2>目前能确定与不能确定的事</h2>
-<ul><li>原来的 245 秒请求截止可能限制较慢响应；一次扩大预算诊断确实在约 298 秒才到达 EOF。</li><li>第三次在更长客户端截止前发生流中断。因此，单纯提高客户端超时不足以保证本次请求完成。</li><li>早期诊断器遗漏了合法的紧凑 SSE 写法 data:{…}。该问题属于诊断记录；生产客户端支持这种写法。本次没有据此修改科学源码或补算旧答案。</li><li>尚不能定位中断究竟来自模型服务、网关还是传输链路，也不能把一次约 400 秒中断说成固定的网关超时上限。</li><li>尚无新的科学成绩，更不能得出 DeepSeek 科学能力低于 GPT、环境有稳定区分度或发现深度不同的结论。</li></ul>
+<section class="panel"><h2>此前诊断的证据与局限</h2>
+<ul><li>原来的 245 秒请求截止可能限制较慢响应；一次扩大预算诊断确实在约 298 秒才到达 EOF。</li><li>第三次在更长客户端截止前发生流中断。因此，单纯提高客户端超时不足以保证本次请求完成。</li><li>早期诊断器遗漏了合法的紧凑 SSE 写法 data:{…}。该问题属于诊断记录；生产客户端支持这种写法。本次没有据此修改科学源码或补算旧答案。</li><li>尚不能定位中断究竟来自模型服务、网关还是传输链路，也不能把一次约 400 秒中断说成固定的网关超时上限。</li><li>正式评测刚启动，尚无完整的新科学成绩，更不能得出 DeepSeek 科学能力低于 GPT、环境有稳定区分度或发现深度不同的结论。</li></ul>
 </section>
-<section class="panel"><h2>接续配置已准备，等待通过完整响应检查</h2>
-<div class="scroll"><table><tr><th>条件</th><th>GPT 基线 / 原 DeepSeek</th><th>拟接续 DeepSeek</th></tr>
-<tr><td>每请求输出上限</td><td>8,000 token</td><td>16,000 token</td></tr><tr><td>连接读取超时</td><td>180 秒</td><td>900 秒</td></tr><tr><td>外层请求截止</td><td>245 秒</td><td>965 秒，仍受单次运行剩余时间限制</td></tr><tr><td>单次运行总时间</td><td>3,600 秒</td><td>14,400 秒</td></tr><tr><td>请求 / 实验 / 分析</td><td colspan="2">每次运行最多 16 请求、48 实验、180 秒分析计算；全批最多 72 次运行、1,152 请求、8 并发。</td></tr><tr><td>科学条件</td><td colspan="2">同一组世界、测试面板、任务提示、评分协议和随机实例；不合并不同批次。</td></tr></table></div>
-<p><strong>即使后续跑通，这也是不同预算的系统比较，不是等预算模型排名。</strong>输出与时间上限的差异会在新页面和数据中同时披露。全部结束前不计算 72 次总分；首轮 12 次中至少 3 次基础设施故障就停止后续派发。</p>
-<p>本地 64 项检查通过；远端 76 项检查通过，包含 12 环境的原生沙箱；之后加强启动条件的 10 项检查也已通过。新增启动条件要求诊断响应通过生产 SSE 校验、出现终止事件并包含可见答案。当前不满足这一条件。</p>
+<section class="panel"><h2>32k 正式批次配置</h2>
+<div class="scroll"><table><tr><th>条件</th><th>GPT 基线 / 原 DeepSeek</th><th>正式 DeepSeek</th></tr>
+<tr><td>每请求输出上限</td><td>8,000 token</td><td>32,000 token</td></tr><tr><td>连接读取超时</td><td>180 秒</td><td>900 秒</td></tr><tr><td>外层请求截止</td><td>245 秒</td><td>965 秒，仍受单次运行剩余时间限制</td></tr><tr><td>单次运行总时间</td><td>3,600 秒</td><td>14,400 秒</td></tr><tr><td>请求 / 实验 / 分析</td><td colspan="2">每次运行最多 16 请求、48 实验、180 秒分析计算；全批最多 72 次运行、1,152 请求、8 并发。</td></tr><tr><td>科学条件</td><td colspan="2">同一组世界、测试面板、任务提示、评分协议和随机实例；不合并不同批次。</td></tr></table></div>
+<p><strong>这是不同预算的系统比较，不是等预算模型排名。</strong>输出与时间上限的差异会在新页面和数据中同时披露。全部结束前不计算 72 次总分；首轮 12 次中至少 3 次基础设施故障就停止后续派发。</p>
+<p>32k 配置在远端通过 78 项检查，包含 12 环境的原生沙箱。32k 诊断已通过生产 SSE 校验、正常结束并包含可见答案，因此已满足启动条件并独立冻结正式批次。</p>
 </section>
-<section class="panel"><h2>下一步</h2><p>先获得能完成这类长响应的 DeepSeek 服务接入，或确认现有链路已修复，再做有上限的完整性验证。通过后独立冻结正式批次，归档逐例答案与实验轨迹。若需要改用其他模型或关闭思考，应另立协议，不能静默替换当前 DeepSeek V4 Pro 对照。</p><p>自动跟进保持停用：当前没有正式评测进程可等待，也没有自动扩预算或反复试跑。原预算的 <a href="comparison.html">12 次停止结果与已发现的问题</a> 仍可查看。</p></section>
+<section class="panel"><h2>接下来</h2><p>持续归档正式批次的实验、分析、提交和评分。所有运行结束后才汇总总分与配对差；首轮故障达到阈值则停止后续派发。自动跟进已恢复，只在重要进展、完成、失败或需要输入时通知。<a href="deepseek-extended.html">查看正式评测页</a>；<a href="comparison.html">查看原预算停止批次</a>。</p></section>
 <footer class="muted">仅公开诊断统计。原始响应、思考内容、封存目标、隐藏参数、配置凭证均不公开。技术诊断不替代独立科学证据审阅。</footer></main></html>

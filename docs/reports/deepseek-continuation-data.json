@@ -2,11 +2,9 @@
   "schema": "sle-continuation-diagnostics-1",
   "date": "2026-10-05",
   "model": "deepseek-v4-pro-0813",
-  "formal_campaign_started": false,
-  "new_scored_requests": 0,
-  "new_diagnostic_requests": 3,
+  "formal_campaign_started": true,
+  "new_scored_requests": 9,
   "proposed_budget_profile": "extended-output-v1",
-  "readiness_passed": false,
   "diagnostics": [
     {
       "attempts": 1,
@@ -77,6 +75,104 @@
     "First two terminal detectors assumed data colon space; raw responses were not retained.",
     "HTTP EOF alone is not proof of a valid complete answer.",
     "Last stream was interrupted; this does not identify a fixed gateway timeout or the root cause of all earlier failures.",
-    "No total score, paired difference, or scientific ability conclusion."
-  ]
+    "No total score, paired difference, or scientific ability conclusion.",
+    "One token-cap replay per setting; does not establish a causal effect size or long-run reliability. Formal 32k results use larger output and time budgets than GPT."
+  ],
+  "historical_diagnostics_readiness_passed": false,
+  "historical_diagnostic_requests": 3,
+  "readiness_passed": true,
+  "selected_budget_profile": "extended-output-32k-v1",
+  "token_cap_study": [
+    {
+      "model": "deepseek-v4-pro-0813",
+      "max_tokens": 8000,
+      "reasoning_effort": "high",
+      "scored": false,
+      "attempts": 1,
+      "deadline_seconds": 965,
+      "timeout_seconds": 900,
+      "status": "terminal",
+      "first_visible_seconds": null,
+      "finish_reason": "length",
+      "elapsed_seconds": 127.532,
+      "sse_valid": true,
+      "visible_characters": 0,
+      "reasoning_characters": 28087,
+      "usage": {
+        "completion_tokens": 8000,
+        "prompt_tokens": 16105,
+        "total_tokens": 24105,
+        "completion_tokens_details": {
+          "reasoning_tokens": 8000
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 15872
+        }
+      },
+      "complete_visible_response": false,
+      "response_sha256": "3e8b759883b8ed08a65e9770183d87db80a1bfc035efd91bf8eb207e482ee6cd"
+    },
+    {
+      "model": "deepseek-v4-pro-0813",
+      "max_tokens": 16000,
+      "reasoning_effort": "high",
+      "scored": false,
+      "attempts": 1,
+      "deadline_seconds": 965,
+      "timeout_seconds": 900,
+      "status": "terminal",
+      "first_visible_seconds": null,
+      "finish_reason": "length",
+      "elapsed_seconds": 238.441,
+      "sse_valid": true,
+      "visible_characters": 0,
+      "reasoning_characters": 56360,
+      "usage": {
+        "completion_tokens": 16000,
+        "prompt_tokens": 16105,
+        "total_tokens": 32105,
+        "completion_tokens_details": {
+          "reasoning_tokens": 16000
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 14336
+        }
+      },
+      "complete_visible_response": false,
+      "response_sha256": "516507d647be657dea8b8285e3e5529ce60de9e46a918ff3adff99b322d6908b"
+    },
+    {
+      "model": "deepseek-v4-pro-0813",
+      "max_tokens": 32000,
+      "reasoning_effort": "high",
+      "scored": false,
+      "attempts": 1,
+      "deadline_seconds": 965,
+      "timeout_seconds": 900,
+      "status": "terminal",
+      "first_visible_seconds": 225.951,
+      "finish_reason": "stop",
+      "elapsed_seconds": 246.736,
+      "sse_valid": true,
+      "visible_characters": 5977,
+      "reasoning_characters": 52005,
+      "usage": {
+        "completion_tokens": 17721,
+        "prompt_tokens": 16105,
+        "total_tokens": 33826,
+        "completion_tokens_details": {
+          "reasoning_tokens": 15319
+        },
+        "prompt_tokens_details": {
+          "cached_tokens": 15872
+        }
+      },
+      "complete_visible_response": true,
+      "response_sha256": "7042167838b93162180a217deb90581250e355e5b14e854ece8873af8393c30e"
+    }
+  ],
+  "token_cap_diagnostic_requests": 3,
+  "short_connectivity_requests": 6,
+  "formal_manifest_sha256": "0fec9da6ae722a06cbc321d47df928214cd82637eb750e46927deae27ab88d61",
+  "formal_progress_page": "deepseek-extended.html"
 }

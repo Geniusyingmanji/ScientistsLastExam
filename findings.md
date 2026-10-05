@@ -145,3 +145,25 @@ Next dependency: a repaired or alternative authorized long-response service
 path, followed by a bounded readiness check. Do not automatically launch another
 campaign or expand budgets. Scientific claim review from the earlier stopped
 batch remains separate; these sanity checks add no scientific score claim.
+
+
+## 2026-10-05 Token-cap diagnostic and formal 32k start
+
+The user requested continued evaluation after discussing max_tokens. One fixed
+scientific request was replayed once each at 8k, 16k and 32k with high effort,
+900-second socket timeout and a 965-second deadline. All streams were complete.
+8k and 16k exhausted exactly their output caps, with every output token reported
+as reasoning and zero visible answer. At 32k, the service returned 17,721 output
+tokens (15,319 reasoning), 5,977 visible characters and normal stop in 246.736 s.
+The visible answer passed the scientific action parser as analyze. These are
+diagnostics, not scored episodes or a reliable causal effect estimate.
+
+A separate 72-run campaign started on AIStudio 62910175 at 02:05:40 UTC.
+Source e8a92200e3c994d6a635c285f909a547a602c2e6, manifest
+0fec9da6ae722a06cbc321d47df928214cd82637eb750e46927deae27ab88d61.
+32k output cap, 900 s socket timeout, 14,400 s episode wall; unchanged science,
+16 requests/run, 1,152 total requests, eight workers, no retries/replacements,
+and the original first-twelve infrastructure stop rule. Linux preflight: 78
+passed including twelve native worlds. This is a different-budget comparison
+with the original GPT baseline. Report: docs/reports/deepseek-extended.html.
+Automatic follow-up resumed; all older cohorts remain immutable.
