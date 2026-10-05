@@ -29,12 +29,17 @@
     "ceiling_count": 29
   },
   "candidate": {
-    "settled": 0,
+    "settled": 12,
     "valid": 0,
-    "infrastructure_failures": 0,
-    "statuses": {},
-    "calls": 16,
-    "provider_models": [],
+    "infrastructure_failures": 10,
+    "statuses": {
+      "failed": 10,
+      "incomplete": 2
+    },
+    "calls": 94,
+    "provider_models": [
+      "deepseek-v4-pro-0813"
+    ],
     "effects": 0,
     "score": null,
     "components": {
@@ -73,12 +78,16 @@
         "ceiling_count": 0
       },
       "candidate": {
-        "settled": 0,
+        "settled": 1,
         "valid": 0,
-        "infrastructure_failures": 0,
-        "statuses": {},
-        "calls": 3,
-        "provider_models": [],
+        "infrastructure_failures": 1,
+        "statuses": {
+          "failed": 1
+        },
+        "calls": 15,
+        "provider_models": [
+          "deepseek-v4-pro-0813"
+        ],
         "effects": 0,
         "score": null,
         "components": {
@@ -122,25 +131,25 @@
             "environment": "microecology",
             "instance_index": 1,
             "repeat_index": 1,
-            "status": "exploring",
-            "settled": false,
+            "status": "failed",
+            "settled": true,
             "completed": false,
-            "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 3,
-            "observations": 8,
-            "stop_reason": "model_round_limit",
+            "infrastructure_failure": "api_transport_or_provider",
+            "score": 0.0,
+            "condition_score": 0.0,
+            "intervention_score": 0.0,
+            "claim_score": 0.0,
+            "requests": 15,
+            "observations": 32,
+            "stop_reason": "api_request_failed",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
             ],
             "verified_nonzero_effects": 0,
             "score_protocol": "sle-unified-score-1.0",
-            "report_sha256": null
+            "report_sha256": "d37fddca1225bed7387ae429a2846b14627f35627dd47580132993dcbd597c61"
           },
-          "delta": null
+          "delta": 0.0
         },
         {
           "environment": "microecology",
@@ -421,12 +430,16 @@
         "ceiling_count": 5
       },
       "candidate": {
-        "settled": 0,
+        "settled": 1,
         "valid": 0,
-        "infrastructure_failures": 0,
-        "statuses": {},
-        "calls": 2,
-        "provider_models": [],
+        "infrastructure_failures": 1,
+        "statuses": {
+          "failed": 1
+        },
+        "calls": 7,
+        "provider_models": [
+          "deepseek-v4-pro-0813"
+        ],
         "effects": 0,
         "score": null,
         "components": {
@@ -470,25 +483,25 @@
             "environment": "coupled_oscillators",
             "instance_index": 1,
             "repeat_index": 1,
-            "status": "exploring",
-            "settled": false,
+            "status": "failed",
+            "settled": true,
             "completed": false,
-            "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 2,
-            "observations": 8,
-            "stop_reason": "model_round_limit",
+            "infrastructure_failure": "api_transport_or_provider",
+            "score": 0.0,
+            "condition_score": 0.0,
+            "intervention_score": 0.0,
+            "claim_score": 0.0,
+            "requests": 7,
+            "observations": 16,
+            "stop_reason": "api_request_failed",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
             ],
             "verified_nonzero_effects": 0,
             "score_protocol": "sle-unified-score-1.0",
-            "report_sha256": null
+            "report_sha256": "198865b1e690829472f8c5e12e5b1baeae0f81d39e1b952f875d096c89659e67"
           },
-          "delta": null
+          "delta": -99.35512710024365
         },
         {
           "environment": "coupled_oscillators",
@@ -769,12 +782,16 @@
         "ceiling_count": 6
       },
       "candidate": {
-        "settled": 0,
+        "settled": 1,
         "valid": 0,
-        "infrastructure_failures": 0,
-        "statuses": {},
+        "infrastructure_failures": 1,
+        "statuses": {
+          "failed": 1
+        },
         "calls": 2,
-        "provider_models": [],
+        "provider_models": [
+          "deepseek-v4-pro-0813"
+        ],
         "effects": 0,
         "score": null,
         "components": {
@@ -818,25 +835,25 @@
             "environment": "reaction_kinetics",
             "instance_index": 1,
             "repeat_index": 1,
-            "status": "exploring",
-            "settled": false,
+            "status": "failed",
+            "settled": true,
             "completed": false,
-            "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
+            "infrastructure_failure": "api_transport_or_provider",
+            "score": 0.0,
+            "condition_score": 0.0,
+            "intervention_score": 0.0,
+            "claim_score": 0.0,
             "requests": 2,
             "observations": 8,
-            "stop_reason": "model_round_limit",
+            "stop_reason": "api_request_failed",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
             ],
             "verified_nonzero_effects": 0,
             "score_protocol": "sle-unified-score-1.0",
-            "report_sha256": null
+            "report_sha256": "d8100ecc69095aefd3aa97e2794e5ec083caf67c7111093be8aa65dcff4ce3f9"
           },
-          "delta": null
+          "delta": -98.9635107989026
         },
         {
           "environment": "reaction_kinetics",
@@ -1117,12 +1134,16 @@
         "ceiling_count": 2
       },
       "candidate": {
-        "settled": 0,
+        "settled": 1,
         "valid": 0,
-        "infrastructure_failures": 0,
-        "statuses": {},
-        "calls": 2,
-        "provider_models": [],
+        "infrastructure_failures": 1,
+        "statuses": {
+          "failed": 1
+        },
+        "calls": 6,
+        "provider_models": [
+          "deepseek-v4-pro-0813"
+        ],
         "effects": 0,
         "score": null,
         "components": {
@@ -1166,25 +1187,25 @@
             "environment": "heat_transport",
             "instance_index": 1,
             "repeat_index": 1,
-            "status": "exploring",
-            "settled": false,
+            "status": "failed",
+            "settled": true,
             "completed": false,
-            "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 2,
-            "observations": 8,
-            "stop_reason": "model_round_limit",
+            "infrastructure_failure": "api_transport_or_provider",
+            "score": 0.0,
+            "condition_score": 0.0,
+            "intervention_score": 0.0,
+            "claim_score": 0.0,
+            "requests": 6,
+            "observations": 16,
+            "stop_reason": "api_request_failed",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
             ],
             "verified_nonzero_effects": 0,
             "score_protocol": "sle-unified-score-1.0",
-            "report_sha256": null
+            "report_sha256": "d581f191bfd855e946666af89bf8d63c95f9dadcae9f7b45aa033b8c001198e4"
           },
-          "delta": null
+          "delta": -30.472432550500343
         },
         {
           "environment": "heat_transport",
@@ -1466,12 +1487,16 @@
         "ceiling_count": 3
       },
       "candidate": {
-        "settled": 0,
+        "settled": 1,
         "valid": 0,
-        "infrastructure_failures": 0,
-        "statuses": {},
-        "calls": 2,
-        "provider_models": [],
+        "infrastructure_failures": 1,
+        "statuses": {
+          "failed": 1
+        },
+        "calls": 3,
+        "provider_models": [
+          "deepseek-v4-pro-0813"
+        ],
         "effects": 0,
         "score": null,
         "components": {
@@ -1515,25 +1540,25 @@
             "environment": "gene_regulation",
             "instance_index": 1,
             "repeat_index": 1,
-            "status": "exploring",
-            "settled": false,
+            "status": "failed",
+            "settled": true,
             "completed": false,
-            "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 2,
+            "infrastructure_failure": "api_transport_or_provider",
+            "score": 0.0,
+            "condition_score": 0.0,
+            "intervention_score": 0.0,
+            "claim_score": 0.0,
+            "requests": 3,
             "observations": 8,
-            "stop_reason": "model_round_limit",
+            "stop_reason": "api_request_failed",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
             ],
             "verified_nonzero_effects": 0,
             "score_protocol": "sle-unified-score-1.0",
-            "report_sha256": null
+            "report_sha256": "303b510bae70d1603f839d7cfe76f6f6f384dd8b68d070d0848933d9f870a394"
           },
-          "delta": null
+          "delta": -98.11822284181031
         },
         {
           "environment": "gene_regulation",
@@ -1816,12 +1841,16 @@
         "ceiling_count": 3
       },
       "candidate": {
-        "settled": 0,
+        "settled": 1,
         "valid": 0,
-        "infrastructure_failures": 0,
-        "statuses": {},
-        "calls": 1,
-        "provider_models": [],
+        "infrastructure_failures": 1,
+        "statuses": {
+          "failed": 1
+        },
+        "calls": 3,
+        "provider_models": [
+          "deepseek-v4-pro-0813"
+        ],
         "effects": 0,
         "score": null,
         "components": {
@@ -1865,23 +1894,25 @@
             "environment": "ising_spin",
             "instance_index": 1,
             "repeat_index": 1,
-            "status": "running",
-            "settled": false,
+            "status": "failed",
+            "settled": true,
             "completed": false,
-            "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 1,
-            "observations": 0,
-            "stop_reason": null,
-            "provider_reported_models": [],
+            "infrastructure_failure": "api_transport_or_provider",
+            "score": 0.0,
+            "condition_score": 0.0,
+            "intervention_score": 0.0,
+            "claim_score": 0.0,
+            "requests": 3,
+            "observations": 8,
+            "stop_reason": "api_request_failed",
+            "provider_reported_models": [
+              "deepseek-v4-pro-0813"
+            ],
             "verified_nonzero_effects": 0,
-            "score_protocol": null,
-            "report_sha256": null
+            "score_protocol": "sle-unified-score-1.0",
+            "report_sha256": "ead6d8d9844bb0cc946ff10fa88cdc2b8f1cf54f2c0d5944df84e24e63c517ba"
           },
-          "delta": null
+          "delta": 0.0
         },
         {
           "environment": "ising_spin",
@@ -2163,12 +2194,16 @@
         "ceiling_count": 1
       },
       "candidate": {
-        "settled": 0,
+        "settled": 1,
         "valid": 0,
-        "infrastructure_failures": 0,
-        "statuses": {},
+        "infrastructure_failures": 1,
+        "statuses": {
+          "failed": 1
+        },
         "calls": 2,
-        "provider_models": [],
+        "provider_models": [
+          "deepseek-v4-pro-0813"
+        ],
         "effects": 0,
         "score": null,
         "components": {
@@ -2212,25 +2247,25 @@
             "environment": "hysteresis_material",
             "instance_index": 1,
             "repeat_index": 1,
-            "status": "exploring",
-            "settled": false,
+            "status": "failed",
+            "settled": true,
             "completed": false,
-            "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
+            "infrastructure_failure": "api_transport_or_provider",
+            "score": 0.0,
+            "condition_score": 0.0,
+            "intervention_score": 0.0,
+            "claim_score": 0.0,
             "requests": 2,
             "observations": 8,
-            "stop_reason": "model_round_limit",
+            "stop_reason": "api_request_failed",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
             ],
             "verified_nonzero_effects": 0,
             "score_protocol": "sle-unified-score-1.0",
-            "report_sha256": null
+            "report_sha256": "10c9e010cc807bd150faccffa0fa5286bbd469a565996b8d409195f6bb671f49"
           },
-          "delta": null
+          "delta": -71.69667201407252
         },
         {
           "environment": "hysteresis_material",
@@ -2512,12 +2547,16 @@
         "ceiling_count": 5
       },
       "candidate": {
-        "settled": 0,
+        "settled": 1,
         "valid": 0,
         "infrastructure_failures": 0,
-        "statuses": {},
-        "calls": 2,
-        "provider_models": [],
+        "statuses": {
+          "incomplete": 1
+        },
+        "calls": 16,
+        "provider_models": [
+          "deepseek-v4-pro-0813"
+        ],
         "effects": 0,
         "score": null,
         "components": {
@@ -2561,25 +2600,25 @@
             "environment": "molecular_forces",
             "instance_index": 1,
             "repeat_index": 1,
-            "status": "exploring",
-            "settled": false,
+            "status": "incomplete",
+            "settled": true,
             "completed": false,
             "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 2,
-            "observations": 0,
+            "score": 0.0,
+            "condition_score": 0.0,
+            "intervention_score": 0.0,
+            "claim_score": 0.0,
+            "requests": 16,
+            "observations": 11,
             "stop_reason": "model_round_limit",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
             ],
             "verified_nonzero_effects": 0,
             "score_protocol": "sle-unified-score-1.0",
-            "report_sha256": null
+            "report_sha256": "b61d3d45679b2066ebe3c1cd6bdca20dc0f9df4a1db19f0f28bc821a37960262"
           },
-          "delta": null
+          "delta": -98.98412583000163
         },
         {
           "environment": "molecular_forces",
@@ -2860,12 +2899,16 @@
         "ceiling_count": 4
       },
       "candidate": {
-        "settled": 0,
+        "settled": 1,
         "valid": 0,
-        "infrastructure_failures": 0,
-        "statuses": {},
-        "calls": 0,
-        "provider_models": [],
+        "infrastructure_failures": 1,
+        "statuses": {
+          "failed": 1
+        },
+        "calls": 9,
+        "provider_models": [
+          "deepseek-v4-pro-0813"
+        ],
         "effects": 0,
         "score": null,
         "components": {
@@ -2909,23 +2952,25 @@
             "environment": "climate_response",
             "instance_index": 1,
             "repeat_index": 1,
-            "status": "pending",
-            "settled": false,
+            "status": "failed",
+            "settled": true,
             "completed": false,
-            "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 0,
-            "observations": 0,
-            "stop_reason": null,
-            "provider_reported_models": [],
+            "infrastructure_failure": "api_transport_or_provider",
+            "score": 0.0,
+            "condition_score": 0.0,
+            "intervention_score": 0.0,
+            "claim_score": 0.0,
+            "requests": 9,
+            "observations": 16,
+            "stop_reason": "api_request_failed",
+            "provider_reported_models": [
+              "deepseek-v4-pro-0813"
+            ],
             "verified_nonzero_effects": 0,
-            "score_protocol": null,
-            "report_sha256": null
+            "score_protocol": "sle-unified-score-1.0",
+            "report_sha256": "0febba34e63ba258ba66231518420453f8cd410b8d840b3c4a09dd4e00e72043"
           },
-          "delta": null
+          "delta": -95.24345256956315
         },
         {
           "environment": "climate_response",
@@ -3207,12 +3252,16 @@
         "ceiling_count": 0
       },
       "candidate": {
-        "settled": 0,
+        "settled": 1,
         "valid": 0,
-        "infrastructure_failures": 0,
-        "statuses": {},
-        "calls": 0,
-        "provider_models": [],
+        "infrastructure_failures": 1,
+        "statuses": {
+          "failed": 1
+        },
+        "calls": 5,
+        "provider_models": [
+          "deepseek-v4-pro-0813"
+        ],
         "effects": 0,
         "score": null,
         "components": {
@@ -3256,23 +3305,25 @@
             "environment": "catalyst_aging",
             "instance_index": 1,
             "repeat_index": 1,
-            "status": "pending",
-            "settled": false,
+            "status": "failed",
+            "settled": true,
             "completed": false,
-            "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 0,
-            "observations": 0,
-            "stop_reason": null,
-            "provider_reported_models": [],
+            "infrastructure_failure": "api_transport_or_provider",
+            "score": 0.0,
+            "condition_score": 0.0,
+            "intervention_score": 0.0,
+            "claim_score": 0.0,
+            "requests": 5,
+            "observations": 8,
+            "stop_reason": "api_request_failed",
+            "provider_reported_models": [
+              "deepseek-v4-pro-0813"
+            ],
             "verified_nonzero_effects": 0,
-            "score_protocol": null,
-            "report_sha256": null
+            "score_protocol": "sle-unified-score-1.0",
+            "report_sha256": "1c24373c3d08ffb0a19fa0a05e08dfa35ace50dabb8611b0250ea960201ef913"
           },
-          "delta": null
+          "delta": -84.54388206217205
         },
         {
           "environment": "catalyst_aging",
@@ -3553,12 +3604,16 @@
         "ceiling_count": 0
       },
       "candidate": {
-        "settled": 0,
+        "settled": 1,
         "valid": 0,
-        "infrastructure_failures": 0,
-        "statuses": {},
-        "calls": 0,
-        "provider_models": [],
+        "infrastructure_failures": 1,
+        "statuses": {
+          "failed": 1
+        },
+        "calls": 10,
+        "provider_models": [
+          "deepseek-v4-pro-0813"
+        ],
         "effects": 0,
         "score": null,
         "components": {
@@ -3602,23 +3657,25 @@
             "environment": "field_ecology",
             "instance_index": 1,
             "repeat_index": 1,
-            "status": "pending",
-            "settled": false,
+            "status": "failed",
+            "settled": true,
             "completed": false,
-            "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 0,
-            "observations": 0,
-            "stop_reason": null,
-            "provider_reported_models": [],
+            "infrastructure_failure": "api_transport_or_provider",
+            "score": 0.0,
+            "condition_score": 0.0,
+            "intervention_score": 0.0,
+            "claim_score": 0.0,
+            "requests": 10,
+            "observations": 32,
+            "stop_reason": "api_request_failed",
+            "provider_reported_models": [
+              "deepseek-v4-pro-0813"
+            ],
             "verified_nonzero_effects": 0,
-            "score_protocol": null,
-            "report_sha256": null
+            "score_protocol": "sle-unified-score-1.0",
+            "report_sha256": "a16dc4ad776d86b5743391e335c94da46aaa583702acec331d4fac9cae3195fc"
           },
-          "delta": null
+          "delta": -88.60338466319664
         },
         {
           "environment": "field_ecology",
@@ -3899,12 +3956,16 @@
         "ceiling_count": 0
       },
       "candidate": {
-        "settled": 0,
+        "settled": 1,
         "valid": 0,
         "infrastructure_failures": 0,
-        "statuses": {},
-        "calls": 0,
-        "provider_models": [],
+        "statuses": {
+          "incomplete": 1
+        },
+        "calls": 16,
+        "provider_models": [
+          "deepseek-v4-pro-0813"
+        ],
         "effects": 0,
         "score": null,
         "components": {
@@ -3948,23 +4009,25 @@
             "environment": "phase_equilibria",
             "instance_index": 1,
             "repeat_index": 1,
-            "status": "pending",
-            "settled": false,
+            "status": "incomplete",
+            "settled": true,
             "completed": false,
             "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 0,
-            "observations": 0,
-            "stop_reason": null,
-            "provider_reported_models": [],
+            "score": 0.0,
+            "condition_score": 0.0,
+            "intervention_score": 0.0,
+            "claim_score": 0.0,
+            "requests": 16,
+            "observations": 32,
+            "stop_reason": "model_round_limit",
+            "provider_reported_models": [
+              "deepseek-v4-pro-0813"
+            ],
             "verified_nonzero_effects": 0,
-            "score_protocol": null,
-            "report_sha256": null
+            "score_protocol": "sle-unified-score-1.0",
+            "report_sha256": "77d462aea229e1ad09ecfa3873c8e7fd22fb954f0fea9e9104101379cbfa7e01"
           },
-          "delta": null
+          "delta": -26.7620853650608
         },
         {
           "environment": "phase_equilibria",
@@ -4261,31 +4324,346 @@
   },
   "candidate_ledger": {
     "attempt_limit": 1152,
-    "started_attempts": 16,
-    "remaining_attempts": 1136,
+    "started_attempts": 94,
+    "remaining_attempts": 1058,
     "status_counts": {
-      "returned": 8,
-      "started": 8
+      "interrupted": 10,
+      "returned": 84
     }
   },
-  "candidate_status": "running",
+  "candidate_status": "stopped_infrastructure",
   "source_sha256": {
     "reference": "a3d3633e166fe36a68b2c67b90a06ccacc4ed99781a1372fddd6ec28f945790c",
-    "candidate": "97b0bc029d0d28ef5c1a51d277d742542c6ba437f99747848579fbdaefa02551"
+    "candidate": "d6c46e4763dd2e311dc31dcf7661e3a0dc3c1984f1541c471be077b6a9ebf769"
   },
-  "monitor_status": {
-    "checked_at": "2026-10-04T09:02:58+00:00",
-    "status": "stopped_infrastructure",
-    "evidence": "Remote Python read of public-progress.json via verified SSH; complete file transfer failed after connection dropped again",
-    "remote_closed": 12,
-    "remote_calls": 94,
-    "returned": 84,
-    "interrupted": 10,
-    "failed_episodes": 10,
-    "incomplete_episodes": 2,
-    "undispatched": 60,
-    "raw_report_audit": "pending retrieval",
-    "new_model_requests_by_monitor": 0,
-    "manifest_sha256": "4067ba920df218bc9574090b1fc6b51045bd67f9394e5fc3deeb05e962a723a9"
+  "review": {
+    "schema": "sle-stopped-paired-claim-review-1",
+    "language": "zh-CN",
+    "claim_under_review": "这次 DeepSeek V4 Pro 与 GPT-5.6 配对实验能否证明基准具有科学能力区分度、给出科学模型强弱排序，以及揭示何种工作流短板。",
+    "claim_supported": "no",
+    "confidence": "high",
+    "confidence_scope": "对“尚不支持科学能力区分度或排名”的判断为高；中间分析只按已记录行为与静态代码检查解释，不升级为独立确认。",
+    "review_independence": "same-family",
+    "acceptance_status": "provisional",
+    "integrity_status": "unavailable",
+    "summary": "预定的 72 例科学能力配对比较未完成。修正空输出处理后的首批 12 例有 10 例实际请求期限到期，2 例轮次耗尽，0 例有效最终交付；60 例未派发。结果清楚暴露了当前服务、客户端和模型动作链的交付问题，但不足以建立科学能力差异、完整宏平均、置信区间或模型排名。若干任务留下真实拟合与对照采样，不能把零交付解释为没有科学活动，也不能把这些未闭合的探索称为发现。",
+    "what_results_support": [
+      "在冻结的本次配置与停止规则下，候选首批任务未形成任何有效最终交付；十次失败的直接证据是请求 DeadlineExpired，而非 episode 墙钟耗尽。",
+      "日志能区分空可见输出、长度停止、动作解析/约束错误、分析执行/序列化/超时错误，以及未冻结和未提交等不同流程问题。",
+      "科学中间活动确实存在：系统辨识、候选模型拟合比较、校准、背景扣除和干预采样均有返回记录或分析输出；其证据层级主要是探索与同样本拟合。",
+      "在同一首批 12 个 episode 定义上可描述交付结果：参考有效完成 10 例，候选 0 例。该描述衡量当前整体运行链，不能分离服务、传输、原生推理设置和模型科学能力。"
+    ],
+    "what_results_dont_support": [
+      "不支持将候选 12 个按失败策略结算的零分写成完整 72 例宏平均为零，或将参考 64.3141 与该零分相减得到有效配对模型差距。",
+      "不支持完整配对宏差、区间、稳定模型排名、跨世界广泛科学能力区分度、科学发现深度校准或污染免疫。",
+      "不支持从首批中止样本估计其余实例和重复的科学表现；排除故障后只剩两例未完成任务，不能恢复故障无关的能力估计。",
+      "不支持将 195 个实验记录、23 个 analysis_ok、模型自述或参数快照换算为有效发现；也不支持把未验证等同于已证伪。",
+      "不支持断言请求超时由某个具体服务商故障、推理过长或模型能力不足单独造成。"
+    ],
+    "findings": [
+      "72 例计划中仅 12 例派发并关闭，每个世界只有一个实例的一次运行；60 例仍未派发，应视为未观察而非失败样本。",
+      "在同一首批 12 个 episode 定义上可描述交付结果：参考有效完成 10 例，候选 0 例。该描述衡量当前整体运行链，不能分离服务、传输、原生推理设置和模型科学能力。",
+      "94 次请求 = 84 次返回 + 10 次中断；返回动作包括 25 次观测批次、23 次执行器标记成功的分析、7 次显式分析失败和 29 次无效动作，观测批次产生 195 个实验记录。",
+      "18 次空可见输出全部也以 length 结束；另有 3 次非空 length 截断。空输出、长度停止与无效动作是重叠统计，不能相加。",
+      "两例非基础设施中止任务均未能在 16 次请求内提交：molecular_forces 末三轮为空，phase_equilibria 末四轮为空；此处轮次耗尽有直接记录。",
+      "23 个 analysis_ok 仅指执行器正常返回；其中包含内部捕获错误或未收敛优化。反过来，部分 result=null 的分析在 stdout 中有真实计算结果，不能一律按“未分析”处理。",
+      "四个任务保存过模型快照，只有 Ising 快照含预测代码；所有 12 例均未冻结模型，没有最终评分面板或经独立确认的非零效应。",
+      "分子力比较中的导数符号不一致、旋转构型混入温度力比较，以及相平衡三样本中心化 SVD 的秩上限，均限制中间结果可承载的机制结论。"
+    ],
+    "limits": [
+      "参考完整 72 例成绩为 64.31410842561716，62 例有效完成；候选完整成绩为 null。参考成绩可作为背景，不能与候选不同暴露量的流程总数直接比较。",
+      "即使限定同一首批 12 例，两侧实际经历的请求、分析与实验机会仍不同。直接比较计数或按请求归一化均不能消除提前终止与阶段构成差异。",
+      "原生 reasoning effort 分别为 high 与 medium，跨提供方标签不等价；候选使用 streaming，参考使用 nonstream，运行还是顺序而非随机同时服务试验。",
+      "空可见输出被误判传输错误的客户端口径已经在本次前瞻修正版修正，当前空输出作为无效动作计轮；不能把早期缺陷继续归入这次真实超时。此前非流式与首版流式 pilot、连接调用和流式诊断须独立披露，不能池化或修补本次样本。",
+      "标准 evidence_check.py 未解析到；既有数值审计与本审阅逐一检查的 12 份 raw report SHA 仅确认来源对应与记录内容，不代替完整性审计、候选程序重新执行或异模型家族语义审阅。"
+    ],
+    "missing_evidence": [
+      "候选其余 60 例及实例内重复未观察，预定实例级配对统计结构不完整。",
+      "稳定交付条件下的独立前瞻比较，以及对服务/传输/推理配置影响的预先规定控制。",
+      "冻结、可执行预测器在隐藏条件与干预面板上的结果，以及按协议预先定义的定量声明独立确认。",
+      "对候选函数比较的实现自检、适当留出验证与不确定性评估；中间高拟合度不足以替代这些证据。",
+      "完整实验完整性审计与异家族独立语义复核。"
+    ],
+    "suggested_claim_revision": "在相同任务定义和名义预算下，本次修正后的 DeepSeek V4 Pro 前瞻对比在首批 12 例触发停止规则，尚未产生有效最终交付，不能完成预定的科学能力比较。轨迹揭示了请求期限、可见动作输出、代码正确性和从探索到冻结提交之间的流程短板；部分科学中间操作成立，其预测与机制结论仍待独立验证。",
+    "next_steps": [
+      "将本次归档为中止的操作性对比，保留每例原始结算和停止原因；候选宏平均、宏差及区间继续为不可估计。",
+      "公开描述严格区分计划、实际执行、同样本拟合、冻结交付和独立确认，按报告哈希追溯十二个世界。",
+      "以下下一轮建议仅为设计建议；本次审阅不触发新请求、重跑、预算调整、候选代码执行或公共源码修改。",
+      "如另行授权新实验，先将服务/传输诊断作为独立、未计分的前置验证，并在候选结果出现前冻结新的运行协议与预算；保留本次失败记录，不追溯修补。",
+      "在可交付条件下开展覆盖全部计划实例与重复的新前瞻配对比较，按预设实例聚类统计，并分开报告交付、预测与定量声明结果。",
+      "使用额外模型或预先设计的能力对照，检验分离是否落在科学预测/干预/机制证据上，而不只落在服务与格式遵从上；单一比较器不足以建立广泛区分度。",
+      "对科学机制主张要求事先固定候选解释、正确实现和独立验证条件；例如力的坐标/导数一致性、事件处理、相关通道似然、模型复杂度与留出误差。"
+    ],
+    "next_experiments_needed": [
+      "如另行授权新实验，先将服务/传输诊断作为独立、未计分的前置验证，并在候选结果出现前冻结新的运行协议与预算；保留本次失败记录，不追溯修补。",
+      "在可交付条件下开展覆盖全部计划实例与重复的新前瞻配对比较，按预设实例聚类统计，并分开报告交付、预测与定量声明结果。",
+      "使用额外模型或预先设计的能力对照，检验分离是否落在科学预测/干预/机制证据上，而不只落在服务与格式遵从上；单一比较器不足以建立广泛区分度。",
+      "对科学机制主张要求事先固定候选解释、正确实现和独立验证条件；例如力的坐标/导数一致性、事件处理、相关通道似然、模型复杂度与留出误差。"
+    ],
+    "recommendations_only": true,
+    "evidence_review": {
+      "all_packets_reviewed": 12,
+      "candidate_report_hashes_verified": 12,
+      "representative_full_traces": [
+        "molecular_forces",
+        "phase_equilibria",
+        "microecology",
+        "climate_response",
+        "coupled_oscillators",
+        "field_ecology",
+        "catalyst_aging",
+        "heat_transport",
+        "ising_spin"
+      ],
+      "candidate_code_executed": false,
+      "new_api_requests": 0,
+      "precheck_status": "standard_helper_unavailable; supplied numeric/hash audits reviewed; 12 candidate report hashes independently matched",
+      "integrity_audit": "EXPERIMENT_AUDIT.json unavailable"
+    },
+    "worlds": [
+      {
+        "environment": "microecology",
+        "report_sha256": "d37fddca1225bed7387ae429a2846b14627f35627dd47580132993dcbd597c61",
+        "status": "failed",
+        "stop_reason": "api_request_failed",
+        "observations": 32,
+        "requests": 15,
+        "summary": "完成单培养、共培养、条件与干预采样，并实际比较了线性和二次导数回归；未形成可验证的动态预测器。",
+        "findings": [
+          "32 个观测记录包含种群组合、营养和温度变化，以及耗减、补料和温度切换；这些是实际返回的实验，而非仅有计划。",
+          "第 11、12 轮输出实际回归结果；第 12 轮排除了跨越事件的差分区间，并更新事件后的温度特征，显示对分析缺陷的局部修正。",
+          "此前出现数组维度错误、分析代码拒绝、JSON 截断和实验字段错误；最后一次请求超时。"
+        ],
+        "limits": [
+          "较高的二次回归拟合度来自同一批差分样本，没有轨迹留出验证、稳定积分预测或独立效应确认。",
+          "第 11 轮关于排除事件的注释未在代码中真正执行；不能将该轮结果解释为可靠的自主动力学辨识。",
+          "对观测通道求和不是经过证明的碳守恒量；耗减采样也尚未转化为经确认的交叉喂养机制结论。"
+        ]
+      },
+      {
+        "environment": "coupled_oscillators",
+        "report_sha256": "198865b1e690829472f8c5e12e5b1baeae0f81d39e1b952f875d096c89659e67",
+        "status": "failed",
+        "stop_reason": "api_request_failed",
+        "observations": 16,
+        "requests": 7,
+        "summary": "实际执行了自由响应系统辨识，并采集了多类干预响应；验证链在交付前中断。",
+        "findings": [
+          "16 个记录覆盖独立初始位移/速度激励，以及切边、加质量、加阻尼、钳制和驱动等后续实验。",
+          "第 2 轮由观测转移矩阵估计线性刚度和阻尼，再计算同批自由响应轨迹的残差。",
+          "后续连续三次空可见输出消耗动作轮次，随后请求超时；未保存或冻结最终预测器。"
+        ],
+        "limits": [
+          "矩阵对数再指数化得到的近机器精度重构属于代数自洽检查，不是独立预测验证。",
+          "拟合残差来自用于辨识的自由响应记录；新采集干预记录没有后续预测残差或确认结果。",
+          "不能据此声称已恢复真实机制、验证干预泛化或在该科学任务上胜过另一模型。"
+        ]
+      },
+      {
+        "environment": "reaction_kinetics",
+        "report_sha256": "d8100ecc69095aefd3aa97e2794e5ec083caf67c7111093be8aa65dcff4ce3f9",
+        "status": "failed",
+        "stop_reason": "api_request_failed",
+        "observations": 8,
+        "requests": 2,
+        "summary": "完成初始纯组分与温度时间序列采样，第二次请求即超时。",
+        "findings": [
+          "8 个已返回记录覆盖不同纯组分初态与温度条件。",
+          "没有执行成功的分析、模型快照、最终预测程序或定量声明。"
+        ],
+        "limits": [
+          "模型注释提出辨识转移拓扑和温度依赖，但尚无实际拟合或检验输出支撑这些目标。",
+          "如此早期的截断不足以判断动力学辨识能力，更不能把零结算分解释为科学机制理解失败。"
+        ]
+      },
+      {
+        "environment": "heat_transport",
+        "report_sha256": "d581f191bfd855e946666af89bf8d63c95f9dadcae9f7b45aa033b8c001198e4",
+        "status": "failed",
+        "stop_reason": "api_request_failed",
+        "observations": 16,
+        "requests": 6,
+        "summary": "进行了热传输条件与干预采样，并留下初步 PDE 参数快照；结果序列化和最终交付均未闭合。",
+        "findings": [
+          "16 个记录覆盖冷却、正负流动、热源位置和边界梯度等实际实验。",
+          "初步拟合在结果序列化时因数组不可 JSON 化而报错，但随后分析成功读到了已保存的参数快照。",
+          "一次实验 schema 错误得到后续修正；最后请求超时。"
+        ],
+        "limits": [
+          "序列化失败不能等同于拟合从未发生，参数快照也不能等同于可运行预测器。",
+          "快照没有预测代码，未冻结；没有独立残差、干预泛化或定量机制确认。"
+        ]
+      },
+      {
+        "environment": "gene_regulation",
+        "report_sha256": "303b510bae70d1603f839d7cfe76f6f6f384dd8b68d070d0848933d9f870a394",
+        "status": "failed",
+        "stop_reason": "api_request_failed",
+        "observations": 8,
+        "requests": 3,
+        "summary": "完成恒定外驱下的基因表达轨迹采样，分析代码失败后请求超时。",
+        "findings": [
+          "8 个记录实际施加逐基因正负外驱并观测时间序列。",
+          "唯一分析因缺失键而失败；没有成功的速率估计或调控矩阵结果。"
+        ],
+        "limits": [
+          "“早期暴露衰减、晚期暴露耦合”是实验意图，尚不能当作已验证的调控拓扑发现。",
+          "未进入冻结预测器与独立验证阶段，无法评价科学预测质量。"
+        ]
+      },
+      {
+        "environment": "ising_spin",
+        "report_sha256": "ead6d8d9844bb0cc946ff10fa88cdc2b8f1cf54f2c0d5944df84e24e63c517ba",
+        "status": "failed",
+        "stop_reason": "api_request_failed",
+        "observations": 8,
+        "requests": 3,
+        "summary": "完成温度、钳制和外场采样，实际拟合有限自旋模型并保存含预测代码的快照，随后请求超时。",
+        "findings": [
+          "8 个观测记录用于精确枚举自旋状态的参数拟合，实际输出了同批数据残差。",
+          "保存的快照确实包含预测代码；这比只保存参数多走了一步，但 frozen_model_snapshot 仍为空。"
+        ],
+        "limits": [
+          "拟合残差约处于所用噪声尺度，仅限已经采集的数据；审阅未执行该预测代码。",
+          "没有冻结后的条件/干预面板评测或独立声明确认，不能称为有效最终完成或经验证的机制恢复。"
+        ]
+      },
+      {
+        "environment": "hysteresis_material",
+        "report_sha256": "10c9e010cc807bd150faccffa0fa5286bbd469a565996b8d409195f6bb671f49",
+        "status": "failed",
+        "stop_reason": "api_request_failed",
+        "observations": 8,
+        "requests": 2,
+        "summary": "完成初始复位、循环和扫速采样，第二次请求超时。",
+        "findings": [
+          "8 个返回记录包含不同复位和协议路径；有真实实验数据。",
+          "没有分析执行、预测程序、模型快照或提交声明。"
+        ],
+        "limits": [
+          "关于饱和、反转、速率和记忆的文字属于实验动机；尚无模型比较或量化检验输出。",
+          "不能从早期传输截断推断模型缺乏材料机制推理能力。"
+        ]
+      },
+      {
+        "environment": "molecular_forces",
+        "report_sha256": "b61d3d45679b2066ebe3c1cd6bdca20dc0f9df4a1db19f0f28bc821a37960262",
+        "status": "incomplete",
+        "stop_reason": "model_round_limit",
+        "observations": 11,
+        "requests": 16,
+        "summary": "实际比较了多种成对势能形式，并扩展几何与温度采样；最终因轮次耗尽而未提交，且部分力比较存在实现缺陷。",
+        "findings": [
+          "11 个记录包含距离、三角形形状、方向及温度变化；第 10 轮进一步采集重复几何与非共面构型。",
+          "第 5、9、13 轮留下能量或力的拟合输出；能量拟合在已采集样本中显示候选函数形式之间有差异。",
+          "仅保存了不含预测代码的参数快照；第 11 轮显式分析失败，第 12 轮外层成功但内部报告类型错误，末三轮为空输出。"
+        ],
+        "limits": [
+          "第 9 轮力预测辅助函数的符号与各势函数导数约定不一致；Morse 与其他形式的力残差差距不是干净的候选模型比较。",
+          "按排序后的边长分组会混合旋转后的构型；直接比较笛卡尔力分量或向量不能证明温度效应。",
+          "能量拟合和后续重新拟合均使用已采集样本，没有冻结模型、预先留出的预测验证或独立声明确认；不据此授予科学发现。"
+        ]
+      },
+      {
+        "environment": "climate_response",
+        "report_sha256": "0febba34e63ba258ba66231518420453f8cd410b8d840b3c4a09dd4e00e72043",
+        "status": "failed",
+        "stop_reason": "api_request_failed",
+        "observations": 16,
+        "requests": 9,
+        "summary": "实际拟合并比较了一、二、三箱线性响应模型，又采集新强迫历史，但尚未检验这些新历史上的预测。",
+        "findings": [
+          "初批和后批共 16 个记录，包含恒定、阶跃、脉冲、斜坡以及振荡等强迫。",
+          "第 5 轮完成两箱拟合，第 6 轮输出不同箱数的拟合残差；这是实际分析输出，不能因 result 为 null 而忽略 stdout。",
+          "先前的数据拼接错误和一次实验 schema 错误消耗轮次；新强迫实验返回后下一请求超时。"
+        ],
+        "limits": [
+          "不同箱数的残差在相同拟合数据上计算，未报告复杂度校正或独立比较。",
+          "后批采样的意图是检验泛化，但没有记录后续预测对比；不能把“准备验证”写成“已验证线性机制”。",
+          "无冻结快照、面板得分或声明确认。"
+        ]
+      },
+      {
+        "environment": "catalyst_aging",
+        "report_sha256": "1c24373c3d08ffb0a19fa0a05e08dfa35ace50dabb8611b0250ea960201ef913",
+        "status": "failed",
+        "stop_reason": "api_request_failed",
+        "observations": 8,
+        "requests": 5,
+        "summary": "实际执行了空白/标准校正及反应与使用历史的初步回归，随后空输出和请求超时阻断交付。",
+        "findings": [
+          "8 个记录交错包含空白、标准、反应条件和试片重复使用等实验。",
+          "分析 stdout 给出了校准、校正反应信号以及线性/对数线性拟合；不是只有一段未执行的校准计划。",
+          "连续两次空可见输出后请求超时，没有模型快照或最终提交。"
+        ],
+        "limits": [
+          "校正与高拟合度来自同批探索记录，未验证校准假设、跨条件预测或衰减机制的唯一性。",
+          "未形成冻结模型后的独立效应确认；不能把校准操作本身写成已发现并验证老化机制。"
+        ]
+      },
+      {
+        "environment": "field_ecology",
+        "report_sha256": "a16dc4ad776d86b5743391e335c94da46aaa583702acec331d4fac9cae3195fc",
+        "status": "failed",
+        "stop_reason": "api_request_failed",
+        "observations": 32,
+        "requests": 10,
+        "summary": "完成多协议重复调查并尝试分离占据与检测过程，但优化未收敛、后续分析预算耗尽，最后请求超时。",
+        "findings": [
+          "32 个记录覆盖不同生境和快速/密集调查顺序；后续批次确实补充重复测量与协议覆盖。",
+          "第 5 轮保存潜在占据/检测模型参数并输出训练数据误差，同时明确 optimizer success 为 false。",
+          "第 7 轮尝试多项式复杂度与似然比较时发生分析超时，分析余额归零；后续仍采集了更多协议数据。"
+        ],
+        "limits": [
+          "执行器 analysis_ok 不等于优化收敛；该快照无预测代码，也未冻结。",
+          "第 5 轮将相关汇总通道分别加入二项似然，不能把其目标值当作完整联合似然；第 7 轮拟修正的比较没有成功返回。",
+          "更多覆盖数据未转化为最终模型或独立验证，尚不能证明正确识别占据与检测机制。"
+        ]
+      },
+      {
+        "environment": "phase_equilibria",
+        "report_sha256": "77d462aea229e1ad09ecfa3873c8e7fd22fb954f0fea9e9104101379cbfa7e01",
+        "status": "incomplete",
+        "stop_reason": "model_round_limit",
+        "observations": 32,
+        "requests": 16,
+        "summary": "实际开展空架扣除、端元混合与长时谱形比较，扩展了组成和动力学采样；轮次耗尽前没有冻结预测器。",
+        "findings": [
+          "32 个记录覆盖空架、端元、制备方式、组成和保温时间等条件。",
+          "第 4、6、7 轮实际计算背景扣除、端元叠加残差、非负混合拟合和时间插值；显示若干局部谱形关系值得继续检验。",
+          "初始两次非空输出被长度截断，另有 schema/JSON 错误；末四轮连续空输出，16 次请求后按轮次上限关闭。"
+        ],
+        "limits": [
+          "长时两种制备谱形接近是已采样条件下的探索性关系，尚无冻结声明后的独立重复确认。",
+          "仅有三个组成样本的中心化 SVD 必然至多二秩，不能据此认定真实相数或机制维度。",
+          "混合拟合残差和局部时间插值尚未构成可转移的相平衡或动力学预测器；没有最终程序和评分面板。"
+        ]
+      }
+    ],
+    "source_sha256": {
+      "reference": "a3d3633e166fe36a68b2c67b90a06ccacc4ed99781a1372fddd6ec28f945790c",
+      "candidate": "d6c46e4763dd2e311dc31dcf7661e3a0dc3c1984f1541c471be077b6a9ebf769"
+    },
+    "workflow_metrics": {
+      "scope": "同一首轮12个配对任务；不与GPT全72次的流程总量比较",
+      "reference": {
+        "requests": 168,
+        "experiment_count": 460,
+        "empty_visible_replies": 0,
+        "length_stops": 0,
+        "invalid_actions": 14,
+        "analysis_ok": 64,
+        "analysis_failed": 11
+      },
+      "candidate": {
+        "requests": 94,
+        "experiment_count": 195,
+        "empty_visible_replies": 18,
+        "length_stops": 21,
+        "invalid_actions": 29,
+        "analysis_ok": 23,
+        "analysis_failed": 7
+      }
+    }
   }
 }

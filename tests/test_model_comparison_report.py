@@ -59,3 +59,18 @@ def test_unpaired_comparisons_rejected(change):
     elif change=='slots':b['episodes'][0]=copy.deepcopy(b['episodes'][1])
     else:b['episodes'][0]['episode_id']='new-noise-key'
     with pytest.raises(ValueError):report.compare(a,b)
+
+
+def test_stopped_first_wave_does_not_become_zero_full_macro():
+    a,b=fixtures();b['status']='stopped_infrastructure'
+    for e in b['episodes']:
+        closed=e['instance_index']==1 and e['repeat_index']==1
+        e.update(settled=closed,completed=False,status='failed' if closed else 'pending',
+                 score=0. if closed else None,condition_score=0. if closed else None,
+                 intervention_score=0. if closed else None,claim_score=0. if closed else None,
+                 infrastructure_failure='deadline' if closed else None)
+    d=report.compare(a,b)
+    assert d['candidate']['settled']==12 and d['candidate']['score'] is None
+    assert d['delta'] is None and d['paired_cluster_bootstrap_95'] is None
+    assert all(w['candidate']['score'] is None for w in d['worlds'])
+    assert '不计算72次总分' in report.render(d)

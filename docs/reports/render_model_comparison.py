@@ -128,8 +128,8 @@ def render(d,review=None):
         x,y=w['reference'],w['candidate']
         def bar(score,color):
             return '' if score is None else '<span class="bar" style="width:%.3f%%;background:%s"></span>'%(score,color)
-        rows.append('<tr><td><a href="#%s">%s</a></td><td>%s%s</td><td>%s%s</td><td><strong>%s</strong></td><td>%d / 6</td><td>%d / 6</td></tr>'%
-                    (w['environment'],esc(w['name']),num(x['score']),bar(x['score'],'#7387b2'),num(y['score']),bar(y['score'],'#258570'),signed(w['delta']),x['valid'],y['valid']))
+        rows.append('<tr><td><a href="#%s">%s</a></td><td>%s%s</td><td>%s%s</td><td><strong>%s</strong></td><td>%d / 6</td><td>%d / %d</td></tr>'%
+                    (w['environment'],esc(w['name']),num(x['score']),bar(x['score'],'#7387b2'),num(y['score']),bar(y['score'],'#258570'),signed(w['delta']),x['valid'],y['valid'],y['settled']))
         body='<h3>三个分项</h3><table><tr><th>模型</th><th>新条件 50%</th><th>控制变化 30%</th><th>效应区间 20%</th></tr>'
         for label,z in [('GPT-5.6',x),('DeepSeek V4 Pro',y)]:
             body+='<tr><td>'+label+'</td>'+''.join('<td>'+num(z['components'][k])+'</td>' for k in COMPONENTS)+'</tr>'
@@ -158,8 +158,9 @@ def render(d,review=None):
         conclusion+='<h3>审阅结论</h3><p>'+esc(review.get('summary',''))+'</p>'+ul(review.get('findings',[]))+'<h3>边界与下一步</h3>'+ul(review.get('limits',[]))+ul(review.get('next_steps',[]))
     if review and review.get('workflow_metrics'):
         metrics=review['workflow_metrics']
+        conclusion+='<p>'+esc(metrics.get('scope',''))+'。原始次数受提前终止影响，不能直接比较科学能力或效率。</p>'
         conclusion+='<h3>差距发生在研究流程的哪一步</h3><div class="scroll"><table><tr><th>过程指标</th><th>GPT-5.6</th><th>DeepSeek V4 Pro</th></tr>'
-        for key,label in [('requests','API 请求数'),('experiment_count','实际实验数'),('empty_visible_replies','完整回复但没有可见答案'),('length_stops','输出达到长度上限'),('invalid_actions','无效动作次数'),('analysis_ok','成功执行的分析次数'),('analysis_failed','分析执行失败次数')]:
+        for key,label in [('requests','API 请求数'),('experiment_count','实际实验数'),('empty_visible_replies','完整回复但没有可见答案'),('length_stops','输出达到长度上限'),('invalid_actions','无效动作次数'),('analysis_ok','分析程序外层成功返回次数'),('analysis_failed','分析执行失败次数')]:
             conclusion+='<tr><td>%s</td><td>%d</td><td>%d</td></tr>'%(label,metrics['reference'][key],metrics['candidate'][key])
         conclusion+='</table></div><p>这些次数可以重叠，例如同一次回复可能既达到长度上限又形成无效动作。分析执行成功仅表示程序运行成功，不等于科学结论成立。</p>'
     pilot=d['design'].get('transport_pilot')
@@ -178,13 +179,13 @@ def render(d,review=None):
     if monitor:status='远端已停止；页面计数仍为旧快照，原始结果待同步核验'
     return '''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SLE · GPT-5.6 与 DeepSeek V4 配对评测</title><style>
 *{box-sizing:border-box}body{background:#f4f5ef;color:#173d3a;font:16px/1.75 system-ui,sans-serif;margin:0}main{max-width:1180px;margin:auto;padding:36px 24px 70px}h1{font-size:clamp(28px,4vw,42px);line-height:1.3}h2{font-size:23px}h3{font-size:18px}a{color:#07776b}small,.muted{font-size:13px;color:#647570}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.metric,article,.panel{background:#fff;border:1px solid #d9e2d8;border-radius:14px;padding:24px;margin:18px 0}.metric strong{display:block;font-size:32px}.notice{background:#e9eee5;padding:20px;border-left:4px solid #56836c}.scroll{overflow:auto}table{width:100%;min-width:720px;border-collapse:collapse;background:#fff;font-size:14px}td,th{text-align:left;padding:12px;border-bottom:1px solid #d9e2d8;vertical-align:top}th{background:#e7eee4}.bar{display:block;height:6px;margin-top:7px;border-radius:3px}details{margin-top:10px}summary{cursor:pointer;font-weight:600}li{margin:8px 0}nav{display:flex;flex-wrap:wrap;gap:18px}@media(max-width:700px){main{padding:20px 14px}.metrics{grid-template-columns:1fr}.metric{margin:0}.metric,article,.panel{padding:18px}}
-</style><main><small>SCIENTISTS’ LAST EXAM · PAIRED MODEL COMPARISON</small><h1>同一批科学世界<br>GPT-5.6 × DeepSeek V4 Pro</h1><p>12 环境 × 3 隐藏实例 × 2 次运行。同样的世界、面板、提示、评分与预算，两模型独立选择实验和提交预测。</p>
+</style><main><small>SCIENTISTS’ LAST EXAM · PAIRED MODEL COMPARISON</small><h1>同一批科学世界<br>GPT-5.6 × DeepSeek V4 Pro</h1><p>计划：12 环境 × 3 隐藏实例 × 2 次运行。同样的世界、面板、提示、评分与预算，两模型独立选择实验和提交预测。</p>
 <nav><a href="#comparison">配对成绩</a><a href="#findings">区分度与证据</a><a href="overview.html">GPT 完整发现报告</a><a href="comparison-data.json">公开对照数据</a></nav>
-<div class="metrics"><div class="metric">GPT-5.6 主分<strong>'''+num(a['score'])+''' / 100</strong><small>有效完成 62 / 72；原批次保留全部失败。</small></div><div class="metric">DeepSeek V4 Pro 主分<strong>'''+num(b['score'])+'''</strong><small>已结束 %d / 72；有效完成 %d / 72。</small></div><div class="metric">配对分差 · V4 − GPT<strong>%s</strong><small>共同协议：新条件 50%% + 控制变化 30%% + 定量声明 20%%。</small></div></div>
+<div class="metrics"><div class="metric">GPT-5.6 主分<strong>'''+num(a['score'])+''' / 100</strong><small>有效完成 62 / 72；原批次保留全部失败。</small></div><div class="metric">DeepSeek V4 Pro 主分<strong>'''+num(b['score'])+'''</strong><small>已结束 %d / 72；其中有效完成 %d / %d。</small></div><div class="metric">配对分差 · V4 − GPT<strong>%s</strong><small>共同协议：新条件 50%% + 控制变化 30%% + 定量声明 20%%。</small></div></div>
 <div class="notice"><strong>%s</strong><p>DeepSeek 请求型号 %s。实际调用 %d / 1152；基础设施失败 %d；其他未完成 %d。有效完成不是科学发现成功率。</p></div>
-<section id="comparison"><h2>各环境是否拉开差距</h2><div class="scroll"><table><tr><th>环境</th><th>GPT-5.6</th><th>V4 Pro</th><th>分差</th><th>GPT 有效</th><th>V4 有效</th></tr>%s</table></div></section>
+<section id="comparison"><h2>各环境是否拉开差距</h2><div class="scroll"><table><tr><th>环境</th><th>GPT-5.6</th><th>V4 Pro</th><th>分差</th><th>GPT 有效</th><th>V4 有效 / 已结束</th></tr>%s</table></div></section>
 <section id="findings" class="panel"><h2>怎样解释区分度</h2>%s</section>
-<section class="panel"><h2>共同条件与比较边界</h2><p>两模型都限制为每次运行 16 次请求、8,000 输出 token 上限、48 次实验和相同分析及墙钟预算。DeepSeek 使用 high / max_tokens，GPT 使用 medium / max_completion_tokens；厂商思考档位不等价，因此这是共同外部预算下的系统比较。DeepSeek 使用流式传输，GPT 使用非流式传输；修正后的对照将完整空答案按无效动作消耗预算。</p><p>同一实例的两次重复共同构成一个独立实例簇。复用 episode 标识和确认密钥使相同实验索引及指定对比可共享观测随机性；模型探索路线仍各自决定。主分包括所有失败计零。</p><p>这是先后执行的两批服务调用，并非同时随机分配的服务试验。单个对照模型只能说明样本上的分离、相近或分数饱和情况，不能认证一般科学能力、抗污染或发现深度。预埋方程族、候选菜单和难度差异仍然存在。</p><p class="muted">原始隐藏 seed、参数、测试目标、API 凭证与模型完整轨迹不公开。科学证据审阅若存在，为同模型家族的暂定判断；算术核验不是机制认证。</p></section>%s<footer class="muted">本页无外部资源，可离线阅读。固定对照设计见 env/PAIRED_COMPARISON.md。生成时间 %s UTC。</footer></main></html>'''%(b['settled'],b['valid'],signed(d['delta']),esc(status),esc(d['candidate_model']),d['candidate_ledger']['started_attempts'],b['infrastructure_failures'],b['settled']-b['valid']-b['infrastructure_failures'],''.join(rows),conclusion,''.join(cards),datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M'))
+<section class="panel"><h2>共同条件与比较边界</h2><p>两模型都限制为每次运行 16 次请求、8,000 输出 token 上限、48 次实验和相同分析及墙钟预算。DeepSeek 使用 high / max_tokens，GPT 使用 medium / max_completion_tokens；厂商思考档位不等价，因此这是共同外部预算下的系统比较。DeepSeek 使用流式传输，GPT 使用非流式传输；修正后的对照将完整空答案按无效动作消耗预算。</p><p>同一实例的两次重复共同构成一个独立实例簇。复用 episode 标识和确认密钥使相同实验索引及指定对比可共享观测随机性；模型探索路线仍各自决定。主分包括所有失败计零。</p><p>这是先后执行的两批服务调用，并非同时随机分配的服务试验。单个对照模型只能说明样本上的分离、相近或分数饱和情况，不能认证一般科学能力、抗污染或发现深度。预埋方程族、候选菜单和难度差异仍然存在。</p><p class="muted">原始隐藏 seed、参数、测试目标、API 凭证与模型完整轨迹不公开。科学证据审阅若存在，为同模型家族的暂定判断；算术核验不是机制认证。</p></section>%s<footer class="muted">本页无外部资源，可离线阅读。固定对照设计见 env/PAIRED_COMPARISON.md。生成时间 %s UTC。</footer></main></html>'''%(b['settled'],b['valid'],b['settled'],signed(d['delta']),esc(status),esc(d['candidate_model']),d['candidate_ledger']['started_attempts'],b['infrastructure_failures'],b['settled']-b['valid']-b['infrastructure_failures'],''.join(rows),conclusion,''.join(cards),datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M'))
 
 
 def main():

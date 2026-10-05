@@ -113,3 +113,8 @@ Public results and all scoped episode conclusions are in
 [the unified report](docs/reports/overview.html) and
 [its evaluation archive](docs/reports/sle-unified12-20261004/README.md).
 Private traces and validation targets are not published.
+
+
+## DeepSeek V4 stopped paired comparison
+
+Claim-supported: no for scientific discrimination or model ranking; same-family provisional review. Twelve episodes closed: ten request deadlines and two round-limit incompletions; sixty undispatched. No candidate macro or paired interval. Twelve raw report hashes verified; 195 observations show scientific activity, but no frozen final predictor or independent confirmation. Gate: .aris/traces/result-to-claim/2026-10-04_deepseek/. Archive and report; no further experiments authorized in this campaign.
