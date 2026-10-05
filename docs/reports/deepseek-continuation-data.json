@@ -1,0 +1,82 @@
+{
+  "schema": "sle-continuation-diagnostics-1",
+  "date": "2026-10-05",
+  "model": "deepseek-v4-pro-0813",
+  "formal_campaign_started": false,
+  "new_scored_requests": 0,
+  "new_diagnostic_requests": 3,
+  "proposed_budget_profile": "extended-output-v1",
+  "readiness_passed": false,
+  "diagnostics": [
+    {
+      "attempts": 1,
+      "max_tokens": 8000,
+      "deadline_seconds": 245,
+      "status": "interrupted",
+      "bytes_received": 1570329,
+      "elapsed_seconds": 245.031,
+      "http_status": 200,
+      "headers_seconds": 2.204,
+      "first_byte_seconds": 2.204,
+      "exception_type": "Deadline",
+      "diagnostic": "sle-transport-diagnostic-20261005",
+      "scored": false,
+      "timing_sha256": "309fc05fc6e61f7d8205f2003044d9dae0232677e610ec6d733546ccdbdc5034",
+      "usage_status": "unknown"
+    },
+    {
+      "attempts": 1,
+      "max_tokens": 16000,
+      "deadline_seconds": 965,
+      "status": "eof",
+      "bytes_received": 1831590,
+      "elapsed_seconds": 297.524,
+      "http_status": 200,
+      "headers_seconds": 1.727,
+      "first_byte_seconds": 1.727,
+      "eof_seconds": 297.52,
+      "diagnostic": "sle-transport-extended-diagnostic-20261005",
+      "scored": false,
+      "timing_sha256": "31adf5d1928844f4f54a19bb4c277fa12a6b2969b2ced72ded3c38240153c5b1",
+      "usage_status": "unknown"
+    },
+    {
+      "attempts": 1,
+      "max_tokens": 16000,
+      "deadline_seconds": 965,
+      "status": "interrupted",
+      "bytes_received": 2993347,
+      "elapsed_seconds": 399.735,
+      "http_status": 200,
+      "headers_seconds": 1.944,
+      "first_byte_seconds": 1.944,
+      "exception_type": "IncompleteRead",
+      "sse_valid": false,
+      "sse_validation_error": "JSONDecodeError",
+      "visible_characters": 0,
+      "diagnostic": "sle-transport-framing-diagnostic-20261005",
+      "scored": false,
+      "timing_sha256": "892ea76201d1235c7a0878c5ddddb70bc4c480f5f027875514b35525333ab76a",
+      "usage_status": "unknown",
+      "framing_audit": {
+        "valid_json_frames": 11718,
+        "malformed_frames": 1,
+        "visible_characters": 0,
+        "reasoning_characters": 39707,
+        "done_markers": 0,
+        "finish_reasons": [],
+        "provider_models": [
+          "deepseek-v4-pro-0813"
+        ],
+        "response_sha256": "a905c5f051d6e780b9e8a0026a3d9bdcb849103f119024f02de1d714fcfec42d"
+      }
+    }
+  ],
+  "limitations": [
+    "Three sequential replays of one prior request, not independent scientific runs.",
+    "First two terminal detectors assumed data colon space; raw responses were not retained.",
+    "HTTP EOF alone is not proof of a valid complete answer.",
+    "Last stream was interrupted; this does not identify a fixed gateway timeout or the root cause of all earlier failures.",
+    "No total score, paired difference, or scientific ability conclusion."
+  ]
+}

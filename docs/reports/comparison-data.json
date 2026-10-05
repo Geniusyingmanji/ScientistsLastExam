@@ -4332,6 +4332,7 @@
     }
   },
   "candidate_status": "stopped_infrastructure",
+  "equal_budget": true,
   "source_sha256": {
     "reference": "a3d3633e166fe36a68b2c67b90a06ccacc4ed99781a1372fddd6ec28f945790c",
     "candidate": "d6c46e4763dd2e311dc31dcf7661e3a0dc3c1984f1541c471be077b6a9ebf769"

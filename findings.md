@@ -118,3 +118,30 @@ Private traces and validation targets are not published.
 ## DeepSeek V4 stopped paired comparison
 
 Claim-supported: no for scientific discrimination or model ranking; same-family provisional review. Twelve episodes closed: ten request deadlines and two round-limit incompletions; sixty undispatched. No candidate macro or paired interval. Twelve raw report hashes verified; 195 observations show scientific activity, but no frozen final predictor or independent confirmation. Gate: .aris/traces/result-to-claim/2026-10-04_deepseek/. Archive and report; no further experiments authorized in this campaign.
+
+
+## 2026-10-05 DeepSeek continuation readiness
+
+No new scored campaign was started. Three unscored replays used the same prior
+heat-transport request. The 8,000-token diagnostic reached the 245-second local
+deadline while receiving bytes. A 16,000-token diagnostic reached HTTP EOF at
+297.52 seconds, but its initial detector assumed a space after the SSE data
+colon; without retained raw bytes, no complete answer can be certified.
+The third diagnostic retained raw bytes and used the production validator:
+11,718 valid JSON frames, one truncated frame, no terminal marker, zero visible
+characters, and IncompleteRead at 399.735 seconds before the 965-second client
+deadline. This is an observed interrupted stream, not evidence of a fixed
+400-second gateway limit or a model science deficit.
+
+The extended-output-v1 protocol is implemented with 16,000 output tokens,
+900-second socket timeout and 14,400-second episode wall budget. Other action
+and scoring limits remain fixed; any resulting comparison must disclose unequal
+compute. Production validation plus a complete visible readiness response is
+required before freezing. That gate has not passed. Remote preflight passed
+76 tests including twelve native worlds; the final readiness-guard tests passed
+10/10. No scientific source or earlier scores were modified.
+
+Next dependency: a repaired or alternative authorized long-response service
+path, followed by a bounded readiness check. Do not automatically launch another
+campaign or expand budgets. Scientific claim review from the earlier stopped
+batch remains separate; these sanity checks add no scientific score claim.
