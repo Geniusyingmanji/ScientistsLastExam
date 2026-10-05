@@ -1,0 +1,10 @@
+{
+  "schema": "sle-completion-repair-status-1",
+  "status": "running",
+  "gpt_slots": 10,
+  "deepseek_slots": 2,
+  "request_cap": 192,
+  "original_budgets_unchanged": true,
+  "gpt_32k_alignment_started": false,
+  "selection_policy": "Preserve successful originals; one authorized replacement per failed slot; retain first valid replacement without score selection. No implicit further attempts."
+}
