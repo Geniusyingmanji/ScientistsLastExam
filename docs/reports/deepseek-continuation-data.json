@@ -3,7 +3,7 @@
   "date": "2026-10-05",
   "model": "deepseek-v4-pro-0813",
   "formal_campaign_started": true,
-  "new_scored_requests": 9,
+  "new_scored_requests": 100,
   "proposed_budget_profile": "extended-output-v1",
   "diagnostics": [
     {
@@ -174,5 +174,28 @@
   "token_cap_diagnostic_requests": 3,
   "short_connectivity_requests": 6,
   "formal_manifest_sha256": "0fec9da6ae722a06cbc321d47df928214cd82637eb750e46927deae27ab88d61",
-  "formal_progress_page": "deepseek-extended.html"
+  "formal_progress_page": "deepseek-extended.html",
+  "progress_snapshot": {
+    "updated_at": "2026-10-05T02:38:30.173656+00:00",
+    "settled": 2,
+    "valid": 1,
+    "failed": 1,
+    "requests": 100,
+    "audit": "2 candidate raw report hashes and scores verified; 72 reference raw reports verified",
+    "episodes": [
+      {
+        "episode_id": "unified-reaction_kinetics-i1-r1",
+        "score": 0.0,
+        "status": "failed",
+        "report_sha256": "32599e1ba258f0b6976fff4b4742a3672ffa6f847d6abda6a751a675c199a2f3"
+      },
+      {
+        "episode_id": "unified-ising_spin-i1-r1",
+        "score": 99.27378464506378,
+        "status": "completed",
+        "report_sha256": "b78a8972f441b8da1b6b00164ba32dd096323422afd46633d1de1697cbb1b7b1"
+      }
+    ],
+    "science_note": "Ising single-run prediction scores are high, but its three claims are null effects derived from the public physics of a field on a clamped spin. Verified nonzero effects: 0. This is not mechanism discovery certification or a world/model mean."
+  }
 }
