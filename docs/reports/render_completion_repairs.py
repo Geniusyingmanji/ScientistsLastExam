@@ -18,7 +18,7 @@ def apply(page,data,review):
     assert review['review_independence']=='same-family' and review['acceptance_status']=='provisional'
     d=data['comparison'];missing={(r['model'],r['episode_id']) for r in data['missing_slots']}
     missing_worlds={(r['model'],r['environment']) for r in data['missing_slots']}
-    banner='<section class="notice" id="completion-repair"><h2>补跑结果已核验</h2><p>DeepSeek已补齐全部预定项目。GPT本轮补齐9项，伊辛自旋实例3／重复2再次遇到API断连，尚待补齐；GPT总分暂不作为完整结果发布。未启动GPT 32k对齐实验。</p><p>主表采用成功原运行及预先指定补跑的首个有效结果；失败记录和所有请求成本保留在下方审计，不按最高分择优。</p></section>'
+    banner='<section class="notice" id="completion-repair"><h2>补跑结果已核验</h2><p>DeepSeek已补齐全部预定项目。GPT本轮补齐9项，伊辛自旋实例3／重复2额外补跑的16次请求均正常返回，但完成48次实验后两次提交均因外场数组格式不合法被拒收，尚待补齐；GPT总分暂不作为完整结果发布。未启动GPT 32k对齐实验。</p><p>主表采用成功原运行及预先指定补跑的首个有效结果；失败记录和所有请求成本保留在下方审计，不按最高分择优。</p></section>'
     start=page.index('<div class="metrics">');end=page.index('<section class="protocol" id="paired-results">',start)
     page=page[:start]+banner+'<details><summary>原始单次运行审计</summary>'+page[start:end]+'</details>'+page[end:]
     for marker,label in [('<section id="scores">','GPT原始单次成绩'),('<section id="findings"','原始单次研究结论与局限')]:
@@ -51,7 +51,7 @@ def apply(page,data,review):
             block+='<tr><td>'+str(p['instance'])+' / '+str(p['repeat'])+'</td>'
             for model,side in [('gpt','reference'),('deepseek','candidate')]:
                 x=p[side];pending=(model,x['episode_id']) in missing
-                block+='<td>'+('待补齐' if pending else num(x['score']))+'</td><td>'+('补跑API断连' if pending else '指定补跑' if x.get('replacement_phase') else '原运行')+'</td>'
+                block+='<td>'+('待补齐' if pending else num(x['score']))+'</td><td>'+('轮数用尽／提交未通过' if pending else '指定补跑' if x.get('replacement_phase') else '原运行')+'</td>'
             block+='</tr>'
         block+='</table></div></details><details><summary>原始轨迹解读与补跑前结果</summary>'+old+'</details></section>'
         page=page[:start]+block+page[end:]

@@ -164,10 +164,22 @@
       "original_report_sha256": "294544928d4f8a7656ddcb1048cd35ceeb2985890a2a6118e2da7c47d20f810e",
       "infrastructure_failure": null,
       "selected": true
+    },
+    {
+      "model": "gpt",
+      "phase": "authorized-final-ising-repair",
+      "episode_id": "unified-ising_spin-i3-r2",
+      "status": "incomplete",
+      "score": 0.0,
+      "requests": 16,
+      "report_sha256": "f5cade6847d523272ff3dc2985f6464b4aa101c527eada2399a64f6f7c5818c2",
+      "infrastructure_failure": null,
+      "stop_reason": "model_round_limit",
+      "selected": false
     }
   ],
   "actual_requests": {
-    "gpt": 1195,
+    "gpt": 1211,
     "deepseek": 1034
   },
   "source_public_sha256": {

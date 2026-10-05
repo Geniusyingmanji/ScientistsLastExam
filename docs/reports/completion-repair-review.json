@@ -37,7 +37,7 @@
       "environment": "ising_spin",
       "model": "gpt",
       "episode_id": "unified-ising_spin-i3-r2",
-      "summary": "本次授权修复在 API 传输阶段失败，没有冻结提交及最终保留测试。已有探索不补足结果槽位，不作科学完成项计数。"
+      "summary": "额外授权补跑完成48次实验，16次API请求均正常返回。最后两轮尝试提交，但声明中的外场数组未满足六节点格式，两次都被校验拒收；未形成有效冻结提交，轮数用尽。已有探索不能代替正式预测验证。此前一次补跑为API断连，两种失败原因分别保留。"
     },
     {
       "environment": "gene_regulation",

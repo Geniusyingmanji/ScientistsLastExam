@@ -10,8 +10,11 @@
     }
   ],
   "actual_requests": {
-    "gpt": 1195,
+    "gpt": 1211,
     "deepseek": 1034
   },
-  "additional_retry": "awaiting_user_reply"
+  "additional_retry": "closed_incomplete",
+  "latest_stop_reason": "model_round_limit",
+  "latest_requests": 16,
+  "latest_experiments": 48
 }
