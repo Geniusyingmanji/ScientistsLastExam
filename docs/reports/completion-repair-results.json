@@ -1,13 +1,7 @@
 {
   "schema": "sle-completion-results-1",
-  "all_slots_filled": false,
-  "missing_slots": [
-    {
-      "model": "gpt",
-      "episode_id": "unified-ising_spin-i3-r2",
-      "environment": "ising_spin"
-    }
-  ],
+  "all_slots_filled": true,
+  "missing_slots": [],
   "attempts": [
     {
       "model": "deepseek",
@@ -173,13 +167,25 @@
       "score": 0.0,
       "requests": 16,
       "report_sha256": "f5cade6847d523272ff3dc2985f6464b4aa101c527eada2399a64f6f7c5818c2",
+      "original_report_sha256": "3d00e71c691d48cacaad7d5feaf202bc304db859852c379c2360d34f09204fb0",
       "infrastructure_failure": null,
-      "stop_reason": "model_round_limit",
       "selected": false
+    },
+    {
+      "model": "gpt",
+      "phase": "authorized-ising-retry-20261006",
+      "episode_id": "unified-ising_spin-i3-r2",
+      "status": "completed",
+      "score": 99.32804096073967,
+      "requests": 15,
+      "report_sha256": "b9529e9aabf45b454e4cb1a23d243a32392e8da8249faae5ae53de182838af96",
+      "original_report_sha256": "3d00e71c691d48cacaad7d5feaf202bc304db859852c379c2360d34f09204fb0",
+      "infrastructure_failure": null,
+      "selected": true
     }
   ],
   "actual_requests": {
-    "gpt": 1211,
+    "gpt": 1226,
     "deepseek": 1034
   },
   "source_public_sha256": {
@@ -188,9 +194,11 @@
   },
   "repair_manifests": {
     "gpt": "d7ee65eede1d19a7da5ead46d955bef52fe9f9cd95f4975b87a2775c65a0959e",
-    "deepseek": "2920670113d2365ddcc6992b2a7093a191075427e3f628699356a4bd3d9d2a39"
+    "deepseek": "2920670113d2365ddcc6992b2a7093a191075427e3f628699356a4bd3d9d2a39",
+    "authorized-ising-retry-20261006": "a4672b4f6e0d8c3c755d9ca3bcf6a64777e0e03f8496ad11f7e867bcd4913785",
+    "authorized-final-ising-repair": "186472cb099ef41fa46ad025490301284ee03f8a34874acfad6631509295cc22"
   },
-  "policy": "Preserve successful originals, select first valid authorized replacement in each failed slot; no score selection. Remaining failed slot has original zero in audit arithmetic, not a completed scientific result. Main report must keep its GPT overall score pending. Actual requests include all failed and replacement attempts.",
+  "policy": "Preserve successful originals, select first valid authorized replacement in each failed slot; no score selection. All slots now contain valid submissions; original failures and all repair attempts remain in audit. Actual requests include all failed and replacement attempts.",
   "comparison": {
     "schema": "sle-paired-comparison-1",
     "protocol": "sle-unified-score-1.0",
@@ -198,24 +206,23 @@
     "candidate_model": "deepseek-v4-pro-0813",
     "reference": {
       "settled": 72,
-      "valid": 71,
+      "valid": 72,
       "provider_models": [
         "gpt-5.6-sol"
       ],
-      "effects": 174,
-      "score": 71.46011170441433,
+      "effects": 177,
+      "score": 72.83966782886905,
       "components": {
-        "condition_score": 72.5142876348058,
-        "intervention_score": 72.20867889613079,
-        "claim_score": 67.70182109086097
+        "condition_score": 73.90188895187532,
+        "intervention_score": 73.59596976998573,
+        "claim_score": 69.04966210967835
       },
-      "floor_count": 1,
-      "ceiling_count": 31,
-      "selected_slot_requests": 1082,
+      "floor_count": 0,
+      "ceiling_count": 32,
+      "selected_slot_requests": 1081,
       "selected_slot_infrastructure_failures": 0,
       "selected_slot_statuses": {
-        "completed": 71,
-        "incomplete": 1
+        "completed": 72
       }
     },
     "candidate": {
@@ -2116,25 +2123,24 @@
         "name": "伊辛自旋",
         "reference": {
           "settled": 6,
-          "valid": 5,
+          "valid": 6,
           "infrastructure_failures": 0,
           "statuses": {
-            "completed": 5,
-            "incomplete": 1
+            "completed": 6
           },
-          "calls": 94,
+          "calls": 93,
           "provider_models": [
             "gpt-5.6-sol"
           ],
-          "effects": 14,
-          "score": 80.93941750258263,
+          "effects": 17,
+          "score": 97.49409099603923,
           "components": {
-            "condition_score": 83.25766543814733,
-            "intervention_score": 83.23550276760298,
-            "claim_score": 71.69966976614029
+            "condition_score": 99.90888124298166,
+            "intervention_score": 99.88299325386215,
+            "claim_score": 87.87376199194877
           },
-          "floor_count": 1,
-          "ceiling_count": 5
+          "floor_count": 0,
+          "ceiling_count": 6
         },
         "candidate": {
           "settled": 6,
@@ -2429,23 +2435,24 @@
               "environment": "ising_spin",
               "instance_index": 3,
               "repeat_index": 2,
-              "status": "incomplete",
+              "status": "completed",
               "settled": true,
-              "completed": false,
+              "completed": true,
               "infrastructure_failure": null,
-              "score": 0.0,
-              "condition_score": 0.0,
-              "intervention_score": 0.0,
-              "claim_score": 0.0,
-              "requests": 16,
-              "observations": 48,
-              "stop_reason": "model_round_limit",
+              "score": 99.32804096073967,
+              "condition_score": 99.90729482900596,
+              "intervention_score": 99.88494291755504,
+              "claim_score": 97.04455335485083,
+              "requests": 15,
+              "observations": 45,
+              "stop_reason": "verified",
               "provider_reported_models": [
                 "gpt-5.6-sol"
               ],
-              "verified_nonzero_effects": 0,
+              "verified_nonzero_effects": 3,
               "score_protocol": "sle-unified-score-1.0",
-              "report_sha256": "3d00e71c691d48cacaad7d5feaf202bc304db859852c379c2360d34f09204fb0"
+              "report_sha256": "b9529e9aabf45b454e4cb1a23d243a32392e8da8249faae5ae53de182838af96",
+              "replacement_phase": "authorized-ising-retry-20261006"
             },
             "candidate": {
               "episode_id": "unified-ising_spin-i3-r2",
@@ -2471,22 +2478,22 @@
               "report_sha256": "d577792249c3f74557018de27a50450b2c689e0db82b0106c3f8ba2bf41a2585",
               "replacement_phase": "completion-round-1"
             },
-            "delta": 97.23877057176043
+            "delta": -2.0892703889792443
           }
         ],
-        "delta": 11.68969377562932,
+        "delta": -4.864979717827292,
         "cluster_deltas": [
           -1.4812357233317357,
           -10.240853084795724,
-          46.79117013501542
+          -2.872850345354415
         ],
         "wins_ties_losses": [
-          3,
+          2,
           0,
-          3
+          4
         ],
         "matched_noinfra_pairs": 6,
-        "matched_noinfra_delta": 11.68969377562932
+        "matched_noinfra_delta": -4.864979717827292
       },
       {
         "environment": "hysteresis_material",
@@ -4730,13 +4737,13 @@
         "matched_noinfra_delta": 9.688819843070153
       }
     ],
-    "delta": 1.8672560650331178,
+    "delta": 0.48769994057839483,
     "paired_cluster_bootstrap_95": [
-      -3.776337668171703,
-      7.310604342119092
+      -4.63144483227598,
+      5.315375733559321
     ],
     "bootstrap_scope": "20,000 fixed-seed draws; resample 3 instance pairs within each fixed world; two repeats averaged; descriptive, not population-wide",
-    "matched_noinfra_delta": 1.867256065033117,
+    "matched_noinfra_delta": 0.48769994057839927,
     "candidate_model_only_macro": 73.32736776944745,
     "design": {
       "reference_model": "gpt-5.6-sol",
@@ -4807,6 +4814,6 @@
     },
     "equal_budget": false,
     "arithmetic_ready": true,
-    "all_slots_filled": false
+    "all_slots_filled": true
   }
 }

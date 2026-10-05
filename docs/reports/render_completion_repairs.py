@@ -18,7 +18,7 @@ def apply(page,data,review):
     assert review['review_independence']=='same-family' and review['acceptance_status']=='provisional'
     d=data['comparison'];missing={(r['model'],r['episode_id']) for r in data['missing_slots']}
     missing_worlds={(r['model'],r['environment']) for r in data['missing_slots']}
-    banner='<section class="notice" id="completion-repair"><h2>补跑结果已核验</h2><p>DeepSeek已补齐全部预定项目。GPT本轮补齐9项，伊辛自旋实例3／重复2额外补跑的16次请求均正常返回，但完成48次实验后两次提交均因外场数组格式不合法被拒收，尚待补齐；GPT总分暂不作为完整结果发布。未启动GPT 32k对齐实验。</p><p>主表采用成功原运行及预先指定补跑的首个有效结果；失败记录和所有请求成本保留在下方审计，不按最高分择优。</p></section>'
+    banner='<section class="notice" id="completion-repair"><h2>两模型补齐评测已结束</h2><p>GPT与DeepSeek的全部预定项目均已有有效提交。最后一项GPT伊辛自旋补跑得分99.33，使用15次请求；原始失败和历次补跑仍保留审计记录。</p><p>主表采用成功原运行及预先指定补跑的首个有效结果，不按最高分择优。GPT 32k预算对齐实验未启动。</p></section>'
     start=page.index('<div class="metrics">');end=page.index('<section class="protocol" id="paired-results">',start)
     page=page[:start]+banner+'<details><summary>原始单次运行审计</summary>'+page[start:end]+'</details>'+page[end:]
     for marker,label in [('<section id="scores">','GPT原始单次成绩'),('<section id="findings"','原始单次研究结论与局限')]:

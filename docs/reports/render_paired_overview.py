@@ -49,7 +49,7 @@ def integrate(page, comparison, repair, notes):
     progress_path=HERE/'completion-repair-status.json'
     if progress_path.exists():
         progress=json.loads(progress_path.read_text())
-        if progress['status']=='closed_with_gap':
+        if progress['status'] in ('closed_with_gap','completed'):
             from render_completion_repairs import apply
             return apply(page,json.loads((HERE/'completion-repair-results.json').read_text()),json.loads((HERE/'completion-repair-review.json').read_text()))
         if progress['status']=='running':
