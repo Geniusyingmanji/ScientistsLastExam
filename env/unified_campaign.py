@@ -161,6 +161,7 @@ def freeze_paired(root, reference_root, reference_source, config, commit, transp
         probe = json.loads(probe_path.read_text())
         if (probe.get("scored") is not False or probe.get("attempts") != 1
                 or probe.get("status") != "eof" or probe.get("max_tokens") != 16000
+                or probe.get("sse_valid") is not True
                 or probe.get("deadline_seconds") != 965 or probe.get("visible_characters", 0) <= 0
                 or not isinstance(probe.get("terminal_seconds"), (int, float))
                 or not 0 <= probe["terminal_seconds"] <= 965):
@@ -181,7 +182,7 @@ def freeze_paired(root, reference_root, reference_source, config, commit, transp
                                          "candidate": v} for k, v in EXTENDED_BUDGET.items()},
                              interpretation="same scientific tasks and scoring, different output and time budgets; descriptive system comparison, not an equal-budget model ranking")
         budget_change["readiness_probe"] = dict(sha256=hashlib.sha256(probe_path.read_bytes()).hexdigest(),
-                                                scored=False, attempts=1, terminal_seconds=probe["terminal_seconds"],
+                                                scored=False, attempts=1, sse_valid=True, terminal_seconds=probe["terminal_seconds"],
                                                 visible_characters=probe["visible_characters"])
         decoding.update({k: v for k, v in EXTENDED_BUDGET.items() if k != "wall_seconds"})
     if {k: getattr(cfg, k) for k in decoding} != decoding:

@@ -94,8 +94,12 @@ round-limit non-submissions, with 94 requests; sixty slots were never dispatched
 Its report and all raw results remain immutable. A separately logged diagnostic
 replayed one previously interrupted request: HTTP 200 and first bytes arrived at
 2.204 seconds, data continued arriving, and the 245-second deadline fired before
-any terminal SSE marker. This one replay supports a generation-time bottleneck;
-it does not establish the cause of all ten historical failures.
+HTTP EOF. Its simple terminal detector was not sufficient to certify SSE framing.
+A second diagnostic using the larger budget reached EOF at 297.52 seconds, but
+did not establish a valid complete response. A separate framing diagnostic must
+pass the production SSE validator and record visible output before launch.
+These replays investigate response latency; they do not establish the cause of
+all ten historical failures. All diagnostic calls stay outside campaign scores.
 
 The explicit `extended-output-v1` profile is a **different-budget system
 evaluation**, not an equal-budget model ranking. It changes only these limits:

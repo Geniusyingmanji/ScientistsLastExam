@@ -73,7 +73,7 @@ def test_extended_budget_is_explicit_frozen_and_does_not_change_science(referenc
         campaign.freeze_paired(tmp_path / 'implicit', root, source, config, 'new', prior)
     target = tmp_path / 'extended'
     probe = tmp_path / 'probe.json'
-    probe.write_text(json.dumps(dict(scored=False, attempts=1, status='eof', max_tokens=16000,
+    probe.write_text(json.dumps(dict(scored=False, attempts=1, status='eof', sse_valid=True, max_tokens=16000,
                                     deadline_seconds=965, visible_characters=1200, terminal_seconds=310.)))
     campaign.freeze_paired(target, root, source, config, 'new', prior,
                           budget_profile='extended-output-v1', prior_campaign=prior, readiness_probe=probe)
