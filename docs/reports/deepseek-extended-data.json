@@ -4629,5 +4629,60 @@
   "source_sha256": {
     "reference": "a3d3633e166fe36a68b2c67b90a06ccacc4ed99781a1372fddd6ec28f945790c",
     "candidate": "664b133449e9c9485048005c3d37779a40191f1f915096a1b3d25ccb6dfadb47"
+  },
+  "review": {
+    "summary": "部分支持，置信度中等；同模型家族暂定审阅。环境能区分预测、声明校准与执行可靠性的行为差异，不能由总分推断发现深度或等预算模型优劣。",
+    "findings": [
+      "DeepSeek新条件与干预预测更强；GPT声明得分更高。",
+      "代表轨迹存在错误效应方向、过宽区间、错误温度效应与高分已知零效应。",
+      "原始144份报告哈希与成绩已核验；补跑实例、源码、参数与预算也已核验。",
+      "授权单次反应动力学补跑96.27分；补齐后总分70.60，配对差+6.29，描述性区间[-0.22,12.72]。"
+    ],
+    "limits": [
+      "两模型资源预算不同；描述性区间跨零。",
+      "补跑仅修复DeepSeek一项故障，GPT五次API故障未补，敏感性口径不对称。",
+      "独立审阅为同模型家族暂定结论，完整实验完整性审计不可用。"
+    ],
+    "next_steps": [
+      "将预测、区间校准、机制辨识和程序可靠性分开评价。",
+      "筛选竞争机制需要主动区分、预算内oracle可解的新环境。"
+    ],
+    "workflow_metrics": {
+      "scope": "原始72次运行，补跑另列",
+      "reference": {
+        "requests": 1052,
+        "experiment_count": 2805,
+        "empty_visible_replies": 2,
+        "length_stops": 2,
+        "invalid_actions": 106,
+        "analysis_ok": 424,
+        "analysis_failed": 55,
+        "episodes_with_empty_reply": 1,
+        "episodes_with_length_stop": 1,
+        "episodes_with_invalid_action": 49,
+        "valid_completions": 62,
+        "infrastructure_failures": 5
+      },
+      "candidate": {
+        "requests": 995,
+        "experiment_count": 1909,
+        "empty_visible_replies": 4,
+        "length_stops": 10,
+        "invalid_actions": 52,
+        "analysis_ok": 471,
+        "analysis_failed": 148,
+        "episodes_with_empty_reply": 2,
+        "episodes_with_length_stop": 8,
+        "episodes_with_invalid_action": 35,
+        "valid_completions": 69,
+        "infrastructure_failures": 1
+      }
+    },
+    "review_independence": "same-family",
+    "acceptance_status": "provisional",
+    "source_sha256": {
+      "reference": "a3d3633e166fe36a68b2c67b90a06ccacc4ed99781a1372fddd6ec28f945790c",
+      "candidate": "664b133449e9c9485048005c3d37779a40191f1f915096a1b3d25ccb6dfadb47"
+    }
   }
 }

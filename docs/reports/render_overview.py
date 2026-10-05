@@ -237,6 +237,9 @@ def main():
     parser.add_argument('--unified-data', type=Path, help='Sanitized sle-unified-public-1 aggregate JSON')
     parser.add_argument('--review-data', type=Path, help='Curated sle-unified-review-1 findings, tied to closed report hashes')
     parser.add_argument('--output-dir', type=Path, default=HERE)
+    parser.add_argument('--paired-data', type=Path)
+    parser.add_argument('--repair-data', type=Path)
+    parser.add_argument('--paired-notes', type=Path)
     args = parser.parse_args()
     paths = [HERE / p for p in ('sle-env-pilot-20261003/data.json', 'sle-new-frontier-20261003/data.json',
                                'sle-new-frontier-20261003/worlds.json', 'sle-new-frontier-20261003/summary.json')]
@@ -368,6 +371,12 @@ def main():
     for key, value in replacements.items():
         page = page.replace('@@%s@@' % key, str(value) if key in ('ROWS', 'CARDS', 'POLICY') else esc(value))
     assert '@@' not in page
+    if args.paired_data:
+        if not args.repair_data or not args.paired_notes:
+            raise ValueError('Paired report requires audited repair and review notes')
+        from render_paired_overview import integrate
+        page = integrate(page, json.loads(args.paired_data.read_text()),
+                         json.loads(args.repair_data.read_text()), json.loads(args.paired_notes.read_text()))
     (args.output_dir / 'overview.html').write_text(page)
     print(json.dumps(dict(worlds=len(catalog), settled=settled, scored=scored, total_score=total,
                           output=str(args.output_dir / 'overview.html')), ensure_ascii=False))

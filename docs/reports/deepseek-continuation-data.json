@@ -1842,5 +1842,18 @@
       }
     ],
     "scope": "individual runs only; no campaign or environment means"
-  }
+  },
+  "repair_summary": {
+    "hash_verified": true,
+    "same_instance_verified": true,
+    "budget_verified": true,
+    "score": 96.265495050154,
+    "repair_total": 70.60475009385979,
+    "delta": 6.290641668242628,
+    "ci": [
+      -0.21701710603898935,
+      12.71889523924666
+    ]
+  },
+  "review_status": "partial / medium / same-family / provisional"
 }
