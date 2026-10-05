@@ -71,14 +71,15 @@ def compare(reference,candidate):
         raise ValueError('Score protocols differ')
     budget_change = candidate.get('comparison', {}).get('budget_change')
     if budget_change:
-        expected = {'max_output_tokens': {'reference': 8000, 'candidate': 16000},
+        output_cap = {'extended-output-v1': 16000, 'extended-output-32k-v1': 32000}.get(budget_change.get('profile'))
+        expected = {'max_output_tokens': {'reference': 8000, 'candidate': output_cap},
                     'timeout_seconds': {'reference': 180, 'candidate': 900},
                     'wall_seconds': {'reference': 3600, 'candidate': 14400}}
-        if (budget_change.get('profile') != 'extended-output-v1'
+        if (output_cap is None
                 or budget_change.get('equal_budget') is not False or budget_change.get('fields') != expected
                 or candidate['limits'] != dict(reference['limits'], wall_seconds=14400)
                 or reference['limits']['wall_seconds'] != 3600
-                or candidate.get('decoding', {}).get('max_output_tokens') != 16000
+                or candidate.get('decoding', {}).get('max_output_tokens') != output_cap
                 or candidate.get('decoding', {}).get('timeout_seconds') != 900):
             raise ValueError('Undeclared extended evaluation budgets')
     elif reference['limits']!=candidate['limits']:
@@ -197,6 +198,8 @@ def render(d,review=None, data_href='comparison-data.json'):
         lead = '同样的世界、面板、提示与评分，DeepSeek 使用更高输出和时间预算；两模型独立选择实验和提交预测。'
         budget_text = '两模型均为每次运行最多 16 次请求、48 次实验、180 秒分析计算，全批最多 1,152 次请求。GPT：8,000 输出 token、180 秒请求超时、3,600 秒单次运行上限。DeepSeek：16,000 输出 token、900 秒请求超时、14,400 秒单次运行上限；客户端另有 65 秒请求截止余量，仍受运行总时间限制。输出上限包含服务计入的思考 token，不能视为可见答案长度。DeepSeek 使用 high / max_tokens，GPT 使用 medium / max_completion_tokens。'
         budget_notice = '<div class="notice"><strong>扩大预算的接续评测 · 不是等预算模型排名</strong><p>原批次首轮 12 次结束后停止，全部记录保留。这里是独立冻结的新批次；分差同时包含输出预算、耗时和服务条件差异，不能归因于模型科学能力。<a href="comparison.html">查看原预算批次</a></p></div>'
+        output_cap = d['design']['budget_change']['fields']['max_output_tokens']['candidate']
+        budget_text = budget_text.replace('16,000', format(output_cap, ','))
     page = '''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SLE · GPT-5.6 与 DeepSeek V4 配对评测</title><style>
 *{box-sizing:border-box}body{background:#f4f5ef;color:#173d3a;font:16px/1.75 system-ui,sans-serif;margin:0}main{max-width:1180px;margin:auto;padding:36px 24px 70px}h1{font-size:clamp(28px,4vw,42px);line-height:1.3}h2{font-size:23px}h3{font-size:18px}a{color:#07776b}small,.muted{font-size:13px;color:#647570}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.metric,article,.panel{background:#fff;border:1px solid #d9e2d8;border-radius:14px;padding:24px;margin:18px 0}.metric strong{display:block;font-size:32px}.notice{background:#e9eee5;padding:20px;border-left:4px solid #56836c}.scroll{overflow:auto}table{width:100%;min-width:720px;border-collapse:collapse;background:#fff;font-size:14px}td,th{text-align:left;padding:12px;border-bottom:1px solid #d9e2d8;vertical-align:top}th{background:#e7eee4}.bar{display:block;height:6px;margin-top:7px;border-radius:3px}details{margin-top:10px}summary{cursor:pointer;font-weight:600}li{margin:8px 0}nav{display:flex;flex-wrap:wrap;gap:18px}@media(max-width:700px){main{padding:20px 14px}.metrics{grid-template-columns:1fr}.metric{margin:0}.metric,article,.panel{padding:18px}}
 </style><main><small>SCIENTISTS’ LAST EXAM · PAIRED MODEL COMPARISON</small><h1>同一批科学世界<br>GPT-5.6 × DeepSeek V4 Pro</h1><p>计划：12 环境 × 3 隐藏实例 × 2 次运行。同样的世界、面板、提示、评分与预算，两模型独立选择实验和提交预测。</p>

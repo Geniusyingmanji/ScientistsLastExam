@@ -57,7 +57,8 @@ def test_undeclared_model_or_budget_changes_rejected(reference, tmp_path, change
     assert not (tmp_path / 'bad').exists()
 
 
-def test_extended_budget_is_explicit_frozen_and_does_not_change_science(reference, tmp_path):
+@pytest.mark.parametrize("cap,profile", [(16000,"extended-output-v1"),(32000,"extended-output-32k-v1")])
+def test_extended_budget_is_explicit_frozen_and_does_not_change_science(reference, tmp_path, cap, profile):
     root, config, source = reference
     prior = tmp_path / 'stopped'
     campaign.freeze_paired(prior, root, source, config, 'old')
@@ -66,17 +67,17 @@ def test_extended_budget_is_explicit_frozen_and_does_not_change_science(referenc
     public['ledger']['started_attempts'] = 94
     campaign.write(prior / 'public-progress.json', public)
     cfg = json.loads(config.read_text())
-    cfg.update(stream=True, chat_empty_response_as_text=True, max_output_tokens=16000, timeout_seconds=900)
+    cfg.update(stream=True, chat_empty_response_as_text=True, max_output_tokens=cap, timeout_seconds=900)
     config.write_text(json.dumps(cfg))
     before = (prior / 'public-progress.json').read_bytes()
     with pytest.raises(ValueError, match='declared adapter'):
         campaign.freeze_paired(tmp_path / 'implicit', root, source, config, 'new', prior)
     target = tmp_path / 'extended'
     probe = tmp_path / 'probe.json'
-    probe.write_text(json.dumps(dict(scored=False, attempts=1, status='eof', sse_valid=True, max_tokens=16000,
+    probe.write_text(json.dumps(dict(scored=False, attempts=1, status='terminal', sse_valid=True, max_tokens=cap,
                                     deadline_seconds=965, visible_characters=1200, terminal_seconds=310.)))
     campaign.freeze_paired(target, root, source, config, 'new', prior,
-                          budget_profile='extended-output-v1', prior_campaign=prior, readiness_probe=probe)
+                          budget_profile=profile, prior_campaign=prior, readiness_probe=probe)
     old, new = campaign.load_manifest(root), campaign.load_manifest(target)
     assert (prior / 'public-progress.json').read_bytes() == before
     assert new['instances'] == old['instances']
@@ -86,20 +87,20 @@ def test_extended_budget_is_explicit_frozen_and_does_not_change_science(referenc
     assert new['workers'] == old['workers'] == 8
     assert new['comparison']['budget_change']['equal_budget'] is False
     assert new['comparison']['previous_stopped_campaign']['calls'] == 94
-    assert new['decoding']['max_output_tokens'] == 16000
+    assert new['decoding']['max_output_tokens'] == cap
     assert new['decoding']['timeout_seconds'] == 900
     assert CampaignLedger(target / 'attempts.sqlite').summary()['started_attempts'] == 0
     # Even the explicit profile cannot silently expand beyond its fixed limits.
-    cfg['max_output_tokens'] = 32000
+    cfg['max_output_tokens'] = 64000
     config.write_text(json.dumps(cfg))
     with pytest.raises(ValueError, match='declared adapter'):
         campaign.freeze_paired(tmp_path / 'too-large', root, source, config, 'new', prior,
-                              budget_profile='extended-output-v1', prior_campaign=prior, readiness_probe=probe)
-    probe.write_text(json.dumps(dict(scored=False, attempts=1, status='interrupted', max_tokens=16000,
+                              budget_profile=profile, prior_campaign=prior, readiness_probe=probe)
+    probe.write_text(json.dumps(dict(scored=False, attempts=1, status='interrupted', max_tokens=cap,
                                     deadline_seconds=965, visible_characters=1200)))
     with pytest.raises(ValueError, match='complete visible response'):
         campaign.freeze_paired(tmp_path / 'not-ready', root, source, config, 'new', prior,
-                              budget_profile='extended-output-v1', prior_campaign=prior, readiness_probe=probe)
+                              budget_profile=profile, prior_campaign=prior, readiness_probe=probe)
 
 
 def test_extended_budget_requires_preserved_predecessor(reference, tmp_path):

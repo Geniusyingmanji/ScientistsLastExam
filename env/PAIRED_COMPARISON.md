@@ -131,3 +131,34 @@ The manifest binds both the GPT design and the corrected stopped predecessor.
 New public results use a separate page and data file. Any eventual paired score
 difference and cluster interval describe the two observed systems under their
 declared budgets; they cannot isolate model capability from compute or latency.
+
+## Token-cap diagnostic and 32k continuation (2026-10-05)
+
+Following the user's request to resume evaluation, three concurrently dispatched,
+unscored replays held the scientific request, native high effort, 900-second
+socket timeout and 965-second outer deadline fixed. Only the output cap changed.
+Each cap received one attempt, without retries:
+
+| Cap | Returned output tokens | Reported reasoning tokens | Visible characters | Finish | Seconds |
+| --- | ---: | ---: | ---: | --- | ---: |
+| 8,000 | 8,000 | 8,000 | 0 | length | 127.532 |
+| 16,000 | 16,000 | 16,000 | 0 | length | 238.441 |
+| 32,000 | 17,721 | 15,319 | 5,977 | stop | 246.736 |
+
+All three streams passed the production SSE validator. The 32k visible response
+also passed the ordinary scientific action parser as an analysis action. Its
+first visible content arrived at 225.951 seconds. This demonstrates budget
+exhaustion in the two smaller replays and successful delivery in the third;
+one sample per cap cannot identify a causal effect size or guarantee reliability.
+The original stopped cohorts and all other diagnostics remain separately stored.
+
+The prospectively frozen `extended-output-32k-v1` profile therefore sets 32,000
+output tokens per request, 900-second socket timeout and 14,400-second episode
+wall time. It preserves every other constraint of the 16k proposal, including
+16 requests per episode, 72 episodes, 8 workers, 1,152 total requests and the
+first-twelve infrastructure stop rule. Maximum configured output allowance is
+36,864,000 tokens, not actual billed usage. The 16k proposal was never launched.
+The 32k diagnostic is bound as the readiness evidence, not merged into scores.
+No other model batch, retries, replacement runs or further budget increase are
+automatic. All comparisons with the unchanged GPT baseline disclose unequal
+output and time budgets.

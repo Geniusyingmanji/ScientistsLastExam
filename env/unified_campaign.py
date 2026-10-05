@@ -34,6 +34,8 @@ DECODING = dict(wire="chat", reasoning_effort="medium", max_output_tokens=8000,
                 chat_max_tokens_field="max_completion_tokens", temperature=None,
                 stream=False, timeout_seconds=180)
 EXTENDED_BUDGET = dict(max_output_tokens=16000, timeout_seconds=900, wall_seconds=14400)
+EXTENDED_PROFILES = {"extended-output-v1": EXTENDED_BUDGET,
+                     "extended-output-32k-v1": dict(EXTENDED_BUDGET, max_output_tokens=32000)}
 
 
 def utc():
@@ -148,11 +150,12 @@ def freeze_paired(root, reference_root, reference_source, config, commit, transp
     decoding = dict(reference["decoding"], model=cfg.model, reasoning_effort="high",
                     chat_max_tokens_field="max_tokens", temperature=None, chat_reasoning_fallback=False,
                     stream=cfg.stream, chat_empty_response_as_text=cfg.stream)
-    if budget_profile not in ("reference", "extended-output-v1"):
+    if budget_profile not in ("reference", *EXTENDED_PROFILES):
         raise ValueError("unknown prospective budget profile")
     budget_change = None
     previous = None
-    if budget_profile == "extended-output-v1":
+    if budget_profile in EXTENDED_PROFILES:
+        extended_budget = EXTENDED_PROFILES[budget_profile]
         if not cfg.stream or prior_campaign is None:
             raise ValueError("extended budget requires streaming and a preserved stopped campaign")
         if readiness_probe is None:
@@ -160,7 +163,7 @@ def freeze_paired(root, reference_root, reference_source, config, commit, transp
         probe_path = Path(readiness_probe)
         probe = json.loads(probe_path.read_text())
         if (probe.get("scored") is not False or probe.get("attempts") != 1
-                or probe.get("status") != "eof" or probe.get("max_tokens") != 16000
+                or probe.get("status") not in ("eof", "terminal") or probe.get("max_tokens") != extended_budget["max_output_tokens"]
                 or probe.get("sse_valid") is not True
                 or probe.get("deadline_seconds") != 965 or probe.get("visible_characters", 0) <= 0
                 or not isinstance(probe.get("terminal_seconds"), (int, float))
@@ -179,12 +182,12 @@ def freeze_paired(root, reference_root, reference_source, config, commit, transp
                         policy="immutable earlier cohort; no scores, attempts or submissions are merged")
         budget_change = dict(profile=budget_profile, equal_budget=False,
                              fields={k: {"reference": reference["limits" if k == "wall_seconds" else "decoding"][k],
-                                         "candidate": v} for k, v in EXTENDED_BUDGET.items()},
+                                         "candidate": v} for k, v in extended_budget.items()},
                              interpretation="same scientific tasks and scoring, different output and time budgets; descriptive system comparison, not an equal-budget model ranking")
         budget_change["readiness_probe"] = dict(sha256=hashlib.sha256(probe_path.read_bytes()).hexdigest(),
                                                 scored=False, attempts=1, sse_valid=True, terminal_seconds=probe["terminal_seconds"],
                                                 visible_characters=probe["visible_characters"])
-        decoding.update({k: v for k, v in EXTENDED_BUDGET.items() if k != "wall_seconds"})
+        decoding.update({k: v for k, v in extended_budget.items() if k != "wall_seconds"})
     if {k: getattr(cfg, k) for k in decoding} != decoding:
         raise ValueError("paired configuration differs from the declared adapter")
     pilot = None
@@ -216,10 +219,10 @@ def freeze_paired(root, reference_root, reference_source, config, commit, transp
                                 "empty_output_policy": "empty visible replies consume one invalid-action turn, matching nonstream chat; no reasoning fallback or retry",
                                 "interpretation": "paired end-to-end comparison; three independent instances per environment, not six; service/model/workflow effects are not causally separated"})
     if budget_change:
-        manifest["limits"]["wall_seconds"] = EXTENDED_BUDGET["wall_seconds"]
+        manifest["limits"]["wall_seconds"] = extended_budget["wall_seconds"]
         manifest["comparison"].update(budget_change=budget_change, previous_stopped_campaign=previous,
                                      paired_on="world, panels, episode observation-index noise, claim confirmation keys, scientific action budgets, order",
-                                     decoding_difference="GPT medium/max_completion_tokens/8000 vs DeepSeek high/max_tokens/16000; native effort and output/time budgets differ",
+                                     decoding_difference="GPT medium/max_completion_tokens/8000 vs DeepSeek high/max_tokens/%d; native effort and output/time budgets differ" % decoding["max_output_tokens"],
                                      interpretation=budget_change["interpretation"])
     if pilot is not None:
         manifest["comparison"]["transport_pilot"] = pilot
@@ -363,7 +366,7 @@ def main():
     parser.add_argument("--reference-source", type=Path)
     parser.add_argument("--transport-pilot", type=Path)
     parser.add_argument("--client-pilot", type=Path)
-    parser.add_argument("--budget-profile", choices=("reference", "extended-output-v1"), default="reference")
+    parser.add_argument("--budget-profile", choices=("reference", *EXTENDED_PROFILES), default="reference")
     parser.add_argument("--prior-campaign", type=Path)
     parser.add_argument("--readiness-probe", type=Path)
     args = parser.parse_args()
