@@ -69,7 +69,19 @@ def compare(reference,candidate):
     check(reference);check(candidate)
     if reference['protocol']!=candidate['protocol'] or reference['score_policy']!=candidate['score_policy']:
         raise ValueError('Score protocols differ')
-    if reference['limits']!=candidate['limits']:
+    budget_change = candidate.get('comparison', {}).get('budget_change')
+    if budget_change:
+        expected = {'max_output_tokens': {'reference': 8000, 'candidate': 16000},
+                    'timeout_seconds': {'reference': 180, 'candidate': 900},
+                    'wall_seconds': {'reference': 3600, 'candidate': 14400}}
+        if (budget_change.get('profile') != 'extended-output-v1'
+                or budget_change.get('equal_budget') is not False or budget_change.get('fields') != expected
+                or candidate['limits'] != dict(reference['limits'], wall_seconds=14400)
+                or reference['limits']['wall_seconds'] != 3600
+                or candidate.get('decoding', {}).get('max_output_tokens') != 16000
+                or candidate.get('decoding', {}).get('timeout_seconds') != 900):
+            raise ValueError('Undeclared extended evaluation budgets')
+    elif reference['limits']!=candidate['limits']:
         raise ValueError('Evaluation budgets differ')
     if candidate.get('comparison',{}).get('reference_manifest_sha256')!=reference['manifest_sha256']:
         raise ValueError('Candidate is not bound to this reference')
@@ -112,7 +124,8 @@ def compare(reference,candidate):
                 bootstrap_scope='20,000 fixed-seed draws; resample 3 instance pairs within each fixed world; two repeats averaged; descriptive, not population-wide',
                 matched_noinfra_delta=mean(matched) if ready and all(x is not None for x in matched) else None,
                 candidate_model_only_macro=mean(model_only) if ready and all(x is not None for x in model_only) else None,
-                design=candidate['comparison'],candidate_ledger=candidate['ledger'],candidate_status=candidate['status'])
+                design=candidate['comparison'],candidate_ledger=candidate['ledger'],candidate_status=candidate['status'],
+                equal_budget=not bool(budget_change))
 
 
 def esc(x):return html.escape(str(x),quote=True)
@@ -122,7 +135,7 @@ def ul(xs):return '<ul>'+''.join('<li>'+esc(x)+'</li>' for x in xs)+'</ul>'
 def details(title,body):return '<details><summary>'+esc(title)+'</summary>'+body+'</details>'
 
 
-def render(d,review=None):
+def render(d,review=None, data_href='comparison-data.json'):
     a,b=d['reference'],d['candidate'];rows=[];cards=[]
     for w in d['worlds']:
         x,y=w['reference'],w['candidate']
@@ -177,7 +190,14 @@ def render(d,review=None):
         conclusion='<p><strong>最新远端查询：首轮 12 次后已停止。</strong>查询到 94 次请求，其中 84 次返回、10 次中断；10 次运行失败、2 次未完成，后续 60 次未派发。连接再次中断，完整文件尚未同步，逐例原因和原始报告哈希待核验。以下数据为上一次成功同步的旧快照，不代表当前进度。</p>'+conclusion
     status=('全部 72 次已结束' if d['ready'] else '基础设施故障达到阈值，已停止后续派发' if d['candidate_status']=='stopped_infrastructure' else '进行中 · '+d['candidate_status'])
     if monitor:status='远端已停止；页面计数仍为旧快照，原始结果待同步核验'
-    return '''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SLE · GPT-5.6 与 DeepSeek V4 配对评测</title><style>
+    lead = '同样的世界、面板、提示、评分与预算，两模型独立选择实验和提交预测。'
+    budget_text = '两模型都限制为每次运行 16 次请求、8,000 输出 token 上限、48 次实验和相同分析及墙钟预算。DeepSeek 使用 high / max_tokens，GPT 使用 medium / max_completion_tokens；厂商思考档位不等价，因此这是共同外部预算下的系统比较。'
+    budget_notice = ''
+    if not d.get('equal_budget', True):
+        lead = '同样的世界、面板、提示与评分，DeepSeek 使用更高输出和时间预算；两模型独立选择实验和提交预测。'
+        budget_text = '两模型均为每次运行最多 16 次请求、48 次实验、180 秒分析计算，全批最多 1,152 次请求。GPT：8,000 输出 token、180 秒请求超时、3,600 秒单次运行上限。DeepSeek：16,000 输出 token、900 秒请求超时、14,400 秒单次运行上限；客户端另有 65 秒请求截止余量，仍受运行总时间限制。输出上限包含服务计入的思考 token，不能视为可见答案长度。DeepSeek 使用 high / max_tokens，GPT 使用 medium / max_completion_tokens。'
+        budget_notice = '<div class="notice"><strong>扩大预算的接续评测 · 不是等预算模型排名</strong><p>原批次首轮 12 次结束后停止，全部记录保留。这里是独立冻结的新批次；分差同时包含输出预算、耗时和服务条件差异，不能归因于模型科学能力。<a href="comparison.html">查看原预算批次</a></p></div>'
+    page = '''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SLE · GPT-5.6 与 DeepSeek V4 配对评测</title><style>
 *{box-sizing:border-box}body{background:#f4f5ef;color:#173d3a;font:16px/1.75 system-ui,sans-serif;margin:0}main{max-width:1180px;margin:auto;padding:36px 24px 70px}h1{font-size:clamp(28px,4vw,42px);line-height:1.3}h2{font-size:23px}h3{font-size:18px}a{color:#07776b}small,.muted{font-size:13px;color:#647570}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.metric,article,.panel{background:#fff;border:1px solid #d9e2d8;border-radius:14px;padding:24px;margin:18px 0}.metric strong{display:block;font-size:32px}.notice{background:#e9eee5;padding:20px;border-left:4px solid #56836c}.scroll{overflow:auto}table{width:100%;min-width:720px;border-collapse:collapse;background:#fff;font-size:14px}td,th{text-align:left;padding:12px;border-bottom:1px solid #d9e2d8;vertical-align:top}th{background:#e7eee4}.bar{display:block;height:6px;margin-top:7px;border-radius:3px}details{margin-top:10px}summary{cursor:pointer;font-weight:600}li{margin:8px 0}nav{display:flex;flex-wrap:wrap;gap:18px}@media(max-width:700px){main{padding:20px 14px}.metrics{grid-template-columns:1fr}.metric{margin:0}.metric,article,.panel{padding:18px}}
 </style><main><small>SCIENTISTS’ LAST EXAM · PAIRED MODEL COMPARISON</small><h1>同一批科学世界<br>GPT-5.6 × DeepSeek V4 Pro</h1><p>计划：12 环境 × 3 隐藏实例 × 2 次运行。同样的世界、面板、提示、评分与预算，两模型独立选择实验和提交预测。</p>
 <nav><a href="#comparison">配对成绩</a><a href="#findings">区分度与证据</a><a href="overview.html">GPT 完整发现报告</a><a href="comparison-data.json">公开对照数据</a></nav>
@@ -186,14 +206,22 @@ def render(d,review=None):
 <section id="comparison"><h2>各环境是否拉开差距</h2><div class="scroll"><table><tr><th>环境</th><th>GPT-5.6</th><th>V4 Pro</th><th>分差</th><th>GPT 有效</th><th>V4 有效 / 已结束</th></tr>%s</table></div></section>
 <section id="findings" class="panel"><h2>怎样解释区分度</h2>%s</section>
 <section class="panel"><h2>共同条件与比较边界</h2><p>两模型都限制为每次运行 16 次请求、8,000 输出 token 上限、48 次实验和相同分析及墙钟预算。DeepSeek 使用 high / max_tokens，GPT 使用 medium / max_completion_tokens；厂商思考档位不等价，因此这是共同外部预算下的系统比较。DeepSeek 使用流式传输，GPT 使用非流式传输；修正后的对照将完整空答案按无效动作消耗预算。</p><p>同一实例的两次重复共同构成一个独立实例簇。复用 episode 标识和确认密钥使相同实验索引及指定对比可共享观测随机性；模型探索路线仍各自决定。主分包括所有失败计零。</p><p>这是先后执行的两批服务调用，并非同时随机分配的服务试验。单个对照模型只能说明样本上的分离、相近或分数饱和情况，不能认证一般科学能力、抗污染或发现深度。预埋方程族、候选菜单和难度差异仍然存在。</p><p class="muted">原始隐藏 seed、参数、测试目标、API 凭证与模型完整轨迹不公开。科学证据审阅若存在，为同模型家族的暂定判断；算术核验不是机制认证。</p></section>%s<footer class="muted">本页无外部资源，可离线阅读。固定对照设计见 env/PAIRED_COMPARISON.md。生成时间 %s UTC。</footer></main></html>'''%(b['settled'],b['valid'],b['settled'],signed(d['delta']),esc(status),esc(d['candidate_model']),d['candidate_ledger']['started_attempts'],b['infrastructure_failures'],b['settled']-b['valid']-b['infrastructure_failures'],''.join(rows),conclusion,''.join(cards),datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M'))
+    page = page.replace('同样的世界、面板、提示、评分与预算，两模型独立选择实验和提交预测。', lead)
+    old_budget = '两模型都限制为每次运行 16 次请求、8,000 输出 token 上限、48 次实验和相同分析及墙钟预算。DeepSeek 使用 high / max_tokens，GPT 使用 medium / max_completion_tokens；厂商思考档位不等价，因此这是共同外部预算下的系统比较。'
+    page = page.replace(old_budget, budget_text).replace('<nav>', budget_notice + '<nav>', 1)
+    return page.replace('href="comparison-data.json"', 'href="' + esc(data_href) + '"')
 
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--reference',type=Path,required=True);p.add_argument('--candidate',type=Path,required=True);p.add_argument('--output-dir',type=Path,default=Path(__file__).parent);p.add_argument('--review',type=Path);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--reference',type=Path,required=True);p.add_argument('--candidate',type=Path,required=True);p.add_argument('--output-dir',type=Path,default=Path(__file__).parent);p.add_argument('--review',type=Path);p.add_argument('--output-prefix',default='comparison');a=p.parse_args()
+    if not a.output_prefix or any(c not in 'abcdefghijklmnopqrstuvwxyz0123456789-' for c in a.output_prefix):
+        p.error('output prefix must use lowercase letters, digits or hyphens')
     ref=json.loads(a.reference.read_text());cand=json.loads(a.candidate.read_text())
     if cand['comparison']['reference_public_sha256']!=hashlib.sha256(a.reference.read_bytes()).hexdigest():
         raise ValueError('Reference bytes differ from paired freeze')
     d=compare(ref,cand);review=json.loads(a.review.read_text()) if a.review else None
+    if not d['equal_budget'] and a.output_prefix == 'comparison':
+        p.error('extended budget requires a separate output prefix; preserve the reference-budget report')
     d['source_sha256']={'reference':hashlib.sha256(a.reference.read_bytes()).hexdigest(),'candidate':hashlib.sha256(a.candidate.read_bytes()).hexdigest()}
     monitor_path=a.candidate.parent/'monitor-status.json'
     if monitor_path.exists():
@@ -207,8 +235,9 @@ def main():
             raise ValueError('Review does not bind these exact public results')
         d['review']=review
     a.output_dir.mkdir(parents=True,exist_ok=True)
-    (a.output_dir/'comparison-data.json').write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
-    (a.output_dir/'comparison.html').write_text(render(d,review))
+    data_name = a.output_prefix + '-data.json'
+    (a.output_dir/data_name).write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
+    (a.output_dir/(a.output_prefix+'.html')).write_text(render(d,review,data_name))
     print(json.dumps({'settled':d['candidate']['settled'],'score':d['candidate']['score'],'delta':d['delta'],'ci':d['paired_cluster_bootstrap_95']}))
 
 if __name__=='__main__':main()

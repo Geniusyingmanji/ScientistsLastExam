@@ -74,3 +74,24 @@ def test_stopped_first_wave_does_not_become_zero_full_macro():
     assert d['delta'] is None and d['paired_cluster_bootstrap_95'] is None
     assert all(w['candidate']['score'] is None for w in d['worlds'])
     assert '不计算72次总分' in report.render(d)
+
+
+def test_extended_budget_is_labeled_and_cannot_hide_other_budget_changes():
+    a,b=fixtures()
+    b['limits']['wall_seconds']=14400
+    b['decoding']={'max_output_tokens':16000,'timeout_seconds':900}
+    b['comparison']['budget_change']={
+        'profile':'extended-output-v1','equal_budget':False,
+        'fields':{'max_output_tokens':{'reference':8000,'candidate':16000},
+                  'timeout_seconds':{'reference':180,'candidate':900},
+                  'wall_seconds':{'reference':3600,'candidate':14400}}}
+    d=report.compare(a,b)
+    assert d['equal_budget'] is False
+    text=report.render(d,data_href='deepseek-extended-data.json')
+    assert '不是等预算模型排名' in text and '16,000' in text
+    assert '同样的世界、面板、提示、评分与预算' not in text
+    assert '共同外部预算下的系统比较' not in text
+    assert 'href="deepseek-extended-data.json"' in text
+    b['limits']['experiments']=96
+    with pytest.raises(ValueError,match='Undeclared extended'):
+        report.compare(a,b)

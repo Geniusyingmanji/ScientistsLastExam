@@ -86,3 +86,44 @@ turn, preserving usage and stop reason. It never substitutes reasoning content,
 retries requests, or increases any budget. Real transport errors still fail.
 Both earlier pilots remain separate and their public hashes are bound in the
 corrected manifest. No previously scored episode is repaired or pooled.
+
+## Prospective extended-output continuation (2026-10-05)
+
+The corrected campaign stopped after twelve runs: ten request deadlines and two
+round-limit non-submissions, with 94 requests; sixty slots were never dispatched.
+Its report and all raw results remain immutable. A separately logged diagnostic
+replayed one previously interrupted request: HTTP 200 and first bytes arrived at
+2.204 seconds, data continued arriving, and the 245-second deadline fired before
+any terminal SSE marker. This one replay supports a generation-time bottleneck;
+it does not establish the cause of all ten historical failures.
+
+The explicit `extended-output-v1` profile is a **different-budget system
+evaluation**, not an equal-budget model ranking. It changes only these limits:
+
+| Limit | Frozen GPT / earlier DeepSeek | New DeepSeek |
+| --- | ---: | ---: |
+| Output tokens per request | 8,000 | 16,000 |
+| Socket timeout seconds | 180 | 900 |
+| Episode wall seconds | 3,600 | 14,400 |
+
+The existing outer request deadline remains socket timeout + 65 seconds, bounded
+by remaining episode time. The longer episode limit prevents the new request
+allowance from silently consuming the entire original wall budget. Request
+counts (16 per episode, 1,152 for the campaign), 8 workers, experiments (48),
+experimental cost, active analysis (180 seconds), science source, scoring,
+instances, panels and action prompts remain unchanged. Maximum configured output
+allowance becomes 18,432,000 tokens over the full campaign; actual usage is
+reported separately and missing usage is unknown. No automatic retry or repair
+of earlier submissions is permitted. Empty visible replies remain invalid
+actions and never expose internal reasoning as an answer.
+
+Before launching this new frozen campaign, a separate one-request diagnostic
+must finish with a terminal event and nonempty visible output under the proposed
+configuration. It is not a score or an extra episode. The first-twelve stop rule
+still applies: at least three infrastructure failures stop further dispatch.
+No later campaign or additional budget increase is automatic.
+
+The manifest binds both the GPT design and the corrected stopped predecessor.
+New public results use a separate page and data file. Any eventual paired score
+difference and cluster interval describe the two observed systems under their
+declared budgets; they cannot isolate model capability from compute or latency.
