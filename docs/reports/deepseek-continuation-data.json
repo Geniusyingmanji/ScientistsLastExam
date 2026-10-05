@@ -3,7 +3,7 @@
   "date": "2026-10-05",
   "model": "deepseek-v4-pro-0813",
   "formal_campaign_started": true,
-  "new_scored_requests": 376,
+  "new_scored_requests": 460,
   "proposed_budget_profile": "extended-output-v1",
   "diagnostics": [
     {
@@ -176,13 +176,13 @@
   "formal_manifest_sha256": "0fec9da6ae722a06cbc321d47df928214cd82637eb750e46927deae27ab88d61",
   "formal_progress_page": "deepseek-extended.html",
   "progress_snapshot": {
-    "updated_at": "2026-10-05T04:36:46.390976+00:00",
-    "settled": 24,
-    "valid": 23,
+    "updated_at": "2026-10-05T05:07:05.154201+00:00",
+    "settled": 29,
+    "valid": 28,
     "failed": 1,
-    "requests": 376,
+    "requests": 460,
     "first_twelve_gate": "passed: 1 infrastructure failure; remaining runs dispatched by existing process",
-    "audit": "24 raw report hashes, scores and budgets verified",
+    "audit": "29 raw report hashes, scores and budgets verified",
     "episodes": [
       {
         "episode_id": "unified-microecology-i1-r1",
@@ -645,6 +645,52 @@
         "report_sha256": "dbbb7128258d29df77ab56da93fb148587dcb5e5ed67d316aac9f1b403f32871"
       },
       {
+        "episode_id": "unified-climate_response-i1-r2",
+        "environment": "climate_response",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 84.20105784245617,
+        "condition_score": 88.2679803949866,
+        "intervention_score": 90.27712051357727,
+        "claim_score": 64.91965745444843,
+        "requests": 11,
+        "observations": 46,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "deepseek-v4-pro-0813"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "2a75407c8905e867d39bb81a7e27efdf08eaf16c0ef556d1ff2b76fceb2376f1"
+      },
+      {
+        "episode_id": "unified-catalyst_aging-i1-r2",
+        "environment": "catalyst_aging",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 83.91067050208034,
+        "condition_score": 98.38236239983914,
+        "intervention_score": 98.69412282892287,
+        "claim_score": 25.55626226741948,
+        "requests": 15,
+        "observations": 22,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "deepseek-v4-pro-0813"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "da152043d2db10dfc0cf4da3f90cb9de078bc0f48e342c749c601e6a22479ead"
+      },
+      {
         "episode_id": "unified-field_ecology-i1-r2",
         "environment": "field_ecology",
         "instance_index": 1,
@@ -714,6 +760,29 @@
         "report_sha256": "d0b539298c66ea1a03c62bbd5d92bc2468fe1d1e493e9e503387863ed73d7b01"
       },
       {
+        "episode_id": "unified-coupled_oscillators-i2-r1",
+        "environment": "coupled_oscillators",
+        "instance_index": 2,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 79.85780366814677,
+        "condition_score": 99.80838305441684,
+        "intervention_score": 99.84537380312787,
+        "claim_score": 0.0,
+        "requests": 12,
+        "observations": 32,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "deepseek-v4-pro-0813"
+        ],
+        "verified_nonzero_effects": 0,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "9b5c4233506824ebb7439f59b01a903157bf07f1f0a2dcf55268d9bfaca8925a"
+      },
+      {
         "episode_id": "unified-reaction_kinetics-i2-r1",
         "environment": "reaction_kinetics",
         "instance_index": 2,
@@ -735,6 +804,52 @@
         "verified_nonzero_effects": 3,
         "score_protocol": "sle-unified-score-1.0",
         "report_sha256": "6f6ca5db20ff7efc0ee515e774b7dcb5c8eafded66950819791a1a04f1532506"
+      },
+      {
+        "episode_id": "unified-heat_transport-i2-r1",
+        "environment": "heat_transport",
+        "instance_index": 2,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 88.29112296654523,
+        "condition_score": 99.07839568491673,
+        "intervention_score": 99.60285426383129,
+        "claim_score": 44.35534422468741,
+        "requests": 15,
+        "observations": 32,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "deepseek-v4-pro-0813"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "9b09458e2ef15ae6873f9421e01d9a9767e77e3d4f1235a6c1fc4f1cb91926a0"
+      },
+      {
+        "episode_id": "unified-gene_regulation-i2-r1",
+        "environment": "gene_regulation",
+        "instance_index": 2,
+        "repeat_index": 1,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 93.08577880049803,
+        "condition_score": 99.62358419631084,
+        "intervention_score": 99.55861927209943,
+        "claim_score": 67.03200460356392,
+        "requests": 15,
+        "observations": 32,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "deepseek-v4-pro-0813"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "ad2eae75d56a000a1197282c1a195ac0ed4fb9e1756e9c08b9821e86bda7c89e"
       }
     ],
     "scope": "individual runs only; no campaign or environment means"
