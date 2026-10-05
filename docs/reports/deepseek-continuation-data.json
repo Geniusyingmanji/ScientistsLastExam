@@ -3,7 +3,7 @@
   "date": "2026-10-05",
   "model": "deepseek-v4-pro-0813",
   "formal_campaign_started": true,
-  "new_scored_requests": 993,
+  "new_scored_requests": 995,
   "proposed_budget_profile": "extended-output-v1",
   "diagnostics": [
     {
@@ -176,13 +176,13 @@
   "formal_manifest_sha256": "0fec9da6ae722a06cbc321d47df928214cd82637eb750e46927deae27ab88d61",
   "formal_progress_page": "deepseek-extended.html",
   "progress_snapshot": {
-    "updated_at": "2026-10-05T09:02:56.009006+00:00",
-    "settled": 71,
-    "valid": 68,
+    "updated_at": "2026-10-05T09:12:17.715455+00:00",
+    "settled": 72,
+    "valid": 69,
     "failed": 1,
-    "requests": 993,
+    "requests": 995,
     "first_twelve_gate": "passed: 1 infrastructure failure; remaining runs dispatched by existing process",
-    "audit": "71 raw report hashes, scores and budgets verified",
+    "audit": "72 raw report hashes, scores and budgets verified",
     "episodes": [
       {
         "episode_id": "unified-microecology-i1-r1",
@@ -1816,6 +1816,29 @@
         "verified_nonzero_effects": 2,
         "score_protocol": "sle-unified-score-1.0",
         "report_sha256": "c7e67b40568ed9ee5f6d12a9c2c6fe2f1ea0203e6355cc8d7fd3944e44786a1b"
+      },
+      {
+        "episode_id": "unified-phase_equilibria-i3-r2",
+        "environment": "phase_equilibria",
+        "instance_index": 3,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 83.72629533818701,
+        "condition_score": 90.32170012518858,
+        "intervention_score": 86.5636680705245,
+        "claim_score": 62.98172427217684,
+        "requests": 15,
+        "observations": 47,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "deepseek-v4-pro-0813"
+        ],
+        "verified_nonzero_effects": 0,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "efc50f4412fcf510a2305d4ccd3cae7b7aad0fc1382532663f751f5e157cf5ae"
       }
     ],
     "scope": "individual runs only; no campaign or environment means"

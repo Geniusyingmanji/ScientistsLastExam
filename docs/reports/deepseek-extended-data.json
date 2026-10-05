@@ -1,7 +1,7 @@
 {
   "schema": "sle-paired-comparison-1",
   "protocol": "sle-unified-score-1.0",
-  "ready": false,
+  "ready": true,
   "reference_model": "gpt-5.6-sol",
   "candidate_model": "deepseek-v4-pro-0813",
   "reference": {
@@ -29,27 +29,27 @@
     "ceiling_count": 29
   },
   "candidate": {
-    "settled": 71,
-    "valid": 68,
+    "settled": 72,
+    "valid": 69,
     "infrastructure_failures": 1,
     "statuses": {
-      "completed": 68,
+      "completed": 69,
       "failed": 1,
       "invalid_predictor": 2
     },
-    "calls": 993,
+    "calls": 995,
     "provider_models": [
       "deepseek-v4-pro-0813"
     ],
     "effects": 147,
-    "score": null,
+    "score": 69.26772932927432,
     "components": {
-      "condition_score": null,
-      "intervention_score": null,
-      "claim_score": null
+      "condition_score": 76.46348255814543,
+      "intervention_score": 75.79446791834212,
+      "claim_score": 41.48823837349486
     },
-    "floor_count": null,
-    "ceiling_count": null
+    "floor_count": 5,
+    "ceiling_count": 6
   },
   "worlds": [
     {
@@ -4191,25 +4191,25 @@
         "ceiling_count": 0
       },
       "candidate": {
-        "settled": 5,
-        "valid": 5,
+        "settled": 6,
+        "valid": 6,
         "infrastructure_failures": 0,
         "statuses": {
-          "completed": 5
+          "completed": 6
         },
-        "calls": 88,
+        "calls": 90,
         "provider_models": [
           "deepseek-v4-pro-0813"
         ],
         "effects": 3,
-        "score": null,
+        "score": 63.42546753351513,
         "components": {
-          "condition_score": null,
-          "intervention_score": null,
-          "claim_score": null
+          "condition_score": 68.1868380134288,
+          "intervention_score": 73.0665866428362,
+          "claim_score": 37.060362669749374
         },
-        "floor_count": null,
-        "ceiling_count": null
+        "floor_count": 0,
+        "ceiling_count": 0
       },
       "pairs": [
         {
@@ -4504,36 +4504,50 @@
             "environment": "phase_equilibria",
             "instance_index": 3,
             "repeat_index": 2,
-            "status": "exploring",
-            "settled": false,
-            "completed": false,
+            "status": "completed",
+            "settled": true,
+            "completed": true,
             "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 13,
+            "score": 83.72629533818701,
+            "condition_score": 90.32170012518858,
+            "intervention_score": 86.5636680705245,
+            "claim_score": 62.98172427217684,
+            "requests": 15,
             "observations": 47,
-            "stop_reason": "model_round_limit",
+            "stop_reason": "verified",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
             ],
             "verified_nonzero_effects": 0,
             "score_protocol": "sle-unified-score-1.0",
-            "report_sha256": null
+            "report_sha256": "efc50f4412fcf510a2305d4ccd3cae7b7aad0fc1382532663f751f5e157cf5ae"
           },
-          "delta": null
+          "delta": 33.6343566173486
         }
       ],
-      "delta": null,
-      "cluster_deltas": null
+      "delta": 9.688819843070153,
+      "cluster_deltas": [
+        27.18621155754991,
+        -8.123990214523015,
+        10.004238186183564
+      ],
+      "wins_ties_losses": [
+        3,
+        0,
+        3
+      ],
+      "matched_noinfra_pairs": 6,
+      "matched_noinfra_delta": 9.688819843070153
     }
   ],
-  "delta": null,
-  "paired_cluster_bootstrap_95": null,
+  "delta": 4.9536209036571535,
+  "paired_cluster_bootstrap_95": [
+    -1.7374363345802426,
+    11.661729868794142
+  ],
   "bootstrap_scope": "20,000 fixed-seed draws; resample 3 instance pairs within each fixed world; two repeats averaged; descriptive, not population-wide",
-  "matched_noinfra_delta": null,
-  "candidate_model_only_macro": null,
+  "matched_noinfra_delta": 2.4187800375278137,
+  "candidate_model_only_macro": 70.34026182006232,
   "design": {
     "reference_model": "gpt-5.6-sol",
     "reference_manifest_sha256": "acb76ea79dbe3e72940e3c6f64038bbfd23c2b0c589b82c7c379e4cb5fff6136",
@@ -4603,18 +4617,17 @@
   },
   "candidate_ledger": {
     "attempt_limit": 1152,
-    "started_attempts": 993,
-    "remaining_attempts": 159,
+    "started_attempts": 995,
+    "remaining_attempts": 157,
     "status_counts": {
       "failed": 1,
-      "returned": 991,
-      "started": 1
+      "returned": 994
     }
   },
-  "candidate_status": "running",
+  "candidate_status": "completed",
   "equal_budget": false,
   "source_sha256": {
     "reference": "a3d3633e166fe36a68b2c67b90a06ccacc4ed99781a1372fddd6ec28f945790c",
-    "candidate": "0e6c36bfed80f3431ee37bc463cd54a8b51de642f98a76b3767cd40e6bc397df"
+    "candidate": "664b133449e9c9485048005c3d37779a40191f1f915096a1b3d25ccb6dfadb47"
   }
 }

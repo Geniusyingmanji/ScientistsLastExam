@@ -5,19 +5,18 @@
   "source_commit": "e8a92200e3c994d6a635c285f909a547a602c2e6",
   "source_sha256": "7e8699fef6af9dea2b5c0bf7b7994be75c66a19362e72854a7e11c86f7a1916a",
   "manifest_sha256": "0fec9da6ae722a06cbc321d47df928214cd82637eb750e46927deae27ab88d61",
-  "updated_at": "2026-10-05T09:02:56.009006+00:00",
-  "status": "running",
+  "updated_at": "2026-10-05T09:12:17.715455+00:00",
+  "status": "completed",
   "planned_episodes": 72,
-  "settled_episodes": 71,
+  "settled_episodes": 72,
   "call_cap_per_episode": 16,
   "ledger": {
     "attempt_limit": 1152,
-    "started_attempts": 993,
-    "remaining_attempts": 159,
+    "started_attempts": 995,
+    "remaining_attempts": 157,
     "status_counts": {
       "failed": 1,
-      "returned": 991,
-      "started": 1
+      "returned": 994
     }
   },
   "by_environment": {
@@ -189,17 +188,17 @@
     "phase_equilibria": {
       "planned": 6,
       "started": 6,
-      "settled": 5,
-      "completed": 5,
+      "settled": 6,
+      "completed": 6,
       "failed": 0,
       "infrastructure_failures": 0,
-      "scored_runs": 5,
+      "scored_runs": 6,
       "discoveries": [],
-      "model_only_score_mean": null,
-      "condition_score": null,
-      "intervention_score": null,
-      "claim_score": null,
-      "score_mean": null
+      "model_only_score_mean": 63.42546753351513,
+      "condition_score": 68.1868380134288,
+      "intervention_score": 73.0665866428362,
+      "claim_score": 37.060362669749374,
+      "score_mean": 63.42546753351513
     }
   },
   "episodes": [
@@ -1841,23 +1840,23 @@
       "environment": "phase_equilibria",
       "instance_index": 3,
       "repeat_index": 2,
-      "status": "exploring",
-      "settled": false,
-      "completed": false,
+      "status": "completed",
+      "settled": true,
+      "completed": true,
       "infrastructure_failure": null,
-      "score": null,
-      "condition_score": null,
-      "intervention_score": null,
-      "claim_score": null,
-      "requests": 13,
+      "score": 83.72629533818701,
+      "condition_score": 90.32170012518858,
+      "intervention_score": 86.5636680705245,
+      "claim_score": 62.98172427217684,
+      "requests": 15,
       "observations": 47,
-      "stop_reason": "model_round_limit",
+      "stop_reason": "verified",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"
       ],
       "verified_nonzero_effects": 0,
       "score_protocol": "sle-unified-score-1.0",
-      "report_sha256": null
+      "report_sha256": "efc50f4412fcf510a2305d4ccd3cae7b7aad0fc1382532663f751f5e157cf5ae"
     }
   ],
   "score_policy": {
@@ -2045,7 +2044,7 @@
     "failure": "Healthy runs without a valid frozen predictor score zero. Infrastructure failures are excluded from model-only scores and retained in end-to-end accounting.",
     "aggregation": "Average runs within each environment, then average environments equally; uncertainty must cluster repeated runs by independent world instance. Environment difficulty and physical experimental cost are not made equal by score normalization."
   },
-  "total_score": null,
+  "total_score": 69.26772932927432,
   "denominator_policy": "Each closed episode contributes its score or zero on failure; six episodes per environment; 12 environments equal. Also report model-only means excluding infrastructure failures.",
   "limits": {
     "rounds": 16,
