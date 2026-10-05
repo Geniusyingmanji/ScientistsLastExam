@@ -3,7 +3,7 @@
   "date": "2026-10-05",
   "model": "deepseek-v4-pro-0813",
   "formal_campaign_started": true,
-  "new_scored_requests": 285,
+  "new_scored_requests": 341,
   "proposed_budget_profile": "extended-output-v1",
   "diagnostics": [
     {
@@ -176,13 +176,13 @@
   "formal_manifest_sha256": "0fec9da6ae722a06cbc321d47df928214cd82637eb750e46927deae27ab88d61",
   "formal_progress_page": "deepseek-extended.html",
   "progress_snapshot": {
-    "updated_at": "2026-10-05T04:07:06.116176+00:00",
-    "settled": 18,
-    "valid": 17,
+    "updated_at": "2026-10-05T04:24:08.553976+00:00",
+    "settled": 21,
+    "valid": 20,
     "failed": 1,
-    "requests": 285,
+    "requests": 341,
     "first_twelve_gate": "passed: 1 infrastructure failure; remaining runs dispatched by existing process",
-    "audit": "18 raw report hashes, scores and budgets verified",
+    "audit": "21 raw report hashes, scores and budgets verified",
     "episodes": [
       {
         "episode_id": "unified-microecology-i1-r1",
@@ -553,6 +553,29 @@
         "report_sha256": "a04483aabe7abcf3ca3465f57c106d6f0bd711da97ff7a10282dfd5e11d3a857"
       },
       {
+        "episode_id": "unified-gene_regulation-i1-r2",
+        "environment": "gene_regulation",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 82.38022337004566,
+        "condition_score": 99.6670591137694,
+        "intervention_score": 99.46662716142899,
+        "claim_score": 13.53352832366127,
+        "requests": 15,
+        "observations": 40,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "deepseek-v4-pro-0813"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "d5f9ed63475f3a7ceb053b67453c54d80b9ada2757827b56c85c16305b2613cc"
+      },
+      {
         "episode_id": "unified-ising_spin-i1-r2",
         "environment": "ising_spin",
         "instance_index": 1,
@@ -597,6 +620,52 @@
         "verified_nonzero_effects": 3,
         "score_protocol": "sle-unified-score-1.0",
         "report_sha256": "4b06037b996a1014d8f35a0c5e8a7d944a5165b49f952d7ec7a0c126f22f7692"
+      },
+      {
+        "episode_id": "unified-molecular_forces-i1-r2",
+        "environment": "molecular_forces",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 98.08347790199329,
+        "condition_score": 99.98320915015277,
+        "intervention_score": 99.98374988732587,
+        "claim_score": 90.48374180359572,
+        "requests": 15,
+        "observations": 15,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "deepseek-v4-pro-0813"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "dbbb7128258d29df77ab56da93fb148587dcb5e5ed67d316aac9f1b403f32871"
+      },
+      {
+        "episode_id": "unified-field_ecology-i1-r2",
+        "environment": "field_ecology",
+        "instance_index": 1,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 75.46213163087629,
+        "condition_score": 88.46999245576228,
+        "intervention_score": 83.17184553368753,
+        "claim_score": 31.377908714444473,
+        "requests": 3,
+        "observations": 8,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "deepseek-v4-pro-0813"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "c3cf22046f73a7f6f389d98311bea80d495320e16a6dcb3a70b6e8fe364d42c8"
       }
     ],
     "scope": "individual runs only; no campaign or environment means"

@@ -5,19 +5,19 @@
   "source_commit": "e8a92200e3c994d6a635c285f909a547a602c2e6",
   "source_sha256": "7e8699fef6af9dea2b5c0bf7b7994be75c66a19362e72854a7e11c86f7a1916a",
   "manifest_sha256": "0fec9da6ae722a06cbc321d47df928214cd82637eb750e46927deae27ab88d61",
-  "updated_at": "2026-10-05T04:07:06.116176+00:00",
+  "updated_at": "2026-10-05T04:24:08.553976+00:00",
   "status": "running",
   "planned_episodes": 72,
-  "settled_episodes": 18,
+  "settled_episodes": 21,
   "call_cap_per_episode": 16,
   "ledger": {
     "attempt_limit": 1152,
-    "started_attempts": 285,
-    "remaining_attempts": 867,
+    "started_attempts": 341,
+    "remaining_attempts": 811,
     "status_counts": {
       "failed": 1,
-      "returned": 278,
-      "started": 6
+      "returned": 332,
+      "started": 8
     }
   },
   "by_environment": {
@@ -53,7 +53,7 @@
     },
     "reaction_kinetics": {
       "planned": 6,
-      "started": 2,
+      "started": 3,
       "settled": 2,
       "completed": 1,
       "failed": 1,
@@ -68,7 +68,7 @@
     },
     "heat_transport": {
       "planned": 6,
-      "started": 2,
+      "started": 3,
       "settled": 2,
       "completed": 2,
       "failed": 0,
@@ -83,12 +83,12 @@
     },
     "gene_regulation": {
       "planned": 6,
-      "started": 2,
-      "settled": 1,
-      "completed": 1,
+      "started": 3,
+      "settled": 2,
+      "completed": 2,
       "failed": 0,
       "infrastructure_failures": 0,
-      "scored_runs": 1,
+      "scored_runs": 2,
       "discoveries": [],
       "model_only_score_mean": null,
       "condition_score": null,
@@ -129,11 +129,11 @@
     "molecular_forces": {
       "planned": 6,
       "started": 2,
-      "settled": 1,
-      "completed": 1,
+      "settled": 2,
+      "completed": 2,
       "failed": 0,
       "infrastructure_failures": 0,
-      "scored_runs": 1,
+      "scored_runs": 2,
       "discoveries": [],
       "model_only_score_mean": null,
       "condition_score": null,
@@ -174,11 +174,11 @@
     "field_ecology": {
       "planned": 6,
       "started": 2,
-      "settled": 1,
-      "completed": 1,
+      "settled": 2,
+      "completed": 2,
       "failed": 0,
       "infrastructure_failures": 0,
-      "scored_runs": 1,
+      "scored_runs": 2,
       "discoveries": [],
       "model_only_score_mean": null,
       "condition_score": null,
@@ -576,23 +576,23 @@
       "environment": "gene_regulation",
       "instance_index": 1,
       "repeat_index": 2,
-      "status": "exploring",
-      "settled": false,
-      "completed": false,
+      "status": "completed",
+      "settled": true,
+      "completed": true,
       "infrastructure_failure": null,
-      "score": null,
-      "condition_score": null,
-      "intervention_score": null,
-      "claim_score": null,
-      "requests": 14,
+      "score": 82.38022337004566,
+      "condition_score": 99.6670591137694,
+      "intervention_score": 99.46662716142899,
+      "claim_score": 13.53352832366127,
+      "requests": 15,
       "observations": 40,
-      "stop_reason": "model_round_limit",
+      "stop_reason": "verified",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"
       ],
-      "verified_nonzero_effects": 0,
+      "verified_nonzero_effects": 3,
       "score_protocol": "sle-unified-score-1.0",
-      "report_sha256": null
+      "report_sha256": "d5f9ed63475f3a7ceb053b67453c54d80b9ada2757827b56c85c16305b2613cc"
     },
     {
       "episode_id": "unified-ising_spin-i1-r2",
@@ -645,23 +645,23 @@
       "environment": "molecular_forces",
       "instance_index": 1,
       "repeat_index": 2,
-      "status": "exploring",
-      "settled": false,
-      "completed": false,
+      "status": "completed",
+      "settled": true,
+      "completed": true,
       "infrastructure_failure": null,
-      "score": null,
-      "condition_score": null,
-      "intervention_score": null,
-      "claim_score": null,
+      "score": 98.08347790199329,
+      "condition_score": 99.98320915015277,
+      "intervention_score": 99.98374988732587,
+      "claim_score": 90.48374180359572,
       "requests": 15,
       "observations": 15,
-      "stop_reason": "model_round_limit",
+      "stop_reason": "verified",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"
       ],
-      "verified_nonzero_effects": 0,
+      "verified_nonzero_effects": 3,
       "score_protocol": "sle-unified-score-1.0",
-      "report_sha256": null
+      "report_sha256": "dbbb7128258d29df77ab56da93fb148587dcb5e5ed67d316aac9f1b403f32871"
     },
     {
       "episode_id": "unified-climate_response-i1-r2",
@@ -676,8 +676,8 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 4,
-      "observations": 8,
+      "requests": 7,
+      "observations": 22,
       "stop_reason": "model_round_limit",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"
@@ -699,8 +699,8 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 4,
-      "observations": 8,
+      "requests": 11,
+      "observations": 22,
       "stop_reason": "model_round_limit",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"
@@ -714,23 +714,23 @@
       "environment": "field_ecology",
       "instance_index": 1,
       "repeat_index": 2,
-      "status": "exploring",
-      "settled": false,
-      "completed": false,
+      "status": "completed",
+      "settled": true,
+      "completed": true,
       "infrastructure_failure": null,
-      "score": null,
-      "condition_score": null,
-      "intervention_score": null,
-      "claim_score": null,
-      "requests": 2,
+      "score": 75.46213163087629,
+      "condition_score": 88.46999245576228,
+      "intervention_score": 83.17184553368753,
+      "claim_score": 31.377908714444473,
+      "requests": 3,
       "observations": 8,
-      "stop_reason": "model_round_limit",
+      "stop_reason": "verified",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"
       ],
-      "verified_nonzero_effects": 0,
+      "verified_nonzero_effects": 3,
       "score_protocol": "sle-unified-score-1.0",
-      "report_sha256": null
+      "report_sha256": "c3cf22046f73a7f6f389d98311bea80d495320e16a6dcb3a70b6e8fe364d42c8"
     },
     {
       "episode_id": "unified-phase_equilibria-i1-r2",
@@ -745,8 +745,8 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 3,
-      "observations": 8,
+      "requests": 13,
+      "observations": 32,
       "stop_reason": "model_round_limit",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"
@@ -768,8 +768,8 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 3,
-      "observations": 16,
+      "requests": 12,
+      "observations": 40,
       "stop_reason": "model_round_limit",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"
@@ -783,7 +783,7 @@
       "environment": "coupled_oscillators",
       "instance_index": 2,
       "repeat_index": 1,
-      "status": "running",
+      "status": "exploring",
       "settled": false,
       "completed": false,
       "infrastructure_failure": null,
@@ -791,12 +791,14 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 0,
-      "observations": 0,
-      "stop_reason": null,
-      "provider_reported_models": [],
+      "requests": 7,
+      "observations": 16,
+      "stop_reason": "model_round_limit",
+      "provider_reported_models": [
+        "deepseek-v4-pro-0813"
+      ],
       "verified_nonzero_effects": 0,
-      "score_protocol": null,
+      "score_protocol": "sle-unified-score-1.0",
       "report_sha256": null
     },
     {
@@ -804,7 +806,7 @@
       "environment": "reaction_kinetics",
       "instance_index": 2,
       "repeat_index": 1,
-      "status": "pending",
+      "status": "exploring",
       "settled": false,
       "completed": false,
       "infrastructure_failure": null,
@@ -812,12 +814,14 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 0,
-      "observations": 0,
-      "stop_reason": null,
-      "provider_reported_models": [],
+      "requests": 10,
+      "observations": 16,
+      "stop_reason": "model_round_limit",
+      "provider_reported_models": [
+        "deepseek-v4-pro-0813"
+      ],
       "verified_nonzero_effects": 0,
-      "score_protocol": null,
+      "score_protocol": "sle-unified-score-1.0",
       "report_sha256": null
     },
     {
@@ -825,7 +829,7 @@
       "environment": "heat_transport",
       "instance_index": 2,
       "repeat_index": 1,
-      "status": "pending",
+      "status": "exploring",
       "settled": false,
       "completed": false,
       "infrastructure_failure": null,
@@ -833,12 +837,14 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 0,
-      "observations": 0,
-      "stop_reason": null,
-      "provider_reported_models": [],
+      "requests": 5,
+      "observations": 16,
+      "stop_reason": "model_round_limit",
+      "provider_reported_models": [
+        "deepseek-v4-pro-0813"
+      ],
       "verified_nonzero_effects": 0,
-      "score_protocol": null,
+      "score_protocol": "sle-unified-score-1.0",
       "report_sha256": null
     },
     {
@@ -846,7 +852,7 @@
       "environment": "gene_regulation",
       "instance_index": 2,
       "repeat_index": 1,
-      "status": "pending",
+      "status": "exploring",
       "settled": false,
       "completed": false,
       "infrastructure_failure": null,
@@ -854,12 +860,14 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 0,
-      "observations": 0,
-      "stop_reason": null,
-      "provider_reported_models": [],
+      "requests": 3,
+      "observations": 8,
+      "stop_reason": "model_round_limit",
+      "provider_reported_models": [
+        "deepseek-v4-pro-0813"
+      ],
       "verified_nonzero_effects": 0,
-      "score_protocol": null,
+      "score_protocol": "sle-unified-score-1.0",
       "report_sha256": null
     },
     {
