@@ -244,3 +244,7 @@ python -m pytest env tests/test_runtime_shared_libraries.py
 World tests run on macOS or Linux. The actual process/filesystem/network boundary
 must also be tested on the Linux execution host, where the full security tests
 should pass without platform skips.
+
+## New unregistered prototypes (2026-10-05)
+
+`adaptive_signaling` studies intervention identifiability of matched adaptive systems; `retention_transport` studies flow-history discrimination of retention and parallel passage. Both implement the trusted World interface and have bounded local numerical/reference checks, but are **not registered**, not available to the shared research runner or MCP, and not part of any model score. See [screening decisions](HARD_ENV_SCREENING.md) and the [development report](../docs/reports/environment-expansion.html). Formal admission needs shared adapters and broader calibration; local feasibility does not certify high difficulty.

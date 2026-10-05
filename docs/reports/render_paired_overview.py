@@ -28,7 +28,7 @@ def integrate(page, comparison, repair, notes):
     header+=f'<p>原始配对差（DeepSeek − GPT）{comparison["delta"]:+.2f}，三个实例聚类的描述性区间 [{ci[0]:.2f}, {ci[1]:.2f}]。剔除任一模型基础设施故障的配对后，按环境等权的辅助差为 {comparison["matched_noinfra_delta"]:+.2f}。均不能视作普适排名或发现深度。</p>'
     sci=s['paired_cluster_bootstrap_95'];header+=f'<p>用户授权仅补一次反应动力学 API 故障：补跑 {repair["repair_episode"]["score"]:.2f} 分、15 次请求。替换该指定失败后的敏感性差为 {s["delta"]:+.2f}，描述性区间 [{sci[0]:.2f}, {sci[1]:.2f}]。原失败与原始总分保留；GPT 的服务故障未补跑，因此该补齐口径并不对称，也不是择优取分。</p>'
     header+='<p>原始请求数：GPT 1,052；DeepSeek 995，另补跑15次，共1,010次。原始有效完成：62/72 与69/72；补齐后DeepSeek为70/72，两次预测器无效仍计零。</p>'
-    header+='<h3>结论：预测与声明应分别看</h3><p>DeepSeek的两项预测分更高，GPT的声明分更高。审阅发现：高预测分可以与错误的效应方向、过宽区间或无效机制声明并存；局部声明成立也不代表整体机制已经重建。</p><p class="muted">独立上下文审阅：部分支持（partial），置信度中等；同模型家族、暂定结论。144份原始报告哈希与分数已核验，但不等于完整实验完整性认证。每题以下轨迹说明基于代表性案例，不代表全部运行都采取相同策略。</p><nav><a href="deepseek-extended.html">完整原始比较</a><a href="deepseek-repair-data.json">单次补齐公开数据</a><a href="paired-world-notes.json">逐题审阅摘要</a></nav></section>'
+    header+='<h3>结论：预测与声明应分别看</h3><p>DeepSeek的两项预测分更高，GPT的声明分更高。审阅发现：高预测分可以与错误的效应方向、过宽区间或无效机制声明并存；局部声明成立也不代表整体机制已经重建。</p><p class="muted">独立上下文审阅：部分支持（partial），置信度中等；同模型家族、暂定结论。144份原始报告哈希与分数已核验，但不等于完整实验完整性认证。每题以下轨迹说明基于代表性案例，不代表全部运行都采取相同策略。</p><nav><a href="deepseek-extended.html">完整原始比较</a><a href="deepseek-repair-data.json">单次补齐公开数据</a><a href="paired-world-notes.json">逐题审阅摘要</a><a href="environment-expansion.html">新环境筛选与原型</a></nav></section>'
     page=page.replace('<section id="scores"><h2>',header+'<section id="scores"><h2>',1)
     page=page.replace('<a href="#scores">统一成绩</a>','<a href="#paired-results">双模型对比</a><a href="#scores">GPT基线成绩</a>',1)
     for world in comparison['worlds']:

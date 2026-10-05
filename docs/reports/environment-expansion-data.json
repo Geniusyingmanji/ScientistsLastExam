@@ -1,0 +1,96 @@
+{
+  "schema": "sle-prototype-screen-v1",
+  "paid_model_requests": 0,
+  "scope": "Exposed development instances; author-informed reference, not model results or certified difficulty. Six training experiments per fit; two family hypotheses, two starts each. Heldout clean targets remain private.",
+  "worlds": [
+    {
+      "environment": "adaptive_signaling",
+      "status": "prototype",
+      "results": [
+        {
+          "development_instance": 100,
+          "training_experiments": 6,
+          "heldout_experiments": 6,
+          "experiment_cost": 720,
+          "fit_forward_predictions": 870,
+          "fit_cap_reached": false,
+          "zero_nrmse": 0.11438492893470394,
+          "empirical_nrmse": 0.05580797675120414,
+          "author_informed_nrmse": 6.606501240359903e-05,
+          "wall_seconds": 0.08855454200238455
+        },
+        {
+          "development_instance": 101,
+          "training_experiments": 6,
+          "heldout_experiments": 6,
+          "experiment_cost": 720,
+          "fit_forward_predictions": 894,
+          "fit_cap_reached": false,
+          "zero_nrmse": 0.19537437397077867,
+          "empirical_nrmse": 0.1039965805218487,
+          "author_informed_nrmse": 0.00020198379459607487,
+          "wall_seconds": 0.0896054999975604
+        },
+        {
+          "development_instance": 202,
+          "training_experiments": 6,
+          "heldout_experiments": 6,
+          "experiment_cost": 720,
+          "fit_forward_predictions": 744,
+          "fit_cap_reached": false,
+          "zero_nrmse": 0.21846715976523026,
+          "empirical_nrmse": 0.09232370455705051,
+          "author_informed_nrmse": 0.0001472143004493561,
+          "wall_seconds": 0.07490533300006064
+        }
+      ]
+    },
+    {
+      "environment": "retention_transport",
+      "status": "prototype",
+      "results": [
+        {
+          "development_instance": 100,
+          "training_experiments": 6,
+          "heldout_experiments": 6,
+          "experiment_cost": 720,
+          "fit_forward_predictions": 816,
+          "fit_cap_reached": false,
+          "zero_nrmse": 0.7488943564877685,
+          "empirical_nrmse": 0.05512515995834815,
+          "author_informed_nrmse": 0.00034335030941062394,
+          "wall_seconds": 0.07925750000140397
+        },
+        {
+          "development_instance": 101,
+          "training_experiments": 6,
+          "heldout_experiments": 6,
+          "experiment_cost": 720,
+          "fit_forward_predictions": 768,
+          "fit_cap_reached": false,
+          "zero_nrmse": 0.8362263406129454,
+          "empirical_nrmse": 0.03738443695525266,
+          "author_informed_nrmse": 0.0002768207842043183,
+          "wall_seconds": 0.07579420800175285
+        },
+        {
+          "development_instance": 202,
+          "training_experiments": 6,
+          "heldout_experiments": 6,
+          "experiment_cost": 720,
+          "fit_forward_predictions": 768,
+          "fit_cap_reached": false,
+          "zero_nrmse": 0.7672875486609169,
+          "empirical_nrmse": 0.06629170998072845,
+          "author_informed_nrmse": 0.0006037843606160916,
+          "wall_seconds": 0.07605583399708848
+        }
+      ]
+    }
+  ],
+  "development_notes": [
+    "Two deterministic calibration passes were executed: the second corrected the empirical comparator from exact-match fallback to nearest public control history. Same training and validation queries and noise keys; no additional independent data. First-pass output is retained privately.",
+    "No new paid model requests. Unregistered prototypes, not certified high-difficulty worlds.",
+    "Initial adaptation reset witness at t=5 did not meet its separation threshold; revised exposed witness at t=1 passed. See env/HARD_ENV_SCREENING.md."
+  ]
+}
