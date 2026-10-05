@@ -1,10 +1,17 @@
 {
-  "schema": "sle-completion-repair-status-1",
-  "status": "running",
-  "gpt_slots": 10,
-  "deepseek_slots": 2,
-  "request_cap": 192,
-  "original_budgets_unchanged": true,
-  "gpt_32k_alignment_started": false,
-  "selection_policy": "Preserve successful originals; one authorized replacement per failed slot; retain first valid replacement without score selection. No implicit further attempts."
+  "status": "closed_with_gap",
+  "closed": 12,
+  "successful_replacements": 11,
+  "missing_slots": [
+    {
+      "model": "gpt",
+      "episode_id": "unified-ising_spin-i3-r2",
+      "environment": "ising_spin"
+    }
+  ],
+  "actual_requests": {
+    "gpt": 1195,
+    "deepseek": 1034
+  },
+  "additional_retry": "awaiting_user_reply"
 }

@@ -1,0 +1,85 @@
+{
+  "schema": "sle-repair-public-notes-1",
+  "review_independence": "same-family",
+  "acceptance_status": "provisional",
+  "episode_notes": [
+    {
+      "environment": "microecology",
+      "model": "gpt",
+      "episode_id": "unified-microecology-i1-r1",
+      "summary": "探索了菌株组合、营养、温度和事件；提交通用营养限制与交换 ODE。通过的两项主要是补料后的短时营养增量。分析失败后未完成参数拟合，长期及干预预测很弱，不能据此确认菌株交换机制。"
+    },
+    {
+      "environment": "microecology",
+      "model": "gpt",
+      "episode_id": "unified-microecology-i2-r2",
+      "summary": "覆盖单培养、混培养与三类干预，但提交的简化模型没有完成可靠拟合。三项组分移除区间全未覆盖，其中一项连后续变化方向也不一致；既不能称已复现组分效应，也不能把候选抑制关系写成结论。"
+    },
+    {
+      "environment": "microecology",
+      "model": "gpt",
+      "episode_id": "unified-microecology-i3-r2",
+      "summary": "配对补料与组分移除确实支持所选条件下的延迟群落响应；拟合了碳流 ODE。三条具体效应均通过，但保留测试预测仍弱。探索数据拟合误差小不能代替泛化结果，组分的底物、抑制或间接竞争解释尚未唯一识别。"
+    },
+    {
+      "environment": "ising_spin",
+      "model": "gpt",
+      "episode_id": "unified-ising_spin-i1-r1",
+      "summary": "精确枚举有限自旋配置，拟合局域场和成对相互作用，并测试外场、钳制和断键。三项独立干预类型通过，支持本实例范围内较强的平衡预测；不能由此声称唯一网络通路或热力学极限相变。"
+    },
+    {
+      "environment": "ising_spin",
+      "model": "gpt",
+      "episode_id": "unified-ising_spin-i2-r1",
+      "summary": "条件与干预预测很强，干预探索有助于区分直接耦合和间接相关。外场 claim 的区间未覆盖，钳制与断键两项通过；精确图稀疏性和机制唯一性仍超出证据。"
+    },
+    {
+      "environment": "ising_spin",
+      "model": "gpt",
+      "episode_id": "unified-ising_spin-i3-r2",
+      "summary": "本次授权修复在 API 传输阶段失败，没有冻结提交及最终保留测试。已有探索不补足结果槽位，不作科学完成项计数。"
+    },
+    {
+      "environment": "gene_regulation",
+      "model": "gpt",
+      "episode_id": "unified-gene_regulation-i3-r1",
+      "summary": "稀疏 sigmoid ODE 在本实例保留动力学预测上表现很强。脉冲探索包含跨基因响应，可支持候选调控结构；提交 claims 却只选择直接驱动的本基因响应。两项宽区间通过、另一项区间已偏离其引用观测，体现预测质量与区间校准的脱节；最终保存的是较早拟合快照。"
+    },
+    {
+      "environment": "molecular_forces",
+      "model": "gpt",
+      "episode_id": "unified-molecular_forces-i2-r1",
+      "summary": "中心二体力模型结合径向修正并保持能量—力一致性；探索含径向扫描、形状、旋转、置换和温度重复。支持所测几何的能量/力对比及局部对称性模式；三个 claims 不直接排除三体解释，稀疏距离覆盖仍影响插值。"
+    },
+    {
+      "environment": "hysteresis_material",
+      "model": "gpt",
+      "episode_id": "unified-hysteresis_material-i3-r2",
+      "summary": "快慢回线、镜像历史与驻留实验支持可衰减的制备记忆。单状态弛豫模型只有中等保留预测；两项失败区间已与引用的探索观测不符。不能把短时记忆称为持久滞回，也未确认单时间尺度机制。"
+    },
+    {
+      "environment": "catalyst_aging",
+      "model": "gpt",
+      "episode_id": "unified-catalyst_aging-i3-r2",
+      "summary": "模型分离事件位置校准与 coupon 历史，并用响应面近似新鲜产出。唯一通过的 claim 是新鲜 coupon 的联合条件对比；另两项区间偏离引用观测。通过的效应未检验老化，不能把它当成老化机制验证。"
+    },
+    {
+      "environment": "ising_spin",
+      "model": "deepseek",
+      "episode_id": "unified-ising_spin-i3-r2",
+      "summary": "拟合有限自旋模型带来很强的条件和干预预测。三项通过的 claims 均为高温下不同节点的弱外场自身响应，物理干预不同但科学内容相近；保存快照早于后续钳制观测。高分不等于更深的机制区分。"
+    },
+    {
+      "environment": "coupled_oscillators",
+      "model": "deepseek",
+      "episode_id": "unified-coupled_oscillators-i2-r2",
+      "summary": "拟合线性耦合振子动力学，测试质量、断边和阻尼变化，保留预测很强。三条效应都在同一初始位移后的早期读数上验证；支持这些局部瞬态对比，不能据此认证唯一拓扑、长期行为或更广的发现深度。"
+    },
+    {
+      "environment": "reaction_kinetics",
+      "model": "deepseek",
+      "episode_id": "unified-reaction_kinetics-i1-r1",
+      "summary": "已存在的单次授权修复纳入合并视图一次。本次核对其文件、分数和选择归属；不新增运行，也不把旧修复再计作本轮新增科学结果。"
+    }
+  ]
+}

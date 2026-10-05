@@ -49,6 +49,9 @@ def integrate(page, comparison, repair, notes):
     progress_path=HERE/'completion-repair-status.json'
     if progress_path.exists():
         progress=json.loads(progress_path.read_text())
+        if progress['status']=='closed_with_gap':
+            from render_completion_repairs import apply
+            return apply(page,json.loads((HERE/'completion-repair-results.json').read_text()),json.loads((HERE/'completion-repair-review.json').read_text()))
         if progress['status']=='running':
             banner='<section class="notice" id="completion-repair"><h2>补齐运行已启动</h2><p>保留成功运行，补跑GPT的10项和DeepSeek的2项未完成项目；此前反应动力学补跑已经完成。沿用各模型原预算，未启动GPT 32k对齐实验。补齐并核验后更新本页总分与逐题结果。</p><p>下面成绩暂为补跑前参考；原始失败记录与额外请求成本保留在审计明细，补跑不按最高分择优。</p></section>'
             begin=page.index('<div class="metrics">');end=page.index('<section class="protocol" id="paired-results">',begin)
