@@ -3,7 +3,7 @@
   "date": "2026-10-05",
   "model": "deepseek-v4-pro-0813",
   "formal_campaign_started": true,
-  "new_scored_requests": 537,
+  "new_scored_requests": 605,
   "proposed_budget_profile": "extended-output-v1",
   "diagnostics": [
     {
@@ -176,13 +176,13 @@
   "formal_manifest_sha256": "0fec9da6ae722a06cbc321d47df928214cd82637eb750e46927deae27ab88d61",
   "formal_progress_page": "deepseek-extended.html",
   "progress_snapshot": {
-    "updated_at": "2026-10-05T05:37:29.403910+00:00",
-    "settled": 37,
-    "valid": 36,
+    "updated_at": "2026-10-05T06:07:16.068528+00:00",
+    "settled": 39,
+    "valid": 37,
     "failed": 1,
-    "requests": 537,
+    "requests": 605,
     "first_twelve_gate": "passed: 1 infrastructure failure; remaining runs dispatched by existing process",
-    "audit": "37 raw report hashes, scores and budgets verified",
+    "audit": "39 raw report hashes, scores and budgets verified",
     "episodes": [
       {
         "episode_id": "unified-microecology-i1-r1",
@@ -1034,6 +1034,52 @@
         "verified_nonzero_effects": 3,
         "score_protocol": "sle-unified-score-1.0",
         "report_sha256": "fd5a63c98e4628647b14805b482ab5bb9da96620209d33e5103fe79bce8d4b90"
+      },
+      {
+        "episode_id": "unified-coupled_oscillators-i2-r2",
+        "environment": "coupled_oscillators",
+        "instance_index": 2,
+        "repeat_index": 2,
+        "status": "invalid_predictor",
+        "settled": true,
+        "completed": false,
+        "infrastructure_failure": null,
+        "score": 0.0,
+        "condition_score": 0.0,
+        "intervention_score": 0.0,
+        "claim_score": 0.0,
+        "requests": 15,
+        "observations": 12,
+        "stop_reason": "predictor_verification_failed",
+        "provider_reported_models": [
+          "deepseek-v4-pro-0813"
+        ],
+        "verified_nonzero_effects": 3,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "8ec8af0f3221a9dc5e5f78ade308b7f60505d3b637839809a7fb29777f2c37d4"
+      },
+      {
+        "episode_id": "unified-reaction_kinetics-i2-r2",
+        "environment": "reaction_kinetics",
+        "instance_index": 2,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 88.35454002607727,
+        "condition_score": 99.9219349086454,
+        "intervention_score": 99.8408572556011,
+        "claim_score": 42.20657697537124,
+        "requests": 15,
+        "observations": 32,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "deepseek-v4-pro-0813"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "9b788bc7d5ac140d9194e4719986a50378df34510037ac473706d048190a18ae"
       }
     ],
     "scope": "individual runs only; no campaign or environment means"

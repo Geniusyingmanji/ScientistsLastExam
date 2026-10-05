@@ -5,18 +5,18 @@
   "source_commit": "e8a92200e3c994d6a635c285f909a547a602c2e6",
   "source_sha256": "7e8699fef6af9dea2b5c0bf7b7994be75c66a19362e72854a7e11c86f7a1916a",
   "manifest_sha256": "0fec9da6ae722a06cbc321d47df928214cd82637eb750e46927deae27ab88d61",
-  "updated_at": "2026-10-05T05:37:29.403910+00:00",
+  "updated_at": "2026-10-05T06:07:16.068528+00:00",
   "status": "running",
   "planned_episodes": 72,
-  "settled_episodes": 37,
+  "settled_episodes": 39,
   "call_cap_per_episode": 16,
   "ledger": {
     "attempt_limit": 1152,
-    "started_attempts": 537,
-    "remaining_attempts": 615,
+    "started_attempts": 605,
+    "remaining_attempts": 547,
     "status_counts": {
       "failed": 1,
-      "returned": 528,
+      "returned": 596,
       "started": 8
     }
   },
@@ -39,11 +39,11 @@
     "coupled_oscillators": {
       "planned": 6,
       "started": 4,
-      "settled": 3,
+      "settled": 4,
       "completed": 3,
-      "failed": 0,
+      "failed": 1,
       "infrastructure_failures": 0,
-      "scored_runs": 3,
+      "scored_runs": 4,
       "discoveries": [],
       "model_only_score_mean": null,
       "condition_score": null,
@@ -54,11 +54,11 @@
     "reaction_kinetics": {
       "planned": 6,
       "started": 4,
-      "settled": 3,
-      "completed": 2,
+      "settled": 4,
+      "completed": 3,
       "failed": 1,
       "infrastructure_failures": 1,
-      "scored_runs": 3,
+      "scored_runs": 4,
       "discoveries": [],
       "model_only_score_mean": null,
       "condition_score": null,
@@ -158,7 +158,7 @@
     },
     "catalyst_aging": {
       "planned": 6,
-      "started": 3,
+      "started": 4,
       "settled": 3,
       "completed": 3,
       "failed": 0,
@@ -173,7 +173,7 @@
     },
     "field_ecology": {
       "planned": 6,
-      "started": 3,
+      "started": 4,
       "settled": 3,
       "completed": 3,
       "failed": 0,
@@ -1059,46 +1059,46 @@
       "environment": "coupled_oscillators",
       "instance_index": 2,
       "repeat_index": 2,
-      "status": "exploring",
-      "settled": false,
+      "status": "invalid_predictor",
+      "settled": true,
       "completed": false,
       "infrastructure_failure": null,
-      "score": null,
-      "condition_score": null,
-      "intervention_score": null,
-      "claim_score": null,
-      "requests": 10,
+      "score": 0.0,
+      "condition_score": 0.0,
+      "intervention_score": 0.0,
+      "claim_score": 0.0,
+      "requests": 15,
       "observations": 12,
-      "stop_reason": "model_round_limit",
+      "stop_reason": "predictor_verification_failed",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"
       ],
-      "verified_nonzero_effects": 0,
+      "verified_nonzero_effects": 3,
       "score_protocol": "sle-unified-score-1.0",
-      "report_sha256": null
+      "report_sha256": "8ec8af0f3221a9dc5e5f78ade308b7f60505d3b637839809a7fb29777f2c37d4"
     },
     {
       "episode_id": "unified-reaction_kinetics-i2-r2",
       "environment": "reaction_kinetics",
       "instance_index": 2,
       "repeat_index": 2,
-      "status": "exploring",
-      "settled": false,
-      "completed": false,
+      "status": "completed",
+      "settled": true,
+      "completed": true,
       "infrastructure_failure": null,
-      "score": null,
-      "condition_score": null,
-      "intervention_score": null,
-      "claim_score": null,
-      "requests": 9,
-      "observations": 24,
-      "stop_reason": "model_round_limit",
+      "score": 88.35454002607727,
+      "condition_score": 99.9219349086454,
+      "intervention_score": 99.8408572556011,
+      "claim_score": 42.20657697537124,
+      "requests": 15,
+      "observations": 32,
+      "stop_reason": "verified",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"
       ],
-      "verified_nonzero_effects": 0,
+      "verified_nonzero_effects": 2,
       "score_protocol": "sle-unified-score-1.0",
-      "report_sha256": null
+      "report_sha256": "9b788bc7d5ac140d9194e4719986a50378df34510037ac473706d048190a18ae"
     },
     {
       "episode_id": "unified-heat_transport-i2-r2",
@@ -1113,8 +1113,8 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 6,
-      "observations": 16,
+      "requests": 13,
+      "observations": 40,
       "stop_reason": "model_round_limit",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"
@@ -1136,8 +1136,8 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 4,
-      "observations": 16,
+      "requests": 13,
+      "observations": 24,
       "stop_reason": "model_round_limit",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"
@@ -1159,8 +1159,8 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 3,
-      "observations": 8,
+      "requests": 12,
+      "observations": 32,
       "stop_reason": "model_round_limit",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"
@@ -1182,8 +1182,8 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 3,
-      "observations": 8,
+      "requests": 8,
+      "observations": 16,
       "stop_reason": "model_round_limit",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"
@@ -1205,8 +1205,8 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 2,
-      "observations": 8,
+      "requests": 12,
+      "observations": 16,
       "stop_reason": "model_round_limit",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"
@@ -1220,7 +1220,7 @@
       "environment": "climate_response",
       "instance_index": 2,
       "repeat_index": 2,
-      "status": "running",
+      "status": "exploring",
       "settled": false,
       "completed": false,
       "infrastructure_failure": null,
@@ -1228,12 +1228,14 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 1,
-      "observations": 0,
-      "stop_reason": null,
-      "provider_reported_models": [],
+      "requests": 9,
+      "observations": 16,
+      "stop_reason": "model_round_limit",
+      "provider_reported_models": [
+        "deepseek-v4-pro-0813"
+      ],
       "verified_nonzero_effects": 0,
-      "score_protocol": null,
+      "score_protocol": "sle-unified-score-1.0",
       "report_sha256": null
     },
     {
@@ -1241,7 +1243,7 @@
       "environment": "catalyst_aging",
       "instance_index": 2,
       "repeat_index": 2,
-      "status": "pending",
+      "status": "exploring",
       "settled": false,
       "completed": false,
       "infrastructure_failure": null,
@@ -1249,12 +1251,14 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 0,
-      "observations": 0,
-      "stop_reason": null,
-      "provider_reported_models": [],
+      "requests": 5,
+      "observations": 8,
+      "stop_reason": "model_round_limit",
+      "provider_reported_models": [
+        "deepseek-v4-pro-0813"
+      ],
       "verified_nonzero_effects": 0,
-      "score_protocol": null,
+      "score_protocol": "sle-unified-score-1.0",
       "report_sha256": null
     },
     {
@@ -1262,7 +1266,7 @@
       "environment": "field_ecology",
       "instance_index": 2,
       "repeat_index": 2,
-      "status": "pending",
+      "status": "exploring",
       "settled": false,
       "completed": false,
       "infrastructure_failure": null,
@@ -1270,12 +1274,14 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 0,
-      "observations": 0,
-      "stop_reason": null,
-      "provider_reported_models": [],
+      "requests": 4,
+      "observations": 12,
+      "stop_reason": "model_round_limit",
+      "provider_reported_models": [
+        "deepseek-v4-pro-0813"
+      ],
       "verified_nonzero_effects": 0,
-      "score_protocol": null,
+      "score_protocol": "sle-unified-score-1.0",
       "report_sha256": null
     },
     {
