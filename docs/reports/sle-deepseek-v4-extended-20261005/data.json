@@ -5,19 +5,19 @@
   "source_commit": "e8a92200e3c994d6a635c285f909a547a602c2e6",
   "source_sha256": "7e8699fef6af9dea2b5c0bf7b7994be75c66a19362e72854a7e11c86f7a1916a",
   "manifest_sha256": "0fec9da6ae722a06cbc321d47df928214cd82637eb750e46927deae27ab88d61",
-  "updated_at": "2026-10-05T08:56:34.959874+00:00",
+  "updated_at": "2026-10-05T09:02:56.009006+00:00",
   "status": "running",
   "planned_episodes": 72,
-  "settled_episodes": 70,
+  "settled_episodes": 71,
   "call_cap_per_episode": 16,
   "ledger": {
     "attempt_limit": 1152,
-    "started_attempts": 990,
-    "remaining_attempts": 162,
+    "started_attempts": 993,
+    "remaining_attempts": 159,
     "status_counts": {
       "failed": 1,
-      "returned": 987,
-      "started": 2
+      "returned": 991,
+      "started": 1
     }
   },
   "by_environment": {
@@ -174,17 +174,17 @@
     "field_ecology": {
       "planned": 6,
       "started": 6,
-      "settled": 5,
-      "completed": 5,
+      "settled": 6,
+      "completed": 6,
       "failed": 0,
       "infrastructure_failures": 0,
-      "scored_runs": 5,
+      "scored_runs": 6,
       "discoveries": [],
-      "model_only_score_mean": null,
-      "condition_score": null,
-      "intervention_score": null,
-      "claim_score": null,
-      "score_mean": null
+      "model_only_score_mean": 78.83639980302459,
+      "condition_score": 92.44878064629269,
+      "intervention_score": 89.83295089464796,
+      "claim_score": 28.31062105741934,
+      "score_mean": 78.83639980302459
     },
     "phase_equilibria": {
       "planned": 6,
@@ -1818,23 +1818,23 @@
       "environment": "field_ecology",
       "instance_index": 3,
       "repeat_index": 2,
-      "status": "exploring",
-      "settled": false,
-      "completed": false,
+      "status": "completed",
+      "settled": true,
+      "completed": true,
       "infrastructure_failure": null,
-      "score": null,
-      "condition_score": null,
-      "intervention_score": null,
-      "claim_score": null,
-      "requests": 14,
+      "score": 71.48296253810231,
+      "condition_score": 86.6243079954149,
+      "intervention_score": 75.63474630416093,
+      "claim_score": 27.401923245732945,
+      "requests": 15,
       "observations": 20,
-      "stop_reason": "model_round_limit",
+      "stop_reason": "verified",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"
       ],
-      "verified_nonzero_effects": 0,
+      "verified_nonzero_effects": 2,
       "score_protocol": "sle-unified-score-1.0",
-      "report_sha256": null
+      "report_sha256": "c7e67b40568ed9ee5f6d12a9c2c6fe2f1ea0203e6355cc8d7fd3944e44786a1b"
     },
     {
       "episode_id": "unified-phase_equilibria-i3-r2",
@@ -1849,8 +1849,8 @@
       "condition_score": null,
       "intervention_score": null,
       "claim_score": null,
-      "requests": 11,
-      "observations": 39,
+      "requests": 13,
+      "observations": 47,
       "stop_reason": "model_round_limit",
       "provider_reported_models": [
         "deepseek-v4-pro-0813"

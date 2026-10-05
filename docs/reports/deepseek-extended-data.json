@@ -29,19 +29,19 @@
     "ceiling_count": 29
   },
   "candidate": {
-    "settled": 70,
-    "valid": 67,
+    "settled": 71,
+    "valid": 68,
     "infrastructure_failures": 1,
     "statuses": {
-      "completed": 67,
+      "completed": 68,
       "failed": 1,
       "invalid_predictor": 2
     },
-    "calls": 990,
+    "calls": 993,
     "provider_models": [
       "deepseek-v4-pro-0813"
     ],
-    "effects": 145,
+    "effects": 147,
     "score": null,
     "components": {
       "condition_score": null,
@@ -3818,25 +3818,25 @@
         "ceiling_count": 0
       },
       "candidate": {
-        "settled": 5,
-        "valid": 5,
+        "settled": 6,
+        "valid": 6,
         "infrastructure_failures": 0,
         "statuses": {
-          "completed": 5
+          "completed": 6
         },
-        "calls": 58,
+        "calls": 59,
         "provider_models": [
           "deepseek-v4-pro-0813"
         ],
-        "effects": 11,
-        "score": null,
+        "effects": 13,
+        "score": 78.83639980302459,
         "components": {
-          "condition_score": null,
-          "intervention_score": null,
-          "claim_score": null
+          "condition_score": 92.44878064629269,
+          "intervention_score": 89.83295089464796,
+          "claim_score": 28.31062105741934
         },
-        "floor_count": null,
-        "ceiling_count": null
+        "floor_count": 0,
+        "ceiling_count": 0
       },
       "pairs": [
         {
@@ -4131,29 +4131,40 @@
             "environment": "field_ecology",
             "instance_index": 3,
             "repeat_index": 2,
-            "status": "exploring",
-            "settled": false,
-            "completed": false,
+            "status": "completed",
+            "settled": true,
+            "completed": true,
             "infrastructure_failure": null,
-            "score": null,
-            "condition_score": null,
-            "intervention_score": null,
-            "claim_score": null,
-            "requests": 14,
+            "score": 71.48296253810231,
+            "condition_score": 86.6243079954149,
+            "intervention_score": 75.63474630416093,
+            "claim_score": 27.401923245732945,
+            "requests": 15,
             "observations": 20,
-            "stop_reason": "model_round_limit",
+            "stop_reason": "verified",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
             ],
-            "verified_nonzero_effects": 0,
+            "verified_nonzero_effects": 2,
             "score_protocol": "sle-unified-score-1.0",
-            "report_sha256": null
+            "report_sha256": "c7e67b40568ed9ee5f6d12a9c2c6fe2f1ea0203e6355cc8d7fd3944e44786a1b"
           },
-          "delta": null
+          "delta": -19.701648537982067
         }
       ],
-      "delta": null,
-      "cluster_deltas": null
+      "delta": 34.90563456874285,
+      "cluster_deltas": [
+        32.957471539702254,
+        56.029212066299976,
+        15.730220100226312
+      ],
+      "wins_ties_losses": [
+        5,
+        0,
+        1
+      ],
+      "matched_noinfra_pairs": 6,
+      "matched_noinfra_delta": 34.90563456874285
     },
     {
       "environment": "phase_equilibria",
@@ -4186,7 +4197,7 @@
         "statuses": {
           "completed": 5
         },
-        "calls": 86,
+        "calls": 88,
         "provider_models": [
           "deepseek-v4-pro-0813"
         ],
@@ -4501,8 +4512,8 @@
             "condition_score": null,
             "intervention_score": null,
             "claim_score": null,
-            "requests": 11,
-            "observations": 39,
+            "requests": 13,
+            "observations": 47,
             "stop_reason": "model_round_limit",
             "provider_reported_models": [
               "deepseek-v4-pro-0813"
@@ -4592,18 +4603,18 @@
   },
   "candidate_ledger": {
     "attempt_limit": 1152,
-    "started_attempts": 990,
-    "remaining_attempts": 162,
+    "started_attempts": 993,
+    "remaining_attempts": 159,
     "status_counts": {
       "failed": 1,
-      "returned": 987,
-      "started": 2
+      "returned": 991,
+      "started": 1
     }
   },
   "candidate_status": "running",
   "equal_budget": false,
   "source_sha256": {
     "reference": "a3d3633e166fe36a68b2c67b90a06ccacc4ed99781a1372fddd6ec28f945790c",
-    "candidate": "8ecb9995d51eb5b807ee3868544f8d9ced39bead04541bb0e9a9a357382acdc8"
+    "candidate": "0e6c36bfed80f3431ee37bc463cd54a8b51de642f98a76b3767cd40e6bc397df"
   }
 }

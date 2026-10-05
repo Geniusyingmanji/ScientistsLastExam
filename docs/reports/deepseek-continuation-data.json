@@ -3,7 +3,7 @@
   "date": "2026-10-05",
   "model": "deepseek-v4-pro-0813",
   "formal_campaign_started": true,
-  "new_scored_requests": 990,
+  "new_scored_requests": 993,
   "proposed_budget_profile": "extended-output-v1",
   "diagnostics": [
     {
@@ -176,13 +176,13 @@
   "formal_manifest_sha256": "0fec9da6ae722a06cbc321d47df928214cd82637eb750e46927deae27ab88d61",
   "formal_progress_page": "deepseek-extended.html",
   "progress_snapshot": {
-    "updated_at": "2026-10-05T08:56:34.959874+00:00",
-    "settled": 70,
-    "valid": 67,
+    "updated_at": "2026-10-05T09:02:56.009006+00:00",
+    "settled": 71,
+    "valid": 68,
     "failed": 1,
-    "requests": 990,
+    "requests": 993,
     "first_twelve_gate": "passed: 1 infrastructure failure; remaining runs dispatched by existing process",
-    "audit": "70 raw report hashes, scores and budgets verified",
+    "audit": "71 raw report hashes, scores and budgets verified",
     "episodes": [
       {
         "episode_id": "unified-microecology-i1-r1",
@@ -1793,6 +1793,29 @@
         "verified_nonzero_effects": 2,
         "score_protocol": "sle-unified-score-1.0",
         "report_sha256": "1a3af42f88a51b3777d074ab5f1ed2879fb68254338ee94f7028c617d8a0590a"
+      },
+      {
+        "episode_id": "unified-field_ecology-i3-r2",
+        "environment": "field_ecology",
+        "instance_index": 3,
+        "repeat_index": 2,
+        "status": "completed",
+        "settled": true,
+        "completed": true,
+        "infrastructure_failure": null,
+        "score": 71.48296253810231,
+        "condition_score": 86.6243079954149,
+        "intervention_score": 75.63474630416093,
+        "claim_score": 27.401923245732945,
+        "requests": 15,
+        "observations": 20,
+        "stop_reason": "verified",
+        "provider_reported_models": [
+          "deepseek-v4-pro-0813"
+        ],
+        "verified_nonzero_effects": 2,
+        "score_protocol": "sle-unified-score-1.0",
+        "report_sha256": "c7e67b40568ed9ee5f6d12a9c2c6fe2f1ea0203e6355cc8d7fd3944e44786a1b"
       }
     ],
     "scope": "individual runs only; no campaign or environment means"
