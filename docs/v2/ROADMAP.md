@@ -209,3 +209,10 @@ at95% needs18445pairs/arm, or2360960individuals with32/group; .005 exceeds
 single-call cap. One analytic planner test passes; no new random sampling.
 This is not a power calculation or impossibility claim. Candidate retained but
 not promoted; next evaluate variance-aware bounds under a frozen small design.
+
+2026-10-07 lineage exact variance enumerator added (n<=64), checked against
+Bernoulli limit and analytic crossed covariance; one test passes. Fixed exposed
+known-parameter two-call analytic screen yields sufficient975pairs/arm for.01
+radius via Chebyshev, versus18445 distribution-free. No sampling/API calls.
+This demonstrates potential budget headroom only with privileged parameters;
+next design candidate-accessible uncertainty, not an automatic World promotion.

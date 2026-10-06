@@ -68,3 +68,14 @@ not a lower bound, empirical power estimate or proof the task is infeasible.
 Decision: retain as candidate only; do not promote based on earlier20k-pair
 witness. Next compare justified variance-aware uncertainty and a small fixed
 budget design before implementing a full World. No sampling or fitting done.
+
+Exact-variance development unit: before reporting a budget, fix mu=.5,L=.4,E=.2,
+p=c=.5,n=32; compare neither-shared versus founder-only sharing. Two exact
+finite-support moment calls, no simulation, fitting or parameter search. This
+uses known synthetic parameters. Report Chebyshev sufficient pair count for a
+single .01 radius at95%; do not give this privileged variance to a candidate.
+Result: Var(Z)=.004871923828125; Chebyshev sufficient count975pairs/arm,
+124800individuals at32/group. This narrower result is specific to the fixed
+known-parameter fixture, not uniform over worlds; it is not a detection-power
+claim or validated empirical interval. Earlier distribution-free18445 bound
+remains correct and unchanged. Candidate-accessible uncertainty remains pending.
