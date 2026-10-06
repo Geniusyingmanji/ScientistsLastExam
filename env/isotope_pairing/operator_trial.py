@@ -3,7 +3,7 @@
 A receipt holds raw observations and must stay private. Single-use, no retries.
 A generated random namespace avoids replaying measurement keys between trials.
 """
-import copy,hashlib,json,math,uuid
+import copy,hashlib,json,os,uuid
 from .eligibility import validate_spec,contrast_eligibility,CHANNELS
 from .evidence import record
 from .noise_contract import contrast_uncertainty
@@ -25,7 +25,26 @@ class Trial:
         self._used=False;self._namespace=uuid.uuid4().hex;self.attempted_calls=0;self.charged_units=0
     @property
     def plan(self):return copy.deepcopy(self._plan)
-    def run(self,world):
+    def run(self,world,journal_path=None):
+        if journal_path is None:
+            return self._run(world,lambda event: None)
+        # Exclusive creation prevents overwriting an earlier attempt or symlink.
+        fd=os.open(journal_path,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
+        with os.fdopen(fd,'w') as stream:
+            def emit(event):
+                stream.write(json.dumps(event,allow_nan=False,sort_keys=True)+'\n')
+                stream.flush();os.fsync(stream.fileno())
+            emit({'event':'frozen','plan_sha256':self._hash,'plan':self.plan})
+            try:
+                result=self._run(world,emit)
+                emit({'event':'completed','result':result})
+                return result
+            except Exception as exc:
+                emit({'event':'failed','exception_type':type(exc).__name__,
+                      'attempted_calls':self.attempted_calls,'charged_units':self.charged_units})
+                raise
+
+    def _run(self,world,emit):
         if self._used:raise RuntimeError('trial is single-use, including after failure')
         if world.name!='isotope_pairing' or world.version!='isotope_pairing-0.1.0':raise ValueError('unsupported world version')
         for arm in ('control','treatment'):
@@ -36,8 +55,11 @@ class Trial:
             values[arm]=[]
             for i in range(p['replicates']):
                 s=copy.deepcopy(p[arm]);self.attempted_calls+=1;self.charged_units+=world.cost(s)
-                obs=world.run(s,noise_key=self._namespace+':'+arm+':'+str(i))
+                key=self._namespace+':'+arm+':'+str(i)
+                emit({'event':'attempt','arm':arm,'replicate':i,'noise_key':key,'attempted_calls':self.attempted_calls,'charged_units':self.charged_units})
+                obs=world.run(s,noise_key=key)
                 receipt=record(s,obs);records.append(receipt)
+                emit({'event':'observation','arm':arm,'replicate':i,'record':receipt})
                 values[arm].append(obs['values'][p['row']][CHANNELS.index(p['channel'])])
         delta=sum(values['treatment'])/p['replicates']-sum(values['control'])/p['replicates']
         h=p['uncertainty']['half_width'];lo,hi=p['interval']

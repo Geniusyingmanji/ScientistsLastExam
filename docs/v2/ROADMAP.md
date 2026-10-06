@@ -97,3 +97,12 @@ not a scientific calibration or agent score. All17 isotope tests pass. Raw trial
 receipts remain private. NOT a sandbox, shared runner integration or mechanism
 certificate; wide intervals may be compatible without being informative. Next
 review persistent failure receipts and a versioned score contract before admission.
+
+Private trial journaling added: exclusive0600 file, frozen plan before experiment,
+attempt cost before invocation, returned validated observations, completion/failure
+record. Flush/fsync at each event; no exception message copied. Four operator
+integration tests pass, including partial failure and overwrite refusal. These
+are regression/smoke runs, not new scientific evidence. Abrupt termination may
+leave a final attempt without outcome; disk failure cannot guarantee a terminal
+receipt. Raw journals must never be published. Next: formal per-axis prediction
+score contract and integration review; no registry admission yet.

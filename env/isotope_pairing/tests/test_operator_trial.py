@@ -29,3 +29,22 @@ def test_failed_call_is_charged_and_cannot_retry():
     with pytest.raises(RuntimeError):t.run(Broken(100))
     assert t.attempted_calls==1 and t.charged_units==24
     with pytest.raises(RuntimeError):t.run(World(100))
+
+def test_private_journal_retains_partial_failure(tmp_path):
+    import json,stat
+    class SecondFails(World):
+        calls=0
+        def run(self,*args,**kwargs):
+            self.calls+=1
+            if self.calls==2:raise RuntimeError('sensitive diagnostic not copied into journal')
+            return super().run(*args,**kwargs)
+    a,b=specs();t=Trial(a,b,3,'double_label',[-1.,1.],replicates=2);p=tmp_path/'trial.jsonl'
+    with pytest.raises(RuntimeError):t.run(SecondFails(100),p)
+    events=[json.loads(x) for x in p.read_text().splitlines()]
+    assert [x['event'] for x in events]==['frozen','attempt','observation','attempt','failed']
+    assert events[-1]['charged_units']==48 and events[-1]['attempted_calls']==2
+    assert 'sensitive diagnostic' not in p.read_text()
+    assert stat.S_IMODE(p.stat().st_mode)==0o600
+    saved=p.read_bytes()
+    with pytest.raises(FileExistsError):Trial(a,b,3,'double_label',[-1.,1.]).run(World(100),p)
+    assert p.read_bytes()==saved
