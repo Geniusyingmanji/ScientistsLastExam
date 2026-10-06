@@ -58,3 +58,10 @@ Each unit is bounded; follow-up continues until the user pauses it. Repeated fai
 candidates are rejected rather than repeatedly tuning until a desired score appears.
 
 2026-10-06: implementation audit and four development task specifications saved in PROTOTYPE_AUDIT.md and env/v2_tasks/catalog.json. Next candidate: isotope tracing.
+
+Isotope pairing prototype implemented: public apparatus, private bookkeeping
+kernel, fresh preparation, pulse/chase source recipes, public-data baseline and
+four passing local tests (conservation/discrimination, independent ODE solution,
+contract/noise, chase/reset). Not registered and no model evaluation. Next bounded
+unit: freeze and run noisy parameter-inference/reference baseline screen, broaden
+piecewise solver validation, then update aggregate HTML readiness report.
