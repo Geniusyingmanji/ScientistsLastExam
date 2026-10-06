@@ -274,3 +274,5 @@ chronology: layered fixture numerically infeasible, homogeneous control feasible
 2kernel calls/14readouts,2LPs,source hashes match. This is new noise on exposed
 structures, not new-world validation. Confirmation review pending; next inspect
 numerical certificate and update consolidated report before further scope growth.
+
+2026-10-07 Confirmation fresh review supports narrow run; hashes/LP constraints and direct contradiction checked. Same-family/provisional, no integrity audit. Reports updated with lineage deferral and seismic witness status. Next prioritize completing isotope task presentation rather than more seismic sampling.

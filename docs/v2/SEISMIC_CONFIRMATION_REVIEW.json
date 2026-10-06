@@ -1,0 +1,18 @@
+{
+  "claim_supported": "yes",
+  "review_independence": "same-family",
+  "acceptance_status": "provisional",
+  "integrity_status": "unavailable",
+  "confidence": "high for internal numerical consistency only",
+  "supports": "Archived source/plan hashes and LP inputs match; direct slope-bound contradiction corroborates layered infeasibility; control satisfies all inequalities.",
+  "limits": "Local receipts are not external chronology or exhaustive run history. No coverage/power/generalization/difficulty/unique structure/model capability claims. Official checker unresolved.",
+  "counts": {
+    "kernel_calls": 2,
+    "readouts": 14,
+    "lp_calls": 2,
+    "root_solves": 12,
+    "root_iterations": 90,
+    "lp_iterations": 2
+  },
+  "next_action": "Preserve archive and report narrow run; no additional experiment needed for this description."
+}

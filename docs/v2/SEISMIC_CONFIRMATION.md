@@ -11,6 +11,6 @@ This confirms under new noise only, not unseen structure or general difficulty.
 Execution: both fixtures completed; layered status2(infeasible), homogeneous
 control status0(feasible). Two kernel calls/14readouts,2LPs,zero API calls.
 Saved source hashes verified and event log starts with frozen plan and ends
-completed. Independent semantic review of this confirmation is still pending.
+completed. Fresh-context semantic review supports this narrow run description: same-family/provisional, high confidence in internal numerical consistency; no independent execution-provenance certification.
 Do not extrapolate these two outcomes to coverage, power, unique identification,
 unseen-world generalization or agent difficulty. No World registered.
