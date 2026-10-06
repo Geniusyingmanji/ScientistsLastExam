@@ -412,8 +412,15 @@ class ProspectiveTask:
     def _preview_validate(self, spec):
         if not self._frontier:
             raise RuntimeError("schema preview requires the frontier apparatus contract")
-        module = import_module("env." + self._world.name + ".protocol")
-        validators = [getattr(module, name) for name in ("validate_spec", "number", "integer")]
+        if self._world.name == "isotope_pairing":
+            # Audited public validator origins only; no kernel/observer errors.
+            _observation_contract(self._world)
+            from .isotope_pairing.eligibility import validate_spec
+            from .prototype_history import real, times
+            validators = [validate_spec, real, times]
+        else:
+            module = import_module("env." + self._world.name + ".protocol")
+            validators = [getattr(module, name) for name in ("validate_spec", "number", "integer")]
         try:
             return self._world.validate(deepcopy(spec))
         except ValueError as error:

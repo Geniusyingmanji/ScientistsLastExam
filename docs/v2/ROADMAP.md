@@ -145,3 +145,12 @@ identified: prospective schema preview assumes a protocol module with specific
 validator function names; isotope currently uses eligibility/prototype_history.
 Next implement explicit audited error provenance before isolated runner smoke.
 Registry unchanged; no paid calls and no new scientific calibration.
+
+2026-10-06 shared schema preview supports the exact isotope observation contract
+and audited validate_spec/real/times exception origins. Legal requests are copied;
+illegal public controls produce recoverable PublicSchemaRejected feedback.
+An injected operator ValueError is converted to generic infrastructure failure,
+with canary text withheld. 55 tests pass (27 isotope + prospective suite).
+New tests are method fixtures with no sampling, task startup or model calls.
+Remaining: frontier semantic contract/task profiles and full isolated lifecycle;
+these adapter tests do not establish a runnable registered research task.
