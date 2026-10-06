@@ -82,3 +82,9 @@ clipping. World and eligibility now share one validator. All12 isotope tests pas
 Adapter is internal acquired-observation handling, NOT a public report exporter;
 it cannot authenticate noisy-vs-clean provenance. Trusted orchestration still
 required. Next audit shared runner integration and prospective noise contracts.
+
+Isotope admission audit saved in ISOTOPE_ADMISSION.md: explicit remaining gates
+for claims, prediction scoring, archive allowlist, presentation and isolation.
+Local predeclared-contrast noise helper added, not connected to shared runner;
+14 isotope tests pass. Next: implement one versioned end-to-end operator path
+with no model calls; do not register based solely on helper coverage.
