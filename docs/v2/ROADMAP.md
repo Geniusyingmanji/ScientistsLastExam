@@ -88,3 +88,12 @@ for claims, prediction scoring, archive allowlist, presentation and isolation.
 Local predeclared-contrast noise helper added, not connected to shared runner;
 14 isotope tests pass. Next: implement one versioned end-to-end operator path
 with no model calls; do not register based solely on helper coverage.
+
+Operator-only isotope trial now connects frozen contrast, eligibility, fresh-noise
+observations, evidence validation, measured-mean uncertainty and cost accounting.
+Single-use including after failure; failed calls are charged. Integration smoke
+uses four successful World.run calls plus one deliberately failed wrapper call;
+not a scientific calibration or agent score. All17 isotope tests pass. Raw trial
+receipts remain private. NOT a sandbox, shared runner integration or mechanism
+certificate; wide intervals may be compatible without being informative. Next
+review persistent failure receipts and a versioned score contract before admission.
