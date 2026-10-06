@@ -36,3 +36,21 @@ not a tuned separation threshold. No fitting, model calls, hidden evaluation
 panels or difficulty claim. Preserve failures. Next gate: public apparatus,
 explicit finite-sampling cost and uncertainty, independent reference, then
 budgeted inference. Do not substitute Gaussian readout noise for lineage sampling.
+
+## Confounding gate frozen before execution
+
+Extend the synthetic survival probability to mu + L(H-p) + E(C-c), where H is
+founder state and C is preparation-batch state. The two sources are independent.
+Choose parameters with all four probabilities strictly inside [0,1]. In a pair,
+founder identity and batch identity can each be shared or independently assigned.
+Covariance equals I(shared founder)L²p(1-p) + I(shared batch)E²c(1-c).
+When both identities always coincide and L²p(1-p)=E²c(1-c), lineage-only and
+batch-only accounts agree in pair covariance. Crossed preparation separates them.
+This remains a synthetic experimental-design witness, not proof of genetics.
+
+Bounded validation: four sampling calls with fixed seed731, 20000 pairs and
+32 cells/group, one per 2x2 shared-identity condition. Check covariance against
+analytic expectation with a six-standard-error threshold. No fitting, tuning or
+extra samples after failure. Re-running old tests is regression only, not fresh
+scientific evidence. Full apparatus admission remains deferred until feasible
+sampling budgets, unit costs and uncertainty are calibrated.

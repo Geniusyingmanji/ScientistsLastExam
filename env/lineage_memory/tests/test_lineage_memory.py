@@ -17,3 +17,17 @@ def test_fixed_sampling_witness():
         products=(x[:,0]-mean)*(x[:,1]-mean)
         expected=cov if related else 0.
         assert abs(products.mean()-expected)<6*products.std(ddof=1)/np.sqrt(len(x))
+
+def test_crossed_grouping_distinguishes_confounds():
+    from env.lineage_memory.kernel import crossed_sample
+    for founder,batch in [(False,False),(True,False),(False,True),(True,True)]:
+        x=crossed_sample(.5,.3,.3,.5,.5,32,20000,731,founder,batch)
+        products=(x[:,0]-.5)*(x[:,1]-.5)
+        expected=(int(founder)+int(batch))*.3**2*.25
+        assert abs(products.mean()-expected)<6*products.std(ddof=1)/np.sqrt(len(x))
+
+def test_confound_boundary_validation():
+    import pytest
+    from env.lineage_memory.kernel import crossed_sample
+    with pytest.raises(ValueError):crossed_sample(.9,.8,.8,.5,.5,32,100,731)
+    with pytest.raises(ValueError):crossed_sample(.5,.3,.3,.5,.5,32,100,731,1,True)

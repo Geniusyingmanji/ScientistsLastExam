@@ -69,3 +69,5 @@ piecewise solver validation, then update aggregate HTML readiness report.
 2026-10-06 noisy isotope screen: 3 exposed instances, 30 World.run calls; reference feasible within fixed budget. 13 prototype tests pass. HTML updated. Next: population persistence candidate design with explicit washout/regrowth and stochastic budget; isotope shared adapters remain pending.
 
 Lineage-memory candidate: bulk two-state wrapper rejected. Operator-only common-founder covariance witness and two tests pass under frozen 3-call sampling plan. Not a World. Next: decide novelty versus isotope correlation, define finite-sampling apparatus and costs; no genetic-mechanism claim.
+
+Crossed founder/batch witness implemented; four lineage tests pass. Consolidated current progress at docs/reports/progress-v2.html. Next prioritize finite sampling costs and actual shared integration rather than counting task variants as worlds.
