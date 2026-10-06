@@ -187,3 +187,11 @@ prospective test. Twelve receipts verify. Local macOS has no bwrap; Linux
 prerequisite unmet. No retry/fallback/access probes. Next inspect available
 Linux runtime read-only, then freeze separate validation if feasible. This is
 an infrastructure limitation, not scientific difficulty or model performance.
+
+2026-10-06 Linux isotope smoke completed on g450:5 observations/96units and2
+isolated predictor calls, within frozen cap; remote receipt replay passed. No
+model calls. Two access-denial probes still pending. Archive-path collision on
+first download compromised preservation of prior macOS raw failure directory;
+recorded explicitly, distinct Linux archive created, remote Linux original intact.
+Next verify independent local Linux archive and execute the pending access probes;
+update consolidated HTML with this milestone and archive limitation.
