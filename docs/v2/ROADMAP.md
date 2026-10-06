@@ -253,3 +253,9 @@ freeze budgeted noisy fitting/transfer screen; candidate is operator-only.
 .377763 constant empirical, .000968 privileged layered. Single exposed instance,
 no API calls. Does not separate parameter uncertainty from model misspecification.
 Next address that distinction before claiming a scientific discrimination gate.
+
+2026-10-07 post-hoc seismic family audit:6LP solves propagate source uncertainty
+across the entire bounded homogeneous family. All3target ranges overlap their
+measurement intervals. Point-fit failure is not sufficient family rejection;
+joint feasibility remains untested. No new samples/API calls. Next one bounded
+joint feasibility solve before changing acquisition design or promoting candidate.
