@@ -233,3 +233,10 @@ DEFERRED under current policy, not admitted as a difficult task. Results in
 LINEAGE_FIXED_SCREEN.md, raw observations private. Next screen seismic inverse
 response for a distinct legal intervention and identifiability witness; avoid
 further unbounded refinement of the same lineage helper stack.
+
+2026-10-07 seismic screen rejects a homogeneous2parameter reflection task as a
+standalone high-difficulty world: squared travel time is linear in squared offset.
+SEISMIC_SCREEN.md freezes a layered-versus-homogeneous aperture witness with
+matched zero-offset and quadratic behavior,12total readouts and bounded solves.
+No numerical run yet. Next implement this witness and quantify validity-range
+separation, preserving layer-order ambiguity; no new paid calls.
