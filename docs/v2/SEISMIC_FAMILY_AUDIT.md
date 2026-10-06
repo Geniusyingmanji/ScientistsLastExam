@@ -21,3 +21,17 @@ This audit did NOT solve joint source-and-target feasibility, so it does not
 establish that one homogeneous parameter pair explains all observations.
 Next test joint feasibility as a separately bounded calculation, then decide
 whether a wider source aperture or tighter measurement design is required.
+
+Joint follow-up frozen before solve: one feasibility LP using all7existing
+observations, unchanged noise bound and parameter box; maximum1000iterations.
+No new measurements, tolerance changes or retry. Status2 means numerical
+infeasibility, not an independently certified exact-arithmetic proof. Preserve
+post-hoc designation. Feasible solution, if any, must satisfy original time
+intervals after square-root back-transform.
+Result: HiGHS returned status2(infeasible), presolve iterations0. No common
+parameter pair was found within the fixed simultaneous measurement bands and
+parameter box. Individual target-range overlap does not imply joint feasibility:
+each target may require different parameters. This supports a scoped post-hoc
+model-family inconsistency diagnostic, not a prospective discovery verdict,
+unique layered mechanism, or exact proof. Next use a fresh predeclared noisy
+instance/design for confirmation; do not reuse these targets as unseen evidence.

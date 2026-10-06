@@ -259,3 +259,10 @@ across the entire bounded homogeneous family. All3target ranges overlap their
 measurement intervals. Point-fit failure is not sufficient family rejection;
 joint feasibility remains untested. No new samples/API calls. Next one bounded
 joint feasibility solve before changing acquisition design or promoting candidate.
+
+2026-10-07 joint seismic audit completed: one bounded LP over all7existing
+observations returned infeasible(status2). Pointwise overlaps can coexist with
+no shared parameter solution. This is post-hoc numerical family inconsistency,
+not prospective significance or unique mechanism discovery. No new samples.
+Next independently review scope and freeze fresh confirmation before promotion;
+existing data are exposed development evidence.
