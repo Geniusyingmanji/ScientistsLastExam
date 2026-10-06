@@ -1,6 +1,7 @@
 import numpy as np
-from env.prototype_history import integer,real,times,observe
+from env.prototype_history import integer,observe
 from .kernel import predict
+from .eligibility import validate_spec
 
 class World:
     name='isotope_pairing';version='isotope_pairing-0.1.0';axis_field='times'
@@ -19,19 +20,7 @@ class World:
           'Independent Gaussian measurement errors of standard deviation .002 per channel, no clipping or process noise. Measured fractions need not sum exactly to one.'],
           schema={'times':'1..49 strictly increasing in [0,12]','source':'1..4 segments, first at=0; each {at, fractions:[00,10,01,11]}'},examples=[self.example()])
     def validate(self,s):
-        if not isinstance(s,dict) or set(s)!={'times','source'}:raise ValueError('expected times and source')
-        ts=times(s['times']);src=s['source']
-        if not isinstance(src,list) or not 1<=len(src)<=4:raise ValueError('source needs 1..4 segments')
-        rows=[]
-        for x in src:
-            if not isinstance(x,dict) or set(x)!={'at','fractions'}:raise ValueError('segment needs at and fractions')
-            q=x['fractions']
-            if not isinstance(q,list) or len(q)!=4:raise ValueError('fractions must have four numbers ordered 00,10,01,11')
-            q=[real(v,0,1,'fraction') for v in q]
-            if abs(sum(q)-1)>1e-10:raise ValueError('fractions must sum to one')
-            rows.append({'at':real(x['at'],0,12,'at'),'fractions':q})
-        if rows[0]['at']!=0 or any(b['at']<=a['at'] for a,b in zip(rows,rows[1:])):raise ValueError('source starts at zero and strictly increases')
-        return {'times':ts,'source':rows}
+        return validate_spec(s)
     def cost(self,s):
         s=self.validate(s);return 8+3*len(s['times'])+len(s['source'])
     def run(self,s,*,noise_key=None):

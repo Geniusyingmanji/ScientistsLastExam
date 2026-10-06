@@ -75,3 +75,10 @@ Crossed founder/batch witness implemented; four lineage tests pass. Consolidated
 Prediction-scope audit: original isotope RMSE is fresh-query known-family validation, not structural transfer; exposed static/history/ambiguity design fixtures added with two checks. Next implement assigned-cell mask and explicit claim/evidence adapters before registration.
 
 Isotope public eligibility helper added (not connected to shared scoring): excludes t=0, rejects identical histories and changes only at/after readout, validates channels/shapes. Three checks pass. No-observation sum channel unsupported; remaining cells not certified novel. Next consolidate duplicate validators and add evidence adapter before registry admission.
+
+Isotope observation adapter added; validates exact public keys, axis/channels,
+finite numeric shapes and detached copies; preserves additive noise without
+clipping. World and eligibility now share one validator. All12 isotope tests pass.
+Adapter is internal acquired-observation handling, NOT a public report exporter;
+it cannot authenticate noisy-vs-clean provenance. Trusted orchestration still
+required. Next audit shared runner integration and prospective noise contracts.
