@@ -202,3 +202,10 @@ archive verifies32receipts/1replayed test. This narrow check is not a comprehens
 sandbox audit. No API calls or new simulations. Prototype remains unregistered;
 next finish presentation/task contracts and evaluate lineage candidate finite
 sampling costs, avoiding further stand-alone integration helper proliferation.
+
+2026-10-06 lineage analytic cost gate: mean-free squared-difference contrast
+under equal marginals gives a conservative Hoeffding planning bound. Radius.01
+at95% needs18445pairs/arm, or2360960individuals with32/group; .005 exceeds
+single-call cap. One analytic planner test passes; no new random sampling.
+This is not a power calculation or impossibility claim. Candidate retained but
+not promoted; next evaluate variance-aware bounds under a frozen small design.

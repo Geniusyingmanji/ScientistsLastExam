@@ -54,3 +54,17 @@ analytic expectation with a six-standard-error threshold. No fitting, tuning or
 extra samples after failure. Re-running old tests is regression only, not fresh
 scientific evidence. Full apparatus admission remains deferred until feasible
 sampling budgets, unit costs and uncertainty are calibrated.
+
+## Conservative finite-sampling screen (analytic only)
+For X,Y in [0,1], D=(X-Y)^2 lies in [0,1]. With identical marginal
+means/variances across grouping arms, E[D]=2(Var(X)-Cov(X,Y)). Thus independent
+arm samples Z=(D_control-D_treatment)/2 estimate covariance increase without
+knowing the population mean. Z lies in [-.5,.5]; a fixed single-contrast
+Hoeffding radius is sqrt(log(2/alpha)/(2m)). Pair draws must be independent.
+At alpha=.05 and radius .01, m=18445 pairs per arm. With32individuals/group,
+two groups/pair and two arms, this costs2360960simulated individuals. Radius
+.005 exceeds the current20000pair per-call cap. This is a conservative bound,
+not a lower bound, empirical power estimate or proof the task is infeasible.
+Decision: retain as candidate only; do not promote based on earlier20k-pair
+witness. Next compare justified variance-aware uncertainty and a small fixed
+budget design before implementing a full World. No sampling or fitting done.
