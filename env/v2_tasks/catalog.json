@@ -1,0 +1,10 @@
+{
+  "schema": "sle-v2-development-tasks-1",
+  "status": "prototype_not_runner_registered",
+  "tasks": [
+    {"id":"adaptation_history_transfer","world":"adaptive_signaling","question":"Build an account of the instrument's response to different stimulus histories. Freeze predictions for a new history before measuring it, and report where the account fails.","evidence":"Source observations, frozen executable prediction, fresh history observations, scoped revision.","operator_limit":"Stimulus-only observations cannot distinguish the matched realization pair. Do not reward recovery of a hidden family label."},
+    {"id":"adaptation_selective_reset","world":"adaptive_signaling","question":"Determine when the permitted auxiliary-state reset changes the measured response. Compare explanations compatible with your earlier observations and choose a test that could refute them.","evidence":"Two source-compatible predictions, reset timing chosen before the fresh observation, both-refuted and inconclusive outcomes allowed.","operator_limit":"Reset after adaptation may have negligible power; a negative result does not identify architecture."},
+    {"id":"tracer_pause_recovery","world":"retention_transport","question":"Investigate whether recovery depends only on accumulated imposed flow or also on its timing. Design matched histories and predict the effect of changing the pause duration.","evidence":"Matched cumulative-flow design, frozen contrast, replicated noisy observations and uncertainty.","operator_limit":"Only nonnegative flow is legal. Flow reversal is unavailable. Narrow parameter regimes can remain practically ambiguous."},
+    {"id":"tracer_history_boundary","world":"retention_transport","question":"Find conditions under which a predictor fitted to steady operation remains useful after a change in flow history. Predeclare the tested histories and tolerance and retain counterexamples.","evidence":"Frozen predictor and finite history grid; adequate, inadequate and inconclusive outcomes reported separately.","operator_limit":"A finite tested grid does not establish a continuous validity boundary or unique internal geometry."}
+  ]
+}
