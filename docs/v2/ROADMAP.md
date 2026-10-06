@@ -225,3 +225,11 @@ improvement over original distribution-free bound. Three deterministic helper
 tests pass; no sampling/model calls. Next priority is a frozen finite-sampling
 comparison of candidate-visible intervals, then decide whether to admit or defer
 lineage; do not count this helper as a new environment.
+
+2026-10-07 fixed lineage screen finished:6sampling calls,768000individuals,
+three predeclared fixtures with Bonferroni-adjusted intervals. Strong effect
+excludes zero, weak and null remain unresolved; no retries. Full lineage World
+DEFERRED under current policy, not admitted as a difficult task. Results in
+LINEAGE_FIXED_SCREEN.md, raw observations private. Next screen seismic inverse
+response for a distinct legal intervention and identifiability witness; avoid
+further unbounded refinement of the same lineage helper stack.
