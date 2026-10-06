@@ -240,3 +240,10 @@ SEISMIC_SCREEN.md freezes a layered-versus-homogeneous aperture witness with
 matched zero-offset and quadratic behavior,12total readouts and bounded solves.
 No numerical run yet. Next implement this witness and quantify validity-range
 separation, preserving layer-order ambiguity; no new paid calls.
+
+2026-10-07 seismic aperture witness implemented: matched homogeneous/layered
+curves differ by~4e-8 at offset.1 and~.0519 at4. Independent minimum-path
+validation passes; layer permutation remains exactly ambiguous. Twelve screen
+readouts plus22regression readouts and6independent path checks recorded. No
+noise precision had been fixed, so no noise-separation success claim. Next
+freeze budgeted noisy fitting/transfer screen; candidate is operator-only.

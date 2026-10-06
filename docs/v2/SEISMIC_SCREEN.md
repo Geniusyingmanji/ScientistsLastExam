@@ -43,3 +43,20 @@ large-offset model rejection must exceed a declared measurement precision while
 small-offset agreement is quantified, not asserted. Next implement only this
 operator witness. Full World remains deferred until a distinct multilayer task,
 finite experimental budget and non-unique interpretations are specified.
+
+## Numerical witness result
+Residual layered-minus-homogeneous at offsets[0,.1,.5,1,2,4]:
+[0,-3.998e-8,-2.465e-5,-.0003783,-.0051939,-.0518925].
+Layered nonzero solves used[6,7,7,8,11]iterations. The12planned readouts
+completed. Additional regression validation evaluated22readouts (including
+homogeneous limit, symmetry and layer permutation) plus6independent path checks
+(5bounded minimizations and1zero-offset analytic evaluation); these are separate
+from the12readout screen. One test passes. No noise or model calls.
+
+Layer permutation gives identical results: bottom-reflection travel times do
+not recover layer order in this model. Aperture reveals failure of the matched
+homogeneous approximation, not unique subsurface structure. No measurement
+precision was numerically fixed in the original plan, so do not retroactively
+claim a passed noise-separation gate. Next freeze a noisy precision/budget and
+source-fit/held-out aperture design before further scientific runs. Status:
+operator witness only, no World registration or confirmed high difficulty.
