@@ -1,6 +1,6 @@
 # Isotope isolated operator smoke plan v1
 
-Frozen before execution, 2026-10-06. Status: NOT EXECUTED.
+Frozen before execution, 2026-10-06. Status: EXECUTED ONCE; STOPPED AT SANDBOX STARTUP.
 Purpose: verify the actual private journal / candidate sandbox / prospective
 session lifecycle. No model calls and no scientific capability score.
 
@@ -50,3 +50,15 @@ code, observations, private seed or target outcomes.
 A successful operator smoke does not register the environment: task presentation,
 full claim semantics, calibration and initial-state adapters must still pass.
 A failure is an engineering result, not evidence of scientific difficulty.
+
+## Observed execution, 2026-10-06
+
+One source observation (24 units), one predictor startup attempt, 15 seconds
+charged prediction allowance. Startup failed before prediction; zero prospective
+tests completed and no target replicates collected. Twelve private receipts
+verified; no scientific conclusion. Host is macOS with no bwrap available; the
+secure worker requires a Linux/bubblewrap runtime. The generic runtime failure
+is consistent with this unmet prerequisite, not a measured model failure.
+Stopped without retry or in-process fallback. The two separate access probes
+were not run after startup failure. Future Linux validation requires a newly
+frozen, separately recorded development run; preserve this failure.

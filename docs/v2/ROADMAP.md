@@ -180,3 +180,10 @@ observations or predictors; 58 isotope/prospective tests pass. Initial test used
 an unsupported close reason and failed; corrected fixture to driver_stopped.
 No frozen smoke observation budget consumed. The complete planned scientific
 session and two isolation probes are still NOT EXECUTED; next run those once.
+
+2026-10-06 frozen isotope smoke ran once and stopped at sandbox startup:
+1 observation/24 units, 1 predictor attempt/15 seconds charged, no completed
+prospective test. Twelve receipts verify. Local macOS has no bwrap; Linux
+prerequisite unmet. No retry/fallback/access probes. Next inspect available
+Linux runtime read-only, then freeze separate validation if feasible. This is
+an infrastructure limitation, not scientific difficulty or model performance.
