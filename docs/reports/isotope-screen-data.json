@@ -1,0 +1,53 @@
+{
+  "schema": "sle-isotope-screen-1",
+  "status": "prototype",
+  "paid_model_requests": 0,
+  "scope": "Three exposed development instances; known-family author reference with supplied bounds. No difficulty or universal identifiability claim. Errors are dimensionless RMSE, not model scores.",
+  "instances": [
+    {
+      "world_run_calls": 10,
+      "training_experiments": 4,
+      "validation_experiments": 6,
+      "experiment_units": 604,
+      "fit_kernel_predictions": 156,
+      "validation_kernel_predictions": 6,
+      "cap_reached": false,
+      "rmse": {
+        "uninformed": 0.389687492411672,
+        "empirical": 0.13493581573656863,
+        "author_reference": 0.00013076722693969013
+      },
+      "wall_seconds": 0.012365957998554222
+    },
+    {
+      "world_run_calls": 10,
+      "training_experiments": 4,
+      "validation_experiments": 6,
+      "experiment_units": 604,
+      "fit_kernel_predictions": 168,
+      "validation_kernel_predictions": 6,
+      "cap_reached": false,
+      "rmse": {
+        "uninformed": 0.3884505125386657,
+        "empirical": 0.14730497438037224,
+        "author_reference": 5.380421459823264e-05
+      },
+      "wall_seconds": 0.006609165997360833
+    },
+    {
+      "world_run_calls": 10,
+      "training_experiments": 4,
+      "validation_experiments": 6,
+      "experiment_units": 604,
+      "fit_kernel_predictions": 144,
+      "validation_kernel_predictions": 6,
+      "cap_reached": false,
+      "rmse": {
+        "uninformed": 0.36483993038811124,
+        "empirical": 0.12253242616676896,
+        "author_reference": 0.00029050325985162124
+      },
+      "wall_seconds": 0.005156874991371296
+    }
+  ]
+}

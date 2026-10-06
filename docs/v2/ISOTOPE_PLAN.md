@@ -19,3 +19,17 @@ independent source and correlated-source separation, reproducibility and schema.
 Stop on failed invariant. These tests do not certify high difficulty or full
 biochemical realism. Next unit freezes a bounded noisy inference screen before
 fitting; no reference score is claimed in this unit. Keep unregistered.
+
+## Screen frozen before execution — 2026-10-06
+
+Three exposed development instances 100,101,202. Per instance: four noisy
+training experiments and six clean validation queries, with panel seeds 710/711
+(three each conditions/interventions). Training includes independent labeling,
+positively correlated labeling, anticorrelated labeling and correlated pulse/chase.
+Fit a known two-parameter family with supplied bounds rate [0.1,2], scrambling
+[0,1], two fixed starts, max_nfev80 and a hard cap of 2000 kernel predictions
+per instance. Compare uninformed unlabeled-product and nearest-history empirical
+baselines. No adaptive widening of budgets or additional starts. Record every
+fit prediction, validation prediction and World.run call; cap failures retained.
+Do not publish sampled parameters or validation targets. These three instances
+are not unseen evaluation cases. Success is scoped feasibility, not model hardness.
