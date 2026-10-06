@@ -71,3 +71,5 @@ piecewise solver validation, then update aggregate HTML readiness report.
 Lineage-memory candidate: bulk two-state wrapper rejected. Operator-only common-founder covariance witness and two tests pass under frozen 3-call sampling plan. Not a World. Next: decide novelty versus isotope correlation, define finite-sampling apparatus and costs; no genetic-mechanism claim.
 
 Crossed founder/batch witness implemented; four lineage tests pass. Consolidated current progress at docs/reports/progress-v2.html. Next prioritize finite sampling costs and actual shared integration rather than counting task variants as worlds.
+
+Prediction-scope audit: original isotope RMSE is fresh-query known-family validation, not structural transfer; exposed static/history/ambiguity design fixtures added with two checks. Next implement assigned-cell mask and explicit claim/evidence adapters before registration.
