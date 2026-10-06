@@ -216,3 +216,12 @@ known-parameter two-call analytic screen yields sufficient975pairs/arm for.01
 radius via Chebyshev, versus18445 distribution-free. No sampling/API calls.
 This demonstrates potential budget headroom only with privileged parameters;
 next design candidate-accessible uncertainty, not an automatic World promotion.
+
+2026-10-07 observation-only lineage interval implemented: fixed single-contrast
+Hoeffding interval for half reduction in expected squared pair difference, bounded
+to[-.5,.5]. Covariance interpretation is explicitly unverified unless marginals
+match across arms. No hidden parameters, optional-stopping claim or precision
+improvement over original distribution-free bound. Three deterministic helper
+tests pass; no sampling/model calls. Next priority is a frozen finite-sampling
+comparison of candidate-visible intervals, then decide whether to admit or defer
+lineage; do not count this helper as a new environment.
