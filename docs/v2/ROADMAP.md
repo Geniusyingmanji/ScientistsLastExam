@@ -115,3 +115,13 @@ isotope tests pass. No new scientific sampling or model evaluation. Private
 operator journaling and uncertainty helpers are still not shared-runner adapters.
 Next bounded unit: connect exposed development fixtures to these metrics and
 verify panel provenance before shared integration review.
+
+2026-10-06 exposed metric binding complete: fixed IDs map the five existing
+public fixtures to 2 recipe / 2 history / 1 ambiguity experiments; SHA-256 binds
+the entire exposed design. Missing/extra IDs or stale design hashes fail closed;
+callers cannot relabel axes. All22 isotope tests pass using synthetic arrays,
+with zero new World.run or model calls. This authenticates design consistency,
+not target provenance or prediction isolation. Trusted target acquisition and
+shared-runner integration remain pending; no registry admission. Next bounded
+unit: review candidate integration gates and prioritize completing one usable
+research task over adding further isolated helpers.
