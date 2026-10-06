@@ -195,3 +195,10 @@ first download compromised preservation of prior macOS raw failure directory;
 recorded explicitly, distinct Linux archive created, remote Linux original intact.
 Next verify independent local Linux archive and execute the pending access probes;
 update consolidated HTML with this milestone and archive limitation.
+
+2026-10-06 two planned Linux access probes executed once each: candidate
+private-file read and isotope kernel import both denied. Independent local Linux
+archive verifies32receipts/1replayed test. This narrow check is not a comprehensive
+sandbox audit. No API calls or new simulations. Prototype remains unregistered;
+next finish presentation/task contracts and evaluate lineage candidate finite
+sampling costs, avoiding further stand-alone integration helper proliferation.
