@@ -203,12 +203,14 @@ def _observation_contract(world):
 class ProspectiveTask:
     """Trusted operator API. Only public specs enter candidate RPC calls."""
 
-    def __init__(self, environment, seed, directory, *, limits=None, frontier=False):
-        if frontier and environment not in {"molecular_forces", "climate_response", "catalyst_aging", "field_ecology", "phase_equilibria"}:
+    def __init__(self, environment, seed, directory, *, limits=None, frontier=False, prototype=False):
+        if type(prototype) is not bool or (prototype and (environment != "isotope_pairing" or not frontier)):
+            raise ValueError("prototype mode requires isotope_pairing frontier workflow")
+        if frontier and not prototype and environment not in {"molecular_forces", "climate_response", "catalyst_aging", "field_ecology", "phase_equilibria"}:
             raise ValueError("frontier readout eligibility is not audited for this environment")
         self._frontier = frontier
         self._limits = _limits(limits)
-        if environment not in ENVIRONMENTS + ("prospective_fixture",):
+        if not prototype and environment not in ENVIRONMENTS + ("prospective_fixture",):
             raise ValueError("unknown environment")
         if type(seed) is not int or not 0 <= seed < 2 ** 63:
             raise ValueError("invalid operator seed")
@@ -229,13 +231,19 @@ class ProspectiveTask:
                        "predictor_attempts": 0, "predictor_seconds_charged": 0.0,
                        "predictor_seconds_actual": 0.0, "simulation_seconds_actual": 0.0}
         try:
-            self._world = _FixtureWorld(seed) if environment == "prospective_fixture" else load_world(environment, seed)[0]
+            if prototype:
+                from .isotope_pairing.world import World as IsotopePrototype
+                self._world = IsotopePrototype(seed)
+            else:
+                self._world = _FixtureWorld(seed) if environment == "prospective_fixture" else load_world(environment, seed)[0]
             self._contract = _observation_contract(self._world)
             binding = _runtime_binding(self._world)
             self._runtime_id = digest(binding)
             metadata = {"protocol": RUNNER_PROTOCOL, "environment": environment, "private_world_seed": seed,
                         "world_version": self._world.version, "limits": self._limits,
                         "runtime_binding": binding, "runtime_id": self._runtime_id}
+            if prototype:
+                metadata["prototype_operator_only"] = True
             if self._frontier:
                 metadata["scientific_workflow"] = "single_or_two_predictors_frontier_v0.2"
             _atomic_json(self.directory / "operator-private.json", metadata)

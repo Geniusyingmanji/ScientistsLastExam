@@ -171,3 +171,12 @@ ISOTOPE_ISOLATION_PLAN.md sets one operator smoke, 5 observations/128 units,
 2 prediction calls and two separate source-access probes; no retries/API calls.
 Plan has NOT run. Next implement explicit opt-in prototype constructor without
 broad registry admission, freeze the exact request, then execute within this cap.
+
+2026-10-06 operator constructor entry implemented: prototype=True is explicit,
+boolean-only, isotope-only and requires frontier mode. Default registry/CLI
+choices unchanged. Exact observation contract is checked and private metadata
+marks prototype_operator_only. Constructor/checkpoint/close test passed without
+observations or predictors; 58 isotope/prospective tests pass. Initial test used
+an unsupported close reason and failed; corrected fixture to driver_stopped.
+No frozen smoke observation budget consumed. The complete planned scientific
+session and two isolation probes are still NOT EXECUTED; next run those once.
