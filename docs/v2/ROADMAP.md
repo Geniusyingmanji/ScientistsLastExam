@@ -106,3 +106,12 @@ are regression/smoke runs, not new scientific evidence. Abrupt termination may
 leave a final attempt without outcome; disk failure cannot guarantee a terminal
 receipt. Raw journals must never be published. Next: formal per-axis prediction
 score contract and integration review; no registry admission yet.
+
+2026-10-06 development metric contract: isotope-development-rmse-1 reports
+new-recipe, new-history and ambiguity-control RMSE separately, with equal
+experiment weights and assigned t=0 excluded. Missing panels are null, invalid
+predictions fail explicitly, no overall or discovery score is invented. All20
+isotope tests pass. No new scientific sampling or model evaluation. Private
+operator journaling and uncertainty helpers are still not shared-runner adapters.
+Next bounded unit: connect exposed development fixtures to these metrics and
+verify panel provenance before shared integration review.
