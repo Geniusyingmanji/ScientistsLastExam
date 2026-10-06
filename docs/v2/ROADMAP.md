@@ -247,3 +247,9 @@ validation passes; layer permutation remains exactly ambiguous. Twelve screen
 readouts plus22regression readouts and6independent path checks recorded. No
 noise precision had been fixed, so no noise-separation success claim. Next
 freeze budgeted noisy fitting/transfer screen; candidate is operator-only.
+
+2026-10-07 seismic noisy screen completed within cap:2kernel calls/7readouts,
+9fit calls. Source RMSE .000341; target RMSE .058373 for fitted homogeneous,
+.377763 constant empirical, .000968 privileged layered. Single exposed instance,
+no API calls. Does not separate parameter uncertainty from model misspecification.
+Next address that distinction before claiming a scientific discrimination gate.
