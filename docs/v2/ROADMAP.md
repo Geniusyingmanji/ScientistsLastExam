@@ -125,3 +125,11 @@ not target provenance or prediction isolation. Trusted target acquisition and
 shared-runner integration remain pending; no registry admission. Next bounded
 unit: review candidate integration gates and prioritize completing one usable
 research task over adding further isolated helpers.
+
+2026-10-06 first shared adapter: prospective_runner now explicitly accepts only
+isotope_pairing-0.1.0 with its exact channels, axis, scales and independent
+unclipped Gaussian SD contract. Changed versions/schema/noise fail closed.
+51 tests pass (23 isotope plus existing prospective tests), no World.run calls
+added by the new policy test and no paid calls. Registry unchanged. Next: audit
+shared public schema error sanitization and evidence allowlist before an isolated
+prospective task smoke run; this one adapter is not complete admission.

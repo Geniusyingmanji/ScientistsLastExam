@@ -8,7 +8,7 @@ Status: unregistered prototype, not runnable through the shared registry.
 | Prediction | t=0 mask exists separately | Wire to explicit versioned score contract; do not alter frozen v1 |
 | Claims | Pre-readout history check | Full submission schema, deduplication, uncertainty and task semantics |
 | Observation evidence | Strict local adapter, detached output | Shared archive allowlist, trusted provenance and raw-data boundary |
-| Prospective noise | Independent additive Gaussian, no clipping; mean bias zero | Explicit shared policy entry and integration tests |
+| Prospective noise | Independent additive Gaussian, no clipping; mean bias zero | Version-bound shared observation contract and rejection test now present; full prospective task integration remains pending |
 | Calibration | 3 exposed development instances | Initial-state semantics, wider instance calibration and structural split |
 | Presentation/isolation | No registration yet | Explicit task profiles, sandbox and source-exclusion smoke test |
 

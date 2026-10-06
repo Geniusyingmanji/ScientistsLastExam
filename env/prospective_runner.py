@@ -170,6 +170,18 @@ def _runtime_binding(world):
 
 
 def _observation_contract(world):
+    # Prototype integration is explicit and version-bound; this does not register
+    # the world or approve its other claim/task/archive adapters.
+    if world.name == "isotope_pairing":
+        if (world.version != "isotope_pairing-0.1.0" or world.axis_field != "times"
+                or tuple(world.channels) != ("unlabeled", "single_label", "double_label")
+                or tuple(world.scales) != (1.0, 1.0, 1.0)
+                or tuple(world.noise_std) != (0.002, 0.002, 0.002)):
+            raise ValueError("unsupported isotope observation contract")
+        return {"environment": world.name, "world_version": world.version,
+                "axis_field": world.axis_field, "channels": list(world.channels),
+                "scales": list(world.scales), "noise_std": list(world.noise_std),
+                "noise_mean_bias_bound": [0.0, 0.0, 0.0]}
     additive = {"coupled_oscillators", "reaction_kinetics", "heat_transport", "gene_regulation",
                 "ising_spin", "hysteresis_material", "orbital_dynamics", "pattern_formation",
                 "electrical_impedance", "spin_echo", "population_drift", "prospective_fixture",
