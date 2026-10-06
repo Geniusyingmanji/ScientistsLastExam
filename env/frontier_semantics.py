@@ -25,7 +25,7 @@ import math
 
 
 _ENVIRONMENTS = {'molecular_forces', 'climate_response', 'catalyst_aging',
-                 'field_ecology', 'phase_equilibria'}
+                 'field_ecology', 'phase_equilibria', 'isotope_pairing'}
 _MOLECULAR_CHANNELS = ('energy_ev',) + tuple('f%d%s_ev_per_a' % (i, a)
                                           for i in (1, 2, 3) for a in 'xyz')
 _CLIMATE_CHANNELS = ('surface_temperature_anomaly_k', 'toa_imbalance_w_m2')
@@ -78,7 +78,19 @@ def readout_key(environment, spec, row, channel):
     if not isinstance(spec, dict):
         raise ValueError('canonical experiment must be a mapping')
     try:
-        if environment == 'molecular_forces':
+        if environment == 'isotope_pairing':
+            from .isotope_pairing.eligibility import validate_spec, CHANNELS
+            canonical = validate_spec(spec)
+            channel = _channel(channel, CHANNELS)
+            time = _number(_row(canonical['times'], row))
+            prefix = []
+            for event in canonical['source']:
+                if event['at'] >= time:
+                    break  # Continuous product cannot jump at the readout.
+                if not prefix or event['fractions'] != prefix[-1]['fractions']:
+                    prefix.append(deepcopy(event))
+            controls = {'time': time, 'source_prefix': prefix}
+        elif environment == 'molecular_forces':
             channel = _channel(channel, _MOLECULAR_CHANNELS)
             geometry = _row(spec['configurations'], row)
             _row(spec['configuration_ids'], row)
@@ -136,6 +148,8 @@ def eligible_target(environment, spec, row, channel):
     a static index of zero nor habitat zero means an assigned initial value.
     """
     readout_key(environment, spec, row, channel)
+    if environment == 'isotope_pairing':
+        return _number(_row(spec['times'], row)) > 0
     if environment == 'phase_equilibria':
         return _number(spec['loading']) != 0
     if environment == 'catalyst_aging':

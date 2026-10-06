@@ -154,3 +154,13 @@ with canary text withheld. 55 tests pass (27 isotope + prospective suite).
 New tests are method fixtures with no sampling, task startup or model calls.
 Remaining: frontier semantic contract/task profiles and full isolated lifecycle;
 these adapter tests do not establish a runnable registered research task.
+
+2026-10-06 isotope readout semantics: shared identity uses selected time/channel
+and causal source prefix, dropping changes at/after readout and redundant
+same-recipe segments. Other requested rows do not create novel evidence. Initial
+values are ineligible targets. 57 tests pass (29 isotope + prospective suite).
+These identities collapse only documented control aliases, not all algebraic
+or hidden-model equivalences; eligibility is not scientific novelty. No sampling
+in new tests. Registry and ProspectiveTask construction gate remain closed until
+task/presentation and isolated end-to-end review. Next freeze a bounded operator
+smoke plan and audit all constructor/session gates before enabling that path.
