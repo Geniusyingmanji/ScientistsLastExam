@@ -164,3 +164,10 @@ or hidden-model equivalences; eligibility is not scientific novelty. No sampling
 in new tests. Registry and ProspectiveTask construction gate remain closed until
 task/presentation and isolated end-to-end review. Next freeze a bounded operator
 smoke plan and audit all constructor/session gates before enabling that path.
+
+2026-10-06 constructor audit: isotope cannot currently enter ProspectiveTask even
+with the implemented adapters; both constructor allowlists remain closed. Frozen
+ISOTOPE_ISOLATION_PLAN.md sets one operator smoke, 5 observations/128 units,
+2 prediction calls and two separate source-access probes; no retries/API calls.
+Plan has NOT run. Next implement explicit opt-in prototype constructor without
+broad registry admission, freeze the exact request, then execute within this cap.
