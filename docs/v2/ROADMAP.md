@@ -268,3 +268,9 @@ Next independently review scope and freeze fresh confirmation before promotion;
 existing data are exposed development evidence.
 
 2026-10-07 fresh-context result-to-claim review supports only fresh confirmation (same-family/provisional, medium confidence). Numerical evidence corroborated; script/solver/chronology provenance incomplete. No new noisy experiment. See SEISMIC_REVIEW.md.
+
+2026-10-07 fresh-noise seismic confirmation completed with saved executable and
+chronology: layered fixture numerically infeasible, homogeneous control feasible.
+2kernel calls/14readouts,2LPs,source hashes match. This is new noise on exposed
+structures, not new-world validation. Confirmation review pending; next inspect
+numerical certificate and update consolidated report before further scope growth.
