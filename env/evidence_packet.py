@@ -107,6 +107,7 @@ ECOLOGY = {"initial": {key: N for key in ("A", "B", "C", "nutrient")},
            "events": [{"time_h": N, "feed": N, "temperature_c": N,
                        "deplete": {"channel": T, "fraction": N}}]}
 SPECS = {
+    "isotope_pairing": {"times": [N], "source": [{"at": N, "fractions": [N]}]},
     "microecology": ECOLOGY, "microecology_causal": ECOLOGY,
     "coupled_oscillators": {"times": [N], "initial_position": [N], "initial_velocity": [N],
         "mass_add": [N], "damping_add": [N], "cut_edges": [[T]], "clamp": [T],
@@ -133,6 +134,7 @@ SPECS = {
                   "pulses": [{"time_ms": N, "angle_rad": N, "phase_rad": N}]},
 }
 AXIS = {
+    "isotope_pairing": "times",
     "microecology": "times_h", "microecology_causal": "times_h",
     "coupled_oscillators": "times", "heat_transport": "times",
     "reaction_kinetics": "times_s", "gene_regulation": "times_h",
@@ -168,6 +170,9 @@ def _spec(value, environment):
     result = _project(value, SPECS[environment], exact=True)
     if AXIS[environment] not in result:
         raise ValueError("missing observation axis")
+    if environment == "isotope_pairing":
+        from .isotope_pairing.eligibility import validate_spec
+        result = validate_spec(result)
     return result
 
 
@@ -177,6 +182,10 @@ def _record(value, environment):
     result = {"id": _id(value["id"]), "spec": _spec(value["spec"], environment),
               "observation": _project(value["observation"], OBSERVATION)}
     observation = result["observation"]
+    if environment == "isotope_pairing":
+        from .isotope_pairing.eligibility import CHANNELS
+        if observation.get("channels") != list(CHANNELS):
+            raise ValueError("isotope channel order mismatch")
     if (set(observation) != set(OBSERVATION) or not observation["channels"]
             or len(set(observation["channels"])) != len(observation["channels"])
             or observation["axis"] != result["spec"][AXIS[environment]]

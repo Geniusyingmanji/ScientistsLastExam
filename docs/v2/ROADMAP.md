@@ -133,3 +133,15 @@ unclipped Gaussian SD contract. Changed versions/schema/noise fail closed.
 added by the new policy test and no paid calls. Registry unchanged. Next: audit
 shared public schema error sanitization and evidence allowlist before an isolated
 prospective task smoke run; this one adapter is not complete admission.
+
+2026-10-06 shared evidence adapter added: isotope controls pass an exact field
+allowlist plus legal-control validation; recorded observations require canonical
+channel order and preserve unclipped measurements. Canary checks show operator
+metadata/clean targets removed and unexpected nested spec fields rejected.
+38 tests and 5 subtests pass (isotope + existing evidence packet suite), using
+inert records for new tests. These interaction packets contain raw observations
+and remain private review material, NOT public HTML exports. Remaining blocker
+identified: prospective schema preview assumes a protocol module with specific
+validator function names; isotope currently uses eligibility/prototype_history.
+Next implement explicit audited error provenance before isolated runner smoke.
+Registry unchanged; no paid calls and no new scientific calibration.
