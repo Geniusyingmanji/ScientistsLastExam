@@ -18,4 +18,4 @@ def test_homogeneous_limit_and_layer_permutation():
             r=minimize_scalar(f,bounds=(0,x/2),method='bounded',options={'xatol':1e-12,'maxiter':100})
             assert r.success
             expected=r.fun
-        assert t==pytest.approx(expected,abs=1e-10)
+        assert t==pytest.approx(expected,abs=1e-10,rel=0)
