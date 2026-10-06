@@ -73,3 +73,5 @@ Lineage-memory candidate: bulk two-state wrapper rejected. Operator-only common-
 Crossed founder/batch witness implemented; four lineage tests pass. Consolidated current progress at docs/reports/progress-v2.html. Next prioritize finite sampling costs and actual shared integration rather than counting task variants as worlds.
 
 Prediction-scope audit: original isotope RMSE is fresh-query known-family validation, not structural transfer; exposed static/history/ambiguity design fixtures added with two checks. Next implement assigned-cell mask and explicit claim/evidence adapters before registration.
+
+Isotope public eligibility helper added (not connected to shared scoring): excludes t=0, rejects identical histories and changes only at/after readout, validates channels/shapes. Three checks pass. No-observation sum channel unsupported; remaining cells not certified novel. Next consolidate duplicate validators and add evidence adapter before registry admission.
