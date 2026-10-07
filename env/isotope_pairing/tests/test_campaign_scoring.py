@@ -34,3 +34,13 @@ def test_submission_validation_and_reversed_duplicate():
     assert out['score']==out['claims'][0]['score']/3
     sub['claims'][0]['interval']=[0.,float('nan')]
     with pytest.raises(ValueError):score.validate_submission(sub,w,[{'id':'obs-1'}])
+
+
+def test_numeric_ndarray_matches_list_and_rejects_invalid_types():
+    import numpy as np
+    w=World(0);spec,_=pair();observed=w.run(spec)
+    array=np.asarray(observed['values'])
+    assert score.prediction_metrics(array,observed,w.scales,world=w,spec=spec)==score.prediction_metrics(array.tolist(),observed,w.scales,world=w,spec=spec)
+    for invalid in (array.astype(bool),array.astype(complex),array.astype(object),array[:1],array*np.nan):
+        with pytest.raises(ValueError):
+            score.prediction_metrics(invalid,observed,w.scales,world=w,spec=spec)

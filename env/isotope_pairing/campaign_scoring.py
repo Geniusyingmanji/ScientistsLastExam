@@ -11,7 +11,7 @@ from env.scoring import canonical_hash
 from .eligibility import validate_spec, contrast_eligibility, prediction_mask
 from .metrics import experiment_error
 
-PROTOCOL = "isotope-batch-score-1.0"
+PROTOCOL = "isotope-batch-score-1.1"
 WEIGHTS = {"conditions": .5, "interventions": .3, "claims": .2}
 ERROR_SCALE = .1
 CLAIM_SLOTS = 3
@@ -47,6 +47,13 @@ def claim_eligibility(world,control,treatment,readout):
 def prediction_metrics(predicted,observed,scales,*,world,spec):
     if world.name!='isotope_pairing' or tuple(scales)!=(1.,1.,1.):
         raise ValueError('isotope metric requires its explicit world and scales')
+    # The sandbox transport supports numeric ndarrays as well as JSON lists.
+    # Normalize only real numeric arrays; retain strict shape/finite validation.
+    import numpy as np
+    if isinstance(predicted,np.ndarray):
+        if predicted.dtype.kind not in 'fiu':
+            raise ValueError('real numeric prediction array required')
+        predicted=predicted.tolist()
     r=experiment_error(spec,predicted,observed['values'])
     if r['status']!='scored':raise ValueError('no unassigned prediction cells')
     return {'normalized_rmse':r['rmse'],'score':100*math.exp(-r['rmse']/.1),

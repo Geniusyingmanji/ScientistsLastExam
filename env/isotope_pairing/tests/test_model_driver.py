@@ -49,7 +49,7 @@ def test_linux_isolated_episode(tmp_path):
         {'note':'Read public observations in isolation','analyze':{'code':
          "result = {'rows': len(records[0]['observation']['values'])}"}},
         {'note':'Freeze engineering fixture','submit':{
-         'predictor_code':"def predict(spec):\n    return [[1.,0.,0.] for t in spec['times']]\n",
+         'predictor_code':"import numpy as np\ndef predict(spec):\n    return np.asarray([[1.,0.,0.] for t in spec['times']])\n",
          'claims':[], 'explanation':'Engineering fixture, not a scientific reference.'}}])
     limits=dict(DEFAULT_LIMITS,rounds=3,exploration_rounds=2,panel_count=1,
         experiment_units=30000,analysis_active_seconds=60,wall_seconds=180,
