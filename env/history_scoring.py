@@ -6,14 +6,16 @@ import numpy as np
 from env.scoring import canonical_hash
 
 
-PROTOCOL = "history-batch-score-1.0"
+PROTOCOL = "history-batch-score-1.1"
+# Keep confirmation sampling stable across documentation-only revisions.
+CONFIRMATION_NOISE_NAMESPACE = "history-batch-score-1.0"
 WEIGHTS = {"conditions": .5, "interventions": .3, "claims": .2}
 ERROR_SCALE = .1
 CLAIM_SLOTS = 3
 CONFIRMATION_REPLICATES = 32
 CLAIM_SYSTEM = """Row is zero-based and must have positive time. Treatment and control
 readouts must have the same time. A continuous-history control change at or after that time cannot
-change that readout. Freeze a central90% interval for the mean of32 independent
+change that readout. All interval endpoints use the public observable units; claim scores normalize by its public channel scale. Freeze a central90% interval for the mean of32 independent
 fresh treatment-control differences. Reversed and redundant history contrasts
 are duplicates. Evidence IDs must refer to earlier observations. No mechanism
 label or positive result is required."""
@@ -22,7 +24,7 @@ label or positive result is required."""
 def score_contract():
     return {"protocol": PROTOCOL, "weights":dict(WEIGHTS),
         "prediction":"Separate condition and intervention panels; exclude assigned zero prefixes; public channel scales. Per experiment100*exp(-RMSE/.1), average experiments equally.",
-        "claims":"Three slots,32 independent noisy pairs each. IS=width+20*distance outside interval;100*exp(-IS/.1). Missing, ineligible or duplicate slots zero.",
+        "claims":"Three slots,32 independent noisy pairs each. IS=width+20*distance outside interval;100*exp(-IS/(.1*public_channel_scale)). Missing, ineligible or duplicate slots zero.",
         "scope":"Development numerical prediction/effect index, not mechanism or discovery depth. Restricted histories can remain nonidentifiable."}
 
 
@@ -148,7 +150,7 @@ def verify_claims(world, claims, confirmation_key):
         for replica in range(CONFIRMATION_REPLICATES):
             for arm in ("control", "treatment"):
                 # Hash length is fixed even for a long operator confirmation key.
-                key = canonical_hash([PROTOCOL, confirmation_key, index, arm, replica])
+                key = canonical_hash([CONFIRMATION_NOISE_NAMESPACE, confirmation_key, index, arm, replica])
                 arm_values[arm].append(float(world.run(claim[arm], noise_key=key)["values"][row][channel]))
         differences = np.asarray(arm_values["treatment"])-np.asarray(arm_values["control"])
         mean = float(differences.mean())

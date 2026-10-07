@@ -59,3 +59,18 @@ def test_real_linux_driver(name,tmp_path):
     assert r['status']=='completed',r['stop_reason']
     assert r['history'][1]['analysis']['ok']
     assert all(p['valid'] for ps in r['panels'].values() for p in ps)
+
+
+def test_claim_normalization_and_noise_namespace():
+    import math
+    from env.adaptive_signaling.world import World
+    from env.scoring import canonical_hash
+    w=World(100);a=w.example();b=deepcopy(a);b['stimulus'][0]['level']=1.5
+    claim=dict(id='scale',statement='test',control=a,treatment=b,
+        readout={'row':3,'channel':w.channels[0]},interval=[-1,1],evidence_ids=['obs-0001'],scope='test')
+    result=s.verify_claims(w,[claim],'namespace-fixture')['claims'][0]
+    expected=100*math.exp(-result['interval_score']/(.1*w.scales[0]))
+    assert result['score']==pytest.approx(expected)
+    key=canonical_hash(['history-batch-score-1.0','namespace-fixture',0,'control',0])
+    assert result['replicate_arm_values']['control'][0]==w.run(a,noise_key=key)['values'][3][0]
+    assert 'public_channel_scale' in s.score_contract()['claims']

@@ -1,6 +1,6 @@
 # Adaptive signaling
 
-A hidden adaptive instrument with an auxiliary-state intervention. This is a **synthetic unregistered prototype**, not part of the scored twelve-world evaluation. The Python World interface is implemented; shared registry selection, evidence packet and prospective-noise adapters remain disabled. An explicit operator model_driver now selects the shared runner with history-batch-score-1.0; Linux admission is recorded separately before any model campaign.
+A hidden adaptive instrument with an auxiliary-state intervention. This is a **synthetic unregistered prototype**, not part of the scored twelve-world evaluation. The Python World interface is implemented; shared registry selection, evidence packet and prospective-noise adapters remain disabled. An explicit operator model_driver now selects the shared runner with history-batch-score-1.1; Linux admission is recorded separately before any model campaign.
 
 Use `World(seed).describe()` for the public apparatus contract and example. Candidate-facing services must expose only budgeted noisy observations and that contract; `kernel.py`, seed, parameters, clean mode and panels are trusted-operator capabilities. There is no new MCP server for this prototype.
 
@@ -16,3 +16,5 @@ Numerical and identifiability checks are in `tests/`. Run the bounded author-inf
 
 ## Explicit model screening
 The driver uses versioned history scoring: 50% fresh-condition prediction, 30% intervention prediction and 20% fresh paired-claim calibration. Assigned initial/zero-input response cells do not earn prediction credit. Claims require different pre-readout causal histories; future changes, redundant segments and reversed duplicate contrasts do not earn discovery credit. Auxiliary resets at initial zero are excluded. Numeric scores do not certify mechanisms. Outputs may be real numeric NumPy arrays or lists. Existing kernels and frozen evaluations are unchanged.
+
+Score1.1 clarifies public channel normalization in the candidate contract. The confirmation-noise namespace stays at1.0, preserving samples across this text-only correction. The ongoing round2 stays frozen on its1.0 source.
