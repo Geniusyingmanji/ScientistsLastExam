@@ -17,9 +17,12 @@ v=v.replace('仍有缺项的总体成绩暂不发布。','本轮全部预定槽�
 def relink(m):
  u=m.group(1)
  if u.startswith(('#','http','mailto:')):return m.group(0)
+ if u.startswith('../../reports/'):
+  return 'href="'+u[len('../../reports/'):]+'"'
  if u in ['progress.html','v1_results.html','case_study.html']:return m.group(0)
  if u.split('#')[0] in ['overview-data.json','completion-repair-results.json','completion-repair-review.json']:u='data/'+u
- elif u=='environment-expansion.html':u='progress.html'
+ elif u in ('environment-expansion.html','progress-v2.html'):u='progress.html'
+ elif u in ('comparison.html','deepseek-continuation.html','deepseek-extended.html'):u='v1_results.html#paired-results'
  else:u='archive/reports/'+u
  return 'href="'+u+'"'
 v=re.sub(r'href="([^"]+)"',relink,v)
