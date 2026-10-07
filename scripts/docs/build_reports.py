@@ -31,12 +31,12 @@ v=v.replace('<a href="archive/reports/comparison.html">GPT × DeepSeek 对照</a
 progress='''<div class="notice"><strong>持续扩展已暂停。</strong>本页是当前工作快照；未启动 GPT 预算对齐实验，也没有新增付费模型评测。下一阶段先整理环境质量与文档，再由用户决定恢复。</div>'''
 progress+=section('results','已完成：V1 十二环境双模型评测',table(['项目','GPT-5.6','DeepSeek V4 Pro'],[['补齐后总分','72.84','73.33'],['新条件预测','73.90','80.63'],['干预预测','73.60','79.95'],['定量声明','69.05','45.14'],['输出 / 时间上限','8k / 1 小时','32k / 4 小时'],['累计请求（含失败、补跑）','1226','1034']])+'''<p>每模型 12 环境 × 3 实例 × 2 次重复。成功原运行保留，失败槽位使用预先指定补跑的首个有效结果；不是按最高分挑选。两模型总分接近，但分项特点不同，预算也不同，不能据此认定普适模型排名或发现深度。</p><p><a href="v1_results.html#paired-results">查看逐题成绩、六次配对、环境规律与评分</a> · <a href="case_study.html">查看三菌株完整案例</a></p>''')
 progress+=section('candidate-decisions','V2 候选与成熟度',table(['候选','当前证据 / 状态','尚未完成'],[
-['自适应信号 adaptive_signaling','独立原型；研究适应响应背后的竞争解释','共享适配、正式任务接入与更充分筛选'],
-['滞留输运 retention_transport','独立原型；研究表观延迟来自何种机制','共享适配、预算内辨识与泛化验证'],
+['自适应信号 adaptive_signaling','独立原型；研究适应响应背后的竞争解释','显式双模型driver已启动；结果待回收，共享注册尚未完成'],
+['滞留输运 retention_transport','独立原型；研究表观延迟来自何种机制','显式双模型driver已启动；辨识与泛化表现待回收'],
 ['同位素配对 isotope_pairing','原型与前瞻工作流、预算预览、请求示例；Linux 隔离执行验证','显式 driver 已完成双模型实测；评分更正与新难度版本筛选见上方；未作共享注册'],
 ['谱系记忆 lineage_memory','已做有限样本筛选；强信号可分，弱信号及零信号尚不能可靠区分','暂缓；需要候选可获得的不确定性估计'],
 ['地震孔径 seismic_aperture','竞争模型的数值辨识见证；新噪声确认中分层结构不可行、均匀对照可行','仍为算子验证；不是已注册世界、独立新世界泛化或机制唯一性证明']
-])+'''<p>目前三个环境原型均未作为新的正式模型评测任务注册。前两原型合计定义四个任务；候选验证、算子演示、完整环境和模型测评分别统计，避免把数量当成熟度。同位素已有 GPT / DeepSeek 开发实例结果，其他候选尚无模型成绩。</p>''')
+])+'''<p>目前三个环境原型均未作为新的正式模型评测任务注册。前两原型合计定义四个任务；候选验证、算子演示、完整环境和模型测评分别统计，避免把数量当成熟度。同位素已有模型结果；自适应信号和滞留输运正在双模型实测。</p>''')
 progress+=section('findings','已核验的进展与限制','''<ul><li>同位素：59 项相关本地测试通过；另有请求示例预览测试。Linux smoke 记录 5 个观测、96 预算单位、2 次隔离预测和 32 个接收记录；这些是工程验证，不是科学发现成功率。</li><li>地震：单点拟合在新条件失效，不足以排除整个模型家族；后续联合约束检验发现，逐点区间重叠仍可能不存在同一组共同参数。新噪声确认支持这一有限数值结论，审阅为同模型家族暂定。</li><li>谱系记忆：作者知道方差不等于科学 agent 能从预算内数据估计方差；候选因此暂缓，避免制造不可解“难题”。</li><li>已区分科学困难、接口/程序失败和服务故障。V1 预测分、声明分与机制发现分别解释。</li></ul><details><summary>工程审计事项</summary><p>曾发生 Linux 下载覆盖一部分旧 macOS 失败归档的事件，已记录；独立 Linux 归档已校验。历史开发记录保留在归档区，不能把缺失的旧证据当作已恢复。</p></details>''')
 progress+=section('next','持续迭代优先事项','''<ol><li>依据同位素实测高分设计有竞争机制的新版本，验证可辨识性后用新开发实例筛选。</li><li>对自适应信号、滞留输运逐一补足竞争解释、可区分实验、未解决区间和带先验标记的参考解。</li><li>用无观测、经验拟合与作者参考区分“科学难”与“接口难”；不以低分直接认证高难度。</li><li>正式新实例与评分在见模型结果前冻结。持续开展已授权的双模型 API 筛选；GPT 对齐实验继续暂缓。</li></ol>''')
 live_path=P/'data/difficulty-round1-progress.json'
@@ -47,6 +47,8 @@ if live_path.exists():
   progress=progress.replace('双模型难度筛选已恢复。','双模型难度筛选：详见上方核验状态。').replace('Stage A运行微生态与伊辛自旋；','Stage A已启动微生态与伊辛自旋，运行状态见上方；')
  rows=[[e['environment'],e['model'],e['status'],f"{e['score']:.2f}" if isinstance(e.get('score'),(int,float)) else '—'] for e in live['episodes']]
  progress=section('live-screening','首轮实测进度', ('<div class="notice">'+esc(live['monitoring_notice'])+'</div>' if live.get('monitoring_notice') else '')+'<p>Stage A 原始快照：'+esc(live['updated_at'])+'；已结束 '+str(live['closed'])+'/8。已计入请求 '+str(live['ledger']['started_attempts'])+'/128，同位素独立批次上限64请求，状态见上方。以下为单次开发运行，未汇总为最终难度结论。</p>'+table(['环境','模型','状态','单次分数'],rows)+'<p>GPT8k/1小时，DeepSeek32k/4小时；不同预算。已结束报告已归档并核验SHA-256。零API沙箱启动故障单独留档；不混入本表。低分仍需科学轨迹与参考可解性审阅。</p>')+progress
+ if live.get('history_round2'):
+  progress=section('history-screening','自适应信号与滞留输运 · 双模型实测中','<p>8次运行：每环境2个实例，每实例GPT与DeepSeek配对。预测权重50%新条件、30%干预、20%声明复验；排除已知零响应和无效因果对照。尚无最终分数。</p><p>'+esc(live['history_round2']['claim_caveat'])+'</p>')+progress
  if live.get('isotope_sidecar'):
   side=live['isotope_sidecar']
   sr=[[x['model'],x['instance'],*[f"{x[k]:.2f}" for k in ('conditions','interventions','claims','score')]] for x in side['runs']]
