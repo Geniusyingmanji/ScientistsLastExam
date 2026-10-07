@@ -22,3 +22,16 @@ analytic/validation tests supplement the previous12 isotope tests.
 
 Next unit should wire one versioned integration path and test it end-to-end
 without model calls, rather than treating separate helpers as completed admission.
+
+## Current correction — 2026-10-07
+The table above is the initial audit, not current completion evidence. Since it:
+- Separate versioned development metrics and exact exposed-fixture binding exist.
+- Shared observation noise, evidence projection, public-error provenance and
+  causal readout identity adapters exist.
+- Explicit operator-only ProspectiveTask entry completed a Linux lifecycle and
+  two narrow source-access denial probes. General registry remains unchanged.
+- Candidate-facing history-validation instructions now accompany prototype
+  describe(); they do not reveal sampled coefficients or a required mechanism.
+Remaining: agent driver wiring, exact request examples/budget presentation,
+calibration and full admission review. Do not label the current operator workflow
+as a registered model environment. Original frozen campaigns are unaffected.

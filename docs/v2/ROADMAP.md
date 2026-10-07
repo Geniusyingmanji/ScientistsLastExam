@@ -276,3 +276,10 @@ structures, not new-world validation. Confirmation review pending; next inspect
 numerical certificate and update consolidated report before further scope growth.
 
 2026-10-07 Confirmation fresh review supports narrow run; hashes/LP constraints and direct contradiction checked. Same-family/provisional, no integrity audit. Reports updated with lineage deferral and seismic witness status. Next prioritize completing isotope task presentation rather than more seismic sampling.
+
+2026-10-07 isotope prototype describe() now includes candidate-facing research
+question, evidence requirements and operator workflow instructions. Explicitly
+states no agent driver registration or automatic depth score. Public apparatus
+invariant across two seeds; detached instructions tested.59isotope/prospective
+tests pass. No new scientific observations/API calls. Next complete concrete
+request examples and driver eligibility audit before claiming selectable task.

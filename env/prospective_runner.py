@@ -264,10 +264,14 @@ class ProspectiveTask:
         return deepcopy(self._limits)
 
     def describe(self):
-        return {"problem": deepcopy(self._world.describe()), "protocol": RUNNER_PROTOCOL,
+        description = {"problem": deepcopy(self._world.describe()), "protocol": RUNNER_PROTOCOL,
                 "observation_contract": deepcopy(self._contract),
                 "limits": deepcopy(self._limits), "runtime_id": self._runtime_id,
                 "mechanism_identified": False, "discovery_depth_certified": False}
+        if self._world.name == "isotope_pairing":
+            from .isotope_pairing.presentation import research_task
+            description["research_task"] = research_task()
+        return description
 
     def _remaining_wall(self):
         return self._limits["wall_seconds"] - (time.monotonic() - self._started)
