@@ -100,5 +100,36 @@
       "score": null
     }
   ],
-  "monitoring_notice": "同位素已启动4运行，最近核验44次请求、2次结束：GPT一项API故障，另一项零分已定位为评分器拒收NumPy数组的接口缺陷，不能作为科学难度证据；两次DeepSeek仍在运行。评分1.1修复已通过本地检查，Linux验证待完成，原批次保留。Stage A仍保留6份已结束报告及2次中断记录。"
+  "monitoring_notice": "同位素 Stage B 已结束：4 次运行、52 次请求（51 返回、1 次连接断开）。三个已提交预测器受评分器数组兼容问题影响；修复已通过 Linux 39 项测试，48 个封存面板重放全部有效。更正结果单独保存，原报告保留；GPT 第二实例缺失。独立审阅已复现全部48个面板，结论为同模型家族暂定；当前版本的高难度未获支持。后续持续双模型筛选，目标总并发16，累计预算与请求不设上限。",
+  "isotope_sidecar": {
+    "status": "同模型家族独立上下文审阅通过，结论暂定",
+    "requests": 52,
+    "api_failure": "RemoteDisconnected",
+    "runs": [
+      {
+        "model": "GPT-5.6",
+        "instance": "开发实例1",
+        "conditions": 99.9723436344786,
+        "interventions": 99.98090894688411,
+        "claims": 98.1082554408563,
+        "score": 99.6020955894758
+      },
+      {
+        "model": "DeepSeek",
+        "instance": "开发实例1",
+        "conditions": 99.87515439269293,
+        "interventions": 99.86818356940968,
+        "claims": 98.01986733067552,
+        "score": 99.50200573330447
+      },
+      {
+        "model": "DeepSeek",
+        "instance": "开发实例2",
+        "conditions": 99.914703907417,
+        "interventions": 99.93893106575234,
+        "claims": 94.17645335842492,
+        "score": 98.77432194511918
+      }
+    ]
+  }
 }

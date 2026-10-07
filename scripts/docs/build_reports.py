@@ -33,20 +33,26 @@ progress+=section('results','已完成：V1 十二环境双模型评测',table([
 progress+=section('candidate-decisions','V2 候选与成熟度',table(['候选','当前证据 / 状态','尚未完成'],[
 ['自适应信号 adaptive_signaling','独立原型；研究适应响应背后的竞争解释','共享适配、正式任务接入与更充分筛选'],
 ['滞留输运 retention_transport','独立原型；研究表观延迟来自何种机制','共享适配、预算内辨识与泛化验证'],
-['同位素配对 isotope_pairing','原型与前瞻工作流、预算预览、请求示例；Linux 隔离执行验证','显式 driver 已通过本地验证；新 driver 的 Linux 沙箱验证待完成，未注册、未调用模型'],
+['同位素配对 isotope_pairing','原型与前瞻工作流、预算预览、请求示例；Linux 隔离执行验证','显式 driver 已完成双模型实测；评分更正与新难度版本筛选见上方；未作共享注册'],
 ['谱系记忆 lineage_memory','已做有限样本筛选；强信号可分，弱信号及零信号尚不能可靠区分','暂缓；需要候选可获得的不确定性估计'],
 ['地震孔径 seismic_aperture','竞争模型的数值辨识见证；新噪声确认中分层结构不可行、均匀对照可行','仍为算子验证；不是已注册世界、独立新世界泛化或机制唯一性证明']
-])+'''<p>目前三个环境原型均未作为新的正式模型评测任务注册。前两原型合计定义四个任务；候选验证、算子演示、完整环境和模型测评分别统计，避免把数量当成熟度。V2 暂无 GPT / DeepSeek 新模型成绩。</p>''')
+])+'''<p>目前三个环境原型均未作为新的正式模型评测任务注册。前两原型合计定义四个任务；候选验证、算子演示、完整环境和模型测评分别统计，避免把数量当成熟度。同位素已有 GPT / DeepSeek 开发实例结果，其他候选尚无模型成绩。</p>''')
 progress+=section('findings','已核验的进展与限制','''<ul><li>同位素：59 项相关本地测试通过；另有请求示例预览测试。Linux smoke 记录 5 个观测、96 预算单位、2 次隔离预测和 32 个接收记录；这些是工程验证，不是科学发现成功率。</li><li>地震：单点拟合在新条件失效，不足以排除整个模型家族；后续联合约束检验发现，逐点区间重叠仍可能不存在同一组共同参数。新噪声确认支持这一有限数值结论，审阅为同模型家族暂定。</li><li>谱系记忆：作者知道方差不等于科学 agent 能从预算内数据估计方差；候选因此暂缓，避免制造不可解“难题”。</li><li>已区分科学困难、接口/程序失败和服务故障。V1 预测分、声明分与机制发现分别解释。</li></ul><details><summary>工程审计事项</summary><p>曾发生 Linux 下载覆盖一部分旧 macOS 失败归档的事件，已记录；独立 Linux 归档已校验。历史开发记录保留在归档区，不能把缺失的旧证据当作已恢复。</p></details>''')
-progress+=section('next','恢复后优先事项','''<ol><li>先让同位素原型完成共享 driver 接入、预算和观测语义验证，再决定是否注册。</li><li>对自适应信号、滞留输运逐一补足竞争解释、可区分实验、未解决区间和带先验标记的参考解。</li><li>用无观测、经验拟合与作者参考区分“科学难”与“接口难”；不以低分直接认证高难度。</li><li>正式新实例与评分在见模型结果前冻结。新的付费评测需另行安排；GPT 对齐实验继续暂缓。</li></ol>''')
+progress+=section('next','持续迭代优先事项','''<ol><li>依据同位素实测高分设计有竞争机制的新版本，验证可辨识性后用新开发实例筛选。</li><li>对自适应信号、滞留输运逐一补足竞争解释、可区分实验、未解决区间和带先验标记的参考解。</li><li>用无观测、经验拟合与作者参考区分“科学难”与“接口难”；不以低分直接认证高难度。</li><li>正式新实例与评分在见模型结果前冻结。持续开展已授权的双模型 API 筛选；GPT 对齐实验继续暂缓。</li></ol>''')
 live_path=P/'data/difficulty-round1-progress.json'
 if live_path.exists():
  live=json.loads(live_path.read_text())
- progress=progress.replace('持续扩展已暂停。','双模型难度筛选已恢复。').replace('本页是当前工作快照；未启动 GPT 预算对齐实验，也没有新增付费模型评测。下一阶段先整理环境质量与文档，再由用户决定恢复。','本轮已授权12运行、192请求、4并发。Stage A运行微生态与伊辛自旋；同位素接口仍在验证。GPT预算对齐实验未启动。')
+ progress=progress.replace('持续扩展已暂停。','双模型难度筛选已恢复。').replace('本页是当前工作快照；未启动 GPT 预算对齐实验，也没有新增付费模型评测。下一阶段先整理环境质量与文档，再由用户决定恢复。','首轮冻结批次已结束或中断，证据保留。持续迭代已获授权：目标总并发16，累计请求与预算不设上限；GPT预算对齐实验仍暂缓。')
  if live.get('monitoring_notice'):
   progress=progress.replace('双模型难度筛选已恢复。','双模型难度筛选：详见上方核验状态。').replace('Stage A运行微生态与伊辛自旋；','Stage A已启动微生态与伊辛自旋，运行状态见上方；')
  rows=[[e['environment'],e['model'],e['status'],f"{e['score']:.2f}" if isinstance(e.get('score'),(int,float)) else '—'] for e in live['episodes']]
- progress=section('live-screening','首轮实测进度', ('<div class="notice">'+esc(live['monitoring_notice'])+'</div>' if live.get('monitoring_notice') else '')+'<p>最后核验：'+esc(live['updated_at'])+'；已结束 '+str(live['closed'])+'/8。已计入请求 '+str(live['ledger']['started_attempts'])+'/128，同位素独立批次上限64请求，状态见上方。以下为单次开发运行，未汇总为最终难度结论。</p>'+table(['环境','模型','状态','单次分数'],rows)+'<p>GPT8k/1小时，DeepSeek32k/4小时；不同预算。已结束报告已归档并核验SHA-256。零API沙箱启动故障单独留档；不混入本表。低分仍需科学轨迹与参考可解性审阅。</p>')+progress
+ progress=section('live-screening','首轮实测进度', ('<div class="notice">'+esc(live['monitoring_notice'])+'</div>' if live.get('monitoring_notice') else '')+'<p>Stage A 原始快照：'+esc(live['updated_at'])+'；已结束 '+str(live['closed'])+'/8。已计入请求 '+str(live['ledger']['started_attempts'])+'/128，同位素独立批次上限64请求，状态见上方。以下为单次开发运行，未汇总为最终难度结论。</p>'+table(['环境','模型','状态','单次分数'],rows)+'<p>GPT8k/1小时，DeepSeek32k/4小时；不同预算。已结束报告已归档并核验SHA-256。零API沙箱启动故障单独留档；不混入本表。低分仍需科学轨迹与参考可解性审阅。</p>')+progress
+ if live.get('isotope_sidecar'):
+  side=live['isotope_sidecar']
+  sr=[[x['model'],x['instance'],*[f"{x[k]:.2f}" for k in ('conditions','interventions','claims','score')]] for x in side['runs']]
+  sr.append(['GPT-5.6','开发实例2','—','—','—','连接断开，缺失'])
+  progress=section('isotope-correction','同位素 · 封存预测器评分更正', '<p>三个已提交预测器原样重放，仅修正评分器对合法数值数组的兼容性。原报告未覆盖；这不是新一轮模型实验。声明分沿用原冻结复验，避免评分版本号改变随机噪声样本。</p>'+table(['模型','实例','新条件','干预','声明','总分'],sr)+'<p>48 个预测面板全部有效；更正未新增 API 请求。独立审阅状态：'+esc(side['status'])+'。这些开发实例上的高分不能证明机制辨识或发现深度，也不支持将当前版本称为高难；两模型资源预算仍不同。</p>')+progress
+
 (P/'progress.html').write_text(page('当前进度与下一步',progress))
 body='''<p>一个可以干预、采样和预测的虚拟封闭培养舱。研究者只看到三种未知菌株与三个匿名化学信号，要从实验中识别它们的相互作用，并预测未做过的条件。</p><div class="notice">本页是设计者视角的公开案例说明，包含机制方程族；它不是提供给被测模型的题面。实际评测实例参数、随机种子、通道映射和封存测试目标不公开。模型已经看到本页后，不宜再用同一机制作为“完全未知”的测试。</div><nav><a href="#intro">简介</a><a href="#equations">隐藏方程</a><a href="#concealment">如何隐藏</a><a href="#noise">随机干扰</a><a href="#construction">评测构建</a><a href="#tools">工具 / MCP</a><a href="#results">结果</a><a href="#replies">真实回复</a><a href="#depth">发现深度</a></nav>'''
 body+=section('intro','1 · 三种菌如何互相影响','''<p>甲菌 A 吃外界营养 S，产生可供乙菌使用的 X，同时排出废物 Z。乙菌 B 利用 X 并产生 Y。Y 抑制丙菌 C 对 Z 的利用；而 C 平时通过清除 Z 帮助 A。于是 B 的增长可能经由 Y、C、Z，延迟影响 A。</p><pre class="equation">营养 S → A → X → B → Y ┤ C
