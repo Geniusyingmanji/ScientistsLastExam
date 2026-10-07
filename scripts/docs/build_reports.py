@@ -44,7 +44,7 @@ if live_path.exists():
  live=json.loads(live_path.read_text())
  progress=progress.replace('持续扩展已暂停。','双模型难度筛选已恢复。').replace('本页是当前工作快照；未启动 GPT 预算对齐实验，也没有新增付费模型评测。下一阶段先整理环境质量与文档，再由用户决定恢复。','本轮已授权12运行、192请求、4并发。Stage A运行微生态与伊辛自旋；同位素接口仍在验证。GPT预算对齐实验未启动。')
  if live.get('monitoring_notice'):
-  progress=progress.replace('双模型难度筛选已恢复。','双模型难度筛选：远程状态待确认。').replace('Stage A运行微生态与伊辛自旋；','Stage A已启动微生态与伊辛自旋，当前连接中断；')
+  progress=progress.replace('双模型难度筛选已恢复。','双模型难度筛选：详见上方核验状态。').replace('Stage A运行微生态与伊辛自旋；','Stage A已启动微生态与伊辛自旋，运行状态见上方；')
  rows=[[e['environment'],e['model'],e['status'],f"{e['score']:.2f}" if isinstance(e.get('score'),(int,float)) else '—'] for e in live['episodes']]
  progress=section('live-screening','首轮实测进度', ('<div class="notice">'+esc(live['monitoring_notice'])+'</div>' if live.get('monitoring_notice') else '')+'<p>最后核验：'+esc(live['updated_at'])+'；已结束 '+str(live['closed'])+'/8。已计入请求 '+str(live['ledger']['started_attempts'])+'/128，同位素另预留64请求。以下为单次开发运行，未汇总为最终难度结论。</p>'+table(['环境','模型','状态','单次分数'],rows)+'<p>GPT8k/1小时，DeepSeek32k/4小时；不同预算。已结束报告已归档并核验SHA-256。零API沙箱启动故障单独留档；不混入本表。低分仍需科学轨迹与参考可解性审阅。</p>')+progress
 (P/'progress.html').write_text(page('当前进度与下一步',progress))

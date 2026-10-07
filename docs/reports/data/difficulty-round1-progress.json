@@ -1,22 +1,26 @@
 {
-  "status": "running",
-  "updated_at": "2026-10-07T09:22:54.647129+00:00",
+  "status": "interrupted",
+  "updated_at": "2026-10-07T09:50:18.261788+00:00",
   "planned": 8,
-  "closed": 3,
+  "closed": 6,
   "manifest_sha256": "da342dc4b1988ca68279e41eac612901adcfbe48cdb4383d44c75c60a713d7c3",
   "ledger": {
     "attempt_limit": 128,
-    "started_attempts": 60,
-    "remaining_attempts": 68,
+    "started_attempts": 113,
+    "remaining_attempts": 15,
     "status_counts": {
-      "returned": 59,
-      "started": 1
+      "returned": 111,
+      "started": 2
     },
     "attempts_by_episode": {
-      "difficulty-ising_spin-i1-deepseek": 13,
+      "difficulty-ising_spin-i1-deepseek": 14,
       "difficulty-ising_spin-i1-gpt": 16,
+      "difficulty-ising_spin-i2-deepseek": 8,
+      "difficulty-ising_spin-i2-gpt": 16,
       "difficulty-microecology-i1-deepseek": 15,
-      "difficulty-microecology-i1-gpt": 16
+      "difficulty-microecology-i1-gpt": 16,
+      "difficulty-microecology-i2-deepseek": 12,
+      "difficulty-microecology-i2-gpt": 16
     },
     "automatic_retries": 0
   },
@@ -55,32 +59,46 @@
       "episode_id": "difficulty-ising_spin-i1-deepseek",
       "environment": "ising_spin",
       "model": "deepseek",
-      "status": "running"
+      "status": "invalid_predictor",
+      "score": 0.0,
+      "infrastructure_failure": null,
+      "stop_reason": "predictor_verification_failed",
+      "report_sha256": "7251bc7e72fd07dec4da2b7ce13c500b35fb1aa777abcb1da23a165199c06420"
     },
     {
       "episode_id": "difficulty-microecology-i2-gpt",
       "environment": "microecology",
       "model": "gpt",
-      "status": "pending"
+      "status": "completed",
+      "score": 16.189758940136908,
+      "infrastructure_failure": null,
+      "stop_reason": "verified",
+      "report_sha256": "99860dc9b6d320781fd5bf6622783d4c62ab4609088b752cd1f6ed9244955efe"
     },
     {
       "episode_id": "difficulty-microecology-i2-deepseek",
       "environment": "microecology",
       "model": "deepseek",
-      "status": "pending"
+      "status": "interrupted",
+      "score": null
     },
     {
       "episode_id": "difficulty-ising_spin-i2-gpt",
       "environment": "ising_spin",
       "model": "gpt",
-      "status": "pending"
+      "status": "invalid_predictor",
+      "score": 0.0,
+      "infrastructure_failure": null,
+      "stop_reason": "predictor_verification_failed",
+      "report_sha256": "01970d91472d57bcc3dc1654b133e356094fa00eafa3e2b1f07bcdbcc856f101"
     },
     {
       "episode_id": "difficulty-ising_spin-i2-deepseek",
       "environment": "ising_spin",
       "model": "deepseek",
-      "status": "pending"
+      "status": "interrupted",
+      "score": null
     }
   ],
-  "monitoring_notice": "连接恢复失败：AIStudio 62910175 返回没有有效机器。下表为最后核验快照；远程进程现状未知，未重启或补跑。同位素尚未启动。"
+  "monitoring_notice": "连接已恢复。原进程及临时运行环境已不存在：6次已结束报告已归档核验，另2次仅有中途记录，标为中断且成绩空缺。113次已发起请求中111次记录返回，2次结果未知；未重启、未补跑。同位素尚未启动。"
 }
