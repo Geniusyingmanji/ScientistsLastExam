@@ -100,7 +100,7 @@
       "score": null
     }
   ],
-  "monitoring_notice": "新批次已真实运行：自适应信号与滞留输运各2实例×GPT/DeepSeek，共8运行。已核验46请求，40返回、6在途，尚无最终成绩；并发容量16。两环境Linux15项检查通过。同位素上一批已结束，评分更正见上表。所有冻结批次独立留档，累计API预算与请求不设上限。",
+  "monitoring_notice": "历史系统新批次已结束5/8次：95请求、92返回、3在途。已结束报告归档并核验SHA-256；单次分项见上表，3次运行继续进行。同位素上一批评分更正另列。目标总并发16，持续筛选已授权。",
   "isotope_sidecar": {
     "status": "同模型家族独立上下文审阅通过，结论暂定",
     "requests": 52,
@@ -134,13 +134,107 @@
   },
   "history_round2": {
     "planned": 8,
-    "closed": 0,
-    "requests": 46,
-    "returned": 40,
-    "inflight": 6,
+    "closed": 5,
+    "requests": 95,
+    "returned": 92,
+    "inflight": 3,
     "capacity": 16,
     "status": "running",
     "claim_caveat": "当前冻结批次的自适应信号声明分按公开通道尺度归一化，题面公式简写未显式写出除数。后续1.1已澄清，并固定复验噪声命名空间；原批次不修改。",
-    "checked_at": "2026-10-07T23:07:37.656007+00:00"
+    "checked_at": "2026-10-07T23:37:48.120875+00:00",
+    "runs": [
+      {
+        "episode_id": "difficulty-adaptive_signaling-i1-gpt",
+        "environment": "adaptive_signaling",
+        "model": "gpt",
+        "status": "completed",
+        "instance": "实例1",
+        "score": 99.64419235524932,
+        "subscores": {
+          "conditions": 99.95673494064363,
+          "interventions": 99.95697784181644,
+          "claims": 98.39365766191285
+        },
+        "experiments": 48
+      },
+      {
+        "episode_id": "difficulty-adaptive_signaling-i1-deepseek",
+        "environment": "adaptive_signaling",
+        "model": "deepseek",
+        "status": "completed",
+        "instance": "实例1",
+        "score": 99.74519499263886,
+        "subscores": {
+          "conditions": 99.96039975174001,
+          "interventions": 99.95397866747304,
+          "claims": 98.8940075826347
+        },
+        "experiments": 24
+      },
+      {
+        "episode_id": "difficulty-retention_transport-i1-gpt",
+        "environment": "retention_transport",
+        "model": "gpt",
+        "status": "completed",
+        "instance": "实例1",
+        "score": 37.353398596106636,
+        "subscores": {
+          "conditions": 45.877623287130035,
+          "interventions": 40.68517771484726,
+          "claims": 11.045168190437197
+        },
+        "experiments": 48
+      },
+      {
+        "episode_id": "difficulty-retention_transport-i1-deepseek",
+        "environment": "retention_transport",
+        "model": "deepseek",
+        "status": "running",
+        "instance": "实例1"
+      },
+      {
+        "episode_id": "difficulty-adaptive_signaling-i2-gpt",
+        "environment": "adaptive_signaling",
+        "model": "gpt",
+        "status": "completed",
+        "instance": "实例2",
+        "score": 79.90126326326809,
+        "subscores": {
+          "conditions": 99.88036382463841,
+          "interventions": 99.87026998252486,
+          "claims": 1.780957191056203e-06
+        },
+        "experiments": 48
+      },
+      {
+        "episode_id": "difficulty-adaptive_signaling-i2-deepseek",
+        "environment": "adaptive_signaling",
+        "model": "deepseek",
+        "status": "running",
+        "instance": "实例2"
+      },
+      {
+        "episode_id": "difficulty-retention_transport-i2-gpt",
+        "environment": "retention_transport",
+        "model": "gpt",
+        "status": "completed",
+        "instance": "实例2",
+        "score": 99.54948773805302,
+        "subscores": {
+          "conditions": 99.84954344892093,
+          "interventions": 99.8521405263308,
+          "claims": 98.34536927846659
+        },
+        "experiments": 48
+      },
+      {
+        "episode_id": "difficulty-retention_transport-i2-deepseek",
+        "environment": "retention_transport",
+        "model": "deepseek",
+        "status": "running",
+        "instance": "实例2"
+      }
+    ],
+    "review": "5份结束报告的哈希与分项算术已独立复核，同模型家族暂定。自适应信号实例2：预测近满分而声明区间与观测冲突；滞留输运实例1：分析超时与拟合失败并存，不能单凭低分认证高难。另见高分声明文字方向与数值方向不一致，数值评分不等于语义正确。3次未结束运行不纳入比较。"
   }
 }

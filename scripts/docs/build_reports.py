@@ -48,7 +48,11 @@ if live_path.exists():
  rows=[[e['environment'],e['model'],e['status'],f"{e['score']:.2f}" if isinstance(e.get('score'),(int,float)) else '—'] for e in live['episodes']]
  progress=section('live-screening','首轮实测进度', ('<div class="notice">'+esc(live['monitoring_notice'])+'</div>' if live.get('monitoring_notice') else '')+'<p>Stage A 原始快照：'+esc(live['updated_at'])+'；已结束 '+str(live['closed'])+'/8。已计入请求 '+str(live['ledger']['started_attempts'])+'/128，同位素独立批次上限64请求，状态见上方。以下为单次开发运行，未汇总为最终难度结论。</p>'+table(['环境','模型','状态','单次分数'],rows)+'<p>GPT8k/1小时，DeepSeek32k/4小时；不同预算。已结束报告已归档并核验SHA-256。零API沙箱启动故障单独留档；不混入本表。低分仍需科学轨迹与参考可解性审阅。</p>')+progress
  if live.get('history_round2'):
-  progress=section('history-screening','自适应信号与滞留输运 · 双模型实测中','<p>8次运行：每环境2个实例，每实例GPT与DeepSeek配对。预测权重50%新条件、30%干预、20%声明复验；排除已知零响应和无效因果对照。尚无最终分数。</p><p>'+esc(live['history_round2']['claim_caveat'])+'</p>')+progress
+  hr=live['history_round2']; names={'adaptive_signaling':'自适应信号','retention_transport':'滞留输运'}
+  rows=[]
+  for x in hr.get('runs',[]):
+   rows.append([names[x['environment']],x['model'],x['instance'],x['status'],*[f"{x['subscores'][k]:.2f}" if x.get('subscores') else '—' for k in ('conditions','interventions','claims')],f"{x['score']:.2f}" if 'score' in x else '—'])
+  progress=section('history-screening','自适应信号与滞留输运 · 双模型实测','<p>每环境2个实例，每实例GPT与DeepSeek配对。预测权重50%新条件、30%干预、20%声明复验；排除已知零响应和无效因果对照。</p><p>自适应信号：只能看到刺激后的报告信号，需用内部辅助状态的部分重置来检验竞争解释；生成机制与系数不告诉模型。滞留输运：只能测总回收量，需用停流、恢复和改变流速研究表观延迟；内部储留位置不可直接观测。</p>'+table(['环境','模型','实例','状态','新条件','干预','声明','总分'],rows)+'<p>'+esc(hr.get('review','结果审阅待完成'))+'</p><p>'+esc(hr['claim_caveat'])+'</p>')+progress
  if live.get('isotope_sidecar'):
   side=live['isotope_sidecar']
   sr=[[x['model'],x['instance'],*[f"{x[k]:.2f}" for k in ('conditions','interventions','claims','score')]] for x in side['runs']]
