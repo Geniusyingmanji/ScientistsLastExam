@@ -145,3 +145,17 @@ def aggregate_episode(panel_reports, claim_report):
     parts["claims"] = claim_report["score"]
     return {"protocol": PROTOCOL, "subscores": parts,
             "score": sum(WEIGHTS[k]*parts[k] for k in WEIGHTS)}
+
+
+def generate_panel(world, seed, kind, count=8):
+    if world.name != 'isotope_pairing':
+        raise ValueError('isotope adapter world mismatch')
+    return world.panel(seed, kind, count)
+
+
+def public_panel_domain(environment):
+    if environment != 'isotope_pairing':
+        raise ValueError('isotope adapter world mismatch')
+    return {'protocol': PROTOCOL, 'conditions': 'Fresh constant source recipes across the legal simplex, observed over0..12.',
+            'interventions': 'Fresh source recipe followed by an unlabeled chase at3; observed over0..12.',
+            'scope': 'Prediction transfer within these domains, not unique mechanism identification.'}

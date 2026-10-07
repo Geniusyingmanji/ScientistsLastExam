@@ -14,3 +14,5 @@ must allow that conclusion. Prototype source and development fixtures are expose
 ## 2026-10-07 numerical adapter gate
 
 `campaign_scoring.py` adds independent `isotope-batch-score-1.0`: initial-state masking, pre-readout history eligibility, redundant/reversed contrast deduplication, strict submission and 32-pair verification. Three focused tests pass (128 simulated verification calls plus one clean mask fixture, zero model calls). Not wired to the agent driver or registered; Linux integration and complete admission remain pending. No frozen V1 scoring changes.
+
+The explicit `model_driver.run_model_episode` entry now supports scripted local episode validation without registry admission. The driver/scorer plus legacy runner regression checks pass (34 tests); real Linux sandbox validation remains pending because the remote machine is unavailable. No isotope API run has been launched.

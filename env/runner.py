@@ -161,9 +161,10 @@ def _compact_result(entry):
             "observation_ids": [r["id"] for r in entry.get("observations", [])]}
 
 
-def run_episode(instance, limits, directory, client, *, analysis_factory=IsolatedAnalysis, predict_fn=_predict):
+def run_episode(instance, limits, directory, client, *, analysis_factory=IsolatedAnalysis, predict_fn=_predict,
+                world_factory=None, scoring_adapter=None):
     directory = Path(directory)
-    world, baseline = load_world(instance["environment"], instance["world_seed"])
+    world, baseline = (world_factory or load_world)(instance["environment"], instance["world_seed"])
     start = time.monotonic()
     records, history, rounds, models = [], [], [], set()
     state, stop, infrastructure = "exploring", "model_round_limit", None
@@ -176,9 +177,10 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
     unified = None
     if scoring_protocol != "legacy":
         from . import unified_scoring
-        if scoring_protocol != unified_scoring.PROTOCOL:
+        selected = scoring_adapter if scoring_adapter is not None else unified_scoring
+        if scoring_protocol != selected.PROTOCOL:
             raise ValueError("unsupported scoring protocol")
-        unified = unified_scoring
+        unified = selected
     contract_fn = unified.score_contract if unified else score_contract
     validate_fn = unified.validate_submission if unified else validate_submission
     verify_fn = unified.verify_claims if unified else verify_claims
@@ -191,6 +193,8 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
 
     def panel_fn(seed, kind, count):
         if unified:
+            if scoring_adapter is not None:
+                return scoring_adapter.generate_panel(world, seed, kind, count)
             from .unified_panels import generate_panel
             return generate_panel(world, seed, kind, count)
         return world.panel(seed, kind, count)
@@ -217,7 +221,8 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
         end = SYSTEM.index("Read the full score contract.", begin)
         base_system = SYSTEM[:begin] + unified.CLAIM_SYSTEM + SYSTEM[end:]
         from .unified_panels import public_panel_domain
-        problem["evaluation_domain"] = public_panel_domain(world.name)
+        problem["evaluation_domain"] = (scoring_adapter.public_panel_domain(world.name)
+                                        if scoring_adapter is not None else public_panel_domain(world.name))
     system = present_system(base_system, presentation)
     if analysis_protocol == SNAPSHOT_PROTOCOL:
         problem["model_snapshot_contract"] = snapshot_contract()
