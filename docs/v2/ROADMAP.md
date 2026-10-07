@@ -283,3 +283,9 @@ states no agent driver registration or automatic depth score. Public apparatus
 invariant across two seeds; detached instructions tested.59isotope/prospective
 tests pass. No new scientific observations/API calls. Next complete concrete
 request examples and driver eligibility audit before claiming selectable task.
+
+2026-10-07 isotope concrete prospective request example added, clearly labeled
+weak syntax fixture with prior evidence requirement. Read-only real-session
+preview test passes using explicitly inert records, zero sampling/predictor/API
+calls and unchanged usage. Example documents72target units and2predictor calls,
+source extra. Agent driver wiring remains unfinished; do not promote readiness.

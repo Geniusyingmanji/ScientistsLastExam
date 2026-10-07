@@ -1,0 +1,50 @@
+{
+  "profile": "predictive_validation",
+  "scope": "Syntax example only: test a fixed predictor on a fresh recipe. Replace the placeholder program and evidence ID with actual research evidence.",
+  "rivals": [
+    {
+      "id": "example-predictor",
+      "predictor_code": "def predict(spec):\n    return [[1.0,0.0,0.0] for _ in spec[\"times\"]]\n",
+      "rationale": "Placeholder baseline, not a fitted scientific explanation.",
+      "evidence_ids": [
+        "obs-source-0001"
+      ],
+      "tolerance": 0.05
+    }
+  ],
+  "experiments": [
+    {
+      "id": "fresh-recipe",
+      "role": "target",
+      "spec": {
+        "times": [
+          0.0,
+          2.0,
+          5.0
+        ],
+        "source": [
+          {
+            "at": 0.0,
+            "fractions": [
+              0.4,
+              0.1,
+              0.1,
+              0.4
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "readout": [
+    {
+      "experiment_id": "fresh-recipe",
+      "row": 2,
+      "channel": "double_label",
+      "weight": 1.0
+    }
+  ],
+  "replicates": 4,
+  "revision_of": null,
+  "change_note": ""
+}
