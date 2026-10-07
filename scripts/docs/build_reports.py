@@ -39,6 +39,12 @@ progress+=section('candidate-decisions','V2 候选与成熟度',table(['候选',
 ])+'''<p>目前三个环境原型均未作为新的正式模型评测任务注册。前两原型合计定义四个任务；候选验证、算子演示、完整环境和模型测评分别统计，避免把数量当成熟度。V2 暂无 GPT / DeepSeek 新模型成绩。</p>''')
 progress+=section('findings','已核验的进展与限制','''<ul><li>同位素：59 项相关本地测试通过；另有请求示例预览测试。Linux smoke 记录 5 个观测、96 预算单位、2 次隔离预测和 32 个接收记录；这些是工程验证，不是科学发现成功率。</li><li>地震：单点拟合在新条件失效，不足以排除整个模型家族；后续联合约束检验发现，逐点区间重叠仍可能不存在同一组共同参数。新噪声确认支持这一有限数值结论，审阅为同模型家族暂定。</li><li>谱系记忆：作者知道方差不等于科学 agent 能从预算内数据估计方差；候选因此暂缓，避免制造不可解“难题”。</li><li>已区分科学困难、接口/程序失败和服务故障。V1 预测分、声明分与机制发现分别解释。</li></ul><details><summary>工程审计事项</summary><p>曾发生 Linux 下载覆盖一部分旧 macOS 失败归档的事件，已记录；独立 Linux 归档已校验。历史开发记录保留在归档区，不能把缺失的旧证据当作已恢复。</p></details>''')
 progress+=section('next','恢复后优先事项','''<ol><li>先让同位素原型完成共享 driver 接入、预算和观测语义验证，再决定是否注册。</li><li>对自适应信号、滞留输运逐一补足竞争解释、可区分实验、未解决区间和带先验标记的参考解。</li><li>用无观测、经验拟合与作者参考区分“科学难”与“接口难”；不以低分直接认证高难度。</li><li>正式新实例与评分在见模型结果前冻结。新的付费评测需另行安排；GPT 对齐实验继续暂缓。</li></ol>''')
+live_path=P/'data/difficulty-round1-progress.json'
+if live_path.exists():
+ live=json.loads(live_path.read_text())
+ progress=progress.replace('持续扩展已暂停。','双模型难度筛选已恢复。').replace('本页是当前工作快照；未启动 GPT 预算对齐实验，也没有新增付费模型评测。下一阶段先整理环境质量与文档，再由用户决定恢复。','本轮已授权12运行、192请求、4并发。Stage A运行微生态与伊辛自旋；同位素接口仍在验证。GPT预算对齐实验未启动。')
+ rows=[[e['environment'],e['model'],e['status'],f"{e['score']:.2f}" if isinstance(e.get('score'),(int,float)) else '—'] for e in live['episodes']]
+ progress=section('live-screening','首轮实测进度', '<p>更新：'+esc(live['updated_at'])+'；已结束 '+str(live['closed'])+'/8。已计入请求 '+str(live['ledger']['started_attempts'])+'/128，同位素另预留64请求。以下为单次开发运行，未汇总为最终难度结论。</p>'+table(['环境','模型','状态','单次分数'],rows)+'<p>GPT8k/1小时，DeepSeek32k/4小时；不同预算。已结束报告已归档并核验SHA-256。零API沙箱启动故障单独留档；不混入本表。低分仍需科学轨迹与参考可解性审阅。</p>')+progress
 (P/'progress.html').write_text(page('当前进度与下一步',progress))
 body='''<p>一个可以干预、采样和预测的虚拟封闭培养舱。研究者只看到三种未知菌株与三个匿名化学信号，要从实验中识别它们的相互作用，并预测未做过的条件。</p><div class="notice">本页是设计者视角的公开案例说明，包含机制方程族；它不是提供给被测模型的题面。实际评测实例参数、随机种子、通道映射和封存测试目标不公开。模型已经看到本页后，不宜再用同一机制作为“完全未知”的测试。</div><nav><a href="#intro">简介</a><a href="#equations">隐藏方程</a><a href="#concealment">如何隐藏</a><a href="#noise">随机干扰</a><a href="#construction">评测构建</a><a href="#tools">工具 / MCP</a><a href="#results">结果</a><a href="#replies">真实回复</a><a href="#depth">发现深度</a></nav>'''
 body+=section('intro','1 · 三种菌如何互相影响','''<p>甲菌 A 吃外界营养 S，产生可供乙菌使用的 X，同时排出废物 Z。乙菌 B 利用 X 并产生 Y。Y 抑制丙菌 C 对 Z 的利用；而 C 平时通过清除 Z 帮助 A。于是 B 的增长可能经由 Y、C、Z，延迟影响 A。</p><pre class="equation">营养 S → A → X → B → Y ┤ C

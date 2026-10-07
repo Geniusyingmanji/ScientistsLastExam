@@ -1,0 +1,85 @@
+{
+  "status": "running",
+  "updated_at": "2026-10-07T09:22:54.647129+00:00",
+  "planned": 8,
+  "closed": 3,
+  "manifest_sha256": "da342dc4b1988ca68279e41eac612901adcfbe48cdb4383d44c75c60a713d7c3",
+  "ledger": {
+    "attempt_limit": 128,
+    "started_attempts": 60,
+    "remaining_attempts": 68,
+    "status_counts": {
+      "returned": 59,
+      "started": 1
+    },
+    "attempts_by_episode": {
+      "difficulty-ising_spin-i1-deepseek": 13,
+      "difficulty-ising_spin-i1-gpt": 16,
+      "difficulty-microecology-i1-deepseek": 15,
+      "difficulty-microecology-i1-gpt": 16
+    },
+    "automatic_retries": 0
+  },
+  "episodes": [
+    {
+      "episode_id": "difficulty-microecology-i1-gpt",
+      "environment": "microecology",
+      "model": "gpt",
+      "status": "completed",
+      "score": 16.06641040153578,
+      "infrastructure_failure": null,
+      "stop_reason": "verified",
+      "report_sha256": "e3ab920948d286bbc08c98115a057f85ea2e282c62f2dc1bfba62f5ec760dbfa"
+    },
+    {
+      "episode_id": "difficulty-microecology-i1-deepseek",
+      "environment": "microecology",
+      "model": "deepseek",
+      "status": "completed",
+      "score": 25.651656687510766,
+      "infrastructure_failure": null,
+      "stop_reason": "verified",
+      "report_sha256": "5435f3f5723d1d4a9ae78f9dc91694515ee7fda8dca3a5a9f7cbfea42a6e2e76"
+    },
+    {
+      "episode_id": "difficulty-ising_spin-i1-gpt",
+      "environment": "ising_spin",
+      "model": "gpt",
+      "status": "completed",
+      "score": 99.44879770963146,
+      "infrastructure_failure": null,
+      "stop_reason": "verified",
+      "report_sha256": "1fe01231d277f7d952807ad7a67e4c2e73ae3f860b4807020aba24db45089b11"
+    },
+    {
+      "episode_id": "difficulty-ising_spin-i1-deepseek",
+      "environment": "ising_spin",
+      "model": "deepseek",
+      "status": "running"
+    },
+    {
+      "episode_id": "difficulty-microecology-i2-gpt",
+      "environment": "microecology",
+      "model": "gpt",
+      "status": "pending"
+    },
+    {
+      "episode_id": "difficulty-microecology-i2-deepseek",
+      "environment": "microecology",
+      "model": "deepseek",
+      "status": "pending"
+    },
+    {
+      "episode_id": "difficulty-ising_spin-i2-gpt",
+      "environment": "ising_spin",
+      "model": "gpt",
+      "status": "pending"
+    },
+    {
+      "episode_id": "difficulty-ising_spin-i2-deepseek",
+      "environment": "ising_spin",
+      "model": "deepseek",
+      "status": "pending"
+    }
+  ]
+}
