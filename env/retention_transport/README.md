@@ -1,6 +1,6 @@
 # Retention transport
 
-A tracer cartridge supporting pauses and changes in imposed flow. This is a **synthetic unregistered prototype**, not part of the scored twelve-world evaluation. The Python World interface is implemented; shared runner selection, claim verification, presentation, evidence packet and prospective-noise adapters are deliberately not enabled.
+A tracer cartridge supporting pauses and changes in imposed flow. This is a **synthetic unregistered prototype**, not part of the scored twelve-world evaluation. The Python World interface is implemented; shared registry selection, evidence packet and prospective-noise adapters remain disabled. An explicit operator model_driver now selects the shared runner with history-batch-score-1.0; Linux admission is recorded separately before any model campaign.
 
 Use `World(seed).describe()` for the public apparatus contract and example. Candidate-facing services must expose only budgeted noisy observations and that contract; `kernel.py`, seed, parameters, clean mode and panels are trusted-operator capabilities. There is no new MCP server for this prototype.
 
@@ -13,3 +13,6 @@ Task entry points:
 Do not reveal the private mechanism menu in the candidate prompt. Naming the generated family is neither required nor sufficient for success. A useful submission must predict fresh observations and specify which interventions its account explains. Null effects implied by the public apparatus contract are recorded separately from newly established behavior.
 
 Numerical and identifiability checks are in `tests/`. Run the bounded author-informed screen with `python -m env.prototype_screen --output /path/to/private/screen.json` from the repository root. It makes zero model requests. The fit knows formula families and bounds, unlike a scientific agent; its success is only a scoped feasibility result. See [screening decisions](../HARD_ENV_SCREENING.md) for the frozen local budget, exposed development instances, retained failures and remaining admission work.
+
+## Explicit model screening
+The driver uses versioned history scoring: 50% fresh-condition prediction, 30% intervention prediction and 20% fresh paired-claim calibration. Assigned initial/zero-input response cells do not earn prediction credit. Claims require different pre-readout causal histories; future changes, redundant segments and reversed duplicate contrasts do not earn discovery credit. Auxiliary resets at initial zero are excluded. Numeric scores do not certify mechanisms. Outputs may be real numeric NumPy arrays or lists. Existing kernels and frozen evaluations are unchanged.
