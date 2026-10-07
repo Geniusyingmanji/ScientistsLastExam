@@ -98,11 +98,16 @@ for label,k in [('GPT-5.6','reference'),('DeepSeek V4 Pro','candidate')]:
  x=w[k];c=x['components'];rows.append([label,f"{x['score']:.2f}",*[f'{c[t]:.2f}' for t in ['condition_score','intervention_score','claim_score']]])
 body+=section('results','8 · 两模型在微生态上的结果',table(['模型','总分','新条件','干预','声明'],rows)+table(['实例 / 重复','GPT','DeepSeek','差值 DS−GPT'],[[f"i{x['instance']} / r{x['repeat']}",f"{x['reference']['score']:.2f}",f"{x['candidate']['score']:.2f}",f"{x['delta']:+.2f}"] for x in w['pairs']])+'''<p>两模型在这个环境的新条件与干预预测均较弱。DeepSeek 的局部声明表现较高，不能解释为已经发现整条反馈链。GPT 不同运行波动明显；六次成绩也不足以认证稳定能力差异。</p>''')
 ex=json.loads((P/'data/microecology-visible-excerpts.json').read_text());parts='''<p>以下选择同一配对 i2-r1 说明方法差异，未按高分选例，也不代表六次运行都采用相同策略。引文仅为模型公开可见的 note 与最终解释；不是内部思考。note 描述计划，不等于操作或拟合成功。</p>'''
+translations=json.loads((P/'data/microecology-translations-zh.json').read_text())
+def bilingual(zh,en):
+ return '<p><strong>中文翻译：</strong>'+esc(zh)+'</p><details><summary>英文原文</summary><p>'+esc(en)+'</p></details>'
+parts+='<p class="notice">中文为报告补充的翻译，英文原文可展开核对。翻译保留模型的自述语气；其中“已完成”“稳健”等表述不代表评审确认。</p>'
 for x in ex:
+ t=translations[x['model']]
  parts+='<h3>'+x['model']+f" · 本次 {x['score']:.2f} 分</h3>"
- parts+=table(['轮次','可见原文','请求动作'],[[a['round'],esc(a['note']),esc(', '.join(a['action']) or '仅 note')] for a in x['visible_notes']])
- parts+='<details open><summary>最终解释原文</summary><blockquote>'+esc(x['explanation'])+'</blockquote></details>'
- parts+=table(['提交的定量声明（原文）','区间','模型自述适用范围'],[[esc(c['statement']),esc(str(c['interval'])),esc(c['scope'])] for c in x['claims']])
+ parts+=table(['轮次','模型可见回复 · 中文 / 原文','请求动作'],[[a['round'],bilingual(t['notes'][str(a['round'])],a['note']),esc(', '.join(a['action']) or '仅 note')] for a in x['visible_notes']])
+ parts+='<h4>最终解释</h4>'+bilingual(t['explanation'],x['explanation'])
+ parts+=table(['提交的定量声明 · 中文 / 原文','区间','模型自述适用范围 · 中文 / 原文'],[[bilingual(z['statement'],c['statement']),esc(str(c['interval'])),bilingual(z['scope'],c['scope'])] for c,z in zip(x['claims'],t['claims'])])
  parts+='<p class="muted">来源报告 SHA-256：'+x['report_sha256']+'</p>'
 parts+='''<p>GPT 完成 48 个实验，最后提交动力学预测器，但声明集中在“补料后一小时还剩多少营养”；这是可复验的效应，不是对反馈链的决定性检验。DeepSeek 获得 40 个观测，最终使用记忆型 surrogate；提出的是单菌营养/温度效应及一个同时改变多因素的混合培养对比。它自己承认第三条存在混杂，不能据此定位单一路径。</p><p>两个模型都曾请求 ODE 拟合，不能仅凭 note 认定拟合成功或机制恢复。最终解释与实际低预测分需要并列阅读。逐轮完整原始轨迹保留私有，本页公开经过筛选的引文。</p>'''
 body+=section('replies','9 · 模型实际怎样研究与回答',parts)
