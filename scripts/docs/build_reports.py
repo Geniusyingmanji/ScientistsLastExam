@@ -33,7 +33,7 @@ progress+=section('results','已完成：V1 十二环境双模型评测',table([
 progress+=section('candidate-decisions','V2 候选与成熟度',table(['候选','当前证据 / 状态','尚未完成'],[
 ['自适应信号 adaptive_signaling','独立原型；研究适应响应背后的竞争解释','共享适配、正式任务接入与更充分筛选'],
 ['滞留输运 retention_transport','独立原型；研究表观延迟来自何种机制','共享适配、预算内辨识与泛化验证'],
-['同位素配对 isotope_pairing','原型与前瞻工作流、预算预览、请求示例；Linux 隔离执行验证','尚未接入 agent driver / 注册表；不能称已可选评测任务'],
+['同位素配对 isotope_pairing','原型与前瞻工作流、预算预览、请求示例；Linux 隔离执行验证','显式 driver 已通过本地验证；新 driver 的 Linux 沙箱验证待完成，未注册、未调用模型'],
 ['谱系记忆 lineage_memory','已做有限样本筛选；强信号可分，弱信号及零信号尚不能可靠区分','暂缓；需要候选可获得的不确定性估计'],
 ['地震孔径 seismic_aperture','竞争模型的数值辨识见证；新噪声确认中分层结构不可行、均匀对照可行','仍为算子验证；不是已注册世界、独立新世界泛化或机制唯一性证明']
 ])+'''<p>目前三个环境原型均未作为新的正式模型评测任务注册。前两原型合计定义四个任务；候选验证、算子演示、完整环境和模型测评分别统计，避免把数量当成熟度。V2 暂无 GPT / DeepSeek 新模型成绩。</p>''')
@@ -43,6 +43,8 @@ live_path=P/'data/difficulty-round1-progress.json'
 if live_path.exists():
  live=json.loads(live_path.read_text())
  progress=progress.replace('持续扩展已暂停。','双模型难度筛选已恢复。').replace('本页是当前工作快照；未启动 GPT 预算对齐实验，也没有新增付费模型评测。下一阶段先整理环境质量与文档，再由用户决定恢复。','本轮已授权12运行、192请求、4并发。Stage A运行微生态与伊辛自旋；同位素接口仍在验证。GPT预算对齐实验未启动。')
+ if live.get('monitoring_notice'):
+  progress=progress.replace('双模型难度筛选已恢复。','双模型难度筛选：远程状态待确认。').replace('Stage A运行微生态与伊辛自旋；','Stage A已启动微生态与伊辛自旋，当前连接中断；')
  rows=[[e['environment'],e['model'],e['status'],f"{e['score']:.2f}" if isinstance(e.get('score'),(int,float)) else '—'] for e in live['episodes']]
  progress=section('live-screening','首轮实测进度', ('<div class="notice">'+esc(live['monitoring_notice'])+'</div>' if live.get('monitoring_notice') else '')+'<p>最后核验：'+esc(live['updated_at'])+'；已结束 '+str(live['closed'])+'/8。已计入请求 '+str(live['ledger']['started_attempts'])+'/128，同位素另预留64请求。以下为单次开发运行，未汇总为最终难度结论。</p>'+table(['环境','模型','状态','单次分数'],rows)+'<p>GPT8k/1小时，DeepSeek32k/4小时；不同预算。已结束报告已归档并核验SHA-256。零API沙箱启动故障单独留档；不混入本表。低分仍需科学轨迹与参考可解性审阅。</p>')+progress
 (P/'progress.html').write_text(page('当前进度与下一步',progress))
