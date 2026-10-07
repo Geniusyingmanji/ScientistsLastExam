@@ -1,0 +1,15 @@
+{
+  "status": "completed",
+  "closed": 14,
+  "successful_replacements": 12,
+  "missing_slots": [],
+  "actual_requests": {
+    "gpt": 1226,
+    "deepseek": 1034
+  },
+  "additional_retry": "completed",
+  "latest_stop_reason": "verified",
+  "latest_requests": 15,
+  "latest_experiments": 45,
+  "scope": "Completion repair round (12) plus two separately authorized GPT retries; prior DeepSeek reaction repair recorded separately in results audit."
+}

@@ -27,7 +27,7 @@
 
 当前 `MeasurementAudit` 提供通用观测数据入口,默认手工表格只测试协议。
 生产任务应交付真实科学问题和有来源的数据包,保持 candidate,等待独立科学审查和模型标定。
-完整协议见 [发现评估](docs/discovery_evaluation.md)。
+完整协议见 [发现评估](docs/archive/discovery_evaluation.md)。
 
 采用传统 oracle 契约的 certified 任务必须满足**全部七条**:
 
@@ -193,7 +193,7 @@ normalized = (raw_mechanism - always_abstain) / (1.0 - always_abstain)
 账本代码在同一 cell/namespace 内去重,贡献门要求 baseline/有效全弃权不发 frontier records。
 跨契约的语义重复、新增容易 cell 与 surrogate-only 确认要求由 wave 评审把关。
 credit 不含假发现/弃权惩罚,不能作为综合提交质量分。具体 manifest schema、
-链式账本和 threat model 见 [`docs/frontier_families.md`](docs/frontier_families.md)。
+链式账本和 threat model 见 [`docs/archive/frontier_families.md`](docs/archive/frontier_families.md)。
 
 ---
 
@@ -421,7 +421,7 @@ python -m sle run --task CausalDiscovery/InterventionalSCM --algorithm greedy_re
 发现类任务应明确：模型已经知道什么、真正未知什么、输出哪类科学主张、可识别范围、
 竞争解释和结果验证路径。主张类型、开放度、验证方式与新颖性分别说明；只在模拟器中成立
 的结果不能称为真实实验确认。细则与四题试点见
-[`docs/discovery_evaluation.md`](docs/discovery_evaluation.md)。
+[`docs/archive/discovery_evaluation.md`](docs/archive/discovery_evaluation.md)。
 
 当前过程记录器覆盖四个试点，其余 discovery 任务在全量档案中标记待审查。
 接入新题须提供 callback/逐世界结果适配和回归验证；不能仅凭填好档案或日志齐全提升认证状态。

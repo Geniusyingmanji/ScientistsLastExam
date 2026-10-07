@@ -160,7 +160,7 @@ env/<name>/
 | [ProspectiveMetaAnalysis](../benchmarks/Biology/ProspectiveMetaAnalysis/Task.md) | `evidence_synthesis_lab` | P3 | 模拟研究注册、重复报告、偏差与新增确认；标明研究的是证据过程，独立证据研究轨。 |
 | [SparseVectorAudit](../benchmarks/ComputerScience/SparseVectorAudit/Task.md) | `privacy_audit_lab` | P3 | 保留邻接输入、重复运行和可复验违反见证；独立算法审计轨。 |
 
-† 标记的 6 个旧任务已有饱和、捷径或待复核限制，见 [eligibility policy](../docs/discovery_eligibility.md)。转成新 env 不自动解除原限制，也不自动继承旧任务的难度或科学认证。
+† 标记的 6 个旧任务已有饱和、捷径或待复核限制，见 [eligibility policy](../docs/archive/discovery_eligibility.md)。转成新 env 不自动解除原限制，也不自动继承旧任务的难度或科学认证。
 
 ## 8. 旧独立科学环境路线
 

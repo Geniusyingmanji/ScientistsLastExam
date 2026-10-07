@@ -26,6 +26,6 @@ The first adaptation witness reset at t=5 after a down-step: separation was only
 
 ## Local outcome
 
-Eight focused numerical/contract tests passed. Both exact equivalence witnesses were separated by the permitted interventions. Three exposed development instances per world were fitted with six noisy experiments; all fits stayed below the 4000-forward-prediction cap. Aggregate errors are in `docs/reports/environment-expansion-data.json`. This is author-informed feasibility, not demonstrated model difficulty.
+Eight focused numerical/contract tests passed. Both exact equivalence witnesses were separated by the permitted interventions. Three exposed development instances per world were fitted with six noisy experiments; all fits stayed below the 4000-forward-prediction cap. Aggregate errors are in `docs/archive/reports/environment-expansion-data.json`. This is author-informed feasibility, not demonstrated model difficulty.
 
 Two deterministic calibration passes were executed. The initial empirical baseline used exact control equality and otherwise fell back to the first record; this was too weak. The second pass uses nearest public control history, with the same fixed queries and noise keys. Both private result files are retained; there is no additional independent experimental sample and no model request. Shared runner/MCP integration and broader calibration remain explicitly pending.

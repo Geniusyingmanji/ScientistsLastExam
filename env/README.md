@@ -28,7 +28,7 @@ laboratory or external simulator service is required.
 These five additions use the [new prospective research workflow](FRONTIER_RESEARCH.md):
 one or two frozen predictive accounts, fresh observations and explicit uncertainty.
 They are exploratory prototypes, with numerical checks but no strong-baseline
-difficulty calibration. Their new GPT cohort is separate from historical scores. The [self-contained HTML report](../docs/reports/sle-new-frontier-20261003/index.html) presents the repaired workflow; the [original workflow report](../docs/reports/sle-new-frontier-20261003/original.html) preserves its failures and evidence separately.
+difficulty calibration. Their new GPT cohort is separate from historical scores. The [self-contained HTML report](../docs/archive/reports/sle-new-frontier-20261003/index.html) presents the repaired workflow; the [original workflow report](../docs/archive/reports/sle-new-frontier-20261003/original.html) preserves its failures and evidence separately.
 
 These are synthetic, deliberately tractable scientific families. Hidden
 parameters and structures create new instances, but do not by themselves prove
@@ -187,7 +187,7 @@ self-contained HTML and allowlisted aggregate JSON without raw targets or seeds.
 Inspect curated notes before publishing. The normal per-cohort report remains
 an operator artifact because it links to raw reports.
 Public export is read-only on the source cohorts. A sanitized
-[pilot progress report](../docs/reports/sle-env-pilot-20261003/index.html) is included
+[pilot progress report](../docs/archive/reports/sle-env-pilot-20261003/index.html) is included
 with separate core, expansion and development results.
 
 For executable research before a final answer, see

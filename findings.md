@@ -111,7 +111,7 @@ or retrospective rescoring.
 
 Public results and all scoped episode conclusions are in
 [the unified report](docs/reports/overview.html) and
-[its evaluation archive](docs/reports/sle-unified12-20261004/README.md).
+[its evaluation archive](docs/archive/reports/sle-unified12-20261004/README.md).
 Private traces and validation targets are not published.
 
 

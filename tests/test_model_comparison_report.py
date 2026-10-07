@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 import pytest
 
-path=Path(__file__).resolve().parents[1]/'docs/reports/render_model_comparison.py'
+path=Path(__file__).resolve().parents[1]/'docs/archive/reports/render_model_comparison.py'
 spec=importlib.util.spec_from_file_location('comparison_report',path)
 report=importlib.util.module_from_spec(spec);spec.loader.exec_module(report)
 

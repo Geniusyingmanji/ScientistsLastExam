@@ -15,15 +15,15 @@
 假设合理性、推理充分性、因果解释和新颖性需要独立科学审阅。
 **日志齐全不等于发现成立；当前没有自动 discovery 总分。**
 
-协议、指标、限制和 Linux 验证记录见 [发现评估](docs/discovery_evaluation.md)，
-运行入口见 [科学实验环境](docs/scientific_environments.md)。
-真实观测准备与分阶段审阅见 [北京 PM2.5 方法试点](docs/discovery_observational_pilot.md)；
-分支切分的原始失败、跳过及定向复验见 [验证记录](docs/discovery_split_validation.md)。
+协议、指标、限制和 Linux 验证记录见 [发现评估](docs/archive/discovery_evaluation.md)，
+运行入口见 [科学实验环境](docs/archive/scientific_environments.md)。
+真实观测准备与分阶段审阅见 [北京 PM2.5 方法试点](docs/archive/discovery_observational_pilot.md)；
+分支切分的原始失败、跳过及定向复验见 [验证记录](docs/archive/discovery_split_validation.md)。
 该试点已完成两个 `gpt-5.6-sol` 多轮 episode（另一个槽位为网络超时），
-[实际结果与方法审阅](docs/discovery_observational_pilot_results_20260920.md)单列过程记录和科学判断。
-显式选择 `--evidence-protocol posttest-v2` 可启用[检验后只读解释与复合主张核查](docs/discovery_posttest_v2.md)，
+[实际结果与方法审阅](docs/archive/discovery_observational_pilot_results_20260920.md)单列过程记录和科学判断。
+显式选择 `--evidence-protocol posttest-v2` 可启用[检验后只读解释与复合主张核查](docs/archive/discovery_posttest_v2.md)，
 在同一预算内分别冻结研究计划和最终解释。默认与历史评测仍使用 v1；结构核查不替代独立科学审阅。
-[分阶段科学审阅](docs/discovery_scientific_review.md)提供六阶段与八轴对应的空白审阅包，
+[分阶段科学审阅](docs/archive/discovery_scientific_review.md)提供六阶段与八轴对应的空白审阅包，
 单独记录审阅者、证据定位、反证、缺项和结论范围；导出材料不自动给科学评分。
 
 ## 当前任务
@@ -34,7 +34,7 @@
 标为 experimental，尚未进行 GPT 评测。它们共用冻结预测器、独立主张复验、请求账本和 HTML 报告。
 入口与扩展契约见 [环境文档](env/README.md)，
 评分、完成率分母及发现深度边界见 [评测协议](env/EVALUATION.md)。
-[本轮进度与结论](docs/reports/sle-env-pilot-20261003/index.html)分别报告正式与扩展 cohort；
+[本轮进度与结论](docs/archive/reports/sle-env-pilot-20261003/index.html)分别报告正式与扩展 cohort；
 后续实验的准入条件见 [Scaling 准备清单](env/SCALING_READINESS.md)。
 [微生态的持续培养舱接口](env/microecology/README.md)另保留采样、上清转移和组分去除。
 `python -m env.microecology demo --output-dir /var/tmp/sle-microecology-demo` 可生成实验图和证据报告，无需模型 API。
@@ -55,7 +55,7 @@ discovery(46 个):从受预算约束的证据中建立可检验主张,或在证�
 没有生成器、隐藏机制或答案标签；随附手工表格仅用于协议测试。
 其余四个模拟环境保留为显式 oracle 构建诊断，不作为未知科学结论的真值评测。
 完整注册表见 [TASKS.md](TASKS.md)。六个饱和或存在捷径的旧题由
-[准入排除规则](docs/discovery_eligibility.md) 保持 quarantined。
+[准入排除规则](docs/archive/discovery_eligibility.md) 保持 quarantined。
 
 ## 运行
 
@@ -109,3 +109,11 @@ main 的新贡献请围绕科学问题、数据或仪器来源、可检验的竞
 复核路径和独立审阅标准展开。优化题请以 `optimization` 为 PR base。
 参见 [CONTRIBUTING.md](CONTRIBUTING.md)。任务准入、科学价值和对顶级模型的难度需要分别验证；
 一个模型首轮成功不自动意味着删除，稳定被固定策略或捷径解决的题应退出难题集合。
+
+## 当前报告
+
+- [当前进度](docs/reports/progress.html)
+- [V1 双模型结果](docs/reports/v1_results.html)
+- [微生态完整案例](docs/reports/case_study.html)
+
+持续扩展已暂停。旧版本材料统一保留在 `docs/archive/`。

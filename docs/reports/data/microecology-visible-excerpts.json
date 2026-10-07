@@ -1,0 +1,176 @@
+[
+  {
+    "model": "GPT-5.6",
+    "episode": "unified-microecology-i2-r1",
+    "report_sha256": "b988b624a3c9412f7b982cec24fdc141b96bec003a4386aae3bfe01f5e9661cd",
+    "score": 10.636631653977428,
+    "subscores": {
+      "conditions": 5.538335786020783,
+      "interventions": 5.148929889074154,
+      "claims": 31.613923971223954
+    },
+    "limits": {
+      "rounds": 16,
+      "exploration_rounds": 14,
+      "experiments": 48,
+      "experiment_units": 30000,
+      "analysis_active_seconds": 180,
+      "predictor_seconds_per_spec": 15,
+      "wall_seconds": 3600,
+      "panel_count": 8,
+      "max_experiments_per_turn": 8,
+      "verification_reserve_seconds": 300
+    },
+    "visible_notes": [
+      {
+        "round": 1,
+        "note": "Map monoculture, pairwise, community, and temperature-dependent trajectories with dense shared sampling to identify growth, metabolite production/consumption, and interaction structure.",
+        "action": [
+          "experiments"
+        ]
+      },
+      {
+        "round": 2,
+        "note": "Map condition-response surfaces over nutrient, temperature, inoculum magnitude, and community composition using the evaluation-time grid. This tests whether the strong A–C synergy and temperature-dependent succession generalize beyond the initial pilot conditions.",
+        "action": [
+          "experiments"
+        ]
+      },
+      {
+        "round": 3,
+        "note": "Intervene on each extracellular fraction and compare feed and temperature shifts in a common three-strain community. Matched event times and trajectories test whether fractions are merely correlated by-products or have selective downstream effects, while also mapping the intervention domain.",
+        "action": [
+          "experiments"
+        ]
+      },
+      {
+        "round": 14,
+        "note": "Completed model fitting and froze a local-linear condition surrogate with matched intervention-response corrections. Diagnostics for three precommitted intervention contrasts were also saved for final claim calibration.",
+        "action": [
+          "analyze"
+        ]
+      },
+      {
+        "round": 15,
+        "note": "Freeze a mechanistic carbon-limited growth and cross-feeding predictor, with explicit feed, temperature-shift, and fraction-depletion handling. Claims focus on the robust short-lag nutrient response to feed interventions; mechanistic assignments of anonymous peaks remain provisional.",
+        "action": [
+          "submit"
+        ]
+      }
+    ],
+    "explanation": "The predictor represents temperature-dependent Monod growth on measured nutrient, biomass-associated production of the anonymous fractions, selective use of peak-01 by B and peak-03 by C, modest turnover, and exact public event operations. Exploration included monocultures, pairwise cultures, full communities, domain-spanning initial conditions, and matched feed/depletion/temperature interventions (obs-0001 through obs-0048). These data motivated cross-feeding terms, but anonymous-fraction production and consumption are not uniquely identifiable: correlated secretion, inhibition relief, and unobserved inert-carbon transfers remain alternatives. The three claims therefore use the more direct and robust one-hour nutrient consequence of feeding rather than claiming a unique peak mechanism. Predictions are interpolative over the stated evaluation ranges; accuracy may degrade for unusual event combinations, multiple events, or trajectories beyond the sampled 60 h window.",
+    "claims": [
+      {
+        "statement": "Adding 1.5 mmol carbon/L nutrient at 12 h increases nutrient remaining at 13 h by about 1.35 mmol carbon/L in the reference three-strain community.",
+        "scope": "Short-lag feed response at 30 C with all three strains; the interval allows differential consumption during the hour after feeding and does not assert a long-term biomass effect.",
+        "interval": [
+          1.15,
+          1.55
+        ]
+      },
+      {
+        "statement": "Adding 2.0 mmol carbon/L nutrient at 8 h increases nutrient remaining at 9 h by approximately 1.9 mmol carbon/L in a low-nutrient, cool community.",
+        "scope": "One-hour response in the specified low-nutrient background; extrapolation to later times is limited by feed-induced changes in growth and consumption.",
+        "interval": [
+          1.7,
+          2.05
+        ]
+      },
+      {
+        "statement": "Adding 2.5 mmol carbon/L nutrient at 18 h increases nutrient remaining at 19 h by roughly 2.0 mmol carbon/L in the reference three-strain community.",
+        "scope": "Short-lag response to a late, large feed in the reference community; substantial immediate consumption is allowed, and no claim is made about persistence after 19 h.",
+        "interval": [
+          1.7,
+          2.3
+        ]
+      }
+    ]
+  },
+  {
+    "model": "DeepSeek V4 Pro",
+    "episode": "unified-microecology-i2-r1",
+    "report_sha256": "d0b539298c66ea1a03c62bbd5d92bc2468fe1d1e493e9e503387863ed73d7b01",
+    "score": 26.919256957170276,
+    "subscores": {
+      "conditions": 16.19000315692021,
+      "interventions": 8.708568197688102,
+      "claims": 81.0584245970187
+    },
+    "limits": {
+      "rounds": 16,
+      "exploration_rounds": 14,
+      "experiments": 48,
+      "experiment_units": 30000,
+      "analysis_active_seconds": 180,
+      "predictor_seconds_per_spec": 15,
+      "wall_seconds": 14400,
+      "panel_count": 8,
+      "max_experiments_per_turn": 8,
+      "verification_reserve_seconds": 300
+    },
+    "visible_notes": [
+      {
+        "round": 1,
+        "note": "Baseline characterization of single-strain growth, strain mixture, nutrient dependence, and temperature response with no interventions.",
+        "action": [
+          "experiments"
+        ]
+      },
+      {
+        "round": 2,
+        "note": "Batch 2 probes pairwise strain interactions and event responses (depletion, feed, temperature shift) around a common baseline to separate strain roles and intervention dynamics.",
+        "action": [
+          "experiments"
+        ]
+      },
+      {
+        "round": 3,
+        "note": "Fit a candidate ODE surrogate to existing no-event 30C observations; report parameter estimates and residual scale.",
+        "action": [
+          "analyze"
+        ]
+      },
+      {
+        "round": 14,
+        "note": "Fit a memory surrogate on all 40 public observations and save a self-contained model snapshot for final submission.",
+        "action": [
+          "analyze"
+        ]
+      },
+      {
+        "round": 15,
+        "note": "Final submission: freeze the saved micro_knn v1 snapshot and three observed-contrast claims. No further experiments are run.",
+        "action": [
+          "submit"
+        ]
+      }
+    ],
+    "explanation": "Frozen the saved micro_knn v1 memory surrogate based on all 40 public observations. The three claims use directly observed paired contrasts with matched t=48 h readouts, no events, and low measurement noise. Evidence: obs-0001 vs obs-0007 for c1; obs-0001 vs obs-0008 for c2; obs-0002 vs obs-0004 for c3. Intervals are narrow because the hidden dynamics are deterministic and channel noise is small; each interval is wider than expected sampling/measurement error around the observed difference. Limitations: the predictor is a memory surrogate, not a mechanistic model; it may fail for novel event timing or unseen condition combinations. The claims are numerical effect claims under the public eligibility checks and do not prove unique mechanisms. In particular, c3 is confounded by the addition of A and C and by initial B difference; c1 and c2 do not isolate nutrient or temperature effects beyond the stated A-only scope.",
+    "claims": [
+      {
+        "statement": "At 48 h in A-only culture with no events, raising initial nutrient from 1.0 to 5.0 mmol C/L increases A biomass by about 1.10 mmol C/L.",
+        "scope": "A-only, no events, 30 C, t=48 h. Does not isolate nutrient effect across B/C-containing communities or interventions.",
+        "interval": [
+          1.0875,
+          1.1085
+        ]
+      },
+      {
+        "statement": "At 48 h in A-only culture with nutrient 5, raising initial temperature from 30 C to 36 C lowers A biomass by about 0.35 mmol C/L.",
+        "scope": "A-only, N=5, no events, 30 C vs 36 C, t=48 h. Temperature response may differ in mixed cultures or after temperature shift events.",
+        "interval": [
+          -0.3635,
+          -0.3425
+        ]
+      },
+      {
+        "statement": "At 48 h, B biomass is about 0.48 mmol C/L higher in mixed A+B+C culture than in B-only culture despite lower initial B, indicating positive interaction with A and/or C.",
+        "scope": "B readout, N=5, 30 C, no events. Confounded by A and C presence and initial B 0.05 vs 0.10; does not distinguish A from C effects.",
+        "interval": [
+          0.468,
+          0.489
+        ]
+      }
+    ]
+  }
+]

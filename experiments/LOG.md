@@ -1593,7 +1593,7 @@ validity, refusal, supported coverage, uncertainty and cost axes; sealed transfe
 one-shot independent confirmation; null/model-mismatch worlds and false-discovery/over-refusal
 are mandatory; stochastic artifacts are re-evaluated on hidden seeds; and agent-caused invalid
 runs remain in failure-inclusive estimates. The detailed, source-checked experiment list and
-phased TODO are in `docs/edgebench_science_experiment_addendum.md`.
+phased TODO are in `docs/archive/edgebench_science_experiment_addendum.md`.
 
 ## 2026-07-24 — post-analysis clean-revision audit refresh
 
@@ -1682,7 +1682,7 @@ semantics omit instrument drift, sample depletion, irreversible interventions an
 experimental results.
 
 The resulting E29--E32 designs, experiment-matrix rows, TODOs and source hashes are recorded in
-`docs/edgebench_science_experiment_addendum.md`, `.research/science_experiment_plan.md`,
+`docs/archive/edgebench_science_experiment_addendum.md`, `.research/science_experiment_plan.md`,
 `.research/plan_gap_audit.md` and
 `.research/edgebench_science_second_order_audit_2026-07-24.json`. These are Frontier-Science
 proposals derived from explicit EdgeBench assumptions; they are not additional EdgeBench results

@@ -75,7 +75,7 @@ these failures remain in the record. Scientific failures do not trigger stopping
 The exporter publishes only allowlisted aggregate metrics, endpoint statuses,
 request counts and artifact hashes. Private seeds, targets, model code and API
 configuration remain outside the repository/site. The unified HTML accepts this
-public file via `docs/reports/render_overview.py --unified-data ...`. Previously
+public file via `docs/archive/reports/render_overview.py --unified-data ...`. Previously
 reviewed discoveries are labeled historical until new traces are reviewed.
 
 This campaign unifies numerical scoring. It does not by itself calibrate
