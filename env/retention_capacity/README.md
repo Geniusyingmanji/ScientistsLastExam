@@ -29,3 +29,16 @@ Private numerical evidence retains all prediction arrays. This is feasibility
 checking, **not a high-difficulty result**. Before model trials: bounded
 public-data baseline, explicitly informed family-fit reference with recorded
 fits/predictions, Linux sandbox admission, driver and frozen new instances.
+
+Admission update: an explicitly informed two-family fit used six training
+experiments (132 units), four starts and at most 3000 forward calls per exposed
+instance. It used 1080–1536 calls; maximum held-out RMSE was0.0009751 against a
+predeclared0.02 gate. All observations, coefficients and prediction arrays are
+privately archived and independently checked (same-family/provisional). The
+empirical nearest-record baseline mean RMSE was0.093–0.116. This is feasibility,
+not model difficulty. Local admission:5passed/1Linuxskip; Linux:6passed14.78s,
+including real isolated analysis/prediction. Explicit `model_driver.py` requires
+`capacity-batch-score-1.0`; shared registration remains disabled. Weights are
+50% condition prediction,30% intervention prediction,20% effect claims. Load is
+part of causal contrast identity; assigned zero prefixes earn no prediction
+credit. Candidate contracts disclose these rules before calls.
