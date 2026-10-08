@@ -59,7 +59,7 @@ def test_real_linux_pipeline(tmp_path):
     inst['panel_hashes']={k:canonical_hash(s.generate_panel(w,21,k,2)) for k in ('conditions','interventions')}
     code="def predict(spec):\n return [[1.5 if spec['events'][i-1]['kind']=='standard' else 0.] for i in spec['event_indices']]"
     client=FakeClient([
-        {'note':'fixture','experiments':[w.example()]},
+        {'note':'fixture','experiments':[s.generate_panel(w,21,'conditions',1)[0]]},
         {'note':'fixture','analyze':{'code':"result={'rows':len(records[0]['observation']['values'])}"}},
         {'note':'fixture','submit':{'predictor_code':code,'claims':[],'explanation':'Engineering fixture.'}}])
     limits=dict(DEFAULT_LIMITS,rounds=3,exploration_rounds=2,panel_count=2,wall_seconds=180,verification_reserve_seconds=30)
