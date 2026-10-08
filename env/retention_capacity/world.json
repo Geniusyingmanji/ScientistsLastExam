@@ -1,0 +1,1 @@
+{"name":"retention_capacity","version":"retention_capacity-0.1.0","status":"unregistered_prototype","channels":["recovered_fraction"],"axis_field":"times","scales":[1.0],"noise_std":[0.002],"model_evaluation":"not_started"}
