@@ -34,3 +34,16 @@ operator equations and is not evidence of agent difficulty. Three local tests
 cover direction, noise and contract behavior. Public-data fitting baselines,
 Linux admission, model-driver integration and new-instance paired API tests
 remain pending. No paid run has used this task and it is not registered.
+
+The bounded four-instance baseline screen subsequently used four noisy training
+experiments (48 units) and eight held-out arms per instance. A zero-contrast
+predictor scores 100 on two instances and about 8 on two; the known-family,
+bounded-fit reference scores 94.14–100 without reading sampled coefficients or
+family labels. Thus this task is retained as a diagnostic, **not admitted as a
+standalone high-difficulty total score**. No API campaign is launched for this
+standalone design. Review is same-family/provisional; aggregate fit records do
+not retain the per-prediction audit arrays. Future runs must archive those arrays.
+
+Linux admission subsequently passed 11 tests in 20.53 seconds, including the
+history1.1 real sandbox smoke and order-task checks. This engineering gate does
+not change the standalone-task rejection above.
