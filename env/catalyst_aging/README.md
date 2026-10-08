@@ -28,3 +28,12 @@ Sources/manifest/scientific notes are trusted operator material. Shared registry
 semantics, evidence-packet and runner integration are separate acceptance steps.
 Run `pytest env/catalyst_aging/tests` for focused checks. See the bounded
 [development plan](DEVELOPMENT_PLAN.md) and [scientific notes](SCIENTIFIC_NOTES.md).
+
+`matched_readout.py` is an unregistered diagnostic, not a new model-scored task.
+It makes four independent reset experiments with identical preparation prefixes
+and reads used coupon, fresh coupon, blank and standard at the same event index.
+Under this simulator's shared affine instrument response, the standard-normalized
+used-minus-fresh contrast cancels gain and offset. This relies on instrument state
+being independent of terminal event type. Noisy ratio uncertainty, more general
+instrument drift and competing activity models require separate validation;
+passing the clean diagnostic is not high-difficulty or unique-mechanism evidence.

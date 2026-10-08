@@ -48,6 +48,9 @@ if live_path.exists():
   progress=progress.replace('双模型难度筛选已恢复。','双模型难度筛选：详见上方核验状态。').replace('Stage A运行微生态与伊辛自旋；','Stage A已启动微生态与伊辛自旋，运行状态见上方；')
  rows=[[e['environment'],e['model'],e['status'],f"{e['score']:.2f}" if isinstance(e.get('score'),(int,float)) else '—'] for e in live['episodes']]
  progress=section('live-screening','首轮实测进度', ('<div class="notice">'+esc(live['monitoring_notice'])+'</div>' if live.get('monitoring_notice') else '')+'<p>Stage A 原始快照：'+esc(live['updated_at'])+'；已结束 '+str(live['closed'])+'/8。已计入请求 '+str(live['ledger']['started_attempts'])+'/128，同位素独立批次上限64请求，状态见上方。以下为单次开发运行，未汇总为最终难度结论。</p>'+table(['环境','模型','状态','单次分数'],rows)+'<p>GPT8k/1小时，DeepSeek32k/4小时；不同预算。已结束报告已归档并核验SHA-256。零API沙箱启动故障单独留档；不混入本表。低分仍需科学轨迹与参考可解性审阅。</p>')+progress
+ if live.get('catalyst_audit'):
+  ca=live['catalyst_audit']
+  progress=section('catalyst-audit','催化剂老化 · 既有轨迹与新诊断','<p>这是已有V1环境，不是新增环境。研究活性损失与仪器共同漂移的混杂；V1补齐口径GPT65.66、DeepSeek70.05，各6运行，原分数不改。</p><p>'+esc(ca['note'])+'</p><p>新增未注册诊断：四次独立重置实验使用相同准备历史，在同一事件位置测用过试片、新试片、空白和标准。按模拟器的共同仿射仪器假设校正增益和偏置。9个已暴露开发条件、36次干净仿真通过；26项本地测试通过。另完成固定高斯噪声假设下9个条件的比值不确定性检查，每条件2000次抽样，95%区间覆盖率93.85%–95.40%。首次结果序列化失败留档，独立恢复仅修布尔输出。尚缺逆问题参考和新任务模型实测；这些不证明高难或唯一机制。</p>')+progress
  if live.get('capacity_order_round4'):
   co=live['capacity_order_round4']
   progress=section('order-task-screening','新顺序任务 · 双模型确认','<p>同一容量输运世界的新任务：预测绝对回收量和仅改变流速次序的有符号差。两项各占50%，尺度0.1/0.05；差分来自相同两臂预测。内部机制、参数和未来结果隐藏；不计声明分。</p><p>'+esc(co['notice'])+'</p>'+table(['模型','实例','绝对预测','顺序差','总分'],[[x['model'],str(x['instance']),f"{x['absolute']:.2f}" if x.get('absolute') is not None else '—',f"{x['order']:.2f}" if x.get('order') is not None else '—',f"{x['score']:.2f}" if x.get('score') is not None else '预测器失败'] for x in co.get('runs',[])])+'<p>'+esc(co.get('review',''))+'</p><p>Linux11项通过，包含新driver真实隔离实验、分析与冻结预测器评分。两新开发实例×GPT/DeepSeek，共4运行。GPT8k/1小时、DeepSeek32k/4小时，非等预算比较。旧结果不覆盖；低分须区分程序、服务与科学失败。</p>')+progress
