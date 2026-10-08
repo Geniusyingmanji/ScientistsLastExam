@@ -48,6 +48,10 @@ if live_path.exists():
   progress=progress.replace('双模型难度筛选已恢复。','双模型难度筛选：详见上方核验状态。').replace('Stage A运行微生态与伊辛自旋；','Stage A已启动微生态与伊辛自旋，运行状态见上方；')
  rows=[[e['environment'],e['model'],e['status'],f"{e['score']:.2f}" if isinstance(e.get('score'),(int,float)) else '—'] for e in live['episodes']]
  progress=section('live-screening','首轮实测进度', ('<div class="notice">'+esc(live['monitoring_notice'])+'</div>' if live.get('monitoring_notice') else '')+'<p>Stage A 原始快照：'+esc(live['updated_at'])+'；已结束 '+str(live['closed'])+'/8。已计入请求 '+str(live['ledger']['started_attempts'])+'/128，同位素独立批次上限64请求，状态见上方。以下为单次开发运行，未汇总为最终难度结论。</p>'+table(['环境','模型','状态','单次分数'],rows)+'<p>GPT8k/1小时，DeepSeek32k/4小时；不同预算。已结束报告已归档并核验SHA-256。零API沙箱启动故障单独留档；不混入本表。低分仍需科学轨迹与参考可解性审阅。</p>')+progress
+ if live.get('capacity_order_baselines'):
+  ob=live['capacity_order_baselines']
+  names={'clock':'累计流量时钟','linear_memory':'线性记忆','load_memory':'负载相关记忆','informed_reference':'带公式先验的参考','zero':'无观测：零预测','constant_half':'无观测：固定0.5','nearest':'最近公开观测'}
+  progress=section('order-task-baselines','新顺序任务 · 共同数据基线','<p>同时预测两臂回收量与其有符号差，绝对和差分各占50%，RMSE尺度分别0.1和0.05。4个暴露开发实例，每例6个训练臂、4个留出配对；以下均为数值拟合参考，不是GPT或DeepSeek新成绩。</p>'+table(['方法','四实例得分范围'],[[names[k],f'{v[0]:.2f}–{v[1]:.2f}'] for k,v in ob['scores'].items()])+'<p>'+esc(ob['note'])+'</p><p>新task尚未注册，专属driver和新实例模型确认待完成。</p>')+progress
  if live.get('capacity_round3',{}).get('runs'):
   cr=live['capacity_round3']; rows=[]
   for x in cr['runs']:
