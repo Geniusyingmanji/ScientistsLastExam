@@ -37,3 +37,13 @@ used-minus-fresh contrast cancels gain and offset. This relies on instrument sta
 being independent of terminal event type. Noisy ratio uncertainty, more general
 instrument drift and competing activity models require separate validation;
 passing the clean diagnostic is not high-difficulty or unique-mechanism evidence.
+
+`reference.py` is a bounded author-informed inverse reference, not an agent or
+public baseline. It receives observation records, fits calibration-only affine
+instrument candidates, and compares known single/two-population kinetic formulas
+under fixed bounds and training-only selection. Each forward history evaluation
+is counted; all candidate evaluations, optimizer attempts and selected training
+predictions are returned for private archival. Its strong formula/bounds prior
+must be disclosed. Agreement on held-out histories does not uniquely identify
+population structure. The ordinary `baseline.py` remains public-data nearest
+history inference and unchanged.

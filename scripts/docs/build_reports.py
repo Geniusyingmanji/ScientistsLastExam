@@ -48,6 +48,9 @@ if live_path.exists():
   progress=progress.replace('双模型难度筛选已恢复。','双模型难度筛选：详见上方核验状态。').replace('Stage A运行微生态与伊辛自旋；','Stage A已启动微生态与伊辛自旋，运行状态见上方；')
  rows=[[e['environment'],e['model'],e['status'],f"{e['score']:.2f}" if isinstance(e.get('score'),(int,float)) else '—'] for e in live['episodes']]
  progress=section('live-screening','首轮实测进度', ('<div class="notice">'+esc(live['monitoring_notice'])+'</div>' if live.get('monitoring_notice') else '')+'<p>Stage A 原始快照：'+esc(live['updated_at'])+'；已结束 '+str(live['closed'])+'/8。已计入请求 '+str(live['ledger']['started_attempts'])+'/128，同位素独立批次上限64请求，状态见上方。以下为单次开发运行，未汇总为最终难度结论。</p>'+table(['环境','模型','状态','单次分数'],rows)+'<p>GPT8k/1小时，DeepSeek32k/4小时；不同预算。已结束报告已归档并核验SHA-256。零API沙箱启动故障单独留档；不混入本表。低分仍需科学轨迹与参考可解性审阅。</p>')+progress
+ if live.get('catalyst_inverse'):
+  ci=live['catalyst_inverse']
+  progress=section('catalyst-inverse','催化剂老化 · 有界参考拟合','<p>作者已知单群体/双群体公式与参数范围，使用公开观测拟合仪器与反应历史；不读取实例真实系数或生成标签。不是GPT/DeepSeek新成绩。</p><p>'+esc(ci['note'])+'</p><p>3个已暴露实例，各4条训练历史、2组留出配对。3684次优化前向调用，另48次留出参考调用、36次模拟器观测；28项本地测试通过，本轮API为0。计划max_nfev按family表述、实现按start设置；实际各family累计15–48未越100，差异留档。</p>')+progress
  if live.get('catalyst_audit'):
   ca=live['catalyst_audit']
   progress=section('catalyst-audit','催化剂老化 · 既有轨迹与新诊断','<p>这是已有V1环境，不是新增环境。研究活性损失与仪器共同漂移的混杂；V1补齐口径GPT65.66、DeepSeek70.05，各6运行，原分数不改。</p><p>'+esc(ca['note'])+'</p><p>新增未注册诊断：四次独立重置实验使用相同准备历史，在同一事件位置测用过试片、新试片、空白和标准。按模拟器的共同仿射仪器假设校正增益和偏置。9个已暴露开发条件、36次干净仿真通过；26项本地测试通过。另完成固定高斯噪声假设下9个条件的比值不确定性检查，每条件2000次抽样，95%区间覆盖率93.85%–95.40%。首次结果序列化失败留档，独立恢复仅修布尔输出。尚缺逆问题参考和新任务模型实测；这些不证明高难或唯一机制。</p>')+progress
