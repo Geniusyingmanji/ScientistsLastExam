@@ -17,8 +17,8 @@ and scoped observable effects, not the author's internal label.
 The candidate sees load/time/flow controls, units, noise and reset semantics via
 `describe()`. It does not see sampled mechanism, coefficients, seed or targets.
 Noise is independent additive readout noise with SD0.002 and no clipping.
-No model driver or shared registration is supplied yet. Prospective scoring and
-API admission remain pending; old worlds, cohorts and scores are unchanged.
+An explicit model driver is available as described below; shared registration
+remains disabled. Old worlds, cohorts and scores are unchanged.
 
 A frozen exposed development precheck covered 48 trajectories, four injection
 levels and three flow designs across four instances. Four tests passed: two
@@ -42,3 +42,16 @@ including real isolated analysis/prediction. Explicit `model_driver.py` requires
 50% condition prediction,30% intervention prediction,20% effect claims. Load is
 part of causal contrast identity; assigned zero prefixes earn no prediction
 credit. Candidate contracts disclose these rules before calls.
+
+`order_task.py` adds an unregistered prospective task on this same world. It
+reverses three equal-duration flow segments, with an optional identical tail,
+while matching load and final time. Any memoryless clock based on an integral
+of a function of flow gives identical final predictions in the two arms.
+Hidden-state dynamics can give different responses; linear memory can do so
+too, so an order effect does not identify saturation or a unique mechanism.
+The candidate predicts both absolute fractions. A signed contrast is derived
+from those same predictions, preventing contradictory separate submissions.
+The task reports exponential RMSE scores with public scales0.1 (absolute)
+and0.05 (contrast), and their equally weighted average. It has no claim score.
+Common-data baselines, explicit driver integration and new-instance API
+confirmation are still pending. The frozen batch scorer above is unchanged.
