@@ -100,7 +100,7 @@
       "score": null
     }
   ],
-  "monitoring_notice": "非线性容量输运的新配对批次已运行：2新实例×GPT/DeepSeek共4次。快照9请求、6返回、3在途，尚无完整成绩。评分50%新条件、30%干预、20%声明；两模型仍使用各自原8k/32k预算。此前累计273请求，原记录保留。",
+  "monitoring_notice": "容量输运4次运行全部结束；3次有成绩、1次连接故障，完整科学难度审阅进行中。",
   "isotope_sidecar": {
     "status": "同模型家族独立上下文审阅通过，结论暂定",
     "requests": 52,
@@ -266,12 +266,61 @@
     }
   },
   "capacity_round3": {
-    "status": "running",
+    "status": "closed",
     "planned": 4,
-    "closed": 0,
-    "requests": 9,
-    "returned": 6,
-    "inflight": 3,
-    "checked_at": "2026-10-08T03:50:28.903853+00:00"
+    "closed": 4,
+    "requests": 58,
+    "returned": 57,
+    "inflight": 0,
+    "checked_at": "2026-10-08T05:23:25Z",
+    "failed": 1,
+    "runs": [
+      {
+        "episode_id": "difficulty-retention_capacity-i1-gpt",
+        "model": "gpt",
+        "instance": "1",
+        "status": "failed",
+        "score": null,
+        "subscores": null
+      },
+      {
+        "episode_id": "difficulty-retention_capacity-i1-deepseek",
+        "model": "deepseek",
+        "instance": "1",
+        "status": "completed",
+        "score": 92.83925432396966,
+        "subscores": {
+          "conditions": 99.86025773173708,
+          "interventions": 99.75995704291677,
+          "claims": 64.9056917261304
+        }
+      },
+      {
+        "episode_id": "difficulty-retention_capacity-i2-gpt",
+        "model": "gpt",
+        "instance": "2",
+        "status": "completed",
+        "score": 23.86539538074365,
+        "subscores": {
+          "conditions": 28.954973592092223,
+          "interventions": 28.371247343041155,
+          "claims": 4.382671908925957
+        }
+      },
+      {
+        "episode_id": "difficulty-retention_capacity-i2-deepseek",
+        "model": "deepseek",
+        "instance": "2",
+        "status": "completed",
+        "score": 53.071072242132075,
+        "subscores": {
+          "conditions": 75.11396919909453,
+          "interventions": 51.71362547528272,
+          "claims": 0.0
+        }
+      }
+    ],
+    "partial_review": "同模型家族独立上下文部分审阅：GPT实例2最终预测器及一条声明的注入量效应方向与已有观测冲突；同时耗尽分析预算。16个预测面板算术及原预测器复现一致。DeepSeek新结果尚待轨迹审阅。GPT实例1为RemoteDisconnected连接中断。 中断的GPT实例1此前已报告接近噪声水平的训练拟合并保存模型，但没有最终封存评分，不能视作科学失败或计正式成绩。 另一次超时拟合还假定停流时内部状态不变，与匹配暂停实验冲突，不能把低分全部归因于计算时间。",
+    "connection_notice": "连接恢复，整批于04:39 UTC结束；58请求，57返回，1连接失败，无自动重试。完整归档及4份报告哈希已核验；全批独立审阅进行中。"
   }
 }
