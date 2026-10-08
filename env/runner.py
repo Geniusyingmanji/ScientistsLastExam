@@ -209,17 +209,19 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
                         "automatic_depth_certification": False}
     else:
         task_profile = get_task_profile(instance.get("task_profile", "open_discovery"), world.name) if world.name in ENVIRONMENTS else None
+    if unified and hasattr(unified, "TASK_PROFILE"):
+        task_profile = dict(unified.TASK_PROFILE)
     if task_profile:
         problem["task_profile"] = task_profile
     problem["score_contract"] = contract_fn()
     problem["submission_contract"] = {"entrypoint": "predict(spec)", "returns": "values array only; exact public channel order", "claim_count": "0..3", "claim_replicates_per_arm": unified.CONFIRMATION_REPLICATES if unified else 8}
     presentation = instance.get("presentation_profile", "full_description")
     problem = present_problem(problem, presentation, environment=world.name)
-    base_system = SYSTEM
+    base_system = getattr(unified, "CANDIDATE_SYSTEM", SYSTEM) if unified else SYSTEM
     if unified:
-        begin = SYSTEM.index("Row is zero-based and must be after t=0.")
-        end = SYSTEM.index("Read the full score contract.", begin)
-        base_system = SYSTEM[:begin] + unified.CLAIM_SYSTEM + SYSTEM[end:]
+        begin = base_system.index("Row is zero-based and must be after t=0.")
+        end = base_system.index("Read the full score contract.", begin)
+        base_system = base_system[:begin] + unified.CLAIM_SYSTEM + base_system[end:]
         from .unified_panels import public_panel_domain
         problem["evaluation_domain"] = (scoring_adapter.public_panel_domain(world.name)
                                         if scoring_adapter is not None else public_panel_domain(world.name))
