@@ -31,7 +31,7 @@ v=v.replace('<a href="archive/reports/comparison.html">GPT × DeepSeek 对照</a
 progress='''<div class="notice"><strong>持续扩展已暂停。</strong>本页是当前工作快照；未启动 GPT 预算对齐实验，也没有新增付费模型评测。下一阶段先整理环境质量与文档，再由用户决定恢复。</div>'''
 progress+=section('results','已完成：V1 十二环境双模型评测',table(['项目','GPT-5.6','DeepSeek V4 Pro'],[['补齐后总分','72.84','73.33'],['新条件预测','73.90','80.63'],['干预预测','73.60','79.95'],['定量声明','69.05','45.14'],['输出 / 时间上限','8k / 1 小时','32k / 4 小时'],['累计请求（含失败、补跑）','1226','1034']])+'''<p>每模型 12 环境 × 3 实例 × 2 次重复。成功原运行保留，失败槽位使用预先指定补跑的首个有效结果；不是按最高分挑选。两模型总分接近，但分项特点不同，预算也不同，不能据此认定普适模型排名或发现深度。</p><p><a href="v1_results.html#paired-results">查看逐题成绩、六次配对、环境规律与评分</a> · <a href="case_study.html">查看三菌株完整案例</a></p>''')
 progress+=section('candidate-decisions','V2 候选与成熟度',table(['候选','当前证据 / 状态','尚未完成'],[
-['非线性容量输运 retention_capacity','独立非线性修订原型；控制注入量和流量历史，观察回收比例。竞争解释为储留或出口的饱和，具体机制及系数隐藏','拟合参考复核通过，Linux6测试通过；4次配对运行已结束，3次有成绩、1次连接故障；全批审阅中，未共享注册'],
+['非线性容量输运 retention_capacity','独立非线性修订原型；控制注入量和流量历史，观察回收比例。竞争解释为储留或出口的饱和，具体机制及系数隐藏','拟合参考复核通过，Linux6测试通过；4次配对运行已结束，3次有成绩、1次连接故障；完整审阅暂不认证高难，未共享注册'],
 ['自适应信号 adaptive_signaling','独立原型；研究适应响应背后的竞争解释','双模型4次已结束；预测近满分，需增加科学区分度，未共享注册'],
 ['滞留输运 retention_transport','独立原型；研究表观延迟来自何种机制','双模型4次已结束；先分离分析预算与科学失败，再改进任务'],
 ['同位素配对 isotope_pairing','原型与前瞻工作流、预算预览、请求示例；Linux 隔离执行验证','显式 driver 已完成双模型实测；评分更正与新难度版本筛选见上方；未作共享注册'],
@@ -52,7 +52,7 @@ if live_path.exists():
   cr=live['capacity_round3']; rows=[]
   for x in cr['runs']:
    rows.append([x['model'],x['instance'],x['status'],*[f"{x['subscores'][k]:.2f}" if x.get('subscores') else '—' for k in ('conditions','interventions','claims')],f"{x['score']:.2f}" if isinstance(x.get('score'),(int,float)) else '—'])
-  progress=section('capacity-screening','非线性容量输运 · 实测结果','<p>控制注入量和流量历史，预测回收比例。隐藏机制与系数；评分50%新条件、30%干预、20%声明。本批已结束，全批轨迹审阅尚未完成，暂不下总体难度结论。</p>'+table(['模型','实例','状态','新条件','干预','声明','总分'],rows)+'<p>快照：'+esc(cr['checked_at'])+'。GPT实例1服务/传输故障无科学成绩；实例2分析预算耗尽且有无效动作。两模型输出与时间预算不同。原始失败保留。</p><p>'+esc(cr.get('partial_review',''))+'</p><p>'+esc(cr.get('connection_notice',''))+'</p>')+progress
+  progress=section('capacity-screening','非线性容量输运 · 实测结果','<p>控制注入量和流量历史，预测回收比例。隐藏机制与系数；评分50%新条件、30%干预、20%声明。本批已结束并完成独立审阅：保留开发候选，尚不认证高难度。</p>'+table(['模型','实例','状态','新条件','干预','声明','总分'],rows)+'<p>快照：'+esc(cr['checked_at'])+'。GPT实例1服务/传输故障无科学成绩；实例2分析预算耗尽且有无效动作。两模型输出与时间预算不同。原始失败保留。</p><p>'+esc(cr.get('partial_review',''))+'</p><p>'+esc(cr.get('connection_notice',''))+'</p>')+progress
  if live.get('history_round2'):
   hr=live['history_round2']; names={'adaptive_signaling':'自适应信号','retention_transport':'滞留输运'}
   rows=[]
