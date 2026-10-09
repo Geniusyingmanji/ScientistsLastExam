@@ -234,6 +234,7 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
         records.extend(initial)
         spent = sum(r["cost"] for r in records)
         problem["assisted_protocol"] = episode_support.contract()
+        system += "\nThis assisted protocol additionally permits the validate_export action described in problem.assisted_protocol during exploration. Its exact validated snapshot is required for submission."
     result = {}
 
     def snapshot():
