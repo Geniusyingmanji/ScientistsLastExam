@@ -162,7 +162,7 @@ def _compact_result(entry):
 
 
 def run_episode(instance, limits, directory, client, *, analysis_factory=IsolatedAnalysis, predict_fn=_predict,
-                world_factory=None, scoring_adapter=None):
+                world_factory=None, scoring_adapter=None, episode_support=None):
     directory = Path(directory)
     world, baseline = (world_factory or load_world)(instance["environment"], instance["world_seed"])
     start = time.monotonic()
@@ -229,6 +229,11 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
     if analysis_protocol == SNAPSHOT_PROTOCOL:
         problem["model_snapshot_contract"] = snapshot_contract()
         system += SNAPSHOT_SYSTEM
+    if episode_support is not None:
+        initial = episode_support.initialize(world, instance, limits)
+        records.extend(initial)
+        spent = sum(r["cost"] for r in records)
+        problem["assisted_protocol"] = episode_support.contract()
     result = {}
 
     def snapshot():
@@ -299,6 +304,8 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
                       "recent_results": [_compact_result(r) for r in history[-2:]]}
             if model_snapshots is not None:
                 prompt["model_snapshots"] = model_snapshots.catalog()
+            if episode_support is not None:
+                prompt["assisted_public_data"] = episode_support.public_data()
             encoded = json.dumps(prompt, ensure_ascii=False, separators=(",", ":"), allow_nan=False)
             if len(encoded) > 260000:
                 stop = "model_context_budget"
@@ -322,7 +329,7 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
                 break
             turn = {"round": number}
             try:
-                value = _parse(raw)
+                value = episode_support.parse(raw, _parse) if episode_support is not None else _parse(raw)
                 turn["note"] = value["note"]
                 if closing and "submit" not in value:
                     raise ValueError("submission_required_in_closing_phase")
@@ -363,9 +370,14 @@ def run_episode(instance, limits, directory, client, *, analysis_factory=Isolate
                     except Exception as exc:
                         turn["analysis"] = {"ok": False, "error": sanitized_candidate_failure(exc)}
                     turn["outcome"] = "analysis_ok" if turn["analysis"].get("ok") else "analysis_failed"
+                elif episode_support is not None and "validate_export" in value:
+                    turn["export_validation"] = episode_support.validate_export(value["validate_export"], model_snapshots, analysis, predict_fn, directory)
+                    turn["outcome"] = "export_validation"
                 else:
                     proposal, binding = (model_snapshots.resolve_submission(value["submit"])
                                          if model_snapshots else (value["submit"], None))
+                    if episode_support is not None:
+                        episode_support.require_submission(value["submit"], proposal["predictor_code"])
                     frozen = validate_fn(proposal, world, records)
                     save_json(directory/"submission.json", frozen)
                     code_path = directory/"predictor.py"

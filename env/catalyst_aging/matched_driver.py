@@ -25,3 +25,17 @@ def run_model_episode(instance, limits, directory, client, **testing):
         raise ValueError('unsupported driver argument')
     return run_episode(instance, limits, directory, client,
                        world_factory=load_world, scoring_adapter=scoring, **testing)
+
+
+def run_assisted_episode(instance, limits, directory, client, **testing):
+    """Engineering entry point; cohort admission still requires Linux checks."""
+    from .assisted import Assistance
+    if instance.get('assisted_protocol') != 'catalyst-assisted-export-0.1':
+        raise ValueError('explicit assisted protocol required')
+    if instance.get('scoring_protocol') != scoring.PROTOCOL:
+        raise ValueError('explicit matched scoring protocol required')
+    if set(testing)-{'analysis_factory','predict_fn'}:
+        raise ValueError('unsupported driver argument')
+    return run_episode(instance, limits, directory, client,
+                       world_factory=load_world, scoring_adapter=scoring,
+                       episode_support=Assistance(instance['initial_records']), **testing)
