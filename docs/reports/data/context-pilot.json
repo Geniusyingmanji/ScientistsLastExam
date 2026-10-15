@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-15",
+  "status": "completed",
+  "model": "GPT-5.6-sol",
+  "harness": "Codex 0.162.1",
+  "experiments": 48,
+  "valid_panels": 12,
+  "rmse_range": [
+    0.001923634311510301,
+    0.010048116785546143
+  ],
+  "review": "独立审阅为 partial / same-family / provisional：8个模块中5项在限定范围内恢复、2项部分恢复、1项未解决。可辨识性分母尚未预先确立，不能将其称为62.5%正式恢复率。遗漏C的抑制项与温度阈值，温度相关记忆速率不等价；添加B稀释记忆的假设也不符。报告所称未参与拟合验证实际参与过拟合，严格事前预测鉴别计数为0",
+  "scope": "单个暴露开发实例，12面板为事后工程诊断；非正式难度结论",
+  "transport": "token限流与Codex内置重连；最终正常完成",
+  "usage": {
+    "input_tokens": 687683,
+    "cached_input_tokens": 627897,
+    "output_tokens": 27890
+  },
+  "cost": "使用g450已有免key代理；未取得货币账单，不能声称零成本",
+  "valid_experiments": 38,
+  "invalid_experiments": 10,
+  "pooled_rmse": 0.0062306529330948225,
+  "rubric_scope": "本轮模块审阅为事后开发审阅，正式评分规则须在新批次前冻结"
+}
