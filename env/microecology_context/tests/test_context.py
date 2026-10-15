@@ -27,3 +27,18 @@ def test_event_and_readout_semantics():
     assert np.allclose(full['values'][-1],terminal['values'][0],atol=1e-8)
     assert full['values'][1][7]>=.3
     with pytest.raises(ValueError):validate(dict(s,times=[float('nan')]))
+
+
+def test_history_conditioned_interaction_changes_sign():
+    w=World(15105,'context_memory')
+    effects=[]
+    for signal in (0,.5):
+        values=[]
+        for b in (0,.3):
+            spec={'initial':{'A':.1,'C':.2,'m4':signal},'times':[16],
+                  'events':[{'time':8,'channel':'B','add':b},
+                            {'time':8,'channel':'m1','add':.5},
+                            {'time':8,'channel':'m2','add':.2}]}
+            values.append(w.run(spec,clean=True)['values'][0][3])
+        effects.append(values[1]-values[0])
+    assert effects[0]>.1 and effects[1]<-.004
