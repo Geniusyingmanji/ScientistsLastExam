@@ -23,7 +23,7 @@ Approved 2026-10-15. Separate prototype; legacy microecology remains frozen.
 - Candidate sees all pool concentrations under anonymous channel identifiers
   and biomass labels; no hidden allocation state or private equations.
 - Agent pilot: six instances, <=48 experiment calls each, <=1200s wall,
-  no automatic retries; g450 keyless GPT via existing Codex harness.
+  no automatic retries; GPT on g450 via the Codex harness.
   Freeze actual model, source hash, public contract and transcript before runs.
 
 ## Scientific ambiguity and gates

@@ -16,7 +16,7 @@ public bridge. It implements describe/experiment and spends one attempt on each
 valid or invalid experiment, up to48. The candidate cannot request clean values,
 hidden states, private parameters or evaluation targets.
 
-The first g450 pilot uses the existing keyless Responses proxy and Codex0.162.1,
+The first g450 pilot uses GPT and Codex0.162.1,
 GPT5.6sol/high. An outer bubblewrap namespace hides operator source, private data,
 host credentials and host processes. Network loopback remains shared for the
 existing inference proxy and experiment service; this is not a network adversary

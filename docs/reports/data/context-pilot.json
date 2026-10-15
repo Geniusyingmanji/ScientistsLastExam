@@ -17,7 +17,7 @@
     "cached_input_tokens": 627897,
     "output_tokens": 27890
   },
-  "cost": "使用g450已有免key代理；未取得货币账单，不能声称零成本",
+  "cost": "未取得货币账单，成本暂未核算",
   "valid_experiments": 38,
   "invalid_experiments": 10,
   "pooled_rmse": 0.0062306529330948225,
