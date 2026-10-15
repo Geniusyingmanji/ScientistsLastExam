@@ -1,0 +1,69 @@
+<nav aria-label="案例目录"><a href="#intro">简介</a><a href="#equations">隐藏方程</a><a href="#concealment">如何隐藏</a><a href="#noise">随机干扰</a><a href="#construction">评测构建</a><a href="#tools">工具 / MCP</a><a href="#results">结果</a><a href="#replies">真实回复</a><a href="#depth">发现深度</a></nav>
+<section class="world" id="intro"><h2>1 · 简介</h2>
+<p>这是一个可干预、可采样的三菌培养舱。研究者观察 A、B、C、营养和匿名化学池，自主设计实验，推断动力学方程，再预测未做过的条件。</p>
+<p>A 消耗营养，同时产生供 B 利用的底物 X 和调控信号 Q。B 将底物分成自身、能养活 C 的 N 和抑制 C 的 Y；信号改变 N 与 Y 的分配。温度改变信号响应阈值，内部调节状态还有有限响应时间。因此，B 对 C 的作用会随 A 的活动、温度和准备历史变化。</p>
+<pre>营养 S → A → 底物 X → B → N → C
+           └→ 信号 Q ─→ 调节 B 的 N/Y 分配
+                              └→ Y ┤ C
+温度 → 信号阈值；准备历史 → 内部调节状态 h</pre>
+<p>当前实现通过可测化学池和隐藏调节状态表达三者的条件依赖；尚未加入独立的显式 ABC 三体项。它是虚构的碳流模型，不是某种真实菌群的拟合。</p>
+<p class="notice">本页面向读者解释设计者机制，不是被测 agent 的题面。实例参数、私有种子和封存目标不公开；阅读过机制说明的模型不能再被视为对该机制完全未知。</p></section>
+<section class="world" id="equations"><h2>2 · 隐藏方程</h2>
+<p>碳池为 S、A、B、C、X、N、Y、Q、W，单位 mmol C/L；W 为可观测惰性残留。h 是不可观测、无量纲的调节状态，不计入碳总量。时间以小时计，温度以 °C 计。</p>
+<pre>θ = 2^((T−30)/10)
+qA = θ uA A S/(KS+S)
+qB = θ uB B X/(KX+X)
+qC = θ uC C N/(KN+N)/(1+Y/KI)
+
+K(T) = KQ exp[−0.06(T−30)]
+H(Q,T) = Q²/(K(T)²+Q²)
+h′ = (H−h)/τ
+
+S′ = −qA
+A′ = 0.35qA − θdA
+B′ = 0.40qB − θdB
+C′ = 0.50qC − θdC
+X′ = 0.35qA − qB − θδX
+N′ = 0.60(1−h)qB − qC − θδN
+Y′ = 0.60h qB − θδY
+Q′ = 0.05qA − θδQ
+W′ = 0.25qA + 0.50qC + θd(A+B+C) + θδ(X+N+Y+Q)
+
+d = 0.01 h⁻¹；δ = 0.02 h⁻¹</pre>
+<p>qA、qB、qC 是摄取通量。A 将摄取碳分为自身、底物、信号与残留；B 的产物分配随 h 改变；Y 会降低 C 消耗 N 的速度。没有外部事件时，九个碳池的总量守恒。补料和移除会改变总碳，不能跨事件要求总量不变。</p>
+<p>对照机制可以采用固定分配或即时信号响应。上述含记忆机制中 τ 不随温度变化，温度作用于阈值 K(T)；两者是需要实验区分的解释。</p>
+<p>数值实现使用 DOP853，并与 Radau 独立比较；检查非负性、有限值和碳守恒。源码：<a href="https://github.com/Geniusyingmanji/ScientistsLastExam/blob/codex/env/env/microecology_context/kernel.py">动力学</a>、<a href="https://github.com/Geniusyingmanji/ScientistsLastExam/blob/codex/env/env/microecology_context/world.py">实验接口</a>。</p></section>
+<section class="world" id="concealment"><h2>3 · 如何隐藏</h2>
+<p>agent 看到 substrate、A、B、C、m1–m4、residue 九个通道。化学池使用匿名名称，当前接口中的名称固定，并未随机排列。h、反应公式和实例系数均不可读取。不同实例改变参数，同一实例内保持不变。</p>
+<p>研究者可以单独培养、组合培养、添加或移除某个池、改变温度，利用这些干预辨别底物、信号与抑制物。仅凭共同变化不能确认因果作用；例如必须在 C 有底物时操纵另一化学池，才可能发现抑制。</p>
+<p>实验服务与隐藏源码位于 agent 文件系统之外。文件与进程隔离检查通过；探索时共享网络以访问实验和模型服务，这不构成对网络攻击者的完整安全验证。公共说明提示了可能存在调节状态，因此记忆不是完全无提示的发现。</p></section>
+<section class="world" id="noise"><h2>4 · 随机干扰</h2>
+<p>动力学本身确定性。每个通道加入标准差为 0.002 mmol C/L 的独立高斯测量误差，再截断为非负：</p><pre>观测 yⱼ = max(0, xⱼ + εⱼ)，εⱼ ~ Normal(0, 0.002²)</pre>
+<p>零附近的截断会造成均值偏差。跨实例参数也有变化，但一次培养内不随机漂移。目前没有过程噪声、仪器漂移或额外杂峰；不能将未实现的干扰写成实际测评条件。</p></section>
+<section class="world" id="construction"><h2>5 · 评测构建</h2>
+<ol><li>固定实例、机制、实验预算和运行源码；每次实验重置培养舱，内部调节状态从相同静息状态开始。</li><li>agent 自选带噪实验，在隔离工作区写 Python 分析程序。</li><li>提交方程报告、机制清单和可执行预测器；将最终文件冻结并校验哈希。</li><li>分别审阅公式与机制发现，并在独立隔离进程中检查冻结模型的预测。保留无效操作和服务错误。</li></ol>
+<h3>直接评价发现</h3><p>按八类模块审阅：A 的摄取与产物、B 的摄取与收率、B 的产物分配、C 的摄取与抑制、信号作用、环境阈值、有限记忆、周转与碳核算。每项分别记录恢复、部分恢复、错误或未解决，并检查方程等价性、证据和适用范围。</p>
+<p>允许变量变换与代数等价式。近似预测准确不等于恢复真实公式；不可辨识参数和竞争解释单列。正式恢复率需要在实验前确立可辨识性分母，目前不报告一个合成发现总分。</p>
+<h3>本次实测口径</h3><p>单个暴露开发实例，最多48次实验尝试，运行上限1200秒。模块审阅与12个额外预测面板属于事后开发分析，不能充当预注册正式成绩。预测误差以 mmol C/L 的 RMSE 报告，未换算为0–100总分。</p></section>
+<section class="world" id="tools"><h2>6 · 工具 / MCP</h2>
+<p>g450 上运行 GPT-5.6-sol 与 Codex harness。agent 使用真实 MCP 工具访问实验服务，并在隔离工作区编写分析与预测程序。</p>
+<div class="scroll"><table><tr><th>工具或交付</th><th>功能与约束</th></tr><tr><td>describe</td><td>公开通道、单位、合法字段、噪声与预算，不返回隐藏方程。</td></tr><tr><td>experiment</td><td>每次新培养。A/B/C初值0–1，营养0–5，其余池0–2；温度20–40°C；1–25个递增采样点，最长48小时。</td></tr><tr><td>events</td><td>最多8个有序事件，允许改温、添加或按比例移除。添加每次最多2、总量最多8；事件不能晚于末次采样。同一时刻先操作后采样。</td></tr><tr><td>分析与提交</td><td>report.md：方程、单位、证据与限制；mechanisms.json：机制与证据编号；model.py：predict(spec) 返回时间×九通道预测。</td></tr></table></div>
+<h3>合法实验示例</h3><pre>{"initial":{"A":0.1,"B":0.2,"C":0.2,"substrate":2},
+ "times":[0,2,6,12,24],"temperature":30,
+ "events":[{"time":6,"channel":"m4","remove":0.8}]}</pre>
+<p>spec 仅允许 initial、times、temperature、events；额外标签字段不合法。48次上限包含无效尝试。所有未采样的准备阶段仍执行。最终预测检查使用只读冻结文件并禁用网络。</p></section>
+<section class="world" id="results"><h2>7 · 结果</h2>
+<div class="scroll"><table><tr><th>项目</th><th>实测结果</th></tr><tr><td>研究运行</td><td>GPT＋Codex 正常完成，提交报告、机制清单和模型</td></tr><tr><td>实验尝试</td><td>48次：38次有效，10次因额外字段被拒绝</td></tr><tr><td>冻结模型预测</td><td>12个事后新条件/干预面板，全部可执行</td></tr><tr><td>预测误差</td><td>面板RMSE 0.001924–0.010048；整体RMSE 0.006231 mmol C/L</td></tr><tr><td>逐模块审阅</td><td>5项限定范围内恢复、2项部分恢复、1项未解决；不是正式5/8恢复率</td></tr><tr><td>工程检查</td><td>6项本地测试；远端3类机制独立积分检查与文件隔离探针通过</td></tr></table></div>
+<p>运行中出现服务 token 限流和 Codex 内置重连，最终正常完成；未重新启动研究进程。没有取得货币账单，成本暂未核算。模拟器实验次数不等于模型API请求数。</p>
+<p>独立审阅为 same-family / provisional。单实例、事后面板、缺少基线和重复不确定性，尚不能据此认定高难度或普遍发现能力。历史评测另见<a href="v1_results.html">归档结果</a>，不与本表混算。</p></section>
+<section class="world" id="replies"><h2>8 · 真实回复</h2>
+<p>以下摘自模型最终报告的可见文字，不是内部思考。中文为翻译，保留其自述，是否成立由独立审阅判断。</p>
+<blockquote>数据支持一条碳守恒的三步促进链，以及一个短时内部记忆状态。</blockquote><details><summary>英文原文</summary><p>The data support a carbon-conserving three-step facilitation chain with one short-lived internal memory state:</p></details>
+<p>模型给出了摄取、产物分配和周转方程，也明确列出不确定性：</p>
+<blockquote>额外的记忆温度依赖，也可能来自温度相关的信号阈值，或不对称的诱导与松弛速率。</blockquote><details><summary>英文原文</summary><p>The extra temperature dependence of B memory could instead be a temperature-dependent m4 threshold or asymmetric induction/relaxation rates.</p></details>
+<p>这条竞争解释有价值，但最终程序选择了温度相关的松弛速率，未恢复真实阈值关系。模型还将一组已参与拟合的数据称为“未重新拟合验证”；轨迹审阅否定该说法，该数据不计作独立验证。</p></section>
+<section class="world" id="depth"><h2>9 · 发现深度</h2>
+<div class="scroll"><table><tr><th>模块</th><th>审阅结论</th></tr><tr><td>A摄取与多种产物</td><td>限定范围内恢复方程形式</td></tr><tr><td>B摄取与收率</td><td>限定范围内恢复方程形式</td></tr><tr><td>B产物分配</td><td>恢复互补分配结构</td></tr><tr><td>C摄取与抑制</td><td>部分恢复：发现底物，漏掉另一池的抑制项</td></tr><tr><td>信号作用</td><td>30°C范围内恢复Hill形式，不代表唯一辨识</td></tr><tr><td>环境阈值</td><td>未解决：报告列为替代解释，最终模型没有恢复</td></tr><tr><td>有限记忆</td><td>部分恢复：识别记忆，完整温度规律不正确</td></tr><tr><td>周转与碳核算</td><td>恢复形式与守恒结构</td></tr></table></div>
+<p>模型还假设添加 B 会稀释记忆状态，这与模拟器不符。严格的“观察前记录竞争预测，再用新结果鉴别”证据计数为0。准确拟合、提出合理解释和真正排除替代机制，应分别评价。</p>
+<h3>下一步需要的证据</h3><p>在 C 有底物的条件下独立改变抑制池；用不同温度下的匹配信号剂量与洗脱实验区分阈值变化和松弛速率；在已形成记忆后添加 B 检查状态语义。新实验前封存预测与判别规则，使用新实例，保留当前模型与结果。</p>
+<p>显式包含 A、B、C 的三体作用仍是待实现的机制设计，不能将当前间接信号机制的实测结果解释为显式三体公式的发现成绩。</p></section>
