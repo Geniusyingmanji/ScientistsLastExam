@@ -1,3 +1,5 @@
+> 当前持续执行计划见 [MATRIX_PLAN.md](MATRIX_PLAN.md)。以下为保留的首轮开发计划，不代表已完成全部预定运行。
+
 # Context-dependent three-species discovery, development v0.1
 
 Approved 2026-10-15. Separate prototype; legacy microecology remains frozen.
