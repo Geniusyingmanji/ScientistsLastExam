@@ -90,7 +90,7 @@ if context_path.exists():
  context=json.loads(context_path.read_text())
  context_summary=section('context-pilot','三菌环境新版 · GPT＋Codex 实测完成', '<p>2026-10-15：g450 上运行的 '+esc(context['model'])+' / '+esc(context['harness'])+'。完成 '+str(context['experiments'])+' 次实验尝试（38次有效、10次无效格式），并提交方程报告、机制清单和可执行预测器。</p><p>冻结模型的 '+str(context['valid_panels'])+' 个新条件/干预诊断面板均有效，RMSE 范围 0.001924–0.010048 mmol C/L。'+esc(context['scope'])+'。</p><p>'+esc(context['review'])+'。</p><p>'+esc(context['transport'])+'。'+esc(context['cost'])+'。本轮单独记账，48次模拟实验不等于48次模型API请求；旧450请求口径保持。</p><p><a href="case_study.html#intro">查看新版方程、发现评测与案例</a>。旧自动循环仍暂停。</p>')
  progress=context_summary+progress
-progress=section('discovery-matrix','多环境科学发现矩阵', '<p>持续任务每小时检查。三菌显式三体内核已完成；含噪区分证据已归档待独立审阅。事前预测登记原语两个本地测试通过，尚未接入runner或新模型实测。</p><p>下一不同学科候选为已有电阻抗环境：端口规律、跨配置迁移与不可辨识拓扑分别评价。不会将既有环境改名算作新增环境。</p>')+progress
+progress=section('discovery-matrix','多环境科学发现矩阵', '<p>持续任务每小时检查。三菌显式三体内核已完成；48条数值轨迹及合成重复观测已独立复核（same-family/provisional）：3个固定实例检测到三体调节，9个对照未越阈值；不证明机制唯一或高难。事前预测登记原语两个本地测试通过，尚未接入runner或新模型实测。</p><p>下一不同学科候选为已有电阻抗环境：端口规律、跨配置迁移与不可辨识拓扑分别评价。不会将既有环境改名算作新增环境。</p>')+progress
 (P/'progress.html').write_text(page('当前进度与下一步',progress))
 body=(R/'scripts/docs/templates/microecology_case.html').read_text()
 case_page=page('微生态（三菌株）完整案例',body)
