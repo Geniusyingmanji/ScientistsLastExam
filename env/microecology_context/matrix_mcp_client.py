@@ -4,6 +4,7 @@ URL=os.environ['SLE_EXPERIMENT_URL']
 TOOLS=[{'name':'describe','description':'Read public apparatus and budget.','inputSchema':{'type':'object','properties':{},'additionalProperties':False}},
  {'name':'experiment','description':'Execute fresh vessel; experiment_id required, invalid attempts count.','inputSchema':{'type':'object','properties':{'experiment_id':{'type':'string'},'spec':{'type':'object'}},'required':['experiment_id','spec'],'additionalProperties':False}},
  {'name':'register_prediction','description':'Immutable prospective time-major prediction for a future experiment. No observation or hidden feedback.','inputSchema':{'type':'object','properties':{'experiment_id':{'type':'string'},'spec':{'type':'object'},'prediction':{'type':'array','items':{'type':'number'}},'model_sha256':{'type':'string'}},'required':['experiment_id','spec','prediction','model_sha256'],'additionalProperties':False}}]
+TOOLS.append({'name':'submit_matrix','description':'Seal final matrix claims and declared model SHA256; closes experiments. No scientific feedback.', 'inputSchema':{'type':'object','properties':{'submission':{'type':'object'},'model_sha256':{'type':'string'}},'required':['submission','model_sha256'],'additionalProperties':False}})
 for line in sys.stdin:
  try:
   q=json.loads(line)
@@ -13,7 +14,7 @@ for line in sys.stdin:
   elif m=='tools/list':r={'tools':TOOLS}
   elif m=='tools/call':
    p=q['params'];name=p['name']
-   if name not in ('describe','experiment','register_prediction'):raise ValueError('unknown tool')
+   if name not in ('describe','experiment','register_prediction','submit_matrix'):raise ValueError('unknown tool')
    body={'tool':name}
    if name!='describe':body.update(p['arguments'])
    body['tool']=name
