@@ -14,3 +14,16 @@ def test_all_rows_pooled_and_compatible():
 def test_mixed_apparatus_not_silently_selected():
  with pytest.raises(ReferenceFailure):pool_same_apparatus([record([2],[[.5,0]]),record([2],[[.5,0]],1000)])
  with pytest.raises(ReferenceFailure):pool_same_apparatus([])
+
+def test_both_comparators_use_all_repeat_measurements():
+ from env.electrical_impedance.reference_records import compare_pooled
+ a=record([2,10],[[.5,0],[.4,0]])
+ b=record([2,10],[[.7,0],[.6,0]])
+ out=compare_pooled([a,b],a['spec'])
+ assert out['pooling']['counts']==[2,2]
+ for method in out['methods'].values():
+  assert method['error'] is None
+  assert method['prediction'][0][0]==pytest.approx(.6)
+  assert method['prediction'][1][0]==pytest.approx(.5)
+ # The caller's records, including receipt metadata, remain unchanged.
+ assert a['observation']['values'][0][0]==.5

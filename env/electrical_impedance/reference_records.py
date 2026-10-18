@@ -30,3 +30,23 @@ def pool_same_apparatus(records):
     return {'record':{'spec':source,'observation':{'axis':frequencies,'channels':list(CHANNELS),'values':values}},
             'counts':[len(cells[f]) for f in frequencies], 'input_records':len(records),
             'scope':'Mean noisy quadratures before nonlinear de-embedding; bias not removed.'}
+
+
+def compare_pooled(records, query):
+    """Future comparator entry: both methods receive the identical pooled data.
+
+    Returns predictions only; no clean target access or ranking. Failures remain
+    explicit, and the caller must freeze this protocol before a new cohort.
+    """
+    from .baseline import baseline
+    from .port_reference import port_reference
+    pooled=pool_same_apparatus(records)
+    source=[pooled['record']]
+    methods={}
+    for name,method in [('voltage_interpolation',baseline),('port_reference',port_reference)]:
+        try:
+            v=method(source,query)
+            methods[name]={'prediction':v.tolist() if hasattr(v,'tolist') else v,'error':None}
+        except (ValueError,TypeError,KeyError) as error:
+            methods[name]={'prediction':None,'error':str(error)}
+    return {'pooling':pooled,'methods':methods,'scope':'Shared pooled observations; not equal-compute model comparison.'}
