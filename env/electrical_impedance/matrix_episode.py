@@ -18,13 +18,16 @@ class MatrixEpisode:
         self.spent=0;self.count=0;self.ids=set();self.lock=threading.Lock()
         self.journal=ProspectiveJournal(self.root/'prospective.jsonl')
 
+    def validate_acquisition(self, spec):
+        return validate_spec(spec)
+
     def call(self, tool, **args):
         with self.lock:
             if tool=='describe':
                 return dict(self.world.describe(),budget=dict(units=self.budget,max_attempts=self.max_attempts,
                     invalid_cost=1),prospective='Optional register_prediction before experiment: experiment_id, spec, flattened frequency-major two-channel prediction, model_sha256. No hidden feedback.')
             if tool=='register_prediction':
-                spec=validate_spec(args['spec']);eid=args['experiment_id']
+                spec=self.validate_acquisition(args['spec']);eid=args['experiment_id']
                 if eid in self.ids:raise ValueError('already attempted')
                 if len(args['prediction'])!=2*len(spec['frequencies_hz']):raise ValueError('prediction shape')
                 receipt=self.journal.register(eid,spec,args['prediction'],args['model_sha256'])
@@ -34,7 +37,7 @@ class MatrixEpisode:
             self.count+=1;charge=1;eid=args.get('experiment_id')
             try:
                 if not isinstance(eid,str) or not eid or eid in self.ids:raise ValueError('new ID required')
-                self.ids.add(eid);spec=validate_spec(args['spec']);cost=self.world.cost(spec)
+                self.ids.add(eid);spec=self.validate_acquisition(args['spec']);cost=self.world.cost(spec)
                 if cost>self.budget-self.spent:raise ValueError('insufficient units')
                 receipt=self.journal.reserve(eid,spec)
                 charge=cost
