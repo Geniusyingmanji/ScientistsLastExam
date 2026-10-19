@@ -23,3 +23,13 @@ def test_complete_seal(world,tmp_path):
     e.call('submit_discovery',model_sha256='a'*64,submission={'claims':[]})
     with pytest.raises(ValueError): e.call('experiment',experiment_id='late',spec={})
     with pytest.raises(ValueError): e.call('submit_matrix')
+
+def test_numeric_denominator_and_anchors():
+    from env.discovery_layers.prediction_score import score
+    g={'rows':[{'rmse_by_channel':[0.]*9},{'error':'failed'}], 'effects':[{'rmse_by_channel':[.05]*9}]}
+    v=score(g,'ecology')
+    assert v['prediction_utility']==50 and v['effect_utility']==50
+    c=contract('oscillator')
+    for anchor in (0,25,50,75,100):
+        rows=[dict(level=l,criterion=k,score=anchor,reason='fixed anchor recovery',evidence=['anchor']) for l,cs in c['criteria'].items() for k in cs]
+        assert summarize(c,rows)['weighted_score']==anchor
