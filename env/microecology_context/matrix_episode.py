@@ -34,10 +34,21 @@ class MatrixEpisode:
         self.lock = threading.Lock()
         self.budget, self.count, self.attempted = budget, 0, set()
 
+    channels = CHANNELS
+
+    def validate_spec(self, spec):
+        return validate(spec)
+
+    def public_description(self):
+        return DESCRIPTION
+
+    def observe(self, spec):
+        return self.world.run(spec)
+
     def call(self, tool, **args):
         with self.lock:
             if tool == 'describe':
-                return dict(DESCRIPTION, applicable_cells=self.applicable, submission='submit_matrix seals claims and declared model hash, then closes all experiments. Evidence validation is not scientific grading. Hash alone does not verify executable identity.', budget=f'{self.budget} attempts; invalid attempts count',
+                return dict(self.public_description(), applicable_cells=self.applicable, submission='submit_matrix seals claims and declared model hash, then closes all experiments. Evidence validation is not scientific grading. Hash alone does not verify executable identity.', budget=f'{self.budget} attempts; invalid attempts count',
                     prospective='register_prediction binds experiment_id, spec, flattened time-major channel predictions and model_sha256 before experiment. Registering is optional and provides no outcome. Predictions are immutable; no hidden feedback. experiment requires experiment_id and spec.')
             if self.closed:
                 raise ValueError('episode sealed')
@@ -59,10 +70,10 @@ class MatrixEpisode:
                 return {'sealed': True, 'receipt': hashlib.sha256(encoded.encode()).hexdigest(),
                         'scientific_score': None}
             if tool == 'register_prediction':
-                spec = validate(args['spec'])
+                spec = self.validate_spec(args['spec'])
                 if args['experiment_id'] in self.attempted:
                     raise ValueError('experiment already attempted')
-                if len(args['prediction']) != len(spec['times']) * len(CHANNELS):
+                if len(args['prediction']) != len(spec['times']) * len(self.channels):
                     raise ValueError('prediction must match time-major channel shape')
                 receipt = self.journal.register(args['experiment_id'], spec, args['prediction'], args['model_sha256'])
                 return {'registered': args['experiment_id'], 'receipt': receipt['sha256']}
@@ -76,10 +87,10 @@ class MatrixEpisode:
                 if not isinstance(experiment_id, str) or not experiment_id or experiment_id in self.attempted:
                     raise ValueError('new experiment_id required')
                 self.attempted.add(experiment_id)
-                spec = validate(args['spec'])
+                spec = self.validate_spec(args['spec'])
                 # This is durably recorded before observing the world.
                 reservation = self.journal.reserve(experiment_id, spec)
-                result = self.world.run(spec)
+                result = self.observe(spec)
                 result.update(experiment_id=experiment_id, receipt=reservation['sha256'])
             except (ValueError, TypeError, KeyError):
                 result = {'error': 'invalid experiment or registered specification mismatch'}
