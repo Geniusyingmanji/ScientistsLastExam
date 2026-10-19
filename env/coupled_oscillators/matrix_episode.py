@@ -18,7 +18,7 @@ class MatrixEpisode(BaseEpisode):
         return _validate(spec)
 
     def public_description(self):
-        return self.world.describe()
+        return dict(self.world.describe(), cost='This opt-in task uses 48 attempt units, one per experiment including invalid requests; no separate cost-unit budget.')
 
     def observe(self, spec):
         return self.world.run(spec, noise_key=f'matrix-attempt-{self.count}')
