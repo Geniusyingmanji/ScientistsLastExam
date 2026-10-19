@@ -1,0 +1,19 @@
+{
+  "schema": "sle-task-package-1",
+  "id": "ecology",
+  "title": "Three-species scientific discovery",
+  "environment": "ecology",
+  "channels": 9,
+  "attempt_budget": 48,
+  "wall_seconds": 1800,
+  "protocol": "discovery-layers-1",
+  "required_outputs": [
+    "model.py",
+    "claims.json",
+    "report.md"
+  ],
+  "optional_outputs": [
+    "model_state.json"
+  ],
+  "prediction_interface": "predict(spec) -> time-major numeric array"
+}
