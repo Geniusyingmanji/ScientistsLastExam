@@ -16,6 +16,7 @@ def test_complete_seal(world,tmp_path):
     d=e.call('describe'); assert 'applicable_cells' not in d
     assert 'L5' not in d['discovery_contract']['weights']
     spec={'times':[0,0.1]}
+    if world=='ecology': spec['initial']={'A':0.1,'B':0.2,'C':0.1,'substrate':2}
     result=e.call('experiment',experiment_id='observed',spec=spec)
     assert 'error' not in result
     assert result['remaining']==47
