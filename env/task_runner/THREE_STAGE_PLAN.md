@@ -27,3 +27,11 @@ V1原URL保留，仅移出主导航。页面不披露主机、认证、私有目
 
 ## 验收顺序
 文档导航与旧链接→新协议测试→任务包显式协议与judge入口→Linux真实隔离→新实例GPT+Codex→独立审阅三层结果及过程。所有新分都标注合同与审阅状态；无新分时不得展示合成示例为实测成绩。
+
+## Evidence-backed scoring delivery
+
+`env.discovery_layers.judge` now validates frozen evidence and reviewer decisions,
+aggregates fixed scientific modules, and emits separate result/process scores.
+Historical runs require explicit retrospective supplementary labeling and new
+output paths. Full new-task runner admission remains separate; supplementary
+reviews do not claim new-protocol model runs.
