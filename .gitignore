@@ -36,6 +36,11 @@ docs/*
 !docs/plan.html
 !docs/progress.html
 !docs/case_study.html
+!docs/archive/
+docs/archive/*
+!docs/archive/reports/
+docs/archive/reports/*
+!docs/archive/reports/progress-20261022.html
 !docs/reports/
 docs/reports/*
 !docs/reports/overview.html

@@ -1,23 +1,94 @@
-<section class="world"><h2>目标：理解现象、理解规律、应用规律</h2><p>用可交互科学环境考察agent从观测中恢复规律和结构，并在新情境中应用。结果与探索过程分别评价，不能用材料齐全度替代科学发现程度。</p></section>
+<section class="world framework" id="evaluation-matrix" aria-labelledby="matrix-title">
+  <div class="framework-heading">
+    <div><h2 id="matrix-title">信息条件 × 科研成果</h2><p>在不同证据获取条件下，agent 能观察、解释并拓展哪些科学认识？</p></div>
+    <span class="framework-tag">研究目标矩阵 · 难度待校准</span>
+  </div>
+  <div class="matrix-scroll" role="region" aria-label="信息条件与科研成果矩阵，可横向滚动" tabindex="0">
+    <table class="evaluation-matrix" aria-labelledby="matrix-title" aria-describedby="matrix-note">
+      <colgroup><col class="environment-column"><col><col><col></colgroup>
+      <thead><tr>
+        <th scope="col" class="axis-label"><span>信息条件 ↓</span><span>科研成果 →</span></th>
+        <th scope="col"><span class="column-title">现象表征</span><small>系统呈现什么行为</small></th>
+        <th scope="col"><span class="column-title">规律建构</span><small>什么关系能够解释</small></th>
+        <th scope="col"><span class="column-title">知识拓展</span><small>新增了什么可靠知识</small></th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <th scope="row"><span class="tier">证据获取约束低</span><strong>信息较充分</strong><p>关键量可测，相关因素可干预，实验可重复</p></th>
+          <td><strong>可靠描述响应</strong><p>自主采集观测，识别效应、条件与不确定性</p></td>
+          <td><strong>建立定量解释</strong><p>自主设计实验，辨析关系、结构与适用范围</p></td>
+          <td><strong>核验知识增量</strong><p>相对参考知识的新认识或新对象，并有独立验证</p></td>
+        </tr>
+        <tr>
+          <th scope="row"><span class="tier">证据获取约束中</span><strong>信息部分受限</strong><p>部分量间接可测，采样或部分干预受限</p></th>
+          <td><strong>联合观测刻画效应</strong><p>结合有限读数，处理混淆与测量不确定性</p></td>
+          <td><strong>辨析相容解释</strong><p>寻找区分实验，建立证据支持的关系</p></td>
+          <td><strong>核验知识增量</strong><p>相对参考知识的新认识或新对象，并有独立验证</p></td>
+        </tr>
+        <tr>
+          <th scope="row"><span class="tier">证据获取约束高</span><strong>信息强受限</strong><p>关键测量稀缺、干预有限，目标仍有可获取证据</p></th>
+          <td><strong>在有限证据下表征</strong><p>定位可重复行为，明确尚不能判断的部分</p></td>
+          <td><strong>整合证据形成解释</strong><p>规划关键实验，检验关系及其可辨识边界</p></td>
+          <td><strong>核验知识增量</strong><p>相对参考知识的新认识或新对象，并有独立验证</p></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="process-strip"><span class="process-title">探索过程 · 独立评价</span><ol class="process-steps"><li>假设形成 <span>20%</span></li><li>实验设计 <span>30%</span></li><li>证据更新 <span>30%</span></li><li>验证复现 <span>20%</span></li></ol></div>
+  <p class="matrix-note" id="matrix-note">纵轴描述通过实验获取证据的条件；各档保持研究问题、公开先验与提示条件一致。横轴使用共同成果标准，不要求按阶段依次完成。预测、干预与设计用于前瞻验证；新成果权重与实际难度待校准。</p>
+</section>
+<nav class="section-links" aria-label="Plan 目录"><a href="#environment-levels">信息分档</a><a href="#scoring">成果评价</a><a href="#query-template">Query 模板</a><a href="#query-output">输出规范</a><a href="#roadmap">实施路线</a></nav>
+<section class="world" id="environment-levels">
+  <h2>信息条件分档与环境变体</h2>
+  <p>信息条件按观测、干预、重复与采样成本描述。信息较充分表示关键证据可通过实验取得，规律与结论仍需自主研究；分档不通过增减题面提示实现。系统结构作为属性记录，实际难度另行校准。</p>
+  <div class="tier-grid">
+    <article class="tier-card"><h3>信息较充分</h3><p>关键量可测，相关因素可独立干预，允许重复实验。研究者自主选择实验和分析方法。</p><p><strong>三菌设计示例：</strong>九通道观测，允许独立设置培养条件与合法干预。</p><span class="tier-status">具体分档待验证</span></article>
+    <article class="tier-card"><h3>信息部分受限</h3><p>部分状态间接可测，或采样与干预受到限制。需要联合观测、排除混淆和选择区分实验。</p><p><strong>三菌设计示例：</strong>在相同系统上减少采样频率，或限制部分通道的直接观测。</p><span class="tier-status">候选变体 · 待实现验证</span></article>
+    <article class="tier-card"><h3>信息强受限</h3><p>关键测量昂贵或稀缺，可用干预有限。需要规划实验资源，共同研究目标仍有合法可获取的证据。</p><p><strong>三菌设计示例：</strong>进一步限制关键测量或干预机会，保留可区分主要解释的实验。</p><span class="tier-status">候选变体 · 待实现验证</span></article>
+  </div>
+  <p>上述三菌配置用于说明分档方法，尚未形成三个已实现、已校准的评测变体。现有仪器与历史运行见<a href="case_study.html#tools">案例说明</a>，不据此回填新档位成绩。</p>
+  <div class="difficulty-note"><strong>信息条件、系统结构与实际难度分别记录</strong><p>展示示例：<code>信息部分受限 · 耦合系统 · 难度待校准</code>。变量数量、反馈、多尺度、开放性和历史依赖作为环境属性；Easy / Medium / Hard 绑定具体任务协议和参考模型群体，通过实测确定。信息限制更强不自动表示所有科研成果都更难获得。</p></div>
+  <details id="level-basis"><summary>分层的参考依据与适用边界</summary>
+    <ul>
+      <li><a href="https://researchers.mq.edu.au/en/publications/task-complexity-definition-of-the-construct/">Wood（1986），Task complexity: Definition of the construct</a>：将任务复杂度分为组成、协调与动态等分析维度，支持分别记录结构与研究条件。</li>
+      <li><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2017.01153/full">Dörner &amp; Funke（2017），Complex Problem Solving: What It Is and What It Is Not</a>：讨论关联、动态变化与信息不透明等人类复杂问题求解条件。</li>
+      <li><a href="https://arxiv.org/abs/2407.16212">Huan 等（2024），Optimal experimental design: Formulations and computations</a>：讨论实验信息、采样成本和序贯设计，为控制证据获取条件提供方法依据。</li>
+    </ul>
+    <p>三个信息档位是本评测的设计分组，上述文献没有给出这一通用三级标准或数值阈值。观测、干预与成本可能存在取舍，任意两个环境之间不保证存在统一的信息顺序。</p>
+    <p>优先在同一环境家族中构造逐步限制观测或干预的变体，保持共同研究目标。比较时明确改变了哪些条件，并检查信息限制是否影响目标的可辨识范围。</p>
+  </details>
+  <details><summary>分档判据与难度校准</summary>
+    <ol><li><strong>固定比较基础：</strong>同族变体保持底层机制、研究问题、公开先验、提示和预算一致；逐项改变观测、干预或测量成本，记录具体差异。</li><li><strong>确认科学可辨识范围：</strong>给出相容的竞争解释、合法区分实验和仍无法区分的情形。若共同目标已无法辨识，标记不可直接比较，另作研究边界任务。</li><li><strong>校准实际难度：</strong>比较公开数据方法、带先验标记的参考与模型实测，分别检查三个成果维度和重复运行的不确定性。若难度排序交叉，保留各维结果。</li></ol>
+    <p>不以极度缺失信息迫使研究者猜测隐藏答案。程序错误与服务故障单独统计；信息档位、难度标签及其依据均随协议版本记录。</p>
+  </details>
+</section>
+<section class="world" id="scoring">
+  <h2>科研成果评价</h2>
+  <p>分别评价现象表征、规律建构与知识拓展。先报告各维证据与成立范围，新权重和聚合规则待校准；旧方案的 20 / 40 / 40 不沿用为新成果权重。</p>
+  <div class="score-grid">
+    <div class="score-item"><h3>现象表征</h3><p>可靠描述效应、条件依赖、异常与不确定性，区分可重复行为和测量波动。</p></div>
+    <div class="score-item"><h3>规律建构</h3><p>建立有证据支持的结构、函数形式和定量关系，说明解释能力与边界。接受数学等价表示与可辨识参数组合。</p></div>
+    <div class="score-item"><h3>知识拓展</h3><p>相对冻结的参考知识，形成经验证的新认识或新对象。评价实质增量、科学价值与独立确认，不以候选数量或表述新奇代替发现。</p></div>
+  </div>
+  <p>前瞻预测、干预与设计贯穿成果验证，数值表现单独报告。规律建构评价解释是否成立；知识拓展评价相对参考知识新增了什么。拟合准确、换一种公式表达或恢复随机参数均不自动构成高水平知识增量。</p>
+  <details><summary>知识拓展的对象与新颖性参照</summary><p><strong>新认识：</strong>规律、机制、状态或已有认识的修正，需给出明确增量及支持证据。<strong>新对象：</strong>物质、材料、结构或方法，需由相应环境验证对象、可实现性与性质；仅生成候选不算确认发现。</p><p><strong>受控发现：</strong>相对冻结的任务背景和参考知识评价。<strong>前沿发现：</strong>相对有时间界限的学科知识与已有成果评价，另需查新和独立验证。恢复模拟器中的隐藏关系不等于发现人类未知规律，虚拟新对象不等于真实新物质。</p><p>参考知识与核验原则在运行前冻结，允许核验未预列的有效发现。没有形成知识增量时如实记录；未知或尚未验证的结果保留不确定性。</p></details>
+  <details><summary>过程评价与历史成绩</summary><p>假设形成 20%、实验设计 30%、证据更新 30%、验证复现 20% 为既有过程评价草案，独立于成果分报告。基于可见行为与可信记录，不按报告长度、实验次数或材料齐全度计分；未评保持待定。</p><p>新成果维度用于后续冻结任务。旧协议与成绩保留，旧“应用规律”成绩不转换为“知识拓展”成绩。<a href="case_study.html#historical-assessment">查看案例的旧框架补充评审</a>。</p></details>
+</section>
 <section class="world" id="query-template"><h2>通用研究 Query 模板</h2>
-<p>主任务采用有边界的开放研究：给定研究对象、范围与交付要求，由 agent 自主提出子问题、选择实验和建立模型。下列模板用于后续新任务设计；替换双花括号字段后，随任务冻结公开说明、预算和交付接口。现有批次继续使用原题面与评分。</p>
+<p>主任务采用有边界的开放研究：给定研究对象、范围与必要交付，由 agent 自主提出子问题、选择实验、组织结论。题面不列评分比例、能力层级或科学成果清单。下列模板用于后续新任务设计；替换双花括号字段后，随任务冻结公开说明、预算和交付接口。现有批次继续使用原题面与评分。</p>
 <p><a href="case_study.html#query">查看三菌案例的完整 Query</a> · <a href="#query-output">查看通用交付规范</a></p>
-<pre class="query" aria-label="可复用的通用研究 Query">{{RESEARCH_QUERY}}</pre>
+<details><summary>展开通用研究 Query 模板</summary><pre class="query" aria-label="可复用的通用研究 Query">{{RESEARCH_QUERY}}</pre></details>
 <h3>明确任务，保留科学探索空间</h3>
-<div class="scroll"><table><tr><th>信息</th><th>公开边界</th></tr><tr><td>问题、仪器与交付</td><td>完整说明研究范围、观测通道、单位、操作副作用、预算、模型接口与评分原则。</td></tr><tr><td>科学先验</td><td>明确哪些知识已经给定；给定规律不计作发现。匿名名称不说明组分功能。</td></tr><tr><td>科研提示</td><td>默认不提供。通用方法建议和指向特定机制或区分实验的提示分别记录，按辅助条件单独报告成绩。</td></tr><tr><td>私有评测</td><td>世界参数、隐藏机制、测试目标和实例标识不进入题面。评分目标须属于公开研究范围，并具有合法可获取的证据。</td></tr></table></div>
+<div class="scroll"><table><tr><th>信息</th><th>公开边界</th></tr><tr><td>问题、仪器与交付</td><td>明确研究范围、观测通道、单位、操作副作用、预算和必要提交接口。研究报告由 agent 自行组织。</td></tr><tr><td>科学先验</td><td>明确哪些知识已经给定；给定规律不计作发现。匿名名称不说明组分功能。</td></tr><tr><td>科研提示</td><td>默认不提供。不预列应发现的关系、结论类别或研究步骤。通用方法建议和定向提示分别记录，按辅助条件单独报告成绩。</td></tr><tr><td>私有评测</td><td>评分维度与权重、世界参数、隐藏机制、测试目标和实例标识不进入题面。评分方案在运行前冻结，目标须属于公开研究范围，并具有合法可获取的证据。</td></tr></table></div>
 <pre>assistance:
   mode: none  # none / general_method / targeted
   hints: []</pre>
 <p>研究 Query 发给 agent；实验环境接收 agent 自主选择的操作。实验控制（初始组成、温度、采样时刻等）与私有世界参数分开：重新制备样本通常改变初态，不重新抽取底层机制。共同核心任务决定评分范围，自主子问题允许未预列但可验证的发现，不能通过缩小自选问题缩小核心评分分母。</p>
 </section>
-<section class="world" id="query-output"><h2>统一研究成果与过程记录</h2>
-<div class="scroll"><table><tr><th>产物</th><th>内容与用途</th></tr><tr><td>report.md</td><td>研究问题、主要发现、解释、局限与未解决问题。</td></tr><tr><td>claims.json</td><td>可逐项核查的陈述、适用范围、数学表示与证据；不要求每层固定提交几条主张。</td></tr><tr><td>模型文件及必要状态</td><td>按各环境公开接口产生预测。三菌与振子采用 model.py / predict(spec)，列顺序由仪器合同指定。</td></tr><tr><td>可信过程记录</td><td>由环境自动保存实验、观测、预算、预测登记、模型版本与时间顺序。由提交工具生成并核验封存清单。</td></tr></table></div>
-<details><summary>展开 claims.json 通用示例</summary><pre aria-label="科学主张 JSON 示例">{{CLAIM_EXAMPLE}}</pre></details>
-<p>kind 可取 phenomenon、law、structure、mechanism；不适用的数学表示可以为空。status 是 agent 对证据的判断，最终科学评价由评测器完成，事前预测由可信记录核验。该结构是新交付方案，尚未替换现有 runner 的提交 schema；接入前须验证适配，旧声明与成绩不改。</p>
+<section class="world" id="query-output"><h2>研究交付与评测记录</h2>
+<div class="scroll"><table><tr><th>来源</th><th>产物</th><th>内容与用途</th></tr><tr><td>agent 提交</td><td>report.md</td><td>自由组织的研究报告，说明结论及其依据，不规定章节、结论类别或逐项填写表格。</td></tr><tr><td>agent 提交（任务需要时）</td><td>模型文件及必要状态</td><td>按公开接口产生预测。三菌与振子采用 model.py / predict(spec)，列顺序由仪器合同指定。模型用途须在研究任务中说明。</td></tr><tr><td>环境自动记录</td><td>可信过程记录</td><td>保存实验、观测、预算、预测登记、模型版本与时间顺序；由提交工具生成并核验封存清单。</td></tr><tr><td>评测侧整理</td><td>证据索引</td><td>从已封存报告和实验记录中提取可核查的主张，关联原文与证据，再按内部量表评价；不代替 agent 补写结论。</td></tr></table></div>
+<details><summary>展开评测侧证据索引示例（不发给 agent）</summary><pre aria-label="评测侧证据索引示例">{{CLAIM_EXAMPLE}}</pre></details>
+<p>该示例仅用于评测侧整理，agent 不必提交 claims.json 或选择 kind 分类。提取内容须可追溯到报告原文；未陈述、未验证或无法判断的内容如实记录，不推断为 agent 已完成。事前预测由可信记录核验。自由报告交付尚未接入现有 runner，接入前须验证适配；旧声明与成绩不改。</p>
 <p>接口样例、格式检查和文件封存应明确且易用，不提供隐藏科学反馈。默认、方法辅助和定向辅助条件分别冻结与比较，不能将辅助运行的成绩当作无提示结果。</p>
 </section>
-<section class="world"><h2>三层能力与独立过程分</h2><table><tr><th>能力</th><th>权重</th><th>内容</th></tr><tr><td>现象理解</td><td>20%</td><td>效应、条件与不确定性</td></tr><tr><td>理解规律</td><td>40%</td><td>结构、形式、定量恢复及可辨识解释</td></tr><tr><td>应用规律</td><td>40%</td><td>新情境、组合干预与适用范围</td></tr></table><p>过程分：假设形成20%、实验设计30%、证据更新30%、验证复现20%。基于可见行为和可信收据，不读取内部思考；不和结果分混成总分。评分采用连续部分分，未审保持待定。</p></section>
-<section class="world"><h2>科学判分</h2><p>方程按预设模块检查依赖结构30%、函数形式40%、定量恢复30%；支持数学等价及可辨识参数组合。黑箱预测不自动获得公式恢复分，竞争解释未排除时不声称唯一机制。正式新评分用于新冻结批次；旧提交可另作明确标注的事后补充评审，旧成绩不折算、不覆盖。</p></section>
-<section class="world"><h2>多环境路线</h2><table><tr><th>环境</th><th>重点</th></tr><tr><td>三菌</td><td>条件作用、资源通量与联合调节，随后新准备和干预迁移</td></tr><tr><td>耦合振子</td><td>未知连接与系数组合、切边与组合加载；公开公式不计发现</td></tr><tr><td>其他环境</td><td>按科学差异和可辨识性选择；电阻抗接受内部结构等价类</td></tr></table></section>
-<section class="world"><h2>运行与评测环境</h2><p>公开任务包→考生沙箱↔可信实验室→封存提交→无网络预测沙箱→可信数值评测与独立科学judge。隐藏实例和目标仅在可信侧；预测执行器只得到查询。镜像、源码、预算和评分合同事前冻结，失败记录保留。</p></section>
-<section class="world"><h2>执行里程碑</h2><ol><li>保存三层与过程合同，重组文档导航。</li><li>接入三菌与振子标准任务包及双评分输出，完成必要锚点校准。</li><li>真实Linux隔离与干净预测验证。</li><li>冻结新实例和完整task，开展GPT＋Codex实测。</li><li>独立审阅并据科学缺口优化；保留失败和旧协议。</li></ol><p>过程设计与实现进度分开发布。新目标导向控制任务必须先验证可达性，不静默添加到旧题。飞书参考正文尚未读取，本方案依据用户确认方向，待正文可访问后对齐。</p></section>
+<section class="world" id="roadmap"><h2>实施路线</h2><ol><li><strong>定义信息变体：</strong>为同一环境制定较充分、部分受限、强受限的观测与干预配置，核验共同目标的可辨识范围。</li><li><strong>定义成果：</strong>为三个维度建立正反例，冻结知识拓展的参考知识与核验原则，先设计认识修正和可构造对象两类任务。</li><li><strong>验证与校准：</strong>核验合法实验、独立预测及新对象验证能力，在固定先验、提示和预算下校准成果评价与任务难度。</li><li><strong>接入任务：</strong>将自由报告、模型接口与评测侧证据整理接入新任务，再填充矩阵；过程与不确定性独立报告。</li></ol><details><summary>运行与评测架构</summary><p>公开任务包 → 考生沙箱 ↔ 可信实验室 → 封存提交 → 无网络预测沙箱 → 可信数值评测与独立科学评审。隐藏实例和目标仅在可信侧；预测执行器只得到查询。镜像、源码、预算和评分合同事前冻结，失败记录保留。</p><p>新目标导向任务须先验证可达性。本页说明设计方案，实际执行按各批次冻结协议记录；历史批次参见<a href="reports/v1_results.html">V1 双模型结果</a>。</p></details></section>

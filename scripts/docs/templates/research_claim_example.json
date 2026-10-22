@@ -8,6 +8,11 @@
       "question_id": "q1",
       "kind": "law",
       "statement": "具体、可检验的科学陈述",
+      "source": {
+        "file": "report.md",
+        "location": "对应原文段落",
+        "quote": "agent 实际写出的结论原文"
+      },
       "scope": {
         "conditions": "成立的条件范围",
         "time_range": "成立的时间范围",
@@ -25,7 +30,7 @@
       },
       "alternative_explanations": [],
       "uncertainty": "尚未确定的部分",
-      "status": "partially_supported",
+      "review_status": "pending",
       "model_version": "对应模型版本"
     }
   ],
