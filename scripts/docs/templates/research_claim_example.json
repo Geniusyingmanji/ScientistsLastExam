@@ -1,0 +1,33 @@
+{
+  "research_questions": [
+    {"id": "q1", "question": "自主选择的具体研究问题"}
+  ],
+  "claims": [
+    {
+      "id": "c1",
+      "question_id": "q1",
+      "kind": "law",
+      "statement": "具体、可检验的科学陈述",
+      "scope": {
+        "conditions": "成立的条件范围",
+        "time_range": "成立的时间范围",
+        "interventions": "适用的干预范围"
+      },
+      "representation": {
+        "equations": [],
+        "variables_and_units": {},
+        "parameters": {}
+      },
+      "evidence": {
+        "supporting_ids": [],
+        "contradicting_ids": [],
+        "prospective_test_ids": []
+      },
+      "alternative_explanations": [],
+      "uncertainty": "尚未确定的部分",
+      "status": "partially_supported",
+      "model_version": "对应模型版本"
+    }
+  ],
+  "unresolved_questions": []
+}

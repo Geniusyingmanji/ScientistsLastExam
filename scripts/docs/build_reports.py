@@ -1,14 +1,18 @@
-"""Build the three public report entries from immutable public summaries/excerpts."""
+"""Build docs/{plan,progress,case_study}.html and preserve legacy report URLs."""
 from pathlib import Path
 import json,re,html
-R=Path(__file__).resolve().parents[2]; P=R/'docs/reports'; A=R/'docs/archive/reports'
+R=Path(__file__).resolve().parents[2]; D=R/'docs'; P=D/'reports'; A=D/'archive/reports'
+T=R/'scripts/docs/templates'
 esc=html.escape
 d=json.loads((P/'data/completion-repair-results.json').read_text())
 w=next(x for x in d['comparison']['worlds'] if x['environment']=='microecology')
 old=(A/'overview.html').read_text();style=re.search(r'<style>(.*?)</style>',old,re.S).group(1)
 style+='\npre{background:#edf2ec;padding:20px;border-radius:8px;overflow:auto}blockquote{border-left:3px solid #56836c;margin:16px 0;padding:8px 20px;background:#f3f6f0}section{scroll-margin-top:20px}.equation{font:16px/1.9 ui-monospace,monospace}.toc{position:sticky;top:0;background:#f4f5eff5;z-index:2;padding:8px 0}.tag{font-size:13px;color:#6a562c}svg{max-width:100%;height:auto}'
 nav='<nav class="toc"><a href="plan.html">整体 Plan</a><a href="progress.html">当前进度</a><a href="case_study.html">Case Study</a></nav>'
-def page(title,body):return '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+title+'</title><style>'+style+'</style></head><body><main>'+nav+'<div class="eyebrow">Scientists’ Last Exam · 2026-10-07</div><h1>'+title+'</h1>'+body+'<footer>来源：已冻结 V1 公开汇总、模拟器实现及经筛选的可见回复。历史过程材料移入 docs/archive；原始私有评测资料不随页面发布。</footer></main></body></html>'
+style+='\ntable{min-width:0}.scroll table{min-width:810px}.query{white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.85}section,h3[id]{scroll-margin-top:90px}'
+def page(title,body):
+ body=body.replace('href="v1_results.html','href="reports/v1_results.html')
+ return '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+title+'</title><style>'+style+'</style></head><body><main>'+nav+'<div class="eyebrow">Scientists’ Last Exam</div><h1>'+title+'</h1>'+body+'<footer>来源：已冻结 V1 公开汇总、模拟器实现及经筛选的可见回复。历史过程材料移入 docs/archive；原始私有评测资料不随页面发布。</footer></main></body></html>'
 def section(i,title,body):return f'<section class="world" id="{i}"><h2>{title}</h2>{body}</section>'
 def table(headers,rows):return '<div class="scroll"><table><tr>'+''.join('<th>'+x+'</th>' for x in headers)+'</tr>'+''.join('<tr>'+''.join('<td>'+str(x)+'</td>' for x in row)+'</tr>' for row in rows)+'</table></div>'
 # Public allowlisted summaries only; private evidence and reviewer transcripts stay outside reports.
@@ -22,18 +26,20 @@ def scientific_assessment():
  return '<h3>冻结提交的三层补充评审</h3><p>对已完成提交作事后三层评审，原协议和成绩不变；不是新三层协议的前瞻实测。独立评审为 same-family / provisional，分数尚未跨评审校准。结果与过程分别报告。</p>'+table(['环境','现象20%','规律40%','应用40%','结果分','过程分'],rows)+''.join('<p><strong>'+esc(x['name'])+'：</strong>'+esc(x['finding'])+'</p><details><summary>查看逐项评分</summary>'+table(['评分项','得分'],[[esc(c['name']),f"{c['score']:.2f}"] for c in x['criteria']])+'</details>' for x in data['environments'])+'<p>评分核验模型封存哈希及证据文件；每项保留判断依据。规律分固定包含全部科学模块，遗漏机制不能从分母删除。语义正确性由独立评审判断，文件哈希不代替科学审查。</p>'
 
 # V1 retains all twelve task descriptions and paired results. History remains collapsible.
-v=old.replace('<main>','<main>'+nav,1).replace('Scientists’ Last Exam · GPT-5.6','Scientists’ Last Exam · GPT-5.6 × DeepSeek')
+v=old.replace('<main>','<main>'+nav.replace('href="','href="../'),1).replace('Scientists’ Last Exam · GPT-5.6','Scientists’ Last Exam · GPT-5.6 × DeepSeek')
 v=v.replace('仍有缺项的总体成绩暂不发布。','本轮全部预定槽位已补齐。')
 def relink(m):
  u=m.group(1)
  if u.startswith(('#','http','mailto:')):return m.group(0)
  if u.startswith('../../reports/'):
-  return 'href="'+u[len('../../reports/'):]+'"'
- if u in ['plan.html','progress.html','v1_results.html','case_study.html']:return m.group(0)
+  u=u[len('../../reports/'):]
+ if u.split('#')[0] in ['plan.html','progress.html','case_study.html']:
+  return 'href="../'+u+'"'
+ if u.startswith('../') or u.split('#')[0]=='v1_results.html':return 'href="'+u+'"'
  if u.split('#')[0] in ['overview-data.json','completion-repair-results.json','completion-repair-review.json']:u='data/'+u
- elif u in ('environment-expansion.html','progress-v2.html'):u='progress.html'
+ elif u in ('environment-expansion.html','progress-v2.html'):u='../progress.html'
  elif u in ('comparison.html','deepseek-continuation.html','deepseek-extended.html'):u='v1_results.html#paired-results'
- else:u='archive/reports/'+u
+ else:u='../archive/reports/'+u
  return 'href="'+u+'"'
 v=re.sub(r'href="([^"]+)"',relink,v)
 v=v.replace('<a href="archive/reports/comparison.html">GPT × DeepSeek 对照</a><a href="archive/reports/deepseek-continuation.html">DeepSeek 接续诊断</a><a href="archive/reports/deepseek-extended.html">DeepSeek 32k 正式评测</a>','<a href="case_study.html">微生态详细案例</a>')
@@ -103,15 +109,22 @@ if context_path.exists():
 progress=section('discovery-matrix','多环境科学发现矩阵', '<p>新任务框架为发现对象（规律/结构）×探索层级，取消独立理解深度维度。L1现象、L2规律、L3解释、L4统一与应用、L5边界修正；完整权重10/20/25/25/20，三菌与振子暂适用L1–L4。独立任务入口、科学目标与程度锚点已冻结；Linux4测试及两个环境真实隔离闭环通过。三菌和振子各1个新实例GPT＋Codex已启动，48尝试/1800秒。完成后独立分层审阅，当前没有新正式层级成绩；锚点尚未作跨审阅者校准，旧协议不变。</p><p>后续任务采用五层科研探索框架：识别现象→提炼规律→辨别解释→迁移与干预→发现边界并修正；与规律/结构及四种理解维度交叉，按适用范围分别评价，不按材料齐全度计分。当前两项运行按原协议已正常结束（三菌48次、振子22次均有效），正在归档原评测；新框架不追溯修改其成绩。下一批优先完整task与模型实测，三菌聚焦条件依赖，振子聚焦结构及切边迁移。</p><p>新一轮完整任务实测已启动：三菌显式三体作用与耦合振子各一个新开发实例，GPT＋Codex，每项48次实验尝试、1800秒，非法尝试计入预算。已通过5项Linux测试及真实隔离MCP登记→含噪观测→最终封存→拒绝追加闭环；首次测试因缺pytest失败，原记录保留。模型已有返回，尚无最终成绩。预测器哈希必须与封存提交一致；独立隔离评测分别记录轨迹、三菌A×B差分和振子切边效应，不按声明齐全度评分。首次完成后归档与独立内容审阅，不重启旧批。</p><p>振子切边对照已完成：两个固定开发实例、全部六条候选边、静止与单端点位移两种准备，共24组、192次模拟调用、0模型调用；每组保留三次独立含噪重复和清洁算子对照。静止条件清洁差分全部为零，有激励的最大绝对响应范围0–0.2346（位移/速度各自单位，不能混作单一评分）。完整观测与分通道效应已归档；独立审阅进行中，不据零效应判无边，不认证结构发现或高难。</p><p>跨环境推进至耦合振子：新增单连接切断配对设计与校验，要求仅新增一条切边，质量、阻尼、驱动、初态和采样时刻全部一致；拒绝端点夹持及仅零时刻观测。3项测试通过，0模拟/模型调用。非零配对效应可支持局部连接作用；零效应不能证明连接不存在，尚未形成结构发现分数。下一振子单元冻结有激励/无激励对照与观测噪声预算，检查结构证据的可辨识范围；三菌独立审阅完成后再安排后续实验。</p><p>新增四臂重复观测差分不确定性工具：保留每个重复块的条件效应与A×B差分，报告均值及标准误，允许块内配对但要求块间独立。2项合成测试通过；未应用于旧队列，无新模拟或模型调用。标准误只描述重复读数波动，不代表模型无偏、机制可辨识或发现分数。</p><p>三菌共同含噪对照已执行：4个固定开发案例，每例12条训练观测和4个留出端点，共64次模拟调用、0模型调用。训练记录、拟合系数、预测及目标全部归档，预测先写入再生成目标。三体案例整体RMSE约0.0116–0.0118，两个响应面接近；单看C的A×B端点差分，固定尺度归一化误差由加性模型约0.099–0.103降至交互模型约0.035–0.045。此为插值端点诊断，不代表局部方程恢复或正式发现分；独立审阅进行中，旧成绩不变。</p><p>三菌公共观测响应面对照已实现：加性项与A×B交互项使用相同全部训练记录（含重复观测），固定温度、终点及其他初始池；秩不足、混杂或非法观测显式失败。保存系数、训练预测与分通道残差，JSON封存后可复用；3项合成测试通过，0模拟/模型调用。此为端点响应面，不是局部动力学方程恢复，也尚无真实含噪留出成绩。下一单元冻结共同含噪训练/留出设计并执行这两个对照，保留失败，再独立审阅；不追加已完成电学简单实例。</p><p>持续任务每小时检查。三菌显式三体内核已完成；48条数值轨迹及合成重复观测已独立复核（same-family/provisional）：3个固定实例检测到三体调节，9个对照未越阈值；不证明机制唯一或高难。事前预测登记已接入独立实验服务：4项相关本地测试通过，Linux隔离MCP登记→实验闭环通过；本轮1次模拟实验、0模型调用。矩阵提交与证据核验已实现：区分事前/事后证据，拒绝不适用格与无效凭据；2项测试通过。最终矩阵提交入口已实现：封存声明、证据审计及声明的模型哈希，提交后关闭实验；6项相关本地测试通过；Linux隔离MCP登记→实验→封存提交→拒绝追加实验闭环通过，1次模拟实验、0模型调用。哈希不等于已核验可执行文件，原证据判据聚合器已有2项测试，但其0–3分不作为发现程度成绩。现按预设动力学模块设计结构、形式和定量恢复评分，权重与阈值待校准；新开发实例GPT＋Codex矩阵实验已完成：527.78秒，48次实验全部有效，8条声明已封存，最终模型哈希一致。4个预定诊断面板RMSE为0.000326、0.023887、0.000663、0.025549 mmol C/L；独立逐格审阅进行中，尚不发布科学发现分数。</p><p>已有电阻抗环境的新任务原型已实现：分别记录频率、外部电路和联合迁移；幅度单独变化不计发现。失败计入分母，内部拓扑不要求唯一恢复。共同数据检查完成：3个固定开发实例、相同8频率观测。端口参考/经验插值平均分：频率44.42/70.79，外部配置99.99/2.65，联合80.85/2.93；18预测全部有效。独立审阅same-family/provisional；三个实例同属一种电路族，只支持这组描述性比较，不证明高难或agent能力。12次模拟调用，0模型调用；独立带噪实验服务与预算账本已接入，4项episode/task测试通过；Linux隔离MCP登记→测量闭环通过，1次带噪测量正确扣28单位；GPT＋Codex单实例开发实验已结束：178.45秒、4次实验、279单位。冻结模型隔离评测的频率/外部配置/联合面板分别99.9985/99.9995/99.9996分；独立审阅（same-family/provisional）确认20个评分配置点均未测量，但协议尚未强制不重叠。三次事前登记预测的带噪观测RMSE为0.001142V；仅支持单实例端口规律与有限迁移，不认证高难或唯一结构。“外部配置”面板同时包含未测频率，不能当纯配置迁移。已实现按实际观测逐点分类的独立审计，3项测试通过；它区分仅频率、仅配置、联合变化与已测点，旧分数保持不变。独立受限采集入口已通过Linux隔离MCP验证：合法采样扣28单位、越界拒绝扣1单位且无观测；该准入检查0模型调用；受限采集的新实例GPT＋Codex实测已完成，10次实验有效；三面板RMSE约0.000161/0.000070/0.000076V，独立审阅完成（same-family/provisional）：支持单实例端口规律的有限迁移；留出频率仍在采集范围内，未开展竞争机制区分，不支持高难或唯一内部结构。端口参考因仅接受单条源记录而失败，保留空结果，不据此排名。供未来批次使用的共用接口已实现：同仪器重复观测先统一平均，再同时交给经验基线与端口参考；3项合成测试通过，旧批次不重评。这属于共同数据比较，不称独立等资源agent比较。模型请求数与货币成本尚未核实。</p>')+progress
 progress=section('current-framework','当前框架与交付', '<p>新任务采用现象理解20%、理解规律40%、应用规律40%，过程分独立报告。新双评分合同、证据核验和独立评审聚合入口已实现；已完成提交的补充评分见下表。完整任务包接入与新协议前瞻实测尚待完成。既有标准runner处于本地测试阶段，真实容器准入仍待完成。</p><p><a href="plan.html">查看整体计划</a> · <a href="v1_results.html">V1 双模型历史结果（原协议原成绩）</a></p>')+'<details><summary>历史批次与开发记录（按当时协议，不代表当前运行状态）</summary>'+progress+'</details>'
 progress=progress.replace('<details><summary>历史批次', scientific_assessment()+'<details><summary>历史批次',1)
-(P/'progress.html').write_text(page('当前进度与下一步',progress))
-plan_body=(R/'scripts/docs/templates/overall_plan.html').read_text()
-(P/'plan.html').write_text(page('科学发现评测 · 整体 Plan',plan_body))
-body=(R/'scripts/docs/templates/microecology_case.html').read_text()
+(D/'progress.html').write_text(page('当前进度与下一步',progress))
+plan_body=(T/'overall_plan.html').read_text()
+plan_body=plan_body.replace('{{RESEARCH_QUERY}}',esc((T/'research_query.txt').read_text()))
+claim_example=json.loads((T/'research_claim_example.json').read_text())
+plan_body=plan_body.replace('{{CLAIM_EXAMPLE}}',esc(json.dumps(claim_example,ensure_ascii=False,indent=2)))
+(D/'plan.html').write_text(page('科学发现评测 · 整体 Plan',plan_body))
+body=(T/'microecology_case.html').read_text()
+body=body.replace('{{CASE_QUERY}}',esc((T/'ecology_query.txt').read_text()))
 body=body.replace('<h2>9 · 三层能力与过程评估</h2>','<h2>9 · 三层能力与过程评估</h2>'+scientific_assessment(),1)
 case_page=page('微生态（三菌株）完整案例',body)
 case_page=case_page.replace('Scientists’ Last Exam · 2026-10-07','Scientists’ Last Exam')
 case_page=case_page.replace('来源：已冻结 V1 公开汇总、模拟器实现及经筛选的可见回复。历史过程材料移入 docs/archive；原始私有评测资料不随页面发布。','来源：模拟器实现、冻结提交与独立审阅。原始轨迹、实例参数和封存目标不随页面发布。')
-(P/'case_study.html').write_text(case_page)
+(D/'case_study.html').write_text(case_page)
 # Short compatibility entries preserve common bookmarked URLs and fragments.
-for src,dst in [('overview.html','v1_results.html'),('progress-v2.html','progress.html'),('environment-expansion.html','progress.html'),('index.html','plan.html')]:
- (P/src).write_text(f'<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>报告已整合</title><meta http-equiv="refresh" content="0;url={dst}"><script>location.replace("{dst}"+location.hash)</script><a href="{dst}">打开整合报告</a></html>')
+redirects={'overview.html':'v1_results.html','progress-v2.html':'../progress.html',
+           'environment-expansion.html':'../progress.html','index.html':'../plan.html',
+           **{name:'../'+name for name in ['plan.html','progress.html','case_study.html']}}
+for src,dst in redirects.items():
+ (P/src).write_text(f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>报告已迁移</title><script>location.replace("{dst}"+location.search+location.hash)</script><meta http-equiv="refresh" content="1;url={dst}"></head><body><a href="{dst}">打开报告新地址</a></body></html>\n')

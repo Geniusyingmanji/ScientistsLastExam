@@ -1,4 +1,21 @@
 <section class="world"><h2>目标：理解现象、理解规律、应用规律</h2><p>用可交互科学环境考察agent从观测中恢复规律和结构，并在新情境中应用。结果与探索过程分别评价，不能用材料齐全度替代科学发现程度。</p></section>
+<section class="world" id="query-template"><h2>通用研究 Query 模板</h2>
+<p>主任务采用有边界的开放研究：给定研究对象、范围与交付要求，由 agent 自主提出子问题、选择实验和建立模型。下列模板用于后续新任务设计；替换双花括号字段后，随任务冻结公开说明、预算和交付接口。现有批次继续使用原题面与评分。</p>
+<p><a href="case_study.html#query">查看三菌案例的完整 Query</a> · <a href="#query-output">查看通用交付规范</a></p>
+<pre class="query" aria-label="可复用的通用研究 Query">{{RESEARCH_QUERY}}</pre>
+<h3>明确任务，保留科学探索空间</h3>
+<div class="scroll"><table><tr><th>信息</th><th>公开边界</th></tr><tr><td>问题、仪器与交付</td><td>完整说明研究范围、观测通道、单位、操作副作用、预算、模型接口与评分原则。</td></tr><tr><td>科学先验</td><td>明确哪些知识已经给定；给定规律不计作发现。匿名名称不说明组分功能。</td></tr><tr><td>科研提示</td><td>默认不提供。通用方法建议和指向特定机制或区分实验的提示分别记录，按辅助条件单独报告成绩。</td></tr><tr><td>私有评测</td><td>世界参数、隐藏机制、测试目标和实例标识不进入题面。评分目标须属于公开研究范围，并具有合法可获取的证据。</td></tr></table></div>
+<pre>assistance:
+  mode: none  # none / general_method / targeted
+  hints: []</pre>
+<p>研究 Query 发给 agent；实验环境接收 agent 自主选择的操作。实验控制（初始组成、温度、采样时刻等）与私有世界参数分开：重新制备样本通常改变初态，不重新抽取底层机制。共同核心任务决定评分范围，自主子问题允许未预列但可验证的发现，不能通过缩小自选问题缩小核心评分分母。</p>
+</section>
+<section class="world" id="query-output"><h2>统一研究成果与过程记录</h2>
+<div class="scroll"><table><tr><th>产物</th><th>内容与用途</th></tr><tr><td>report.md</td><td>研究问题、主要发现、解释、局限与未解决问题。</td></tr><tr><td>claims.json</td><td>可逐项核查的陈述、适用范围、数学表示与证据；不要求每层固定提交几条主张。</td></tr><tr><td>模型文件及必要状态</td><td>按各环境公开接口产生预测。三菌与振子采用 model.py / predict(spec)，列顺序由仪器合同指定。</td></tr><tr><td>可信过程记录</td><td>由环境自动保存实验、观测、预算、预测登记、模型版本与时间顺序。由提交工具生成并核验封存清单。</td></tr></table></div>
+<details><summary>展开 claims.json 通用示例</summary><pre aria-label="科学主张 JSON 示例">{{CLAIM_EXAMPLE}}</pre></details>
+<p>kind 可取 phenomenon、law、structure、mechanism；不适用的数学表示可以为空。status 是 agent 对证据的判断，最终科学评价由评测器完成，事前预测由可信记录核验。该结构是新交付方案，尚未替换现有 runner 的提交 schema；接入前须验证适配，旧声明与成绩不改。</p>
+<p>接口样例、格式检查和文件封存应明确且易用，不提供隐藏科学反馈。默认、方法辅助和定向辅助条件分别冻结与比较，不能将辅助运行的成绩当作无提示结果。</p>
+</section>
 <section class="world"><h2>三层能力与独立过程分</h2><table><tr><th>能力</th><th>权重</th><th>内容</th></tr><tr><td>现象理解</td><td>20%</td><td>效应、条件与不确定性</td></tr><tr><td>理解规律</td><td>40%</td><td>结构、形式、定量恢复及可辨识解释</td></tr><tr><td>应用规律</td><td>40%</td><td>新情境、组合干预与适用范围</td></tr></table><p>过程分：假设形成20%、实验设计30%、证据更新30%、验证复现20%。基于可见行为和可信收据，不读取内部思考；不和结果分混成总分。评分采用连续部分分，未审保持待定。</p></section>
 <section class="world"><h2>科学判分</h2><p>方程按预设模块检查依赖结构30%、函数形式40%、定量恢复30%；支持数学等价及可辨识参数组合。黑箱预测不自动获得公式恢复分，竞争解释未排除时不声称唯一机制。正式新评分用于新冻结批次；旧提交可另作明确标注的事后补充评审，旧成绩不折算、不覆盖。</p></section>
 <section class="world"><h2>多环境路线</h2><table><tr><th>环境</th><th>重点</th></tr><tr><td>三菌</td><td>条件作用、资源通量与联合调节，随后新准备和干预迁移</td></tr><tr><td>耦合振子</td><td>未知连接与系数组合、切边与组合加载；公开公式不计发现</td></tr><tr><td>其他环境</td><td>按科学差异和可辨识性选择；电阻抗接受内部结构等价类</td></tr></table></section>

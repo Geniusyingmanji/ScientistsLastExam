@@ -1,0 +1,108 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>微生态（三菌株）完整案例</title><style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f4f5ef;color:#173d3a;font:16px/1.75 system-ui,-apple-system,sans-serif}main{max-width:1180px;margin:auto;padding:36px 24px 80px}h1{font-size:clamp(27px,4vw,42px);line-height:1.3;margin:14px 0}h2{font-size:25px;margin:10px 0 18px}h3{font-size:18px;margin:22px 0 8px}h4{font-size:15px;margin:18px 0 5px}a{color:#07776b;text-underline-offset:3px}p{margin:10px 0 16px}small,.muted{color:#647570;font-size:13px}.eyebrow{font-size:12px;letter-spacing:.14em;color:#65716b;text-transform:uppercase}nav{display:flex;gap:12px 24px;flex-wrap:wrap;margin:20px 0}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:26px 0}.metric{padding:22px;background:#fff;border:1px solid #d9e2d8;border-radius:14px}.metric strong{display:block;font-size:34px;line-height:1.5}.notice{padding:18px 22px;background:#e9eee5;border-left:4px solid #56836c;border-radius:4px;margin:22px 0}.pending{font-size:14px;padding:12px 16px;background:#f2f1e9;border-radius:7px}.scroll{overflow:auto;border-radius:12px;border:1px solid #d9e2d8;margin:22px 0}table{width:100%;border-collapse:collapse;font-size:14px;background:white;min-width:810px}th,td{padding:13px 14px;text-align:left;border-bottom:1px solid #e0e6df;vertical-align:top}th{background:#e7eee4;white-space:nowrap}td:first-child{min-width:140px}.world{margin:24px 0;padding:30px;background:white;border:1px solid #d9e2d8;border-radius:16px;scroll-margin-top:20px}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:28px}.badge{display:inline-block;color:#7c5f25;background:#f3eddc;padding:3px 10px;border-radius:5px;font-size:12px}details{border-top:1px solid #e2e8df;padding:14px 0}summary{cursor:pointer;font-size:15px;font-weight:600}.detail-body{padding:6px 0 4px}li{margin:8px 0}ul,ol{padding-left:23px}.steps p{margin:6px 0 15px}.protocol{padding:24px 30px;background:#fff;border:1px solid #d9e2d8;border-radius:14px}.protocol code{background:#edf1e8;padding:3px 6px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}footer{margin-top:30px;border-top:1px solid #ccd8ce;padding-top:20px;font-size:13px;color:#65736d}@media(max-width:700px){main{padding:24px 14px}.metrics,.two-col{grid-template-columns:1fr}.metric{padding:15px 20px}.metric strong{font-size:29px}.world,.protocol{padding:20px}nav{gap:10px 18px}}
+
+pre{background:#edf2ec;padding:20px;border-radius:8px;overflow:auto}blockquote{border-left:3px solid #56836c;margin:16px 0;padding:8px 20px;background:#f3f6f0}section{scroll-margin-top:20px}.equation{font:16px/1.9 ui-monospace,monospace}.toc{position:sticky;top:0;background:#f4f5eff5;z-index:2;padding:8px 0}.tag{font-size:13px;color:#6a562c}svg{max-width:100%;height:auto}
+table{min-width:0}.scroll table{min-width:810px}.query{white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.85}section,h3[id]{scroll-margin-top:90px}</style></head><body><main><nav class="toc"><a href="plan.html">整体 Plan</a><a href="progress.html">当前进度</a><a href="case_study.html">Case Study</a></nav><div class="eyebrow">Scientists’ Last Exam</div><h1>微生态（三菌株）完整案例</h1><nav aria-label="案例目录"><a href="#intro">简介</a><a href="#equations">隐藏方程</a><a href="#concealment">如何隐藏</a><a href="#noise">随机干扰</a><a href="#construction">评测构建</a><a href="#tools">工具 / MCP</a><a href="#results">结果</a><a href="#replies">真实回复</a><a href="#depth">三层能力与过程评估</a></nav>
+<section class="world" id="intro"><h2>1 · 简介</h2><p>这是一个可干预、可采样的三菌培养舱。研究者观察 A、B、C、营养和匿名化学池，自主设计实验，提出方程与结构解释，并在观测前登记预测。</p><p>A 为 B 提供底物，B 为 C 提供底物和抑制物。除此之外，C 的摄取通量直接包含 A、B、C 的联合项：A 的数量改变 B 对 C 的有效影响。相同的 B，在不同 A 背景下可能产生不同方向的调节。</p><p>当前显式三体环境已完成一次 GPT＋Codex 实测。它是虚构的碳守恒动力学，不是对真实菌群的拟合；先前含信号记忆的实验结果保留，不与本次混算。</p><p class="notice">本页面向读者解释设计者机制，不是 agent 题面。实例参数、种子和封存目标不公开；公开机制说明不构成抗污染保证。</p></section>
+<section class="world" id="equations"><h2>2 · 隐藏方程</h2><p>碳池 S、A、B、C、X、N、Y、Q、W 的单位为 mmol C/L；W 是惰性残留，时间单位为小时。当前环境采用固定产物分配，在 C 通量中加入显式三体调节，不使用旧实验的隐藏记忆状态。</p><pre>θ = 2^((T−30)/10)
+qA = θ uA A S/(KS+S)
+qB = θ uB B X/(KX+X)
+qC,base = θ uC C N/(KN+N)/(1+Y/KI)
+M(A,B) = 1 + B/(KB+B) · [−β + γ A/(KA+A)]
+qC = qC,base · M(A,B)
+
+三体增量 ∝ ABC / [(KA+A)(KB+B)]
+             × N/(KN+N) / (1+Y/KI)
+
+S′ = −qA
+A′ = 0.35qA − θdA
+B′ = 0.40qB − θdB
+C′ = 0.50qC − θdC
+X′ = 0.35qA − qB − θδX
+N′ = 0.42qB − qC − θδN
+Y′ = 0.18qB − θδY
+Q′ = 0.05qA − θδQ
+W′ = 0.25qA + 0.50qC + θd(A+B+C) + θδ(X+N+Y+Q)</pre><p>联合调节同时影响 N 的消耗及 C/W 的生成，保持碳守恒。B 的调节方向取决于括号内的符号；A 较低时可抑制，较高时可促进。实现采用有界门函数，保证合法非负状态下通量非负。</p><p>这是有效三体作用，不等于发现唯一的微观三体过程；隐藏介质或状态依赖的有效两两描述仍可能等价。数值检查包含独立积分、非负性和碳守恒。<a href="https://github.com/Geniusyingmanji/ScientistsLastExam/blob/codex/env/env/microecology_context/direct_kernel.py">查看动力学实现</a>。</p></section>
+<section class="world" id="concealment"><h2>3 · 如何隐藏</h2><p>agent 只看到 substrate、A、B、C、m1–m4、residue 九个通道及带噪实验结果。匿名池名称固定；反应公式、实例系数和封存评测目标不可读取。</p><p>允许单独培养、组合培养、补料、移除与改温。区分联合调节需要控制其他条件，比较不同 A 背景下 B 的效应；共同变化本身不是因果证据。</p><p>实验服务、算子源码和私有证据不挂载到 agent 工作区。探索共享服务网络，因此不声称完成网络对抗安全验证。最终预测进程单独隔离并禁用网络。</p></section>
+<section class="world" id="noise"><h2>4 · 随机干扰</h2>
+<p>动力学本身确定性。每个通道加入标准差为 0.002 mmol C/L 的独立高斯测量误差，再截断为非负：</p><pre>观测 yⱼ = max(0, xⱼ + εⱼ)，εⱼ ~ Normal(0, 0.002²)</pre>
+<p>零附近的截断会造成均值偏差。跨实例参数也有变化，但一次培养内不随机漂移。目前没有过程噪声、仪器漂移或额外杂峰；不能将未实现的干扰写成实际测评条件。</p></section>
+<section class="world" id="construction"><h2>5 · 评测构建</h2><ol><li>运行前冻结实例、源码、预算、诊断面板与逐格审阅标准。</li><li>agent 自选带噪实验，提出模型；测试既有预测时先登记配置、预测数组与模型哈希。</li><li>提交声明和模型哈希后关闭实验，禁止覆盖提交；再独立核验实际模型文件是否一致。</li><li>隔离执行冻结模型，分别报告预测误差、逐格发现证据及工程失败。</li></ol><p>新框架为发现对象（规律/结构）×现象理解、理解规律、应用规律三层，过程独立评估。各层评估预设科学目标的实际恢复程度，区分遗漏、错误与可辨识范围。证据用于核验，不按材料齐全程度计分；具体方法见“发现深度”。</p><p>本次为单个暴露开发实例，48次尝试、1800秒上限，4个预先确定的诊断面板。面板与自主实验的实际重叠由独立审阅检查，不能仅凭事前确定就称为未见泛化。原证据判据审阅保留作历史诊断，不作为发现程度成绩；新评分方案待校准后用于新实验。</p></section>
+<section class="world" id="tools"><h2>6 · 工具 / MCP</h2>
+<h3 id="query">三菌案例 Query</h3>
+<p>这是按<a href="plan.html#query-template">通用模板</a>填写的后续新任务题面草案，默认无额外科研提示。它只提供研究范围、仪器和交付要求；本页其他栏目中的设计者方程与评分目标不随 Query 发给 agent。下方历史成绩来自原题面，尚未采用这份草案。</p>
+<details open><summary>查看完整研究任务输入</summary><pre class="query" aria-label="三菌案例研究 Query">你是一名研究者，将通过实验接口研究一个未知的三菌培养系统。
+
+【研究背景】
+系统包含三种微生物群体 A、B、C，以及可测量的营养、匿名化学组分和残留池。你可以制备培养物、调整培养条件、施加合法干预，并测量时间序列。组分名称不预先说明其生物学作用。
+
+【研究任务】
+请研究：在仪器允许的范围内，这个系统如何随时间变化，可控条件如何影响其行为？
+你可以自主提出和修订具体子问题。请通过实验建立有证据支持的定量模型，说明哪些关系已经确定、哪些解释仍无法区分，并检验模型对未测条件或干预的预测。
+
+【已知信息与实验环境】
+先调用 describe 获取完整仪器说明。公开观测通道依次为 substrate、A、B、C、m1、m2、m3、m4、residue，浓度单位为 mmol C/L，时间单位为小时，温度单位为摄氏度。
+实验接口提供初始组成、采样时刻、温度及合法事件设置；字段、范围、事件副作用和噪声以本任务冻结的 describe 契约为准。观测含测量噪声，不能把单次读数视为无误差真值。
+每次 experiment 新建培养，同一次研究的底层世界实例保持固定；改变初始组成不会重新抽取机制。初始观测需自行采集。除仪器说明外，不提供反应方程、作用关系或函数形式。
+
+【资源限制】
+最多 48 次实验尝试，无效实验请求也计入预算；运行上限为 1800 秒。
+使用提供的实验工具和隔离分析工作区。可以用工作区已有的 Python 与数值工具分析自己的观测；不访问互联网或实验室私有文件。
+
+【研究成果】
+在 output/ 提交：
+1. report.md：研究问题、主要现象、方程或结构解释、变量与单位、参数和适用范围、证据、反证及未解决问题。
+2. claims.json：逐条科学主张及其范围、证据引用、仍成立的竞争解释和不确定性，使用随任务提供的交付规范。
+3. model.py：提供 predict(spec)，接收与合法 experiment 相同的实验配置，按给定 times 返回“时间点数 × 9”的有限数值数组；列顺序与公开通道一致。需要的模型状态应一并交付，程序应能从干净目录独立运行。
+实验配置 spec 使用 initial、times、temperature、events 字段；具体字段规则见 describe。
+区分拟合数据与新验证数据。声明事前预测时，先用 register_prediction 绑定预测、实验配置和模型版本，再取得观测。修订模型时保留版本，不能将旧版本的验证直接归于修订后的模型。
+允许提交不完整模型和部分发现，并说明限制。按任务随附的提交接口封存文件及实际哈希；最终封存后不再修改。
+
+【评价原则】
+结果分分别评价现象理解 20%、理解规律 40%、应用规律 40%。探索过程独立报告，评价假设形成 20%、实验设计 30%、证据更新 30%、验证复现 20%。
+评分依据研究范围内实际恢复的科学内容及证据，不按主张数量、报告长度或实验次数加分。接受可辨识范围内的等价解释；预测准确不自动证明机制正确。
+</pre></details>
+<p>交付结构见<a href="plan.html#query-output">整体 Plan 的统一输出规范</a>。运行前还需将新声明 schema、提交接口与统一 runner 对齐并冻结；这里的文档更新不表示已经启动新协议实测。</p>
+<p>运行 GPT-5.6-sol 与 Codex harness。agent 使用真实 MCP 工具访问实验服务，并在隔离工作区编写分析与预测程序。</p>
+<div class="scroll"><table><tr><th>工具或交付</th><th>功能与约束</th></tr><tr><td>describe</td><td>公开通道、单位、合法字段、噪声与预算，不返回隐藏方程。</td></tr><tr><td>experiment</td><td>每次新培养。A/B/C初值0–1，营养0–5，其余池0–2；温度20–40°C；1–25个递增采样点，最长48小时。</td></tr><tr><td>events</td><td>最多8个有序事件，允许改温、添加或按比例移除。添加每次最多2、总量最多8；事件不能晚于末次采样。同一时刻先操作后采样。</td></tr><tr><td>register_prediction</td><td>观测前绑定实验ID、配置、预测与模型哈希；禁止追认与覆盖，不返回隐藏反馈。</td></tr><tr><td>submit_matrix</td><td>封存最终声明及证据审计，关闭实验；哈希还需独立核对实际文件。</td></tr><tr><td>分析与提交</td><td>report.md：方程、单位、证据与限制；claims.json：逐格声明、范围、竞争解释及实验编号；model.py：predict(spec) 返回时间×九通道预测。</td></tr></table></div>
+<h3>合法实验示例</h3><pre>{"initial":{"A":0.1,"B":0.2,"C":0.2,"substrate":2},
+ "times":[0,2,6,12,24],"temperature":30,
+ "events":[{"time":6,"channel":"m4","remove":0.8}]}</pre>
+<p>spec 仅允许 initial、times、temperature、events；额外标签字段不合法。48次上限包含无效尝试。所有未采样的准备阶段仍执行。最终预测检查使用只读冻结文件并禁用网络。</p></section>
+<section class="world" id="results"><h2>7 · 结果</h2><div class="scroll"><table><tr><th>项目</th><th>当前实测</th></tr><tr><td>研究运行</td><td>GPT＋Codex 正常结束，耗时527.78秒</td></tr><tr><td>实验尝试</td><td>48次全部有效</td></tr><tr><td>封存提交</td><td>8条矩阵声明；最终模型与封存哈希一致</td></tr><tr><td>隔离预测</td><td>4个预定诊断面板全部可执行</td></tr><tr><td>面板RMSE（mmol C/L）</td><td>0.000326 / 0.023887 / 0.000663 / 0.025549</td></tr><tr><td>发现评分</td><td>独立逐格审阅进行中，暂未发布</td></tr></table></div><p>完整报告、提交、轨迹和账本已私有归档并核验哈希。不同条件下预测误差差异明显；不能据此直接判断发现程度或环境难度。模拟实验次数不等于模型API请求数，货币成本尚未核实。</p><p>这些结果仅来自一个开发实例。旧实验成绩保持冻结，不用本轮口径重评分。</p></section>
+<section class="world" id="replies"><h2>8 · 真实回复</h2><p>以下为本次最终报告中的可见文字，不是内部思考：</p><blockquote>Claims concern effective observable dependencies/carbon flow, not molecular identities.</blockquote><p>即：声明涉及可观测的有效依赖和碳流，不涉及分子身份。报告提交了三个资源摄取通量、产物分配与周转方程；冻结程序的 C 摄取式仅包含 C 和底物项，没有显式 A/B 联合调节项。</p><p>这描述的是候选实际提交内容，不是审阅通过的发现结论。方程适用范围、前瞻证据和遗漏机制正在独立核验。</p></section>
+<section class="world" id="depth"><h2>9 · 三层能力与过程评估</h2><h3>冻结提交的三层补充评审</h3><p>对已完成提交作事后三层评审，原协议和成绩不变；不是新三层协议的前瞻实测。独立评审为 same-family / provisional，分数尚未跨评审校准。结果与过程分别报告。</p><div class="scroll"><table><tr><th>环境</th><th>现象20%</th><th>规律40%</th><th>应用40%</th><th>结果分</th><th>过程分</th></tr><tr><td>三菌</td><td>42.50</td><td>85.00</td><td>35.00</td><td>56.50</td><td>62.50</td></tr><tr><td>振子</td><td>95.00</td><td>100.00</td><td>95.00</td><td>97.00</td><td>87.50</td></tr></table></div><p><strong>三菌：</strong>基础摄取、分配和守恒恢复较好，但关键群落情境调节机制遗漏，最终经验修正没有新的事前验证。规律分按六模块平均；情境效应缺口在现象与应用两层另行反映。</p><details><summary>查看逐项评分</summary><div class="scroll"><table><tr><th>评分项</th><th>得分</th></tr><tr><td>现象：效应</td><td>25.00</td></tr><tr><td>现象：条件</td><td>50.00</td></tr><tr><td>现象：不确定性</td><td>75.00</td></tr><tr><td>规律：依赖结构</td><td>87.50</td></tr><tr><td>规律：函数形式</td><td>87.50</td></tr><tr><td>规律：定量恢复</td><td>79.17</td></tr><tr><td>应用：新情境预测</td><td>25.00</td></tr><tr><td>应用：干预效应</td><td>25.00</td></tr><tr><td>应用：范围</td><td>75.00</td></tr><tr><td>过程：假设</td><td>50.00</td></tr><tr><td>过程：设计</td><td>50.00</td></tr><tr><td>过程：更新</td><td>75.00</td></tr><tr><td>过程：验证</td><td>75.00</td></tr></table></div></details><p><strong>振子：</strong>在题目给定的线性力学族内恢复了实例连接和系数，同一冻结模型支持干预迁移。公共方程先验不算发现；过程中的竞争假设和证据更新仍有不足。</p><details><summary>查看逐项评分</summary><div class="scroll"><table><tr><th>评分项</th><th>得分</th></tr><tr><td>现象：效应</td><td>100.00</td></tr><tr><td>现象：条件</td><td>100.00</td></tr><tr><td>现象：不确定性</td><td>75.00</td></tr><tr><td>规律：依赖结构</td><td>100.00</td></tr><tr><td>规律：函数形式</td><td>100.00</td></tr><tr><td>规律：定量恢复</td><td>100.00</td></tr><tr><td>应用：新情境预测</td><td>100.00</td></tr><tr><td>应用：干预效应</td><td>100.00</td></tr><tr><td>应用：范围</td><td>75.00</td></tr><tr><td>过程：假设</td><td>75.00</td></tr><tr><td>过程：设计</td><td>100.00</td></tr><tr><td>过程：更新</td><td>75.00</td></tr><tr><td>过程：验证</td><td>100.00</td></tr></table></div></details><p>评分核验模型封存哈希及证据文件；每项保留判断依据。规律分固定包含全部科学模块，遗漏机制不能从分母删除。语义正确性由独立评审判断，文件哈希不代替科学审查。</p>
+<p>新任务采用发现对象（规律/结构）×三层能力。以下为未来协议，不折算历史成绩；当前没有此协议下的实测分。</p>
+<table><tr><th>层级</th><th>结果权重</th><th>核验内容</th></tr><tr><td>现象理解</td><td>20%</td><td>方向、效应量、条件依赖、噪声与异常</td></tr><tr><td>理解规律</td><td>40%</td><td>依赖结构、函数形式、定量关系、机制与适用边界</td></tr><tr><td>应用规律</td><td>40%</td><td>冻结模型的新情境预测、组合干预及推断范围</td></tr></table>
+<p>结果分与过程分分开。过程评价假设形成20%、实验设计30%、证据更新30%、验证复现20%；不按调用次数、报告长度或材料齐全度给分，不读取内部思考。竞争解释的正确结论归入规律理解，实验区分力归入过程。未审为待定而非0分。</p>
+<p>三菌考察条件作用、资源通量、联合调节与新干预；振子考察未知连接和系数组合及加载迁移，公开力学公式不计新发现。可辨识等价解释可以接受。</p>
+<h3>方程按独立动力学模块评估</h3>
+<p>模块与可辨识范围在实验前固定；未提交的模块仍在分母内，不能通过缩小声明范围获得满分。拆写方程不增加模块数量。</p>
+<div class="scroll"><table><tr><th>模块</th><th>需要恢复的科学内容</th></tr>
+<tr><td>A摄取</td><td>A、营养、温度的依赖及营养饱和形式</td></tr>
+<tr><td>B摄取</td><td>B、底物、温度的依赖及底物饱和形式</td></tr>
+<tr><td>C基础摄取</td><td>C与底物的依赖及抑制作用</td></tr>
+<tr><td>A–B–C联合调节</td><td>A如何改变B对C的影响，包括方向翻转、饱和与交互</td></tr>
+<tr><td>产物分配</td><td>摄取通量如何转化为菌体、代谢物和残留</td></tr>
+<tr><td>周转与守恒</td><td>衰减项、去向及各状态方程之间的碳流一致性</td></tr></table></div>
+<h3>每个模块如何评分</h3>
+<div class="scroll"><table><tr><th>评分方面</th><th>建议权重</th><th>实际核验</th></tr>
+<tr><td>依赖结构</td><td>30%</td><td>正确变量、作用方向与交互关系；遗漏必要项、引入错误作用分别记录并扣分。</td></tr>
+<tr><td>函数形式</td><td>40%</td><td>线性、饱和、抑制或交互门控；检查极限、斜率、曲率和条件变化。允许数学等价表达。</td></tr>
+<tr><td>定量恢复</td><td>30%</td><td>固定提交参数，在封存状态与干预条件上比较通量或变化率，禁止用评测目标重新拟合。</td></tr></table></div>
+<p>以上权重是设计建议，须先用参考解、经验基线、遗漏项模型和错误模型检验，再冻结权重、阈值、模块分母与聚合规则。当前不能据此回填一个看似精确的总分。</p>
+<pre>真实动力学：dx/dt = f(x,u)
+候选动力学：dx/dt = f̂(x,u)
+模块归一化误差：Eₖ = √{ (1/N) Σᵢ [(f̂ₖ(xᵢ,uᵢ) − fₖ(xᵢ,uᵢ))/sₖ]² }</pre>
+<p>sₖ是实验前固定的物理尺度。评测状态覆盖低值、高值、饱和区和干预条件；零通量区与活跃区分开，避免大量容易的零值稀释误差。通量仅在可辨识时独立计分，否则比较可辨识的状态变化率组合。长期轨迹RMSE另报，用于检查误差积累，不替代方程恢复。</p>
+<h3>三体项的具体判别测试</h3>
+<pre>qC = qC,base · {1 + B/(KB+B) · [−β + γA/(KA+A)]}
+
+IAB = qC(A高,B高) − qC(A低,B高)
+    − qC(A高,B低) + qC(A低,B低)</pre>
+<p>固定C、底物、抑制物和温度，正交改变A与B，分别检查A效应、随A变化的B效应、交互差分IAB，以及多个浓度下的饱和与方向翻转。不能只用四个点证明完整函数形式，温度变化须另设正交条件。</p>
+<p>当前冻结模型的C摄取式没有A/B联合调节，因而预测这一通量的A/B交互为零。低密度轨迹拟合好不能抵消该关键模块的遗漏；摄取、分配等其他模块仍可分别获得部分恢复评价。当前诊断未完成上述完整正交设计，不能把现有结果当作新方案的正式评分。</p>
+<h3>等价、近似与不可辨识</h3>
+<ul><li>代数变形、变量替换和可辨识参数组合按数学等价性核验，不做字符串匹配。</li><li>只有“A促进C”这样的定性判断，不能等同于恢复完整定量公式。</li><li>不同函数在有限范围近似正确，可获得相应范围的部分恢复评价，不能据此认定全域形式正确。</li><li>黑箱程序可以获得预测成绩；未给出可核验的方程，不自动获得方程形式分。</li><li>不可分别辨识的参数只评可辨识组合；有效作用结构不等于唯一微观实现。</li></ul>
+<h3>结果与过程分别核验</h3><p>现象层分项为效应50%、条件30%、不确定性20%；规律层为结构30%、形式40%、定量30%；应用层为新情境预测50%、干预30%、范围20%。每项评价实际恢复程度。层级总分采用20/40/40；过程另报，不能抵消错误科学结论。成本、程序和服务故障另列。</p></section>
+<footer>来源：模拟器实现、冻结提交与独立审阅。原始轨迹、实例参数和封存目标不随页面发布。</footer></main></body></html>

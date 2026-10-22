@@ -1,4 +1,4 @@
-<nav aria-label="案例目录"><a href="#intro">简介</a><a href="#equations">隐藏方程</a><a href="#concealment">如何隐藏</a><a href="#noise">随机干扰</a><a href="#construction">评测构建</a><a href="#tools">工具 / MCP</a><a href="#results">结果</a><a href="#replies">真实回复</a><a href="#depth">发现深度</a></nav>
+<nav aria-label="案例目录"><a href="#intro">简介</a><a href="#equations">隐藏方程</a><a href="#concealment">如何隐藏</a><a href="#noise">随机干扰</a><a href="#construction">评测构建</a><a href="#tools">工具 / MCP</a><a href="#results">结果</a><a href="#replies">真实回复</a><a href="#depth">三层能力与过程评估</a></nav>
 <section class="world" id="intro"><h2>1 · 简介</h2><p>这是一个可干预、可采样的三菌培养舱。研究者观察 A、B、C、营养和匿名化学池，自主设计实验，提出方程与结构解释，并在观测前登记预测。</p><p>A 为 B 提供底物，B 为 C 提供底物和抑制物。除此之外，C 的摄取通量直接包含 A、B、C 的联合项：A 的数量改变 B 对 C 的有效影响。相同的 B，在不同 A 背景下可能产生不同方向的调节。</p><p>当前显式三体环境已完成一次 GPT＋Codex 实测。它是虚构的碳守恒动力学，不是对真实菌群的拟合；先前含信号记忆的实验结果保留，不与本次混算。</p><p class="notice">本页面向读者解释设计者机制，不是 agent 题面。实例参数、种子和封存目标不公开；公开机制说明不构成抗污染保证。</p></section>
 <section class="world" id="equations"><h2>2 · 隐藏方程</h2><p>碳池 S、A、B、C、X、N、Y、Q、W 的单位为 mmol C/L；W 是惰性残留，时间单位为小时。当前环境采用固定产物分配，在 C 通量中加入显式三体调节，不使用旧实验的隐藏记忆状态。</p><pre>θ = 2^((T−30)/10)
 qA = θ uA A S/(KS+S)
@@ -25,6 +25,10 @@ W′ = 0.25qA + 0.50qC + θd(A+B+C) + θδ(X+N+Y+Q)</pre><p>联合调节同时�
 <p>零附近的截断会造成均值偏差。跨实例参数也有变化，但一次培养内不随机漂移。目前没有过程噪声、仪器漂移或额外杂峰；不能将未实现的干扰写成实际测评条件。</p></section>
 <section class="world" id="construction"><h2>5 · 评测构建</h2><ol><li>运行前冻结实例、源码、预算、诊断面板与逐格审阅标准。</li><li>agent 自选带噪实验，提出模型；测试既有预测时先登记配置、预测数组与模型哈希。</li><li>提交声明和模型哈希后关闭实验，禁止覆盖提交；再独立核验实际模型文件是否一致。</li><li>隔离执行冻结模型，分别报告预测误差、逐格发现证据及工程失败。</li></ol><p>新框架为发现对象（规律/结构）×现象理解、理解规律、应用规律三层，过程独立评估。各层评估预设科学目标的实际恢复程度，区分遗漏、错误与可辨识范围。证据用于核验，不按材料齐全程度计分；具体方法见“发现深度”。</p><p>本次为单个暴露开发实例，48次尝试、1800秒上限，4个预先确定的诊断面板。面板与自主实验的实际重叠由独立审阅检查，不能仅凭事前确定就称为未见泛化。原证据判据审阅保留作历史诊断，不作为发现程度成绩；新评分方案待校准后用于新实验。</p></section>
 <section class="world" id="tools"><h2>6 · 工具 / MCP</h2>
+<h3 id="query">三菌案例 Query</h3>
+<p>这是按<a href="plan.html#query-template">通用模板</a>填写的后续新任务题面草案，默认无额外科研提示。它只提供研究范围、仪器和交付要求；本页其他栏目中的设计者方程与评分目标不随 Query 发给 agent。下方历史成绩来自原题面，尚未采用这份草案。</p>
+<details open><summary>查看完整研究任务输入</summary><pre class="query" aria-label="三菌案例研究 Query">{{CASE_QUERY}}</pre></details>
+<p>交付结构见<a href="plan.html#query-output">整体 Plan 的统一输出规范</a>。运行前还需将新声明 schema、提交接口与统一 runner 对齐并冻结；这里的文档更新不表示已经启动新协议实测。</p>
 <p>运行 GPT-5.6-sol 与 Codex harness。agent 使用真实 MCP 工具访问实验服务，并在隔离工作区编写分析与预测程序。</p>
 <div class="scroll"><table><tr><th>工具或交付</th><th>功能与约束</th></tr><tr><td>describe</td><td>公开通道、单位、合法字段、噪声与预算，不返回隐藏方程。</td></tr><tr><td>experiment</td><td>每次新培养。A/B/C初值0–1，营养0–5，其余池0–2；温度20–40°C；1–25个递增采样点，最长48小时。</td></tr><tr><td>events</td><td>最多8个有序事件，允许改温、添加或按比例移除。添加每次最多2、总量最多8；事件不能晚于末次采样。同一时刻先操作后采样。</td></tr><tr><td>register_prediction</td><td>观测前绑定实验ID、配置、预测与模型哈希；禁止追认与覆盖，不返回隐藏反馈。</td></tr><tr><td>submit_matrix</td><td>封存最终声明及证据审计，关闭实验；哈希还需独立核对实际文件。</td></tr><tr><td>分析与提交</td><td>report.md：方程、单位、证据与限制；claims.json：逐格声明、范围、竞争解释及实验编号；model.py：predict(spec) 返回时间×九通道预测。</td></tr></table></div>
 <h3>合法实验示例</h3><pre>{"initial":{"A":0.1,"B":0.2,"C":0.2,"substrate":2},

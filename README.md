@@ -112,8 +112,8 @@ main 的新贡献请围绕科学问题、数据或仪器来源、可检验的竞
 
 ## 当前报告
 
-- [当前进度](docs/reports/progress.html)
-- [V1 双模型结果](docs/reports/v1_results.html)
-- [微生态完整案例](docs/reports/case_study.html)
+- [整体 Plan 与通用 Query 模板](docs/plan.html)
+- [当前进度](docs/progress.html)
+- [微生态完整案例与研究 Query](docs/case_study.html)
 
-持续扩展已暂停。旧版本材料统一保留在 `docs/archive/`。
+[V1 双模型历史结果](docs/reports/v1_results.html)保留原协议与成绩，旧版本材料位于 `docs/archive/`。三个主页面直接放在 `docs/`；`docs/reports/` 中的旧入口保留跳转。

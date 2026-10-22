@@ -32,6 +32,10 @@ docs/*
 !docs/frontier_families.md
 !docs/scientific_environments.md
 !docs/discovery_eligibility.md
+!docs/README.md
+!docs/plan.html
+!docs/progress.html
+!docs/case_study.html
 !docs/reports/
 docs/reports/*
 !docs/reports/overview.html
