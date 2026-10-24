@@ -39,7 +39,12 @@ known_shortcuts: 'astropy is available to the candidate, which is deliberate: th
   periodogram and the task is about which peaks to believe. Claiming the maximum six periods is defeated
   by the false-discovery axis. Abstaining everywhere is defeated by scoring an abstention on a determined
   system as zero. Real exoplanet catalogues are public, so the systems here are generated rather than
-  drawn from one, and a strong result must be confirmed on the sealed systems.'
+  drawn from one, and a strong result must be confirmed on the sealed systems. FIXED 2026-09-18: an
+  empty-claim candidate used to score 0.25 combined from the zero-planet development world s0_p0,
+  whose mechanism read as 1.0 on an empty denominator - the card invariant says that world has no
+  recoverable mechanism and every claim on it is a false discovery, so the mechanism row is now
+  None with a published denominator of zero, and the split mean averages only worlds with injected
+  planets.'
 review:
   domain: pending_external_exoplanet_detection
   evaluator_security: oracle runs in the trusted parent; candidate receives astropy through the audited

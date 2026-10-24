@@ -457,7 +457,11 @@ def evaluate(fit_spectrum):
         "valid": 1.0 if development["all_valid"] else 0.0,
         "feasibility_rate": development["feasibility_rate"],
         "development_score": combined,
-        "mechanism_score": development["raw_mechanism"],
+        # Same correction as the other evaluators: the headline axis is the normalized
+        # mechanism; the raw value (which includes the always-abstain anchor) stays
+        # published under its own key.
+        "mechanism_score": development["normalized_mechanism"],
+        "raw_mechanism": development["raw_mechanism"],
         "robustness_score": (
             heldout["normalized_mechanism"] if heldout["all_valid"] else 0.0
         ),

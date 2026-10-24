@@ -241,12 +241,23 @@ def _mechanism(world, parsed):
             if guess_value >= RESOLVABLE_J:
                 claimed_false += 1
     real = sum(1 for i, j in pairs if truth_j[i][j] >= RESOLVABLE_J)
-    coupling_score = hits / real if real else 1.0
+    # A spin system whose couplings are all true zeros has nothing resolvable to recover. The
+    # previous line read that as coupling_score = 1.0, so a candidate that claimed only zeros
+    # collected half of the mechanism axis (0.5 * 1.0) from a world with no recoverable
+    # mechanism - the empty-denominator-to-perfect-score defect. An empty denominator is
+    # not_measured, never a perfect score: the coupling axis carries no information about a
+    # world with no resolvable couplings, and any claim above RESOLVABLE_J there is already
+    # counted as a false discovery in the fdr axis.
+    coupling_score = hits / real if real else None
     fdr = claimed_false / true_zero if true_zero else None
     return {
         "shift_recovery": shift_score,
         "coupling_recovery": coupling_score,
-        "mechanism": 0.5 * shift_score + 0.5 * coupling_score,
+        # With no resolvable couplings the mechanism of that world is the shift axis alone:
+        # the shift axis still measures real recovery, and there is no second axis to average.
+        "mechanism": (0.5 * shift_score + 0.5 * coupling_score
+                      if coupling_score is not None else shift_score),
+        "coupling_denominator": real,
         "false_discovery_rate": fdr,
         "true_zero_couplings": true_zero,
         "resolvable_couplings": real,

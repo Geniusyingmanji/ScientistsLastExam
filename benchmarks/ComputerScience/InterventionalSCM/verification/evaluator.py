@@ -265,7 +265,11 @@ def evaluate(discover_mechanism):
         "raw_score": raw_mechanism,
         "valid": 1.0 if valid_worlds == len(WORLD_SEEDS) else 0.0,
         "feasibility_rate": valid_worlds / len(WORLD_SEEDS),
-        "mechanism_score": raw_mechanism,
+        # The reported mechanism axis is the normalized value for the same reason as the
+        # other evaluators: raw_mechanism includes the no-claim baseline (1/n worlds), so
+        # the raw headline overstates a candidate that predicts the null graph everywhere.
+        "mechanism_score": combined,
+        "raw_mechanism": raw_mechanism,
         "intervention_prediction_score": float(np.mean(prediction_scores)),
         "null_abstention_correct": null_correct,
         # The same facts as rates, which is what the discovery triple needs. There is exactly one

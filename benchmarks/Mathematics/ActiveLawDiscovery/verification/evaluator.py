@@ -536,7 +536,12 @@ def evaluate(discover_law):
         "combined_score": dev["normalized_mechanism"],
         "valid": 1.0 if dev["valid_count"] == len(development) else 0.0,
         "feasibility_rate": dev["valid_count"] / len(development),
-        "mechanism_score": dev["raw_mechanism"],
+        # The reported mechanism axis is the normalized one: raw_mechanism includes the
+        # always-abstain anchor, so publishing it here lets a blanket abstainer report
+        # 0.29-0.40 on the headline axis while combined_score correctly reads zero. The
+        # raw value stays published under its own key for diagnostics.
+        "mechanism_score": dev["normalized_mechanism"],
+        "raw_mechanism": dev["raw_mechanism"],
         "development_prediction_score": dev["prediction"],
         "robustness_score": val["normalized_mechanism"],
         "validation_prediction_score": val["prediction"],

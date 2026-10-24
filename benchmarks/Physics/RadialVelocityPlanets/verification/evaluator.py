@@ -212,9 +212,17 @@ def _score_world(world, parsed):
     truth = [p["period"] for p in world["planets"]]
     hits, missed = _match(parsed["periods"], truth)
     false_claims = len(parsed["periods"]) - len(hits)
-    recovery = len(hits) / len(truth) if truth else 1.0
+    # A world with no injected planet has no recoverable mechanism, and every claim on it is a
+    # false discovery - the card's own invariant. Reading an empty truth set as recovery = 1.0
+    # turned "there is nothing to recover" into "perfectly recovered", so a candidate that
+    # claims nothing on every world collected 0.25 combined from the single empty world (s0_p0)
+    # while the card says a detector returning nothing earns zero. The empty-denominator rule
+    # this follows is the maintainer's D-b: an axis whose denominator is empty is not_measured,
+    # never 1.0.
+    recovery = len(hits) / len(truth) if truth else None
     return {
         "mechanism": recovery,
+        "mechanism_denominator": len(truth),
         "recovered": len(hits),
         "injected": len(truth),
         "claimed": len(parsed["periods"]),
@@ -259,12 +267,20 @@ def _score_split(detect, worlds):
     undetermined = [r for r in valid if not r["determined"]]
     fdrs = [r["false_discovery_rate"] for r in valid
             if not r.get("abstained") and r.get("false_discovery_rate") is not None]
+    # Mechanism averages only worlds with a recoverable mechanism (injected > 0). A determined
+    # world with zero injected planets has nothing to recover, so it contributes to the
+    # false-discovery axis (any claim there is false) and to the published denominator, but
+    # not to this numerator. Previously it entered the mean as a 1.0, which is the
+    # empty-denominator-to-perfect-score defect.
+    scored_worlds = [r for r in determined
+                     if not r.get("abstained") and r.get("mechanism") is not None]
     return {
         "rows": rows,
         "valid_count": len(valid),
         "world_count": len(worlds),
-        "mechanism": (sum(r["mechanism"] for r in determined) / len(determined)
-                      if determined else 0.0),
+        "mechanism": (sum(r["mechanism"] for r in scored_worlds) / len(scored_worlds)
+                      if scored_worlds else 0.0),
+        "mechanism_denominator": len(scored_worlds),
         "false_discovery_rate": (sum(fdrs) / len(fdrs)) if fdrs else None,
         "correct_refusal_rate": ((sum(1 for r in undetermined if r["correct_refusal"])
                                   / len(undetermined)) if undetermined else None),
@@ -281,6 +297,7 @@ def evaluate(detect_planets) -> dict:
         "combined_score": float(development["mechanism"]) if valid else 0.0,
         "valid": 1.0 if valid else 0.0,
         "development_mechanism_score": development["mechanism"],
+        "development_mechanism_denominator": development["mechanism_denominator"],
         "development_false_discovery_rate": development["false_discovery_rate"],
         "development_correct_refusal_rate": development["correct_refusal_rate"],
         "development_unwarranted_refusal_rate": development["unwarranted_refusal_rate"],
@@ -292,6 +309,7 @@ def evaluate(detect_planets) -> dict:
         result.update({
             "robustness_score": float(sealed["mechanism"]),
             "heldout_mechanism_score": sealed["mechanism"],
+            "heldout_mechanism_denominator": sealed["mechanism_denominator"],
             "heldout_false_discovery_rate": sealed["false_discovery_rate"],
             "heldout_correct_refusal_rate": sealed["correct_refusal_rate"],
             "sealed_per_instance": sealed["rows"],

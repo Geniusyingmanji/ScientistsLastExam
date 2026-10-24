@@ -44,7 +44,11 @@ known_shortcuts: 'nmrsim is available to the candidate, which is deliberate: fit
   an abstention on a determined world as zero. Claiming a coupling on every pair is defeated by the false-discovery
   axis, which has a denominator at every difficulty level. Second-order NMR analysis is well documented
   in public literature, so a strong result must be confirmed on the sealed worlds, which use a separate
-  generator seed.'
+  generator seed. FIXED 2026-09-18: a world whose couplings are all true zeros used to read its
+  coupling axis as 1.0 on an empty denominator, giving a claim-only-zeros candidate half the
+  mechanism axis for free; the coupling axis is now not_measured (None, denominator published)
+  and the mechanism of such a world is the shift axis alone, while a claim above the resolvable
+  floor there is still counted by the false-discovery axis.'
 review:
   domain: pending_external_nmr_spectroscopy
   evaluator_security: oracle runs in the trusted parent; candidate receives nmrsim through the audited
